@@ -2,6 +2,8 @@ import asyncio
 import logging
 import json
 import os
+import time
+import hashlib
 from models import Player
 from core import loader as world_loader
 from logic import systems, input_handler, actions
@@ -28,11 +30,267 @@ HEARTBEAT_SUBSCRIBERS = [
     mob_manager.check_respawns
 ]
 
+class Connection:
+    """
+    Manages the lifecycle of a client connection.
+    Handles the handshake (Login/Auth) and the main game loop.
+    """
+    def __init__(self, game, reader, writer):
+        self.game = game
+        self.reader = reader
+        self.writer = writer
+        self.state = "CONNECTED"
+        self.name = "Unknown"
+        self.player = None
+        self.addr = writer.get_extra_info('peername')
+
+    def _hash_password(self, password):
+        if not password: return ""
+        return hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+    async def send(self, message):
+        try:
+            self.writer.write(f"{message}\r\n".encode('utf-8'))
+            await self.writer.drain()
+        except Exception:
+            pass
+
+    async def read_line(self, timeout=None):
+        try:
+            if timeout:
+                data = await asyncio.wait_for(self.reader.readuntil(b'\n'), timeout=timeout)
+            else:
+                data = await self.reader.readuntil(b'\n')
+            return self.game._clean_input(data.decode('utf-8', errors='ignore')).strip()
+        except (asyncio.TimeoutError, asyncio.IncompleteReadError, ConnectionResetError):
+            return None
+
+    async def run(self):
+        ip = self.addr[0]
+        
+        # --- Layer 1: The Firewall (IP Checks) ---
+        if ip in self.game.blacklist:
+            self.writer.close()
+            await self.writer.wait_closed()
+            return
+            
+        if self.game.is_rate_limited(ip):
+            logger.warning(f"Rate limit exceeded for {ip}")
+            await self.send("Too many connections. Please wait.")
+            self.writer.close()
+            await self.writer.wait_closed()
+            return
+
+        logger.info(f"New connection from {self.addr}")
+
+        try:
+            # --- Layer 2: The Bouncer (Handshake) ---
+            if len(self.game.players) >= 100:
+                await self.send("Server is full.")
+                self.writer.close()
+                await self.writer.wait_closed()
+                return
+
+            self.state = "GET_NAME"
+            await self.send("Welcome to GODLESS.")
+            self.writer.write(b"Enter your name: ")
+            await self.writer.drain()
+
+            # Timeout: 60 seconds to provide a name
+            raw_name = await self.read_line(timeout=60.0)
+            
+            if raw_name is None: # Timeout or disconnect
+                logger.info(f"Connection dropped (Handshake): {self.addr}")
+                return
+
+            # The Silent Test: Check for bot signatures
+            if any(sig in raw_name for sig in ["GET /", "SSH-2.0", '{"id":', "HTTP/"]):
+                logger.warning(f"Bot detected and dropped from {self.addr}: {raw_name[:50]}")
+                return
+
+            self.name = raw_name
+            if not self.name:
+                return
+
+            # --- Login / Creation Logic ---
+            await self.handle_login()
+
+            if self.player:
+                self.state = "PLAYING"
+                await self.game_loop()
+
+        except Exception as e:
+            logger.error(f"Error handling client {self.name}: {e}", exc_info=True)
+        finally:
+            await self.disconnect()
+
+    async def handle_login(self):
+        # Check for save file
+        save_file = f"data/saves/{self.name.lower()}.json"
+        loaded_data = None
+        start_room = self.game.world.start_room
+
+        if os.path.exists(save_file):
+            self.state = "GET_PASSWORD"
+            try:
+                with open(save_file, 'r') as f:
+                    loaded_data = json.load(f)
+                
+                if loaded_data.get('room_id') in self.game.world.rooms:
+                    start_room = self.game.world.rooms[loaded_data['room_id']]
+                
+                stored_pass = loaded_data.get('password')
+                if stored_pass:
+                    self.writer.write(b"Password: ")
+                    await self.writer.drain()
+                    pwd = await self.read_line()
+                    
+                    if not pwd: return
+                    hashed_input = self._hash_password(pwd)
+
+                    # Check Hash (Secure) OR Plaintext (Legacy)
+                    if hashed_input != stored_pass and pwd != stored_pass:
+                        await self.send("Incorrect password.")
+                        return
+            except Exception as e:
+                logger.error(f"Error loading save for {self.name}: {e}")
+                return
+
+        self.player = Player(self.game, self.writer, self.name, start_room)
+        
+        if loaded_data:
+            try:
+                self.player.load_data(loaded_data)
+                class_engine.calculate_identity(self.player)
+                synergy_engine.calculate_synergies(self.player)
+                self.player.state = "normal"
+                self.player.interaction_data = {}
+                self.player.send_line(f"Welcome back, {self.name}.")
+                
+                # Auto-upgrade legacy password to hash
+                if stored_pass and stored_pass == pwd and stored_pass != hashed_input:
+                    self.player.password = hashed_input
+                    logger.info(f"Upgraded legacy password for {self.name} to hash.")
+            except Exception as e:
+                logger.error(f"Failed to hydrate player {self.name}: {e}")
+                self.player.send_line(f"Welcome, {self.name}. (Save data corrupted)")
+        else:
+            # New Character
+            self.state = "CREATE_PASSWORD"
+            self.writer.write(b"Create a password: ")
+            await self.writer.drain()
+            raw_pwd = await self.read_line()
+            if raw_pwd:
+                self.player.password = self._hash_password(raw_pwd)
+            
+            await self.handle_kingdom_selection()
+            self.player.send_line(f"Welcome, {self.name}. Type 'help' for commands.")
+            
+        self.game.players[self.name] = self.player
+        
+        if os.path.exists("data/motd.txt"):
+            try:
+                with open("data/motd.txt", "r") as f:
+                    self.player.send_line(f.read())
+            except Exception:
+                pass
+        
+        input_handler.handle(self.player, "look")
+        self.player.room.broadcast(f"{self.name} has entered the realm.", exclude_player=self.player)
+
+    async def handle_kingdom_selection(self):
+        self.state = "SELECT_KINGDOM"
+        while True:
+            self.writer.write(b"\nChoose your Kingdom:\r\n")
+            self.writer.write(b"1. Light (Order, Healing, Protection)\r\n")
+            self.writer.write(b"2. Dark (Ambition, Shadows, Decay)\r\n")
+            self.writer.write(b"3. Instinct (Nature, Rage, Survival)\r\n")
+            self.writer.write(b"Choice: ")
+            await self.writer.drain()
+            
+            choice = await self.read_line()
+            if not choice: continue
+            choice = choice.lower()
+            
+            kingdom = None
+            if choice == '1' or choice == 'light': kingdom = 'light'
+            elif choice == '2' or choice == 'dark': kingdom = 'dark'
+            elif choice == '3' or choice == 'instinct': kingdom = 'instinct'
+            
+            if kingdom:
+                self.player.identity_tags = [kingdom, "adventurer"]
+                cap_id = self.game.world.landmarks.get(f"{kingdom}_cap")
+                if cap_id and cap_id in self.game.world.rooms:
+                    self.player.room = self.game.world.rooms[cap_id]
+                    if self.game.world.start_room and self.player in self.game.world.start_room.players:
+                        self.game.world.start_room.players.remove(self.player)
+                    self.player.room.players.append(self.player)
+                    self.player.visited_rooms.add(self.player.room.id)
+                break
+            else:
+                await self.send("Invalid choice.")
+
+    async def game_loop(self):
+        while True:
+            self.writer.write(f"\r\n{self.player.get_prompt()}".encode('utf-8'))
+            await self.writer.drain()
+            
+            command_line = await self.read_line()
+            
+            if command_line is None:
+                break
+            
+            if self.player.pagination_buffer:
+                if command_line and command_line.lower() == 'q':
+                    self.player.pagination_buffer = []
+                    self.player.send_line("Pagination stopped.")
+                else:
+                    self.player.show_next_page()
+                continue
+
+            if not command_line:
+                continue
+
+            if not input_handler.handle(self.player, command_line):
+                break
+
+    async def disconnect(self):
+        if self.player:
+            logger.info(f"{self.name} disconnected")
+            self.player.save()
+            
+            if self.player.room:
+                if self.player in self.player.room.players:
+                    self.player.room.players.remove(self.player)
+                
+                # Scrub player from mobs
+                for mob in self.player.room.monsters:
+                    if mob.fighting == self.player:
+                        mob.fighting = None
+                    if self.player in mob.attackers:
+                        mob.attackers.remove(self.player)
+
+                self.player.room.broadcast(f"{self.name} has vanished.", exclude_player=self.player)
+
+            if self.name in self.game.players:
+                del self.game.players[self.name]
+        
+        try:
+            self.writer.close()
+            await self.writer.wait_closed()
+        except Exception:
+            pass
+
 class GodlessGame:
     def __init__(self):
         self.players = {} # name -> Player
         self.world = world_loader.load_world('data/world_data.json')
         self.tick_count = 0
+        
+        # Security
+        self.blacklist = set()
+        self.connection_history = {} # IP -> list of timestamps
+        self.load_blacklist()
         
         # Use the global configuration
         self.subscribers = HEARTBEAT_SUBSCRIBERS
@@ -55,6 +313,32 @@ class GodlessGame:
 
         # Populate world
         mob_manager.initialize_spawns(self)
+
+    def load_blacklist(self):
+        """Loads banned IPs from file."""
+        self.blacklist.clear()
+        if os.path.exists("data/blacklist.txt"):
+            with open("data/blacklist.txt", "r") as f:
+                for line in f:
+                    ip = line.strip()
+                    if ip and not ip.startswith("#"):
+                        self.blacklist.add(ip)
+        logger.info(f"Loaded {len(self.blacklist)} banned IPs.")
+
+    def is_rate_limited(self, ip):
+        """Checks if an IP is connecting too frequently (15 per minute)."""
+        now = time.time()
+        if ip not in self.connection_history:
+            self.connection_history[ip] = []
+        
+        # Keep timestamps from the last 60 seconds
+        self.connection_history[ip] = [t for t in self.connection_history[ip] if now - t < 60]
+        
+        if len(self.connection_history[ip]) >= 15:
+            return True
+            
+        self.connection_history[ip].append(now)
+        return False
 
     def reload_world(self):
         """Reloads world data and relocates players."""
@@ -98,191 +382,8 @@ class GodlessGame:
             self.save_all()
 
     async def handle_client(self, reader, writer):
-        addr = writer.get_extra_info('peername')
-        logger.info(f"New connection from {addr}")
-        
-        player = None
-        name = "Unknown"
-
-        try:
-            writer.write(b"Welcome to GODLESS.\r\n")
-            writer.write(b"Enter your name: ")
-            await writer.drain()
-
-            name_data = await reader.readuntil(b'\n')
-            raw_name = name_data.decode()
-            name = self._clean_input(raw_name).strip()
-            
-            if not name:
-                writer.close()
-                await writer.wait_closed()
-                return
-
-            # Check for save file
-            save_file = f"data/saves/{name.lower()}.json"
-            loaded_data = None
-            start_room = self.world.start_room
-
-            if os.path.exists(save_file):
-                try:
-                    with open(save_file, 'r') as f:
-                        loaded_data = json.load(f)
-                    
-                    # Resolve saved room ID
-                    if loaded_data.get('room_id') in self.world.rooms:
-                        start_room = self.world.rooms[loaded_data['room_id']]
-                    
-                    # Password Check
-                    stored_pass = loaded_data.get('password')
-                    if stored_pass:
-                        writer.write(b"Password: ")
-                        await writer.drain()
-                        pwd_data = await reader.readuntil(b'\n')
-                        pwd = self._clean_input(pwd_data.decode()).strip()
-                        if pwd != stored_pass:
-                            writer.write(b"Incorrect password.\r\n")
-                            await writer.drain()
-                            writer.close()
-                            await writer.wait_closed()
-                            return
-                except asyncio.IncompleteReadError:
-                    raise
-                except Exception as e:
-                    logger.error(f"Error loading save for {name}: {e}")
-
-            player = Player(self, writer, name, start_room)
-            
-            if loaded_data:
-                try:
-                    player.load_data(loaded_data)
-                    
-                    # Recalculate dynamic stats
-                    class_engine.calculate_identity(player)
-                    synergy_engine.calculate_synergies(player)
-                    
-                    # Safety: Reset state to normal to prevent stuck interactions
-                    player.state = "normal"
-                    player.interaction_data = {}
-                    
-                    player.send_line(f"Welcome back, {name}.")
-                except Exception as e:
-                    logger.error(f"Failed to hydrate player {name}: {e}")
-                    player.send_line(f"Welcome, {name}. (Save data corrupted or incompatible)")
-            else:
-                # New Character - Set Password
-                writer.write(b"Create a password: ")
-                await writer.drain()
-                pwd_data = await reader.readuntil(b'\n')
-                player.password = self._clean_input(pwd_data.decode()).strip()
-                
-                # Kingdom Selection
-                while True:
-                    writer.write(b"\nChoose your Kingdom:\r\n")
-                    writer.write(b"1. Light (Order, Healing, Protection)\r\n")
-                    writer.write(b"2. Dark (Ambition, Shadows, Decay)\r\n")
-                    writer.write(b"3. Instinct (Nature, Rage, Survival)\r\n")
-                    writer.write(b"Choice: ")
-                    await writer.drain()
-                    
-                    k_data = await reader.readuntil(b'\n')
-                    choice = self._clean_input(k_data.decode()).strip().lower()
-                    
-                    kingdom = None
-                    if choice == '1' or choice == 'light': kingdom = 'light'
-                    elif choice == '2' or choice == 'dark': kingdom = 'dark'
-                    elif choice == '3' or choice == 'instinct': kingdom = 'instinct'
-                    
-                    if kingdom:
-                        player.identity_tags = [kingdom, "adventurer"]
-                        
-                        # Teleport to Capital if available
-                        cap_id = self.world.landmarks.get(f"{kingdom}_cap")
-                        if cap_id and cap_id in self.world.rooms:
-                            player.room = self.world.rooms[cap_id]
-                            # Remove from start room, add to new room
-                            if self.world.start_room and player in self.world.start_room.players:
-                                self.world.start_room.players.remove(player)
-                            player.room.players.append(player)
-                            player.visited_rooms.add(player.room.id)
-                        break
-                    else:
-                        writer.write(b"Invalid choice.\r\n")
-
-                player.send_line(f"Welcome, {name}. Type 'help' for commands.")
-                
-            self.players[name] = player
-            
-            if os.path.exists("data/motd.txt"):
-                try:
-                    with open("data/motd.txt", "r") as f:
-                        player.send_line(f.read())
-                except Exception as e:
-                    logger.error(f"Error loading MOTD: {e}")
-            
-            input_handler.handle(player, "look")
-            player.room.broadcast(f"{name} has entered the realm.", exclude_player=player)
-
-            while True:
-                writer.write(f"\r\n{player.get_prompt()}".encode('utf-8'))
-                await writer.drain()
-                
-                data = await reader.readuntil(b'\n')
-                command_line = self._clean_input(data.decode()).strip()
-                
-                if player.pagination_buffer:
-                    if command_line.lower() == 'q':
-                        player.pagination_buffer = []
-                        player.send_line("Pagination stopped.")
-                    else:
-                        player.show_next_page()
-                    continue
-
-                if not command_line:
-                    continue
-
-                try:
-                    if not input_handler.handle(player, command_line):
-                        break
-                except Exception as e:
-                    logger.error(f"Command error for {name}: {e}", exc_info=True)
-                    player.send_line(f"{Colors.RED}An internal error occurred.{Colors.RESET}")
-
-        except (asyncio.IncompleteReadError, ConnectionResetError):
-            logger.info(f"Connection closed: {name}")
-        except Exception as e:
-            logger.error(f"Error handling client {name}: {e}", exc_info=True)
-        finally:
-            if player:
-                logger.info(f"{name} disconnected")
-                # Auto-save on disconnect
-                player.save()
-                logger.info(f"Saved data for {name}")
-
-                if player in player.room.players:
-                    player.room.players.remove(player)
-                player.room.broadcast(f"{name} has vanished.", exclude_player=player)
-                if player.room:
-                    if player in player.room.players:
-                        player.room.players.remove(player)
-                    
-                    # Scrub player from mobs in the room to prevent heartbeat errors
-                    for mob in player.room.monsters:
-                        if mob.fighting == player:
-                            mob.fighting = None
-                        if player in mob.attackers:
-                            mob.attackers.remove(player)
-
-                    player.room.broadcast(f"{name} has vanished.", exclude_player=player)
-                    player.room = None
-
-                if name in self.players:
-                    del self.players[name]
-            
-            try:
-                writer.close()
-                await writer.wait_closed()
-            except Exception:
-                pass
+        connection = Connection(self, reader, writer)
+        await connection.run()
 
     def save_all(self):
         """Saves all players and world state."""

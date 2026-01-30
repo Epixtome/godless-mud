@@ -8,6 +8,7 @@ from models import Monster, Door
 import models, json
 from collections import defaultdict
 from utilities.colors import Colors
+import os
 
 # Lazy import information inside functions to avoid circular dependency during startup
 # if information.py imports command_manager which is used here.
@@ -1344,3 +1345,107 @@ def paint_zone(player, args):
                     links += 1
                     
     player.send_line(f"Painted {created} rooms. Created {links} links.")
+
+@command_manager.register("@ban", admin=True)
+def ban_player(player, args):
+    """
+    Ban an IP address. Usage: @ban <ip> OR @ban <player_name>
+    """
+    if not args:
+        player.send_line("Usage: @ban <ip> | <player_name>")
+        return
+        
+    target_ip = args.strip()
+    
+    # Check if arg is a player name
+    target_session = None
+    for name, p in player.game.players.items():
+        if name.lower() == args.lower():
+            # We need the writer to get the IP
+            # Player object has writer
+            try:
+                addr = p.writer.get_extra_info('peername')
+                target_ip = addr[0]
+                target_session = p
+            except:
+                player.send_line("Could not determine IP for that player.")
+                return
+            break
+            
+    # Add to blacklist file
+    with open("data/blacklist.txt", "a") as f:
+        f.write(f"{target_ip}\n")
+        
+    # Reload in memory
+    player.game.load_blacklist()
+    
+    player.send_line(f"Banned IP: {target_ip}")
+    
+    # Kick if online
+    if target_session:
+        target_session.send_line(f"{Colors.RED}You have been banned.{Colors.RESET}")
+        # The disconnect logic in godless_mud.py handles the rest when connection closes
+        # We can force close the writer
+        # This requires async, but we are in a sync function. 
+        # Ideally we'd schedule it, but for now we rely on the blacklist blocking their NEXT connection.
+        pass
+
+@command_manager.register("@reloadbans", admin=True)
+def reload_bans(player, args):
+    """Reloads the blacklist from data/blacklist.txt."""
+    player.game.load_blacklist()
+    player.send_line(f"Blacklist reloaded. {len(player.game.blacklist)} IPs blocked.")
+
+@command_manager.register("@whoson", admin=True)
+def whos_on(player, args):
+    """List online players and their IP addresses."""
+    player.send_line(f"\n{Colors.BOLD}--- Online Players (Admin) ---{Colors.RESET}")
+    player.send_line(f"{'Name':<20} {'IP Address':<20}")
+    player.send_line("-" * 40)
+    
+    count = 0
+    for name, p in player.game.players.items():
+        ip = "Unknown"
+        try:
+            addr = p.writer.get_extra_info('peername')
+            if addr:
+                ip = addr[0]
+        except:
+            pass
+        
+        player.send_line(f"{name:<20} {ip:<20}")
+        count += 1
+        
+    player.send_line(f"\nTotal: {count}")
+
+@command_manager.register("@kick", admin=True)
+def kick_player(player, args):
+    """Forcibly disconnect a player."""
+    if not args:
+        player.send_line("Usage: @kick <player_name>")
+        return
+    
+    target_name = args.lower()
+    target = None
+    
+    for p in player.game.players.values():
+        if p.name.lower() == target_name:
+            target = p
+            break
+            
+    if not target:
+        player.send_line(f"Player '{args}' not found.")
+        return
+        
+    if target == player:
+        player.send_line("You cannot kick yourself. Use 'quit'.")
+        return
+        
+    player.send_line(f"Kicking {target.name}...")
+    target.send_line(f"{Colors.RED}You have been kicked from the server.{Colors.RESET}")
+    
+    # Closing the writer will cause read_line() to return None in the game loop, triggering cleanup
+    try:
+        target.writer.close()
+    except Exception as e:
+        player.send_line(f"Error closing socket: {e}")

@@ -43,4 +43,7 @@ utilities/unlock_hub.py
 
 # Documentation (Intellectual Property)
 *.md
-!CHANGELOG.md
+
+# 3. Ignore my local server security/config files
+blacklist.txt
+.env
