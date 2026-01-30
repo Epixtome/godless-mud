@@ -1,0 +1,3143 @@
+{
+    "zones": [
+        {
+            "id": "region_40_240",
+            "name": "The Abyssal Depths",
+            "security_level": "null_sec"
+        }
+    ],
+    "rooms": [
+        {
+            "id": "region_40_240_n85_115_0",
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "x": -85,
+            "y": 115,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_220_n85_114_0",
+                "south": "region_40_240_n85_116_0",
+                "east": "region_40_240_n84_115_0",
+                "west": "region_20_240_n86_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_115_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -84,
+            "y": 115,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_220_n84_114_0",
+                "south": "region_40_240_n84_116_0",
+                "east": "region_40_240_n83_115_0",
+                "west": "region_40_240_n85_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_115_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -83,
+            "y": 115,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_220_n83_114_0",
+                "south": "region_40_240_n83_116_0",
+                "east": "region_40_240_n82_115_0",
+                "west": "region_40_240_n84_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_115_0",
+            "name": "Plains",
+            "description": "Travelers rest here for the night.",
+            "x": -82,
+            "y": 115,
+            "z": 0,
+            "terrain": "plains",
+            "exits": {
+                "north": "region_40_220_n82_114_0",
+                "south": "region_40_240_n82_116_0",
+                "east": "region_40_240_n81_115_0",
+                "west": "region_40_240_n83_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_115_0",
+            "name": "Plains",
+            "description": "A small campfire smolders in the center.",
+            "x": -81,
+            "y": 115,
+            "z": 0,
+            "terrain": "plains",
+            "exits": {
+                "north": "region_40_220_n81_114_0",
+                "south": "region_40_240_n81_116_0",
+                "east": "region_40_240_n80_115_0",
+                "west": "region_40_240_n82_115_0"
+            },
+            "monsters": [
+                "town_guard"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_115_0",
+            "name": "Plains",
+            "description": "A small campfire smolders in the center.",
+            "x": -80,
+            "y": 115,
+            "z": 0,
+            "terrain": "plains",
+            "exits": {
+                "north": "region_40_220_n80_114_0",
+                "south": "region_40_240_n80_116_0",
+                "east": "region_40_240_n79_115_0",
+                "west": "region_40_240_n81_115_0"
+            },
+            "monsters": [
+                "goblin"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_115_0",
+            "name": "Plains",
+            "description": "A small campfire smolders in the center.",
+            "x": -79,
+            "y": 115,
+            "z": 0,
+            "terrain": "plains",
+            "exits": {
+                "north": "region_40_220_n79_114_0",
+                "south": "region_40_240_n79_116_0",
+                "east": "region_40_240_n78_115_0",
+                "west": "region_40_240_n80_115_0"
+            },
+            "monsters": [
+                "town_guard"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_115_0",
+            "name": "Plains",
+            "description": "A small campfire smolders in the center.",
+            "x": -78,
+            "y": 115,
+            "z": 0,
+            "terrain": "plains",
+            "exits": {
+                "north": "region_40_220_n78_114_0",
+                "south": "region_40_240_n78_116_0",
+                "east": "region_40_240_n77_115_0",
+                "west": "region_40_240_n79_115_0"
+            },
+            "monsters": [
+                "town_guard"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_115_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -77,
+            "y": 115,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_220_n77_114_0",
+                "south": "region_40_240_n77_116_0",
+                "east": "region_40_240_n76_115_0",
+                "west": "region_40_240_n78_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_115_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -76,
+            "y": 115,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_220_n76_114_0",
+                "south": "region_40_240_n76_116_0",
+                "east": "region_40_240_n75_115_0",
+                "west": "region_40_240_n77_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_115_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -75,
+            "y": 115,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_220_n75_114_0",
+                "south": "region_40_240_n75_116_0",
+                "east": "region_40_240_n74_115_0",
+                "west": "region_40_240_n76_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_115_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -74,
+            "y": 115,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_220_n74_114_0",
+                "south": "region_40_240_n74_116_0",
+                "east": "region_40_240_n73_115_0",
+                "west": "region_40_240_n75_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_115_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -73,
+            "y": 115,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_220_n73_114_0",
+                "south": "region_40_240_n73_116_0",
+                "east": "region_40_240_n72_115_3",
+                "west": "region_40_240_n74_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_115_3",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "x": -72,
+            "y": 115,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_220_n72_114_3",
+                "south": "region_40_240_n72_116_2",
+                "west": "region_40_240_n73_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_115_4",
+            "name": "Peak",
+            "description": "You stand atop the world.",
+            "x": -71,
+            "y": 115,
+            "z": 4,
+            "terrain": "peak",
+            "exits": {
+                "east": "region_40_240_n70_115_3",
+                "west": "region_40_240_n72_115_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_115_3",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "x": -70,
+            "y": 115,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_220_n70_114_3",
+                "south": "region_40_240_n70_116_3",
+                "east": "region_40_240_n69_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_115_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -69,
+            "y": 115,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_220_n69_114_0",
+                "south": "region_40_240_n69_116_0",
+                "east": "region_40_240_n68_115_0",
+                "west": "region_40_240_n70_115_3"
+            },
+            "monsters": [
+                "wolf"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_115_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -68,
+            "y": 115,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_220_n68_114_0",
+                "south": "region_40_240_n68_116_0",
+                "east": "region_40_240_n67_115_0",
+                "west": "region_40_240_n69_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_115_0",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "x": -67,
+            "y": 115,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_220_n67_114_0",
+                "south": "region_40_240_n67_116_0",
+                "east": "region_40_240_n66_115_0",
+                "west": "region_40_240_n68_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_115_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -66,
+            "y": 115,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_220_n66_114_0",
+                "south": "region_40_240_n66_116_0",
+                "east": "region_60_240_n65_115_0",
+                "west": "region_40_240_n67_115_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n85_116_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -85,
+            "y": 116,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n85_115_0",
+                "south": "region_40_240_n85_117_0",
+                "east": "region_40_240_n84_116_0",
+                "west": "region_20_240_n86_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_116_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -84,
+            "y": 116,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n84_115_0",
+                "south": "region_40_240_n84_117_0",
+                "east": "region_40_240_n83_116_0",
+                "west": "region_40_240_n85_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_116_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -83,
+            "y": 116,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n83_115_0",
+                "south": "region_40_240_n83_117_0",
+                "east": "region_40_240_n82_116_0",
+                "west": "region_40_240_n84_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_116_0",
+            "name": "Plains",
+            "description": "Travelers rest here for the night.",
+            "x": -82,
+            "y": 116,
+            "z": 0,
+            "terrain": "plains",
+            "exits": {
+                "north": "region_40_240_n82_115_0",
+                "south": "region_40_240_n82_117_0",
+                "east": "region_40_240_n81_116_0",
+                "west": "region_40_240_n83_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_116_0",
+            "name": "Plains",
+            "description": "Travelers rest here for the night.",
+            "x": -81,
+            "y": 116,
+            "z": 0,
+            "terrain": "plains",
+            "exits": {
+                "north": "region_40_240_n81_115_0",
+                "south": "region_40_240_n81_117_0",
+                "east": "region_40_240_n80_116_0",
+                "west": "region_40_240_n82_116_0"
+            },
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_116_0",
+            "name": "Plains",
+            "description": "A small campfire smolders in the center.",
+            "x": -80,
+            "y": 116,
+            "z": 0,
+            "terrain": "plains",
+            "exits": {
+                "north": "region_40_240_n80_115_0",
+                "south": "region_40_240_n80_117_0",
+                "east": "region_40_240_n79_116_0",
+                "west": "region_40_240_n81_116_0"
+            },
+            "monsters": [
+                "town_guard"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_116_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -79,
+            "y": 116,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n79_115_0",
+                "south": "region_40_240_n79_117_0",
+                "east": "region_40_240_n78_116_0",
+                "west": "region_40_240_n80_116_0"
+            },
+            "monsters": [
+                "slime",
+                "leech"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_116_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -78,
+            "y": 116,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n78_115_0",
+                "south": "region_40_240_n78_117_0",
+                "east": "region_40_240_n77_116_0",
+                "west": "region_40_240_n79_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_116_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -77,
+            "y": 116,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n77_115_0",
+                "south": "region_40_240_n77_117_0",
+                "east": "region_40_240_n76_116_0",
+                "west": "region_40_240_n78_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_116_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -76,
+            "y": 116,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n76_115_0",
+                "south": "region_40_240_n76_117_0",
+                "east": "region_40_240_n75_116_0",
+                "west": "region_40_240_n77_116_0"
+            },
+            "monsters": [
+                "leech"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_116_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -75,
+            "y": 116,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n75_115_0",
+                "south": "region_40_240_n75_117_0",
+                "east": "region_40_240_n74_116_0",
+                "west": "region_40_240_n76_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_116_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -74,
+            "y": 116,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n74_115_0",
+                "south": "region_40_240_n74_117_0",
+                "east": "region_40_240_n73_116_0",
+                "west": "region_40_240_n75_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_116_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -73,
+            "y": 116,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n73_115_0",
+                "south": "region_40_240_n73_117_3",
+                "east": "region_40_240_n72_116_2",
+                "west": "region_40_240_n74_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_116_2",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "x": -72,
+            "y": 116,
+            "z": 2,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n72_115_3",
+                "south": "region_40_240_n72_117_3",
+                "west": "region_40_240_n73_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_116_4",
+            "name": "Peak",
+            "description": "You stand atop the world.",
+            "x": -71,
+            "y": 116,
+            "z": 4,
+            "terrain": "peak",
+            "exits": {
+                "east": "region_40_240_n70_116_3",
+                "west": "region_40_240_n72_116_2"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_116_3",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "x": -70,
+            "y": 116,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n70_115_3",
+                "south": "region_40_240_n70_117_3",
+                "east": "region_40_240_n69_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_116_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -69,
+            "y": 116,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n69_115_0",
+                "south": "region_40_240_n69_117_0",
+                "east": "region_40_240_n68_116_0",
+                "west": "region_40_240_n70_116_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_116_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -68,
+            "y": 116,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n68_115_0",
+                "south": "region_40_240_n68_117_0",
+                "east": "region_40_240_n67_116_0",
+                "west": "region_40_240_n69_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_116_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -67,
+            "y": 116,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n67_115_0",
+                "south": "region_40_240_n67_117_0",
+                "east": "region_40_240_n66_116_0",
+                "west": "region_40_240_n68_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_116_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -66,
+            "y": 116,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n66_115_0",
+                "south": "region_40_240_n66_117_0",
+                "east": "region_60_240_n65_116_0",
+                "west": "region_40_240_n67_116_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n85_117_0",
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "x": -85,
+            "y": 117,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n85_116_0",
+                "south": "region_40_240_n85_118_0",
+                "east": "region_40_240_n84_117_0",
+                "west": "region_20_240_n86_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_117_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -84,
+            "y": 117,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n84_116_0",
+                "south": "region_40_240_n84_118_0",
+                "east": "region_40_240_n83_117_0",
+                "west": "region_40_240_n85_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_117_0",
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "x": -83,
+            "y": 117,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n83_116_0",
+                "south": "region_40_240_n83_118_0",
+                "east": "region_40_240_n82_117_0",
+                "west": "region_40_240_n84_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_117_0",
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "x": -82,
+            "y": 117,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n82_116_0",
+                "south": "region_40_240_n82_118_0",
+                "east": "region_40_240_n81_117_0",
+                "west": "region_40_240_n83_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_117_0",
+            "name": "Plains",
+            "description": "Travelers rest here for the night.",
+            "x": -81,
+            "y": 117,
+            "z": 0,
+            "terrain": "plains",
+            "exits": {
+                "north": "region_40_240_n81_116_0",
+                "south": "region_40_240_n81_118_0",
+                "east": "region_40_240_n80_117_0",
+                "west": "region_40_240_n82_117_0"
+            },
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_117_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -80,
+            "y": 117,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n80_116_0",
+                "south": "region_40_240_n80_118_0",
+                "east": "region_40_240_n79_117_0",
+                "west": "region_40_240_n81_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_117_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -79,
+            "y": 117,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n79_116_0",
+                "south": "region_40_240_n79_118_0",
+                "east": "region_40_240_n78_117_0",
+                "west": "region_40_240_n80_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_117_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -78,
+            "y": 117,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n78_116_0",
+                "south": "region_40_240_n78_118_0",
+                "east": "region_40_240_n77_117_0",
+                "west": "region_40_240_n79_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_117_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -77,
+            "y": 117,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n77_116_0",
+                "south": "region_40_240_n77_118_0",
+                "east": "region_40_240_n76_117_0",
+                "west": "region_40_240_n78_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_117_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -76,
+            "y": 117,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n76_116_0",
+                "south": "region_40_240_n76_118_0",
+                "east": "region_40_240_n75_117_0",
+                "west": "region_40_240_n77_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_117_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -75,
+            "y": 117,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n75_116_0",
+                "south": "region_40_240_n75_118_0",
+                "east": "region_40_240_n74_117_0",
+                "west": "region_40_240_n76_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_117_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -74,
+            "y": 117,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n74_116_0",
+                "south": "region_40_240_n74_118_3",
+                "east": "region_40_240_n73_117_3",
+                "west": "region_40_240_n75_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_117_3",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "x": -73,
+            "y": 117,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n73_116_0",
+                "south": "region_40_240_n73_118_2",
+                "east": "region_40_240_n72_117_3",
+                "west": "region_40_240_n74_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_117_3",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "x": -72,
+            "y": 117,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n72_116_2",
+                "west": "region_40_240_n73_117_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_117_5",
+            "name": "Peak",
+            "description": "Snow clings to the jagged rock.",
+            "x": -71,
+            "y": 117,
+            "z": 5,
+            "terrain": "peak",
+            "exits": {
+                "south": "region_40_240_n71_118_3",
+                "east": "region_40_240_n70_117_3",
+                "west": "region_40_240_n72_117_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_117_3",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "x": -70,
+            "y": 117,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n70_116_3",
+                "south": "region_40_240_n70_118_3",
+                "east": "region_40_240_n69_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_117_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -69,
+            "y": 117,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n69_116_0",
+                "south": "region_40_240_n69_118_0",
+                "east": "region_40_240_n68_117_0",
+                "west": "region_40_240_n70_117_3"
+            },
+            "monsters": [
+                "wolf"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_117_0",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "x": -68,
+            "y": 117,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n68_116_0",
+                "south": "region_40_240_n68_118_0",
+                "east": "region_40_240_n67_117_0",
+                "west": "region_40_240_n69_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_117_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -67,
+            "y": 117,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n67_116_0",
+                "south": "region_40_240_n67_118_0",
+                "east": "region_40_240_n66_117_0",
+                "west": "region_40_240_n68_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_117_0",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "x": -66,
+            "y": 117,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n66_116_0",
+                "south": "region_40_240_n66_118_0",
+                "east": "region_60_240_n65_117_0",
+                "west": "region_40_240_n67_117_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n85_118_0",
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "x": -85,
+            "y": 118,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n85_117_0",
+                "south": "region_40_240_n85_119_0",
+                "east": "region_40_240_n84_118_0",
+                "west": "region_20_240_n86_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_118_0",
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "x": -84,
+            "y": 118,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n84_117_0",
+                "south": "region_40_240_n84_119_0",
+                "east": "region_40_240_n83_118_0",
+                "west": "region_40_240_n85_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_118_0",
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "x": -83,
+            "y": 118,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n83_117_0",
+                "south": "region_40_240_n83_119_0",
+                "east": "region_40_240_n82_118_0",
+                "west": "region_40_240_n84_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_118_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -82,
+            "y": 118,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n82_117_0",
+                "south": "region_40_240_n82_119_0",
+                "east": "region_40_240_n81_118_0",
+                "west": "region_40_240_n83_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_118_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -81,
+            "y": 118,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n81_117_0",
+                "south": "region_40_240_n81_119_0",
+                "east": "region_40_240_n80_118_0",
+                "west": "region_40_240_n82_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_118_0",
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "x": -80,
+            "y": 118,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n80_117_0",
+                "south": "region_40_240_n80_119_0",
+                "east": "region_40_240_n79_118_0",
+                "west": "region_40_240_n81_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_118_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -79,
+            "y": 118,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n79_117_0",
+                "south": "region_40_240_n79_119_0",
+                "east": "region_40_240_n78_118_0",
+                "west": "region_40_240_n80_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_118_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -78,
+            "y": 118,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n78_117_0",
+                "south": "region_40_240_n78_119_0",
+                "east": "region_40_240_n77_118_0",
+                "west": "region_40_240_n79_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_118_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -77,
+            "y": 118,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n77_117_0",
+                "south": "region_40_240_n77_119_0",
+                "east": "region_40_240_n76_118_0",
+                "west": "region_40_240_n78_118_0"
+            },
+            "monsters": [
+                "leech"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_118_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -76,
+            "y": 118,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n76_117_0",
+                "south": "region_40_240_n76_119_0",
+                "east": "region_40_240_n75_118_0",
+                "west": "region_40_240_n77_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_118_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -75,
+            "y": 118,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n75_117_0",
+                "south": "region_40_240_n75_119_3",
+                "east": "region_40_240_n74_118_3",
+                "west": "region_40_240_n76_118_0"
+            },
+            "monsters": [
+                "leech"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_118_3",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "x": -74,
+            "y": 118,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n74_117_0",
+                "south": "region_40_240_n74_119_3",
+                "east": "region_40_240_n73_118_2",
+                "west": "region_40_240_n75_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_118_2",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "x": -73,
+            "y": 118,
+            "z": 2,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n73_117_3",
+                "west": "region_40_240_n74_118_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_118_4",
+            "name": "Peak",
+            "description": "Snow clings to the jagged rock.",
+            "x": -72,
+            "y": 118,
+            "z": 4,
+            "terrain": "peak",
+            "exits": {
+                "north": "region_40_240_n72_117_3",
+                "south": "region_40_240_n72_119_3",
+                "east": "region_40_240_n71_118_3",
+                "west": "region_40_240_n73_118_2"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_118_3",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "x": -71,
+            "y": 118,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "south": "region_40_240_n71_119_3",
+                "east": "region_40_240_n70_118_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_118_3",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "x": -70,
+            "y": 118,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n70_117_3",
+                "south": "region_40_240_n70_119_0",
+                "east": "region_40_240_n69_118_0",
+                "west": "region_40_240_n71_118_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_118_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -69,
+            "y": 118,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n69_117_0",
+                "south": "region_40_240_n69_119_0",
+                "east": "region_40_240_n68_118_0",
+                "west": "region_40_240_n70_118_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_118_0",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "x": -68,
+            "y": 118,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n68_117_0",
+                "south": "region_40_240_n68_119_0",
+                "east": "region_40_240_n67_118_0",
+                "west": "region_40_240_n69_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_118_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -67,
+            "y": 118,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n67_117_0",
+                "south": "region_40_240_n67_119_0",
+                "east": "region_40_240_n66_118_0",
+                "west": "region_40_240_n68_118_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_118_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -66,
+            "y": 118,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n66_117_0",
+                "south": "region_40_240_n66_119_0",
+                "east": "region_60_240_n65_118_0",
+                "west": "region_40_240_n67_118_0"
+            },
+            "monsters": [
+                "bear"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n85_119_0",
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "x": -85,
+            "y": 119,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n85_118_0",
+                "east": "region_40_240_n84_119_0",
+                "west": "region_20_240_n86_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_119_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -84,
+            "y": 119,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n84_118_0",
+                "east": "region_40_240_n83_119_0",
+                "west": "region_40_240_n85_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_119_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -83,
+            "y": 119,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n83_118_0",
+                "east": "region_40_240_n82_119_0",
+                "west": "region_40_240_n84_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_119_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -82,
+            "y": 119,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n82_118_0",
+                "east": "region_40_240_n81_119_0",
+                "west": "region_40_240_n83_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_119_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -81,
+            "y": 119,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n81_118_0",
+                "east": "region_40_240_n80_119_0",
+                "west": "region_40_240_n82_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_119_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -80,
+            "y": 119,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n80_118_0",
+                "east": "region_40_240_n79_119_0",
+                "west": "region_40_240_n81_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_119_0",
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "x": -79,
+            "y": 119,
+            "z": 0,
+            "terrain": "water",
+            "exits": {
+                "north": "region_40_240_n79_118_0",
+                "east": "region_40_240_n78_119_0",
+                "west": "region_40_240_n80_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_119_0",
+            "name": "Swamp",
+            "description": "Insects buzz in the humid air.",
+            "x": -78,
+            "y": 119,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n78_118_0",
+                "east": "region_40_240_n77_119_0",
+                "west": "region_40_240_n79_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_119_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -77,
+            "y": 119,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n77_118_0",
+                "east": "region_40_240_n76_119_0",
+                "west": "region_40_240_n78_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_119_0",
+            "name": "Swamp",
+            "description": "The ground squelches beneath your feet.",
+            "x": -76,
+            "y": 119,
+            "z": 0,
+            "terrain": "swamp",
+            "exits": {
+                "north": "region_40_240_n76_118_0",
+                "east": "region_40_240_n75_119_3",
+                "west": "region_40_240_n77_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_119_3",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "x": -75,
+            "y": 119,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n75_118_0",
+                "east": "region_40_240_n74_119_3",
+                "west": "region_40_240_n76_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_119_3",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "x": -74,
+            "y": 119,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n74_118_3",
+                "west": "region_40_240_n75_119_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_119_5",
+            "name": "Peak",
+            "description": "The wind howls violently at this altitude.",
+            "x": -73,
+            "y": 119,
+            "z": 5,
+            "terrain": "peak",
+            "exits": {
+                "north": "region_40_240_n73_118_2",
+                "east": "region_40_240_n72_119_3",
+                "west": "region_40_240_n74_119_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_119_3",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "x": -72,
+            "y": 119,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "east": "region_40_240_n71_119_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_119_3",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "x": -71,
+            "y": 119,
+            "z": 3,
+            "terrain": "mountain",
+            "exits": {
+                "north": "region_40_240_n71_118_3",
+                "east": "region_40_240_n70_119_0",
+                "west": "region_40_240_n72_119_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_119_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -70,
+            "y": 119,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n70_118_3",
+                "east": "region_40_240_n69_119_0",
+                "west": "region_40_240_n71_119_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_119_0",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "x": -69,
+            "y": 119,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n69_118_0",
+                "east": "region_40_240_n68_119_0",
+                "west": "region_40_240_n70_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_119_0",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "x": -68,
+            "y": 119,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n68_118_0",
+                "east": "region_40_240_n67_119_0",
+                "west": "region_40_240_n69_119_0"
+            },
+            "monsters": [
+                "wild_boar"
+            ],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_119_0",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "x": -67,
+            "y": 119,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n67_118_0",
+                "east": "region_40_240_n66_119_0",
+                "west": "region_40_240_n68_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_119_0",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "x": -66,
+            "y": 119,
+            "z": 0,
+            "terrain": "forest",
+            "exits": {
+                "north": "region_40_240_n66_118_0",
+                "east": "region_60_240_n65_119_0",
+                "west": "region_40_240_n67_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n85_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -85,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n85_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_120_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -84,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n84_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_120_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -83,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n83_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -82,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n82_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -81,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n81_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_120_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -80,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n80_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -79,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n79_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_120_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -78,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n78_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_120_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -77,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n77_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -76,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n76_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_120_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -75,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n75_119_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -74,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n74_119_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -73,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -72,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n72_119_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_120_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -71,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n71_119_3"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -70,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n70_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -69,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n69_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_120_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -68,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n68_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_120_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -67,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n67_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_120_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -66,
+            "y": 120,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {
+                "north": "region_40_240_n66_119_0"
+            },
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n85_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -85,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_121_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -84,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_121_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -83,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -82,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -81,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -80,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -79,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_121_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -78,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -77,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_121_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -76,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -75,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -74,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_121_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -73,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -72,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -71,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -70,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -69,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_121_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -68,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_121_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -67,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_121_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -66,
+            "y": 121,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n85_122_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -85,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -84,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_122_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -83,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_122_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -82,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -81,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -80,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -79,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_122_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -78,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -77,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -76,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_122_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -75,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -74,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_122_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -73,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -72,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_122_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -71,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_122_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -70,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -69,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -68,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_122_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -67,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_122_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -66,
+            "y": 122,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n85_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -85,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_123_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -84,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -83,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -82,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -81,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -80,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -79,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -78,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -77,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -76,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_123_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -75,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_123_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -74,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -73,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_123_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -72,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_123_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -71,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_123_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -70,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_123_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -69,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_123_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -68,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_123_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -67,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_123_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -66,
+            "y": 123,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n85_124_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -85,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n84_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -84,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n83_124_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -83,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n82_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -82,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n81_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -81,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n80_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -80,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n79_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -79,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n78_124_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -78,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n77_124_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -77,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n76_124_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -76,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n75_124_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -75,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n74_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -74,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n73_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -73,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n72_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -72,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n71_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -71,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n70_124_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -70,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n69_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -69,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n68_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -68,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n67_124_0",
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -67,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        },
+        {
+            "id": "region_40_240_n66_124_0",
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "x": -66,
+            "y": 124,
+            "z": 0,
+            "terrain": "deep_water",
+            "exits": {},
+            "monsters": [],
+            "items": [],
+            "zone_id": "region_40_240"
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+{
+    "effects": [
+        {
+            "id": "mental_strain",
+            "name": "Mental Strain",
+            "blocks": ["magic"]
+        },
+        {
+            "id": "reinforce_armor",
+            "name": "Reinforced Armor",
+            "modifiers": {"defense_add": 5}
+        },
+        {
+            "id": "berserk_rage",
+            "name": "Berserker Rage",
+            "modifiers": {"str_mult": 1.2, "defense_mult": 0.8}
+        },
+        {
+            "id": "undying",
+            "name": "Undying Rage",
+            "blocks": ["death"]
+        },
+        {
+            "id": "stone_skin",
+            "name": "Stone Skin",
+            "modifiers": {"defense_add": 15}
+        },
+        {
+            "id": "stun",
+            "name": "Stunned",
+            "blocks": ["movement", "action", "combat"]
+        },
+        {
+            "id": "tiger_stance",
+            "name": "Tiger Stance",
+            "group": "stance",
+            "modifiers": {"str_mult": 1.2, "dex_mult": 1.1}
+        },
+        {
+            "id": "crane_stance",
+            "name": "Crane Stance",
+            "group": "stance",
+            "modifiers": {"defense_add": 10, "wis_mult": 1.2}
+        },
+        {
+            "id": "bleed",
+            "name": "Bleeding",
+            "dot": {"damage": 5, "type": "physical"}
+        }
+    ]
+}

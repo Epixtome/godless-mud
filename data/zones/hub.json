@@ -1,0 +1,2186 @@
+{
+    "zones": [
+        {
+            "id": "hub",
+            "name": "The Shard Crater",
+            "security_level": "danger"
+        }
+    ],
+    "rooms": [
+        {
+            "id": "hub_n5_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_n5_n4_0",
+                "east": "hub_n4_n5_0",
+                "north": "region_120_100_n5_n6_1",
+                "west": "region_100_120_n6_n5_1"
+            },
+            "x": -5,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n5_n5_0",
+                "south": "hub_n5_n3_0",
+                "east": "hub_n4_n4_0",
+                "west": "region_100_120_n6_n4_1"
+            },
+            "x": -5,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n5_n4_0",
+                "south": "hub_n5_n2_0",
+                "east": "hub_n4_n3_0",
+                "west": "region_100_120_n6_n3_1"
+            },
+            "x": -5,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n5_n3_0",
+                "south": "hub_n5_n1_0",
+                "east": "hub_n4_n2_0",
+                "west": "region_100_120_n6_n2_1"
+            },
+            "x": -5,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n5_n2_0",
+                "south": "hub_n5_0_0",
+                "east": "hub_n4_n1_0",
+                "west": "region_100_120_n6_n1_1"
+            },
+            "x": -5,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_n5_n1_0",
+                "south": "hub_n5_1_0",
+                "east": "hub_n4_0_0"
+            },
+            "x": -5,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n5_0_0",
+                "south": "hub_n5_2_0",
+                "east": "hub_n4_1_0",
+                "west": "region_100_120_n6_1_1"
+            },
+            "x": -5,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n5_1_0",
+                "south": "hub_n5_3_0",
+                "east": "hub_n4_2_0",
+                "west": "region_100_120_n6_2_1"
+            },
+            "x": -5,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n5_2_0",
+                "south": "hub_n5_4_0",
+                "east": "hub_n4_3_0",
+                "west": "region_100_120_n6_3_1"
+            },
+            "x": -5,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n5_3_0",
+                "south": "hub_n5_5_0",
+                "east": "hub_n4_4_0",
+                "west": "region_100_120_n6_4_1"
+            },
+            "x": -5,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n5_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n5_4_0",
+                "east": "hub_n4_5_0",
+                "south": "region_120_120_n5_6_1",
+                "west": "region_100_120_n6_5_1"
+            },
+            "x": -5,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_n4_n4_0",
+                "east": "hub_n3_n5_0",
+                "west": "hub_n5_n5_0",
+                "north": "region_120_100_n4_n6_1"
+            },
+            "x": -4,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n4_n5_0",
+                "south": "hub_n4_n3_0",
+                "east": "hub_n3_n4_0",
+                "west": "hub_n5_n4_0"
+            },
+            "x": -4,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n4_n4_0",
+                "south": "hub_n4_n2_0",
+                "east": "hub_n3_n3_0",
+                "west": "hub_n5_n3_0"
+            },
+            "x": -4,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n4_n3_0",
+                "south": "hub_n4_n1_0",
+                "east": "hub_n3_n2_0",
+                "west": "hub_n5_n2_0"
+            },
+            "x": -4,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n4_n2_0",
+                "south": "hub_n4_0_0",
+                "east": "hub_n3_n1_0",
+                "west": "hub_n5_n1_0"
+            },
+            "x": -4,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_n4_n1_0",
+                "south": "hub_n4_1_0",
+                "east": "hub_n3_0_0",
+                "west": "hub_n5_0_0"
+            },
+            "x": -4,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n4_0_0",
+                "south": "hub_n4_2_0",
+                "east": "hub_n3_1_0",
+                "west": "hub_n5_1_0"
+            },
+            "x": -4,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n4_1_0",
+                "south": "hub_n4_3_0",
+                "east": "hub_n3_2_0",
+                "west": "hub_n5_2_0"
+            },
+            "x": -4,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n4_2_0",
+                "south": "hub_n4_4_0",
+                "east": "hub_n3_3_0",
+                "west": "hub_n5_3_0"
+            },
+            "x": -4,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n4_3_0",
+                "south": "hub_n4_5_0",
+                "east": "hub_n3_4_0",
+                "west": "hub_n5_4_0"
+            },
+            "x": -4,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n4_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n4_4_0",
+                "east": "hub_n3_5_0",
+                "west": "hub_n5_5_0",
+                "south": "region_120_120_n4_6_1"
+            },
+            "x": -4,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_n3_n4_0",
+                "east": "hub_n2_n5_0",
+                "west": "hub_n4_n5_0",
+                "north": "region_120_100_n3_n6_1"
+            },
+            "x": -3,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n3_n5_0",
+                "south": "hub_n3_n3_0",
+                "east": "hub_n2_n4_0",
+                "west": "hub_n4_n4_0"
+            },
+            "x": -3,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n3_n4_0",
+                "south": "hub_n3_n2_0",
+                "east": "hub_n2_n3_0",
+                "west": "hub_n4_n3_0"
+            },
+            "x": -3,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n3_n3_0",
+                "south": "hub_n3_n1_0",
+                "east": "hub_n2_n2_0",
+                "west": "hub_n4_n2_0"
+            },
+            "x": -3,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n3_n2_0",
+                "south": "hub_n3_0_0",
+                "east": "hub_n2_n1_0",
+                "west": "hub_n4_n1_0"
+            },
+            "x": -3,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_n3_n1_0",
+                "south": "hub_n3_1_0",
+                "east": "hub_n2_0_0",
+                "west": "hub_n4_0_0"
+            },
+            "x": -3,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n3_0_0",
+                "south": "hub_n3_2_0",
+                "east": "hub_n2_1_0",
+                "west": "hub_n4_1_0"
+            },
+            "x": -3,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n3_1_0",
+                "south": "hub_n3_3_0",
+                "east": "hub_n2_2_0",
+                "west": "hub_n4_2_0"
+            },
+            "x": -3,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n3_2_0",
+                "south": "hub_n3_4_0",
+                "east": "hub_n2_3_0",
+                "west": "hub_n4_3_0"
+            },
+            "x": -3,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n3_3_0",
+                "south": "hub_n3_5_0",
+                "east": "hub_n2_4_0",
+                "west": "hub_n4_4_0"
+            },
+            "x": -3,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n3_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n3_4_0",
+                "east": "hub_n2_5_0",
+                "west": "hub_n4_5_0",
+                "south": "region_120_120_n3_6_1"
+            },
+            "x": -3,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_n2_n4_0",
+                "east": "hub_n1_n5_0",
+                "west": "hub_n3_n5_0",
+                "north": "region_120_100_n2_n6_1"
+            },
+            "x": -2,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n2_n5_0",
+                "south": "hub_n2_n3_0",
+                "east": "hub_n1_n4_0",
+                "west": "hub_n3_n4_0"
+            },
+            "x": -2,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n2_n4_0",
+                "south": "hub_n2_n2_0",
+                "east": "hub_n1_n3_0",
+                "west": "hub_n3_n3_0"
+            },
+            "x": -2,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n2_n3_0",
+                "south": "hub_n2_n1_0",
+                "east": "hub_n1_n2_0",
+                "west": "hub_n3_n2_0"
+            },
+            "x": -2,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n2_n2_0",
+                "south": "hub_n2_0_0",
+                "east": "hub_n1_n1_0",
+                "west": "hub_n3_n1_0"
+            },
+            "x": -2,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_n2_n1_0",
+                "south": "hub_n2_1_0",
+                "east": "hub_n1_0_0",
+                "west": "hub_n3_0_0"
+            },
+            "x": -2,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n2_0_0",
+                "south": "hub_n2_2_0",
+                "east": "hub_n1_1_0",
+                "west": "hub_n3_1_0"
+            },
+            "x": -2,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n2_1_0",
+                "south": "hub_n2_3_0",
+                "east": "hub_n1_2_0",
+                "west": "hub_n3_2_0"
+            },
+            "x": -2,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n2_2_0",
+                "south": "hub_n2_4_0",
+                "east": "hub_n1_3_0",
+                "west": "hub_n3_3_0"
+            },
+            "x": -2,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n2_3_0",
+                "south": "hub_n2_5_0",
+                "east": "hub_n1_4_0",
+                "west": "hub_n3_4_0"
+            },
+            "x": -2,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n2_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n2_4_0",
+                "east": "hub_n1_5_0",
+                "west": "hub_n3_5_0",
+                "south": "region_120_120_n2_6_1"
+            },
+            "x": -2,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_n1_n4_0",
+                "east": "hub_0_n5_0",
+                "west": "hub_n2_n5_0",
+                "north": "region_120_100_n1_n6_1"
+            },
+            "x": -1,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n1_n5_0",
+                "south": "hub_n1_n3_0",
+                "east": "hub_0_n4_0",
+                "west": "hub_n2_n4_0"
+            },
+            "x": -1,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n1_n4_0",
+                "south": "hub_n1_n2_0",
+                "east": "hub_0_n3_0",
+                "west": "hub_n2_n3_0"
+            },
+            "x": -1,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n1_n3_0",
+                "south": "hub_n1_n1_0",
+                "east": "hub_0_n2_0",
+                "west": "hub_n2_n2_0"
+            },
+            "x": -1,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n1_n2_0",
+                "south": "hub_n1_0_0",
+                "east": "hub_0_n1_0",
+                "west": "hub_n2_n1_0"
+            },
+            "x": -1,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_n1_n1_0",
+                "south": "hub_n1_1_0",
+                "east": "hub_0_0_0",
+                "west": "hub_n2_0_0"
+            },
+            "x": -1,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n1_0_0",
+                "south": "hub_n1_2_0",
+                "east": "hub_0_1_0",
+                "west": "hub_n2_1_0"
+            },
+            "x": -1,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n1_1_0",
+                "south": "hub_n1_3_0",
+                "east": "hub_0_2_0",
+                "west": "hub_n2_2_0"
+            },
+            "x": -1,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n1_2_0",
+                "south": "hub_n1_4_0",
+                "east": "hub_0_3_0",
+                "west": "hub_n2_3_0"
+            },
+            "x": -1,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n1_3_0",
+                "south": "hub_n1_5_0",
+                "east": "hub_0_4_0",
+                "west": "hub_n2_4_0"
+            },
+            "x": -1,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_n1_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_n1_4_0",
+                "east": "hub_0_5_0",
+                "west": "hub_n2_5_0",
+                "south": "region_120_120_n1_6_1"
+            },
+            "x": -1,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_n5_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "south": "hub_0_n4_0",
+                "east": "hub_1_n5_0",
+                "west": "hub_n1_n5_0"
+            },
+            "x": 0,
+            "y": -5,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_n4_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "north": "hub_0_n5_0",
+                "south": "hub_0_n3_0",
+                "east": "hub_1_n4_0",
+                "west": "hub_n1_n4_0"
+            },
+            "x": 0,
+            "y": -4,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_n3_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "north": "hub_0_n4_0",
+                "south": "hub_0_n2_0",
+                "east": "hub_1_n3_0",
+                "west": "hub_n1_n3_0"
+            },
+            "x": 0,
+            "y": -3,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_n2_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "north": "hub_0_n3_0",
+                "south": "hub_0_n1_0",
+                "east": "hub_1_n2_0",
+                "west": "hub_n1_n2_0"
+            },
+            "x": 0,
+            "y": -2,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_n1_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "north": "hub_0_n2_0",
+                "south": "hub_0_0_0",
+                "east": "hub_1_n1_0",
+                "west": "hub_n1_n1_0"
+            },
+            "x": 0,
+            "y": -1,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_0_0",
+            "zone_id": "hub",
+            "name": "Shard Zero",
+            "description": "A massive impact crater dominates the landscape. In the center, a jagged shard of void crystal floats silently, distorting the light around it.",
+            "exits": {
+                "north": "hub_0_n1_0",
+                "south": "hub_0_1_0",
+                "east": "hub_1_0_0",
+                "west": "hub_n1_0_0"
+            },
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_1_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "north": "hub_0_0_0",
+                "south": "hub_0_2_0",
+                "east": "hub_1_1_0",
+                "west": "hub_n1_1_0"
+            },
+            "x": 0,
+            "y": 1,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_2_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "north": "hub_0_1_0",
+                "south": "hub_0_3_0",
+                "east": "hub_1_2_0",
+                "west": "hub_n1_2_0"
+            },
+            "x": 0,
+            "y": 2,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_3_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "north": "hub_0_2_0",
+                "south": "hub_0_4_0",
+                "east": "hub_1_3_0",
+                "west": "hub_n1_3_0"
+            },
+            "x": 0,
+            "y": 3,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_4_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "north": "hub_0_3_0",
+                "south": "hub_0_5_0",
+                "east": "hub_1_4_0",
+                "west": "hub_n1_4_0"
+            },
+            "x": 0,
+            "y": 4,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_0_5_0",
+            "zone_id": "hub",
+            "name": "The Glassway",
+            "description": "The ground here has been fused into slick, black glass by intense heat. Reflections in the surface seem to move on their own.",
+            "exits": {
+                "north": "hub_0_4_0",
+                "east": "hub_1_5_0",
+                "west": "hub_n1_5_0",
+                "south": "region_120_120_0_6_1"
+            },
+            "x": 0,
+            "y": 5,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_1_n4_0",
+                "east": "hub_2_n5_0",
+                "west": "hub_0_n5_0",
+                "north": "region_120_100_1_n6_1"
+            },
+            "x": 1,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_1_n5_0",
+                "south": "hub_1_n3_0",
+                "east": "hub_2_n4_0",
+                "west": "hub_0_n4_0"
+            },
+            "x": 1,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_1_n4_0",
+                "south": "hub_1_n2_0",
+                "east": "hub_2_n3_0",
+                "west": "hub_0_n3_0"
+            },
+            "x": 1,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_1_n3_0",
+                "south": "hub_1_n1_0",
+                "east": "hub_2_n2_0",
+                "west": "hub_0_n2_0"
+            },
+            "x": 1,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_1_n2_0",
+                "south": "hub_1_0_0",
+                "east": "hub_2_n1_0",
+                "west": "hub_0_n1_0"
+            },
+            "x": 1,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_1_n1_0",
+                "south": "hub_1_1_0",
+                "east": "hub_2_0_0",
+                "west": "hub_0_0_0"
+            },
+            "x": 1,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_1_0_0",
+                "south": "hub_1_2_0",
+                "east": "hub_2_1_0",
+                "west": "hub_0_1_0"
+            },
+            "x": 1,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_1_1_0",
+                "south": "hub_1_3_0",
+                "east": "hub_2_2_0",
+                "west": "hub_0_2_0"
+            },
+            "x": 1,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_1_2_0",
+                "south": "hub_1_4_0",
+                "east": "hub_2_3_0",
+                "west": "hub_0_3_0"
+            },
+            "x": 1,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_1_3_0",
+                "south": "hub_1_5_0",
+                "east": "hub_2_4_0",
+                "west": "hub_0_4_0"
+            },
+            "x": 1,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_1_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_1_4_0",
+                "east": "hub_2_5_0",
+                "west": "hub_0_5_0",
+                "south": "region_120_120_1_6_1"
+            },
+            "x": 1,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_2_n4_0",
+                "east": "hub_3_n5_0",
+                "west": "hub_1_n5_0",
+                "north": "region_120_100_2_n6_1"
+            },
+            "x": 2,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_2_n5_0",
+                "south": "hub_2_n3_0",
+                "east": "hub_3_n4_0",
+                "west": "hub_1_n4_0"
+            },
+            "x": 2,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_2_n4_0",
+                "south": "hub_2_n2_0",
+                "east": "hub_3_n3_0",
+                "west": "hub_1_n3_0"
+            },
+            "x": 2,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_2_n3_0",
+                "south": "hub_2_n1_0",
+                "east": "hub_3_n2_0",
+                "west": "hub_1_n2_0"
+            },
+            "x": 2,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_2_n2_0",
+                "south": "hub_2_0_0",
+                "east": "hub_3_n1_0",
+                "west": "hub_1_n1_0"
+            },
+            "x": 2,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_2_n1_0",
+                "south": "hub_2_1_0",
+                "east": "hub_3_0_0",
+                "west": "hub_1_0_0"
+            },
+            "x": 2,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_2_0_0",
+                "south": "hub_2_2_0",
+                "east": "hub_3_1_0",
+                "west": "hub_1_1_0"
+            },
+            "x": 2,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_2_1_0",
+                "south": "hub_2_3_0",
+                "east": "hub_3_2_0",
+                "west": "hub_1_2_0"
+            },
+            "x": 2,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_2_2_0",
+                "south": "hub_2_4_0",
+                "east": "hub_3_3_0",
+                "west": "hub_1_3_0"
+            },
+            "x": 2,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_2_3_0",
+                "south": "hub_2_5_0",
+                "east": "hub_3_4_0",
+                "west": "hub_1_4_0"
+            },
+            "x": 2,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_2_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_2_4_0",
+                "east": "hub_3_5_0",
+                "west": "hub_1_5_0",
+                "south": "region_120_120_2_6_1"
+            },
+            "x": 2,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_3_n4_0",
+                "east": "hub_4_n5_0",
+                "west": "hub_2_n5_0",
+                "north": "region_120_100_3_n6_1"
+            },
+            "x": 3,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_3_n5_0",
+                "south": "hub_3_n3_0",
+                "east": "hub_4_n4_0",
+                "west": "hub_2_n4_0"
+            },
+            "x": 3,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_3_n4_0",
+                "south": "hub_3_n2_0",
+                "east": "hub_4_n3_0",
+                "west": "hub_2_n3_0"
+            },
+            "x": 3,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_3_n3_0",
+                "south": "hub_3_n1_0",
+                "east": "hub_4_n2_0",
+                "west": "hub_2_n2_0"
+            },
+            "x": 3,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_3_n2_0",
+                "south": "hub_3_0_0",
+                "east": "hub_4_n1_0",
+                "west": "hub_2_n1_0"
+            },
+            "x": 3,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_3_n1_0",
+                "south": "hub_3_1_0",
+                "east": "hub_4_0_0",
+                "west": "hub_2_0_0"
+            },
+            "x": 3,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_3_0_0",
+                "south": "hub_3_2_0",
+                "east": "hub_4_1_0",
+                "west": "hub_2_1_0"
+            },
+            "x": 3,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_3_1_0",
+                "south": "hub_3_3_0",
+                "east": "hub_4_2_0",
+                "west": "hub_2_2_0"
+            },
+            "x": 3,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_3_2_0",
+                "south": "hub_3_4_0",
+                "east": "hub_4_3_0",
+                "west": "hub_2_3_0"
+            },
+            "x": 3,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_3_3_0",
+                "south": "hub_3_5_0",
+                "east": "hub_4_4_0",
+                "west": "hub_2_4_0"
+            },
+            "x": 3,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_3_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_3_4_0",
+                "east": "hub_4_5_0",
+                "west": "hub_2_5_0",
+                "south": "region_120_120_3_6_1"
+            },
+            "x": 3,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_4_n4_0",
+                "east": "hub_5_n5_0",
+                "west": "hub_3_n5_0",
+                "north": "region_120_100_4_n6_1"
+            },
+            "x": 4,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_4_n5_0",
+                "south": "hub_4_n3_0",
+                "east": "hub_5_n4_0",
+                "west": "hub_3_n4_0"
+            },
+            "x": 4,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_4_n4_0",
+                "south": "hub_4_n2_0",
+                "east": "hub_5_n3_0",
+                "west": "hub_3_n3_0"
+            },
+            "x": 4,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_4_n3_0",
+                "south": "hub_4_n1_0",
+                "east": "hub_5_n2_0",
+                "west": "hub_3_n2_0"
+            },
+            "x": 4,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_4_n2_0",
+                "south": "hub_4_0_0",
+                "east": "hub_5_n1_0",
+                "west": "hub_3_n1_0"
+            },
+            "x": 4,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_4_n1_0",
+                "south": "hub_4_1_0",
+                "east": "hub_5_0_0",
+                "west": "hub_3_0_0"
+            },
+            "x": 4,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_4_0_0",
+                "south": "hub_4_2_0",
+                "east": "hub_5_1_0",
+                "west": "hub_3_1_0"
+            },
+            "x": 4,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_4_1_0",
+                "south": "hub_4_3_0",
+                "east": "hub_5_2_0",
+                "west": "hub_3_2_0"
+            },
+            "x": 4,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_4_2_0",
+                "south": "hub_4_4_0",
+                "east": "hub_5_3_0",
+                "west": "hub_3_3_0"
+            },
+            "x": 4,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_4_3_0",
+                "south": "hub_4_5_0",
+                "east": "hub_5_4_0",
+                "west": "hub_3_4_0"
+            },
+            "x": 4,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_4_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_4_4_0",
+                "east": "hub_5_5_0",
+                "west": "hub_3_5_0",
+                "south": "region_120_120_4_6_1"
+            },
+            "x": 4,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_n5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "south": "hub_5_n4_0",
+                "west": "hub_4_n5_0",
+                "north": "region_120_100_5_n6_1",
+                "east": "region_120_120_6_n5_1"
+            },
+            "x": 5,
+            "y": -5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_n4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_5_n5_0",
+                "south": "hub_5_n3_0",
+                "west": "hub_4_n4_0",
+                "east": "region_120_120_6_n4_1"
+            },
+            "x": 5,
+            "y": -4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_n3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_5_n4_0",
+                "south": "hub_5_n2_0",
+                "west": "hub_4_n3_0",
+                "east": "region_120_120_6_n3_1"
+            },
+            "x": 5,
+            "y": -3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_n2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_5_n3_0",
+                "south": "hub_5_n1_0",
+                "west": "hub_4_n2_0",
+                "east": "region_120_120_6_n2_1"
+            },
+            "x": 5,
+            "y": -2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_n1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_5_n2_0",
+                "south": "hub_5_0_0",
+                "west": "hub_4_n1_0",
+                "east": "region_120_120_6_n1_1"
+            },
+            "x": 5,
+            "y": -1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_0_0",
+            "zone_id": "hub",
+            "name": "Ash Road",
+            "description": "Thick grey ash covers the ancient stones. The wind howls through the ruins, carrying the scent of ozone.",
+            "exits": {
+                "north": "hub_5_n1_0",
+                "south": "hub_5_1_0",
+                "west": "hub_4_0_0"
+            },
+            "x": 5,
+            "y": 0,
+            "z": 0,
+            "terrain": "wasteland",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_1_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_5_0_0",
+                "south": "hub_5_2_0",
+                "west": "hub_4_1_0",
+                "east": "region_120_120_6_1_1"
+            },
+            "x": 5,
+            "y": 1,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_2_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_5_1_0",
+                "south": "hub_5_3_0",
+                "west": "hub_4_2_0",
+                "east": "region_120_120_6_2_1"
+            },
+            "x": 5,
+            "y": 2,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_3_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_5_2_0",
+                "south": "hub_5_4_0",
+                "west": "hub_4_3_0",
+                "east": "region_120_120_6_3_1"
+            },
+            "x": 5,
+            "y": 3,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_4_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_5_3_0",
+                "south": "hub_5_5_0",
+                "west": "hub_4_4_0",
+                "east": "region_120_120_6_4_1"
+            },
+            "x": 5,
+            "y": 4,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "hub_5_5_0",
+            "zone_id": "hub",
+            "name": "Ruined Sector",
+            "description": "Crumbling walls and twisted metal are all that remain of the old world here. Shadows cling to the debris.",
+            "exits": {
+                "north": "hub_5_4_0",
+                "west": "hub_4_5_0",
+                "south": "region_120_120_5_6_1",
+                "east": "region_120_120_6_5_1"
+            },
+            "x": 5,
+            "y": 5,
+            "z": 0,
+            "terrain": "ruins",
+            "opacity": 0,
+            "traversal_cost": 1
+        }
+    ]
+}

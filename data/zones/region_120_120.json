@@ -1,0 +1,5096 @@
+{
+    "zones": [
+        {
+            "id": "region_120_120",
+            "name": "The Elder Woods",
+            "security_level": "null_sec"
+        }
+    ],
+    "rooms": [
+        {
+            "id": "region_120_120_6_n5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_100_6_n6_1",
+                "south": "region_120_120_6_n4_1",
+                "east": "region_120_120_7_n5_1",
+                "west": "hub_5_n5_0"
+            },
+            "x": 6,
+            "y": -5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "id": "region_120_120_7_n5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_100_7_n6_1",
+                "south": "region_120_120_7_n4_1",
+                "east": "region_120_120_8_n5_1",
+                "west": "region_120_120_6_n5_1"
+            },
+            "x": 7,
+            "y": -5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "id": "region_120_120_8_n5_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "north": "region_120_100_8_n6_1",
+                "south": "region_120_120_8_n4_1",
+                "east": "region_120_120_9_n5_3",
+                "west": "region_120_120_7_n5_1"
+            },
+            "x": 8,
+            "y": -5,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "id": "region_120_120_9_n5_3",
+            "zone_id": "region_120_120",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "exits": {
+                "north": "region_120_100_9_n6_3",
+                "south": "region_120_120_9_n4_1",
+                "east": "region_120_120_10_n5_2",
+                "west": "region_120_120_8_n5_1"
+            },
+            "x": 9,
+            "y": -5,
+            "z": 3,
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_n5_2",
+            "zone_id": "region_120_120",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "exits": {
+                "north": "region_120_100_10_n6_2",
+                "south": "region_120_120_10_n4_1",
+                "east": "region_120_120_11_n5_2",
+                "west": "region_120_120_9_n5_3"
+            },
+            "x": 10,
+            "y": -5,
+            "z": 2,
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_n5_2",
+            "zone_id": "region_120_120",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "exits": {
+                "north": "region_120_100_11_n6_3",
+                "south": "region_120_120_11_n4_3",
+                "east": "region_120_120_12_n5_2",
+                "west": "region_120_120_10_n5_2"
+            },
+            "x": 11,
+            "y": -5,
+            "z": 2,
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_n5_2",
+            "zone_id": "region_120_120",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "exits": {
+                "north": "region_120_100_12_n6_2",
+                "south": "region_120_120_12_n4_3",
+                "east": "region_120_120_13_n5_3",
+                "west": "region_120_120_11_n5_2"
+            },
+            "x": 12,
+            "y": -5,
+            "z": 2,
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_n5_3",
+            "zone_id": "region_120_120",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "exits": {
+                "north": "region_120_100_13_n6_3",
+                "south": "region_120_120_13_n4_1",
+                "east": "region_120_120_14_n5_2",
+                "west": "region_120_120_12_n5_2"
+            },
+            "x": 13,
+            "y": -5,
+            "z": 3,
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_n5_2",
+            "zone_id": "region_120_120",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "exits": {
+                "north": "region_120_100_14_n6_2",
+                "south": "region_120_120_14_n4_1",
+                "east": "region_140_120_15_n5_2",
+                "west": "region_120_120_13_n5_3"
+            },
+            "x": 14,
+            "y": -5,
+            "z": 2,
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_n4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_6_n5_1",
+                "south": "region_120_120_6_n3_1",
+                "east": "region_120_120_7_n4_1",
+                "west": "hub_5_n4_0"
+            },
+            "x": 6,
+            "y": -4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_n4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_n5_1",
+                "south": "region_120_120_7_n3_1",
+                "east": "region_120_120_8_n4_1",
+                "west": "region_120_120_6_n4_1"
+            },
+            "x": 7,
+            "y": -4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_n4_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "A well-traveled dirt road.",
+            "exits": {
+                "north": "region_120_120_8_n5_1",
+                "south": "region_120_120_8_n3_1",
+                "east": "region_120_120_9_n4_1",
+                "west": "region_120_120_7_n4_1"
+            },
+            "x": 8,
+            "y": -4,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_n4_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "A well-traveled dirt road.",
+            "exits": {
+                "north": "region_120_120_9_n5_3",
+                "south": "region_120_120_9_n3_1",
+                "east": "region_120_120_10_n4_1",
+                "west": "region_120_120_8_n4_1"
+            },
+            "x": 9,
+            "y": -4,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "id": "region_120_120_10_n4_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "A well-traveled dirt road.",
+            "exits": {
+                "north": "region_120_120_10_n5_2",
+                "south": "region_120_120_10_n3_1",
+                "east": "region_120_120_11_n4_3",
+                "west": "region_120_120_9_n4_1"
+            },
+            "x": 10,
+            "y": -4,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_n4_3",
+            "zone_id": "region_120_120",
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "exits": {
+                "north": "region_120_120_11_n5_2",
+                "south": "region_120_120_11_n3_1",
+                "east": "region_120_120_12_n4_3",
+                "west": "region_120_120_10_n4_1"
+            },
+            "x": 11,
+            "y": -4,
+            "z": 3,
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_n4_3",
+            "zone_id": "region_120_120",
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "exits": {
+                "north": "region_120_120_12_n5_2",
+                "south": "region_120_120_12_n3_1",
+                "east": "region_120_120_13_n4_1",
+                "west": "region_120_120_11_n4_3"
+            },
+            "x": 12,
+            "y": -4,
+            "z": 3,
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_n4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_13_n5_3",
+                "south": "region_120_120_13_n3_1",
+                "east": "region_120_120_14_n4_1",
+                "west": "region_120_120_12_n4_3"
+            },
+            "x": 13,
+            "y": -4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_n4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_14_n5_2",
+                "south": "region_120_120_14_n3_1",
+                "east": "region_140_120_15_n4_1",
+                "west": "region_120_120_13_n4_1"
+            },
+            "x": 14,
+            "y": -4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_6_n3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_6_n4_1",
+                "south": "region_120_120_6_n2_1",
+                "east": "region_120_120_7_n3_1",
+                "west": "hub_5_n3_0"
+            },
+            "x": 6,
+            "y": -3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_n3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_n4_1",
+                "south": "region_120_120_7_n2_1",
+                "east": "region_120_120_8_n3_1",
+                "west": "region_120_120_6_n3_1"
+            },
+            "x": 7,
+            "y": -3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_n3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_8_n4_1",
+                "south": "region_120_120_8_n2_1",
+                "east": "region_120_120_9_n3_1",
+                "west": "region_120_120_7_n3_1"
+            },
+            "x": 8,
+            "y": -3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_n3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_9_n4_1",
+                "south": "region_120_120_9_n2_1",
+                "east": "region_120_120_10_n3_1",
+                "west": "region_120_120_8_n3_1"
+            },
+            "x": 9,
+            "y": -3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_n3_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "north": "region_120_120_10_n4_1",
+                "south": "region_120_120_10_n2_1",
+                "east": "region_120_120_11_n3_1",
+                "west": "region_120_120_9_n3_1"
+            },
+            "x": 10,
+            "y": -3,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "id": "region_120_120_11_n3_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "north": "region_120_120_11_n4_3",
+                "south": "region_120_120_11_n2_1",
+                "east": "region_120_120_12_n3_1",
+                "west": "region_120_120_10_n3_1"
+            },
+            "x": 11,
+            "y": -3,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_12_n3_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "north": "region_120_120_12_n4_3",
+                "south": "region_120_120_12_n2_1",
+                "east": "region_120_120_13_n3_1",
+                "west": "region_120_120_11_n3_1"
+            },
+            "x": 12,
+            "y": -3,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_n3_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "north": "region_120_120_13_n4_1",
+                "south": "region_120_120_13_n2_1",
+                "east": "region_120_120_14_n3_1",
+                "west": "region_120_120_12_n3_1"
+            },
+            "x": 13,
+            "y": -3,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_n3_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "A well-traveled dirt road.",
+            "exits": {
+                "north": "region_120_120_14_n4_1",
+                "south": "region_120_120_14_n2_1",
+                "east": "region_140_120_15_n3_1",
+                "west": "region_120_120_13_n3_1"
+            },
+            "x": 14,
+            "y": -3,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_n2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_6_n3_1",
+                "south": "region_120_120_6_n1_1",
+                "east": "region_120_120_7_n2_1",
+                "west": "hub_5_n2_0"
+            },
+            "x": 6,
+            "y": -2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_n2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_n3_1",
+                "south": "region_120_120_7_n1_1",
+                "east": "region_120_120_8_n2_1",
+                "west": "region_120_120_6_n2_1"
+            },
+            "x": 7,
+            "y": -2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_n2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_8_n3_1",
+                "south": "region_120_120_8_n1_1",
+                "east": "region_120_120_9_n2_1",
+                "west": "region_120_120_7_n2_1"
+            },
+            "x": 8,
+            "y": -2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_n2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_9_n3_1",
+                "south": "region_120_120_9_n1_1",
+                "east": "region_120_120_10_n2_1",
+                "west": "region_120_120_8_n2_1"
+            },
+            "x": 9,
+            "y": -2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_n2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_10_n3_1",
+                "south": "region_120_120_10_n1_1",
+                "east": "region_120_120_11_n2_1",
+                "west": "region_120_120_9_n2_1"
+            },
+            "x": 10,
+            "y": -2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_n2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_11_n3_1",
+                "south": "region_120_120_11_n1_1",
+                "east": "region_120_120_12_n2_1",
+                "west": "region_120_120_10_n2_1"
+            },
+            "x": 11,
+            "y": -2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_n2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_n3_1",
+                "south": "region_120_120_12_n1_1",
+                "east": "region_120_120_13_n2_1",
+                "west": "region_120_120_11_n2_1"
+            },
+            "x": 12,
+            "y": -2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_n2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_13_n3_1",
+                "south": "region_120_120_13_n1_1",
+                "east": "region_120_120_14_n2_1",
+                "west": "region_120_120_12_n2_1"
+            },
+            "x": 13,
+            "y": -2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_n2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_14_n3_1",
+                "south": "region_120_120_14_n1_1",
+                "east": "region_140_120_15_n2_1",
+                "west": "region_120_120_13_n2_1"
+            },
+            "x": 14,
+            "y": -2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_n1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_6_n2_1",
+                "east": "region_120_120_7_n1_1",
+                "west": "hub_5_n1_0"
+            },
+            "x": 6,
+            "y": -1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "id": "region_120_120_7_n1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_7_n2_1",
+                "east": "region_120_120_8_n1_1",
+                "west": "region_120_120_6_n1_1"
+            },
+            "x": 7,
+            "y": -1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "id": "region_120_120_8_n1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_8_n2_1",
+                "east": "region_120_120_9_n1_1",
+                "west": "region_120_120_7_n1_1"
+            },
+            "x": 8,
+            "y": -1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_n1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_9_n2_1",
+                "east": "region_120_120_10_n1_1",
+                "west": "region_120_120_8_n1_1"
+            },
+            "x": 9,
+            "y": -1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bear",
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_10_n1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_10_n2_1",
+                "east": "region_120_120_11_n1_1",
+                "west": "region_120_120_9_n1_1"
+            },
+            "x": 10,
+            "y": -1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_n1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_11_n2_1",
+                "east": "region_120_120_12_n1_1",
+                "west": "region_120_120_10_n1_1"
+            },
+            "x": 11,
+            "y": -1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_n1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_12_n2_1",
+                "east": "region_120_120_13_n1_1",
+                "west": "region_120_120_11_n1_1"
+            },
+            "x": 12,
+            "y": -1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_13_n1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_13_n2_1",
+                "east": "region_120_120_14_n1_1",
+                "west": "region_120_120_12_n1_1"
+            },
+            "x": 13,
+            "y": -1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_n1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_14_n2_1",
+                "east": "region_140_120_15_n1_1",
+                "west": "region_120_120_13_n1_1"
+            },
+            "x": 14,
+            "y": -1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "id": "region_120_120_6_1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "south": "region_120_120_6_2_1",
+                "east": "region_120_120_7_1_1",
+                "west": "hub_5_1_0"
+            },
+            "x": 6,
+            "y": 1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "south": "region_120_120_7_2_1",
+                "east": "region_120_120_8_1_1",
+                "west": "region_120_120_6_1_1"
+            },
+            "x": 7,
+            "y": 1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "south": "region_120_120_8_2_1",
+                "east": "region_120_120_9_1_1",
+                "west": "region_120_120_7_1_1"
+            },
+            "x": 8,
+            "y": 1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_9_2_1",
+                "east": "region_120_120_10_1_1",
+                "west": "region_120_120_8_1_1"
+            },
+            "x": 9,
+            "y": 1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_10_2_1",
+                "east": "region_120_120_11_1_1",
+                "west": "region_120_120_9_1_1"
+            },
+            "x": 10,
+            "y": 1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "id": "region_120_120_11_1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_11_2_1",
+                "east": "region_120_120_12_1_1",
+                "west": "region_120_120_10_1_1"
+            },
+            "x": 11,
+            "y": 1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_12_2_1",
+                "east": "region_120_120_13_1_1",
+                "west": "region_120_120_11_1_1"
+            },
+            "x": 12,
+            "y": 1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_13_1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_13_2_1",
+                "east": "region_120_120_14_1_1",
+                "west": "region_120_120_12_1_1"
+            },
+            "x": 13,
+            "y": 1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_1_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_14_2_1",
+                "east": "region_140_120_15_1_1",
+                "west": "region_120_120_13_1_1"
+            },
+            "x": 14,
+            "y": 1,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_6_1_1",
+                "south": "region_120_120_6_3_1",
+                "east": "region_120_120_7_2_1",
+                "west": "hub_5_2_0"
+            },
+            "x": 6,
+            "y": 2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_7_2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_7_1_1",
+                "south": "region_120_120_7_3_1",
+                "east": "region_120_120_8_2_1",
+                "west": "region_120_120_6_2_1"
+            },
+            "x": 7,
+            "y": 2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_8_1_1",
+                "south": "region_120_120_8_3_1",
+                "east": "region_120_120_9_2_1",
+                "west": "region_120_120_7_2_1"
+            },
+            "x": 8,
+            "y": 2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_9_1_1",
+                "south": "region_120_120_9_3_1",
+                "east": "region_120_120_10_2_1",
+                "west": "region_120_120_8_2_1"
+            },
+            "x": 9,
+            "y": 2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_10_1_1",
+                "south": "region_120_120_10_3_1",
+                "east": "region_120_120_11_2_1",
+                "west": "region_120_120_9_2_1"
+            },
+            "x": 10,
+            "y": 2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_11_1_1",
+                "south": "region_120_120_11_3_1",
+                "east": "region_120_120_12_2_1",
+                "west": "region_120_120_10_2_1"
+            },
+            "x": 11,
+            "y": 2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_1_1",
+                "south": "region_120_120_12_3_1",
+                "east": "region_120_120_13_2_1",
+                "west": "region_120_120_11_2_1"
+            },
+            "x": 12,
+            "y": 2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_13_1_1",
+                "south": "region_120_120_13_3_1",
+                "east": "region_120_120_14_2_1",
+                "west": "region_120_120_12_2_1"
+            },
+            "x": 13,
+            "y": 2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_2_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_14_1_1",
+                "south": "region_120_120_14_3_1",
+                "east": "region_140_120_15_2_1",
+                "west": "region_120_120_13_2_1"
+            },
+            "x": 14,
+            "y": 2,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "id": "region_120_120_6_3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_6_2_1",
+                "south": "region_120_120_6_4_1",
+                "east": "region_120_120_7_3_1",
+                "west": "hub_5_3_0"
+            },
+            "x": 6,
+            "y": 3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_2_1",
+                "south": "region_120_120_7_4_1",
+                "east": "region_120_120_8_3_1",
+                "west": "region_120_120_6_3_1"
+            },
+            "x": 7,
+            "y": 3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_8_2_1",
+                "south": "region_120_120_8_4_1",
+                "east": "region_120_120_9_3_1",
+                "west": "region_120_120_7_3_1"
+            },
+            "x": 8,
+            "y": 3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_9_2_1",
+                "south": "region_120_120_9_4_1",
+                "east": "region_120_120_10_3_1",
+                "west": "region_120_120_8_3_1"
+            },
+            "x": 9,
+            "y": 3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_10_2_1",
+                "south": "region_120_120_10_4_1",
+                "east": "region_120_120_11_3_1",
+                "west": "region_120_120_9_3_1"
+            },
+            "x": 10,
+            "y": 3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_11_2_1",
+                "south": "region_120_120_11_4_1",
+                "east": "region_120_120_12_3_1",
+                "west": "region_120_120_10_3_1"
+            },
+            "x": 11,
+            "y": 3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton",
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_12_3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_2_1",
+                "south": "region_120_120_12_4_1",
+                "east": "region_120_120_13_3_1",
+                "west": "region_120_120_11_3_1"
+            },
+            "x": 12,
+            "y": 3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_13_2_1",
+                "south": "region_120_120_13_4_1",
+                "east": "region_120_120_14_3_1",
+                "west": "region_120_120_12_3_1"
+            },
+            "x": 13,
+            "y": 3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "id": "region_120_120_14_3_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_14_2_1",
+                "south": "region_120_120_14_4_1",
+                "east": "region_140_120_15_3_1",
+                "west": "region_120_120_13_3_1"
+            },
+            "x": 14,
+            "y": 3,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "id": "region_120_120_6_4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_6_3_1",
+                "south": "region_120_120_6_5_1",
+                "east": "region_120_120_7_4_1",
+                "west": "hub_5_4_0"
+            },
+            "x": 6,
+            "y": 4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_3_1",
+                "south": "region_120_120_7_5_1",
+                "east": "region_120_120_8_4_1",
+                "west": "region_120_120_6_4_1"
+            },
+            "x": 7,
+            "y": 4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_8_3_1",
+                "south": "region_120_120_8_5_1",
+                "east": "region_120_120_9_4_1",
+                "west": "region_120_120_7_4_1"
+            },
+            "x": 8,
+            "y": 4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_9_3_1",
+                "south": "region_120_120_9_5_1",
+                "east": "region_120_120_10_4_1",
+                "west": "region_120_120_8_4_1"
+            },
+            "x": 9,
+            "y": 4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_10_3_1",
+                "south": "region_120_120_10_5_1",
+                "east": "region_120_120_11_4_1",
+                "west": "region_120_120_9_4_1"
+            },
+            "x": 10,
+            "y": 4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_11_3_1",
+                "south": "region_120_120_11_5_1",
+                "east": "region_120_120_12_4_1",
+                "west": "region_120_120_10_4_1"
+            },
+            "x": 11,
+            "y": 4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "id": "region_120_120_12_4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_3_1",
+                "south": "region_120_120_12_5_1",
+                "east": "region_120_120_13_4_1",
+                "west": "region_120_120_11_4_1"
+            },
+            "x": 12,
+            "y": 4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_13_3_1",
+                "south": "region_120_120_13_5_1",
+                "east": "region_120_120_14_4_1",
+                "west": "region_120_120_12_4_1"
+            },
+            "x": 13,
+            "y": 4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_4_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_14_3_1",
+                "south": "region_120_120_14_5_1",
+                "east": "region_140_120_15_4_1",
+                "west": "region_120_120_13_4_1"
+            },
+            "x": 14,
+            "y": 4,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_6_5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_6_4_1",
+                "south": "region_120_120_6_6_1",
+                "east": "region_120_120_7_5_1",
+                "west": "hub_5_5_0"
+            },
+            "x": 6,
+            "y": 5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_7_5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_4_1",
+                "south": "region_120_120_7_6_1",
+                "east": "region_120_120_8_5_1",
+                "west": "region_120_120_6_5_1"
+            },
+            "x": 7,
+            "y": 5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_8_4_1",
+                "south": "region_120_120_8_6_1",
+                "east": "region_120_120_9_5_1",
+                "west": "region_120_120_7_5_1"
+            },
+            "x": 8,
+            "y": 5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "id": "region_120_120_9_5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_9_4_1",
+                "south": "region_120_120_9_6_1",
+                "east": "region_120_120_10_5_1",
+                "west": "region_120_120_8_5_1"
+            },
+            "x": 9,
+            "y": 5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_10_4_1",
+                "south": "region_120_120_10_6_1",
+                "east": "region_120_120_11_5_1",
+                "west": "region_120_120_9_5_1"
+            },
+            "x": 10,
+            "y": 5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_11_4_1",
+                "south": "region_120_120_11_6_1",
+                "east": "region_120_120_12_5_1",
+                "west": "region_120_120_10_5_1"
+            },
+            "x": 11,
+            "y": 5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "id": "region_120_120_12_5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_4_1",
+                "south": "region_120_120_12_6_1",
+                "east": "region_120_120_13_5_1",
+                "west": "region_120_120_11_5_1"
+            },
+            "x": 12,
+            "y": 5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_13_5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_13_4_1",
+                "south": "region_120_120_13_6_1",
+                "east": "region_120_120_14_5_1",
+                "west": "region_120_120_12_5_1"
+            },
+            "x": 13,
+            "y": 5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_5_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_14_4_1",
+                "south": "region_120_120_14_6_1",
+                "east": "region_140_120_15_5_1",
+                "west": "region_120_120_13_5_1"
+            },
+            "x": 14,
+            "y": 5,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n5_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "south": "region_120_120_n5_7_1",
+                "east": "region_120_120_n4_6_1",
+                "west": "region_100_120_n6_6_1",
+                "north": "hub_n5_5_0"
+            },
+            "x": -5,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_n4_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_n4_7_1",
+                "east": "region_120_120_n3_6_1",
+                "west": "region_120_120_n5_6_1",
+                "north": "hub_n4_5_0"
+            },
+            "x": -4,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n3_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "south": "region_120_120_n3_7_1",
+                "east": "region_120_120_n2_6_1",
+                "west": "region_120_120_n4_6_1",
+                "north": "hub_n3_5_0"
+            },
+            "x": -3,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n2_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_n2_7_1",
+                "east": "region_120_120_n1_6_1",
+                "west": "region_120_120_n3_6_1",
+                "north": "hub_n2_5_0"
+            },
+            "x": -2,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        {
+            "id": "region_120_120_n1_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "south": "region_120_120_n1_7_1",
+                "east": "region_120_120_0_6_1",
+                "west": "region_120_120_n2_6_1",
+                "north": "hub_n1_5_0"
+            },
+            "x": -1,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_0_6_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "south": "region_120_120_0_7_1",
+                "east": "region_120_120_1_6_1",
+                "west": "region_120_120_n1_6_1",
+                "north": "hub_0_5_0"
+            },
+            "x": 0,
+            "y": 6,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "id": "region_120_120_1_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_1_7_1",
+                "east": "region_120_120_2_6_1",
+                "west": "region_120_120_0_6_1",
+                "north": "hub_1_5_0"
+            },
+            "x": 1,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_2_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_2_7_1",
+                "east": "region_120_120_3_6_1",
+                "west": "region_120_120_1_6_1",
+                "north": "hub_2_5_0"
+            },
+            "x": 2,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_3_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_3_7_1",
+                "east": "region_120_120_4_6_1",
+                "west": "region_120_120_2_6_1",
+                "north": "hub_3_5_0"
+            },
+            "x": 3,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_4_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "south": "region_120_120_4_7_1",
+                "east": "region_120_120_5_6_1",
+                "west": "region_120_120_3_6_1",
+                "north": "hub_4_5_0"
+            },
+            "x": 4,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "id": "region_120_120_5_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "south": "region_120_120_5_7_1",
+                "east": "region_120_120_6_6_1",
+                "west": "region_120_120_4_6_1",
+                "north": "hub_5_5_0"
+            },
+            "x": 5,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_6_5_1",
+                "south": "region_120_120_6_7_1",
+                "east": "region_120_120_7_6_1",
+                "west": "region_120_120_5_6_1"
+            },
+            "x": 6,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "id": "region_120_120_7_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_5_1",
+                "south": "region_120_120_7_7_1",
+                "east": "region_120_120_8_6_1",
+                "west": "region_120_120_6_6_1"
+            },
+            "x": 7,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_8_5_1",
+                "south": "region_120_120_8_7_1",
+                "east": "region_120_120_9_6_1",
+                "west": "region_120_120_7_6_1"
+            },
+            "x": 8,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_9_5_1",
+                "south": "region_120_120_9_7_1",
+                "east": "region_120_120_10_6_1",
+                "west": "region_120_120_8_6_1"
+            },
+            "x": 9,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_10_5_1",
+                "south": "region_120_120_10_7_1",
+                "east": "region_120_120_11_6_1",
+                "west": "region_120_120_9_6_1"
+            },
+            "x": 10,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_11_5_1",
+                "south": "region_120_120_11_7_1",
+                "east": "region_120_120_12_6_1",
+                "west": "region_120_120_10_6_1"
+            },
+            "x": 11,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_12_5_1",
+                "south": "region_120_120_12_7_1",
+                "east": "region_120_120_13_6_1",
+                "west": "region_120_120_11_6_1"
+            },
+            "x": 12,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_13_5_1",
+                "south": "region_120_120_13_7_1",
+                "east": "region_120_120_14_6_1",
+                "west": "region_120_120_12_6_1"
+            },
+            "x": 13,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_6_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_14_5_1",
+                "south": "region_120_120_14_7_1",
+                "east": "region_140_120_15_6_1",
+                "west": "region_120_120_13_6_1"
+            },
+            "x": 14,
+            "y": 6,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n5_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n5_6_1",
+                "south": "region_120_120_n5_8_1",
+                "east": "region_120_120_n4_7_1",
+                "west": "region_100_120_n6_7_1"
+            },
+            "x": -5,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wild_boar",
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_n4_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n4_6_1",
+                "south": "region_120_120_n4_8_1",
+                "east": "region_120_120_n3_7_1",
+                "west": "region_120_120_n5_7_1"
+            },
+            "x": -4,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n3_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n3_6_1",
+                "south": "region_120_120_n3_8_1",
+                "east": "region_120_120_n2_7_1",
+                "west": "region_120_120_n4_7_1"
+            },
+            "x": -3,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_n2_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n2_6_1",
+                "south": "region_120_120_n2_8_1",
+                "east": "region_120_120_n1_7_1",
+                "west": "region_120_120_n3_7_1"
+            },
+            "x": -2,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n1_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n1_6_1",
+                "south": "region_120_120_n1_8_1",
+                "east": "region_120_120_0_7_1",
+                "west": "region_120_120_n2_7_1"
+            },
+            "x": -1,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wild_boar",
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_0_7_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "north": "region_120_120_0_6_1",
+                "south": "region_120_120_0_8_1",
+                "east": "region_120_120_1_7_1",
+                "west": "region_120_120_n1_7_1"
+            },
+            "x": 0,
+            "y": 7,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_1_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_1_6_1",
+                "south": "region_120_120_1_8_1",
+                "east": "region_120_120_2_7_1",
+                "west": "region_120_120_0_7_1"
+            },
+            "x": 1,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_2_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_2_6_1",
+                "south": "region_120_120_2_8_1",
+                "east": "region_120_120_3_7_1",
+                "west": "region_120_120_1_7_1"
+            },
+            "x": 2,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_3_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_3_6_1",
+                "south": "region_120_120_3_8_1",
+                "east": "region_120_120_4_7_1",
+                "west": "region_120_120_2_7_1"
+            },
+            "x": 3,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_4_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_4_6_1",
+                "south": "region_120_120_4_8_1",
+                "east": "region_120_120_5_7_1",
+                "west": "region_120_120_3_7_1"
+            },
+            "x": 4,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "items": [
+                "wild_berry"
+            ]
+        },
+        {
+            "id": "region_120_120_5_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_5_6_1",
+                "south": "region_120_120_5_8_1",
+                "east": "region_120_120_6_7_1",
+                "west": "region_120_120_4_7_1"
+            },
+            "x": 5,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker",
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_6_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_6_6_1",
+                "south": "region_120_120_6_8_1",
+                "east": "region_120_120_7_7_1",
+                "west": "region_120_120_5_7_1"
+            },
+            "x": 6,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_7_6_1",
+                "south": "region_120_120_7_8_1",
+                "east": "region_120_120_8_7_1",
+                "west": "region_120_120_6_7_1"
+            },
+            "x": 7,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_8_6_1",
+                "south": "region_120_120_8_8_1",
+                "east": "region_120_120_9_7_1",
+                "west": "region_120_120_7_7_1"
+            },
+            "x": 8,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_9_6_1",
+                "south": "region_120_120_9_8_1",
+                "east": "region_120_120_10_7_1",
+                "west": "region_120_120_8_7_1"
+            },
+            "x": 9,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_10_6_1",
+                "south": "region_120_120_10_8_1",
+                "east": "region_120_120_11_7_1",
+                "west": "region_120_120_9_7_1"
+            },
+            "x": 10,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_11_6_1",
+                "south": "region_120_120_11_8_1",
+                "east": "region_120_120_12_7_1",
+                "west": "region_120_120_10_7_1"
+            },
+            "x": 11,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_12_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_6_1",
+                "south": "region_120_120_12_8_1",
+                "east": "region_120_120_13_7_1",
+                "west": "region_120_120_11_7_1"
+            },
+            "x": 12,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bear"
+            ]
+        },
+        {
+            "id": "region_120_120_13_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_13_6_1",
+                "south": "region_120_120_13_8_1",
+                "east": "region_120_120_14_7_1",
+                "west": "region_120_120_12_7_1"
+            },
+            "x": 13,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_7_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_14_6_1",
+                "south": "region_120_120_14_8_1",
+                "east": "region_140_120_15_7_1",
+                "west": "region_120_120_13_7_1"
+            },
+            "x": 14,
+            "y": 7,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n5_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n5_7_1",
+                "south": "region_120_120_n5_9_1",
+                "east": "region_120_120_n4_8_1",
+                "west": "region_100_120_n6_8_1"
+            },
+            "x": -5,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_n4_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n4_7_1",
+                "south": "region_120_120_n4_9_1",
+                "east": "region_120_120_n3_8_1",
+                "west": "region_120_120_n5_8_1"
+            },
+            "x": -4,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n3_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n3_7_1",
+                "south": "region_120_120_n3_9_1",
+                "east": "region_120_120_n2_8_1",
+                "west": "region_120_120_n4_8_1"
+            },
+            "x": -3,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n2_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n2_7_1",
+                "south": "region_120_120_n2_9_1",
+                "east": "region_120_120_n1_8_1",
+                "west": "region_120_120_n3_8_1"
+            },
+            "x": -2,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_n1_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n1_7_1",
+                "south": "region_120_120_n1_9_1",
+                "east": "region_120_120_0_8_1",
+                "west": "region_120_120_n2_8_1"
+            },
+            "x": -1,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_0_8_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "A well-traveled dirt road.",
+            "exits": {
+                "north": "region_120_120_0_7_1",
+                "south": "region_120_120_0_9_1",
+                "east": "region_120_120_1_8_1",
+                "west": "region_120_120_n1_8_1"
+            },
+            "x": 0,
+            "y": 8,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "id": "region_120_120_1_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_1_7_1",
+                "south": "region_120_120_1_9_1",
+                "east": "region_120_120_2_8_1",
+                "west": "region_120_120_0_8_1"
+            },
+            "x": 1,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_2_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_2_7_1",
+                "south": "region_120_120_2_9_1",
+                "east": "region_120_120_3_8_1",
+                "west": "region_120_120_1_8_1"
+            },
+            "x": 2,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_3_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_3_7_1",
+                "south": "region_120_120_3_9_1",
+                "east": "region_120_120_4_8_1",
+                "west": "region_120_120_2_8_1"
+            },
+            "x": 3,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_4_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_4_7_1",
+                "south": "region_120_120_4_9_1",
+                "east": "region_120_120_5_8_1",
+                "west": "region_120_120_3_8_1"
+            },
+            "x": 4,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "id": "region_120_120_5_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_5_7_1",
+                "south": "region_120_120_5_9_1",
+                "east": "region_120_120_6_8_1",
+                "west": "region_120_120_4_8_1"
+            },
+            "x": 5,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_6_7_1",
+                "south": "region_120_120_6_9_1",
+                "east": "region_120_120_7_8_1",
+                "west": "region_120_120_5_8_1"
+            },
+            "x": 6,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_7_7_1",
+                "south": "region_120_120_7_9_1",
+                "east": "region_120_120_8_8_1",
+                "west": "region_120_120_6_8_1"
+            },
+            "x": 7,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_8_7_1",
+                "south": "region_120_120_8_9_1",
+                "east": "region_120_120_9_8_1",
+                "west": "region_120_120_7_8_1"
+            },
+            "x": 8,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_9_7_1",
+                "south": "region_120_120_9_9_1",
+                "east": "region_120_120_10_8_1",
+                "west": "region_120_120_8_8_1"
+            },
+            "x": 9,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_10_7_1",
+                "south": "region_120_120_10_9_1",
+                "east": "region_120_120_11_8_1",
+                "west": "region_120_120_9_8_1"
+            },
+            "x": 10,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_11_7_1",
+                "south": "region_120_120_11_9_1",
+                "east": "region_120_120_12_8_1",
+                "west": "region_120_120_10_8_1"
+            },
+            "x": 11,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_12_7_1",
+                "south": "region_120_120_12_9_1",
+                "east": "region_120_120_13_8_1",
+                "west": "region_120_120_11_8_1"
+            },
+            "x": 12,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_13_7_1",
+                "south": "region_120_120_13_9_1",
+                "east": "region_120_120_14_8_1",
+                "west": "region_120_120_12_8_1"
+            },
+            "x": 13,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_8_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_14_7_1",
+                "south": "region_120_120_14_9_1",
+                "east": "region_140_120_15_8_1",
+                "west": "region_120_120_13_8_1"
+            },
+            "x": 14,
+            "y": 8,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n5_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n5_8_1",
+                "south": "region_120_120_n5_10_1",
+                "east": "region_120_120_n4_9_1",
+                "west": "region_100_120_n6_9_1"
+            },
+            "x": -5,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n4_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n4_8_1",
+                "south": "region_120_120_n4_10_1",
+                "east": "region_120_120_n3_9_1",
+                "west": "region_120_120_n5_9_1"
+            },
+            "x": -4,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n3_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n3_8_1",
+                "south": "region_120_120_n3_10_1",
+                "east": "region_120_120_n2_9_1",
+                "west": "region_120_120_n4_9_1"
+            },
+            "x": -3,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "items": [
+                "wild_berry"
+            ]
+        },
+        {
+            "id": "region_120_120_n2_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n2_8_1",
+                "south": "region_120_120_n2_10_1",
+                "east": "region_120_120_n1_9_1",
+                "west": "region_120_120_n3_9_1"
+            },
+            "x": -2,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_n1_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n1_8_1",
+                "south": "region_120_120_n1_10_1",
+                "east": "region_120_120_0_9_1",
+                "west": "region_120_120_n2_9_1"
+            },
+            "x": -1,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_0_9_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "A well-traveled dirt road.",
+            "exits": {
+                "north": "region_120_120_0_8_1",
+                "south": "region_120_120_0_10_1",
+                "east": "region_120_120_1_9_1",
+                "west": "region_120_120_n1_9_1"
+            },
+            "x": 0,
+            "y": 9,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "id": "region_120_120_1_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_1_8_1",
+                "south": "region_120_120_1_10_1",
+                "east": "region_120_120_2_9_1",
+                "west": "region_120_120_0_9_1"
+            },
+            "x": 1,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_2_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_2_8_1",
+                "south": "region_120_120_2_10_1",
+                "east": "region_120_120_3_9_1",
+                "west": "region_120_120_1_9_1"
+            },
+            "x": 2,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wild_boar",
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_3_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_3_8_1",
+                "south": "region_120_120_3_10_1",
+                "east": "region_120_120_4_9_1",
+                "west": "region_120_120_2_9_1"
+            },
+            "x": 3,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "id": "region_120_120_4_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_4_8_1",
+                "south": "region_120_120_4_10_1",
+                "east": "region_120_120_5_9_1",
+                "west": "region_120_120_3_9_1"
+            },
+            "x": 4,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_5_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_5_8_1",
+                "south": "region_120_120_5_10_1",
+                "east": "region_120_120_6_9_1",
+                "west": "region_120_120_4_9_1"
+            },
+            "x": 5,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_6_8_1",
+                "south": "region_120_120_6_10_1",
+                "east": "region_120_120_7_9_1",
+                "west": "region_120_120_5_9_1"
+            },
+            "x": 6,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_8_1",
+                "south": "region_120_120_7_10_1",
+                "east": "region_120_120_8_9_1",
+                "west": "region_120_120_6_9_1"
+            },
+            "x": 7,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_8_8_1",
+                "south": "region_120_120_8_10_1",
+                "east": "region_120_120_9_9_1",
+                "west": "region_120_120_7_9_1"
+            },
+            "x": 8,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_9_8_1",
+                "south": "region_120_120_9_10_1",
+                "east": "region_120_120_10_9_1",
+                "west": "region_120_120_8_9_1"
+            },
+            "x": 9,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_10_8_1",
+                "south": "region_120_120_10_10_1",
+                "east": "region_120_120_11_9_1",
+                "west": "region_120_120_9_9_1"
+            },
+            "x": 10,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_11_8_1",
+                "south": "region_120_120_11_10_1",
+                "east": "region_120_120_12_9_1",
+                "west": "region_120_120_10_9_1"
+            },
+            "x": 11,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_8_1",
+                "south": "region_120_120_12_10_1",
+                "east": "region_120_120_13_9_1",
+                "west": "region_120_120_11_9_1"
+            },
+            "x": 12,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_13_8_1",
+                "south": "region_120_120_13_10_1",
+                "east": "region_120_120_14_9_1",
+                "west": "region_120_120_12_9_1"
+            },
+            "x": 13,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_14_9_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_14_8_1",
+                "south": "region_120_120_14_10_1",
+                "east": "region_140_120_15_9_1",
+                "west": "region_120_120_13_9_1"
+            },
+            "x": 14,
+            "y": 9,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n5_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n5_9_1",
+                "south": "region_120_120_n5_11_1",
+                "east": "region_120_120_n4_10_1",
+                "west": "region_100_120_n6_10_1"
+            },
+            "x": -5,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n4_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n4_9_1",
+                "south": "region_120_120_n4_11_1",
+                "east": "region_120_120_n3_10_1",
+                "west": "region_120_120_n5_10_1"
+            },
+            "x": -4,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf",
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_n3_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n3_9_1",
+                "south": "region_120_120_n3_11_1",
+                "east": "region_120_120_n2_10_1",
+                "west": "region_120_120_n4_10_1"
+            },
+            "x": -3,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_n2_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n2_9_1",
+                "south": "region_120_120_n2_11_1",
+                "east": "region_120_120_n1_10_1",
+                "west": "region_120_120_n3_10_1"
+            },
+            "x": -2,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n1_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n1_9_1",
+                "south": "region_120_120_n1_11_1",
+                "east": "region_120_120_0_10_1",
+                "west": "region_120_120_n2_10_1"
+            },
+            "x": -1,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_0_10_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "north": "region_120_120_0_9_1",
+                "south": "region_120_120_0_11_1",
+                "east": "region_120_120_1_10_1",
+                "west": "region_120_120_n1_10_1"
+            },
+            "x": 0,
+            "y": 10,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_1_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_1_9_1",
+                "south": "region_120_120_1_11_1",
+                "east": "region_120_120_2_10_1",
+                "west": "region_120_120_0_10_1"
+            },
+            "x": 1,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_2_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_2_9_1",
+                "south": "region_120_120_2_11_1",
+                "east": "region_120_120_3_10_1",
+                "west": "region_120_120_1_10_1"
+            },
+            "x": 2,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_3_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_3_9_1",
+                "south": "region_120_120_3_11_1",
+                "east": "region_120_120_4_10_1",
+                "west": "region_120_120_2_10_1"
+            },
+            "x": 3,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_4_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_4_9_1",
+                "south": "region_120_120_4_11_1",
+                "east": "region_120_120_5_10_1",
+                "west": "region_120_120_3_10_1"
+            },
+            "x": 4,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_5_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_5_9_1",
+                "south": "region_120_120_5_11_1",
+                "east": "region_120_120_6_10_1",
+                "west": "region_120_120_4_10_1"
+            },
+            "x": 5,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_6_9_1",
+                "south": "region_120_120_6_11_1",
+                "east": "region_120_120_7_10_1",
+                "west": "region_120_120_5_10_1"
+            },
+            "x": 6,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_9_1",
+                "south": "region_120_120_7_11_1",
+                "east": "region_120_120_8_10_1",
+                "west": "region_120_120_6_10_1"
+            },
+            "x": 7,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "id": "region_120_120_8_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_8_9_1",
+                "south": "region_120_120_8_11_1",
+                "east": "region_120_120_9_10_1",
+                "west": "region_120_120_7_10_1"
+            },
+            "x": 8,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_9_9_1",
+                "south": "region_120_120_9_11_1",
+                "east": "region_120_120_10_10_1",
+                "west": "region_120_120_8_10_1"
+            },
+            "x": 9,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_10_9_1",
+                "south": "region_120_120_10_11_1",
+                "east": "region_120_120_11_10_1",
+                "west": "region_120_120_9_10_1"
+            },
+            "x": 10,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_11_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_11_9_1",
+                "south": "region_120_120_11_11_1",
+                "east": "region_120_120_12_10_1",
+                "west": "region_120_120_10_10_1"
+            },
+            "x": 11,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_9_1",
+                "south": "region_120_120_12_11_1",
+                "east": "region_120_120_13_10_1",
+                "west": "region_120_120_11_10_1"
+            },
+            "x": 12,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_13_9_1",
+                "south": "region_120_120_13_11_1",
+                "east": "region_120_120_14_10_1",
+                "west": "region_120_120_12_10_1"
+            },
+            "x": 13,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_10_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_14_9_1",
+                "south": "region_120_120_14_11_1",
+                "east": "region_140_120_15_10_1",
+                "west": "region_120_120_13_10_1"
+            },
+            "x": 14,
+            "y": 10,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bear"
+            ]
+        },
+        {
+            "id": "region_120_120_n5_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n5_10_1",
+                "south": "region_120_120_n5_12_1",
+                "east": "region_120_120_n4_11_1",
+                "west": "region_100_120_n6_11_1"
+            },
+            "x": -5,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_n4_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n4_10_1",
+                "south": "region_120_120_n4_12_1",
+                "east": "region_120_120_n3_11_1",
+                "west": "region_120_120_n5_11_1"
+            },
+            "x": -4,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_n3_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n3_10_1",
+                "south": "region_120_120_n3_12_1",
+                "east": "region_120_120_n2_11_1",
+                "west": "region_120_120_n4_11_1"
+            },
+            "x": -3,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n2_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n2_10_1",
+                "south": "region_120_120_n2_12_1",
+                "east": "region_120_120_n1_11_1",
+                "west": "region_120_120_n3_11_1"
+            },
+            "x": -2,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        {
+            "id": "region_120_120_n1_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n1_10_1",
+                "south": "region_120_120_n1_12_1",
+                "east": "region_120_120_0_11_1",
+                "west": "region_120_120_n2_11_1"
+            },
+            "x": -1,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "items": [
+                "wild_berry"
+            ]
+        },
+        {
+            "id": "region_120_120_0_11_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "A well-traveled dirt road.",
+            "exits": {
+                "north": "region_120_120_0_10_1",
+                "south": "region_120_120_0_12_1",
+                "east": "region_120_120_1_11_1",
+                "west": "region_120_120_n1_11_1"
+            },
+            "x": 0,
+            "y": 11,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_1_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_1_10_1",
+                "south": "region_120_120_1_12_1",
+                "east": "region_120_120_2_11_1",
+                "west": "region_120_120_0_11_1"
+            },
+            "x": 1,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_2_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_2_10_1",
+                "south": "region_120_120_2_12_1",
+                "east": "region_120_120_3_11_1",
+                "west": "region_120_120_1_11_1"
+            },
+            "x": 2,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_3_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_3_10_1",
+                "south": "region_120_120_3_12_1",
+                "east": "region_120_120_4_11_1",
+                "west": "region_120_120_2_11_1"
+            },
+            "x": 3,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_4_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_4_10_1",
+                "south": "region_120_120_4_12_1",
+                "east": "region_120_120_5_11_1",
+                "west": "region_120_120_3_11_1"
+            },
+            "x": 4,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_5_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_5_10_1",
+                "south": "region_120_120_5_12_1",
+                "east": "region_120_120_6_11_1",
+                "west": "region_120_120_4_11_1"
+            },
+            "x": 5,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_6_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_6_10_1",
+                "south": "region_120_120_6_12_1",
+                "east": "region_120_120_7_11_1",
+                "west": "region_120_120_5_11_1"
+            },
+            "x": 6,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_10_1",
+                "south": "region_120_120_7_12_1",
+                "east": "region_120_120_8_11_1",
+                "west": "region_120_120_6_11_1"
+            },
+            "x": 7,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_8_10_1",
+                "south": "region_120_120_8_12_1",
+                "east": "region_120_120_9_11_1",
+                "west": "region_120_120_7_11_1"
+            },
+            "x": 8,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_9_10_1",
+                "south": "region_120_120_9_12_1",
+                "east": "region_120_120_10_11_1",
+                "west": "region_120_120_8_11_1"
+            },
+            "x": 9,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_10_10_1",
+                "south": "region_120_120_10_12_1",
+                "east": "region_120_120_11_11_1",
+                "west": "region_120_120_9_11_1"
+            },
+            "x": 10,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_11_10_1",
+                "south": "region_120_120_11_12_1",
+                "east": "region_120_120_12_11_1",
+                "west": "region_120_120_10_11_1"
+            },
+            "x": 11,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_12_10_1",
+                "south": "region_120_120_12_12_1",
+                "east": "region_120_120_13_11_1",
+                "west": "region_120_120_11_11_1"
+            },
+            "x": 12,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_13_10_1",
+                "south": "region_120_120_13_12_1",
+                "east": "region_120_120_14_11_1",
+                "west": "region_120_120_12_11_1"
+            },
+            "x": 13,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_14_11_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_14_10_1",
+                "south": "region_120_120_14_12_1",
+                "east": "region_140_120_15_11_1",
+                "west": "region_120_120_13_11_1"
+            },
+            "x": 14,
+            "y": 11,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n5_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n5_11_1",
+                "south": "region_120_120_n5_13_1",
+                "east": "region_120_120_n4_12_1",
+                "west": "region_100_120_n6_12_1"
+            },
+            "x": -5,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n4_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n4_11_1",
+                "south": "region_120_120_n4_13_1",
+                "east": "region_120_120_n3_12_1",
+                "west": "region_120_120_n5_12_1"
+            },
+            "x": -4,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n3_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n3_11_1",
+                "south": "region_120_120_n3_13_1",
+                "east": "region_120_120_n2_12_1",
+                "west": "region_120_120_n4_12_1"
+            },
+            "x": -3,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_n2_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n2_11_1",
+                "south": "region_120_120_n2_13_1",
+                "east": "region_120_120_n1_12_1",
+                "west": "region_120_120_n3_12_1"
+            },
+            "x": -2,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n1_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n1_11_1",
+                "south": "region_120_120_n1_13_1",
+                "east": "region_120_120_0_12_1",
+                "west": "region_120_120_n2_12_1"
+            },
+            "x": -1,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_0_12_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "A well-traveled dirt road.",
+            "exits": {
+                "north": "region_120_120_0_11_1",
+                "south": "region_120_120_0_13_1",
+                "east": "region_120_120_1_12_1",
+                "west": "region_120_120_n1_12_1"
+            },
+            "x": 0,
+            "y": 12,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_1_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_1_11_1",
+                "south": "region_120_120_1_13_1",
+                "east": "region_120_120_2_12_1",
+                "west": "region_120_120_0_12_1"
+            },
+            "x": 1,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_2_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_2_11_1",
+                "south": "region_120_120_2_13_1",
+                "east": "region_120_120_3_12_1",
+                "west": "region_120_120_1_12_1"
+            },
+            "x": 2,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_3_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_3_11_1",
+                "south": "region_120_120_3_13_1",
+                "east": "region_120_120_4_12_1",
+                "west": "region_120_120_2_12_1"
+            },
+            "x": 3,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf",
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_4_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_4_11_1",
+                "south": "region_120_120_4_13_1",
+                "east": "region_120_120_5_12_1",
+                "west": "region_120_120_3_12_1"
+            },
+            "x": 4,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_5_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_5_11_1",
+                "south": "region_120_120_5_13_1",
+                "east": "region_120_120_6_12_1",
+                "west": "region_120_120_4_12_1"
+            },
+            "x": 5,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bear"
+            ]
+        },
+        {
+            "id": "region_120_120_6_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_6_11_1",
+                "south": "region_120_120_6_13_1",
+                "east": "region_120_120_7_12_1",
+                "west": "region_120_120_5_12_1"
+            },
+            "x": 6,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_7_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_7_11_1",
+                "south": "region_120_120_7_13_1",
+                "east": "region_120_120_8_12_1",
+                "west": "region_120_120_6_12_1"
+            },
+            "x": 7,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_8_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_8_11_1",
+                "south": "region_120_120_8_13_1",
+                "east": "region_120_120_9_12_1",
+                "west": "region_120_120_7_12_1"
+            },
+            "x": 8,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_9_11_1",
+                "south": "region_120_120_9_13_1",
+                "east": "region_120_120_10_12_1",
+                "west": "region_120_120_8_12_1"
+            },
+            "x": 9,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_10_11_1",
+                "south": "region_120_120_10_13_1",
+                "east": "region_120_120_11_12_1",
+                "west": "region_120_120_9_12_1"
+            },
+            "x": 10,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_11_11_1",
+                "south": "region_120_120_11_13_1",
+                "east": "region_120_120_12_12_1",
+                "west": "region_120_120_10_12_1"
+            },
+            "x": 11,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "id": "region_120_120_12_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_12_11_1",
+                "south": "region_120_120_12_13_1",
+                "east": "region_120_120_13_12_1",
+                "west": "region_120_120_11_12_1"
+            },
+            "x": 12,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_13_11_1",
+                "south": "region_120_120_13_13_1",
+                "east": "region_120_120_14_12_1",
+                "west": "region_120_120_12_12_1"
+            },
+            "x": 13,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_12_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_14_11_1",
+                "south": "region_120_120_14_13_1",
+                "east": "region_140_120_15_12_1",
+                "west": "region_120_120_13_12_1"
+            },
+            "x": 14,
+            "y": 12,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n5_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n5_12_1",
+                "south": "region_120_120_n5_14_1",
+                "east": "region_120_120_n4_13_1",
+                "west": "region_100_120_n6_13_1"
+            },
+            "x": -5,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n4_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n4_12_1",
+                "south": "region_120_120_n4_14_1",
+                "east": "region_120_120_n3_13_1",
+                "west": "region_120_120_n5_13_1"
+            },
+            "x": -4,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n3_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n3_12_1",
+                "south": "region_120_120_n3_14_1",
+                "east": "region_120_120_n2_13_1",
+                "west": "region_120_120_n4_13_1"
+            },
+            "x": -3,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        {
+            "id": "region_120_120_n2_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n2_12_1",
+                "south": "region_120_120_n2_14_1",
+                "east": "region_120_120_n1_13_1",
+                "west": "region_120_120_n3_13_1"
+            },
+            "x": -2,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n1_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n1_12_1",
+                "south": "region_120_120_n1_14_1",
+                "east": "region_120_120_0_13_1",
+                "west": "region_120_120_n2_13_1"
+            },
+            "x": -1,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_0_13_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "north": "region_120_120_0_12_1",
+                "south": "region_120_120_0_14_1",
+                "east": "region_120_120_1_13_1",
+                "west": "region_120_120_n1_13_1"
+            },
+            "x": 0,
+            "y": 13,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_1_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_1_12_1",
+                "south": "region_120_120_1_14_1",
+                "east": "region_120_120_2_13_1",
+                "west": "region_120_120_0_13_1"
+            },
+            "x": 1,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_2_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_2_12_1",
+                "south": "region_120_120_2_14_1",
+                "east": "region_120_120_3_13_1",
+                "west": "region_120_120_1_13_1"
+            },
+            "x": 2,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_3_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_3_12_1",
+                "south": "region_120_120_3_14_1",
+                "east": "region_120_120_4_13_1",
+                "west": "region_120_120_2_13_1"
+            },
+            "x": 3,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_4_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_4_12_1",
+                "south": "region_120_120_4_14_1",
+                "east": "region_120_120_5_13_1",
+                "west": "region_120_120_3_13_1"
+            },
+            "x": 4,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_5_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_5_12_1",
+                "south": "region_120_120_5_14_1",
+                "east": "region_120_120_6_13_1",
+                "west": "region_120_120_4_13_1"
+            },
+            "x": 5,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_6_12_1",
+                "south": "region_120_120_6_14_1",
+                "east": "region_120_120_7_13_1",
+                "west": "region_120_120_5_13_1"
+            },
+            "x": 6,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "items": [
+                "wild_berry"
+            ],
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_7_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_7_12_1",
+                "south": "region_120_120_7_14_1",
+                "east": "region_120_120_8_13_1",
+                "west": "region_120_120_6_13_1"
+            },
+            "x": 7,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bear"
+            ]
+        },
+        {
+            "id": "region_120_120_8_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_8_12_1",
+                "south": "region_120_120_8_14_1",
+                "east": "region_120_120_9_13_1",
+                "west": "region_120_120_7_13_1"
+            },
+            "x": 8,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_9_12_1",
+                "south": "region_120_120_9_14_1",
+                "east": "region_120_120_10_13_1",
+                "west": "region_120_120_8_13_1"
+            },
+            "x": 9,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_10_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_10_12_1",
+                "south": "region_120_120_10_14_1",
+                "east": "region_120_120_11_13_1",
+                "west": "region_120_120_9_13_1"
+            },
+            "x": 10,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_11_12_1",
+                "south": "region_120_120_11_14_1",
+                "east": "region_120_120_12_13_1",
+                "west": "region_120_120_10_13_1"
+            },
+            "x": 11,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_12_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_12_1",
+                "south": "region_120_120_12_14_1",
+                "east": "region_120_120_13_13_1",
+                "west": "region_120_120_11_13_1"
+            },
+            "x": 12,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_13_12_1",
+                "south": "region_120_120_13_14_1",
+                "east": "region_120_120_14_13_1",
+                "west": "region_120_120_12_13_1"
+            },
+            "x": 13,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_13_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_14_12_1",
+                "south": "region_120_120_14_14_1",
+                "east": "region_140_120_15_13_1",
+                "west": "region_120_120_13_13_1"
+            },
+            "x": 14,
+            "y": 13,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n5_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n5_13_1",
+                "south": "region_120_140_n5_15_1",
+                "east": "region_120_120_n4_14_1",
+                "west": "region_100_120_n6_14_1"
+            },
+            "x": -5,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n4_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n4_13_1",
+                "south": "region_120_140_n4_15_1",
+                "east": "region_120_120_n3_14_1",
+                "west": "region_120_120_n5_14_1"
+            },
+            "x": -4,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wild_boar",
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_n3_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n3_13_1",
+                "south": "region_120_140_n3_15_1",
+                "east": "region_120_120_n2_14_1",
+                "west": "region_120_120_n4_14_1"
+            },
+            "x": -3,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n2_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_n2_13_1",
+                "south": "region_120_140_n2_15_1",
+                "east": "region_120_120_n1_14_1",
+                "west": "region_120_120_n3_14_1"
+            },
+            "x": -2,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_n1_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_n1_13_1",
+                "south": "region_120_140_n1_15_1",
+                "east": "region_120_120_0_14_1",
+                "west": "region_120_120_n2_14_1"
+            },
+            "x": -1,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_0_14_1",
+            "zone_id": "region_120_120",
+            "name": "Road",
+            "description": "Wagon ruts cut deep into the path.",
+            "exits": {
+                "north": "region_120_120_0_13_1",
+                "south": "region_120_140_0_15_1",
+                "east": "region_120_120_1_14_1",
+                "west": "region_120_120_n1_14_1"
+            },
+            "x": 0,
+            "y": 14,
+            "z": 1,
+            "terrain": "road",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "id": "region_120_120_1_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_1_13_1",
+                "south": "region_120_140_1_15_1",
+                "east": "region_120_120_2_14_1",
+                "west": "region_120_120_0_14_1"
+            },
+            "x": 1,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_2_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_2_13_1",
+                "south": "region_120_140_2_15_1",
+                "east": "region_120_120_3_14_1",
+                "west": "region_120_120_1_14_1"
+            },
+            "x": 2,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        {
+            "id": "region_120_120_3_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_3_13_1",
+                "south": "region_120_140_3_15_1",
+                "east": "region_120_120_4_14_1",
+                "west": "region_120_120_2_14_1"
+            },
+            "x": 3,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_4_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_4_13_1",
+                "south": "region_120_140_4_15_1",
+                "east": "region_120_120_5_14_1",
+                "west": "region_120_120_3_14_1"
+            },
+            "x": 4,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_5_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_5_13_1",
+                "south": "region_120_140_5_15_1",
+                "east": "region_120_120_6_14_1",
+                "west": "region_120_120_4_14_1"
+            },
+            "x": 5,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_6_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_6_13_1",
+                "south": "region_120_140_6_15_1",
+                "east": "region_120_120_7_14_1",
+                "west": "region_120_120_5_14_1"
+            },
+            "x": 6,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        {
+            "id": "region_120_120_7_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_7_13_1",
+                "south": "region_120_140_7_15_1",
+                "east": "region_120_120_8_14_1",
+                "west": "region_120_120_6_14_1"
+            },
+            "x": 7,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "items": [
+                "wild_berry"
+            ]
+        },
+        {
+            "id": "region_120_120_8_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_8_13_1",
+                "south": "region_120_140_8_15_1",
+                "east": "region_120_120_9_14_1",
+                "west": "region_120_120_7_14_1"
+            },
+            "x": 8,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_9_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_9_13_1",
+                "south": "region_120_140_9_15_1",
+                "east": "region_120_120_10_14_1",
+                "west": "region_120_120_8_14_1"
+            },
+            "x": 9,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "id": "region_120_120_10_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "exits": {
+                "north": "region_120_120_10_13_1",
+                "south": "region_120_140_10_15_1",
+                "east": "region_120_120_11_14_1",
+                "west": "region_120_120_9_14_1"
+            },
+            "x": 10,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_11_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_11_13_1",
+                "south": "region_120_140_11_15_1",
+                "east": "region_120_120_12_14_1",
+                "west": "region_120_120_10_14_1"
+            },
+            "x": 11,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "id": "region_120_120_12_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_12_13_1",
+                "south": "region_120_140_12_15_1",
+                "east": "region_120_120_13_14_1",
+                "west": "region_120_120_11_14_1"
+            },
+            "x": 12,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_13_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_13_13_1",
+                "south": "region_120_140_13_15_1",
+                "east": "region_120_120_14_14_1",
+                "west": "region_120_120_12_14_1"
+            },
+            "x": 13,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        {
+            "id": "region_120_120_14_14_1",
+            "zone_id": "region_120_120",
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "exits": {
+                "north": "region_120_120_14_13_1",
+                "south": "region_120_140_14_15_1",
+                "east": "region_140_120_15_14_1",
+                "west": "region_120_120_13_14_1"
+            },
+            "x": 14,
+            "y": 14,
+            "z": 1,
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1,
+            "monsters": [
+                "bear"
+            ]
+        }
+    ]
+}

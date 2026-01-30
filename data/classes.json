@@ -1,0 +1,319 @@
+{
+    "classes": [
+        {"id": "wanderer", "name": "Wanderer", "description": "A traveler with no specific allegiance.", "requirements": {}, "bonuses": {}},
+        {
+            "id": "beast_master",
+            "name": "Beast Master",
+            "description": "One who commands the wild to fight by their side.",
+            "requirements": {"tags": {"instinct": 3, "command": 1}},
+            "bonuses": {
+                "stats": {"wis": 2, "con": 1},
+                "passive": "Companions deal 20% more damage."
+            }
+        },
+        {
+            "id": "red_mage",
+            "name": "Red Mage",
+            "description": "A weaver of light and shadow who balances opposing forces.",
+            "requirements": {"tags": {"light": 2, "dark": 2}},
+            "bonuses": {
+                "stats": {"int": 2, "dex": 2},
+                "passive": "Spells generate 1 Momentum on cast."
+            }
+        },
+        {
+            "id": "paladin",
+            "name": "Paladin",
+            "description": "A holy warrior who protects allies and smites evil.",
+            "requirements": {
+                "tags": {
+                    "light": 3,
+                    "martial": 1,
+                    "protection": 1
+                }
+            },
+            "bonuses": {
+                "stats": {"str": 3, "con": 1},
+                "passive": "Incoming damage reduced by 10%."
+            }
+        },
+    {
+      "id": "cleric",
+      "name": "Cleric",
+      "description": "A divine caster focused on healing, protection, and purging evil.",
+      "requirements": {
+        "tags": {
+          "light": 4,
+          "healing": 1,
+          "protection": 1
+        }
+      },
+      "bonuses": {
+        "stats": {"wis": 3, "luk": 1},
+        "passive": "Healing effects increased by 20%."
+      }
+    },
+    {
+      "id": "barbarian",
+      "name": "Barbarian",
+      "description": "A tribal warrior who becomes harder to kill as they get angry.",
+      "requirements": {
+        "tags": {
+          "instinct": 3,
+          "martial": 2,
+          "rage": 1
+        }
+      },
+      "bonuses": {
+        "stats": {"str": 3, "con": 2},
+        "passive": "Damage increases as HP decreases."
+      }
+    },
+    {
+      "id": "assassin",
+      "name": "Assassin",
+      "description": "A master of shadows and lethal strikes.",
+      "requirements": {
+        "tags": {
+          "dark": 3,
+          "stealth": 1,
+          "martial": 1
+        }
+      },
+      "bonuses": {
+        "stats": {"dex": 3, "luk": 1},
+        "passive": "First attack in combat deals 20% more damage."
+      }
+    },
+    {
+      "id": "rogue",
+      "name": "Rogue",
+      "description": "A versatile scoundrel skilled in toxins, traps, and stealth.",
+      "requirements": {
+        "tags": {
+          "dex": 3,
+          "rogue": 1
+        }
+      },
+      "bonuses": {
+        "stats": {"dex": 2, "luk": 1},
+        "passive": "Chance to dodge increases by 10%."
+      }
+    },
+    {
+      "id": "shadow_dancer",
+      "name": "Shadow Dancer",
+      "description": "A prestige rogue who weaves through the battlefield.",
+      "requirements": {
+        "tags": {
+          "dex": 4,
+          "mobility": 2,
+          "dark": 1
+        }
+      },
+      "bonuses": {
+        "stats": {"dex": 3, "spd": 2},
+        "passive": "Movement skills cost 50% less Stamina."
+      }
+    },
+    {
+      "id": "elementalist",
+      "name": "Elementalist",
+      "description": "A mage who chains elemental spells for devastating combos.",
+      "requirements": {
+        "tags": {
+          "int": 4,
+          "elemental": 2,
+          "spell": 2
+        }
+      },
+      "bonuses": {
+        "stats": {"int": 3, "wis": 1},
+        "passive": "Elemental status effects last 1 extra turn."
+      }
+    },
+    {
+      "id": "knight",
+      "name": "Knight",
+      "description": "A mounted commander who controls the battlefield with tactics and heavy armor.",
+      "requirements": {
+        "tags": {
+          "light": 3,
+          "martial": 2,
+          "mount": 1
+        }
+      },
+      "bonuses": {
+        "stats": {"str": 2, "luk": 1, "con": 1},
+        "passive": "Damage reduction increased by 5%."
+      }
+    },
+    {
+      "id": "warrior",
+      "name": "Warrior",
+      "description": "A master of all weapons who controls the flow of melee combat.",
+      "requirements": {
+        "tags": {
+          "martial": 3,
+          "weapon": 1,
+          "control": 1
+        }
+      },
+      "bonuses": {
+        "stats": {"str": 2, "dex": 1, "con": 1},
+        "passive": "Weapon damage increased by 10%."
+      }
+    },
+    {
+      "id": "alchemist",
+      "name": "Alchemist",
+      "description": "A master of chemistry who controls the battlefield with flasks and infusions.",
+      "requirements": {
+        "tags": {
+          "int": 3,
+          "alchemy": 2,
+          "utility": 1
+        }
+      },
+      "bonuses": {
+        "stats": {"int": 2, "wis": 1, "con": 1},
+        "passive": "Potion effects increased by 20%."
+      }
+    },
+    {
+      "id": "scout",
+      "name": "Scout",
+      "description": "A master of reconnaissance who sees what others miss.",
+      "requirements": {
+        "tags": {
+          "instinct": 3,
+          "scout": 2
+        }
+      },
+      "bonuses": {
+        "stats": {"luk": 2, "dex": 1, "wis": 1},
+        "passive": "Movement cost reduced by 1."
+      }
+    },
+    {
+      "id": "ranger",
+      "name": "Ranger",
+      "description": "A sharpshooter who eliminates targets from a distance.",
+      "requirements": {
+        "tags": {
+          "instinct": 3,
+          "marksmanship": 2
+        }
+      },
+      "bonuses": {
+        "stats": {"dex": 3, "wis": 1},
+        "passive": "Ranged damage increased by 15%."
+      }
+    },
+    {
+      "id": "berserker",
+      "name": "Berserker",
+      "description": "A violent warrior who trades defense for overwhelming offense.",
+      "requirements": {
+        "tags": {
+          "instinct": 3,
+          "rage": 2
+        }
+      },
+      "bonuses": {
+        "stats": {"str": 4, "con": 1},
+        "passive": "Gain Momentum when taking damage."
+      }
+    },
+    {
+      "id": "druid",
+      "name": "Druid",
+      "description": "A guardian of nature who commands earth, storms, and growth.",
+      "requirements": {
+        "tags": {
+          "instinct": 3,
+          "nature": 3
+        }
+      },
+      "bonuses": {
+        "stats": {"wis": 3, "con": 1},
+        "passive": "Nature spells cost 10% less Concentration."
+      }
+    },
+    {
+      "id": "geomancer",
+      "name": "Geomancer",
+      "description": "A shaper of stone and earth who controls the battlefield.",
+      "requirements": {
+        "tags": {
+          "instinct": 3,
+          "earth": 2
+        }
+      },
+      "bonuses": {
+        "stats": {"wis": 2, "con": 2},
+        "passive": "Immune to Knockback effects."
+      }
+    },
+    {
+      "id": "warlock",
+      "name": "Warlock",
+      "description": "A practitioner of forbidden arts who drains life and spreads decay.",
+      "requirements": {
+        "tags": {
+          "dark": 3,
+          "spell": 2
+        }
+      },
+      "bonuses": {
+        "stats": {"int": 3, "con": 1},
+        "passive": "Dark spells heal you for 5% of damage dealt."
+      }
+    },
+    {
+      "id": "dragoon",
+      "name": "Dragoon",
+      "description": "A high-flying knight who strikes from the sky.",
+      "requirements": {
+        "tags": {
+          "mobility": 3,
+          "martial": 2
+        }
+      },
+      "bonuses": {
+        "stats": {"dex": 2, "str": 2},
+        "passive": "Jump attacks deal 20% more damage."
+      }
+    },
+    {
+      "id": "monk",
+      "name": "Monk",
+      "description": "A martial artist who harnesses Chi to perform devastating combos.",
+      "requirements": {
+        "tags": {
+          "martial": 3,
+          "unarmed": 2
+        }
+      },
+      "bonuses": {
+        "stats": {"wis": 2, "dex": 2},
+        "passive": "Unarmed attacks generate 1 Chi on critical hits."
+      }
+    },
+    {
+      "id": "necromancer",
+      "name": "Necromancer",
+      "description": "A master of death who raises corpses to fight.",
+      "requirements": {
+        "tags": {
+          "dark": 3,
+          "summon": 2
+        }
+      },
+      "bonuses": {
+        "stats": {"int": 3, "con": 1},
+        "passive": "Minions have 20% more Health."
+      }
+    }
+  ]
+}

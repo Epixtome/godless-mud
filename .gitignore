@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Player Data (Sensitive!)
+data/saves/
+
+# Runtime State
+data/world_state.json
+
+# Logs
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Generators & Tools (Intellectual Property)
+utilities/generate_*.py
+utilities/Generate_*.py
+utilities/pipeline_*.py
+utilities/master_world_gen.py
+utilities/zone_generator.py
+utilities/world_gen_tool/
+utilities/constraint_map_generator.py
+utilities/simple_noise.py
+utilities/stitch_world.py
+utilities/reset_world.py
+utilities/resolve_hub.py
+utilities/visualize_*.py
+utilities/prune_world.py
+utilities/atlas_builder.py
+utilities/world_atlas.py
+utilities/world_builder.py
+utilities/cleanup_legacy.py
+utilities/data_migrator.py
+utilities/detect_overlaps.py
+utilities/flavor_injector.py
+utilities/populate_elderwood.py
+utilities/restore_admin.py
+utilities/unlock_hub.py
+
+# Documentation (Intellectual Property)
+*.md
+!CHANGELOG.md

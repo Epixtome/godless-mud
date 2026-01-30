@@ -1,0 +1,29 @@
+{
+    "quests": [
+        {
+            "id": "fetch_sun_elixir",
+            "name": "A Taste of the Sun",
+            "giver_text": "The Tavern Keeper looks weary. 'I've heard tales of a \"Sun Elixir\" from the Kingdom of Light. They say it can cure any fatigue. If you bring one to me, I'll make it worth your while.'",
+            "log_text": "Bring a Sun Elixir to the Tavern Keeper in the Hub.",
+            "objectives": [
+                {"type": "item", "id": "sun_elixir", "count": 1}
+            ],
+            "rewards": [
+                {"type": "gold", "amount": 100},
+                {"type": "favor", "deity": "any", "amount": 50}
+            ]
+        },
+        {
+            "id": "kill_goblins",
+            "name": "Goblin Menace",
+            "giver_text": "A Town Guard salutes you. 'The slums are crawling with goblins again. We're stretched thin. If you could clear out five of them, the Captain would be grateful.'",
+            "log_text": "Kill 5 Goblins in or near the Crossroads City.",
+            "objectives": [
+                {"type": "kill", "id": "goblin", "count": 5}
+            ],
+            "rewards": [
+                {"type": "gold", "amount": 75}
+            ]
+        }
+    ]
+}

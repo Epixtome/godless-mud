@@ -1,0 +1,352 @@
+{
+    "nodes": {
+        "hub": {
+            "id": "hub",
+            "x": 0,
+            "y": 0,
+            "type": "hub",
+            "biome": "wasteland",
+            "name": "The Shard Crater",
+            "radius": 8
+        },
+        "border_north": {
+            "id": "border_north",
+            "x": 0,
+            "y": -60,
+            "type": "outpost",
+            "biome": "borderland",
+            "name": "Light Border Post",
+            "radius": 6
+        },
+        "border_southeast": {
+            "id": "border_southeast",
+            "x": 51,
+            "y": 29,
+            "type": "outpost",
+            "biome": "borderland",
+            "name": "Shadow Border Post",
+            "radius": 6
+        },
+        "border_southwest": {
+            "id": "border_southwest",
+            "x": -51,
+            "y": 29,
+            "type": "outpost",
+            "biome": "borderland",
+            "name": "Instinct Border Post",
+            "radius": 6
+        },
+        "light_cap": {
+            "id": "light_cap",
+            "x": 0,
+            "y": -220,
+            "type": "capital",
+            "biome": "light",
+            "name": "Sanctum",
+            "radius": 18
+        },
+        "light_farm": {
+            "id": "light_farm",
+            "x": -50,
+            "y": -180,
+            "type": "outpost",
+            "biome": "light",
+            "name": "Golden Fields",
+            "radius": 10
+        },
+        "light_mine": {
+            "id": "light_mine",
+            "x": 50,
+            "y": -180,
+            "type": "dungeon",
+            "biome": "light",
+            "name": "Crystal Caverns",
+            "radius": 10
+        },
+        "light_port": {
+            "id": "light_port",
+            "x": 0,
+            "y": -280,
+            "type": "outpost",
+            "biome": "light",
+            "name": "Port Solas",
+            "radius": 8
+        },
+        "shadow_cap": {
+            "id": "shadow_cap",
+            "x": 190,
+            "y": 110,
+            "type": "capital",
+            "biome": "shadow",
+            "name": "Noxus",
+            "radius": 18
+        },
+        "shadow_swamp": {
+            "id": "shadow_swamp",
+            "x": 140,
+            "y": 80,
+            "type": "dungeon",
+            "biome": "shadow",
+            "name": "Obsidian Marsh",
+            "radius": 12
+        },
+        "shadow_ruins": {
+            "id": "shadow_ruins",
+            "x": 240,
+            "y": 80,
+            "type": "dungeon",
+            "biome": "shadow",
+            "name": "Ancient Ruins",
+            "radius": 10
+        },
+        "shadow_void": {
+            "id": "shadow_void",
+            "x": 190,
+            "y": 170,
+            "type": "dungeon",
+            "biome": "shadow",
+            "name": "Void Scar",
+            "radius": 10
+        },
+        "instinct_cap": {
+            "id": "instinct_cap",
+            "x": -190,
+            "y": 110,
+            "type": "capital",
+            "biome": "instinct",
+            "name": "Ironbark",
+            "radius": 18
+        },
+        "instinct_jungle": {
+            "id": "instinct_jungle",
+            "x": -140,
+            "y": 80,
+            "type": "dungeon",
+            "biome": "instinct",
+            "name": "Verdant Jungle",
+            "radius": 12
+        },
+        "instinct_canyon": {
+            "id": "instinct_canyon",
+            "x": -240,
+            "y": 80,
+            "type": "dungeon",
+            "biome": "instinct",
+            "name": "Red Canyons",
+            "radius": 10
+        },
+        "instinct_tundra": {
+            "id": "instinct_tundra",
+            "x": -190,
+            "y": 170,
+            "type": "dungeon",
+            "biome": "instinct",
+            "name": "Frozen Wastes",
+            "radius": 10
+        },
+        "wild_ashlands": {
+            "id": "wild_ashlands",
+            "x": 100,
+            "y": -100,
+            "type": "dungeon",
+            "biome": "wasteland",
+            "name": "The Ashlands",
+            "radius": 8
+        },
+        "wild_deep": {
+            "id": "wild_deep",
+            "x": 0,
+            "y": 180,
+            "type": "dungeon",
+            "biome": "wasteland",
+            "name": "The Deep Wilds",
+            "radius": 8
+        },
+        "wild_peaks": {
+            "id": "wild_peaks",
+            "x": -100,
+            "y": -100,
+            "type": "dungeon",
+            "biome": "wasteland",
+            "name": "Storm Peaks",
+            "radius": 8
+        }
+    },
+    "edges": [
+        {
+            "id": "road_hub_border_north",
+            "from": "hub",
+            "to": "border_north",
+            "type": "road",
+            "biome": "wasteland"
+        },
+        {
+            "id": "road_hub_border_southeast",
+            "from": "hub",
+            "to": "border_southeast",
+            "type": "road",
+            "biome": "wasteland"
+        },
+        {
+            "id": "road_hub_border_southwest",
+            "from": "hub",
+            "to": "border_southwest",
+            "type": "road",
+            "biome": "wasteland"
+        },
+        {
+            "id": "inner_border_north_border_southeast",
+            "from": "border_north",
+            "to": "border_southeast",
+            "type": "road",
+            "biome": "borderland"
+        },
+        {
+            "id": "inner_border_southeast_border_southwest",
+            "from": "border_southeast",
+            "to": "border_southwest",
+            "type": "road",
+            "biome": "borderland"
+        },
+        {
+            "id": "inner_border_southwest_border_north",
+            "from": "border_southwest",
+            "to": "border_north",
+            "type": "road",
+            "biome": "borderland"
+        },
+        {
+            "id": "bridge_light",
+            "from": "border_north",
+            "to": "light_farm",
+            "type": "road",
+            "biome": "light"
+        },
+        {
+            "id": "road_farm_cap",
+            "from": "light_farm",
+            "to": "light_cap",
+            "type": "road",
+            "biome": "light"
+        },
+        {
+            "id": "road_mine_cap",
+            "from": "light_mine",
+            "to": "light_cap",
+            "type": "road",
+            "biome": "light"
+        },
+        {
+            "id": "road_port_cap",
+            "from": "light_port",
+            "to": "light_cap",
+            "type": "road",
+            "biome": "light"
+        },
+        {
+            "id": "road_farm_mine",
+            "from": "light_farm",
+            "to": "light_mine",
+            "type": "road",
+            "biome": "light"
+        },
+        {
+            "id": "bridge_shadow",
+            "from": "border_southeast",
+            "to": "shadow_swamp",
+            "type": "road",
+            "biome": "shadow"
+        },
+        {
+            "id": "road_swamp_cap",
+            "from": "shadow_swamp",
+            "to": "shadow_cap",
+            "type": "road",
+            "biome": "shadow"
+        },
+        {
+            "id": "road_ruins_cap",
+            "from": "shadow_ruins",
+            "to": "shadow_cap",
+            "type": "road",
+            "biome": "shadow"
+        },
+        {
+            "id": "road_void_cap",
+            "from": "shadow_void",
+            "to": "shadow_cap",
+            "type": "road",
+            "biome": "shadow"
+        },
+        {
+            "id": "bridge_instinct",
+            "from": "border_southwest",
+            "to": "instinct_jungle",
+            "type": "road",
+            "biome": "instinct"
+        },
+        {
+            "id": "road_jungle_cap",
+            "from": "instinct_jungle",
+            "to": "instinct_cap",
+            "type": "road",
+            "biome": "instinct"
+        },
+        {
+            "id": "road_canyon_cap",
+            "from": "instinct_canyon",
+            "to": "instinct_cap",
+            "type": "road",
+            "biome": "instinct"
+        },
+        {
+            "id": "road_tundra_cap",
+            "from": "instinct_tundra",
+            "to": "instinct_cap",
+            "type": "road",
+            "biome": "instinct"
+        },
+        {
+            "id": "path_light_ash",
+            "from": "light_mine",
+            "to": "wild_ashlands",
+            "type": "road",
+            "biome": "wasteland"
+        },
+        {
+            "id": "path_shadow_ash",
+            "from": "shadow_ruins",
+            "to": "wild_ashlands",
+            "type": "road",
+            "biome": "wasteland"
+        },
+        {
+            "id": "path_shadow_deep",
+            "from": "shadow_void",
+            "to": "wild_deep",
+            "type": "road",
+            "biome": "wasteland"
+        },
+        {
+            "id": "path_instinct_deep",
+            "from": "instinct_tundra",
+            "to": "wild_deep",
+            "type": "road",
+            "biome": "wasteland"
+        },
+        {
+            "id": "path_instinct_peaks",
+            "from": "instinct_canyon",
+            "to": "wild_peaks",
+            "type": "road",
+            "biome": "wasteland"
+        },
+        {
+            "id": "path_light_peaks",
+            "from": "light_farm",
+            "to": "wild_peaks",
+            "type": "road",
+            "biome": "wasteland"
+        }
+    ]
+}
