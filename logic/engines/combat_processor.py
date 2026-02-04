@@ -29,9 +29,11 @@ def process_round(game):
             
             # Validate Target
             is_valid = combat_engine.validate_target(combatant, target)
-            target_dead_pending = target and target.hp <= 0 and (target in room.monsters or target in room.players)
+            # Check if target is effectively dead (HP <= 0). 
+            # They might not be in the room anymore if another player killed them earlier in this tick.
+            target_is_dead = target and target.hp <= 0
             
-            if not is_valid and not target_dead_pending:
+            if not is_valid or target_is_dead:
                 # Target invalid/dead/gone. Check for other attackers.
                 valid_attackers = [a for a in combatant.attackers if combat_engine.validate_target(combatant, a)]
                 combatant.attackers = valid_attackers
@@ -43,16 +45,42 @@ def process_round(game):
                     combatant.send_line(f"You turn to fight {new_target.name}!")
                     target = new_target
                 else:
-                    if target:
+                    # Only warn if target exists, is alive, but invalid (e.g. moved/bugged)
+                    if target and not target_is_dead:
                         logger.warning(f"Dropping combat for {combatant.name}. Target {target.name} invalid.")
                     combatant.send_line(f"You are no longer fighting.")
                     combatant.fighting = None
+                    combatant.state = "normal"
                     players_to_prompt.add(combatant)
                     continue
 
             # Calculate damage
             raw_damage = combat_engine.calculate_player_damage(combatant)
             
+            # Assassin Passive: First attack deals 20% more damage
+            # We check if the player is NOT yet in the target's attacker list
+            if combatant.active_class == 'assassin' and combatant not in target.attackers:
+                raw_damage = int(raw_damage * 1.20)
+                combatant.send_line(f"{Colors.CYAN}(Assassin) Critical opening strike!{Colors.RESET}")
+            
+            # Rogue Passive: Dodge Chance
+            # Base 5% + (DEX-10)*0.5%
+            target_dex = 10
+            if hasattr(target, 'get_stat'):
+                target_dex = target.get_stat('dex')
+            
+            dodge_chance = 5 + max(0, (target_dex - 10) * 0.5)
+            if hasattr(target, 'active_class') and target.active_class == 'rogue':
+                dodge_chance += 10 # Passive bonus
+            
+            if random.uniform(0, 100) < dodge_chance:
+                combatant.send_line(f"{Colors.YELLOW}{target.name} dodges your attack!{Colors.RESET}")
+                if hasattr(target, 'send_line'):
+                    target.send_line(f"{Colors.GREEN}You dodge {combatant.name}'s attack!{Colors.RESET}")
+                # Force prompt update
+                players_to_prompt.add(combatant)
+                continue # Skip damage application
+
             # Apply Defense (Armor + Buffs)
             defense = 0
             if hasattr(target, 'get_defense'):
@@ -64,24 +92,39 @@ def process_round(game):
                 multiplier = target.get_damage_modifier()
 
             damage = max(1, int((raw_damage - defense) * multiplier))
+            
+            # Paladin Passive: Damage Reduction
+            if hasattr(target, 'active_class') and target.active_class == 'paladin':
+                damage = int(damage * 0.90) # 10% reduction
+                
             target.hp -= damage
             
             if damage > 0:
-                att_msg, tgt_msg, _ = combat_formatter.format_damage(combatant.name, target.name, damage)
-                combatant.send_line(f"\r\n{att_msg}")
+                att_msg, tgt_msg, room_msg = combat_formatter.format_damage(combatant.name, target.name, damage)
+                combatant.send_line(att_msg)
                 
                 # Weapon Effects (Bleed)
                 if combatant.equipped_weapon and "bleed" in combatant.equipped_weapon.flags:
                     # Apply bleed for 10 seconds (5 ticks)
                     status_effects_engine.apply_effect(target, "bleed", 10)
                 
+                # Broadcast to spectators
+                for p in room.players:
+                    if p != combatant and p != target:
+                        p.send_line(room_msg)
+                
             if hasattr(target, 'send_line'):
-                target.send_line(f"\r\n{tgt_msg}")
+                target.send_line(tgt_msg)
                 if hasattr(target, 'get_prompt'):
                     # Concentration Loss on Hit
                     conc_loss = random.randint(1, 5)
                     target.resources['concentration'] = max(0, target.resources.get('concentration', 0) - conc_loss)
                     players_to_prompt.add(target)
+                    
+                    # Berserker Passive: Gain Momentum when taking damage
+                    if target.active_class == 'berserker':
+                        target.resources['momentum'] = min(100, target.resources.get('momentum', 0) + 5)
+                        # Optional: target.send_line(f"{Colors.RED}Pain fuels your rage! (+5 Momentum){Colors.RESET}")
             
             if target.hp <= 0:
                 combatant.send_line(f"{Colors.BOLD}{Colors.YELLOW}You have defeated {target.name}!{Colors.RESET}")
@@ -120,6 +163,17 @@ def process_round(game):
                     target.fighting = mob
                     target.state = "combat"
 
+            # AI Turn (Spells/Skills)
+            # Check if mob wants to do something special instead of attacking
+            did_ai_act, ai_target_died = mob_manager.execute_ai_turn(game, mob, target)
+            if did_ai_act:
+                if ai_target_died:
+                    if isinstance(target, Player):
+                        handle_player_death(game, target, mob)
+                    elif isinstance(target, Monster):
+                        handle_mob_death(game, target, mob)
+                continue # Skip standard auto-attack
+
             # Rally Mechanic (Summon Help)
             if "rally" in mob.tags and mob.hp < mob.max_hp * 0.5:
                 # 5% chance per round to rally if hurt
@@ -144,10 +198,15 @@ def process_round(game):
             target.hp -= damage
             
             if damage > 0:
-                _, tgt_msg, _ = combat_formatter.format_damage(mob.name, target.name, damage)
+                _, tgt_msg, room_msg = combat_formatter.format_damage(mob.name, target.name, damage)
                 if hasattr(target, 'send_line'):
-                    target.send_line(f"\r\n{tgt_msg}")
+                    target.send_line(tgt_msg)
             
+                # Broadcast to spectators
+                for p in room.players:
+                    if p != target: # Target already got msg above
+                        p.send_line(room_msg)
+
             if target.hp <= 0:
                 if hasattr(target, 'send_line'):
                     target.send_line(f"\n{Colors.BOLD}{Colors.RED}You have been defeated by {mob.name}!{Colors.RESET}")
@@ -165,6 +224,7 @@ def process_round(game):
 
         # Send prompts once per tick
         for p in players_to_prompt:
+            p.send_line("")
             p.send_line(p.get_prompt())
 
 def _check_aggro(room):

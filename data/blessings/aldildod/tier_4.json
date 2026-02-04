@@ -1,0 +1,113 @@
+{
+    "blessings": [
+        {
+            "id": "elemental_cataclysm",
+            "name": "Elemental Cataclysm",
+            "tier": 4,
+            "base_power": 50,
+            "scaling": {
+                "int": 2.5
+            },
+            "requirements": {
+                "int": 20,
+                "cost": {
+                    "concentration": 60
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "elemental",
+                "int",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Massive damage. Explodes if targets have status effects.",
+            "cost": 1000,
+            "deity_id": "aldildod",
+            "required_class": "Elementalist"
+        },
+        {
+            "id": "nexus",
+            "name": "Nexus",
+            "tier": 4,
+            "base_power": 0,
+            "scaling": {
+                "int": 2.5
+            },
+            "requirements": {
+                "int": 20,
+                "cost": {
+                    "concentration": 60
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "space",
+                "portal",
+                "int",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Creates a two-way portal to a target location.",
+            "cost": 1000,
+            "deity_id": "aldildod",
+            "required_class": "Temporalist"
+        },
+        {
+            "id": "reality_fracture",
+            "name": "Reality Fracture",
+            "tier": 4,
+            "base_power": 50,
+            "scaling": {
+                "int": 2.5
+            },
+            "requirements": {
+                "int": 20,
+                "cost": {
+                    "concentration": 60
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "arcane",
+                "control",
+                "int"
+            ],
+            "charges": 1,
+            "description": "Ruptures reality, damaging and stunning enemies.",
+            "cost": 1000,
+            "deity_id": "aldildod",
+            "required_class": "Mage"
+        },
+        {
+            "id": "trinity_of_destruction",
+            "name": "Trinity of Destruction",
+            "tier": 4,
+            "base_power": 60,
+            "scaling": {
+                "int": 3.0
+            },
+            "requirements": {
+                "int": 22,
+                "cost": {
+                    "concentration": 70
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "elemental",
+                "int",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Hits target with Fire, Ice, and Lightning simultaneously.",
+            "cost": 1000,
+            "deity_id": "aldildod",
+            "required_class": "Elementalist"
+        }
+    ]
+}

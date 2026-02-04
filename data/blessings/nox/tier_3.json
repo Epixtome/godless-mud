@@ -1,0 +1,81 @@
+{
+    "blessings": [
+        {
+            "id": "backstab",
+            "name": "Backstab",
+            "tier": 3,
+            "base_power": 35,
+            "scaling": {
+                "dex": 2.0
+            },
+            "requirements": {
+                "dex": 15,
+                "cost": {
+                    "stamina": 30
+                }
+            },
+            "deity_id": "nox",
+            "identity_tags": [
+                "dark",
+                "martial",
+                "stealth",
+                "dex"
+            ],
+            "charges": 2,
+            "cost": 500,
+            "description": "A high damage strike that requires stealth."
+        },
+        {
+            "id": "phantom_strike",
+            "name": "Phantom Strike",
+            "tier": 3,
+            "base_power": 35,
+            "scaling": {
+                "dex": 1.8
+            },
+            "requirements": {
+                "dex": 18,
+                "cost": {
+                    "stamina": 40,
+                    "concentration": 10
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "martial",
+                "teleport",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Teleport to foe and strike, ignoring all Armor.",
+            "cost": 500,
+            "deity_id": "nox"
+        },
+        {
+            "id": "shroud_of_shadows",
+            "name": "Shroud of Shadows",
+            "tier": 3,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.5
+            },
+            "requirements": {
+                "dex": 16,
+                "cost": {
+                    "concentration": 40
+                },
+                "cooldown": 10
+            },
+            "identity_tags": [
+                "dark",
+                "stealth",
+                "dex",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Vanish from sight. Next attack deals bonus damage.",
+            "cost": 500,
+            "deity_id": "nox"
+        }
+    ]
+}

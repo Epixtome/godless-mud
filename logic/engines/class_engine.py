@@ -26,16 +26,25 @@ def calculate_identity(player):
         match = True
         score = 0
         reqs = cls.requirements.get('tags', {})
+        stat_reqs = cls.requirements.get('stats', {})
         
-        if not reqs: 
+        if not reqs and not stat_reqs: 
             continue
         
+        # 1. Check Tag Requirements
         for tag, required_count in reqs.items():
             if tag_counts.get(tag, 0) < required_count:
                 # logger.debug(f"Failed {cls.id}: Need {required_count} {tag}, have {tag_counts.get(tag, 0)}")
                 match = False
                 break
             score += required_count
+            
+        # 2. Check Stat Requirements (Base Stats)
+        if match and stat_reqs:
+            for stat, min_val in stat_reqs.items():
+                if player.base_stats.get(stat, 0) < min_val:
+                    match = False
+                    break
         
         if match and score > best_score:
             found_class_id = cls.id

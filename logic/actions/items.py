@@ -2,6 +2,7 @@ from logic import command_manager
 from logic import search
 from logic.common import find_by_index
 from utilities.colors import Colors
+from models import Corpse, Consumable
 
 @command_manager.register("inventory", "inv", "i", category="information")
 def inventory(player, args):
@@ -31,7 +32,7 @@ def equipment(player, args):
         "Arms": "Nothing", "Hands": "Nothing", 
         "Legs": "Nothing", "Feet": "Nothing",
         "Main Hand": player.equipped_weapon.name if player.equipped_weapon else "Nothing",
-        "Off Hand": "Nothing",
+        "Off Hand": player.equipped_offhand.name if player.equipped_offhand else "Nothing",
         "Floating": "Nothing",
         "Mount": "Nothing" # Placeholder
     }
@@ -227,6 +228,16 @@ def equip_item(player, args):
         player.send_line(f"You wield {item.name}.")
         
     elif hasattr(item, 'defense'): # Armor
+        # Check for Shield/Offhand
+        if "shield" in item.flags or "shield" in item.name.lower():
+            if player.equipped_offhand:
+                player.inventory.append(player.equipped_offhand)
+                player.send_line(f"You unequip {player.equipped_offhand.name}.")
+            player.equipped_offhand = item
+            player.inventory.remove(item)
+            player.send_line(f"You hold {item.name} in your off hand.")
+            return
+
         if player.equipped_armor:
             if len(player.inventory) >= player.inventory_limit: # Check limit for swap
                 player.send_line("Your inventory is full, cannot swap armor.")
@@ -257,6 +268,15 @@ def remove_item(player, args):
                 player.equipped_weapon = None
                 removed_count += 1
         
+        if player.equipped_offhand:
+            if len(player.inventory) >= player.inventory_limit:
+                player.send_line("Your inventory is full, cannot remove offhand.")
+            else:
+                player.inventory.append(player.equipped_offhand)
+                player.send_line(f"You stop holding {player.equipped_offhand.name}.")
+                player.equipped_offhand = None
+                removed_count += 1
+
         if player.equipped_armor:
             if len(player.inventory) >= player.inventory_limit:
                 player.send_line("Your inventory is full, cannot remove armor.")
@@ -288,6 +308,16 @@ def remove_item(player, args):
         player.inventory.append(player.equipped_armor)
         player.send_line(f"You stop wearing {player.equipped_armor.name}.")
         player.equipped_armor = None
+        return
+
+    # Check Offhand
+    if player.equipped_offhand and args.lower() in player.equipped_offhand.name.lower():
+        if len(player.inventory) >= player.inventory_limit:
+            player.send_line("Your inventory is full.")
+            return
+        player.inventory.append(player.equipped_offhand)
+        player.send_line(f"You stop holding {player.equipped_offhand.name}.")
+        player.equipped_offhand = None
         return
         
     player.send_line("You aren't equipping that.")
@@ -379,6 +409,10 @@ def open_obj(player, args):
         target = find_by_index(player.room.items, args)
         
     if target:
+        if isinstance(target, Corpse):
+            player.send_line("You cannot open a corpse. Just 'get' items from it.")
+            return
+
         if not hasattr(target, 'inventory'):
             player.send_line(f"{target.name} cannot be opened.")
             return
@@ -423,6 +457,10 @@ def close_obj(player, args):
         target = find_by_index(player.room.items, args)
         
     if target:
+        if isinstance(target, Corpse):
+            player.send_line("You cannot close a corpse.")
+            return
+
         if not hasattr(target, 'inventory'):
             player.send_line(f"{target.name} cannot be closed.")
             return

@@ -1,0 +1,210 @@
+{
+    "blessings": [
+        {
+            "id": "ancient_wisdom",
+            "name": "Ancient Wisdom",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.5
+            },
+            "requirements": {
+                "wis": 12,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "buff",
+                "wis",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "Temporarily increases Wisdom.",
+            "cost": 100,
+            "deity_id": "sophia"
+        },
+        {
+            "id": "cure_light",
+            "name": "Cure Light",
+            "tier": 2,
+            "base_power": 15,
+            "scaling": {
+                "wis": 1.4
+            },
+            "requirements": {
+                "wis": 12,
+                "cost": {
+                    "concentration": 15
+                }
+            },
+            "identity_tags": [
+                "light",
+                "healing",
+                "wis",
+                "spell"
+            ],
+            "charges": 4,
+            "description": "Heals a target and grants temporary Defense.",
+            "cost": 100,
+            "deity_id": "sophia"
+        },
+        {
+            "id": "enhanced_heal",
+            "name": "Enhanced Heal",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.2
+            },
+            "requirements": {
+                "wis": 12,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "buff",
+                "regen",
+                "wis",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "Increases natural health regeneration.",
+            "cost": 100,
+            "deity_id": "sophia"
+        },
+        {
+            "id": "flame_blanket",
+            "name": "Flame Blanket",
+            "tier": 2,
+            "base_power": 10,
+            "scaling": {
+                "wis": 1.2
+            },
+            "requirements": {
+                "wis": 12,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "protection",
+                "field_effect",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "Fire-damage shield for the party.",
+            "cost": 100,
+            "deity_id": "sophia"
+        },
+        {
+            "id": "healing_mist",
+            "name": "Healing Mist",
+            "tier": 2,
+            "base_power": 10,
+            "scaling": {
+                "int": 1.0,
+                "wis": 1.2
+            },
+            "requirements": {
+                "int": 12,
+                "cost": {
+                    "concentration": 25
+                }
+            },
+            "identity_tags": [
+                "light",
+                "alchemy",
+                "healing",
+                "aoe",
+                "wis",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "Creates a mist that heals nearby allies.",
+            "cost": 100,
+            "deity_id": "sophia"
+        },
+        {
+            "id": "mend",
+            "name": "Mend",
+            "tier": 2,
+            "base_power": 15,
+            "scaling": {
+                "wis": 1.2
+            },
+            "requirements": {
+                "wis": 12,
+                "cooldown": 4,
+                "cost": {
+                    "concentration": 15
+                }
+            },
+            "identity_tags": [
+                "light",
+                "wis",
+                "mend",
+                "spell"
+            ],
+            "charges": 3,
+            "description": "A standard, reliable health restoration (Light Spark).",
+            "cost": 100,
+            "deity_id": "sophia"
+        },
+        {
+            "id": "regen",
+            "name": "Regen",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.2
+            },
+            "requirements": {
+                "wis": 12,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "buff",
+                "hot",
+                "wis",
+                "spell"
+            ],
+            "charges": 3,
+            "description": "Heals the target over time.",
+            "cost": 100,
+            "deity_id": "sophia"
+        },
+        {
+            "id": "sanctuary",
+            "name": "Sanctuary",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.5
+            },
+            "requirements": {
+                "wis": 14,
+                "cost": {
+                    "concentration": 30
+                }
+            },
+            "identity_tags": [
+                "light",
+                "protection",
+                "defense",
+                "wis"
+            ],
+            "charges": 2,
+            "description": "Reduces all damage taken by 50% for a short time.",
+            "cost": 100,
+            "deity_id": "sophia"
+        }
+    ]
+}

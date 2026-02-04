@@ -1,39 +1,112 @@
 {
     "help": [
         {
-                        "keywords": ["commune"],
+            "keywords": ["combat", "fighting", "kill"],
+            "title": "Combat System",
+            "body": "Combat in Godless is real-time and automatic. Once engaged (via 'kill' or being attacked), you will auto-attack every few seconds. You can weave Skills and Spells into combat using commands like 'cast fireball' or 'kick'.\n\nCombat is 'Sticky': You cannot switch targets freely without fleeing or defeating your current opponent. If you are attacked by multiple enemies, you will automatically switch to the next one if your target dies.",
+            "category": "system"
+        },
+        {
+            "keywords": ["stats", "attributes", "str", "dex", "con", "wis", "int", "luk"],
+            "title": "Attributes & Stats",
+            "body": "Your character is defined by six primary attributes:\n\nSTR (Strength): Melee damage and carrying capacity.\nDEX (Dexterity): Accuracy, evasion, and critical hit chance.\nCON (Constitution): Max Health and resistance to status effects.\nWIS (Wisdom): Healing power, perception, and willpower.\nINT (Intelligence): Spell power and magical reserves.\nLUK (Luck): Critical hit chance, loot drops, and random events.",
+            "category": "system"
+        },
+        {
+            "keywords": ["resources", "hp", "stamina", "concentration", "favor"],
+            "title": "Resources",
+            "body": "HP: Your life force. If it hits 0, you die.\nStamina: Physical energy used for movement and martial skills. Regenerates quickly.\nConcentration: Mental focus used for spells. Regenerates slowly. Taking damage reduces Concentration.\nFavor: Divine currency earned by killing mobs. Used to buy Blessings from Deities.",
+            "category": "system"
+        },
+        {
+            "keywords": ["blessings", "deck", "skills", "spells"],
+            "title": "The Blessing Deck",
+            "body": "Your abilities come from Blessings granted by Deities. You can 'know' many blessings, but you can only 'equip' a limited number at once in your Deck.\n\nDeck Limits:\nTier 1 (Foundations): 4 Slots\nTier 2 (Sparks): 3 Slots\nTier 3 (Masteries): 2 Slots\nTier 4 (Ultimates): 1 Slot\n\nYour equipped blessings determine your Class Identity.",
+            "category": "system"
+        },
+        {
+            "keywords": ["class", "classes", "identity"],
+            "title": "Class Identity",
+            "body": "You do not pick a class at character creation. Your class is determined dynamically by the Tags on your equipped Blessings. For example, equipping many [Fire] and [Spell] blessings might make you a Pyromancer.\n\nClasses provide passive bonuses and are often required to use Tier 4 Ultimate abilities. Use 'lore classes' to see specific requirements.",
+            "category": "system"
+        },
+        {
+            "keywords": ["synergy", "synergies"],
+            "title": "Synergies",
+            "body": "Synergies are passive bonuses unlocked by having specific combinations of tags in your deck. For example, having 2 [Light] tags might grant 'Holy Fortitude' (+CON). These happen automatically.",
+            "category": "system"
+        },
+        {
+            "keywords": ["security", "sec", "pvp"],
+            "title": "Security Levels",
+            "body": "The world is divided into security sectors based on distance from Capitals:\n\nHigh-Sec (1.0 - 0.5): Near capitals. No PvP. Guards kill aggressors.\nLow-Sec (0.4 - 0.1): Wilderness. PvP Allowed. Guards only at outposts.\nNull-Sec (0.0): Deep wilds/Warzones. Lawless. Free-for-all PvP. Best loot.",
+            "category": "system"
+        },
+        {
+            "keywords": ["death", "dying"],
+            "title": "Death",
+            "body": "If you die, you leave behind a corpse containing your items. You will respawn at your Kingdom's capital (or the starting area). You must return to your corpse to retrieve your gear. In High-Sec, you keep your items. In Null-Sec, anyone can loot your corpse.",
+            "category": "system"
+        },
+        {
+            "keywords": ["crafting", "craft", "recipes"],
+            "title": "Crafting",
+            "body": "You can craft items using materials found in the world. Use 'recipes' to see what you can make, and 'craft <item>' to create it. You need the ingredients in your inventory.",
+            "category": "system"
+        },
+        {
+            "keywords": ["travel", "movement", "map"],
+            "title": "Travel & Mapping",
+            "body": "Move using cardinal directions (n, s, e, w, u, d). Use 'map' to see a grid of the surrounding area. 'scan' reveals nearby enemies. 'recall' returns you to your capital city.",
+            "category": "system"
+        },
+        {
+            "keywords": ["commune"],
             "title": "Commune",
-            "body": "Use 'commune' at a shrine or near a Deity Avatar to buy new blessings using Favor."
+            "body": "Use 'commune' at a shrine or near a Deity Avatar to enter a trance. While communing, you can buy new blessings with Favor, and manage your deck using 'memorize' and 'forget'. You must be at the specific deity's shrine to modify their specific blessings.",
+            "category": "system"
         },
         {
             "keywords": ["sylva", "instinct"],
             "title": "Sylva, The Wild Mother",
-            "body": "Sylva represents the untamed growth of nature and the wisdom of instinct. She is worshipped by druids, rangers, and those who reject the rigid order of Light or the nihilism of Dark. Her blessings focus on Wisdom, Nature, and Survival."
+            "body": "Sylva represents the untamed growth of nature and the wisdom of instinct. She is worshipped by druids, rangers, and those who reject the rigid order of Light or the nihilism of Dark. Her blessings focus on Wisdom, Nature, and Survival.",
+            "category": "lore"
         },
         {
             "keywords": ["krog", "instinct"],
             "title": "Krog, The Primal Force",
-            "body": "Krog is the embodiment of raw physical power and the survival of the fittest. He cares not for morality, only strength. His followers are often barbarians and warriors who seek to crush their enemies with overwhelming force."
+            "body": "Krog is the embodiment of raw physical power and the survival of the fittest. He cares not for morality, only strength. His followers are often barbarians and warriors who seek to crush their enemies with overwhelming force.",
+            "category": "lore"
         },
         {
             "keywords": ["nox", "dark"],
             "title": "Nox, The Silent Blade",
-            "body": "Nox is the patron of assassins, thieves, and those who operate in the shadows. He values precision and the element of surprise. His blessings enhance Dexterity, Stealth, and Critical Strikes."
+            "body": "Nox is the patron of assassins, thieves, and those who operate in the shadows. He values precision and the element of surprise. His blessings enhance Dexterity, Stealth, and Critical Strikes.",
+            "category": "lore"
         },
         {
             "keywords": ["solara", "light"],
             "title": "Solara, The Sun Queen",
-            "body": "Solara brings the blinding truth of the sun. She represents order, hierarchy, and the burning purity of Light. Her followers are zealots and mages who wield fire and holy energy to purge the world of darkness."
+            "body": "Solara brings the blinding truth of the sun. She represents order, hierarchy, and the burning purity of Light. Her followers are zealots and mages who wield fire and holy energy to purge the world of darkness.",
+            "category": "lore"
         },
         {
             "keywords": ["umbra", "dark"],
             "title": "Umbra, The Void",
-            "body": "Umbra is the emptiness between stars. She represents the arcane mysteries of the void and the power of the mind to unravel reality. Her blessings focus on Intelligence, Curses, and Anti-Magic."
+            "body": "Umbra is the emptiness between stars. She represents the arcane mysteries of the void and the power of the mind to unravel reality. Her blessings focus on Intelligence, Curses, and Anti-Magic.",
+            "category": "lore"
         },
         {
             "keywords": ["aurelius", "light"],
             "title": "Aurelius, The Golden Shield",
-            "body": "Aurelius is the defender of the weak and the champion of justice. He represents the protective aspect of Light. His blessings focus on Constitution, Defense, and Healing."
+            "body": "Aurelius is the defender of the weak and the champion of justice. He represents the protective aspect of Light. His blessings focus on Constitution, Defense, and Healing.",
+            "category": "lore"
+        },
+        {
+            "keywords": ["kingdoms", "factions"],
+            "title": "The Three Kingdoms",
+            "body": "The world is divided into three primal philosophies:\n\nLIGHT (Solas): Order, Civilization, Hierarchy. Capital: Sanctum.\nDARK (Umbra): Ambition, Mystery, Individualism. Capital: Noxus.\nINSTINCT (Sylva): Nature, Survival, Freedom. Capital: Ironbark.",
+            "category": "lore"
         }
     ]
 }

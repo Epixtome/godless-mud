@@ -1,14 +1,15 @@
 import importlib
 from core import loader
 import logic.command_manager as command_manager
-from logic.engines import interaction_engine
 from logic.engines import status_effects_engine
 from logic.engines import class_engine
+from logic.engines import synergy_engine
 from models import Monster, Door
-import models, json
+import models
 from collections import defaultdict
 from utilities.colors import Colors
 import os
+from core.world import get_room_id
 
 # Lazy import information inside functions to avoid circular dependency during startup
 # if information.py imports command_manager which is used here.
@@ -58,6 +59,10 @@ def spawn(player, args):
                 new_obj.room = player.room
                 new_obj.quests = proto.quests
                 new_obj.can_be_companion = proto.can_be_companion
+                new_obj.game = player.game
+                new_obj.resources = {"stamina": 100, "concentration": 100, "mana": 100}
+                new_obj.cooldowns = {}
+                new_obj.active_class = None
                 player.room.monsters.append(new_obj)
             else:
                 new_obj = proto.clone()
@@ -124,7 +129,14 @@ def teleport(player, room_name):
         player.room = target_room
         player.room.players.append(player)
         if hasattr(player, 'visited_rooms'):
-            player.visited_rooms.add(target_room.id)
+            # Ensure list format
+            if isinstance(player.visited_rooms, set):
+                player.visited_rooms = list(player.visited_rooms)
+            
+            if target_room.id not in player.visited_rooms:
+                player.visited_rooms.append(target_room.id)
+                if len(player.visited_rooms) > 200:
+                    player.visited_rooms = player.visited_rooms[-200:]
         player.room.broadcast(f"{player.name} appears from thin air.")
         from logic.actions import information
         information.look(player, "")
@@ -157,9 +169,18 @@ def restart(player, args):
     import utilities.mapper as mapper
     import logic.engines.vision_engine as vision_engine
     import logic.engines.pathfinding_engine as pathfinding_engine
+    import logic.engines.interaction_engine as interaction_engine
+    import utilities.combat_formatter as combat_formatter
 
     try:
-        importlib.reload(models)
+        # Reload Model Package Submodules
+        import models.items, models.entities, models.world, models.meta
+        importlib.reload(models.items)
+        importlib.reload(models.entities)
+        importlib.reload(models.world)
+        importlib.reload(models.meta)
+        importlib.reload(models) # Reload __init__.py
+        
         # importlib.reload(information) # Reloading this might be tricky if not imported at top
         importlib.reload(movement)
         importlib.reload(items)
@@ -180,6 +201,7 @@ def restart(player, args):
         importlib.reload(mapper)
         importlib.reload(vision_engine)
         importlib.reload(pathfinding_engine)
+        importlib.reload(combat_formatter)
         
         player.game.reload_world()
         
@@ -221,13 +243,27 @@ def learn(player, args):
         return
     
     b_id = args.lower()
+    
+    # Try exact match, then try replacing spaces with underscores
     if b_id not in player.game.world.blessings:
-        player.send_line("Blessing ID not found.")
-        return
+        if b_id.replace(" ", "_") in player.game.world.blessings:
+            b_id = b_id.replace(" ", "_")
+        else:
+            # Partial match search
+            matches = [bid for bid in player.game.world.blessings if b_id in bid]
+            if len(matches) == 1:
+                b_id = matches[0]
+            elif len(matches) > 1:
+                player.send_line(f"Multiple blessings match '{args}': {', '.join(matches[:5])}")
+                return
+            else:
+                player.send_line("Blessing ID not found.")
+                return
         
     if b_id not in player.known_blessings:
         player.known_blessings.append(b_id)
-    player.send_line(f"Learned {b_id}.")
+        class_engine.check_unlocks(player)
+    player.send_line(f"Learned {b_id}. (Use @memorize to equip)")
 
 @command_manager.register("@memorize", admin=True)
 def admin_memorize(player, args):
@@ -237,14 +273,31 @@ def admin_memorize(player, args):
         return
         
     b_id = args.lower()
+    # Add fuzzy search logic, same as @learn
     if b_id not in player.game.world.blessings:
-        player.send_line("Blessing ID not found.")
-        return
+        if b_id.replace(" ", "_") in player.game.world.blessings:
+            b_id = b_id.replace(" ", "_")
+        else:
+            matches = [bid for bid in player.game.world.blessings if b_id in bid]
+            if len(matches) == 1:
+                b_id = matches[0]
+            elif len(matches) > 1:
+                player.send_line(f"Multiple blessings match '{args}': {', '.join(matches[:5])}")
+                return
+            else:
+                player.send_line("Blessing ID not found.")
+                return
+        
+    if b_id not in player.known_blessings:
+        player.known_blessings.append(b_id)
+        class_engine.check_unlocks(player)
+        player.send_line(f"(Auto-learned {b_id})")
         
     if b_id not in player.equipped_blessings:
         player.equipped_blessings.append(b_id)
         player.send_line(f"Memorized {b_id}.")
         class_engine.calculate_identity(player)
+        synergy_engine.calculate_synergies(player)
     else:
         player.send_line("Already memorized.")
 
@@ -406,25 +459,173 @@ def dig(player, args):
         # dig_room handled the error message (e.g. cross-zone collision)
         pass
 
-@command_manager.register("@name", admin=True)
-def set_room_name(player, args):
-    """Set the name of the current room."""
-    if not args:
-        player.send_line("Usage: @name <new name>")
-        return
-    
-    player.room.name = args
-    player.send_line(f"Room name set to: {args}")
+# --- @set Helper Functions ---
 
-@command_manager.register("@desc", "@description", admin=True)
-def set_room_desc(player, args):
-    """Set the description of the current room."""
-    if not args:
-        player.send_line("Usage: @desc <new description>")
-        return
-    
+def _set_room_name(player, args):
+    if not args: return False, "Usage: @set room name <name>"
+    # If this was a generated room, make it persistent now
+    if hasattr(player.room, '_generated'): delattr(player.room, '_generated')
+    player.room.name = args
+    return True, f"Room name set to: {args}"
+
+def _set_room_desc(player, args):
+    if not args: return False, "Usage: @set room desc <description>"
+    # If this was a generated room, make it persistent now
+    if hasattr(player.room, '_generated'): delattr(player.room, '_generated')
     player.room.description = args
-    player.send_line("Room description updated.")
+    return True, "Room description updated."
+
+def _set_room_zone(player, args):
+    if not args: return False, "Usage: @set room zone <zone_id>"
+    player.room.zone_id = args.lower()
+    return True, f"Room zone set to '{args.lower()}'."
+
+def _set_room_deity(player, args):
+    if not args: return False, "Usage: @set room deity <deity_id> | none"
+    d_id = args.lower()
+    player.room.deity_id = None if d_id == 'none' else d_id
+    return True, f"Room deity set to '{d_id}'."
+
+def _set_room_coords(player, args):
+    try:
+        x, y, z = map(int, args.split())
+        player.room.x = x
+        player.room.y = y
+        player.room.z = z
+        from logic.engines import spatial_engine
+        spatial_engine.invalidate()
+        return True, f"Room coordinates set to {x}, {y}, {z}. (Save zone to persist)"
+    except ValueError:
+        return False, "Usage: @set room coords <x> <y> <z>"
+
+def _set_room_terrain(player, args):
+    if not args: return False, "Usage: @set room terrain <type>"
+    player.room.terrain = args.lower()
+    return True, f"Terrain set to '{args.lower()}'. (Save zone to persist)"
+
+def _set_room_mob(player, args):
+    if not args: return False, "Usage: @set room mob <mob_id>"
+    mob_id = args.lower()
+    if mob_id not in player.game.world.monsters:
+        return False, "Mob ID not found."
+    player.room.static_monsters.append(mob_id)
+    return True, f"Added {mob_id} to static spawns. (Use @spawn to create instance now, @savezone to persist)"
+
+def _set_room_item(player, args):
+    if not args: return False, "Usage: @set room item <item_id>"
+    item_id = args.lower()
+    if item_id not in player.game.world.items:
+        return False, "Item ID not found."
+    player.room.static_items.append(item_id)
+    return True, f"Added {item_id} to static spawns. (Use @spawn to create instance now, @savezone to persist)"
+
+def _set_player_stat(player, args):
+    parts = args.split()
+    if len(parts) < 2: return False, "Usage: @set player stat <stat> <value>"
+    stat = parts[0].lower()
+    try:
+        value = int(parts[1])
+    except ValueError:
+        return False, "Value must be a number."
+    if stat not in player.base_stats:
+        return False, f"Invalid stat. Choices: {', '.join(player.base_stats.keys())}"
+    player.base_stats[stat] = value
+    return True, f"Set {stat.upper()} to {value}."
+
+def _auto_equip_tags(player, requirements):
+    """Helper to greedily equip blessings to meet tag requirements."""
+    world = player.game.world
+    player.equipped_blessings = [] # Reset deck
+    
+    needed = requirements.copy()
+    iterations = 0
+    
+    # Greedy Algorithm: Find blessing that reduces the most needed tags
+    while any(v > 0 for v in needed.values()) and iterations < 20:
+        iterations += 1
+        best_blessing = None
+        best_score = 0
+        
+        for b in world.blessings.values():
+            if b.id in player.equipped_blessings: continue
+            
+            score = 0
+            for tag in b.identity_tags:
+                if needed.get(tag, 0) > 0:
+                    score += 1
+            
+            if score > best_score:
+                best_score = score
+                best_blessing = b
+        
+        if best_blessing:
+            player.equipped_blessings.append(best_blessing.id)
+            if best_blessing.id not in player.known_blessings:
+                player.known_blessings.append(best_blessing.id)
+            
+            # Decrement needed counts
+            for tag in best_blessing.identity_tags:
+                if tag in needed:
+                    needed[tag] = max(0, needed[tag] - 1)
+        else:
+            break # No useful blessings found
+            
+    # Recalculate Identity
+    class_engine.calculate_identity(player)
+    synergy_engine.calculate_synergies(player)
+
+def _set_player_class(player, args):
+    class_id = args.lower()
+    target_class = player.game.world.classes.get(class_id)
+    if not target_class: return False, f"Class '{class_id}' not found."
+    
+    _auto_equip_tags(player, target_class.requirements.get('tags', {}))
+    return True, f"Auto-equipped for {target_class.name}. Result: {player.active_class}"
+
+def _set_player_synergy(player, args):
+    syn_id = args.lower()
+    target_syn = player.game.world.synergies.get(syn_id)
+    if not target_syn: return False, f"Synergy '{syn_id}' not found."
+    
+    _auto_equip_tags(player, target_syn.requirements.get('tags', {}))
+    return True, f"Auto-equipped for {target_syn.name}."
+
+def _set_player_hp(player, args):
+    try:
+        val = int(args)
+        player.hp = min(player.max_hp, val)
+        return True, f"HP set to {player.hp}."
+    except ValueError:
+        return False, "Usage: @set player hp <amount>"
+
+def _set_player_stamina(player, args):
+    try:
+        val = int(args)
+        player.resources['stamina'] = val
+        return True, f"Stamina set to {val}."
+    except ValueError:
+        return False, "Usage: @set player stamina <amount>"
+
+def _set_player_conc(player, args):
+    try:
+        val = int(args)
+        player.resources['concentration'] = val
+        return True, f"Concentration set to {val}."
+    except ValueError:
+        return False, "Usage: @set player conc <amount>"
+
+def _set_player_kingdom(player, args):
+    kingdom = args.lower()
+    if kingdom not in ["light", "dark", "instinct"]:
+        return False, "Invalid kingdom. Choose: light, dark, instinct."
+    if player.identity_tags:
+        if player.identity_tags[0] in ["light", "dark", "instinct"]:
+            player.identity_tags[0] = kingdom
+        else:
+            player.identity_tags.insert(0, kingdom)
+    else:
+        player.identity_tags = [kingdom]
+    return True, f"Kingdom set to {kingdom.title()}."
 
 @command_manager.register("@savezone", admin=True)
 def save_zone_cmd(player, args):
@@ -443,36 +644,6 @@ def save_zone_cmd(player, args):
         
     success, msg = loader.save_zone(player.game.world, args)
     player.send_line(msg)
-
-@command_manager.register("@addmob", admin=True)
-def add_mob_spawn(player, args):
-    """Add a mob spawn to the room definition."""
-    if not args:
-        player.send_line("Usage: @addmob <mob_id>")
-        return
-    
-    mob_id = args.lower()
-    if mob_id not in player.game.world.monsters:
-        player.send_line("Mob ID not found.")
-        return
-        
-    player.room.static_monsters.append(mob_id)
-    player.send_line(f"Added {mob_id} to static spawns. (Use @spawn to create instance now, @savezone to persist)")
-
-@command_manager.register("@additem", admin=True)
-def add_item_spawn(player, args):
-    """Add an item spawn to the room definition."""
-    if not args:
-        player.send_line("Usage: @additem <item_id>")
-        return
-    
-    item_id = args.lower()
-    if item_id not in player.game.world.items:
-        player.send_line("Item ID not found.")
-        return
-        
-    player.room.static_items.append(item_id)
-    player.send_line(f"Added {item_id} to static spawns. (Use @spawn to create instance now, @savezone to persist)")
 
 @command_manager.register("@deleteroom", admin=True)
 def delete_room(player, args):
@@ -542,46 +713,6 @@ def copy_room(player, args):
     
     player.send_line(f"Copied attributes to {target_room.name} ({target_room.id}).")
 
-@command_manager.register("@setzone", admin=True)
-def set_zone(player, args):
-    """Set the zone of the current room."""
-    if not args:
-        player.send_line("Usage: @setzone <zone_id>")
-        return
-        
-    zone_id = args.lower()
-    player.room.zone_id = zone_id
-    player.send_line(f"Room zone set to '{zone_id}'.")
-
-@command_manager.register("@setdeity", admin=True)
-def set_deity(player, args):
-    """Set the deity of the current room (for commune)."""
-    if not args:
-        player.send_line("Usage: @setdeity <deity_id> | none")
-        return
-        
-    d_id = args.lower()
-    player.room.deity_id = None if d_id == 'none' else d_id
-    player.send_line(f"Room deity set to '{d_id}'.")
-
-@command_manager.register("@setcoords", admin=True)
-def set_coords(player, args):
-    """Set the coordinates of the current room."""
-    if not args:
-        player.send_line("Usage: @setcoords <x> <y> <z>")
-        return
-    
-    try:
-        x, y, z = map(int, args.split())
-        player.room.x = x
-        player.room.y = y
-        player.room.z = z
-        player.send_line(f"Room coordinates set to {x}, {y}, {z}. (Save zone to persist)")
-        from logic.engines import spatial_engine
-        spatial_engine.invalidate()
-    except ValueError:
-        player.send_line("Invalid coordinates.")
-
 @command_manager.register("@roominfo", admin=True)
 def room_info(player, args):
     """Show detailed debug info for the room."""
@@ -589,20 +720,13 @@ def room_info(player, args):
     player.send_line(f"\n--- Room Debug: {r.name} ({r.id}) ---")
     player.send_line(f"Zone: {r.zone_id}")
     player.send_line(f"Coords: {r.x}, {r.y}, {r.z}")
+    player.send_line(f"Generated: {getattr(r, '_generated', False)}")
     player.send_line(f"Exits: {r.exits}")
     player.send_line(f"Static Mobs: {r.static_monsters}")
+    player.send_line(f"Active Mobs: {[m.name + ' (' + str(m.prototype_id) + ')' for m in r.monsters]}")
     player.send_line(f"Static Items: {r.static_items}")
+    player.send_line(f"Active Items: {[i.name for i in r.items]}")
     player.send_line(f"Terrain: {r.terrain}")
-
-@command_manager.register("@terrain", admin=True)
-def set_terrain(player, args):
-    """Set the terrain type of the current room."""
-    if not args:
-        player.send_line("Usage: @terrain <type>")
-        return
-        
-    player.room.terrain = args.lower()
-    player.send_line(f"Terrain set to '{args.lower()}'. (Save zone to persist)")
 
 @command_manager.register("@scan", admin=True)
 def scan_zone(player, args):
@@ -656,62 +780,6 @@ def recruit_mob(player, args):
         
     player.send_line(f"{target.name} is now following you.")
 
-@command_manager.register("@setstat", admin=True)
-def set_stat(player, args):
-    """Set a player's base stat."""
-    if not args:
-        player.send_line("Usage: @setstat <stat> <value>")
-        return
-        
-    parts = args.split()
-    if len(parts) < 2:
-        player.send_line("Usage: @setstat <stat> <value>")
-        return
-        
-    stat = parts[0].lower()
-    try:
-        value = int(parts[1])
-    except ValueError:
-        player.send_line("Value must be a number.")
-        return
-        
-    if stat not in player.base_stats:
-        player.send_line(f"Invalid stat. Choices: {', '.join(player.base_stats.keys())}")
-        return
-        
-    player.base_stats[stat] = value
-    player.send_line(f"Set {stat.upper()} to {value}.")
-
-@command_manager.register("@sethp", admin=True)
-def set_hp(player, args):
-    """Set your current HP."""
-    try:
-        val = int(args)
-        player.hp = min(player.max_hp, val)
-        player.send_line(f"HP set to {player.hp}.")
-    except ValueError:
-        player.send_line("Usage: @sethp <amount>")
-
-@command_manager.register("@setstamina", admin=True)
-def set_stamina(player, args):
-    """Set your current Stamina."""
-    try:
-        val = int(args)
-        player.resources['stamina'] = val
-        player.send_line(f"Stamina set to {val}.")
-    except ValueError:
-        player.send_line("Usage: @setstamina <amount>")
-
-@command_manager.register("@setconcentration", "@setconc", admin=True)
-def set_concentration(player, args):
-    """Set your current Concentration."""
-    try:
-        val = int(args)
-        player.resources['concentration'] = val
-        player.send_line(f"Concentration set to {val}.")
-    except ValueError:
-        player.send_line("Usage: @setconc <amount>")
-
 @command_manager.register("@kit", admin=True)
 def spawn_kit(player, args):
     """Spawns a starter kit with basic gear."""
@@ -740,13 +808,28 @@ def spawn_kit(player, args):
 
 @command_manager.register("@autodig", admin=True)
 def autodig(player, args):
-    """Toggle auto-dig mode."""
+    """
+    Toggle auto-dig mode.
+    Usage: @autodig [palette_id | copy]
+    """
     if not hasattr(player, 'autodig'):
         player.autodig = False
     
-    player.autodig = not player.autodig
-    state = "enabled" if player.autodig else "disabled"
-    player.send_line(f"Auto-dig {state}.")
+    if args:
+        mode = args.strip()
+        player.autodig = True
+        player.autodig_palette = mode
+        if mode.lower() == 'copy':
+            player.send_line("Auto-dig enabled (Copy Mode). New rooms will inherit attributes from the previous room.")
+        else:
+            player.send_line(f"Auto-dig enabled (Palette: '{mode}').")
+    else:
+        player.autodig = not player.autodig
+        if hasattr(player, 'autodig_palette'):
+            del player.autodig_palette
+        
+        state = "enabled" if player.autodig else "disabled"
+        player.send_line(f"Auto-dig {state}.")
 
 @command_manager.register("@link", admin=True)
 def link_room(player, args):
@@ -795,41 +878,18 @@ def unlink_room(player, args):
     else:
         player.send_line("No exit in that direction.")
 
-@command_manager.register("@setkingdom", admin=True)
-def set_kingdom(player, args):
-    """Set your kingdom allegiance (light, dark, instinct)."""
-    if not args:
-        player.send_line("Usage: @setkingdom <light|dark|instinct>")
-        return
-        
-    kingdom = args.lower()
-    if kingdom not in ["light", "dark", "instinct"]:
-        player.send_line("Invalid kingdom. Choose: light, dark, instinct.")
-        return
-        
-    # Ensure kingdom tag is first
-    if player.identity_tags:
-        if player.identity_tags[0] in ["light", "dark", "instinct"]:
-            player.identity_tags[0] = kingdom
-        else:
-            player.identity_tags.insert(0, kingdom)
-    else:
-        player.identity_tags = [kingdom]
-        
-    player.send_line(f"Kingdom set to {kingdom.title()}.")
-
 @command_manager.register("@clearvisited", admin=True)
 def clear_visited(player, args):
     """Clears your visited rooms history (fixes map ghosts)."""
-    player.visited_rooms = set()
+    player.visited_rooms = []
     if player.room:
-        player.visited_rooms.add(player.room.id)
+        player.visited_rooms.append(player.room.id)
     player.send_line("Visited rooms history cleared.")
 
 @command_manager.register("@revealmap", admin=True)
 def reveal_map(player, args):
     """Reveals all rooms in the world (removes Fog of War)."""
-    player.visited_rooms.update(player.game.world.rooms.keys())
+    player.visited_rooms = list(player.game.world.rooms.keys())
     player.send_line(f"Map revealed. You have now 'visited' {len(player.visited_rooms)} rooms.")
 
 @command_manager.register("@vision", admin=True)
@@ -1102,10 +1162,10 @@ def snap_zone(player, args):
 
     # Link exits
     from logic.common import get_reverse_direction
-    anchor_room.exits[direction] = moving_room.id
+    anchor_room.exits[direction] = moving_room
     rev_dir = get_reverse_direction(direction)
     if rev_dir:
-        moving_room.exits[rev_dir] = anchor_room.id
+        moving_room.exits[rev_dir] = anchor_room
 
     player.send_line(f"Snapped zone '{moving_zone_id}' ({count} rooms) to '{anchor_room.name}'.")
     player.send_line(f"Shifted by X:{shift_x}, Y:{shift_y}, Z:{shift_z}.")
@@ -1257,7 +1317,7 @@ def autostitch_cmd(player, args):
                         best_neighbor = neighbor
             
             if best_neighbor:
-                room.exits[d_name] = best_neighbor.id
+                room.exits[d_name] = best_neighbor
                 links += 1
                 
     player.send_line(f"Stitching complete. Created {links} new links.")
@@ -1305,7 +1365,7 @@ def paint_zone(player, args):
                 continue
                 
             # Create Room
-            new_id = f"{zone_id}_{x}_{y}_{z}".replace("-", "n")
+            new_id = get_room_id(zone_id, x, y, z)
             new_room = Room(new_id, name, desc)
             new_room.x, new_room.y, new_room.z = x, y, z
             new_room.zone_id = zone_id
@@ -1336,12 +1396,12 @@ def paint_zone(player, args):
                 
                 neighbor = spatial_engine.get_instance().get_room(x + dx, y + dy, z + dz)
                 if neighbor:
-                    room.exits[d_name] = neighbor.id
+                    room.exits[d_name] = neighbor
                     # Reciprocal
                     from logic.common import get_reverse_direction
                     rev = get_reverse_direction(d_name)
                     if rev and rev not in neighbor.exits:
-                        neighbor.exits[rev] = room.id
+                        neighbor.exits[rev] = room
                     links += 1
                     
     player.send_line(f"Painted {created} rooms. Created {links} links.")
@@ -1449,3 +1509,143 @@ def kick_player(player, args):
         target.writer.close()
     except Exception as e:
         player.send_line(f"Error closing socket: {e}")
+
+@command_manager.register("@reset", admin=True)
+def reset_char(player, args):
+    """Resets HP, resources, cooldowns, state, and clears deck."""
+    # 1. Vitals
+    player.hp = player.max_hp
+    if hasattr(player, 'get_max_resource'):
+        player.resources['stamina'] = player.get_max_resource('stamina')
+        player.resources['concentration'] = player.get_max_resource('concentration')
+    
+    # 2. State
+    player.state = "normal"
+    player.fighting = None
+    player.attackers = []
+    player.is_resting = False
+    
+    # 3. Effects & Cooldowns
+    player.status_effects = {}
+    player.cooldowns = {}
+    
+    # 4. Deck
+    player.equipped_blessings = []
+    
+    # 5. Recalculate Class/Synergies
+    from logic.engines import class_engine, synergy_engine
+    class_engine.calculate_identity(player)
+    synergy_engine.calculate_synergies(player)
+    
+    player.send_line(f"{Colors.GREEN}Character reset. Deck cleared. Vitals restored.{Colors.RESET}")
+
+@command_manager.register("@forcefight", admin=True)
+def force_fight(player, args):
+    """Forces two mobs in the room to fight each other."""
+    if not args:
+        player.send_line("Usage: @forcefight <mob1> <mob2>")
+        return
+        
+    parts = args.split()
+    if len(parts) < 2:
+        player.send_line("Usage: @forcefight <mob1> <mob2>")
+        return
+        
+    from logic import search
+    # Search specifically in room monsters
+    m1 = search.search_list(player.room.monsters, parts[0])
+    m2 = search.search_list(player.room.monsters, parts[1])
+    
+    if not m1 or not m2:
+        player.send_line("Could not find both mobs.")
+        return
+    if m1 == m2:
+        player.send_line("A mob cannot fight itself.")
+        return
+        
+    m1.fighting = m2
+    m2.fighting = m1
+    player.room.broadcast(f"{Colors.RED}{player.name} forces {m1.name} and {m2.name} to fight!{Colors.RESET}")
+
+# Dispatch Table for @set
+SET_CATEGORIES = {
+    "room": {
+        "name": _set_room_name,
+        "desc": _set_room_desc,
+        "zone": _set_room_zone,
+        "deity": _set_room_deity,
+        "coords": _set_room_coords,
+        "terrain": _set_room_terrain,
+        "mob": _set_room_mob,
+        "item": _set_room_item
+    },
+    "player": {
+        "stat": _set_player_stat,
+        "hp": _set_player_hp,
+        "stamina": _set_player_stamina,
+        "conc": _set_player_conc,
+        "kingdom": _set_player_kingdom,
+        "class": _set_player_class,
+        "synergy": _set_player_synergy
+    }
+}
+
+# Flattened map for fuzzy search on top-level arguments
+FLAT_SET_MAP = {}
+for cat, subcmds in SET_CATEGORIES.items():
+    for sub, func in subcmds.items():
+        FLAT_SET_MAP[sub] = func
+
+@command_manager.register("@set", admin=True)
+def set_command(player, args):
+    """
+    Set various game properties.
+    Usage: @set [category] <attribute> <value>
+    """
+    if not args:
+        # Show Help
+        output = [f"\n{Colors.BOLD}--- @set Options ---{Colors.RESET}"]
+        for cat, subs in SET_CATEGORIES.items():
+            output.append(f"\n{Colors.YELLOW}[{cat.title()}]{Colors.RESET}")
+            keys = sorted(subs.keys())
+            line = "  " + ", ".join(keys)
+            output.append(line)
+        player.send_line("\n".join(output))
+        return
+
+    parts = args.split(maxsplit=1)
+    key = parts[0].lower()
+    val = parts[1] if len(parts) > 1 else ""
+
+    # 1. Check for Category Match
+    if key in SET_CATEGORIES:
+        if not val:
+            player.send_line(f"Usage: @set {key} <attribute> <value>")
+            return
+        
+        sub_parts = val.split(maxsplit=1)
+        sub_key = sub_parts[0].lower()
+        sub_val = sub_parts[1] if len(sub_parts) > 1 else ""
+        
+        if sub_key in SET_CATEGORIES[key]:
+            success, msg = SET_CATEGORIES[key][sub_key](player, sub_val)
+            player.send_line(msg)
+        else:
+            # Fuzzy search in category
+            matches = [k for k in SET_CATEGORIES[key] if sub_key in k]
+            if len(matches) == 1:
+                success, msg = SET_CATEGORIES[key][matches[0]](player, sub_val)
+                player.send_line(msg)
+            else:
+                player.send_line(f"Unknown attribute '{sub_key}' for category '{key}'.")
+        return
+
+    # 2. Check for Flat Match (Implicit Category) or Global Fuzzy
+    matches = [k for k in FLAT_SET_MAP if key in k]
+    if len(matches) == 1:
+        success, msg = FLAT_SET_MAP[matches[0]](player, val)
+        player.send_line(msg)
+    elif len(matches) > 1:
+        player.send_line(f"Multiple matches for '{key}': {', '.join(matches)}")
+    else:
+        player.send_line(f"Unknown setting '{key}'. Type @set for list.")

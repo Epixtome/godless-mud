@@ -5,7 +5,7 @@ from utilities import combat_formatter
 
 logger = logging.getLogger("GodlessMUD")
 
-def apply_effect(target, effect_id, duration_seconds):
+def apply_effect(target, effect_id, duration_seconds, verbose=True):
     """Applies a status effect to a target for a duration."""
     game = getattr(target, 'game', None)
     if not game:
@@ -37,8 +37,8 @@ def apply_effect(target, effect_id, duration_seconds):
     target.status_effects[effect_id] = expiry_tick
     
     effect_name = effect_data['name']
-    if hasattr(target, 'send_line'):
-        target.send_line(f"You are now {effect_name}.")
+    if verbose and hasattr(target, 'send_line'):
+        target.send_line(f"Affected by: {effect_name}")
 
 def remove_effect(target, effect_id):
     """Safely removes an effect and notifies the target."""
@@ -90,6 +90,19 @@ def _process_entity_effects(game, entity):
                     # We rely on the next combat round or a separate check to clean up dead entities
                     # to avoid circular import issues with combat_processor here.
                     pass
+        
+        # 3. Handle Resource Upkeep (Hardcoded logic for specific effects)
+        if effect_id == "berserk_rage":
+            drain = 5
+            current_conc = entity.resources.get('concentration', 0)
+            if current_conc >= drain:
+                entity.resources['concentration'] -= drain
+            else:
+                # Break effect if out of resources
+                expired_effects.append(effect_id)
+                if hasattr(entity, 'send_line'):
+                    entity.send_line(f"{Colors.YELLOW}Your rage subsides as your focus breaks.{Colors.RESET}")
+                continue
 
     for effect_id in expired_effects:
         del entity.status_effects[effect_id]

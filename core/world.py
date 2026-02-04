@@ -1,3 +1,7 @@
+def get_room_id(zone_id, x, y, z):
+    """Generates a deterministic Room ID from coordinates."""
+    return f"{zone_id}.{x}.{y}.{z}"
+
 class World:
     def __init__(self):
         self.rooms = {}

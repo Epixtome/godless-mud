@@ -1,0 +1,32 @@
+{
+    "blessings": [
+        {
+            "id": "lance_thrust",
+            "name": "Lance Thrust",
+            "tier": 3,
+            "base_power": 30,
+            "scaling": {
+                "str": 1.5,
+                "dex": 1.5
+            },
+            "requirements": {
+                "str": 15,
+                "cost": {
+                    "stamina": 35
+                },
+                "mount": true
+            },
+            "identity_tags": [
+                "light",
+                "martial",
+                "mount",
+                "str",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Piercing strike that ignores armor. Stuns if mounted.",
+            "cost": 500,
+            "deity_id": "celeris"
+        }
+    ]
+}

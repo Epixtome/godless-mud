@@ -1,0 +1,83 @@
+{
+    "blessings": [
+        {
+            "id": "divine_judgment",
+            "name": "Divine Judgment",
+            "tier": 4,
+            "base_power": 45,
+            "scaling": {
+                "int": 2.2
+            },
+            "requirements": {
+                "int": 20,
+                "cost": {
+                    "concentration": 60
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "aoe",
+                "int"
+            ],
+            "charges": 1,
+            "description": "Massive AoE damage. Undead take extra damage.",
+            "cost": 1000,
+            "deity_id": "lumos",
+            "required_class": "Cleric"
+        },
+        {
+            "id": "equilibrium",
+            "name": "Equilibrium",
+            "tier": 4,
+            "base_power": 60,
+            "scaling": {
+                "int": 3.0
+            },
+            "requirements": {
+                "int": 20,
+                "cost": {
+                    "concentration": 60
+                }
+            },
+            "identity_tags": [
+                "ultimate",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Red Mage Ultimate.",
+            "cost": 1000,
+            "deity_id": "lumos",
+            "required_class": "Red Mage"
+        },
+        {
+            "id": "philosophers_gift",
+            "name": "Philosopher's Gift",
+            "tier": 4,
+            "base_power": 0,
+            "scaling": {
+                "int": 2.0,
+                "wis": 2.0
+            },
+            "requirements": {
+                "int": 20,
+                "cost": {
+                    "concentration": 50
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "alchemy",
+                "utility",
+                "int",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Grants extra potion slots and free flask usage.",
+            "cost": 1000,
+            "deity_id": "lumos",
+            "required_class": "Alchemist"
+        }
+    ]
+}

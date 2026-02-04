@@ -1,0 +1,52 @@
+{
+    "blessings": [
+        {
+            "id": "crossbow_shot",
+            "name": "Crossbow Shot",
+            "tier": 1,
+            "base_power": 15,
+            "scaling": {
+                "dex": 1.4
+            },
+            "requirements": {
+                "dex": 10,
+                "cost": {
+                    "stamina": 15
+                }
+            },
+            "identity_tags": [
+                "martial",
+                "dex",
+                "ranged",
+                "marksmanship",
+                "skill"
+            ],
+            "charges": 5,
+            "description": "A ranged attack that ignores some armor.",
+            "cost": 50,
+            "deity_id": "raven"
+        },
+        {
+            "id": "trap_sense",
+            "name": "Trap Sense",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.0
+            },
+            "requirements": {
+                "dex": 10
+            },
+            "identity_tags": [
+                "utility",
+                "dex",
+                "awareness",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Passive: Reveals hidden dangers in the room.",
+            "cost": 50,
+            "deity_id": "raven"
+        }
+    ]
+}

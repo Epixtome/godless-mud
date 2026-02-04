@@ -1,0 +1,1471 @@
+{
+    "zones": [
+        {
+            "id": "z164",
+            "name": "The Endless Sea",
+            "security_level": "null_sec",
+            "grid_logic": true
+        }
+    ],
+    "defaults": {
+        "name": "Water",
+        "description": "The dark water ripples silently.",
+        "terrain": "water",
+        "opacity": 0,
+        "traversal_cost": 1
+    },
+    "palettes": {
+        "type_1": {
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "terrain": "water",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_2": {
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_3": {
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_4": {
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_5": {
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_6": {
+            "name": "Deep Water",
+            "description": "Large waves crash against each other.",
+            "terrain": "deep_water",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_7": {
+            "name": "Peak",
+            "description": "The wind howls violently at this altitude.",
+            "terrain": "peak",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_8": {
+            "name": "Peak",
+            "description": "You stand atop the world.",
+            "terrain": "peak",
+            "opacity": 0,
+            "traversal_cost": 1
+        }
+    },
+    "rooms": [
+        {
+            "exits": {
+                "north": "z162.-45.74.2",
+                "south": "z164.-45.76.0",
+                "east": "z164.-44.75.0",
+                "west": "z151.-46.75.2"
+            },
+            "x": -45, "y": 75, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z164.-45.75.2"
+            },
+            "x": -44, "y": 75, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z162.-43.74.0"
+            },
+            "x": -43, "y": 75, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z162.-42.74.0"
+            },
+            "x": -42, "y": 75, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z162.-41.74.0"
+            },
+            "x": -41, "y": 75, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z162.-40.74.0"
+            },
+            "x": -40, "y": 75, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z162.-39.74.0"
+            },
+            "x": -39, "y": 75, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z162.-38.74.0"
+            },
+            "x": -38, "y": 75, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z162.-37.74.0"
+            },
+            "x": -37, "y": 75, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z162.-36.74.0"
+            },
+            "x": -36, "y": 75, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z162.-35.74.0"
+            },
+            "x": -35, "y": 75, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z162.-34.74.0"
+            },
+            "x": -34, "y": 75, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z162.-33.74.0"
+            },
+            "x": -33, "y": 75, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z162.-32.74.0",
+                "east": "z164.-31.75.2"
+            },
+            "x": -32, "y": 75, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z164.-31.76.0",
+                "west": "z164.-32.75.0"
+            },
+            "x": -31, "y": 75, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "south": "z164.-30.76.0"
+            },
+            "x": -30, "y": 75, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "south": "z164.-29.76.0",
+                "east": "z164.-28.75.3"
+            },
+            "x": -29, "y": 75, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "south": "z164.-28.76.0",
+                "east": "z164.-27.75.2",
+                "west": "z164.-29.75.2"
+            },
+            "x": -28, "y": 75, "z": 3,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z164.-28.75.3"
+            },
+            "x": -27, "y": 75, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "south": "z164.-26.76.3",
+                "east": "z21.-25.75.2"
+            },
+            "x": -26, "y": 75, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z164.-45.75.2",
+                "west": "z151.-46.76.2"
+            },
+            "x": -45, "y": 76, "z": 0
+        },
+        { "x": -44, "y": 76, "z": 0, "palette": "type_1" },
+        { "x": -43, "y": 76, "z": 0 },
+        { "x": -42, "y": 76, "z": 0 },
+        { "x": -41, "y": 76, "z": 0 },
+        { "x": -40, "y": 76, "z": 0 },
+        { "x": -39, "y": 76, "z": 0 },
+        { "x": -38, "y": 76, "z": 0 },
+        { "x": -37, "y": 76, "z": 0, "palette": "type_1" },
+        { "x": -36, "y": 76, "z": 0 },
+        { "x": -35, "y": 76, "z": 0, "palette": "type_1" },
+        { "x": -34, "y": 76, "z": 0 },
+        { "x": -33, "y": 76, "z": 0, "palette": "type_1" },
+        {
+            "x": -32, "y": 76, "z": 0,
+            "monsters": [
+                "wolf",
+                "bear"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z164.-31.75.2"
+            },
+            "x": -31, "y": 76, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z164.-30.75.2"
+            },
+            "x": -30, "y": 76, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z164.-29.75.2"
+            },
+            "x": -29, "y": 76, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z164.-28.75.3",
+                "south": "z164.-28.77.2",
+                "east": "z164.-27.76.2"
+            },
+            "x": -28, "y": 76, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z164.-26.76.3",
+                "west": "z164.-28.76.0"
+            },
+            "x": -27, "y": 76, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z164.-26.75.2",
+                "west": "z164.-27.76.2"
+            },
+            "x": -26, "y": 76, "z": 3,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.77.0"
+            },
+            "x": -45, "y": 77, "z": 0
+        },
+        { "x": -44, "y": 77, "z": 0, "palette": "type_1" },
+        { "x": -43, "y": 77, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 77, "z": 0 },
+        { "x": -41, "y": 77, "z": 0 },
+        { "x": -40, "y": 77, "z": 0, "palette": "type_1" },
+        { "x": -39, "y": 77, "z": 0 },
+        { "x": -38, "y": 77, "z": 0 },
+        { "x": -37, "y": 77, "z": 0 },
+        { "x": -36, "y": 77, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 77, "z": 0, "palette": "type_1" },
+        { "x": -34, "y": 77, "z": 0, "palette": "type_1" },
+        { "x": -33, "y": 77, "z": 0, "palette": "type_2" },
+        {
+            "x": -32, "y": 77, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "x": -31, "y": 77, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -30, "y": 77, "z": 0, "palette": "type_2" },
+        {
+            "exits": {
+                "south": "z164.-29.78.2",
+                "east": "z164.-28.77.2"
+            },
+            "x": -29, "y": 77, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z164.-28.76.0",
+                "west": "z164.-29.77.0"
+            },
+            "x": -28, "y": 77, "z": 2,
+            "palette": "type_4"
+        },
+        { "x": -27, "y": 77, "z": 2, "palette": "type_4" },
+        {
+            "exits": {
+                "north": "z164.-26.76.3",
+                "south": "z164.-26.78.2",
+                "east": "z21.-25.77.3",
+                "west": "z164.-27.77.2"
+            },
+            "x": -26, "y": 77, "z": 4,
+            "palette": "type_7"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.78.0"
+            },
+            "x": -45, "y": 78, "z": 0
+        },
+        { "x": -44, "y": 78, "z": 0 },
+        { "x": -43, "y": 78, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 78, "z": 0 },
+        { "x": -41, "y": 78, "z": 0 },
+        { "x": -40, "y": 78, "z": 0 },
+        { "x": -39, "y": 78, "z": 0 },
+        { "x": -38, "y": 78, "z": 0 },
+        { "x": -37, "y": 78, "z": 0 },
+        { "x": -36, "y": 78, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 78, "z": 0 },
+        { "x": -34, "y": 78, "z": 0 },
+        {
+            "x": -33, "y": 78, "z": 0,
+            "monsters": [
+                "bear"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "x": -32, "y": 78, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "x": -31, "y": 78, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z164.-30.79.3",
+                "east": "z164.-29.78.2"
+            },
+            "x": -30, "y": 78, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z164.-29.77.0",
+                "west": "z164.-30.78.0"
+            },
+            "x": -29, "y": 78, "z": 2,
+            "palette": "type_4"
+        },
+        { "x": -28, "y": 78, "z": 2, "palette": "type_5" },
+        {
+            "exits": {
+                "north": "z164.-27.77.2",
+                "south": "z164.-27.79.3",
+                "east": "z164.-26.78.2",
+                "west": "z164.-28.78.2"
+            },
+            "x": -27, "y": 78, "z": 4,
+            "palette": "type_8"
+        },
+        {
+            "exits": {
+                "east": "z21.-25.78.3"
+            },
+            "x": -26, "y": 78, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.79.0"
+            },
+            "x": -45, "y": 79, "z": 0
+        },
+        { "x": -44, "y": 79, "z": 0, "palette": "type_1" },
+        { "x": -43, "y": 79, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 79, "z": 0, "palette": "type_1" },
+        { "x": -41, "y": 79, "z": 0, "palette": "type_1" },
+        { "x": -40, "y": 79, "z": 0, "palette": "type_1" },
+        { "x": -39, "y": 79, "z": 0 },
+        { "x": -38, "y": 79, "z": 0 },
+        { "x": -37, "y": 79, "z": 0, "palette": "type_1" },
+        { "x": -36, "y": 79, "z": 0 },
+        { "x": -35, "y": 79, "z": 0 },
+        { "x": -34, "y": 79, "z": 0 },
+        { "x": -33, "y": 79, "z": 0, "palette": "type_3" },
+        { "x": -32, "y": 79, "z": 0, "palette": "type_3" },
+        {
+            "exits": {
+                "south": "z164.-31.80.3",
+                "east": "z164.-30.79.3"
+            },
+            "x": -31, "y": 79, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z164.-30.78.0",
+                "east": "z164.-29.79.2",
+                "west": "z164.-31.79.0"
+            },
+            "x": -30, "y": 79, "z": 3,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z164.-30.79.3"
+            },
+            "x": -29, "y": 79, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z164.-28.78.2",
+                "south": "z164.-28.80.3",
+                "east": "z164.-27.79.3",
+                "west": "z164.-29.79.2"
+            },
+            "x": -28, "y": 79, "z": 4,
+            "palette": "type_7"
+        },
+        {
+            "exits": {
+                "south": "z164.-27.80.2",
+                "east": "z164.-26.79.2"
+            },
+            "x": -27, "y": 79, "z": 3,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "south": "z164.-26.80.0",
+                "east": "z21.-25.79.0",
+                "west": "z164.-27.79.3"
+            },
+            "x": -26, "y": 79, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.80.0"
+            },
+            "x": -45, "y": 80, "z": 0
+        },
+        { "x": -44, "y": 80, "z": 0 },
+        { "x": -43, "y": 80, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 80, "z": 0, "palette": "type_1" },
+        { "x": -41, "y": 80, "z": 0 },
+        { "x": -40, "y": 80, "z": 0, "palette": "type_1" },
+        { "x": -39, "y": 80, "z": 0, "palette": "type_1" },
+        { "x": -38, "y": 80, "z": 0, "palette": "type_1" },
+        { "x": -37, "y": 80, "z": 0 },
+        { "x": -36, "y": 80, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 80, "z": 0 },
+        {
+            "x": -34, "y": 80, "z": 0,
+            "items": [
+                "wild_berry"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -33, "y": 80, "z": 0, "palette": "type_2" },
+        {
+            "exits": {
+                "south": "z164.-32.81.2",
+                "east": "z164.-31.80.3"
+            },
+            "x": -32, "y": 80, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z164.-31.79.0",
+                "south": "z164.-31.81.2",
+                "west": "z164.-32.80.0"
+            },
+            "x": -31, "y": 80, "z": 3,
+            "palette": "type_5"
+        },
+        { "x": -30, "y": 80, "z": 3, "palette": "type_4" },
+        {
+            "exits": {
+                "north": "z164.-29.79.2",
+                "south": "z164.-29.81.2",
+                "east": "z164.-28.80.3",
+                "west": "z164.-30.80.3"
+            },
+            "x": -29, "y": 80, "z": 4,
+            "palette": "type_8"
+        },
+        {
+            "exits": {
+                "east": "z164.-27.80.2"
+            },
+            "x": -28, "y": 80, "z": 3,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z164.-27.79.3",
+                "south": "z164.-27.81.0",
+                "east": "z164.-26.80.0",
+                "west": "z164.-28.80.3"
+            },
+            "x": -27, "y": 80, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z164.-26.79.2",
+                "east": "z21.-25.80.0",
+                "west": "z164.-27.80.2"
+            },
+            "x": -26, "y": 80, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.81.0"
+            },
+            "x": -45, "y": 81, "z": 0
+        },
+        { "x": -44, "y": 81, "z": 0, "palette": "type_1" },
+        { "x": -43, "y": 81, "z": 0 },
+        { "x": -42, "y": 81, "z": 0, "palette": "type_1" },
+        { "x": -41, "y": 81, "z": 0, "palette": "type_1" },
+        { "x": -40, "y": 81, "z": 0, "palette": "type_1" },
+        { "x": -39, "y": 81, "z": 0 },
+        { "x": -38, "y": 81, "z": 0, "palette": "type_1" },
+        { "x": -37, "y": 81, "z": 0 },
+        { "x": -36, "y": 81, "z": 0 },
+        { "x": -35, "y": 81, "z": 0, "palette": "type_1" },
+        { "x": -34, "y": 81, "z": 0, "palette": "type_2" },
+        {
+            "exits": {
+                "south": "z164.-33.82.2",
+                "east": "z164.-32.81.2"
+            },
+            "x": -33, "y": 81, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z164.-32.80.0",
+                "south": "z164.-32.82.3",
+                "west": "z164.-33.81.0"
+            },
+            "x": -32, "y": 81, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z164.-31.80.3"
+            },
+            "x": -31, "y": 81, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z164.-30.80.3",
+                "south": "z164.-30.82.3",
+                "east": "z164.-29.81.2",
+                "west": "z164.-31.81.2"
+            },
+            "x": -30, "y": 81, "z": 4,
+            "palette": "type_7"
+        },
+        {
+            "exits": {
+                "east": "z164.-28.81.3"
+            },
+            "x": -29, "y": 81, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "south": "z164.-28.82.0",
+                "east": "z164.-27.81.0",
+                "west": "z164.-29.81.2"
+            },
+            "x": -28, "y": 81, "z": 3,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z164.-27.80.2",
+                "west": "z164.-28.81.3"
+            },
+            "x": -27, "y": 81, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z21.-25.81.0"
+            },
+            "x": -26, "y": 81, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.82.0"
+            },
+            "x": -45, "y": 82, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": -44, "y": 82, "z": 0 },
+        { "x": -43, "y": 82, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 82, "z": 0, "palette": "type_1" },
+        { "x": -41, "y": 82, "z": 0 },
+        { "x": -40, "y": 82, "z": 0 },
+        { "x": -39, "y": 82, "z": 0, "palette": "type_1" },
+        { "x": -38, "y": 82, "z": 0 },
+        { "x": -37, "y": 82, "z": 0 },
+        { "x": -36, "y": 82, "z": 0 },
+        { "x": -35, "y": 82, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "south": "z164.-34.83.3",
+                "east": "z164.-33.82.2"
+            },
+            "x": -34, "y": 82, "z": 0,
+            "monsters": [
+                "wolf",
+                "bear"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z164.-33.81.0",
+                "east": "z164.-32.82.3",
+                "west": "z164.-34.82.0"
+            },
+            "x": -33, "y": 82, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z164.-32.81.2",
+                "west": "z164.-33.82.2"
+            },
+            "x": -32, "y": 82, "z": 3,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z164.-31.81.2",
+                "south": "z164.-31.83.2",
+                "east": "z164.-30.82.3",
+                "west": "z164.-32.82.3"
+            },
+            "x": -31, "y": 82, "z": 4,
+            "palette": "type_8"
+        },
+        {
+            "exits": {
+                "east": "z164.-29.82.2"
+            },
+            "x": -30, "y": 82, "z": 3,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "south": "z164.-29.83.0",
+                "east": "z164.-28.82.0",
+                "west": "z164.-30.82.3"
+            },
+            "x": -29, "y": 82, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z164.-28.81.3",
+                "west": "z164.-29.82.2"
+            },
+            "x": -28, "y": 82, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "x": -27, "y": 82, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z21.-25.82.0"
+            },
+            "x": -26, "y": 82, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.83.0"
+            },
+            "x": -45, "y": 83, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": -44, "y": 83, "z": 0 },
+        { "x": -43, "y": 83, "z": 0 },
+        { "x": -42, "y": 83, "z": 0 },
+        { "x": -41, "y": 83, "z": 0, "palette": "type_1" },
+        { "x": -40, "y": 83, "z": 0 },
+        { "x": -39, "y": 83, "z": 0 },
+        { "x": -38, "y": 83, "z": 0 },
+        { "x": -37, "y": 83, "z": 0, "palette": "type_1" },
+        { "x": -36, "y": 83, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "east": "z164.-34.83.3"
+            },
+            "x": -35, "y": 83, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z164.-34.82.0",
+                "south": "z164.-34.84.0",
+                "east": "z164.-33.83.2",
+                "west": "z164.-35.83.0"
+            },
+            "x": -34, "y": 83, "z": 3,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z164.-34.83.3"
+            },
+            "x": -33, "y": 83, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z164.-32.82.3",
+                "south": "z164.-32.84.3",
+                "east": "z164.-31.83.2",
+                "west": "z164.-33.83.2"
+            },
+            "x": -32, "y": 83, "z": 5,
+            "palette": "type_8"
+        },
+        {
+            "exits": {
+                "south": "z164.-31.84.3",
+                "east": "z164.-30.83.3"
+            },
+            "x": -31, "y": 83, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "south": "z164.-30.84.0",
+                "east": "z164.-29.83.0",
+                "west": "z164.-31.83.2"
+            },
+            "x": -30, "y": 83, "z": 3,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z164.-29.82.2",
+                "west": "z164.-30.83.3"
+            },
+            "x": -29, "y": 83, "z": 0,
+            "palette": "type_2"
+        },
+        { "x": -28, "y": 83, "z": 0, "palette": "type_2" },
+        {
+            "x": -27, "y": 83, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z21.-25.83.0"
+            },
+            "x": -26, "y": 83, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.84.0"
+            },
+            "x": -45, "y": 84, "z": 0
+        },
+        { "x": -44, "y": 84, "z": 0 },
+        { "x": -43, "y": 84, "z": 0 },
+        { "x": -42, "y": 84, "z": 0, "palette": "type_1" },
+        { "x": -41, "y": 84, "z": 0, "palette": "type_1" },
+        { "x": -40, "y": 84, "z": 0, "palette": "type_1" },
+        { "x": -39, "y": 84, "z": 0 },
+        { "x": -38, "y": 84, "z": 0 },
+        { "x": -37, "y": 84, "z": 0 },
+        { "x": -36, "y": 84, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 84, "z": 0 },
+        {
+            "exits": {
+                "north": "z164.-34.83.3"
+            },
+            "x": -34, "y": 84, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z164.-33.83.2",
+                "south": "z164.-33.85.2",
+                "east": "z164.-32.84.3",
+                "west": "z164.-34.84.0"
+            },
+            "x": -33, "y": 84, "z": 4,
+            "palette": "type_7"
+        },
+        { "x": -32, "y": 84, "z": 3, "palette": "type_5" },
+        {
+            "exits": {
+                "north": "z164.-31.83.2",
+                "south": "z164.-31.85.0",
+                "east": "z164.-30.84.0"
+            },
+            "x": -31, "y": 84, "z": 3,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z164.-30.83.3",
+                "west": "z164.-31.84.3"
+            },
+            "x": -30, "y": 84, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -29, "y": 84, "z": 0, "palette": "type_2" },
+        {
+            "x": -28, "y": 84, "z": 0,
+            "items": [
+                "wild_berry"
+            ],
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        { "x": -27, "y": 84, "z": 0, "palette": "type_2" },
+        {
+            "exits": {
+                "east": "z21.-25.84.0"
+            },
+            "x": -26, "y": 84, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.85.0"
+            },
+            "x": -45, "y": 85, "z": 0
+        },
+        { "x": -44, "y": 85, "z": 0 },
+        { "x": -43, "y": 85, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 85, "z": 0 },
+        { "x": -41, "y": 85, "z": 0 },
+        { "x": -40, "y": 85, "z": 0, "palette": "type_1" },
+        { "x": -39, "y": 85, "z": 0, "palette": "type_1" },
+        { "x": -38, "y": 85, "z": 0 },
+        { "x": -37, "y": 85, "z": 0, "palette": "type_1" },
+        { "x": -36, "y": 85, "z": 0 },
+        { "x": -35, "y": 85, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "east": "z164.-33.85.2"
+            },
+            "x": -34, "y": 85, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "east": "z164.-32.85.3",
+                "west": "z164.-34.85.0"
+            },
+            "x": -33, "y": 85, "z": 2,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "south": "z164.-32.86.0",
+                "east": "z164.-31.85.0",
+                "west": "z164.-33.85.2"
+            },
+            "x": -32, "y": 85, "z": 3,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z164.-31.84.3",
+                "west": "z164.-32.85.3"
+            },
+            "x": -31, "y": 85, "z": 0,
+            "palette": "type_3"
+        },
+        { "x": -30, "y": 85, "z": 0, "palette": "type_2" },
+        {
+            "x": -29, "y": 85, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "x": -28, "y": 85, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -27, "y": 85, "z": 0, "palette": "type_2" },
+        {
+            "exits": {
+                "east": "z21.-25.85.0"
+            },
+            "x": -26, "y": 85, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.86.0"
+            },
+            "x": -45, "y": 86, "z": 0
+        },
+        { "x": -44, "y": 86, "z": 0, "palette": "type_1" },
+        { "x": -43, "y": 86, "z": 0 },
+        { "x": -42, "y": 86, "z": 0, "palette": "type_1" },
+        { "x": -41, "y": 86, "z": 0, "palette": "type_1" },
+        { "x": -40, "y": 86, "z": 0, "palette": "type_1" },
+        { "x": -39, "y": 86, "z": 0, "palette": "type_1" },
+        { "x": -38, "y": 86, "z": 0 },
+        { "x": -37, "y": 86, "z": 0, "palette": "type_1" },
+        { "x": -36, "y": 86, "z": 0 },
+        { "x": -35, "y": 86, "z": 0 },
+        {
+            "exits": {
+                "east": "z164.-33.86.2"
+            },
+            "x": -34, "y": 86, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z164.-33.87.0",
+                "east": "z164.-32.86.0",
+                "west": "z164.-34.86.0"
+            },
+            "x": -33, "y": 86, "z": 2,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z164.-32.85.3",
+                "west": "z164.-33.86.2"
+            },
+            "x": -32, "y": 86, "z": 0,
+            "palette": "type_2"
+        },
+        { "x": -31, "y": 86, "z": 0, "palette": "type_2" },
+        { "x": -30, "y": 86, "z": 0, "palette": "type_2" },
+        {
+            "x": -29, "y": 86, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        { "x": -28, "y": 86, "z": 0, "palette": "type_2" },
+        {
+            "x": -27, "y": 86, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z21.-25.86.0"
+            },
+            "x": -26, "y": 86, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.87.0"
+            },
+            "x": -45, "y": 87, "z": 0
+        },
+        { "x": -44, "y": 87, "z": 0, "palette": "type_1" },
+        { "x": -43, "y": 87, "z": 0 },
+        { "x": -42, "y": 87, "z": 0 },
+        { "x": -41, "y": 87, "z": 0 },
+        { "x": -40, "y": 87, "z": 0 },
+        { "x": -39, "y": 87, "z": 0 },
+        { "x": -38, "y": 87, "z": 0 },
+        { "x": -37, "y": 87, "z": 0 },
+        { "x": -36, "y": 87, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 87, "z": 0 },
+        { "x": -34, "y": 87, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "north": "z164.-33.86.2"
+            },
+            "x": -33, "y": 87, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -32, "y": 87, "z": 0, "palette": "type_2" },
+        { "x": -31, "y": 87, "z": 0, "palette": "type_2" },
+        { "x": -30, "y": 87, "z": 0, "palette": "type_2" },
+        { "x": -29, "y": 87, "z": 0, "palette": "type_2" },
+        {
+            "x": -28, "y": 87, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "x": -27, "y": 87, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z21.-25.87.0"
+            },
+            "x": -26, "y": 87, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.88.0"
+            },
+            "x": -45, "y": 88, "z": 0
+        },
+        { "x": -44, "y": 88, "z": 0 },
+        { "x": -43, "y": 88, "z": 0 },
+        { "x": -42, "y": 88, "z": 0, "palette": "type_1" },
+        { "x": -41, "y": 88, "z": 0 },
+        { "x": -40, "y": 88, "z": 0 },
+        { "x": -39, "y": 88, "z": 0 },
+        { "x": -38, "y": 88, "z": 0 },
+        { "x": -37, "y": 88, "z": 0 },
+        { "x": -36, "y": 88, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 88, "z": 0 },
+        { "x": -34, "y": 88, "z": 0 },
+        { "x": -33, "y": 88, "z": 0, "palette": "type_2" },
+        {
+            "x": -32, "y": 88, "z": 0,
+            "monsters": [
+                "wolf",
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "x": -31, "y": 88, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "x": -30, "y": 88, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "x": -29, "y": 88, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "x": -28, "y": 88, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "x": -27, "y": 88, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z21.-25.88.0"
+            },
+            "x": -26, "y": 88, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.89.0"
+            },
+            "x": -45, "y": 89, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": -44, "y": 89, "z": 0, "palette": "type_1" },
+        { "x": -43, "y": 89, "z": 0 },
+        { "x": -42, "y": 89, "z": 0, "palette": "type_1" },
+        { "x": -41, "y": 89, "z": 0 },
+        { "x": -40, "y": 89, "z": 0 },
+        { "x": -39, "y": 89, "z": 0, "palette": "type_1" },
+        { "x": -38, "y": 89, "z": 0, "palette": "type_1" },
+        { "x": -37, "y": 89, "z": 0 },
+        { "x": -36, "y": 89, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 89, "z": 0, "palette": "type_1" },
+        { "x": -34, "y": 89, "z": 0 },
+        { "x": -33, "y": 89, "z": 0 },
+        { "x": -32, "y": 89, "z": 0, "palette": "type_3" },
+        {
+            "x": -31, "y": 89, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        { "x": -30, "y": 89, "z": 0, "palette": "type_2" },
+        { "x": -29, "y": 89, "z": 0, "palette": "type_2" },
+        { "x": -28, "y": 89, "z": 0, "palette": "type_3" },
+        { "x": -27, "y": 89, "z": 0, "palette": "type_3" },
+        {
+            "exits": {
+                "east": "z21.-25.89.0"
+            },
+            "x": -26, "y": 89, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.90.0"
+            },
+            "x": -45, "y": 90, "z": 0
+        },
+        { "x": -44, "y": 90, "z": 0 },
+        { "x": -43, "y": 90, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 90, "z": 0, "palette": "type_1" },
+        { "x": -41, "y": 90, "z": 0 },
+        { "x": -40, "y": 90, "z": 0 },
+        { "x": -39, "y": 90, "z": 0, "palette": "type_1" },
+        { "x": -38, "y": 90, "z": 0, "palette": "type_1" },
+        { "x": -37, "y": 90, "z": 0, "palette": "type_1" },
+        { "x": -36, "y": 90, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 90, "z": 0 },
+        { "x": -34, "y": 90, "z": 0, "palette": "type_1" },
+        { "x": -33, "y": 90, "z": 0 },
+        { "x": -32, "y": 90, "z": 0, "palette": "type_1" },
+        {
+            "x": -31, "y": 90, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -30, "y": 90, "z": 0, "palette": "type_2" },
+        { "x": -29, "y": 90, "z": 0, "palette": "type_3" },
+        { "x": -28, "y": 90, "z": 0, "palette": "type_2" },
+        { "x": -27, "y": 90, "z": 0, "palette": "type_3" },
+        {
+            "exits": {
+                "east": "z21.-25.90.0"
+            },
+            "x": -26, "y": 90, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z151.-46.91.0"
+            },
+            "x": -45, "y": 91, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": -44, "y": 91, "z": 0, "palette": "type_1" },
+        { "x": -43, "y": 91, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 91, "z": 0 },
+        { "x": -41, "y": 91, "z": 0, "palette": "type_1" },
+        { "x": -40, "y": 91, "z": 0 },
+        { "x": -39, "y": 91, "z": 0 },
+        { "x": -38, "y": 91, "z": 0 },
+        { "x": -37, "y": 91, "z": 0, "palette": "type_1" },
+        { "x": -36, "y": 91, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 91, "z": 0 },
+        { "x": -34, "y": 91, "z": 0, "palette": "type_1" },
+        { "x": -33, "y": 91, "z": 0, "palette": "type_1" },
+        { "x": -32, "y": 91, "z": 0 },
+        { "x": -31, "y": 91, "z": 0, "palette": "type_3" },
+        { "x": -30, "y": 91, "z": 0, "palette": "type_3" },
+        {
+            "x": -29, "y": 91, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -28, "y": 91, "z": 0, "palette": "type_3" },
+        {
+            "x": -27, "y": 91, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z21.-25.91.0"
+            },
+            "x": -26, "y": 91, "z": 0,
+            "palette": "type_2"
+        },
+        { "x": -45, "y": 92, "z": 0, "palette": "type_1" },
+        { "x": -44, "y": 92, "z": 0 },
+        { "x": -43, "y": 92, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 92, "z": 0 },
+        { "x": -41, "y": 92, "z": 0 },
+        { "x": -40, "y": 92, "z": 0 },
+        { "x": -39, "y": 92, "z": 0, "palette": "type_1" },
+        { "x": -38, "y": 92, "z": 0, "palette": "type_1" },
+        { "x": -37, "y": 92, "z": 0 },
+        { "x": -36, "y": 92, "z": 0 },
+        { "x": -35, "y": 92, "z": 0, "palette": "type_1" },
+        { "x": -34, "y": 92, "z": 0, "palette": "type_1" },
+        { "x": -33, "y": 92, "z": 0 },
+        { "x": -32, "y": 92, "z": 0, "palette": "type_1" },
+        { "x": -31, "y": 92, "z": 0 },
+        { "x": -30, "y": 92, "z": 0, "palette": "type_3" },
+        {
+            "x": -29, "y": 92, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -28, "y": 92, "z": 0, "palette": "type_3" },
+        { "x": -27, "y": 92, "z": 0, "palette": "type_2" },
+        {
+            "exits": {
+                "east": "z21.-25.92.0"
+            },
+            "x": -26, "y": 92, "z": 0,
+            "palette": "type_2"
+        },
+        { "x": -45, "y": 93, "z": 0, "palette": "type_6" },
+        { "x": -44, "y": 93, "z": 0, "palette": "type_6" },
+        { "x": -43, "y": 93, "z": 0, "palette": "type_1" },
+        { "x": -42, "y": 93, "z": 0 },
+        { "x": -41, "y": 93, "z": 0, "palette": "type_1" },
+        { "x": -40, "y": 93, "z": 0 },
+        { "x": -39, "y": 93, "z": 0, "palette": "type_1" },
+        { "x": -38, "y": 93, "z": 0 },
+        { "x": -37, "y": 93, "z": 0 },
+        { "x": -36, "y": 93, "z": 0, "palette": "type_1" },
+        { "x": -35, "y": 93, "z": 0 },
+        { "x": -34, "y": 93, "z": 0, "palette": "type_1" },
+        { "x": -33, "y": 93, "z": 0 },
+        { "x": -32, "y": 93, "z": 0, "palette": "type_1" },
+        { "x": -31, "y": 93, "z": 0 },
+        { "x": -30, "y": 93, "z": 0 },
+        {
+            "x": -29, "y": 93, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_3"
+        },
+        { "x": -28, "y": 93, "z": 0, "palette": "type_3" },
+        {
+            "x": -27, "y": 93, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z21.-25.93.0"
+            },
+            "x": -26, "y": 93, "z": 0,
+            "palette": "type_3"
+        },
+        { "x": -45, "y": 94, "z": 0, "palette": "type_6" },
+        {
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "x": -44, "y": 94, "z": 0,
+            "terrain": "deep_water"
+        },
+        { "x": -43, "y": 94, "z": 0, "palette": "type_6" },
+        { "x": -42, "y": 94, "z": 0, "palette": "type_6" },
+        { "x": -41, "y": 94, "z": 0 },
+        { "x": -40, "y": 94, "z": 0, "palette": "type_1" },
+        { "x": -39, "y": 94, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "south": "z165.-38.95.0"
+            },
+            "x": -38, "y": 94, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z165.-37.95.0"
+            },
+            "x": -37, "y": 94, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z165.-36.95.0"
+            },
+            "x": -36, "y": 94, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z165.-35.95.0"
+            },
+            "x": -35, "y": 94, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z165.-34.95.0"
+            },
+            "x": -34, "y": 94, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z165.-33.95.0"
+            },
+            "x": -33, "y": 94, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z165.-32.95.0"
+            },
+            "x": -32, "y": 94, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z165.-31.95.0"
+            },
+            "x": -31, "y": 94, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z165.-30.95.0"
+            },
+            "x": -30, "y": 94, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z165.-29.95.0"
+            },
+            "x": -29, "y": 94, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z165.-28.95.0"
+            },
+            "x": -28, "y": 94, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z165.-27.95.0"
+            },
+            "x": -27, "y": 94, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z165.-26.95.0",
+                "east": "z21.-25.94.0"
+            },
+            "x": -26, "y": 94, "z": 0,
+            "palette": "type_2"
+        }
+    ]
+}

@@ -1,0 +1,1996 @@
+{
+    "zones": [
+        {
+            "id": "z38",
+            "name": "The Elder Woods",
+            "security_level": "null_sec",
+            "grid_logic": true
+        }
+    ],
+    "defaults": {
+        "name": "Forest",
+        "description": "The air smells of pine and damp earth.",
+        "terrain": "forest",
+        "opacity": 0,
+        "traversal_cost": 1
+    },
+    "palettes": {
+        "type_1": {
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_2": {
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_3": {
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_4": {
+            "name": "Ice",
+            "description": "A blanket of white snow covers everything.",
+            "terrain": "ice",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_5": {
+            "name": "Ice",
+            "description": "The cold bites at your exposed skin.",
+            "terrain": "ice",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_6": {
+            "name": "Peak",
+            "description": "You stand atop the world.",
+            "terrain": "peak",
+            "opacity": 0,
+            "traversal_cost": 1
+        }
+    },
+    "rooms": [
+        {
+            "exits": {
+                "north": "z37.-5.-66.0",
+                "west": "z25.-6.-65.0"
+            },
+            "x": -5, "y": -65, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z37.-4.-66.0"
+            },
+            "x": -4, "y": -65, "z": 0,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z37.-3.-66.0"
+            },
+            "x": -3, "y": -65, "z": 0,
+            "monsters": [
+                "shadow_stalker",
+                "wolf"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z37.-2.-66.0"
+            },
+            "x": -2, "y": -65, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z37.-1.-66.0"
+            },
+            "x": -1, "y": -65, "z": 0,
+            "monsters": [
+                "skeleton"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z37.0.-66.0"
+            },
+            "x": 0, "y": -65, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z37.1.-66.0"
+            },
+            "x": 1, "y": -65, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z37.2.-66.0"
+            },
+            "x": 2, "y": -65, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z37.3.-66.0"
+            },
+            "x": 3, "y": -65, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z37.4.-66.0"
+            },
+            "x": 4, "y": -65, "z": 0,
+            "items": [
+                "wood"
+            ],
+            "monsters": [
+                "skeleton",
+                "bandit"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z37.5.-66.0"
+            },
+            "x": 5, "y": -65, "z": 0,
+            "monsters": [
+                "skeleton",
+                "wolf"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z37.6.-66.0"
+            },
+            "x": 6, "y": -65, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z37.7.-66.0"
+            },
+            "x": 7, "y": -65, "z": 0,
+            "monsters": [
+                "bear"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z37.8.-66.0"
+            },
+            "x": 8, "y": -65, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z37.9.-66.0"
+            },
+            "x": 9, "y": -65, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z37.10.-66.0"
+            },
+            "x": 10, "y": -65, "z": 0,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z37.11.-66.0"
+            },
+            "x": 11, "y": -65, "z": 0,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z37.12.-66.0"
+            },
+            "x": 12, "y": -65, "z": 0,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z37.13.-66.0"
+            },
+            "x": 13, "y": -65, "z": 0,
+            "monsters": [
+                "ice_wolf"
+            ],
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z37.14.-66.0",
+                "east": "z51.15.-65.0"
+            },
+            "x": 14, "y": -65, "z": 0,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-64.0"
+            },
+            "x": -5, "y": -64, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        { "x": -4, "y": -64, "z": 0, "palette": "type_1" },
+        { "x": -3, "y": -64, "z": 0, "palette": "type_1" },
+        { "x": -2, "y": -64, "z": 0, "palette": "type_1" },
+        { "x": -1, "y": -64, "z": 0, "palette": "type_1" },
+        { "x": 0, "y": -64, "z": 0, "palette": "type_1" },
+        { "x": 1, "y": -64, "z": 0 },
+        { "x": 2, "y": -64, "z": 0, "palette": "type_1" },
+        {
+            "x": 3, "y": -64, "z": 0,
+            "monsters": [
+                "skeleton"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 4, "y": -64, "z": 0 },
+        { "x": 5, "y": -64, "z": 0 },
+        { "x": 6, "y": -64, "z": 0 },
+        { "x": 7, "y": -64, "z": 0, "palette": "type_1" },
+        { "x": 8, "y": -64, "z": 0, "palette": "type_1" },
+        { "x": 9, "y": -64, "z": 0, "palette": "type_1" },
+        { "x": 10, "y": -64, "z": 0, "palette": "type_4" },
+        { "x": 11, "y": -64, "z": 0, "palette": "type_4" },
+        { "x": 12, "y": -64, "z": 0, "palette": "type_5" },
+        { "x": 13, "y": -64, "z": 0, "palette": "type_5" },
+        {
+            "exits": {
+                "east": "z51.15.-64.0"
+            },
+            "x": 14, "y": -64, "z": 0,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-63.0"
+            },
+            "x": -5, "y": -63, "z": 0,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        { "x": -4, "y": -63, "z": 0, "palette": "type_1" },
+        { "x": -3, "y": -63, "z": 0, "palette": "type_1" },
+        { "x": -2, "y": -63, "z": 0 },
+        { "x": -1, "y": -63, "z": 0 },
+        { "x": 0, "y": -63, "z": 0 },
+        { "x": 1, "y": -63, "z": 0 },
+        {
+            "x": 2, "y": -63, "z": 0,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        { "x": 3, "y": -63, "z": 0, "palette": "type_1" },
+        { "x": 4, "y": -63, "z": 0 },
+        { "x": 5, "y": -63, "z": 0 },
+        { "x": 6, "y": -63, "z": 0, "palette": "type_1" },
+        { "x": 7, "y": -63, "z": 0, "palette": "type_1" },
+        {
+            "x": 8, "y": -63, "z": 0,
+            "monsters": [
+                "skeleton"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 9, "y": -63, "z": 0, "palette": "type_1" },
+        {
+            "x": 10, "y": -63, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 11, "y": -63, "z": 0,
+            "monsters": [
+                "yeti"
+            ],
+            "palette": "type_4"
+        },
+        { "x": 12, "y": -63, "z": 0, "palette": "type_5" },
+        { "x": 13, "y": -63, "z": 0, "palette": "type_5" },
+        {
+            "exits": {
+                "east": "z51.15.-63.0"
+            },
+            "x": 14, "y": -63, "z": 0,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-62.0"
+            },
+            "x": -5, "y": -62, "z": 0
+        },
+        {
+            "x": -4, "y": -62, "z": 0,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "x": -3, "y": -62, "z": 0,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        { "x": -2, "y": -62, "z": 0, "palette": "type_1" },
+        { "x": -1, "y": -62, "z": 0, "palette": "type_1" },
+        {
+            "x": 0, "y": -62, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 1, "y": -62, "z": 0,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "x": 2, "y": -62, "z": 0,
+            "items": [
+                "wild_berry"
+            ]
+        },
+        { "x": 3, "y": -62, "z": 0, "palette": "type_1" },
+        { "x": 4, "y": -62, "z": 0 },
+        { "x": 5, "y": -62, "z": 0, "palette": "type_1" },
+        { "x": 6, "y": -62, "z": 0, "palette": "type_1" },
+        { "x": 7, "y": -62, "z": 0, "palette": "type_1" },
+        { "x": 8, "y": -62, "z": 0 },
+        { "x": 9, "y": -62, "z": 0, "palette": "type_1" },
+        { "x": 10, "y": -62, "z": 0, "palette": "type_1" },
+        { "x": 11, "y": -62, "z": 0 },
+        { "x": 12, "y": -62, "z": 0, "palette": "type_4" },
+        { "x": 13, "y": -62, "z": 0, "palette": "type_5" },
+        {
+            "exits": {
+                "east": "z51.15.-62.0"
+            },
+            "x": 14, "y": -62, "z": 0,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-61.0"
+            },
+            "x": -5, "y": -61, "z": 0
+        },
+        {
+            "x": -4, "y": -61, "z": 0,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "x": -3, "y": -61, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": -2, "y": -61, "z": 0,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "x": -1, "y": -61, "z": 0,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "x": 0, "y": -61, "z": 0,
+            "monsters": [
+                "shadow_stalker",
+                "skeleton"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 1, "y": -61, "z": 0 },
+        { "x": 2, "y": -61, "z": 0 },
+        { "x": 3, "y": -61, "z": 0 },
+        { "x": 4, "y": -61, "z": 0 },
+        { "x": 5, "y": -61, "z": 0, "palette": "type_1" },
+        {
+            "x": 6, "y": -61, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 7, "y": -61, "z": 0, "palette": "type_1" },
+        {
+            "x": 8, "y": -61, "z": 0,
+            "items": [
+                "wild_berry"
+            ]
+        },
+        { "x": 9, "y": -61, "z": 0, "palette": "type_1" },
+        { "x": 10, "y": -61, "z": 0, "palette": "type_1" },
+        { "x": 11, "y": -61, "z": 0 },
+        {
+            "exits": {
+                "south": "z38.12.-60.2"
+            },
+            "x": 12, "y": -61, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z38.13.-60.3"
+            },
+            "x": 13, "y": -61, "z": 0,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z38.14.-60.3",
+                "east": "z51.15.-61.0"
+            },
+            "x": 14, "y": -61, "z": 0,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-60.0"
+            },
+            "x": -5, "y": -60, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        { "x": -4, "y": -60, "z": 0, "palette": "type_1" },
+        {
+            "x": -3, "y": -60, "z": 0,
+            "monsters": [
+                "bear"
+            ]
+        },
+        {
+            "x": -2, "y": -60, "z": 0,
+            "monsters": [
+                "wolf",
+                "bear"
+            ],
+            "palette": "type_1"
+        },
+        { "x": -1, "y": -60, "z": 0, "palette": "type_1" },
+        { "x": 0, "y": -60, "z": 0 },
+        { "x": 1, "y": -60, "z": 0, "palette": "type_1" },
+        { "x": 2, "y": -60, "z": 0 },
+        { "x": 3, "y": -60, "z": 0, "palette": "type_1" },
+        { "x": 4, "y": -60, "z": 0 },
+        {
+            "x": 5, "y": -60, "z": 0,
+            "monsters": [
+                "skeleton"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 6, "y": -60, "z": 0, "palette": "type_1" },
+        { "x": 7, "y": -60, "z": 0 },
+        { "x": 8, "y": -60, "z": 0 },
+        {
+            "exits": {
+                "south": "z38.9.-59.3"
+            },
+            "x": 9, "y": -60, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z38.10.-59.3"
+            },
+            "x": 10, "y": -60, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.11.-59.3",
+                "east": "z38.12.-60.2"
+            },
+            "x": 11, "y": -60, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.12.-61.0",
+                "east": "z38.13.-60.3",
+                "west": "z38.11.-60.0"
+            },
+            "x": 12, "y": -60, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.13.-61.0",
+                "south": "z38.13.-59.2",
+                "west": "z38.12.-60.2"
+            },
+            "x": 13, "y": -60, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.14.-61.0",
+                "south": "z38.14.-59.2",
+                "east": "z51.15.-60.3"
+            },
+            "x": 14, "y": -60, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-59.0"
+            },
+            "x": -5, "y": -59, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "x": -4, "y": -59, "z": 0,
+            "monsters": [
+                "shadow_stalker",
+                "skeleton"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": -3, "y": -59, "z": 0,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        { "x": -2, "y": -59, "z": 0, "palette": "type_1" },
+        { "x": -1, "y": -59, "z": 0 },
+        { "x": 0, "y": -59, "z": 0, "palette": "type_1" },
+        { "x": 1, "y": -59, "z": 0 },
+        { "x": 2, "y": -59, "z": 0, "palette": "type_1" },
+        { "x": 3, "y": -59, "z": 0, "palette": "type_1" },
+        { "x": 4, "y": -59, "z": 0, "palette": "type_1" },
+        { "x": 5, "y": -59, "z": 0, "palette": "type_1" },
+        { "x": 6, "y": -59, "z": 0, "palette": "type_1" },
+        {
+            "x": 7, "y": -59, "z": 0,
+            "monsters": [
+                "skeleton"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "east": "z38.9.-59.3"
+            },
+            "x": 8, "y": -59, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z38.9.-60.0",
+                "west": "z38.8.-59.0"
+            },
+            "x": 9, "y": -59, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.10.-60.0"
+            },
+            "x": 10, "y": -59, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.11.-60.0",
+                "south": "z38.11.-58.2",
+                "east": "z38.12.-59.2"
+            },
+            "x": 11, "y": -59, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z38.12.-58.3",
+                "west": "z38.11.-59.3"
+            },
+            "x": 12, "y": -59, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.13.-60.3"
+            },
+            "x": 13, "y": -59, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.14.-60.3",
+                "south": "z38.14.-58.3",
+                "east": "z51.15.-59.3"
+            },
+            "x": 14, "y": -59, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-58.0"
+            },
+            "x": -5, "y": -58, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "x": -4, "y": -58, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        { "x": -3, "y": -58, "z": 0, "palette": "type_1" },
+        {
+            "x": -2, "y": -58, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        { "x": -1, "y": -58, "z": 0 },
+        { "x": 0, "y": -58, "z": 0 },
+        { "x": 1, "y": -58, "z": 0, "palette": "type_1" },
+        { "x": 2, "y": -58, "z": 0, "palette": "type_1" },
+        { "x": 3, "y": -58, "z": 0 },
+        {
+            "x": 4, "y": -58, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 5, "y": -58, "z": 0, "palette": "type_1" },
+        { "x": 6, "y": -58, "z": 0 },
+        { "x": 7, "y": -58, "z": 0 },
+        {
+            "exits": {
+                "south": "z38.8.-57.3",
+                "east": "z38.9.-58.3"
+            },
+            "x": 8, "y": -58, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z38.9.-57.2",
+                "west": "z38.8.-58.0"
+            },
+            "x": 9, "y": -58, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z38.11.-58.2"
+            },
+            "x": 10, "y": -58, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.11.-59.3",
+                "east": "z38.12.-58.3",
+                "west": "z38.10.-58.3"
+            },
+            "x": 11, "y": -58, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.12.-59.2",
+                "south": "z38.12.-57.2",
+                "east": "z38.13.-58.2",
+                "west": "z38.11.-58.2"
+            },
+            "x": 12, "y": -58, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "east": "z38.14.-58.3",
+                "west": "z38.12.-58.3"
+            },
+            "x": 13, "y": -58, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.14.-59.2",
+                "east": "z51.15.-58.2",
+                "west": "z38.13.-58.2"
+            },
+            "x": 14, "y": -58, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-57.0"
+            },
+            "x": -5, "y": -57, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": -4, "y": -57, "z": 0, "palette": "type_1" },
+        { "x": -3, "y": -57, "z": 0, "palette": "type_1" },
+        {
+            "x": -2, "y": -57, "z": 0,
+            "monsters": [
+                "shadow_stalker",
+                "wolf"
+            ]
+        },
+        {
+            "x": -1, "y": -57, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 0, "y": -57, "z": 0 },
+        { "x": 1, "y": -57, "z": 0 },
+        { "x": 2, "y": -57, "z": 0, "palette": "type_1" },
+        { "x": 3, "y": -57, "z": 0 },
+        {
+            "x": 4, "y": -57, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 5, "y": -57, "z": 0, "palette": "type_1" },
+        { "x": 6, "y": -57, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "east": "z38.8.-57.3"
+            },
+            "x": 7, "y": -57, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.8.-58.0",
+                "south": "z38.8.-56.2",
+                "east": "z38.9.-57.2",
+                "west": "z38.7.-57.0"
+            },
+            "x": 8, "y": -57, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.9.-58.3",
+                "south": "z38.9.-56.3",
+                "east": "z38.10.-57.3",
+                "west": "z38.8.-57.3"
+            },
+            "x": 9, "y": -57, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "east": "z38.11.-57.2",
+                "west": "z38.9.-57.2"
+            },
+            "x": 10, "y": -57, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z38.11.-56.3",
+                "west": "z38.10.-57.3"
+            },
+            "x": 11, "y": -57, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.12.-58.3"
+            },
+            "x": 12, "y": -57, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z38.14.-57.3"
+            },
+            "x": 13, "y": -57, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z51.15.-57.2",
+                "west": "z38.13.-57.2"
+            },
+            "x": 14, "y": -57, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-56.0"
+            },
+            "x": -5, "y": -56, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "x": -4, "y": -56, "z": 0,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        { "x": -3, "y": -56, "z": 0 },
+        { "x": -2, "y": -56, "z": 0, "palette": "type_1" },
+        { "x": -1, "y": -56, "z": 0, "palette": "type_1" },
+        { "x": 0, "y": -56, "z": 0 },
+        { "x": 1, "y": -56, "z": 0, "palette": "type_1" },
+        { "x": 2, "y": -56, "z": 0 },
+        { "x": 3, "y": -56, "z": 0 },
+        { "x": 4, "y": -56, "z": 0, "palette": "type_1" },
+        { "x": 5, "y": -56, "z": 0 },
+        { "x": 6, "y": -56, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "east": "z38.8.-56.2"
+            },
+            "x": 7, "y": -56, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.8.-57.3",
+                "south": "z38.8.-55.3",
+                "east": "z38.9.-56.3",
+                "west": "z38.7.-56.0"
+            },
+            "x": 8, "y": -56, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.9.-57.2",
+                "west": "z38.8.-56.2"
+            },
+            "x": 9, "y": -56, "z": 3,
+            "palette": "type_3"
+        },
+        { "x": 10, "y": -56, "z": 3, "palette": "type_3" },
+        {
+            "exits": {
+                "north": "z38.11.-57.2",
+                "east": "z38.12.-56.2"
+            },
+            "x": 11, "y": -56, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "west": "z38.11.-56.3"
+            },
+            "x": 12, "y": -56, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.13.-57.2",
+                "west": "z38.12.-56.2"
+            },
+            "x": 13, "y": -56, "z": 4,
+            "palette": "type_6"
+        },
+        {
+            "exits": {
+                "north": "z38.14.-57.3"
+            },
+            "x": 14, "y": -56, "z": 5,
+            "palette": "type_6"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-55.0"
+            },
+            "x": -5, "y": -55, "z": 0
+        },
+        { "x": -4, "y": -55, "z": 0 },
+        { "x": -3, "y": -55, "z": 0 },
+        { "x": -2, "y": -55, "z": 0 },
+        { "x": -1, "y": -55, "z": 0 },
+        { "x": 0, "y": -55, "z": 0, "palette": "type_1" },
+        { "x": 1, "y": -55, "z": 0 },
+        { "x": 2, "y": -55, "z": 0 },
+        { "x": 3, "y": -55, "z": 0, "palette": "type_1" },
+        { "x": 4, "y": -55, "z": 0, "palette": "type_1" },
+        { "x": 5, "y": -55, "z": 0 },
+        { "x": 6, "y": -55, "z": 0 },
+        {
+            "exits": {
+                "east": "z38.8.-55.3"
+            },
+            "x": 7, "y": -55, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.8.-56.2",
+                "west": "z38.7.-55.0"
+            },
+            "x": 8, "y": -55, "z": 3,
+            "palette": "type_3"
+        },
+        { "x": 9, "y": -55, "z": 3, "palette": "type_3" },
+        {
+            "exits": {
+                "south": "z38.10.-54.2"
+            },
+            "x": 10, "y": -55, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z38.11.-54.2",
+                "east": "z38.12.-55.2"
+            },
+            "x": 11, "y": -55, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z38.11.-55.3"
+            },
+            "x": 12, "y": -55, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "name": "Peak",
+            "description": "Snow clings to the jagged rock.",
+            "exits": {
+                "west": "z38.12.-55.2"
+            },
+            "x": 13, "y": -55, "z": 4,
+            "terrain": "peak"
+        },
+        { "x": 14, "y": -55, "z": 4, "palette": "type_6" },
+        {
+            "exits": {
+                "west": "z25.-6.-54.0"
+            },
+            "x": -5, "y": -54, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": -4, "y": -54, "z": 0, "palette": "type_1" },
+        {
+            "x": -3, "y": -54, "z": 0,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "x": -2, "y": -54, "z": 0,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "x": -1, "y": -54, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 0, "y": -54, "z": 0,
+            "monsters": [
+                "bear"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 1, "y": -54, "z": 0 },
+        { "x": 2, "y": -54, "z": 0, "palette": "type_1" },
+        {
+            "x": 3, "y": -54, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 4, "y": -54, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 5, "y": -54, "z": 0, "palette": "type_1" },
+        { "x": 6, "y": -54, "z": 0 },
+        {
+            "exits": {
+                "east": "z38.8.-54.3"
+            },
+            "x": 7, "y": -54, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.8.-53.2",
+                "west": "z38.7.-54.0"
+            },
+            "x": 8, "y": -54, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "east": "z38.10.-54.2"
+            },
+            "x": 9, "y": -54, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.10.-55.3",
+                "west": "z38.9.-54.3"
+            },
+            "x": 10, "y": -54, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.11.-55.3",
+                "south": "z38.11.-53.3"
+            },
+            "x": 11, "y": -54, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z38.12.-53.3"
+            },
+            "x": 12, "y": -54, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "name": "Peak",
+            "description": "The wind howls violently at this altitude.",
+            "exits": {
+                "south": "z38.13.-53.2",
+                "west": "z38.12.-54.2"
+            },
+            "x": 13, "y": -54, "z": 4,
+            "terrain": "peak"
+        },
+        { "x": 14, "y": -54, "z": 4, "palette": "type_6" },
+        {
+            "exits": {
+                "west": "z25.-6.-53.0"
+            },
+            "x": -5, "y": -53, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": -4, "y": -53, "z": 0 },
+        { "x": -3, "y": -53, "z": 0, "palette": "type_1" },
+        { "x": -2, "y": -53, "z": 0, "palette": "type_1" },
+        { "x": -1, "y": -53, "z": 0, "palette": "type_1" },
+        { "x": 0, "y": -53, "z": 0 },
+        { "x": 1, "y": -53, "z": 0 },
+        { "x": 2, "y": -53, "z": 0 },
+        { "x": 3, "y": -53, "z": 0, "palette": "type_1" },
+        { "x": 4, "y": -53, "z": 0 },
+        { "x": 5, "y": -53, "z": 0 },
+        {
+            "x": 6, "y": -53, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "east": "z38.8.-53.2"
+            },
+            "x": 7, "y": -53, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z38.8.-54.3",
+                "south": "z38.8.-52.3",
+                "east": "z38.9.-53.3",
+                "west": "z38.7.-53.0"
+            },
+            "x": 8, "y": -53, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z38.10.-53.2",
+                "west": "z38.8.-53.2"
+            },
+            "x": 9, "y": -53, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z38.10.-52.3",
+                "east": "z38.11.-53.3",
+                "west": "z38.9.-53.3"
+            },
+            "x": 10, "y": -53, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.11.-54.2",
+                "west": "z38.10.-53.2"
+            },
+            "x": 11, "y": -53, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.12.-54.2",
+                "south": "z38.12.-52.2",
+                "east": "z38.13.-53.2"
+            },
+            "x": 12, "y": -53, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z38.12.-53.3"
+            },
+            "x": 13, "y": -53, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z38.14.-52.3",
+                "west": "z38.13.-53.2"
+            },
+            "x": 14, "y": -53, "z": 4,
+            "palette": "type_6"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-52.0"
+            },
+            "x": -5, "y": -52, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": -4, "y": -52, "z": 0, "palette": "type_1" },
+        {
+            "x": -3, "y": -52, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        { "x": -2, "y": -52, "z": 0, "palette": "type_1" },
+        { "x": -1, "y": -52, "z": 0 },
+        { "x": 0, "y": -52, "z": 0 },
+        { "x": 1, "y": -52, "z": 0, "palette": "type_1" },
+        { "x": 2, "y": -52, "z": 0 },
+        { "x": 3, "y": -52, "z": 0 },
+        {
+            "x": 4, "y": -52, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 5, "y": -52, "z": 0, "palette": "type_1" },
+        { "x": 6, "y": -52, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "east": "z38.8.-52.3"
+            },
+            "x": 7, "y": -52, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z38.8.-53.2",
+                "south": "z38.8.-51.0",
+                "west": "z38.7.-52.0"
+            },
+            "x": 8, "y": -52, "z": 3,
+            "palette": "type_2"
+        },
+        { "x": 9, "y": -52, "z": 3, "palette": "type_3" },
+        {
+            "exits": {
+                "north": "z38.10.-53.2",
+                "south": "z38.10.-51.2"
+            },
+            "x": 10, "y": -52, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "east": "z38.12.-52.2"
+            },
+            "x": 11, "y": -52, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.12.-53.3",
+                "south": "z38.12.-51.3",
+                "west": "z38.11.-52.3"
+            },
+            "x": 12, "y": -52, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z38.13.-51.3",
+                "east": "z38.14.-52.3"
+            },
+            "x": 13, "y": -52, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z51.15.-52.3",
+                "west": "z38.13.-52.2"
+            },
+            "x": 14, "y": -52, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-51.0"
+            },
+            "x": -5, "y": -51, "z": 0,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "x": -4, "y": -51, "z": 0,
+            "monsters": [
+                "bear"
+            ]
+        },
+        { "x": -3, "y": -51, "z": 0 },
+        { "x": -2, "y": -51, "z": 0 },
+        {
+            "x": -1, "y": -51, "z": 0,
+            "monsters": [
+                "bear"
+            ]
+        },
+        { "x": 0, "y": -51, "z": 0 },
+        { "x": 1, "y": -51, "z": 0 },
+        { "x": 2, "y": -51, "z": 0 },
+        { "x": 3, "y": -51, "z": 0 },
+        {
+            "x": 4, "y": -51, "z": 0,
+            "monsters": [
+                "shadow_stalker",
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 5, "y": -51, "z": 0 },
+        { "x": 6, "y": -51, "z": 0 },
+        { "x": 7, "y": -51, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "north": "z38.8.-52.3",
+                "east": "z38.9.-51.3"
+            },
+            "x": 8, "y": -51, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.9.-50.2",
+                "east": "z38.10.-51.2",
+                "west": "z38.8.-51.0"
+            },
+            "x": 9, "y": -51, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.10.-52.3",
+                "south": "z38.10.-50.3",
+                "east": "z38.11.-51.3",
+                "west": "z38.9.-51.3"
+            },
+            "x": 10, "y": -51, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z38.10.-51.2"
+            },
+            "x": 11, "y": -51, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.12.-52.2"
+            },
+            "x": 12, "y": -51, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.13.-52.2"
+            },
+            "x": 13, "y": -51, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z51.15.-51.3"
+            },
+            "x": 14, "y": -51, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-50.0"
+            },
+            "x": -5, "y": -50, "z": 0,
+            "monsters": [
+                "skeleton"
+            ],
+            "palette": "type_1"
+        },
+        { "x": -4, "y": -50, "z": 0, "palette": "type_1" },
+        { "x": -3, "y": -50, "z": 0, "palette": "type_1" },
+        { "x": -2, "y": -50, "z": 0 },
+        {
+            "x": -1, "y": -50, "z": 0,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        { "x": 0, "y": -50, "z": 0 },
+        {
+            "x": 1, "y": -50, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 2, "y": -50, "z": 0, "palette": "type_1" },
+        {
+            "x": 3, "y": -50, "z": 0,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        { "x": 4, "y": -50, "z": 0 },
+        { "x": 5, "y": -50, "z": 0, "palette": "type_1" },
+        { "x": 6, "y": -50, "z": 0, "palette": "type_1" },
+        { "x": 7, "y": -50, "z": 0 },
+        {
+            "exits": {
+                "east": "z38.9.-50.2"
+            },
+            "x": 8, "y": -50, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z38.9.-51.3",
+                "south": "z38.9.-49.1",
+                "east": "z38.10.-50.3",
+                "west": "z38.8.-50.0"
+            },
+            "x": 9, "y": -50, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.10.-51.2",
+                "west": "z38.9.-50.2"
+            },
+            "x": 10, "y": -50, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z38.11.-49.2"
+            },
+            "x": 11, "y": -50, "z": 3,
+            "palette": "type_2"
+        },
+        { "x": 12, "y": -50, "z": 3, "palette": "type_3" },
+        {
+            "exits": {
+                "south": "z38.13.-49.2"
+            },
+            "x": 13, "y": -50, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z38.14.-49.2",
+                "east": "z51.15.-50.2"
+            },
+            "x": 14, "y": -50, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z25.-6.-49.0"
+            },
+            "x": -5, "y": -49, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": -4, "y": -49, "z": 0 },
+        { "x": -3, "y": -49, "z": 0 },
+        { "x": -2, "y": -49, "z": 0, "palette": "type_1" },
+        { "x": -1, "y": -49, "z": 0, "palette": "type_1" },
+        { "x": 0, "y": -49, "z": 0 },
+        {
+            "x": 1, "y": -49, "z": 0,
+            "monsters": [
+                "skeleton",
+                "bear"
+            ]
+        },
+        {
+            "x": 2, "y": -49, "z": 0,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        { "x": 3, "y": -49, "z": 0 },
+        { "x": 4, "y": -49, "z": 0 },
+        {
+            "exits": {
+                "south": "z38.5.-48.1"
+            },
+            "x": 5, "y": -49, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z38.6.-48.1"
+            },
+            "x": 6, "y": -49, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z38.7.-48.1"
+            },
+            "x": 7, "y": -49, "z": 0,
+            "monsters": [
+                "skeleton"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z38.8.-48.1",
+                "east": "z38.9.-49.1"
+            },
+            "x": 8, "y": -49, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z38.9.-50.2",
+                "east": "z38.10.-49.3",
+                "west": "z38.8.-49.0"
+            },
+            "x": 9, "y": -49, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.10.-48.1",
+                "east": "z38.11.-49.2",
+                "west": "z38.9.-49.1"
+            },
+            "x": 10, "y": -49, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.11.-50.3",
+                "east": "z38.12.-49.3",
+                "west": "z38.10.-49.3"
+            },
+            "x": 11, "y": -49, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z38.12.-48.2",
+                "east": "z38.13.-49.2",
+                "west": "z38.11.-49.2"
+            },
+            "x": 12, "y": -49, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.13.-50.3",
+                "west": "z38.12.-49.3"
+            },
+            "x": 13, "y": -49, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.14.-50.3",
+                "south": "z38.14.-48.3",
+                "east": "z51.15.-49.2"
+            },
+            "x": 14, "y": -49, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z38.-5.-47.1",
+                "west": "z25.-6.-48.0"
+            },
+            "x": -5, "y": -48, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z38.-4.-47.1"
+            },
+            "x": -4, "y": -48, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.-3.-47.1"
+            },
+            "x": -3, "y": -48, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.-2.-47.1"
+            },
+            "x": -2, "y": -48, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.-1.-47.1"
+            },
+            "x": -1, "y": -48, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.0.-47.1"
+            },
+            "x": 0, "y": -48, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z38.1.-47.1"
+            },
+            "x": 1, "y": -48, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z38.2.-47.1"
+            },
+            "x": 2, "y": -48, "z": 0,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z38.3.-47.1"
+            },
+            "x": 3, "y": -48, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.4.-47.1",
+                "east": "z38.5.-48.1"
+            },
+            "x": 4, "y": -48, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.5.-49.0",
+                "west": "z38.4.-48.0"
+            },
+            "x": 5, "y": -48, "z": 1
+        },
+        {
+            "exits": {
+                "north": "z38.6.-49.0"
+            },
+            "x": 6, "y": -48, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.7.-49.0"
+            },
+            "x": 7, "y": -48, "z": 1
+        },
+        {
+            "exits": {
+                "north": "z38.8.-49.0"
+            },
+            "x": 8, "y": -48, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "x": 9, "y": -48, "z": 1,
+            "monsters": [
+                "shadow_stalker",
+                "bear"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.10.-49.3",
+                "east": "z38.11.-48.2"
+            },
+            "x": 10, "y": -48, "z": 1
+        },
+        {
+            "exits": {
+                "south": "z38.11.-47.1",
+                "west": "z38.10.-48.1"
+            },
+            "x": 11, "y": -48, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.12.-49.3",
+                "south": "z38.12.-47.1"
+            },
+            "x": 12, "y": -48, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "east": "z38.14.-48.3"
+            },
+            "x": 13, "y": -48, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.14.-49.2",
+                "south": "z38.14.-47.2",
+                "east": "z51.15.-48.2",
+                "west": "z38.13.-48.2"
+            },
+            "x": 14, "y": -48, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z38.-5.-48.0",
+                "west": "z25.-6.-47.0"
+            },
+            "x": -5, "y": -47, "z": 1
+        },
+        {
+            "exits": {
+                "north": "z38.-4.-48.0"
+            },
+            "x": -4, "y": -47, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.-3.-48.0"
+            },
+            "x": -3, "y": -47, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.-2.-48.0"
+            },
+            "x": -2, "y": -47, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.-1.-48.0"
+            },
+            "x": -1, "y": -47, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.0.-48.0"
+            },
+            "x": 0, "y": -47, "z": 1
+        },
+        {
+            "exits": {
+                "north": "z38.1.-48.0"
+            },
+            "x": 1, "y": -47, "z": 1
+        },
+        {
+            "exits": {
+                "north": "z38.2.-48.0"
+            },
+            "x": 2, "y": -47, "z": 1,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.3.-48.0"
+            },
+            "x": 3, "y": -47, "z": 1
+        },
+        {
+            "exits": {
+                "north": "z38.4.-48.0"
+            },
+            "x": 4, "y": -47, "z": 1,
+            "monsters": [
+                "shadow_stalker",
+                "bandit"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 5, "y": -47, "z": 1, "palette": "type_1" },
+        {
+            "x": 6, "y": -47, "z": 1,
+            "monsters": [
+                "bear",
+                "bandit"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 7, "y": -47, "z": 1 },
+        {
+            "x": 8, "y": -47, "z": 1,
+            "monsters": [
+                "bandit"
+            ]
+        },
+        { "x": 9, "y": -47, "z": 1 },
+        { "x": 10, "y": -47, "z": 1 },
+        {
+            "exits": {
+                "north": "z38.11.-48.2"
+            },
+            "x": 11, "y": -47, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.12.-48.2",
+                "east": "z38.13.-47.2"
+            },
+            "x": 12, "y": -47, "z": 1,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z38.13.-46.1",
+                "west": "z38.12.-47.1"
+            },
+            "x": 13, "y": -47, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z38.14.-48.3",
+                "south": "z38.14.-46.1",
+                "east": "z51.15.-47.3"
+            },
+            "x": 14, "y": -47, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z39.-5.-45.1",
+                "west": "z25.-6.-46.1"
+            },
+            "x": -5, "y": -46, "z": 1
+        },
+        {
+            "exits": {
+                "south": "z39.-4.-45.1"
+            },
+            "x": -4, "y": -46, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z39.-3.-45.1"
+            },
+            "x": -3, "y": -46, "z": 1,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z39.-2.-45.1"
+            },
+            "x": -2, "y": -46, "z": 1,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z39.-1.-45.1"
+            },
+            "x": -1, "y": -46, "z": 1
+        },
+        {
+            "exits": {
+                "south": "z39.0.-45.1"
+            },
+            "x": 0, "y": -46, "z": 1,
+            "items": [
+                "wood"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z39.1.-45.1"
+            },
+            "x": 1, "y": -46, "z": 1
+        },
+        {
+            "exits": {
+                "south": "z39.2.-45.1"
+            },
+            "x": 2, "y": -46, "z": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z39.3.-45.1"
+            },
+            "x": 3, "y": -46, "z": 1,
+            "monsters": [
+                "skeleton"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z39.4.-45.1"
+            },
+            "x": 4, "y": -46, "z": 1
+        },
+        {
+            "exits": {
+                "south": "z39.5.-45.1"
+            },
+            "x": 5, "y": -46, "z": 1,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z39.6.-45.1"
+            },
+            "x": 6, "y": -46, "z": 1,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z39.7.-45.1"
+            },
+            "x": 7, "y": -46, "z": 1,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z39.8.-45.1"
+            },
+            "x": 8, "y": -46, "z": 1,
+            "monsters": [
+                "shadow_stalker"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z39.9.-45.1"
+            },
+            "x": 9, "y": -46, "z": 1,
+            "monsters": [
+                "shadow_stalker"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z39.10.-45.1"
+            },
+            "x": 10, "y": -46, "z": 1
+        },
+        {
+            "exits": {
+                "south": "z39.11.-45.1"
+            },
+            "x": 11, "y": -46, "z": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z39.12.-45.1"
+            },
+            "x": 12, "y": -46, "z": 1,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z38.13.-47.2",
+                "south": "z39.13.-45.1"
+            },
+            "x": 13, "y": -46, "z": 1,
+            "monsters": [
+                "wolf"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z38.14.-47.2",
+                "south": "z39.14.-45.1",
+                "east": "z51.15.-46.1"
+            },
+            "x": 14, "y": -46, "z": 1
+        }
+    ]
+}

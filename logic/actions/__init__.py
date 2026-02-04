@@ -1,8 +1,20 @@
-import pkgutil
+# Import all action modules to ensure commands are registered
+from . import admin
+from . import bard
+from . import combat
+from . import commune
+from . import consumables
+from . import core_commands
+from . import crafting
+from . import deck
+from . import help_system
+from . import information
+from . import items
+from . import movement
+from . import quests
+from . import shop
+from . import skills
+from . import social
+from . import spells
 
-# Automatically import all modules in this package to ensure
-# command registration decorators run.
-__all__ = []
-for loader, module_name, is_pkg in pkgutil.walk_packages(__path__):
-    __all__.append(module_name)
-    _module = loader.find_module(module_name).load_module(module_name)
+# Note: handlers package is imported by skills.py

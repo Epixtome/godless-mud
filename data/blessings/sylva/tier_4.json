@@ -1,0 +1,55 @@
+{
+    "blessings": [
+        {
+            "id": "earthquake",
+            "name": "Earthquake",
+            "tier": 4,
+            "base_power": 50,
+            "scaling": {
+                "wis": 2.5
+            },
+            "requirements": {
+                "wis": 20,
+                "cost": {
+                    "concentration": 60
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "ultimate",
+                "nature",
+                "earth",
+                "aoe",
+                "control",
+                "wis",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Massive area damage that knocks down all enemies.",
+            "cost": 1000,
+            "deity_id": "sylva",
+            "required_class": "Druid"
+        },
+        {
+            "id": "spirit_bond",
+            "name": "Spirit Bond",
+            "tier": 4,
+            "base_power": 50,
+            "scaling": {
+                "wis": 3.0
+            },
+            "requirements": {
+                "wis": 20
+            },
+            "identity_tags": [
+                "ultimate",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Beast Master Ultimate.",
+            "cost": 1000,
+            "deity_id": "sylva",
+            "required_class": "Beast Master"
+        }
+    ]
+}

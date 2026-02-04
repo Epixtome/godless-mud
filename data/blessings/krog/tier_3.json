@@ -1,0 +1,211 @@
+{
+    "blessings": [
+        {
+            "id": "cleave",
+            "name": "Cleave",
+            "tier": 3,
+            "base_power": 20,
+            "scaling": {
+                "str": 1.6
+            },
+            "requirements": {
+                "str": 16,
+                "cost": {
+                    "stamina": 35
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "aoe",
+                "str",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Strikes multiple enemies in a wide arc.",
+            "cost": 500,
+            "deity_id": "krog"
+        },
+        {
+            "id": "grip_mastery",
+            "name": "Grip Mastery",
+            "tier": 3,
+            "base_power": 0,
+            "scaling": {
+                "str": 1.2
+            },
+            "requirements": {
+                "str": 15
+            },
+            "identity_tags": [
+                "instinct",
+                "passive",
+                "weapon",
+                "str",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Prevents disarm and boosts weapon damage.",
+            "cost": 500,
+            "deity_id": "krog"
+        },
+        {
+            "id": "raging_strikes",
+            "name": "Raging Strikes",
+            "tier": 3,
+            "base_power": 0,
+            "scaling": {
+                "str": 2.0
+            },
+            "requirements": {
+                "str": 18,
+                "cost": {
+                    "stamina": 40
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "buff",
+                "rage",
+                "str",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Greatly increases damage at the cost of defense.",
+            "cost": 500,
+            "deity_id": "krog"
+        },
+        {
+            "id": "reckless_swing",
+            "name": "Reckless Swing",
+            "tier": 3,
+            "base_power": 40,
+            "scaling": {
+                "str": 2.0
+            },
+            "requirements": {
+                "str": 18,
+                "cost": {
+                    "stamina": 30,
+                    "hp": 10
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "rage",
+                "str",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Massive damage at the cost of your own health.",
+            "cost": 500,
+            "deity_id": "krog"
+        },
+        {
+            "id": "stomp",
+            "name": "Stomp",
+            "tier": 3,
+            "base_power": 10,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 16,
+                "cost": {
+                    "stamina": 25
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "malediction",
+                "aoe",
+                "stomp",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Stomp the ground, stunning all nearby enemies.",
+            "cost": 500,
+            "deity_id": "krog"
+        },
+        {
+            "id": "warriors_roar",
+            "name": "Warrior's Roar",
+            "tier": 3,
+            "base_power": 0,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 18,
+                "cost": {
+                    "stamina": 40
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "control",
+                "aoe",
+                "str",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Stuns all enemies in the room.",
+            "cost": 500,
+            "deity_id": "krog"
+        },
+        {
+            "id": "weapon_cyclone",
+            "name": "Weapon Cyclone",
+            "tier": 3,
+            "base_power": 20,
+            "scaling": {
+                "str": 1.8
+            },
+            "requirements": {
+                "str": 16,
+                "cost": {
+                    "stamina": 35
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "aoe",
+                "martial",
+                "str",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Spins to hit all adjacent enemies. Can disarm.",
+            "cost": 500,
+            "deity_id": "krog"
+        },
+        {
+            "id": "whirl",
+            "name": "Whirl",
+            "tier": 3,
+            "base_power": 15,
+            "scaling": {
+                "str": 1.6
+            },
+            "requirements": {
+                "str": 16,
+                "cost": {
+                    "stamina": 30
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "aoe",
+                "whirl",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Spin around, damaging all enemies in the room.",
+            "cost": 500,
+            "deity_id": "krog"
+        }
+    ]
+}

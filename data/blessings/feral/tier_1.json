@@ -1,0 +1,56 @@
+{
+    "blessings": [
+        {
+            "id": "quick_shot",
+            "name": "Quick Shot",
+            "tier": 1,
+            "base_power": 10,
+            "scaling": {
+                "dex": 1.2
+            },
+            "requirements": {
+                "dex": 10,
+                "cost": {
+                    "stamina": 10
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "marksmanship",
+                "dex",
+                "skill"
+            ],
+            "charges": 5,
+            "description": "A fast arrow shot at a locked target.",
+            "cost": 50,
+            "deity_id": "feral"
+        },
+        {
+            "id": "twin_axes",
+            "name": "Twin Axes",
+            "tier": 1,
+            "base_power": 10,
+            "scaling": {
+                "str": 1.2,
+                "dex": 1.2
+            },
+            "requirements": {
+                "str": 10,
+                "cost": {
+                    "stamina": 15
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "multi_attack",
+                "str",
+                "skill"
+            ],
+            "charges": 4,
+            "description": "A rapid double strike.",
+            "cost": 50,
+            "deity_id": "feral"
+        }
+    ]
+}

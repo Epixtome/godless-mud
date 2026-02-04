@@ -62,9 +62,26 @@ def _handle_commune(player, command, data):
                     name_color = Colors.GREEN
                 else:
                     can_afford = player.favor.get(deity_id, 0) >= b.cost
-                    status = f"{Colors.YELLOW}[Buy]{Colors.RESET}" if can_afford else f"{Colors.RED}[Locked]{Colors.RESET}"
+                    
+                    # Check Class Requirement
+                    req_class = getattr(b, 'required_class', None)
+                    class_match = True
+                    if req_class:
+                        active_cls = player.game.world.classes.get(player.active_class) if player.active_class else None
+                        if not active_cls or active_cls.name != req_class:
+                            class_match = False
+
+                    if not class_match:
+                        status = f"{Colors.RED}[Class]{Colors.RESET}"
+                        name_color = Colors.RED
+                    elif can_afford:
+                        status = f"{Colors.YELLOW}[Buy]{Colors.RESET}"
+                        name_color = Colors.YELLOW
+                    else:
+                        status = f"{Colors.RED}[Favor]{Colors.RESET}"
+                        name_color = Colors.WHITE
+                    
                     price = f"{b.cost} Favor"
-                    name_color = Colors.YELLOW if can_afford else Colors.WHITE
                 
                 player.send_line(f"{status} {name_color}{b.name:<20}{Colors.RESET} : {price}")
                 player.send_line(f"      {Colors.CYAN}ID:{Colors.RESET} {b.id}")
@@ -84,6 +101,14 @@ def _handle_commune(player, command, data):
         if not blessing or getattr(blessing, 'deity_id', None) != deity_id:
             player.send_line("That blessing is not available here.")
             return
+            
+        # Check Class Requirement
+        req_class = getattr(blessing, 'required_class', None)
+        if req_class:
+            active_cls = player.game.world.classes.get(player.active_class) if player.active_class else None
+            if not active_cls or active_cls.name != req_class:
+                player.send_line(f"You must be a {Colors.BOLD}{req_class}{Colors.RESET} to learn this.")
+                return
             
         cost = blessing.cost
         current_favor = player.favor.get(deity_id, 0)

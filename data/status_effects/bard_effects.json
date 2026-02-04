@@ -1,0 +1,22 @@
+{
+    "effects": [
+        {
+            "id": "song_of_courage_upkeep",
+            "name": "Singing (Courage)",
+            "description": "You are performing the Song of Courage. Drains Concentration.",
+            "type": "upkeep",
+            "duration": 600,
+            "tick_interval": 2,
+            "resource_cost": {"concentration": 5},
+            "flags": ["song", "concentration_drain"]
+        },
+        {
+            "id": "song_of_courage_buff",
+            "name": "Song of Courage",
+            "description": "Inspired by the bard's song. Damage increased.",
+            "type": "buff",
+            "duration": 4,
+            "modifiers": {"damage_mult": 1.15}
+        }
+    ]
+}

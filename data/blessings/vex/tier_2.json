@@ -1,0 +1,108 @@
+{
+    "blessings": [
+        {
+            "id": "corrosive_vial",
+            "name": "Corrosive Vial",
+            "tier": 2,
+            "base_power": 8,
+            "scaling": {
+                "int": 1.4
+            },
+            "requirements": {
+                "int": 12,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "alchemy",
+                "acid",
+                "debuff",
+                "int",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Melts enemy armor, reducing their defense.",
+            "cost": 100,
+            "deity_id": "vex"
+        },
+        {
+            "id": "death_touch",
+            "name": "Death Touch",
+            "tier": 2,
+            "base_power": 30,
+            "scaling": {
+                "int": 1.5
+            },
+            "requirements": {
+                "int": 12,
+                "cost": {
+                    "concentration": 25
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "vile",
+                "execution",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Instant heavy damage to low HP.",
+            "cost": 100,
+            "deity_id": "vex"
+        },
+        {
+            "id": "miasma",
+            "name": "Miasma",
+            "tier": 2,
+            "base_power": 8,
+            "scaling": {
+                "int": 1.5
+            },
+            "requirements": {
+                "int": 12,
+                "cost": {
+                    "concentration": 15
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "int",
+                "miasma",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "A cloud that deals damage over time (Dark Spark).",
+            "cost": 100,
+            "deity_id": "vex"
+        },
+        {
+            "id": "screaming_wall",
+            "name": "Screaming Wall",
+            "tier": 2,
+            "base_power": 10,
+            "scaling": {
+                "int": 1.4
+            },
+            "requirements": {
+                "int": 14,
+                "cost": {
+                    "concentration": 30
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "control",
+                "space",
+                "fear",
+                "int",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "A wall of souls that fears and damages enemies.",
+            "cost": 100,
+            "deity_id": "vex"
+        }
+    ]
+}

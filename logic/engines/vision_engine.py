@@ -5,13 +5,16 @@ from logic.engines import spatial_engine
 TERRAIN_OPACITY = {
     "road": 0.0,
     "plains": 0.1,
+    "hills": 0.2,
     "forest": 0.4,
     "dense_forest": 0.8,
     "mountain": 0.9,
+    "peak": 1.0,
     "indoors": 0.2,
     "cave": 0.9,
     "swamp": 0.3,
     "water": 0.1,
+    "lake_deep": 0.1,
     "underwater": 0.5
 }
 

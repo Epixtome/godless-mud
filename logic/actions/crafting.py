@@ -4,9 +4,32 @@ from utilities.colors import Colors
 
 @command_manager.register("craft", category="interaction")
 def craft(player, args):
-    """Craft an item using ingredients."""
+    """
+    Craft an item using ingredients.
+    Usage: craft <item> | craft list
+    """
     if not args:
-        player.send_line("Craft what?")
+        player.send_line("Usage: craft <item> | craft list")
+        return
+        
+    if args.lower() == "list":
+        player.send_line(f"\n--- {Colors.BOLD}Crafting Recipes{Colors.RESET} ---")
+        recipes = player.game.world.recipes
+        if not recipes:
+            player.send_line("No recipes known.")
+            return
+            
+        for r_id, data in recipes.items():
+            # Check if craftable
+            can_make, _ = crafting_engine.can_craft(player, data['ingredients'])
+            status = f"{Colors.GREEN}[Ready]{Colors.RESET}" if can_make else f"{Colors.RED}[Missing]{Colors.RESET}"
+            
+            ingredients = []
+            for name, count in data['ingredients'].items():
+                ingredients.append(f"{count}x {name}")
+            
+            player.send_line(f"{status} {Colors.CYAN}{r_id.title()}{Colors.RESET}")
+            player.send_line(f"      Requires: {', '.join(ingredients)}")
         return
         
     item_name = args.lower()

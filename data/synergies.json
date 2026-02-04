@@ -1,6 +1,45 @@
 {
     "synergies": [
         {"id": "holy_fortitude", "name": "Holy Fortitude", "requirements": {"tags": {"light": 2}}, "bonuses": {"con": 3}},
-        {"id": "shadow_reflexes", "name": "Shadow Reflexes", "requirements": {"tags": {"dark": 2}}, "bonuses": {"dex": 3}}
+        {"id": "shadow_reflexes", "name": "Shadow Reflexes", "requirements": {"tags": {"dark": 2}}, "bonuses": {"dex": 3}},
+        {
+            "id": "sun_dancer",
+            "name": "Sun Dancer",
+            "requirements": {
+                "tags": {
+                    "mobility": 2,
+                    "light": 2
+                }
+            },
+            "bonuses": {
+                "passive": "Movement skills heal you for 5 HP."
+            }
+        },
+        {
+            "id": "shadow_waltz",
+            "name": "Shadow Waltz",
+            "requirements": {
+                "tags": {
+                    "mobility": 2,
+                    "dark": 2
+                }
+            },
+            "bonuses": {
+                "passive": "Movement skills grant +10% Dodge for 1 round."
+            }
+        },
+        {
+            "id": "war_dance",
+            "name": "War Dance",
+            "requirements": {
+                "tags": {
+                    "mobility": 2,
+                    "instinct": 2
+                }
+            },
+            "bonuses": {
+                "passive": "Movement skills generate 5 Stamina."
+            }
+        }
     ]
 }

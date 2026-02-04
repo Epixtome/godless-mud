@@ -77,8 +77,6 @@ def flee(player, args):
     player.attackers = [] # Clear aggro on flee
     player.send_line(f"{Colors.YELLOW}You flee {direction}!{Colors.RESET}")
     _move(player, direction)
-    if hasattr(player, 'visited_rooms'):
-        player.visited_rooms.add(player.room.id)
 
 @command_manager.register("consider", "con", category="combat")
 def consider(player, args):

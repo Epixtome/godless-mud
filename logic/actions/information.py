@@ -1,7 +1,8 @@
 import logic.command_manager as command_manager
 from logic.common import get_reverse_direction, find_by_index
 from utilities.colors import Colors
-from logic import mapper, search
+from utilities import mapper
+from logic import search
 from logic.engines import vision_engine
 
 @command_manager.register("look", "l", category="information")
@@ -32,6 +33,8 @@ def look(player, args):
     if args:
         # Look at specific item/mob
         target_name = args.lower()
+        if target_name.startswith("at "):
+            target_name = target_name[3:].strip()
         
         # Check items
         for item in room.items:
@@ -164,8 +167,10 @@ def score(player, args):
     # Manifestations
     if player.status_effects:
         player.send_line(f"\n{Colors.BOLD}[Manifestations]{Colors.RESET}")
-        for effect, duration in player.status_effects.items():
-            player.send_line(f"  {effect} ({duration}s)")
+        for effect, expiry_tick in player.status_effects.items():
+            remaining_ticks = expiry_tick - player.game.tick_count
+            remaining_seconds = max(0, remaining_ticks * 2)
+            player.send_line(f"  {effect} ({remaining_seconds}s)")
 
 @command_manager.register("attributes", "attr", "sheet", category="information")
 def attributes(player, args):
@@ -174,9 +179,21 @@ def attributes(player, args):
     
     # General Info
     p_class = player.active_class.replace('_', ' ').title() if player.active_class else "Wanderer"
-    kingdom = player.identity_tags[0].title() if player.identity_tags else "None"
+    
+    kingdom = "None"
+    valid_kingdoms = ["light", "dark", "instinct"]
+    for tag in player.identity_tags:
+        if tag in valid_kingdoms:
+            kingdom = tag.title()
+            break
+    
+    # Get Playstyle
+    playstyle = "Unknown"
+    if player.active_class and player.active_class in player.game.world.classes:
+        playstyle = player.game.world.classes[player.active_class].playstyle
     
     player.send_line(f"Class   : {p_class}")
+    player.send_line(f"Style   : {playstyle}")
     player.send_line(f"Kingdom : {kingdom}")
     player.send_line(f"Gold    : {player.gold}")
     rp = getattr(player, 'raid_points', 0)

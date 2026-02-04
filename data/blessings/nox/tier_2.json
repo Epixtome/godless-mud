@@ -1,0 +1,158 @@
+{
+    "blessings": [
+        {
+            "id": "backstab",
+            "name": "Backstab",
+            "tier": 2,
+            "base_power": 25,
+            "scaling": {
+                "dex": 1.0
+            },
+            "requirements": {
+                "dex": 12,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "dex",
+                "backstab",
+                "stealth",
+                "martial",
+                "skill"
+            ],
+            "charges": 5,
+            "description": "Massive damage if the target is facing away (Dark Spark).",
+            "cost": 100,
+            "deity_id": "nox"
+        },
+        {
+            "id": "crippling_strike",
+            "name": "Crippling Strike",
+            "tier": 2,
+            "base_power": 10,
+            "scaling": {
+                "dex": 1.3
+            },
+            "requirements": {
+                "dex": 14,
+                "cost": {
+                    "stamina": 25
+                },
+                "cooldown": 4
+            },
+            "identity_tags": [
+                "martial",
+                "dex",
+                "control",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Damages and slows the target, reducing their attack rate.",
+            "cost": 100,
+            "deity_id": "nox"
+        },
+        {
+            "id": "mug",
+            "name": "Mug",
+            "tier": 2,
+            "base_power": 15,
+            "scaling": {
+                "dex": 1.4
+            },
+            "requirements": {
+                "dex": 12,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "thievery",
+                "martial",
+                "dex",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Damages the target and steals gold simultaneously.",
+            "cost": 100,
+            "deity_id": "nox"
+        },
+        {
+            "id": "poisoned_blade",
+            "name": "Poisoned Blade",
+            "tier": 2,
+            "base_power": 8,
+            "scaling": {
+                "dex": 1.0
+            },
+            "requirements": {
+                "dex": 12,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "alchemy",
+                "dex",
+                "poison",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Strikes and infects the target with a spreading toxin.",
+            "cost": 100,
+            "deity_id": "nox"
+        },
+        {
+            "id": "shadow_step",
+            "name": "Shadow Step",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.5
+            },
+            "requirements": {
+                "dex": 12,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "deity_id": "nox",
+            "identity_tags": [
+                "dark",
+                "mobility",
+                "dex"
+            ],
+            "charges": 3,
+            "cost": 100,
+            "description": "Step through the shadows to appear behind a foe."
+        },
+        {
+            "id": "venom_coat",
+            "name": "Venom Coat",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.2
+            },
+            "requirements": {
+                "dex": 12,
+                "cost": {
+                    "stamina": 15
+                }
+            },
+            "deity_id": "nox",
+            "identity_tags": [
+                "dark",
+                "alchemy",
+                "dex",
+                "buff",
+                "venom_coat"
+            ],
+            "charges": 3,
+            "cost": 100,
+            "description": "Coat your weapon in vile poison."
+        }
+    ]
+}

@@ -1,0 +1,182 @@
+{
+    "blessings": [
+        {
+            "id": "aura_of_protection",
+            "name": "Aura of Protection",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "str": 1.0
+            },
+            "requirements": {
+                "str": 15,
+                "cost": {
+                    "concentration": 30
+                }
+            },
+            "identity_tags": [
+                "light",
+                "protection",
+                "aura",
+                "str",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Reduces incoming damage for the entire party.",
+            "cost": 100,
+            "deity_id": "pyraz"
+        },
+        {
+            "id": "cleansing_wave",
+            "name": "Cleansing Wave",
+            "tier": 2,
+            "base_power": 10,
+            "scaling": {
+                "str": 1.2
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "concentration": 25
+                }
+            },
+            "identity_tags": [
+                "light",
+                "healing",
+                "aoe",
+                "str",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "Removes debuffs from all allies and heals them.",
+            "cost": 100,
+            "deity_id": "pyraz"
+        },
+        {
+            "id": "holy_strike",
+            "name": "Holy Strike",
+            "tier": 2,
+            "base_power": 18,
+            "scaling": {
+                "str": 1.6
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "martial",
+                "control",
+                "str",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "A heavy blow that Stuns the target.",
+            "cost": 100,
+            "deity_id": "pyraz"
+        },
+        {
+            "id": "lay_on_hands",
+            "name": "Lay on Hands",
+            "tier": 2,
+            "base_power": 20,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "healing",
+                "str",
+                "spell"
+            ],
+            "charges": 3,
+            "description": "Heals a target and removes one debuff.",
+            "cost": 100,
+            "deity_id": "pyraz"
+        },
+        {
+            "id": "pin_down",
+            "name": "Pin Down",
+            "tier": 2,
+            "base_power": 12,
+            "scaling": {
+                "str": 1.4
+            },
+            "requirements": {
+                "str": 12,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "control",
+                "martial",
+                "str",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Damages and Roots the target, preventing movement.",
+            "cost": 100,
+            "deity_id": "pyraz"
+        },
+        {
+            "id": "rescue",
+            "name": "Rescue",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "str": 1.2
+            },
+            "requirements": {
+                "str": 12,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "protection",
+                "mobility",
+                "str",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Intercepts an attack meant for an ally.",
+            "cost": 100,
+            "deity_id": "pyraz"
+        },
+        {
+            "id": "vanguard",
+            "name": "Vanguard",
+            "tier": 2,
+            "base_power": 15,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 12,
+                "cooldown": 3
+            },
+            "identity_tags": [
+                "light",
+                "str",
+                "vanguard",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "A heavy strike that generates Momentum (Light Spark).",
+            "cost": 100,
+            "deity_id": "pyraz"
+        }
+    ]
+}

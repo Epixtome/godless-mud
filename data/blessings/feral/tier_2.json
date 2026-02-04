@@ -1,0 +1,93 @@
+{
+    "blessings": [
+        {
+            "id": "harpoon",
+            "name": "Harpoon",
+            "tier": 2,
+            "base_power": 10,
+            "scaling": {
+                "dex": 1.2
+            },
+            "requirements": {
+                "dex": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "dex",
+                "harpoon",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Pulls a distant target into melee range (Instinct Spark).",
+            "cost": 100,
+            "deity_id": "feral"
+        },
+        {
+            "id": "net_trap",
+            "name": "Net Trap",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.2
+            },
+            "requirements": {
+                "dex": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "crowd_control",
+                "stalker",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Immobilizes a target.",
+            "cost": 100,
+            "deity_id": "feral"
+        },
+        {
+            "id": "tiger_stance",
+            "name": "Tiger Stance",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.5
+            },
+            "requirements": {
+                "dex": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "stance",
+                "martial",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Increases Speed/Crit for a duration.",
+            "cost": 100,
+            "deity_id": "feral"
+        },
+        {
+            "id": "track",
+            "name": "Track",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.2
+            },
+            "requirements": {
+                "wis": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "scout",
+                "track",
+                "wis",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Find the direction to a target.",
+            "cost": 100,
+            "deity_id": "feral"
+        }
+    ]
+}

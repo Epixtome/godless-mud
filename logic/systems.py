@@ -17,11 +17,18 @@ def passive_regen(game):
             
         # Concentration Regen
         # Regens slowly in combat, fast out of combat
-        max_conc = 100 # Standardizing to 100
+        max_conc = player.get_max_resource('concentration')
         conc_regen = 5 if player.is_in_combat() else 10
         if player.is_resting: conc_regen = 20
         
         player.resources['concentration'] = min(max_conc, player.resources.get('concentration', 0) + conc_regen)
+
+        # Stamina Regen
+        max_stamina = player.get_max_resource('stamina')
+        stamina_regen = 1
+        if player.is_resting: stamina_regen = 10
+        
+        player.resources['stamina'] = min(max_stamina, player.resources.get('stamina', 0) + stamina_regen)
 
     # Mob Regen & Mechanics
     for room in game.world.rooms.values():
@@ -29,6 +36,13 @@ def passive_regen(game):
             # Standard Regen
             if mob.hp < mob.max_hp:
                 mob.hp = min(mob.max_hp, mob.hp + 1)
+            
+            # Resource Regen for AI
+            if hasattr(mob, 'resources'):
+                max_conc = 100 # Assuming mobs have a max of 100
+                mob.resources['concentration'] = min(max_conc, mob.resources.get('concentration', 0) + 5)
+                max_stam = 100
+                mob.resources['stamina'] = min(max_stam, mob.resources.get('stamina', 0) + 5)
 
             # Hydra/Regenerator Logic
             if "regenerator" in mob.tags and mob.body_parts:

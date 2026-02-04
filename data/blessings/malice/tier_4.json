@@ -1,0 +1,32 @@
+{
+    "blessings": [
+        {
+            "id": "relentless_assault",
+            "name": "Relentless Assault",
+            "tier": 4,
+            "base_power": 0,
+            "scaling": {
+                "str": 2.5
+            },
+            "requirements": {
+                "str": 20,
+                "cost": {
+                    "stamina": 50
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "ultimate",
+                "martial",
+                "multi_attack",
+                "str",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Unleashes a flurry of attacks on the target.",
+            "cost": 1000,
+            "deity_id": "malice",
+            "required_class": "Warrior"
+        }
+    ]
+}

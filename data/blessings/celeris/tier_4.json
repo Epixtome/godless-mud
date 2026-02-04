@@ -1,0 +1,34 @@
+{
+    "blessings": [
+        {
+            "id": "unbreakable_charge",
+            "name": "Unbreakable Charge",
+            "tier": 4,
+            "base_power": 50,
+            "scaling": {
+                "str": 2.0,
+                "dex": 2.0
+            },
+            "requirements": {
+                "str": 20,
+                "cost": {
+                    "stamina": 60
+                },
+                "mount": true
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "mount",
+                "mobility",
+                "str",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Massive charge that pushes enemies and rallies allies.",
+            "cost": 1000,
+            "deity_id": "celeris",
+            "required_class": "Knight"
+        }
+    ]
+}

@@ -1,0 +1,2247 @@
+{
+    "zones": [
+        {
+            "id": "z89",
+            "name": "The Great Plains",
+            "security_level": "low_sec",
+            "grid_logic": true
+        }
+    ],
+    "defaults": {
+        "name": "Plains",
+        "description": "A small campfire smolders in the center.",
+        "terrain": "plains",
+        "opacity": 0,
+        "traversal_cost": 1
+    },
+    "palettes": {
+        "type_1": {
+            "name": "Plains",
+            "description": "Travelers rest here for the night.",
+            "terrain": "plains",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_2": {
+            "name": "Mountain",
+            "description": "Jagged peaks pierce the sky.",
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_3": {
+            "name": "Mountain",
+            "description": "The air is thin and cold here.",
+            "terrain": "mountain",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_4": {
+            "name": "Peak",
+            "description": "The wind howls violently at this altitude.",
+            "terrain": "peak",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_5": {
+            "name": "Peak",
+            "description": "Snow clings to the jagged rock.",
+            "terrain": "peak",
+            "opacity": 0,
+            "traversal_cost": 1
+        }
+    },
+    "rooms": [
+        {
+            "exits": {
+                "north": "z85.75.-86.0",
+                "west": "z76.74.-85.0"
+            },
+            "x": 75, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z85.76.-86.0"
+            },
+            "x": 76, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z85.77.-86.0"
+            },
+            "x": 77, "y": -85, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z85.78.-86.0"
+            },
+            "x": 78, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z85.79.-86.0"
+            },
+            "x": 79, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z85.80.-86.0"
+            },
+            "x": 80, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z85.81.-86.0"
+            },
+            "x": 81, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z85.82.-86.0"
+            },
+            "x": 82, "y": -85, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z85.83.-86.0"
+            },
+            "x": 83, "y": -85, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z85.84.-86.0"
+            },
+            "x": 84, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z85.85.-86.0"
+            },
+            "x": 85, "y": -85, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z85.86.-86.0"
+            },
+            "x": 86, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z85.87.-86.0"
+            },
+            "x": 87, "y": -85, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z85.88.-86.0"
+            },
+            "x": 88, "y": -85, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z85.89.-86.0"
+            },
+            "x": 89, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z85.90.-86.0"
+            },
+            "x": 90, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z85.91.-86.0"
+            },
+            "x": 91, "y": -85, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z85.92.-86.0"
+            },
+            "x": 92, "y": -85, "z": 0,
+            "monsters": [
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z85.93.-86.0"
+            },
+            "x": 93, "y": -85, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z85.94.-86.0",
+                "east": "z115.95.-85.0"
+            },
+            "x": 94, "y": -85, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "west": "z76.74.-84.0"
+            },
+            "x": 75, "y": -84, "z": 0
+        },
+        {
+            "x": 76, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 77, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 78, "y": -84, "z": 0, "palette": "type_1" },
+        { "x": 79, "y": -84, "z": 0, "palette": "type_1" },
+        {
+            "x": 80, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 81, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 82, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 83, "y": -84, "z": 0 },
+        { "x": 84, "y": -84, "z": 0, "palette": "type_1" },
+        {
+            "x": 85, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 86, "y": -84, "z": 0 },
+        {
+            "x": 87, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 88, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 89, "y": -84, "z": 0 },
+        { "x": 90, "y": -84, "z": 0, "palette": "type_1" },
+        { "x": 91, "y": -84, "z": 0 },
+        {
+            "x": 92, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 93, "y": -84, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "east": "z115.95.-84.0"
+            },
+            "x": 94, "y": -84, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "west": "z76.74.-83.0"
+            },
+            "x": 75, "y": -83, "z": 0
+        },
+        {
+            "x": 76, "y": -83, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 77, "y": -83, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 78, "y": -83, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 79, "y": -83, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 80, "y": -83, "z": 0, "palette": "type_1" },
+        {
+            "x": 81, "y": -83, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 82, "y": -83, "z": 0 },
+        {
+            "x": 83, "y": -83, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 84, "y": -83, "z": 0, "palette": "type_1" },
+        { "x": 85, "y": -83, "z": 0 },
+        {
+            "x": 86, "y": -83, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 87, "y": -83, "z": 0, "palette": "type_1" },
+        { "x": 88, "y": -83, "z": 0, "palette": "type_1" },
+        { "x": 89, "y": -83, "z": 0, "palette": "type_1" },
+        {
+            "x": 90, "y": -83, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 91, "y": -83, "z": 0, "palette": "type_1" },
+        {
+            "x": 92, "y": -83, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 93, "y": -83, "z": 0,
+            "monsters": [
+                "wild_boar",
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "east": "z115.95.-83.0"
+            },
+            "x": 94, "y": -83, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "west": "z76.74.-82.0"
+            },
+            "x": 75, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 76, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 77, "y": -82, "z": 0, "palette": "type_1" },
+        {
+            "x": 78, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 79, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 80, "y": -82, "z": 0, "palette": "type_1" },
+        { "x": 81, "y": -82, "z": 0 },
+        {
+            "x": 82, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 83, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 84, "y": -82, "z": 0,
+            "monsters": [
+                "goblin"
+            ]
+        },
+        {
+            "x": 85, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 86, "y": -82, "z": 0,
+            "monsters": [
+                "wild_boar",
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 87, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 88, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 89, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 90, "y": -82, "z": 0 },
+        {
+            "x": 91, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 92, "y": -82, "z": 0, "palette": "type_1" },
+        {
+            "x": 93, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "east": "z115.95.-82.0"
+            },
+            "x": 94, "y": -82, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "west": "z76.74.-81.0"
+            },
+            "x": 75, "y": -81, "z": 0,
+            "monsters": [
+                "goblin"
+            ]
+        },
+        { "x": 76, "y": -81, "z": 0 },
+        {
+            "x": 77, "y": -81, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 78, "y": -81, "z": 0 },
+        { "x": 79, "y": -81, "z": 0 },
+        { "x": 80, "y": -81, "z": 0 },
+        { "x": 81, "y": -81, "z": 0, "palette": "type_1" },
+        {
+            "x": 82, "y": -81, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 83, "y": -81, "z": 0, "palette": "type_1" },
+        { "x": 84, "y": -81, "z": 0 },
+        {
+            "x": 85, "y": -81, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 86, "y": -81, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 87, "y": -81, "z": 0, "palette": "type_1" },
+        { "x": 88, "y": -81, "z": 0, "palette": "type_1" },
+        {
+            "x": 89, "y": -81, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 90, "y": -81, "z": 0 },
+        {
+            "x": 91, "y": -81, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 92, "y": -81, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 93, "y": -81, "z": 0 },
+        {
+            "exits": {
+                "east": "z115.95.-81.0"
+            },
+            "x": 94, "y": -81, "z": 0
+        },
+        {
+            "exits": {
+                "west": "z76.74.-80.0"
+            },
+            "x": 75, "y": -80, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "x": 76, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 77, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ]
+        },
+        { "x": 78, "y": -80, "z": 0 },
+        { "x": 79, "y": -80, "z": 0, "palette": "type_1" },
+        {
+            "x": 80, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 81, "y": -80, "z": 0 },
+        {
+            "x": 82, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 83, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 84, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 85, "y": -80, "z": 0, "palette": "type_1" },
+        {
+            "x": 86, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 87, "y": -80, "z": 0, "palette": "type_1" },
+        {
+            "x": 88, "y": -80, "z": 0,
+            "monsters": [
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 89, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 90, "y": -80, "z": 0 },
+        { "x": 91, "y": -80, "z": 0 },
+        {
+            "x": 92, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 93, "y": -80, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "east": "z115.95.-80.0"
+            },
+            "x": 94, "y": -80, "z": 0
+        },
+        {
+            "exits": {
+                "west": "z76.74.-79.0"
+            },
+            "x": 75, "y": -79, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 76, "y": -79, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 77, "y": -79, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        {
+            "x": 78, "y": -79, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 79, "y": -79, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 80, "y": -79, "z": 0 },
+        { "x": 81, "y": -79, "z": 0 },
+        {
+            "x": 82, "y": -79, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 83, "y": -79, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 84, "y": -79, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ]
+        },
+        { "x": 85, "y": -79, "z": 0 },
+        { "x": 86, "y": -79, "z": 0 },
+        { "x": 87, "y": -79, "z": 0, "palette": "type_1" },
+        {
+            "x": 88, "y": -79, "z": 0,
+            "items": [
+                "wild_berry"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 89, "y": -79, "z": 0 },
+        {
+            "x": 90, "y": -79, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 91, "y": -79, "z": 0 },
+        {
+            "x": 92, "y": -79, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 93, "y": -79, "z": 0 },
+        {
+            "exits": {
+                "east": "z115.95.-79.0"
+            },
+            "x": 94, "y": -79, "z": 0
+        },
+        {
+            "exits": {
+                "west": "z76.74.-78.0"
+            },
+            "x": 75, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 76, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 77, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 78, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 79, "y": -78, "z": 0 },
+        { "x": 80, "y": -78, "z": 0, "palette": "type_1" },
+        { "x": 81, "y": -78, "z": 0 },
+        { "x": 82, "y": -78, "z": 0, "palette": "type_1" },
+        {
+            "x": 83, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 84, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 85, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 86, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 87, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 88, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 89, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 90, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 91, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 92, "y": -78, "z": 0 },
+        {
+            "x": 93, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "east": "z115.95.-78.0"
+            },
+            "x": 94, "y": -78, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "west": "z76.74.-77.0"
+            },
+            "x": 75, "y": -77, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": 76, "y": -77, "z": 0 },
+        {
+            "x": 77, "y": -77, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        { "x": 78, "y": -77, "z": 0 },
+        {
+            "x": 79, "y": -77, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 80, "y": -77, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 81, "y": -77, "z": 0,
+            "monsters": [
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 82, "y": -77, "z": 0 },
+        { "x": 83, "y": -77, "z": 0 },
+        {
+            "x": 84, "y": -77, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 85, "y": -77, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ]
+        },
+        { "x": 86, "y": -77, "z": 0 },
+        { "x": 87, "y": -77, "z": 0, "palette": "type_1" },
+        { "x": 88, "y": -77, "z": 0 },
+        { "x": 89, "y": -77, "z": 0, "palette": "type_1" },
+        { "x": 90, "y": -77, "z": 0, "palette": "type_1" },
+        { "x": 91, "y": -77, "z": 0 },
+        { "x": 92, "y": -77, "z": 0 },
+        {
+            "x": 93, "y": -77, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "east": "z115.95.-77.0"
+            },
+            "x": 94, "y": -77, "z": 0
+        },
+        {
+            "exits": {
+                "west": "z76.74.-76.0"
+            },
+            "x": 75, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 76, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 77, "y": -76, "z": 0, "palette": "type_1" },
+        {
+            "x": 78, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 79, "y": -76, "z": 0 },
+        { "x": 80, "y": -76, "z": 0 },
+        {
+            "x": 81, "y": -76, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        {
+            "x": 82, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 83, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 84, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ]
+        },
+        { "x": 85, "y": -76, "z": 0 },
+        { "x": 86, "y": -76, "z": 0 },
+        { "x": 87, "y": -76, "z": 0 },
+        { "x": 88, "y": -76, "z": 0 },
+        {
+            "x": 89, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 90, "y": -76, "z": 0 },
+        {
+            "x": 91, "y": -76, "z": 0,
+            "monsters": [
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 92, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 93, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "east": "z115.95.-76.0"
+            },
+            "x": 94, "y": -76, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "west": "z76.74.-75.0"
+            },
+            "x": 75, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 76, "y": -75, "z": 0, "palette": "type_1" },
+        {
+            "x": 77, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 78, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 79, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 80, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 81, "y": -75, "z": 0 },
+        { "x": 82, "y": -75, "z": 0 },
+        {
+            "x": 83, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 84, "y": -75, "z": 0 },
+        { "x": 85, "y": -75, "z": 0 },
+        {
+            "x": 86, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 87, "y": -75, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 88, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 89, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 90, "y": -75, "z": 0 },
+        {
+            "x": 91, "y": -75, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 92, "y": -75, "z": 0 },
+        { "x": 93, "y": -75, "z": 0 },
+        {
+            "exits": {
+                "east": "z115.95.-75.0"
+            },
+            "x": 94, "y": -75, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "west": "z76.74.-74.0"
+            },
+            "x": 75, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 76, "y": -74, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        {
+            "x": 77, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 78, "y": -74, "z": 0, "palette": "type_1" },
+        { "x": 79, "y": -74, "z": 0 },
+        {
+            "x": 80, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 81, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 82, "y": -74, "z": 0 },
+        {
+            "x": 83, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 84, "y": -74, "z": 0,
+            "monsters": [
+                "goblin"
+            ]
+        },
+        { "x": 85, "y": -74, "z": 0 },
+        { "x": 86, "y": -74, "z": 0 },
+        {
+            "x": 87, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 88, "y": -74, "z": 0, "palette": "type_1" },
+        {
+            "x": 89, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 90, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 91, "y": -74, "z": 0 },
+        { "x": 92, "y": -74, "z": 0 },
+        {
+            "x": 93, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "east": "z115.95.-74.0"
+            },
+            "x": 94, "y": -74, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "west": "z76.74.-73.0"
+            },
+            "x": 75, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 76, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 77, "y": -73, "z": 0 },
+        { "x": 78, "y": -73, "z": 0 },
+        { "x": 79, "y": -73, "z": 0 },
+        {
+            "x": 80, "y": -73, "z": 0,
+            "items": [
+                "wild_berry"
+            ]
+        },
+        {
+            "x": 81, "y": -73, "z": 0,
+            "monsters": [
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 82, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 83, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z89.84.-72.2"
+            },
+            "x": 84, "y": -73, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z89.85.-72.2"
+            },
+            "x": 85, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z89.86.-72.2"
+            },
+            "x": 86, "y": -73, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": 87, "y": -73, "z": 0 },
+        {
+            "x": 88, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 89, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 90, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 91, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 92, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 93, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "east": "z115.95.-73.0"
+            },
+            "x": 94, "y": -73, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "west": "z76.74.-72.0"
+            },
+            "x": 75, "y": -72, "z": 0
+        },
+        { "x": 76, "y": -72, "z": 0 },
+        { "x": 77, "y": -72, "z": 0, "palette": "type_1" },
+        {
+            "x": 78, "y": -72, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 79, "y": -72, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 80, "y": -72, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 81, "y": -72, "z": 0, "palette": "type_1" },
+        {
+            "x": 82, "y": -72, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "east": "z89.84.-72.2"
+            },
+            "x": 83, "y": -72, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z89.84.-73.0",
+                "west": "z89.83.-72.0"
+            },
+            "x": 84, "y": -72, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z89.85.-73.0"
+            },
+            "x": 85, "y": -72, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z89.86.-73.0",
+                "south": "z89.86.-71.3",
+                "east": "z89.87.-72.0"
+            },
+            "x": 86, "y": -72, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z89.87.-71.2",
+                "west": "z89.86.-72.2"
+            },
+            "x": 87, "y": -72, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": 88, "y": -72, "z": 0, "palette": "type_1" },
+        { "x": 89, "y": -72, "z": 0 },
+        { "x": 90, "y": -72, "z": 0, "palette": "type_1" },
+        {
+            "x": 91, "y": -72, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 92, "y": -72, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ]
+        },
+        {
+            "x": 93, "y": -72, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "east": "z115.95.-72.0"
+            },
+            "x": 94, "y": -72, "z": 0
+        },
+        {
+            "exits": {
+                "west": "z76.74.-71.0"
+            },
+            "x": 75, "y": -71, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": 76, "y": -71, "z": 0 },
+        {
+            "x": 77, "y": -71, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ]
+        },
+        { "x": 78, "y": -71, "z": 0, "palette": "type_1" },
+        {
+            "x": 79, "y": -71, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 80, "y": -71, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 81, "y": -71, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 82, "y": -71, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ]
+        },
+        {
+            "exits": {
+                "east": "z89.84.-71.2"
+            },
+            "x": 83, "y": -71, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z89.84.-70.3",
+                "west": "z89.83.-71.0"
+            },
+            "x": 84, "y": -71, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z89.85.-72.2",
+                "south": "z89.85.-70.3",
+                "east": "z89.86.-71.3",
+                "west": "z89.84.-71.2"
+            },
+            "x": 85, "y": -71, "z": 4,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z89.86.-72.2",
+                "east": "z89.87.-71.2"
+            },
+            "x": 86, "y": -71, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z89.87.-72.0",
+                "east": "z89.88.-71.0",
+                "west": "z89.86.-71.3"
+            },
+            "x": 87, "y": -71, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z89.88.-70.2",
+                "west": "z89.87.-71.2"
+            },
+            "x": 88, "y": -71, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z89.89.-70.3"
+            },
+            "x": 89, "y": -71, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z89.90.-70.3"
+            },
+            "x": 90, "y": -71, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z89.91.-70.2"
+            },
+            "x": 91, "y": -71, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z89.92.-70.2"
+            },
+            "x": 92, "y": -71, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z89.93.-70.3"
+            },
+            "x": 93, "y": -71, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z89.94.-70.3",
+                "east": "z115.95.-71.0"
+            },
+            "x": 94, "y": -71, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ]
+        },
+        {
+            "exits": {
+                "west": "z76.74.-70.0"
+            },
+            "x": 75, "y": -70, "z": 0,
+            "palette": "type_1"
+        },
+        { "x": 76, "y": -70, "z": 0 },
+        {
+            "x": 77, "y": -70, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 78, "y": -70, "z": 0, "palette": "type_1" },
+        {
+            "x": 79, "y": -70, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ]
+        },
+        { "x": 80, "y": -70, "z": 0 },
+        {
+            "x": 81, "y": -70, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ]
+        },
+        { "x": 82, "y": -70, "z": 0 },
+        {
+            "exits": {
+                "east": "z89.84.-70.3"
+            },
+            "x": 83, "y": -70, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z89.84.-71.2",
+                "south": "z89.84.-69.0",
+                "west": "z89.83.-70.0"
+            },
+            "x": 84, "y": -70, "z": 3,
+            "palette": "type_2"
+        },
+        { "x": 85, "y": -70, "z": 3, "palette": "type_3" },
+        {
+            "exits": {
+                "north": "z89.86.-71.3",
+                "south": "z89.86.-69.3",
+                "east": "z89.87.-70.2",
+                "west": "z89.85.-70.3"
+            },
+            "x": 86, "y": -70, "z": 4,
+            "palette": "type_5"
+        },
+        { "x": 87, "y": -70, "z": 2, "palette": "type_3" },
+        {
+            "exits": {
+                "north": "z89.88.-71.0",
+                "east": "z89.89.-70.3"
+            },
+            "x": 88, "y": -70, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z89.89.-71.0",
+                "west": "z89.88.-70.2"
+            },
+            "x": 89, "y": -70, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z89.90.-71.0",
+                "east": "z89.91.-70.2"
+            },
+            "x": 90, "y": -70, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z89.91.-71.0",
+                "west": "z89.90.-70.3"
+            },
+            "x": 91, "y": -70, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z89.92.-71.0",
+                "east": "z89.93.-70.3"
+            },
+            "x": 92, "y": -70, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z89.93.-71.0",
+                "west": "z89.92.-70.2"
+            },
+            "x": 93, "y": -70, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z89.94.-71.0",
+                "east": "z115.95.-70.3"
+            },
+            "x": 94, "y": -70, "z": 3,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "west": "z76.74.-69.0"
+            },
+            "x": 75, "y": -69, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 76, "y": -69, "z": 0 },
+        { "x": 77, "y": -69, "z": 0 },
+        { "x": 78, "y": -69, "z": 0 },
+        {
+            "x": 79, "y": -69, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 80, "y": -69, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 81, "y": -69, "z": 0, "palette": "type_1" },
+        {
+            "x": 82, "y": -69, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 83, "y": -69, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "north": "z89.84.-70.3",
+                "east": "z89.85.-69.3"
+            },
+            "x": 84, "y": -69, "z": 0,
+            "monsters": [
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z89.85.-68.0",
+                "west": "z89.84.-69.0"
+            },
+            "x": 85, "y": -69, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z89.86.-68.2"
+            },
+            "x": 86, "y": -69, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z89.87.-70.2",
+                "south": "z89.87.-68.2",
+                "west": "z89.86.-69.3"
+            },
+            "x": 87, "y": -69, "z": 4,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z89.88.-70.2",
+                "south": "z89.88.-68.3"
+            },
+            "x": 88, "y": -69, "z": 4,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z89.89.-70.3",
+                "south": "z89.89.-68.2"
+            },
+            "x": 89, "y": -69, "z": 5,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z89.90.-70.3",
+                "south": "z89.90.-68.2"
+            },
+            "x": 90, "y": -69, "z": 4,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z89.91.-70.2",
+                "south": "z89.91.-68.3"
+            },
+            "x": 91, "y": -69, "z": 4,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z89.92.-70.2",
+                "south": "z89.92.-68.3"
+            },
+            "x": 92, "y": -69, "z": 5,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z89.93.-70.3",
+                "south": "z89.93.-68.2"
+            },
+            "x": 93, "y": -69, "z": 4,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z89.94.-70.3",
+                "south": "z89.94.-68.3"
+            },
+            "x": 94, "y": -69, "z": 5,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "west": "z76.74.-68.0"
+            },
+            "x": 75, "y": -68, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 76, "y": -68, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 77, "y": -68, "z": 0 },
+        { "x": 78, "y": -68, "z": 0, "palette": "type_1" },
+        {
+            "x": 79, "y": -68, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ]
+        },
+        {
+            "x": 80, "y": -68, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 81, "y": -68, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        { "x": 82, "y": -68, "z": 0 },
+        { "x": 83, "y": -68, "z": 0 },
+        {
+            "x": 84, "y": -68, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z89.85.-69.3",
+                "east": "z89.86.-68.2"
+            },
+            "x": 85, "y": -68, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z89.86.-69.3",
+                "south": "z89.86.-67.0",
+                "west": "z89.85.-68.0"
+            },
+            "x": 86, "y": -68, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z89.87.-67.0",
+                "east": "z89.88.-68.3"
+            },
+            "x": 87, "y": -68, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z89.88.-67.0",
+                "east": "z89.89.-68.2",
+                "west": "z89.87.-68.2"
+            },
+            "x": 88, "y": -68, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z89.89.-67.0",
+                "west": "z89.88.-68.3"
+            },
+            "x": 89, "y": -68, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z89.90.-67.0",
+                "east": "z89.91.-68.3"
+            },
+            "x": 90, "y": -68, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z89.91.-67.0",
+                "west": "z89.90.-68.2"
+            },
+            "x": 91, "y": -68, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z89.92.-67.0",
+                "east": "z89.93.-68.2"
+            },
+            "x": 92, "y": -68, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z89.93.-67.0",
+                "east": "z89.94.-68.3",
+                "west": "z89.92.-68.3"
+            },
+            "x": 93, "y": -68, "z": 2,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "south": "z89.94.-67.2",
+                "west": "z89.93.-68.2"
+            },
+            "x": 94, "y": -68, "z": 3,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "west": "z76.74.-67.0"
+            },
+            "x": 75, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard",
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 76, "y": -67, "z": 0,
+            "monsters": [
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        { "x": 77, "y": -67, "z": 0, "palette": "type_1" },
+        { "x": 78, "y": -67, "z": 0, "palette": "type_1" },
+        { "x": 79, "y": -67, "z": 0 },
+        { "x": 80, "y": -67, "z": 0, "palette": "type_1" },
+        { "x": 81, "y": -67, "z": 0 },
+        {
+            "x": 82, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 83, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "x": 84, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "x": 85, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z89.86.-68.2"
+            },
+            "x": 86, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z89.87.-68.2"
+            },
+            "x": 87, "y": -67, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z89.88.-68.3"
+            },
+            "x": 88, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z89.89.-68.2"
+            },
+            "x": 89, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z89.90.-68.2"
+            },
+            "x": 90, "y": -67, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z89.91.-68.3"
+            },
+            "x": 91, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z89.92.-68.3"
+            },
+            "x": 92, "y": -67, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "north": "z89.93.-68.2",
+                "east": "z89.94.-67.2"
+            },
+            "x": 93, "y": -67, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "north": "z89.94.-68.3",
+                "south": "z89.94.-66.3",
+                "west": "z89.93.-67.0"
+            },
+            "x": 94, "y": -67, "z": 2,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "south": "z90.75.-65.0",
+                "west": "z76.74.-66.0"
+            },
+            "x": 75, "y": -66, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z90.76.-65.0"
+            },
+            "x": 76, "y": -66, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z90.77.-65.0"
+            },
+            "x": 77, "y": -66, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z90.78.-65.0"
+            },
+            "x": 78, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z90.79.-65.0"
+            },
+            "x": 79, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z90.80.-65.0"
+            },
+            "x": 80, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z90.81.-65.0"
+            },
+            "x": 81, "y": -66, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z90.82.-65.0"
+            },
+            "x": 82, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z90.83.-65.0"
+            },
+            "x": 83, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z90.84.-65.0"
+            },
+            "x": 84, "y": -66, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z90.85.-65.0"
+            },
+            "x": 85, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z90.86.-65.0"
+            },
+            "x": 86, "y": -66, "z": 0,
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z90.87.-65.0"
+            },
+            "x": 87, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard",
+                "wild_boar"
+            ]
+        },
+        {
+            "exits": {
+                "south": "z90.88.-65.0"
+            },
+            "x": 88, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z90.89.-65.0"
+            },
+            "x": 89, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z90.90.-65.0"
+            },
+            "x": 90, "y": -66, "z": 0
+        },
+        {
+            "exits": {
+                "south": "z90.91.-65.0"
+            },
+            "x": 91, "y": -66, "z": 0,
+            "monsters": [
+                "wild_boar",
+                "goblin"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z90.92.-65.0"
+            },
+            "x": 92, "y": -66, "z": 0,
+            "monsters": [
+                "town_guard"
+            ],
+            "palette": "type_1"
+        },
+        {
+            "exits": {
+                "south": "z90.93.-65.2",
+                "east": "z89.94.-66.3"
+            },
+            "x": 93, "y": -66, "z": 0
+        },
+        {
+            "exits": {
+                "north": "z89.94.-67.2",
+                "south": "z90.94.-65.2",
+                "west": "z89.93.-66.0"
+            },
+            "x": 94, "y": -66, "z": 3,
+            "palette": "type_3"
+        }
+    ]
+}

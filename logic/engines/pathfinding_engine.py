@@ -4,11 +4,14 @@ from logic.engines import spatial_engine
 TERRAIN_COST = {
     "road": 1,
     "plains": 2,
+    "hills": 3,
     "forest": 3,
     "dense_forest": 5,
     "mountain": 8,
+    "peak": 20,
     "swamp": 8,
     "water": 10,
+    "lake_deep": 15,
     "indoors": 1,
     "cave": 3
 }

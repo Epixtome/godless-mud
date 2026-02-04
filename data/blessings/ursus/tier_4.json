@@ -1,0 +1,32 @@
+{
+    "blessings": [
+        {
+            "id": "undying_rage",
+            "name": "Undying Rage",
+            "tier": 4,
+            "base_power": 0,
+            "scaling": {
+                "con": 3.0
+            },
+            "requirements": {
+                "con": 20,
+                "cost": {
+                    "momentum": 5
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "ultimate",
+                "rage",
+                "survival",
+                "con",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Refuse to die for a short duration.",
+            "cost": 1000,
+            "deity_id": "ursus",
+            "required_class": "Berserker"
+        }
+    ]
+}

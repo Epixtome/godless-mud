@@ -1,0 +1,484 @@
+{
+    "zones": [
+        {
+            "id": "z153",
+            "name": "The Abyssal Depths",
+            "security_level": "null_sec",
+            "grid_logic": true
+        }
+    ],
+    "defaults": {
+        "name": "Deep Water",
+        "description": "Large waves crash against each other.",
+        "terrain": "deep_water",
+        "opacity": 0,
+        "traversal_cost": 1
+    },
+    "palettes": {
+        "type_1": {
+            "name": "Deep Water",
+            "description": "The water here is dangerously deep.",
+            "terrain": "deep_water",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_2": {
+            "name": "Forest",
+            "description": "The air smells of pine and damp earth.",
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_3": {
+            "name": "Forest",
+            "description": "Tall trees block out most of the light.",
+            "terrain": "forest",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_4": {
+            "name": "Water",
+            "description": "The dark water ripples silently.",
+            "terrain": "water",
+            "opacity": 0,
+            "traversal_cost": 1
+        },
+        "type_5": {
+            "name": "Water",
+            "description": "Murky water extends in all directions.",
+            "terrain": "water",
+            "opacity": 0,
+            "traversal_cost": 1
+        }
+    },
+    "rooms": [
+        {
+            "exits": {
+                "north": "z152.-65.114.0",
+                "west": "z140.-66.115.0"
+            },
+            "x": -65, "y": 115, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z152.-64.114.0"
+            },
+            "x": -64, "y": 115, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z152.-63.114.0"
+            },
+            "x": -63, "y": 115, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z152.-62.114.0"
+            },
+            "x": -62, "y": 115, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z152.-61.114.0"
+            },
+            "x": -61, "y": 115, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z152.-60.114.0"
+            },
+            "x": -60, "y": 115, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z152.-59.114.0"
+            },
+            "x": -59, "y": 115, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z152.-58.114.0"
+            },
+            "x": -58, "y": 115, "z": 0,
+            "palette": "type_3"
+        },
+        {
+            "exits": {
+                "north": "z152.-57.114.0"
+            },
+            "x": -57, "y": 115, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z152.-56.114.0"
+            },
+            "x": -56, "y": 115, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z152.-55.114.0"
+            },
+            "x": -55, "y": 115, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z152.-54.114.0"
+            },
+            "x": -54, "y": 115, "z": 0,
+            "palette": "type_2"
+        },
+        {
+            "exits": {
+                "north": "z152.-53.114.0"
+            },
+            "x": -53, "y": 115, "z": 0,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z152.-52.114.0"
+            },
+            "x": -52, "y": 115, "z": 0,
+            "palette": "type_5"
+        },
+        {
+            "exits": {
+                "north": "z152.-51.114.0"
+            },
+            "x": -51, "y": 115, "z": 0,
+            "palette": "type_4"
+        },
+        {
+            "exits": {
+                "north": "z152.-50.114.0"
+            },
+            "x": -50, "y": 115, "z": 0,
+            "palette": "type_5"
+        },
+        { "x": -49, "y": 115, "z": 0 },
+        { "x": -48, "y": 115, "z": 0 },
+        { "x": -47, "y": 115, "z": 0 },
+        { "x": -46, "y": 115, "z": 0 },
+        {
+            "exits": {
+                "west": "z140.-66.116.0"
+            },
+            "x": -65, "y": 116, "z": 0,
+            "palette": "type_2"
+        },
+        { "x": -64, "y": 116, "z": 0, "palette": "type_2" },
+        { "x": -63, "y": 116, "z": 0, "palette": "type_2" },
+        { "x": -62, "y": 116, "z": 0, "palette": "type_3" },
+        { "x": -61, "y": 116, "z": 0, "palette": "type_2" },
+        { "x": -60, "y": 116, "z": 0, "palette": "type_2" },
+        { "x": -59, "y": 116, "z": 0, "palette": "type_2" },
+        {
+            "x": -58, "y": 116, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -57, "y": 116, "z": 0, "palette": "type_3" },
+        {
+            "x": -56, "y": 116, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -55, "y": 116, "z": 0, "palette": "type_2" },
+        { "x": -54, "y": 116, "z": 0, "palette": "type_5" },
+        { "x": -53, "y": 116, "z": 0, "palette": "type_4" },
+        { "x": -52, "y": 116, "z": 0, "palette": "type_4" },
+        { "x": -51, "y": 116, "z": 0, "palette": "type_4" },
+        { "x": -50, "y": 116, "z": 0, "palette": "type_5" },
+        { "x": -49, "y": 116, "z": 0 },
+        { "x": -48, "y": 116, "z": 0 },
+        { "x": -47, "y": 116, "z": 0, "palette": "type_1" },
+        { "x": -46, "y": 116, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "west": "z140.-66.117.0"
+            },
+            "x": -65, "y": 117, "z": 0,
+            "palette": "type_3"
+        },
+        { "x": -64, "y": 117, "z": 0, "palette": "type_2" },
+        { "x": -63, "y": 117, "z": 0, "palette": "type_2" },
+        { "x": -62, "y": 117, "z": 0, "palette": "type_2" },
+        {
+            "x": -61, "y": 117, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        {
+            "x": -60, "y": 117, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "x": -59, "y": 117, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -58, "y": 117, "z": 0, "palette": "type_2" },
+        {
+            "x": -57, "y": 117, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        { "x": -56, "y": 117, "z": 0, "palette": "type_3" },
+        { "x": -55, "y": 117, "z": 0, "palette": "type_5" },
+        { "x": -54, "y": 117, "z": 0, "palette": "type_4" },
+        { "x": -53, "y": 117, "z": 0, "palette": "type_5" },
+        { "x": -52, "y": 117, "z": 0, "palette": "type_5" },
+        { "x": -51, "y": 117, "z": 0, "palette": "type_5" },
+        { "x": -50, "y": 117, "z": 0, "palette": "type_4" },
+        { "x": -49, "y": 117, "z": 0, "palette": "type_1" },
+        { "x": -48, "y": 117, "z": 0 },
+        { "x": -47, "y": 117, "z": 0 },
+        { "x": -46, "y": 117, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "west": "z140.-66.118.0"
+            },
+            "x": -65, "y": 118, "z": 0,
+            "palette": "type_2"
+        },
+        { "x": -64, "y": 118, "z": 0, "palette": "type_2" },
+        { "x": -63, "y": 118, "z": 0, "palette": "type_3" },
+        {
+            "x": -62, "y": 118, "z": 0,
+            "monsters": [
+                "bear"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -61, "y": 118, "z": 0, "palette": "type_2" },
+        {
+            "x": -60, "y": 118, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_3"
+        },
+        { "x": -59, "y": 118, "z": 0, "palette": "type_3" },
+        {
+            "x": -58, "y": 118, "z": 0,
+            "monsters": [
+                "bandit"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "x": -57, "y": 118, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        {
+            "x": -56, "y": 118, "z": 0,
+            "monsters": [
+                "wolf",
+                "bear"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -55, "y": 118, "z": 0, "palette": "type_4" },
+        { "x": -54, "y": 118, "z": 0, "palette": "type_4" },
+        { "x": -53, "y": 118, "z": 0, "palette": "type_4" },
+        { "x": -52, "y": 118, "z": 0, "palette": "type_4" },
+        { "x": -51, "y": 118, "z": 0, "palette": "type_4" },
+        { "x": -50, "y": 118, "z": 0, "palette": "type_5" },
+        { "x": -49, "y": 118, "z": 0, "palette": "type_1" },
+        { "x": -48, "y": 118, "z": 0, "palette": "type_1" },
+        { "x": -47, "y": 118, "z": 0 },
+        { "x": -46, "y": 118, "z": 0, "palette": "type_1" },
+        {
+            "exits": {
+                "west": "z140.-66.119.0"
+            },
+            "x": -65, "y": 119, "z": 0,
+            "palette": "type_3"
+        },
+        { "x": -64, "y": 119, "z": 0, "palette": "type_2" },
+        {
+            "x": -63, "y": 119, "z": 0,
+            "monsters": [
+                "wild_boar",
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        { "x": -62, "y": 119, "z": 0, "palette": "type_2" },
+        {
+            "x": -61, "y": 119, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        { "x": -60, "y": 119, "z": 0, "palette": "type_2" },
+        {
+            "x": -59, "y": 119, "z": 0,
+            "monsters": [
+                "wolf"
+            ],
+            "palette": "type_3"
+        },
+        { "x": -58, "y": 119, "z": 0, "palette": "type_3" },
+        {
+            "x": -57, "y": 119, "z": 0,
+            "monsters": [
+                "wild_boar"
+            ],
+            "palette": "type_2"
+        },
+        { "x": -56, "y": 119, "z": 0, "palette": "type_4" },
+        { "x": -55, "y": 119, "z": 0, "palette": "type_4" },
+        { "x": -54, "y": 119, "z": 0, "palette": "type_4" },
+        { "x": -53, "y": 119, "z": 0, "palette": "type_4" },
+        { "x": -52, "y": 119, "z": 0, "palette": "type_4" },
+        { "x": -51, "y": 119, "z": 0, "palette": "type_5" },
+        { "x": -50, "y": 119, "z": 0, "palette": "type_4" },
+        { "x": -49, "y": 119, "z": 0 },
+        { "x": -48, "y": 119, "z": 0 },
+        { "x": -47, "y": 119, "z": 0, "palette": "type_1" },
+        { "x": -46, "y": 119, "z": 0, "palette": "type_1" },
+        { "x": -65, "y": 120, "z": 0 },
+        { "x": -64, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -63, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -62, "y": 120, "z": 0 },
+        { "x": -61, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -60, "y": 120, "z": 0 },
+        { "x": -59, "y": 120, "z": 0 },
+        { "x": -58, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -57, "y": 120, "z": 0 },
+        { "x": -56, "y": 120, "z": 0 },
+        { "x": -55, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -54, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -53, "y": 120, "z": 0 },
+        { "x": -52, "y": 120, "z": 0 },
+        { "x": -51, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -50, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -49, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -48, "y": 120, "z": 0 },
+        { "x": -47, "y": 120, "z": 0, "palette": "type_1" },
+        { "x": -46, "y": 120, "z": 0 },
+        { "x": -65, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -64, "y": 121, "z": 0 },
+        { "x": -63, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -62, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -61, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -60, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -59, "y": 121, "z": 0 },
+        { "x": -58, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -57, "y": 121, "z": 0 },
+        { "x": -56, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -55, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -54, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -53, "y": 121, "z": 0, "palette": "type_1" },
+        { "x": -52, "y": 121, "z": 0 },
+        { "x": -51, "y": 121, "z": 0 },
+        { "x": -50, "y": 121, "z": 0 },
+        { "x": -49, "y": 121, "z": 0 },
+        { "x": -48, "y": 121, "z": 0 },
+        { "x": -47, "y": 121, "z": 0 },
+        { "x": -46, "y": 121, "z": 0 },
+        { "x": -65, "y": 122, "z": 0, "palette": "type_1" },
+        { "x": -64, "y": 122, "z": 0 },
+        { "x": -63, "y": 122, "z": 0, "palette": "type_1" },
+        { "x": -62, "y": 122, "z": 0 },
+        { "x": -61, "y": 122, "z": 0 },
+        { "x": -60, "y": 122, "z": 0, "palette": "type_1" },
+        { "x": -59, "y": 122, "z": 0, "palette": "type_1" },
+        { "x": -58, "y": 122, "z": 0 },
+        { "x": -57, "y": 122, "z": 0 },
+        { "x": -56, "y": 122, "z": 0, "palette": "type_1" },
+        { "x": -55, "y": 122, "z": 0 },
+        { "x": -54, "y": 122, "z": 0, "palette": "type_1" },
+        { "x": -53, "y": 122, "z": 0, "palette": "type_1" },
+        { "x": -52, "y": 122, "z": 0 },
+        { "x": -51, "y": 122, "z": 0 },
+        { "x": -50, "y": 122, "z": 0, "palette": "type_1" },
+        { "x": -49, "y": 122, "z": 0 },
+        { "x": -48, "y": 122, "z": 0 },
+        { "x": -47, "y": 122, "z": 0 },
+        { "x": -46, "y": 122, "z": 0, "palette": "type_1" },
+        { "x": -65, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -64, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -63, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -62, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -61, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -60, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -59, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -58, "y": 123, "z": 0 },
+        { "x": -57, "y": 123, "z": 0 },
+        { "x": -56, "y": 123, "z": 0 },
+        { "x": -55, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -54, "y": 123, "z": 0 },
+        { "x": -53, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -52, "y": 123, "z": 0 },
+        { "x": -51, "y": 123, "z": 0 },
+        { "x": -50, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -49, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -48, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -47, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -46, "y": 123, "z": 0, "palette": "type_1" },
+        { "x": -65, "y": 124, "z": 0 },
+        { "x": -64, "y": 124, "z": 0 },
+        { "x": -63, "y": 124, "z": 0 },
+        { "x": -62, "y": 124, "z": 0 },
+        { "x": -61, "y": 124, "z": 0 },
+        { "x": -60, "y": 124, "z": 0 },
+        { "x": -59, "y": 124, "z": 0, "palette": "type_1" },
+        { "x": -58, "y": 124, "z": 0, "palette": "type_1" },
+        { "x": -57, "y": 124, "z": 0 },
+        { "x": -56, "y": 124, "z": 0 },
+        { "x": -55, "y": 124, "z": 0, "palette": "type_1" },
+        { "x": -54, "y": 124, "z": 0 },
+        { "x": -53, "y": 124, "z": 0, "palette": "type_1" },
+        { "x": -52, "y": 124, "z": 0, "palette": "type_1" },
+        { "x": -51, "y": 124, "z": 0, "palette": "type_1" },
+        { "x": -50, "y": 124, "z": 0 },
+        { "x": -49, "y": 124, "z": 0 },
+        { "x": -48, "y": 124, "z": 0, "palette": "type_1" },
+        { "x": -47, "y": 124, "z": 0, "palette": "type_1" },
+        { "x": -46, "y": 124, "z": 0 }
+    ]
+}

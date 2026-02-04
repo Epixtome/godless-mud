@@ -1,6 +1,7 @@
 import random
 import logging
 from models import Monster
+from utilities.colors import Colors
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -24,6 +25,9 @@ def spawn_mob(room, mob_data, game):
                            proto.tags, proto.max_hp, prototype_id=mob_id, home_room_id=room.id)
         instance.quests = proto.quests
         instance.can_be_companion = proto.can_be_companion
+        instance.cooldowns = {} # Initialize for AI usage
+        instance.active_class = None # Initialize for Engine compatibility
+        instance.resources = {"stamina": 100, "concentration": 100, "mana": 100} # Initialize resources
         
         # Apply deltas
         for k, v in deltas.items():
@@ -31,6 +35,7 @@ def spawn_mob(room, mob_data, game):
                 setattr(instance, k, v)
         
         instance.room = room
+        instance.game = game
         room.monsters.append(instance)
         room.broadcast(f"A {instance.name} arrives.")
         # logger.info(f"Respawned {instance.name} in {room.id}")
@@ -90,3 +95,77 @@ def initialize_spawns(game):
             else:
                 # Mob is missing from save (or fresh start), spawn it immediately
                 spawn_mob(room, mob_data, game)
+
+def execute_ai_turn(game, mob, target):
+    """
+    Determines if a mob should perform a special action (Spell/Skill) instead of auto-attacking.
+    Returns (did_act, target_died).
+    """
+    # 1. Check if mob is a caster type
+    is_caster = "caster" in mob.tags or "mage" in mob.tags
+    is_illusionist = "illusionist" in mob.tags
+    is_barbarian = "barbarian" in mob.tags
+    is_rogue = "rogue" in mob.tags
+    is_monk = "monk" in mob.tags
+    is_paladin = "paladin" in mob.tags
+    
+    if not (is_caster or is_illusionist or is_barbarian or is_rogue or is_monk or is_paladin):
+        return False, False
+
+    # 2. Chance to cast (30% per round)
+    if random.random() > 0.3:
+        return False, False
+
+    # 3. Find a suitable spell from the world definitions
+    candidates = []
+    for b in game.world.blessings.values():
+        if "spell" in b.identity_tags:
+            if is_caster and ("fire" in b.identity_tags or "ice" in b.identity_tags or "lightning" in b.identity_tags):
+                candidates.append(b)
+            elif is_illusionist and ("illusion" in b.identity_tags or "mind" in b.identity_tags):
+                candidates.append(b)
+        
+        elif "skill" in b.identity_tags:
+            if is_barbarian and ("rage" in b.identity_tags or "martial" in b.identity_tags):
+                # Exclude complex skills that require specific targets/conditions not handled by magic_engine fallback
+                if "sunder" not in b.identity_tags and "trip" not in b.identity_tags:
+                    # Filter out non-barbarian themes (Light/Dark/Stealth) to prevent using Paladin/Rogue skills
+                    if not any(t in b.identity_tags for t in ["light", "dark", "stealth", "rogue", "int"]):
+                        candidates.append(b)
+            elif is_rogue and ("stealth" in b.identity_tags or "poison" in b.identity_tags):
+                candidates.append(b)
+            elif is_monk and ("unarmed" in b.identity_tags or "stance" in b.identity_tags):
+                candidates.append(b)
+            elif is_paladin and ("light" in b.identity_tags or "protection" in b.identity_tags):
+                candidates.append(b)
+            
+    if not candidates:
+        return False, False
+        
+    spell = random.choice(candidates)
+    
+    # 4. Check Cooldown
+    from logic.engines import magic_engine
+    ready, _ = magic_engine.check_cooldown(mob, spell, game=game)
+    if not ready:
+        return False, False
+        
+    # 5. Execute Cast
+    magic_engine.set_cooldown(mob, spell, game=game)
+    
+    # Calculate Power (Base on Mob Damage * 1.5 for impact)
+    power = int(mob.damage * 1.5)
+    
+    if "spell" in spell.identity_tags:
+        mob.room.broadcast(f"{Colors.MAGENTA}{mob.name} begins to chant...{Colors.RESET}")
+    else:
+        mob.room.broadcast(f"{Colors.RED}{mob.name} prepares to use {spell.name}!{Colors.RESET}")
+        
+    # Determine target (Self for buffs/stances)
+    cast_target = target
+    if any(t in spell.identity_tags for t in ["buff", "stance", "protection", "healing", "heal", "mend"]):
+        cast_target = mob
+
+    success, msg, target_died = magic_engine.process_spell_effect(mob, cast_target, spell, power, game=game)
+    
+    return True, target_died

@@ -1,0 +1,78 @@
+{
+    "blessings": [
+        {
+            "id": "hunger",
+            "name": "Hunger",
+            "tier": 2,
+            "base_power": 10,
+            "scaling": {
+                "con": 1.2
+            },
+            "requirements": {
+                "con": 12,
+                "cost": {
+                    "concentration": 15
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "leech",
+                "attrition",
+                "spell"
+            ],
+            "charges": 3,
+            "description": "Drains enemy stamina/HP over time.",
+            "cost": 100,
+            "deity_id": "blight"
+        },
+        {
+            "id": "raise_dead",
+            "name": "Raise Dead",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "int": 1.5
+            },
+            "requirements": {
+                "int": 14,
+                "cost": {
+                    "concentration": 40
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "summon",
+                "raise_dead",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "Turns a corpse in the room into a skeletal minion.",
+            "cost": 100,
+            "deity_id": "blight"
+        },
+        {
+            "id": "siphon",
+            "name": "Siphon",
+            "tier": 2,
+            "base_power": 10,
+            "scaling": {
+                "con": 1.2
+            },
+            "requirements": {
+                "cost": {
+                    "concentration": 10
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "con",
+                "siphon",
+                "spell"
+            ],
+            "charges": 3,
+            "description": "Converts a portion of damage dealt into HP (Dark Spark).",
+            "cost": 100,
+            "deity_id": "blight"
+        }
+    ]
+}

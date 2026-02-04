@@ -1,0 +1,81 @@
+{
+    "blessings": [
+        {
+            "id": "fireburst",
+            "name": "Fireburst",
+            "tier": 1,
+            "base_power": 12,
+            "scaling": {
+                "int": 1.2
+            },
+            "requirements": {
+                "int": 10,
+                "cost": {
+                    "concentration": 10
+                }
+            },
+            "identity_tags": [
+                "light",
+                "fire",
+                "elemental",
+                "int",
+                "spell"
+            ],
+            "charges": 5,
+            "description": "Blasts a target. Removes Freeze to deal bonus damage.",
+            "cost": 50,
+            "deity_id": "aldildod"
+        },
+        {
+            "id": "glacier_spike",
+            "name": "Glacier Spike",
+            "tier": 1,
+            "base_power": 10,
+            "scaling": {
+                "int": 1.2
+            },
+            "requirements": {
+                "int": 10,
+                "cost": {
+                    "concentration": 10
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ice",
+                "elemental",
+                "int",
+                "spell"
+            ],
+            "charges": 5,
+            "description": "Damages and Slows target. Freezes if target is Shocked.",
+            "cost": 50,
+            "deity_id": "aldildod"
+        },
+        {
+            "id": "magic_missile",
+            "name": "Magic Missile",
+            "tier": 1,
+            "base_power": 5,
+            "scaling": {
+                "int": 1.0
+            },
+            "requirements": {
+                "int": 10,
+                "cost": {
+                    "concentration": 5
+                }
+            },
+            "identity_tags": [
+                "light",
+                "spell",
+                "arcane",
+                "int"
+            ],
+            "charges": 5,
+            "description": "Fires 3 projectiles at the target.",
+            "cost": 50,
+            "deity_id": "aldildod"
+        }
+    ]
+}

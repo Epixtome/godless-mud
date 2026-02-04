@@ -1,0 +1,56 @@
+{
+    "blessings": [
+        {
+            "id": "chemical_cataclysm",
+            "name": "Chemical Cataclysm",
+            "tier": 4,
+            "base_power": 60,
+            "scaling": {
+                "int": 2.5
+            },
+            "requirements": {
+                "int": 22,
+                "cost": {
+                    "concentration": 70
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "ultimate",
+                "alchemy",
+                "aoe",
+                "int",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Detonates all ongoing effects for massive damage.",
+            "cost": 1000,
+            "deity_id": "echo",
+            "required_class": "Alchemist"
+        },
+        {
+            "id": "philosophers_stone",
+            "name": "Philosopher's Stone",
+            "tier": 4,
+            "base_power": 0,
+            "scaling": {
+                "int": 3.0
+            },
+            "requirements": {
+                "int": 20,
+                "cost": {
+                    "concentration": 60
+                }
+            },
+            "identity_tags": [
+                "ultimate",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Alchemist Ultimate.",
+            "cost": 1000,
+            "deity_id": "echo",
+            "required_class": "Alchemist"
+        }
+    ]
+}

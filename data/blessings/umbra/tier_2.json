@@ -1,0 +1,54 @@
+{
+    "blessings": [
+        {
+            "id": "curse",
+            "name": "Curse",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.5
+            },
+            "requirements": {
+                "wis": 12,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "wis",
+                "curse",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "Reduces the target's highest attribute (Dark Spark).",
+            "cost": 100,
+            "deity_id": "umbra"
+        },
+        {
+            "id": "disrupt",
+            "name": "Disrupt",
+            "tier": 2,
+            "base_power": 5,
+            "scaling": {
+                "wis": 1.2
+            },
+            "requirements": {
+                "wis": 12,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "anti_magic",
+                "control",
+                "spell"
+            ],
+            "charges": 3,
+            "description": "Silences enemy blessings.",
+            "cost": 100,
+            "deity_id": "umbra"
+        }
+    ]
+}

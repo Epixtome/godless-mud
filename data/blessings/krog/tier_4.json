@@ -1,0 +1,87 @@
+{
+    "blessings": [
+        {
+            "id": "earthshatter",
+            "name": "Earthshatter",
+            "tier": 4,
+            "base_power": 40,
+            "scaling": {
+                "str": 2.2
+            },
+            "requirements": {
+                "str": 20,
+                "cost": {
+                    "stamina": 60
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "ultimate",
+                "aoe",
+                "control",
+                "str",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Slams the ground, damaging and knocking down all enemies.",
+            "cost": 1000,
+            "deity_id": "krog",
+            "required_class": "Barbarian"
+        },
+        {
+            "id": "executioners_wrath",
+            "name": "Executioner's Wrath",
+            "tier": 4,
+            "base_power": 60,
+            "scaling": {
+                "str": 3.0
+            },
+            "requirements": {
+                "str": 22,
+                "cost": {
+                    "stamina": 60
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "ultimate",
+                "martial",
+                "finisher",
+                "str",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Massive damage to controlled targets. Ignores armor.",
+            "cost": 1000,
+            "deity_id": "krog",
+            "required_class": "Warrior"
+        },
+        {
+            "id": "unstoppable_wrath",
+            "name": "Unstoppable Wrath",
+            "tier": 4,
+            "base_power": 50,
+            "scaling": {
+                "str": 2.5
+            },
+            "requirements": {
+                "str": 20,
+                "cost": {
+                    "stamina": 60
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "ultimate",
+                "martial",
+                "str",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Massive damage that ignores armor and heals you.",
+            "cost": 1000,
+            "deity_id": "krog",
+            "required_class": "Barbarian"
+        }
+    ]
+}

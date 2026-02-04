@@ -1,0 +1,29 @@
+{
+    "blessings": [
+        {
+            "id": "bone_spear",
+            "name": "Bone Spear",
+            "tier": 1,
+            "base_power": 15,
+            "scaling": {
+                "int": 1.3
+            },
+            "requirements": {
+                "int": 12,
+                "cost": {
+                    "concentration": 15
+                }
+            },
+            "identity_tags": [
+                "dark",
+                "spell",
+                "damage",
+                "int"
+            ],
+            "charges": 5,
+            "description": "Fires a sharp bone projectile at the target.",
+            "cost": 50,
+            "deity_id": "blight"
+        }
+    ]
+}

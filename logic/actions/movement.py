@@ -5,8 +5,10 @@ from logic import search
 from utilities.colors import Colors
 from logic.engines import pathfinding_engine
 from logic.engines import spatial_engine
+from core.world import get_room_id
+from utilities.mapper import TERRAIN_MAP
 
-def dig_room(player, direction, name="New Room", copy_from=None):
+def dig_room(player, direction, name="New Room", copy_from=None, terrain=None):
     """Digs a new room in the specified direction."""
     # Calculate new coordinates
     x, y, z = player.room.x, player.room.y, player.room.z
@@ -18,7 +20,7 @@ def dig_room(player, direction, name="New Room", copy_from=None):
     elif direction == 'down': z -= 1
     
     # Generate ID
-    new_id = f"{player.room.zone_id}_{x}_{y}_{z}".replace("-", "n")
+    new_id = get_room_id(player.room.zone_id, x, y, z)
     
     # Check for spatial collision (same zone only)
     existing_room = None
@@ -61,6 +63,9 @@ def dig_room(player, direction, name="New Room", copy_from=None):
             new_room.description = copy_from.description
             new_room.zone_id = copy_from.zone_id
             new_room.terrain = copy_from.terrain
+            
+        if terrain:
+            new_room.terrain = terrain
         
         # Add to world
         player.game.world.rooms[new_id] = new_room
@@ -93,8 +98,19 @@ def _move(player, direction):
     if direction not in room.exits:
         if getattr(player, 'autodig', False):
             # Auto-Dig
-            new_room = dig_room(player, direction)
-            player.send_line(f"Auto-dug {direction} to {new_room.name}.")
+            palette_mode = getattr(player, 'autodig_palette', None)
+            copy_target = None
+            target_terrain = None
+            
+            if palette_mode:
+                if palette_mode.lower() == 'copy':
+                    copy_target = player.room
+                elif palette_mode.lower() in TERRAIN_MAP:
+                    target_terrain = palette_mode.lower()
+            
+            new_room = dig_room(player, direction, copy_from=copy_target, terrain=target_terrain)
+            
+            player.send_line(f"Auto-dug {direction} to {new_room.name} (Terrain: {new_room.terrain}).")
         else:
             player.send_line("You cannot go that way.")
             return
@@ -104,6 +120,17 @@ def _move(player, direction):
     if door and door.state != 'open':
         player.send_line(f"The {door.name} is {door.state}.")
         return
+
+    # Hazard Check (Exit)
+    for item in room.items:
+        if "hazard" in item.flags and "fire" in item.flags:
+            damage = 10
+            player.hp -= damage
+            player.send_line(f"{Colors.RED}You burn as you pass through the Wall of Fire! ({damage} dmg){Colors.RESET}")
+            if player.hp <= 0:
+                from logic.engines import combat_processor
+                combat_processor.handle_player_death(player.game, player, None)
+                return
 
     target_room = room.exits[direction]
 
@@ -122,10 +149,33 @@ def _move(player, direction):
     player.room = target_room
     target_room.players.append(player)
     target_room.broadcast(f"{player.name} arrives.", exclude_player=player)
-    player.visited_rooms.add(target_room.id)
+    
+    # Update Visited Rooms (Fog of War) - Cap at 200
+    if not hasattr(player, 'visited_rooms'):
+        player.visited_rooms = []
+    elif isinstance(player.visited_rooms, set):
+        player.visited_rooms = list(player.visited_rooms)
+        
+    if target_room.id in player.visited_rooms:
+        player.visited_rooms.remove(target_room.id) # Move to end (most recent)
+    player.visited_rooms.append(target_room.id)
+    
+    if len(player.visited_rooms) > 200:
+        player.visited_rooms = player.visited_rooms[-200:]
     
     look(player, "")
     
+    # Hazard Check (Enter)
+    for item in target_room.items:
+        if "hazard" in item.flags and "fire" in item.flags:
+            damage = 10
+            player.hp -= damage
+            player.send_line(f"{Colors.RED}You step into a Wall of Fire! ({damage} dmg){Colors.RESET}")
+            if player.hp <= 0:
+                from logic.engines import combat_processor
+                combat_processor.handle_player_death(player.game, player, None)
+                return
+
     # Handle Minions
     if hasattr(player, 'minions') and player.minions:
         for minion in list(player.minions):
@@ -184,6 +234,11 @@ def recall(player, args):
     if target_id and target_id in player.game.world.rooms:
         target_room = player.game.world.rooms[target_id]
     
+    # Fallback to 0,0,0 (Center of World)
+    if not target_room:
+        from logic.engines import spatial_engine
+        target_room = spatial_engine.get_instance(player.game.world).get_room(0, 0, 0)
+
     # Fallback to global start room
     if not target_room:
         target_room = player.game.world.start_room or list(player.game.world.rooms.values())[0]

@@ -1,0 +1,85 @@
+{
+    "blessings": [
+        {
+            "id": "flask_toss",
+            "name": "Flask Toss",
+            "tier": 1,
+            "base_power": 12,
+            "scaling": {
+                "int": 1.2
+            },
+            "requirements": {
+                "int": 10,
+                "cost": {
+                    "concentration": 10
+                }
+            },
+            "identity_tags": [
+                "light",
+                "alchemy",
+                "ranged",
+                "fire",
+                "acid",
+                "int",
+                "skill"
+            ],
+            "charges": 5,
+            "description": "Throws a volatile flask dealing Fire or Acid damage.",
+            "cost": 50,
+            "deity_id": "lumos"
+        },
+        {
+            "id": "ray_of_light",
+            "name": "Ray of Light",
+            "tier": 1,
+            "base_power": 12,
+            "scaling": {
+                "int": 1.2
+            },
+            "requirements": {
+                "int": 10,
+                "cost": {
+                    "concentration": 10
+                }
+            },
+            "identity_tags": [
+                "light",
+                "spell",
+                "damage",
+                "int",
+                "line"
+            ],
+            "charges": 5,
+            "description": "Damages targets in a line (2 rooms). Usage: cast ray <direction>",
+            "cost": 50,
+            "deity_id": "lumos"
+        },
+        {
+            "id": "reinforce",
+            "name": "Reinforce",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "int": 1.2,
+                "wis": 1.0
+            },
+            "requirements": {
+                "int": 10,
+                "cost": {
+                    "concentration": 15
+                }
+            },
+            "identity_tags": [
+                "light",
+                "alchemy",
+                "buff",
+                "int",
+                "spell"
+            ],
+            "charges": 3,
+            "description": "Strengthens an ally's gear for a short time.",
+            "cost": 50,
+            "deity_id": "lumos"
+        }
+    ]
+}

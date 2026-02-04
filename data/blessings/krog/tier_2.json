@@ -1,0 +1,286 @@
+{
+    "blessings": [
+        {
+            "id": "battle_cry",
+            "name": "Battle Cry",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "str": 1.2
+            },
+            "requirements": {
+                "str": 12,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "buff",
+                "aoe",
+                "str",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Grants damage bonus to self and allies. Weakens enemies.",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "berserker_charge",
+            "name": "Berserker Charge",
+            "tier": 2,
+            "base_power": 12,
+            "scaling": {
+                "str": 1.4
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "stamina": 25
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "mobility",
+                "martial",
+                "str",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Rushes an enemy, dealing damage and breaking lines.",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "bloodlust",
+            "name": "Bloodlust",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "rage",
+                "buff",
+                "str",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Enter a rage, increasing STR but lowering Defense.",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "drag",
+            "name": "Drag",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "transportation",
+                "drag",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Drag a target with you to an adjacent room. Usage: drag <target> <dir>",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "dragon_kick",
+            "name": "Dragon Kick",
+            "tier": 2,
+            "base_power": 30,
+            "scaling": {
+                "str": 1.5,
+                "wis": 1.0
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "stamina": 20,
+                    "chi": 2
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "unarmed",
+                "finisher",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "A powerful kick that consumes 2 Chi for massive damage.",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "enhanced_damage",
+            "name": "Enhanced Damage",
+            "tier": 2,
+            "base_power": 20,
+            "scaling": {
+                "str": 1.8
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "stamina": 15
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "attack",
+                "enhanced_damage",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "A powerful weapon strike that deals heavy damage.",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "pummel",
+            "name": "Pummel",
+            "tier": 2,
+            "base_power": 12,
+            "scaling": {
+                "str": 1.4
+            },
+            "requirements": {
+                "str": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "str",
+                "pummel",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "A strike that has a chance to Daze (Instinct Spark).",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "reckless_strike",
+            "name": "Reckless Strike",
+            "tier": 2,
+            "base_power": 25,
+            "scaling": {
+                "str": 1.8
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "stamina": 15
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "rage",
+                "str",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "High damage attack, but you take recoil damage.",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "scare",
+            "name": "Scare",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "stamina": 15
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "malediction",
+                "fear",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Terrify a target, forcing them to flee.",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "sunder",
+            "name": "Sunder",
+            "tier": 2,
+            "base_power": 15,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 14,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "martial",
+                "weapon",
+                "sunder",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Strikes a specific body part to break it.",
+            "cost": 100,
+            "deity_id": "krog"
+        },
+        {
+            "id": "titans_grip",
+            "name": "Titan's Grip",
+            "tier": 2,
+            "base_power": 10,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 16,
+                "cost": {
+                    "stamina": 30
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "control",
+                "martial",
+                "str",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Grabs and throws an enemy, disrupting them.",
+            "cost": 100,
+            "deity_id": "krog"
+        }
+    ]
+}

@@ -1,0 +1,302 @@
+{
+    "blessings": [
+        {
+            "id": "kick",
+            "name": "Kick",
+            "tier": 1,
+            "base_power": 10,
+            "scaling": {
+                "str": 1.5
+            },
+            "requirements": {
+                "str": 8,
+                "max_per_round": 2
+            },
+            "identity_tags": [
+                "martial",
+                "skill"
+            ],
+            "charges": 5,
+            "description": "A strong physical kick. Can be used twice per round.",
+            "cost": 0
+        },
+        {
+            "id": "bash",
+            "name": "Bash",
+            "tier": 1,
+            "base_power": 5,
+            "scaling": {
+                "str": 1.2
+            },
+            "requirements": {
+                "str": 10
+            },
+            "identity_tags": [
+                "physical",
+                "skill"
+            ],
+            "charges": 5,
+            "description": "A heavy strike (Universal).",
+            "cost": 0
+        },
+        {
+            "id": "brace",
+            "name": "Brace",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "con": 1.0
+            },
+            "requirements": {
+                "con": 10
+            },
+            "identity_tags": [
+                "physical",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Prepare for impact.",
+            "cost": 0
+        },
+        {
+            "id": "quick_step",
+            "name": "Quick-Step",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.0
+            },
+            "requirements": {
+                "dex": 10
+            },
+            "identity_tags": [
+                "physical",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Move with speed.",
+            "cost": 0
+        },
+        {
+            "id": "meditate",
+            "name": "Meditate",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.0
+            },
+            "requirements": {
+                "wis": 10
+            },
+            "identity_tags": [
+                "mental",
+                "skill"
+            ],
+            "charges": 5,
+            "description": "Regain focus.",
+            "cost": 0
+        },
+        {
+            "id": "focus",
+            "name": "Focus",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.0
+            },
+            "requirements": {
+                "wis": 10
+            },
+            "identity_tags": [
+                "mental",
+                "skill"
+            ],
+            "charges": 5,
+            "description": "Center your mind (Universal).",
+            "cost": 0
+        },
+        {
+            "id": "parry",
+            "name": "Parry",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.2
+            },
+            "requirements": {
+                "dex": 10
+            },
+            "identity_tags": [
+                "physical",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Deflect an attack.",
+            "cost": 0
+        },
+        {
+            "id": "hardened_skin",
+            "name": "Hardened Skin",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "con": 1.2
+            },
+            "requirements": {
+                "con": 12
+            },
+            "identity_tags": [
+                "physical",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Toughen your defense.",
+            "cost": 0
+        },
+        {
+            "id": "tackle",
+            "name": "Tackle",
+            "tier": 1,
+            "base_power": 8,
+            "scaling": {
+                "str": 1.3
+            },
+            "requirements": {
+                "str": 12
+            },
+            "identity_tags": [
+                "physical",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Knock down an opponent.",
+            "cost": 0
+        },
+        {
+            "id": "defensive_stance",
+            "name": "Defensive Stance",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "con": 1.2
+            },
+            "requirements": {
+                "con": 10,
+                "cost": {
+                    "stamina": 10
+                }
+            },
+            "identity_tags": [
+                "martial",
+                "stance",
+                "defense",
+                "buff",
+                "defensive_stance",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Adopt a guarded posture, increasing Defense.",
+            "cost": 50
+        },
+        {
+            "id": "pommel_strike",
+            "name": "Pommel Strike",
+            "tier": 1,
+            "base_power": 5,
+            "scaling": {
+                "str": 1.0
+            },
+            "requirements": {
+                "str": 10,
+                "cost": {
+                    "stamina": 15
+                }
+            },
+            "identity_tags": [
+                "martial",
+                "control",
+                "stun",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "A quick strike to the head. Interrupts and Stuns.",
+            "cost": 50
+        },
+        {
+            "id": "sword_mastery",
+            "name": "Sword Mastery",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {},
+            "requirements": {
+                "str": 10
+            },
+            "identity_tags": [
+                "passive",
+                "warrior",
+                "sword",
+                "mastery"
+            ],
+            "charges": 1,
+            "description": "Passive: Increases damage and hit chance with Swords.",
+            "cost": 0
+        },
+        {
+            "id": "axe_mastery",
+            "name": "Axe Mastery",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {},
+            "requirements": {
+                "str": 10
+            },
+            "identity_tags": [
+                "passive",
+                "warrior",
+                "axe",
+                "mastery"
+            ],
+            "charges": 1,
+            "description": "Passive: Increases damage and critical chance with Axes.",
+            "cost": 0
+        },
+        {
+            "id": "blunt_mastery",
+            "name": "Blunt Mastery",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {},
+            "requirements": {
+                "str": 10
+            },
+            "identity_tags": [
+                "passive",
+                "warrior",
+                "blunt",
+                "mastery"
+            ],
+            "charges": 1,
+            "description": "Passive: Increases damage and stun chance with Blunt weapons.",
+            "cost": 0
+        },
+        {
+            "id": "mace_mastery",
+            "name": "Mace Mastery",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {},
+            "requirements": {
+                "str": 10
+            },
+            "identity_tags": [
+                "passive",
+                "cleric",
+                "mace",
+                "mastery"
+            ],
+            "charges": 1,
+            "description": "Passive: Increases damage and armor penetration with Maces.",
+            "cost": 0
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "blessings": [
+        {
+            "id": "reflect",
+            "name": "Reflect",
+            "tier": 4,
+            "base_power": 0,
+            "scaling": {
+                "wis": 2.0
+            },
+            "requirements": {
+                "wis": 20,
+                "cost": {
+                    "concentration": 50
+                }
+            },
+            "identity_tags": [
+                "light",
+                "buff",
+                "reflect",
+                "wis",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Reflects incoming spells back at the caster.",
+            "cost": 1000,
+            "deity_id": "aegis"
+        }
+    ]
+}

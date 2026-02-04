@@ -31,7 +31,7 @@ def cast(player, args, target_obj=None):
     target = target_obj
     if not target and target_name:
         # Special handling for directional spells (Farsight)
-        if "farsight" in blessing.identity_tags:
+        if "farsight" in blessing.identity_tags or "line" in blessing.identity_tags:
             valid_dirs = {
                 'n': 'north', 's': 'south', 'e': 'east', 'w': 'west', 'u': 'up', 'd': 'down',
                 'north': 'north', 'south': 'south', 'east': 'east', 'west': 'west', 'up': 'up', 'down': 'down'

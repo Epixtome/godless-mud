@@ -17,6 +17,28 @@ def calculate_player_damage(player):
         # Unarmed: 1 + STR * 0.2
         damage = 1 + int(player.get_stat('str') * 0.2)
     
+    # --- Passive Bonuses ---
+    if player.active_class:
+        cls = player.game.world.classes.get(player.active_class)
+        if cls and cls.bonuses and 'passive' in cls.bonuses:
+            passive = cls.bonuses['passive']
+            
+            # Warrior: "Weapon damage increased by 10%."
+            if "Weapon damage increased" in passive and player.equipped_weapon:
+                damage = int(damage * 1.10)
+                
+            # Barbarian: "Damage increases as HP decreases."
+            if "Damage increases as HP decreases" in passive:
+                missing_hp_pct = 1.0 - (player.hp / player.max_hp)
+                # Up to 50% bonus damage at 0 HP
+                bonus_mult = 1.0 + (missing_hp_pct * 0.5)
+                damage = int(damage * bonus_mult)
+    
+    # --- Status Effects ---
+    if hasattr(player, 'status_effects'):
+        if "berserk_rage" in player.status_effects:
+            damage = int(damage * 1.25) # 25% Damage Bonus
+                
     return max(1, damage)
 
 def estimate_player_damage(player):
@@ -40,9 +62,19 @@ def calculate_mob_damage(mob, target):
     """Calculates damage dealt by a mob to a player."""
     raw = mob.damage
     defense = 0
-    if target.equipped_armor:
+    if hasattr(target, 'get_defense'):
+        defense = target.get_defense()
+    elif hasattr(target, 'equipped_armor') and target.equipped_armor:
         defense = target.equipped_armor.defense
-    return max(1, raw - defense)
+        
+    damage = max(1, raw - defense)
+    
+    # Beast Master Passive: Companions deal 20% more damage
+    if mob.leader and hasattr(mob.leader, 'active_class') and mob.leader.active_class == 'beast_master':
+        # Check for passive string or just assume class ID implies it for performance
+        damage = int(damage * 1.20)
+        
+    return damage
 
 def distribute_favor(player, target, game):
     """Awards favor to the player based on the kill."""

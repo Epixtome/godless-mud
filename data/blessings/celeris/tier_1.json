@@ -1,0 +1,82 @@
+{
+    "blessings": [
+        {
+            "id": "dirt_kick",
+            "name": "Dirt Kick",
+            "tier": 1,
+            "base_power": 5,
+            "scaling": {
+                "dex": 1.2
+            },
+            "requirements": {
+                "dex": 10,
+                "cost": {
+                    "stamina": 10
+                }
+            },
+            "identity_tags": [
+                "light",
+                "martial",
+                "debuff",
+                "dex",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Kicks dirt in the enemy's eyes, causing Blindness.",
+            "cost": 50,
+            "deity_id": "celeris"
+        },
+        {
+            "id": "evasive_step",
+            "name": "Evasive Step",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.5
+            },
+            "requirements": {
+                "dex": 12,
+                "cost": {
+                    "stamina": 15
+                },
+                "cooldown": 3
+            },
+            "identity_tags": [
+                "mobility",
+                "dex",
+                "defense",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Drastically increases Dodge chance for a short time.",
+            "cost": 50,
+            "deity_id": "celeris"
+        },
+        {
+            "id": "fencing_stance",
+            "name": "Fencing Stance",
+            "tier": 1,
+            "base_power": 0,
+            "scaling": {
+                "dex": 1.5
+            },
+            "requirements": {
+                "dex": 12,
+                "cost": {
+                    "stamina": 15
+                }
+            },
+            "identity_tags": [
+                "light",
+                "defense",
+                "counter",
+                "dex",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Parries the next attack and counters with damage.",
+            "cost": 50,
+            "deity_id": "celeris"
+        }
+    ]
+}

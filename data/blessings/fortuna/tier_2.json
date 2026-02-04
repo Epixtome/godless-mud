@@ -1,0 +1,106 @@
+{
+    "blessings": [
+        {
+            "id": "bless",
+            "name": "Bless",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "luk": 1.5
+            },
+            "requirements": {
+                "luk": 12,
+                "cost": {
+                    "concentration": 15
+                }
+            },
+            "identity_tags": [
+                "light",
+                "luk",
+                "bless",
+                "spell"
+            ],
+            "charges": 3,
+            "description": "Increases the party's Crit Rate (Light Spark).",
+            "cost": 100,
+            "deity_id": "fortuna"
+        },
+        {
+            "id": "coin_shot",
+            "name": "Coin Shot",
+            "tier": 2,
+            "base_power": 30,
+            "scaling": {
+                "luk": 2.0
+            },
+            "requirements": {
+                "luk": 14,
+                "cost": {
+                    "gold": 50
+                }
+            },
+            "identity_tags": [
+                "light",
+                "wealth",
+                "ranged",
+                "luk",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Consumes Gold to deal heavy damage.",
+            "cost": 100,
+            "deity_id": "fortuna"
+        },
+        {
+            "id": "guardians_oath",
+            "name": "Guardian's Oath",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "luk": 1.5
+            },
+            "requirements": {
+                "luk": 12,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "protection",
+                "tactics",
+                "luk",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Reduces damage taken for self and nearby allies.",
+            "cost": 100,
+            "deity_id": "fortuna"
+        },
+        {
+            "id": "purify",
+            "name": "Purify",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "luk": 1.2
+            },
+            "requirements": {
+                "luk": 12,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "light",
+                "utility",
+                "cleanse",
+                "luk"
+            ],
+            "charges": 3,
+            "description": "Magically removes debuffs, poison, and restraints (web/net).",
+            "cost": 100,
+            "deity_id": "fortuna"
+        }
+    ]
+}

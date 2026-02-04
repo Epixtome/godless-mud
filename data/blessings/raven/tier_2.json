@@ -1,0 +1,96 @@
+{
+    "blessings": [
+        {
+            "id": "decoy",
+            "name": "Decoy",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "luk": 1.5
+            },
+            "requirements": {
+                "luk": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "stealth",
+                "deception",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Forces NPCs to attack a target-dummy.",
+            "cost": 100,
+            "deity_id": "raven"
+        },
+        {
+            "id": "poach",
+            "name": "Poach",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "luk": 1.5
+            },
+            "requirements": {
+                "luk": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "loot",
+                "execution",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Increased favor/item drops on kill.",
+            "cost": 100,
+            "deity_id": "raven"
+        },
+        {
+            "id": "scavenge",
+            "name": "Scavenge",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "luk": 1.5
+            },
+            "requirements": {
+                "luk": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "luk",
+                "scavenge",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Chance to find extra Favor or items (Instinct Spark).",
+            "cost": 100,
+            "deity_id": "raven"
+        },
+        {
+            "id": "snipe",
+            "name": "Snipe",
+            "tier": 2,
+            "base_power": 25,
+            "scaling": {
+                "dex": 1.8
+            },
+            "requirements": {
+                "dex": 14,
+                "cost": {
+                    "stamina": 25
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "marksmanship",
+                "lethal",
+                "dex",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "A high damage shot that requires a target lock.",
+            "cost": 100,
+            "deity_id": "raven"
+        }
+    ]
+}

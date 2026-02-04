@@ -1,0 +1,180 @@
+{
+    "blessings": [
+        {
+            "id": "control_weather",
+            "name": "Control Weather",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.5
+            },
+            "requirements": {
+                "wis": 12,
+                "cost": {
+                    "concentration": 30
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "nature",
+                "field_effect",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Modifies room environmental tags.",
+            "cost": 100,
+            "deity_id": "sylva"
+        },
+        {
+            "id": "crane_stance",
+            "name": "Crane Stance",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.5
+            },
+            "requirements": {
+                "wis": 14,
+                "cost": {
+                    "concentration": 20
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "martial",
+                "stance",
+                "buff",
+                "crane_stance",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Enter a defensive stance, increasing Defense and Wisdom.",
+            "cost": 100,
+            "deity_id": "sylva"
+        },
+        {
+            "id": "howl",
+            "name": "Howl",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.5
+            },
+            "requirements": {
+                "wis": 12,
+                "cost": {
+                    "stamina": 20
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "command",
+                "howl",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Commands your pet to call for reinforcements.",
+            "cost": 100,
+            "deity_id": "sylva"
+        },
+        {
+            "id": "ice_rain",
+            "name": "Ice Rain",
+            "tier": 2,
+            "base_power": 15,
+            "scaling": {
+                "wis": 1.5
+            },
+            "requirements": {
+                "wis": 14,
+                "cost": {
+                    "concentration": 25
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "nature",
+                "ice",
+                "aoe",
+                "wis",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "Rains shards of ice. Deals damage and slows enemies.",
+            "cost": 100,
+            "deity_id": "sylva"
+        },
+        {
+            "id": "ki_power",
+            "name": "Ki Power",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.2
+            },
+            "requirements": {
+                "wis": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "internal",
+                "resource_gen",
+                "skill"
+            ],
+            "charges": 3,
+            "description": "Boosts Concentration/Momentum.",
+            "cost": 100,
+            "deity_id": "sylva"
+        },
+        {
+            "id": "stone_skin",
+            "name": "Stone Skin",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.0
+            },
+            "requirements": {
+                "wis": 14,
+                "cost": {
+                    "concentration": 25
+                }
+            },
+            "identity_tags": [
+                "instinct",
+                "nature",
+                "buff",
+                "protection",
+                "stone_skin",
+                "wis",
+                "spell"
+            ],
+            "charges": 2,
+            "description": "Hardens skin to drastically increase Defense.",
+            "cost": 100,
+            "deity_id": "sylva"
+        },
+        {
+            "id": "tame",
+            "name": "Tame",
+            "tier": 2,
+            "base_power": 0,
+            "scaling": {
+                "wis": 1.5
+            },
+            "requirements": {
+                "wis": 12
+            },
+            "identity_tags": [
+                "instinct",
+                "wis",
+                "tame",
+                "skill"
+            ],
+            "charges": 2,
+            "description": "Bind a beast (Instinct Spark).",
+            "cost": 100,
+            "deity_id": "sylva"
+        }
+    ]
+}

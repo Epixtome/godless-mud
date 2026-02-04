@@ -1,0 +1,87 @@
+{
+    "blessings": [
+        {
+            "id": "aura_of_divine_light",
+            "name": "Aura of Divine Light",
+            "tier": 4,
+            "base_power": 0,
+            "scaling": {
+                "str": 2.0
+            },
+            "requirements": {
+                "str": 20,
+                "cost": {
+                    "concentration": 50
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "buff",
+                "aura",
+                "str"
+            ],
+            "charges": 1,
+            "description": "Allies gain Damage/Armor. Enemies Weakened.",
+            "cost": 1000,
+            "deity_id": "pyraz",
+            "required_class": "Paladin"
+        },
+        {
+            "id": "banner_of_kings",
+            "name": "Banner of Kings",
+            "tier": 4,
+            "base_power": 0,
+            "scaling": {
+                "luk": 3.0
+            },
+            "requirements": {
+                "luk": 20,
+                "cost": {
+                    "concentration": 60
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "tactics",
+                "zone",
+                "luk",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Plants a banner granting massive buffs to the area.",
+            "cost": 1000,
+            "deity_id": "pyraz",
+            "required_class": "Knight"
+        },
+        {
+            "id": "divine_wrath",
+            "name": "Divine Wrath",
+            "tier": 4,
+            "base_power": 50,
+            "scaling": {
+                "str": 2.5
+            },
+            "requirements": {
+                "str": 20,
+                "cost": {
+                    "concentration": 50,
+                    "stamina": 50
+                }
+            },
+            "identity_tags": [
+                "light",
+                "ultimate",
+                "aoe",
+                "str",
+                "skill"
+            ],
+            "charges": 1,
+            "description": "Smites all enemies and heals all allies.",
+            "cost": 1000,
+            "deity_id": "pyraz",
+            "required_class": "Paladin"
+        }
+    ]
+}

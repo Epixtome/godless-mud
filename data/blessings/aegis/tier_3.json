@@ -1,0 +1,32 @@
+{
+    "blessings": [
+        {
+            "id": "reactive_armor",
+            "name": "Reactive Armor",
+            "tier": 3,
+            "base_power": 15,
+            "scaling": {
+                "int": 1.2,
+                "con": 1.5
+            },
+            "requirements": {
+                "int": 16,
+                "cost": {
+                    "concentration": 30
+                }
+            },
+            "identity_tags": [
+                "light",
+                "alchemy",
+                "defense",
+                "reaction",
+                "con",
+                "spell"
+            ],
+            "charges": 1,
+            "description": "Explodes when hit, damaging and stunning attackers.",
+            "cost": 500,
+            "deity_id": "aegis"
+        }
+    ]
+}
