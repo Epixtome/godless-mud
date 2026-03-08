@@ -1,0 +1,72 @@
+{
+    "deity": "zenith",
+    "archetype": "monk",
+    "description": "A master of internal rhythm and fluid motion.",
+    "blessings": {
+        "crane_stance": {
+            "id": "crane_stance",
+            "name": "Crane Stance",
+            "description": "Toggle a light posture. Reaching Peak Flow (5) grants [Evasive].",
+            "identity_tags": ["martial", "speed", "reflex"],
+            "logic_type": "special",
+            "requirements": { "stamina": 15 },
+            "base_cooldown": 2
+        },
+        "turtle_stance": {
+            "id": "turtle_stance",
+            "name": "Turtle Stance",
+            "description": "Toggle a heavy posture. Grants [Knockback] immunity.",
+            "identity_tags": ["martial", "protection", "weight"],
+            "logic_type": "special",
+            "requirements": { "stamina": 15 },
+            "base_cooldown": 2
+        },
+        "triple_kick": {
+            "id": "triple_kick",
+            "name": "Triple Kick",
+            "identity_tags": ["martial", "speed", "disruption"],
+            "logic_type": "standard",
+            "requirements": {
+                "stamina": 30,
+                "cooldown": 2
+            },
+            "damage_dice": "3d4",
+            "on_hit": { "stamina_damage": 5 }
+        },
+        "stand": {
+            "id": "stand",
+            "name": "Stand",
+            "identity_tags": ["martial", "utility"],
+            "logic_type": "recovery",
+            "requirements": { "stamina": 10 }
+        },
+        "iron_palm": {
+            "id": "iron_palm",
+            "name": "Iron Palm",
+            "description": "Consumes 5 Flow to deal a stunning blow.",
+            "identity_tags": ["martial", "disruption", "debuff"],
+            "logic_type": "standard",
+            "requirements": { "stamina": 25 },
+            "base_cooldown": 5
+        },
+        "dragon_strike": {
+            "id": "dragon_strike",
+            "name": "Dragon Strike",
+            "description": "Consumes all Flow to unleash a devastating attack.",
+            "identity_tags": ["martial", "finisher"],
+            "logic_type": "standard",
+            "requirements": { "stamina": 40 },
+            "base_cooldown": 10,
+            "damage_dice": "1d4"
+        },
+        "meditate": {
+            "id": "meditate",
+            "name": "Meditate",
+            "description": "Recover 40 stamina, but become unsettled for 2s.",
+            "identity_tags": ["utility", "recovery"],
+            "logic_type": "special",
+            "requirements": { "stamina": 0 },
+            "base_cooldown": 15
+        }
+    }
+}

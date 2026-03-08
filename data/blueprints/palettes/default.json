@@ -1,0 +1,55 @@
+{
+    "name": "default",
+    "description": "Basic building templates for exploration and world-building.",
+    "templates": [
+        {
+            "id": "tpl:road",
+            "name": "Dirt Road",
+            "terrain": "dirt_road",
+            "elevation": 0,
+            "description": "A dusty, worn path winding through the wasteland."
+        },
+        {
+            "id": "tpl:stone",
+            "name": "Stone Road",
+            "terrain": "road",
+            "elevation": 0,
+            "description": "A well-paved road made of flat, white stone slabs."
+        },
+        {
+            "id": "tpl:grass",
+            "name": "Lush Grass",
+            "terrain": "grass",
+            "elevation": 0,
+            "description": "Thick, knee-high grass swaying gently in the breeze."
+        },
+        {
+            "id": "tpl:forest",
+            "name": "Dense Forest",
+            "terrain": "dense_forest",
+            "elevation": 0,
+            "description": "Ancient trees form a thick canopy here, blocking most of the light."
+        },
+        {
+            "id": "tpl:cave",
+            "name": "Dark Cave",
+            "terrain": "cave",
+            "elevation": -1,
+            "description": "The air is damp and cold within the echoing hollows of the cave."
+        },
+        {
+            "id": "tpl:mountain",
+            "name": "Mountain Peak",
+            "terrain": "peak",
+            "elevation": 5,
+            "description": "The air is thin and freezing at this extreme altitude."
+        },
+        {
+            "id": "tpl:indoors",
+            "name": "In-Door",
+            "terrain": "indoors",
+            "elevation": 0,
+            "description": "A structured interior space protected from the elements."
+        }
+    ]
+}

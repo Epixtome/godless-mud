@@ -1,43 +1,58 @@
 from collections import deque
 from logic.engines import vision_engine
 
+def _get_val(obj, key):
+    if isinstance(obj, dict): return obj.get(key)
+    return getattr(obj, key, None)
+
 def _match(obj, search):
     """Helper for matching logic."""
-    if hasattr(obj, 'name') and obj.name.lower() == search: return True
-    if hasattr(obj, 'id') and obj.id.lower() == search: return True
+    name = _get_val(obj, 'name')
+    if name and name.lower() == search: return True
+    obj_id = _get_val(obj, 'id')
+    if obj_id and str(obj_id).lower() == search: return True
     return False
 
 def _match_start(obj, search):
-    if hasattr(obj, 'name') and obj.name.lower().startswith(search): return True
-    if hasattr(obj, 'id') and obj.id.lower().startswith(search): return True
+    name = _get_val(obj, 'name')
+    if name and name.lower().startswith(search): return True
+    obj_id = _get_val(obj, 'id')
+    if obj_id and str(obj_id).lower().startswith(search): return True
     return False
 
 def _match_contain(obj, search):
-    if hasattr(obj, 'name') and search in obj.name.lower(): return True
+    name = _get_val(obj, 'name')
+    if name and search in name.lower(): return True
     return False
 
 def search_list(collection, search_term):
     """
-    Smart search through a list of objects.
+    Smart search through a collection of objects.
     Prioritizes: Exact Match > Starts With > Contains.
-    Checks 'name' and 'id' attributes.
+    Matches are case-insensitive.
     """
-    if not search_term: return None
-    search = search_term.lower()
+    matches = find_matches(collection, search_term)
+    return matches[0] if matches else None
+
+def find_matches(collection, search_term):
+    """
+    Returns a list of all objects in a collection matching a search term.
+    Priority: Exact (name/id) > Starts With (name/id) > Contains (name).
+    """
+    if not search_term: return []
+    search = search_term.lower().replace(" ", "_")
     
-    # 1. Exact match
-    for obj in collection:
-        if _match(obj, search): return obj
-            
-    # 2. Starts with
-    for obj in collection:
-        if _match_start(obj, search): return obj
-            
-    # 3. Contains
-    for obj in collection:
-        if _match_contain(obj, search): return obj
-            
-    return None
+    # 1. Exact matches
+    exact = [obj for obj in collection if _match(obj, search)]
+    if exact: return exact
+    
+    # 2. Starts With matches
+    starts = [obj for obj in collection if _match_start(obj, search)]
+    if starts: return starts
+    
+    # 3. Contains matches
+    contains = [obj for obj in collection if _match_contain(obj, search)]
+    return contains
 
 def find_living(room, search_term):
     """Searches for monsters first, then players in a room."""

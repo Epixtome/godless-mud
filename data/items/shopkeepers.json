@@ -1,0 +1,81 @@
+{
+    "monsters": [
+        {
+            "id": "npc_armorsmith",
+            "name": "Grum Ironhand",
+            "description": "A burly dwarf covered in soot, inspecting a dented breastplate.",
+            "level": 10,
+            "hp": 500,
+            "damage": 15,
+            "tags": ["shopkeeper", "dwarf", "neutral", "smith"],
+            "shop_inventory": [
+                "armor_leather_vest",
+                "armor_chainmail",
+                "armor_shield_wood"
+            ]
+        },
+        {
+            "id": "npc_weaponsmith",
+            "name": "Kael the Sharp",
+            "description": "A tall human with scars on his arms, sharpening a blade.",
+            "level": 10,
+            "hp": 450,
+            "damage": 20,
+            "tags": ["shopkeeper", "human", "neutral", "smith"],
+            "shop_inventory": [
+                "weapon_sword_iron",
+                "weapon_axe_iron",
+                "weapon_dagger_iron",
+                "weapon_staff_oak"
+            ]
+        },
+        {
+            "id": "npc_alchemist",
+            "name": "Elara Moonwhisper",
+            "description": "An elf with stained fingers, mixing colorful liquids.",
+            "level": 8,
+            "hp": 200,
+            "damage": 5,
+            "tags": ["shopkeeper", "elf", "neutral", "alchemist"],
+            "shop_inventory": [
+                "potion_health_minor",
+                "potion_mana_minor"
+            ]
+        },
+        {
+            "id": "npc_general_store",
+            "name": "Lysa the Trader",
+            "description": "A cheerful woman arranging goods on a shelf.",
+            "level": 5,
+            "hp": 100,
+            "damage": 4,
+            "tags": ["shopkeeper", "human", "neutral"],
+            "shop_inventory": [
+                "food_ration",
+                "item_torch"
+            ]
+        },
+        {
+            "id": "npc_scribe",
+            "name": "Orion the Scribe",
+            "description": "An old man squinting at a scroll through thick spectacles.",
+            "level": 6,
+            "hp": 80,
+            "damage": 2,
+            "tags": ["shopkeeper", "human", "neutral", "mage"],
+            "shop_inventory": [
+                "scroll_recall"
+            ]
+        },
+        {
+            "id": "npc_healer",
+            "name": "Brother Thomas",
+            "description": "A priest in white robes, tending to the wounded.",
+            "level": 12,
+            "hp": 300,
+            "damage": 8,
+            "tags": ["healer", "human", "good", "priest"],
+            "shop_inventory": []
+        }
+    ]
+}

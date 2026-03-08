@@ -1,0 +1,435 @@
+{
+    "tiers": {
+        "scrap": {
+            "mult": 0.8,
+            "prefix": "Rusted",
+            "dice_offset": -1
+        },
+        "standard": {
+            "mult": 1.0,
+            "prefix": "",
+            "dice_offset": 0
+        },
+        "exotic": {
+            "mult": 1.2,
+            "prefix": "Fine",
+            "dice_offset": 1
+        }
+    },
+    "materials": {
+        "cloth": {
+            "mult": 0.5,
+            "weight": "light",
+            "type": "textile",
+            "min_level": 1,
+            "dice_offset": 0,
+            "tier": 1,
+            "max_integrity": 20,
+            "weight_mult": 0.5,
+            "tags": {
+                "flexible": 1
+            }
+        },
+        "leather": {
+            "mult": 0.8,
+            "weight": "medium",
+            "type": "textile",
+            "min_level": 1,
+            "dice_offset": 0,
+            "tier": 1,
+            "max_integrity": 30,
+            "weight_mult": 1.0,
+            "tags": {
+                "flexible": 1,
+                "insulation": 1
+            }
+        },
+        "iron": {
+            "mult": 1.0,
+            "weight": "medium",
+            "type": "metal",
+            "min_level": 1,
+            "dice_offset": 0,
+            "tier": 1,
+            "max_integrity": 40,
+            "weight_mult": 2.5,
+            "tags": {
+                "magnetic": 1
+            }
+        },
+        "steel": {
+            "mult": 1.2,
+            "weight": "heavy",
+            "type": "metal",
+            "min_level": 5,
+            "dice_offset": 1,
+            "tier": 2,
+            "max_integrity": 60,
+            "weight_mult": 3.0,
+            "tags": {
+                "physical": 1
+            }
+        },
+        "mithril": {
+            "mult": 1.5,
+            "weight": "light",
+            "type": "metal",
+            "min_level": 10,
+            "dice_offset": 2,
+            "tier": 3,
+            "max_integrity": 80,
+            "weight_mult": 1.5,
+            "tags": {
+                "arcane": 1
+            }
+        },
+        "adamant": {
+            "mult": 2.0,
+            "weight": "heavy",
+            "type": "metal",
+            "min_level": 15,
+            "dice_offset": 3,
+            "tier": 4,
+            "max_integrity": 100,
+            "weight_mult": 4.0,
+            "tags": {
+                "indestructible": 1
+            }
+        }
+    },
+    "dice_ladder": [
+        "1d4",
+        "1d6",
+        "1d8",
+        "1d10",
+        "1d12",
+        "2d6",
+        "2d8",
+        "2d10",
+        "2d12",
+        "3d6"
+    ],
+    "prefixes": {
+        "Brutal": {
+            "dice_offset": 1,
+            "tags": {
+                "force": 1,
+                "heavy": 1
+            },
+            "tier": 2
+        },
+        "Keen": {
+            "dice_offset": 0,
+            "tags": {
+                "crit": 1,
+                "lethal": 1
+            },
+            "tier": 1
+        },
+        "Balanced": {
+            "dice_offset": 0,
+            "tags": {
+                "accuracy": 1,
+                "speed": 1
+            },
+            "tier": 1
+        },
+        "Heavy": {
+            "dice_offset": 1,
+            "tags": {
+                "heavy": 1,
+                "slow": 1
+            },
+            "tier": 1
+        },
+        "Swift": {
+            "dice_offset": -1,
+            "tags": {
+                "light": 1,
+                "speed": 2
+            },
+            "tier": 1
+        },
+        "Jagged": {
+            "dice_offset": 0,
+            "tags": {
+                "bleed": 1,
+                "slashing": 1
+            },
+            "tier": 1
+        },
+        "Gleaming": {
+            "dice_offset": 0,
+            "tags": {
+                "light": 1,
+                "holy": 1
+            },
+            "tier": 2
+        }
+    },
+    "suffixes": {
+        "of Embers": {
+            "tags": {
+                "fire": 1,
+                "burn": 1
+            }
+        },
+        "of the Gale": {
+            "tags": {
+                "wind": 1,
+                "speed": 1
+            }
+        },
+        "of the Titan": {
+            "tags": {
+                "knockback": 1,
+                "heavy": 1
+            }
+        },
+        "of Venom": {
+            "tags": {
+                "toxic": 1,
+                "poison": 1
+            }
+        },
+        "of the Bear": {
+            "tags": {
+                "hp_bonus": 10
+            }
+        },
+        "of the Wolf": {
+            "tags": {
+                "stamina_bonus": 10
+            }
+        }
+    },
+    "templates": {
+        "sword": {
+            "type": "weapon",
+            "name": "Sword",
+            "desc": "A sharp blade.",
+            "base_dice_index": 1,
+            "scaling": {
+                "martial": 0.5
+            },
+            "tags": {
+                "martial": 1,
+                "slashing": 1
+            },
+            "material_type": "metal",
+            "base_weight": 4,
+            "slot": "main_hand"
+        },
+        "axe": {
+            "type": "weapon",
+            "name": "Axe",
+            "desc": "A heavy chopping tool.",
+            "base_dice_index": 2,
+            "scaling": {
+                "martial": 0.6
+            },
+            "tags": {
+                "martial": 1,
+                "heavy": 1,
+                "chopping": 1
+            },
+            "material_type": "metal",
+            "base_weight": 6,
+            "slot": "main_hand"
+        },
+        "plate": {
+            "type": "armor",
+            "name": "Plate Armor",
+            "desc": "Heavy protective plating.",
+            "base_defense": 10,
+            "tags": {
+                "heavy": 1,
+                "metal": 1,
+                "stability_bonus": 5
+            },
+            "material_type": "metal",
+            "base_weight": 15,
+            "slot": "chest"
+        },
+        "robe": {
+            "type": "armor",
+            "name": "Robe",
+            "desc": "Magical attire.",
+            "base_defense": 2,
+            "tags": {
+                "light": 1,
+                "magic": 1,
+                "conductivity": 1
+            },
+            "material_type": "textile",
+            "base_weight": 2,
+            "slot": "chest"
+        },
+        "dagger": {
+            "type": "weapon",
+            "name": "Dagger",
+            "desc": "A short, concealable blade.",
+            "base_dice_index": 0,
+            "scaling": {
+                "speed": 0.5,
+                "dex": 0.5
+            },
+            "tags": {
+                "fast": 1,
+                "swift": 1,
+                "light": 1
+            },
+            "material_type": "metal",
+            "base_weight": 1,
+            "slot": "main_hand"
+        },
+        "staff": {
+            "type": "weapon",
+            "name": "Staff",
+            "desc": "A long staff humming with power.",
+            "base_dice_index": 1,
+            "scaling": {
+                "arcane": 0.8
+            },
+            "tags": {
+                "arcane": 1,
+                "magic": 1,
+                "concentration_bonus": 5
+            },
+            "material_type": "metal",
+            "base_weight": 3,
+            "slot": "two_hand"
+        },
+        "shield": {
+            "type": "armor",
+            "name": "Shield",
+            "desc": "A sturdy defensive bulwark.",
+            "base_defense": 5,
+            "tags": {
+                "heavy": 1,
+                "protection": 1,
+                "stability_bonus": 10
+            },
+            "material_type": "metal",
+            "base_weight": 8,
+            "slot": "off_hand"
+        },
+        "maul": {
+            "type": "weapon",
+            "name": "Maul",
+            "desc": "A massive crushing hammer.",
+            "base_dice_index": 3,
+            "scaling": {
+                "martial": 0.8
+            },
+            "tags": {
+                "martial": 1,
+                "heavy": 1,
+                "blunt": 1,
+                "impact": 1,
+                "crushing": 1
+            },
+            "material_type": "metal",
+            "base_weight": 12,
+            "slot": "two_hand"
+        },
+        "helm": {
+            "type": "armor",
+            "name": "Helm",
+            "desc": "Protective headgear.",
+            "base_defense": 3,
+            "tags": {
+                "head": 1
+            },
+            "material_type": "metal",
+            "base_weight": 4,
+            "slot": "head"
+        },
+        "leggings": {
+            "type": "armor",
+            "name": "Leggings",
+            "desc": "Protective leg guards.",
+            "base_defense": 4,
+            "tags": {
+                "legs": 1
+            },
+            "material_type": "metal",
+            "base_weight": 6,
+            "slot": "legs"
+        },
+        "boots": {
+            "type": "armor",
+            "name": "Boots",
+            "desc": "Sturdy combat boots.",
+            "base_defense": 2,
+            "tags": {
+                "feet": 1
+            },
+            "material_type": "leather",
+            "base_weight": 2,
+            "slot": "feet"
+        },
+        "gloves": {
+            "type": "armor",
+            "name": "Gloves",
+            "desc": "Hand protection.",
+            "base_defense": 2,
+            "tags": {
+                "hands": 1
+            },
+            "material_type": "leather",
+            "base_weight": 1,
+            "slot": "hands"
+        },
+        "bracers": {
+            "type": "armor",
+            "name": "Bracers",
+            "desc": "Forearm guards.",
+            "base_defense": 2,
+            "tags": {
+                "arms": 1
+            },
+            "material_type": "metal",
+            "base_weight": 2,
+            "slot": "arms"
+        },
+        "pauldrons": {
+            "type": "armor",
+            "name": "Pauldrons",
+            "desc": "Heavy shoulder guards.",
+            "base_defense": 3,
+            "tags": {
+                "shoulders": 1
+            },
+            "material_type": "metal",
+            "base_weight": 5,
+            "slot": "shoulders"
+        },
+        "amulet": {
+            "type": "armor",
+            "name": "Amulet",
+            "desc": "A magical neckpiece.",
+            "base_defense": 0,
+            "tags": {
+                "neck": 1,
+                "magic": 1
+            },
+            "material_type": "metal",
+            "base_weight": 0,
+            "slot": "neck"
+        },
+        "ring": {
+            "type": "armor",
+            "name": "Ring",
+            "desc": "A magical ring.",
+            "base_defense": 0,
+            "tags": {
+                "finger": 1,
+                "magic": 1
+            },
+            "material_type": "metal",
+            "base_weight": 0,
+            "slot": "finger"
+        }
+    }
+}

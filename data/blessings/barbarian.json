@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "barbarian_init": {
+            "id": "barbarian_init",
+            "name": "Barbarian Awakening",
+            "tier": 1,
+            "cost": 0,
+            "description": "The fundamental identity of a Barbarian. Unlocks raw physical potential.",
+            "identity_tags": [
+                "class_init",
+                "instinct",
+                "martial"
+            ],
+            "logic_type": "passive",
+            "requirements": {
+                "class": "barbarian"
+            }
+        },
+        "whirlwind": {
+            "id": "whirlwind",
+            "name": "Whirlwind",
+            "description": "Spin in a circle, striking all nearby enemies with your weapon.",
+            "identity_tags": [
+                "martial",
+                "aoe",
+                "strike",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 25,
+                "martial": 3
+            },
+            "base_power": 12,
+            "scaling": [
+                {
+                    "scaling_tag": "martial",
+                    "multiplier": 1.5
+                },
+                {
+                    "scaling_tag": "instinct",
+                    "multiplier": 0.5
+                }
+            ]
+        },
+        "hurl": {
+            "id": "hurl",
+            "name": "Hurl",
+            "description": "Throw a heavy object or weapon at a distant foe.",
+            "identity_tags": [
+                "martial",
+                "ranged",
+                "impact",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 15,
+                "martial": 2
+            },
+            "base_power": 18,
+            "scaling": [
+                {
+                    "scaling_tag": "martial",
+                    "multiplier": 2.2
+                }
+            ]
+        },
+        "sunder": {
+            "id": "sunder",
+            "name": "Sunder",
+            "description": "A powerful strike that reduces target's physical resistance.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "disruption",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 20,
+                "martial": 4
+            },
+            "base_power": 15,
+            "on_hit": {
+                "apply_status": "sundered",
+                "duration": 6
+            }
+        },
+        "bash": {
+            "id": "bash",
+            "name": "Bash",
+            "description": "Slam the enemy with blunt force, potentially stunning them.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "blunt",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 10,
+                "martial": 1
+            },
+            "base_power": 8,
+            "on_hit": {
+                "apply_status": "stunned",
+                "chance": 0.3,
+                "duration": 2
+            }
+        },
+        "drag": {
+            "id": "drag",
+            "name": "Drag",
+            "description": "Grab an enemy and pull them into your space.",
+            "identity_tags": [
+                "martial",
+                "utility",
+                "disruption",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 15,
+                "instinct": 2
+            }
+        },
+        "push": {
+            "id": "push",
+            "name": "Push",
+            "description": "Forcefully shove an enemy away.",
+            "identity_tags": [
+                "martial",
+                "utility",
+                "disruption",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 10
+            }
+        }
+    }
+}

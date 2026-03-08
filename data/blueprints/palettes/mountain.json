@@ -1,0 +1,34 @@
+{
+    "name": "mountain",
+    "description": "High altitude terrain for scaling the world's peaks.",
+    "templates": [
+        {
+            "id": "tpl:mountain_path",
+            "name": "Mountain Side",
+            "terrain": "mountain",
+            "elevation": 1,
+            "description": "A steeply inclining path winding up the side of the mountain. Stones tumble away with every step."
+        },
+        {
+            "id": "tpl:high_summit",
+            "name": "High Summit",
+            "terrain": "high_mountain",
+            "elevation": 3,
+            "description": "The air begins to thin here as the path narrows. The world below looks like a distant map."
+        },
+        {
+            "id": "tpl:mountain_peak",
+            "name": "The Peak",
+            "terrain": "peak",
+            "elevation": 5,
+            "description": "The absolute apex of the mountain. The wind howls with ferocity, and the cold is soul-piercing."
+        },
+        {
+            "id": "tpl:cliffside",
+            "name": "Cliffside",
+            "terrain": "grass",
+            "elevation": 1,
+            "description": "A patch of hardy grass clings to the edge of a sheer drop. The sound of water echoes from below."
+        }
+    ]
+}

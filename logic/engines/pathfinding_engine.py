@@ -3,7 +3,9 @@ from logic.engines import spatial_engine
 
 TERRAIN_COST = {
     "road": 1,
+    "dirt_road": 1,
     "plains": 2,
+    "grass": 1,
     "hills": 3,
     "forest": 3,
     "dense_forest": 5,
@@ -50,7 +52,10 @@ def find_path(world, start_room, end_room, max_depth=20):
             
         # Explore neighbors via Exits (Adjacency Graph)
         # We use Exits instead of Grid Neighbors because we can only walk through exits
-        for direction, next_room in current_room.exits.items():
+        for direction, next_room_id in current_room.exits.items():
+            next_room = world.rooms.get(next_room_id)
+            if not next_room:
+                continue
             
             # Calculate tentative G score
             move_cost = get_traversal_cost(next_room)

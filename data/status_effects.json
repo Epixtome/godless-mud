@@ -3,54 +3,174 @@
         {
             "id": "mental_strain",
             "name": "Mental Strain",
-            "blocks": ["magic"]
+            "blocks": [
+                "magic"
+            ],
+            "description": "Your mind is reeling from overcasting. Concentration regen reduced."
         },
         {
             "id": "reinforce_armor",
             "name": "Reinforced Armor",
-            "modifiers": {"defense_add": 5}
+            "modifiers": {
+                "defense_add": 5
+            }
         },
         {
             "id": "berserk_rage",
             "name": "Berserker Rage",
-            "modifiers": {"str_mult": 1.2, "defense_mult": 0.8}
+            "modifiers": {
+                "str_mult": 1.2,
+                "defense_mult": 0.8
+            }
         },
         {
             "id": "undying",
             "name": "Undying Rage",
-            "blocks": ["death"]
+            "blocks": [
+                "death"
+            ]
         },
         {
             "id": "stone_skin",
             "name": "Stone Skin",
-            "modifiers": {"defense_add": 15}
+            "modifiers": {
+                "defense_add": 15
+            }
         },
         {
             "id": "stun",
             "name": "Stunned",
-            "blocks": ["movement", "action", "combat"]
+            "blocks": [
+                "movement",
+                "action",
+                "combat"
+            ]
         },
         {
             "id": "tiger_stance",
             "name": "Tiger Stance",
             "group": "stance",
-            "modifiers": {"str_mult": 1.2, "dex_mult": 1.1}
+            "modifiers": {
+                "str_mult": 1.2,
+                "dex_mult": 1.1
+            }
         },
         {
             "id": "crane_stance",
             "name": "Crane Stance",
             "group": "stance",
-            "modifiers": {"defense_add": 10, "wis_mult": 1.2}
+            "modifiers": {
+                "defense_add": 10,
+                "wis_mult": 1.2
+            }
         },
         {
             "id": "bleed",
             "name": "Bleeding",
-            "dot": {"damage": 5, "type": "physical"}
+            "dot": {
+                "damage": 5,
+                "type": "physical"
+            }
         },
         {
             "id": "magic_shield",
             "name": "Magic Shield",
-            "modifiers": {"defense_add": 10}
+            "description": "Absorbs 50% of incoming damage into Concentration."
+        },
+        {
+            "id": "volatile_reaction",
+            "name": "Volatile Reaction",
+            "description": "Your blood boils with alchemical energy."
+        },
+        {
+            "id": "evasive_step",
+            "name": "Evasive Step",
+            "description": "You are moving unpredictably to dodge attacks."
+        },
+        {
+            "id": "burn",
+            "name": "Burning",
+            "description": "You are on fire!",
+            "dot": {
+                "damage": 5,
+                "type": "fire"
+            }
+        },
+        {
+            "id": "song_of_courage_upkeep",
+            "name": "Singing (Courage)",
+            "description": "You are performing the Song of Courage.",
+            "group": "song",
+            "blocks": [
+                "spell"
+            ]
+        },
+        {
+            "id": "sanctified",
+            "name": "Sanctified",
+            "description": "Protected by holy ground. Damage reduced."
+        },
+        {
+            "id": "malediction",
+            "name": "Malediction",
+            "description": "Cursed. You suffer backlash damage when attacking."
+        },
+        {
+            "id": "off_balance",
+            "name": "Off Balance",
+            "description": "Unsteady and vulnerable to finishers.",
+            "type": "debuff",
+            "modifiers": {
+                "defense_add": -2
+            }
+        },
+        {
+            "id": "shattered_mind",
+            "name": "Shattered Mind",
+            "description": "Your concentration is broken, and your mind is vulnerable. You cannot cast spells and you take increased damage from blunt and disruption attacks.",
+            "cue": "[SHATTERED]",
+            "tags": [
+                "mental",
+                "debuff",
+                "silent"
+            ],
+            "blocks": [
+                "spell",
+                "magic"
+            ]
+        },
+        {
+            "id": "crane_echo",
+            "name": "Crane's Echo",
+            "description": "The lingering grace of the Crane.",
+            "type": "buff"
+        },
+        {
+            "id": "turtle_echo",
+            "name": "Turtle's Echo",
+            "description": "The lingering resilience of the Turtle.",
+            "type": "buff"
+        },
+        {
+            "id": "evasive",
+            "name": "Evasive",
+            "description": "Moving with supernatural flow.",
+            "type": "buff"
+        },
+        {
+            "id": "braced",
+            "name": "Braced",
+            "description": "Prepared for impact. Damage taken is reduced.",
+            "type": "buff"
+        },
+        {
+            "id": "atrophy",
+            "name": "Atrophy",
+            "description": "Your muscles waste away. Stamina regeneration is disabled.",
+            "type": "debuff",
+            "blocks": [
+                "stamina_regen"
+            ]
         }
     ]
 }

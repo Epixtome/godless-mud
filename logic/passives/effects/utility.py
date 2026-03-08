@@ -1,0 +1,52 @@
+import random
+from utilities.colors import Colors
+from models import Player
+from logic.actions import skill_utils
+from logic.core import status_effects_engine
+
+def trap_trigger(ctx):
+    player = ctx.get('player')
+    room = ctx.get('room')
+    
+    if not isinstance(player, Player): return
+
+    if "trap_sense" in getattr(player, 'status_effects', {}):
+        traps = [i for i in room.items if "trap" in getattr(i, 'flags', [])]
+        if traps:
+            player.send_line(f"{Colors.YELLOW}Your trap sense warns you of traps here!{Colors.RESET}")
+        return
+
+    for item in list(room.items):
+        if "trap" in getattr(item, 'flags', []):
+            _trigger_trap(player, room, item)
+
+def _trigger_trap(victim, room, trap):
+    t_type = trap.metadata.get("type")
+    victim.send_line(f"{Colors.RED}You trigger a {t_type} trap!{Colors.RESET}")
+    room.broadcast(f"{victim.name} triggers a {t_type} trap!", exclude_player=victim)
+    
+    if t_type == "net":
+        status_effects_engine.apply_effect(victim, "net", 10)
+        victim.send_line(f"{Colors.RED}You are entangled in a net! Use 'struggle' to break free.{Colors.RESET}")
+    elif t_type == "fire":
+        targets = [p for p in room.players] + [m for m in room.monsters]
+        for t in targets:
+            skill_utils._apply_damage(None, t, 30, "Fire Trap")
+    elif t_type == "stamina":
+        victim.resources['stamina'] = max(0, victim.resources.get('stamina', 0) - 50)
+        victim.send_line(f"{Colors.RED}You feel your energy instantly drained!{Colors.RESET}")
+
+    if trap in room.items:
+        room.items.remove(trap)
+
+def blue_mage_learning(ctx):
+    player = ctx.get('attacker')
+    mob = ctx.get('target')
+    if getattr(player, 'active_class', None) == 'blue_mage':
+        if random.random() < 0.10 and hasattr(mob, 'tags') and mob.tags:
+            player.send_line(f"{Colors.CYAN}You have learned {random.choice(mob.tags)} from {mob.name}!{Colors.RESET}")
+
+def chronomancer_cooldown_reduction(ctx):
+    player = ctx.get('player')
+    if getattr(player, 'active_class', None) == 'temporalist':
+        ctx['cooldown'] = int(ctx.get('cooldown', 0) * 0.80)

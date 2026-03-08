@@ -1,0 +1,145 @@
+{
+    "blessings": {
+        "monk_init": {
+            "id": "monk_init",
+            "name": "Monk Awakening",
+            "tier": 1,
+            "cost": 0,
+            "description": "Initialize Monk resources and pips.",
+            "identity_tags": [
+                "monk",
+                "hidden"
+            ],
+            "action": "monk_init",
+            "requirements": {
+                "class": "monk"
+            }
+        },
+        "kick": {
+            "id": "kick",
+            "name": "Kick",
+            "tier": 1,
+            "cost": 15,
+            "base_power": 12,
+            "description": "A basic martial kick.",
+            "identity_tags": [
+                "monk",
+                "martial",
+                "strike"
+            ],
+            "action": "kick",
+            "requirements": {
+                "class": "monk",
+                "cooldown": 1
+            },
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.0
+            }
+        },
+        "triple_kick": {
+            "id": "triple_kick",
+            "name": "Triple Kick",
+            "tier": 3,
+            "cost": 40,
+            "base_power": 15,
+            "description": "Unleash three rapid kicks.",
+            "identity_tags": [
+                "monk",
+                "martial",
+                "combo"
+            ],
+            "action": "triple_kick",
+            "requirements": {
+                "class": "monk",
+                "cooldown": 4
+            },
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 0.5
+            }
+        },
+        "iron_palm": {
+            "id": "iron_palm",
+            "name": "Iron Palm",
+            "tier": 4,
+            "cost": 30,
+            "base_power": 25,
+            "description": "A powerful palm strike that can daze targets.",
+            "identity_tags": [
+                "monk",
+                "martial",
+                "strike"
+            ],
+            "action": "iron_palm",
+            "requirements": {
+                "class": "monk",
+                "cooldown": 5
+            },
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.5
+            }
+        },
+        "dragon_strike": {
+            "id": "dragon_strike",
+            "name": "Dragon Strike",
+            "tier": 5,
+            "cost": 60,
+            "base_power": 45,
+            "description": "A finishing move that consumes all Flow for massive damage.",
+            "identity_tags": [
+                "monk",
+                "finisher",
+                "martial",
+                "strike"
+            ],
+            "action": "dragon_strike",
+            "requirements": {
+                "class": "monk",
+                "cooldown": 8
+            },
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 2.5
+            }
+        },
+        "palm_strike": {
+            "id": "palm_strike",
+            "name": "Palm Strike",
+            "tier": 2,
+            "cost": 10,
+            "base_power": 12,
+            "description": "Rapid strike that stuns for 1 tick.",
+            "identity_tags": [
+                "monk",
+                "martial",
+                "strike"
+            ],
+            "action": "palm_strike",
+            "requirements": {
+                "class": "monk",
+                "cooldown": 1
+            },
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 0.8
+            }
+        },
+        "flow_mastery": {
+            "id": "flow_mastery",
+            "name": "Flow Mastery",
+            "tier": 3,
+            "cost": 0,
+            "description": "Passive: Each hit in the last 10s increases damage by 10%.",
+            "identity_tags": [
+                "monk",
+                "passive",
+                "flow"
+            ],
+            "requirements": {
+                "class": "monk"
+            }
+        }
+    }
+}

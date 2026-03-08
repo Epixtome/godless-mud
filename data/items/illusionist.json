@@ -1,0 +1,42 @@
+{
+    "items": [
+        {
+            "id": "prism_shards",
+            "type": "weapon",
+            "name": "Prism Shards",
+            "description": "Shimmering shards that refract light into hypnotic patterns.",
+            "value": 100,
+            "weight": 1,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d6"
+            },
+            "scaling": {
+                "tag": "insight",
+                "mult": 1.2
+            },
+            "tags": [
+                "magic",
+                "light",
+                "illusion"
+            ]
+        },
+        {
+            "id": "refractive_cloak",
+            "type": "armor",
+            "name": "Refractive Cloak",
+            "description": "A cloak that bends light around the wearer.",
+            "value": 150,
+            "defense": 2,
+            "bonus_hp": 0,
+            "weight": 2,
+            "tags": [
+                "magic",
+                "illusion",
+                "evasion",
+                "light_gear"
+            ]
+        }
+    ]
+}

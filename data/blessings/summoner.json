@@ -1,0 +1,19 @@
+{
+    "blessings": {
+        "summoner_init": {
+            "id": "summoner_init",
+            "name": "Summoner Awakening",
+            "tier": 1,
+            "cost": 0,
+            "description": "The fundamental identity of a Summoner.",
+            "identity_tags": [
+                "class_init",
+                "summoner"
+            ],
+            "logic_type": "passive",
+            "requirements": {
+                "class": "summoner"
+            }
+        }
+    }
+}

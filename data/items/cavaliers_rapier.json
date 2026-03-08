@@ -1,0 +1,20 @@
+{
+    "items": [
+        {
+            "id": "cavaliers_rapier",
+            "type": "weapon",
+            "name": "Cavalier's Rapier",
+            "description": "A finely crafted blade used by mage-knights.",
+            "value": 200,
+            "damage_dice": "1d8",
+            "scaling": {"martial": 1.2},
+            "tags": {"martial": 2, "precision": 2},
+            "resonance_bonus": {
+                "if_arcane_5": {
+                    "damage_type": "magic",
+                    "bonus_damage": 5
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,84 @@
+{
+    "blessings": {
+        "life_tap": {
+            "id": "life_tap",
+            "name": "Life Tap",
+            "description": "Drain life from a target to heal yourself.",
+            "identity_tags": [
+                "magic",
+                "dark",
+                "drain",
+                "occult",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 15
+            },
+            "base_power": 15,
+            "scaling": [
+                {
+                    "scaling_tag": "dark",
+                    "multiplier": 1.5
+                }
+            ]
+        },
+        "plague": {
+            "id": "plague",
+            "name": "Plague",
+            "description": "Infect a target with a spreading disease.",
+            "identity_tags": [
+                "magic",
+                "dark",
+                "poison",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 20
+            },
+            "on_hit": {
+                "apply_status": "plagued",
+                "duration": 10
+            }
+        },
+        "malediction": {
+            "id": "malediction",
+            "name": "Malediction",
+            "description": "Curse a target, reducing their defenses.",
+            "identity_tags": [
+                "magic",
+                "dark",
+                "utility",
+                "occult",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 15
+            },
+            "on_hit": {
+                "apply_status": "cursed",
+                "duration": 6
+            }
+        },
+        "bone_spear": {
+            "id": "bone_spear",
+            "name": "Bone Spear",
+            "description": "Hurl a spear of bone at your foe.",
+            "identity_tags": [
+                "magic",
+                "dark",
+                "strike",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 25
+            },
+            "base_power": 20,
+            "scaling": [
+                {
+                    "scaling_tag": "dark",
+                    "multiplier": 2.0
+                }
+            ]
+        }
+    }
+}

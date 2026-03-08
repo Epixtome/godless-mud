@@ -1,98 +1,1014 @@
 {
     "monsters": [
-        {"id": "goblin", "name": "Goblin", "description": "A small, green creature with a rusty knife.", "hp": 30, "max_hp": 30, "damage": 5, "tags": ["dark", "malice"]},
-        {"id": "light_wisp", "name": "Light Wisp", "description": "A floating ball of warm light.", "hp": 20, "max_hp": 20, "damage": 3, "tags": ["light", "lumos"]},
-        {"id": "shadow_stalker", "name": "Shadow Stalker", "description": "A vague humanoid shape that blends into the darkness.", "hp": 45, "max_hp": 45, "damage": 8, "tags": ["dark", "nox"]},
-        {"id": "wild_boar", "name": "Wild Boar", "description": "An aggressive boar with sharp tusks.", "hp": 50, "max_hp": 50, "damage": 6, "tags": ["instinct", "krog"]},
-        
-        {"id": "bear", "name": "Brown Bear", "description": "A massive bear with thick fur.", "hp": 120, "max_hp": 120, "damage": 12, "tags": ["beast", "instinct"]},
-        {"id": "wall_of_fire", "name": "Wall of Fire", "description": "A roaring wall of magical flame.", "hp": 100, "max_hp": 100, "damage": 8, "tags": ["construct", "fire", "immobile", "aggressive"]},
-        {"id": "training_dummy", "name": "Training Dummy", "description": "A straw-stuffed dummy for combat practice.", "hp": 1000000, "max_hp": 1000000, "damage": 0, "tags": ["construct"]},
-        {"id": "mage_dummy", "name": "Mage Dummy", "description": "A rune-carved wooden dummy that hums with arcane energy.", "hp": 5000, "max_hp": 5000, "damage": 5, "tags": ["construct", "caster"]},
-        {"id": "illusionist_dummy", "name": "Illusionist Dummy", "description": "A dummy that seems to shift and blur, making it hard to focus on.", "hp": 5000, "max_hp": 5000, "damage": 5, "tags": ["construct", "illusionist"]},
-        {"id": "barbarian_dummy", "name": "Barbarian Dummy", "description": "A rugged dummy clad in furs, wielding a blunted axe.", "hp": 5000, "max_hp": 5000, "damage": 8, "tags": ["construct", "barbarian"]},
-        {"id": "monk_dummy", "name": "Monk Dummy", "description": "A wooden dummy wrapped in prayer beads, posed in a martial stance.", "hp": 5000, "max_hp": 5000, "damage": 7, "tags": ["construct", "monk"]},
-        {"id": "rogue_dummy", "name": "Rogue Dummy", "description": "A shadowy dummy that seems to fade in and out of view.", "hp": 5000, "max_hp": 5000, "damage": 6, "tags": ["construct", "rogue"]},
-        {"id": "paladin_dummy", "name": "Paladin Dummy", "description": "A shining dummy in plate armor, radiating a holy aura.", "hp": 5000, "max_hp": 5000, "damage": 7, "tags": ["construct", "paladin"]},
-        {"id": "town_guard", "name": "Town Guard", "description": "A stoic guard in chainmail armor.", "hp": 100, "max_hp": 100, "damage": 10, "tags": ["human", "guard", "quest_giver"], "quests": ["kill_goblins"], "can_be_companion": true},
-        {"id": "merchant", "name": "Traveling Merchant", "description": "A weary traveler with a large backpack.", "hp": 50, "max_hp": 50, "damage": 4, "tags": ["human"]},
-        {"id": "street_urchin", "name": "Street Urchin", "description": "A dirty child with quick fingers.", "hp": 20, "max_hp": 20, "damage": 2, "tags": ["human", "thief"]},
-        {"id": "drunkard", "name": "Drunkard", "description": "He sways back and forth, mumbling incoherently.", "hp": 40, "max_hp": 40, "damage": 3, "tags": ["human"]},
-        {"id": "wild_dog", "name": "Wild Dog", "description": "A mangy dog with bared teeth.", "hp": 30, "max_hp": 30, "damage": 5, "tags": ["beast"]},
-        {"id": "traveler", "name": "Weary Traveler", "description": "A traveler resting by the side of the road.", "hp": 40, "max_hp": 40, "damage": 5, "tags": ["human", "passive"]},
-        {"id": "tavern_keeper", "name": "The Tavern Keeper", "description": "A burly man cleaning a mug with a dirty rag.", "hp": 100, "max_hp": 100, "damage": 5, "tags": ["human", "quest_giver"], "quests": ["fetch_sun_elixir"]},
-        {"id": "forgotten_mayor", "name": "The Forgotten Mayor", "description": "A skeletal figure in tattered noble finery. He clutches a rusted key.", "hp": 300, "max_hp": 300, "damage": 15, "tags": ["undead", "boss"]},
-
-        {"id": "rat", "name": "Giant Rat", "description": "A large, filthy rat with beady eyes.", "hp": 15, "max_hp": 15, "damage": 2, "tags": ["beast"]},
-        {"id": "bandit", "name": "Bandit", "description": "A rough-looking man with a scar across his cheek.", "hp": 40, "max_hp": 40, "damage": 6, "tags": ["human", "criminal"]},
-        {"id": "cultist", "name": "Cultist", "description": "A figure in dark robes chanting softly.", "hp": 35, "max_hp": 35, "damage": 5, "tags": ["human", "dark"]},
-        {"id": "wolf", "name": "Dire Wolf", "description": "A large wolf with grey fur and intelligent eyes.", "hp": 60, "max_hp": 60, "damage": 8, "tags": ["beast", "instinct"]},
-        
-        {"id": "skeleton", "name": "Skeleton", "description": "A pile of bones held together by dark magic.", "hp": 35, "max_hp": 35, "damage": 6, "tags": ["undead", "dark"]},
-        {"id": "ghost", "name": "Restless Ghost", "description": "A translucent spirit moaning softly.", "hp": 30, "max_hp": 30, "damage": 5, "tags": ["undead", "spirit"]},
-        {"id": "zombie", "name": "Zombie", "description": "A rotting corpse that hungers for flesh.", "hp": 50, "max_hp": 50, "damage": 4, "tags": ["undead", "dark"]},
-        {"id": "slime", "name": "Green Slime", "description": "A quivering blob of green goo.", "hp": 25, "max_hp": 25, "damage": 4, "tags": ["beast", "acid"]},
-        {"id": "leech", "name": "Giant Leech", "description": "A slimy parasite looking for blood.", "hp": 15, "max_hp": 15, "damage": 2, "tags": ["beast", "aquatic"]},
-        {"id": "witch", "name": "Swamp Witch", "description": "A cackling hag stirring a cauldron.", "hp": 60, "max_hp": 60, "damage": 8, "tags": ["human", "dark", "mage"]},
-        {"id": "scorpion", "name": "Giant Scorpion", "description": "A menacing arachnid with a poisonous tail.", "hp": 40, "max_hp": 40, "damage": 7, "tags": ["beast", "desert", "poison"]},
-        {"id": "sand_worm", "name": "Sand Worm", "description": "A massive worm that burrows through the sand.", "hp": 150, "max_hp": 150, "damage": 15, "tags": ["beast", "desert", "boss"]},
-        {"id": "yeti", "name": "Yeti", "description": "A towering ape-like creature covered in white fur.", "hp": 140, "max_hp": 140, "damage": 14, "tags": ["beast", "ice"]},
-        {"id": "ice_wolf", "name": "Ice Wolf", "description": "A wolf with fur as white as snow and eyes like blue ice.", "hp": 65, "max_hp": 65, "damage": 9, "tags": ["beast", "ice"]},
-
-        {"id": "avatar_solas", "name": "Avatar of Solas", "description": "The Crusader, radiating justice and war.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["light", "solas", "avatar"]},
-        {"id": "avatar_celeris", "name": "Avatar of Celeris", "description": "The Duelist, moving with blinding speed.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["light", "celeris", "avatar"]},
-        {"id": "avatar_aegis", "name": "Avatar of Aegis", "description": "The Guardian, an unyielding wall of light.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["light", "aegis", "avatar"]},
-        {"id": "avatar_lumos", "name": "Avatar of Lumos", "description": "The Scholar, surrounded by floating runes.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["light", "lumos", "avatar"]},
-        {"id": "avatar_sophia", "name": "Avatar of Sophia", "description": "The Saint, glowing with healing warmth.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["light", "sophia", "avatar"]},
-        {"id": "avatar_fortuna", "name": "Avatar of Fortuna", "description": "The Merchant, whose form shifts like gold coins.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["light", "fortuna", "avatar"]},
-
-        {"id": "avatar_malice", "name": "Avatar of Malice", "description": "The Tyrant, clad in spiked black iron.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["dark", "malice", "avatar"]},
-        {"id": "avatar_nox", "name": "Avatar of Nox", "description": "A cloaked figure whose face is an endless void, representing the Kingdom of Dark.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["dark", "nox", "avatar"]},
-        {"id": "avatar_blight", "name": "Avatar of Blight", "description": "The Undying, dripping with decay.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["dark", "blight", "avatar"]},
-        {"id": "avatar_vex", "name": "Avatar of Vex", "description": "The Warlock, whispering curses.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["dark", "vex", "avatar"]},
-        {"id": "avatar_umbra", "name": "Avatar of Umbra", "description": "The Cultist, shrouded in madness.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["dark", "umbra", "avatar"]},
-        {"id": "avatar_jinx", "name": "Avatar of Jinx", "description": "The Trickster, grinning with chaotic intent.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["dark", "jinx", "avatar"]},
-
-        {"id": "avatar_krog", "name": "Avatar of Krog", "description": "A massive being of bark and stone with glowing green eyes, representing the Kingdom of Instinct.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["instinct", "krog", "avatar"]},
-        {"id": "avatar_feral", "name": "Avatar of Feral", "description": "The Hunter, stalking its prey.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["instinct", "feral", "avatar"]},
-        {"id": "avatar_ursus", "name": "Avatar of Ursus", "description": "The Survivor, bearing scars of survival.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["instinct", "ursus", "avatar"]},
-        {"id": "avatar_echo", "name": "Avatar of Echo", "description": "The Storm, crackling with lightning.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["instinct", "echo", "avatar"]},
-        {"id": "avatar_sylva", "name": "Avatar of Sylva", "description": "The Tamer, surrounded by nature's growth.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["instinct", "sylva", "avatar"]},
-        {"id": "avatar_raven", "name": "Avatar of Raven", "description": "The Scavenger, watching with beady eyes.", "hp": 500, "max_hp": 500, "damage": 25, "tags": ["instinct", "raven", "avatar"]},
-
-        {"id": "crystal_golem", "name": "Crystal Golem", "description": "A lumbering construct made of jagged crystals.", "hp": 80, "max_hp": 80, "damage": 8, "tags": ["construct", "light"]},
-        {"id": "prism_spider", "name": "Prism Spider", "description": "A spider with a translucent, refracting carapace.", "hp": 25, "max_hp": 25, "damage": 6, "tags": ["beast", "light"]},
-        {"id": "temple_guardian", "name": "Temple Guardian", "description": "A construct of gold and light, guarding the holy places.", "hp": 120, "max_hp": 120, "damage": 12, "tags": ["construct", "light", "guard"]},
-        {"id": "luminescent_beetle", "name": "Luminescent Beetle", "description": "A large beetle that glows softly.", "hp": 15, "max_hp": 15, "damage": 2, "tags": ["beast", "light"]},
-
-        {"id": "shadow_wraith", "name": "Shadow Wraith", "description": "A floating spirit of pure darkness that chills the air.", "hp": 60, "max_hp": 60, "damage": 9, "tags": ["undead", "dark", "spirit"]},
-        {"id": "void_construct", "name": "Void Construct", "description": "A suit of black armor animated by void energy.", "hp": 100, "max_hp": 100, "damage": 10, "tags": ["construct", "dark"]},
-        {"id": "dark_acolyte", "name": "Dark Acolyte", "description": "A robed figure chanting whispers to the void.", "hp": 40, "max_hp": 40, "damage": 7, "tags": ["human", "dark", "mage"]},
-        {"id": "abyssal_leech", "name": "Abyssal Leech", "description": "A black slug-like creature that drains vitality.", "hp": 20, "max_hp": 20, "damage": 3, "tags": ["beast", "dark"]},
-
-        {"id": "treant_sapling", "name": "Treant Sapling", "description": "A small walking tree with whipping branches.", "hp": 40, "max_hp": 40, "damage": 5, "tags": ["plant", "instinct"]},
-        {"id": "moss_golem", "name": "Moss Golem", "description": "A heavy construct of stone covered in thick moss.", "hp": 90, "max_hp": 90, "damage": 9, "tags": ["construct", "instinct"]},
-        {"id": "feral_druid", "name": "Feral Druid", "description": "A wild-eyed human wearing furs and antlers.", "hp": 45, "max_hp": 45, "damage": 7, "tags": ["human", "instinct", "mage"]},
-        {"id": "giant_wasp", "name": "Giant Wasp", "description": "A massive insect with a deadly stinger.", "hp": 25, "max_hp": 25, "damage": 8, "tags": ["beast", "instinct"]},
-
-        {"id": "moss_wolf", "name": "Moss Wolf", "description": "A wolf with fur resembling thick green moss, blending perfectly with the forest floor.", "hp": 60, "max_hp": 60, "damage": 8, "tags": ["beast", "instinct", "aggressive", "rally"]},
-        {"id": "thorn_sprite", "name": "Thorn Sprite", "description": "A tiny, fluttering creature made of sharp twigs and leaves.", "hp": 30, "max_hp": 30, "damage": 5, "tags": ["fey", "instinct", "ranged"]},
-        {"id": "wild_stag", "name": "Wild Stag", "description": "A majestic deer with large antlers.", "hp": 80, "max_hp": 80, "damage": 4, "tags": ["beast", "passive"]},
-        {"id": "river_drake", "name": "River Drake", "description": "A sleek, scaled predator that moves effortlessly through water.", "hp": 120, "max_hp": 120, "damage": 12, "tags": ["dragon", "instinct", "aquatic"]},
-        {"id": "mud_crab", "name": "Mud Crab", "description": "A large crab covered in hardened mud.", "hp": 50, "max_hp": 50, "damage": 6, "tags": ["beast", "aquatic", "defense"], "body_parts": {"shell": {"hp": 20, "defense_bonus": 10, "intact_mult": 0.5, "broken_mult": 2.0}}},
-        {"id": "bark_golem", "name": "Bark Golem", "description": "A lumbering construct made of animated wood and vines.", "hp": 150, "max_hp": 150, "damage": 10, "tags": ["construct", "instinct", "guard"]},
-        {"id": "rot_sapling", "name": "Rot Sapling", "description": "A small, twisted tree creature dripping with dark ichor.", "hp": 25, "max_hp": 25, "damage": 4, "tags": ["plant", "dark", "poison"]},
-        {"id": "rotwood_ancient", "name": "Rotwood Ancient", "description": "A massive, corrupted treant with glowing red eyes. The heart of the forest's decay.", "hp": 800, "max_hp": 800, "damage": 20, "tags": ["plant", "dark", "boss"]},
-        
-        {"id": "fire_elemental", "name": "Fire Elemental", "description": "A living column of flame.", "hp": 60, "max_hp": 60, "damage": 10, "tags": ["elemental", "fire", "aggressive"]},
-        {"id": "air_elemental", "name": "Air Elemental", "description": "A swirling vortex of wind and lightning.", "hp": 55, "max_hp": 55, "damage": 8, "tags": ["elemental", "air", "aggressive"]},
-
-        {"id": "hydra", "name": "Swamp Hydra", "description": "A massive reptilian beast with three snapping heads.", "hp": 300, "max_hp": 300, "damage": 15, "tags": ["beast", "boss", "regenerator"], 
-            "body_parts": {
-                "left_head": {"hp": 50, "max_hp": 50, "defense_bonus": 0, "intact_mult": 1.0, "broken_mult": 1.0},
-                "right_head": {"hp": 50, "max_hp": 50, "defense_bonus": 0, "intact_mult": 1.0, "broken_mult": 1.0},
-                "center_head": {"hp": 80, "max_hp": 80, "defense_bonus": 5, "intact_mult": 0.8, "broken_mult": 1.5}
-            }
+        {
+            "id": "stone_golem",
+            "name": "Stone Golem",
+            "description": "A massive automaton carved from solid granite. It stands unyielding.",
+            "hp": 250,
+            "max_hp": 250,
+            "damage": 15,
+            "tags": [
+                "aggressive",
+                "construct",
+                "class:knight"
+            ]
+        },
+        {
+            "id": "gargoyle",
+            "name": "Obsidian Gargoyle",
+            "description": "An animate statue with razor-sharp claws and a focused, predatory gaze.",
+            "hp": 120,
+            "max_hp": 120,
+            "damage": 12,
+            "tags": [
+                "aggressive",
+                "demon",
+                "class:monk"
+            ]
+        },
+        {
+            "id": "abyssal_leech",
+            "name": "Abyssal Leech",
+            "description": "A black slug-like creature that drains vitality.",
+            "hp": 20,
+            "max_hp": 20,
+            "damage": 3,
+            "tags": [
+                "beast",
+                "dark"
+            ]
+        },
+        {
+            "id": "air_elemental",
+            "name": "Air Elemental",
+            "description": "A swirling vortex of wind and lightning.",
+            "hp": 55,
+            "max_hp": 55,
+            "damage": 8,
+            "tags": [
+                "elemental",
+                "air",
+                "aggressive"
+            ]
+        },
+        {
+            "id": "avatar_aegis",
+            "name": "Avatar of Aegis",
+            "description": "The Guardian, an unyielding wall of light.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "light",
+                "aegis",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_blight",
+            "name": "Avatar of Blight",
+            "description": "The Undying, dripping with decay.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "dark",
+                "blight",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_celeris",
+            "name": "Avatar of Celeris",
+            "description": "The Duelist, moving with blinding speed.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "light",
+                "celeris",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_echo",
+            "name": "Avatar of Echo",
+            "description": "The Storm, crackling with lightning.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "instinct",
+                "echo",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_feral",
+            "name": "Avatar of Feral",
+            "description": "The Hunter, stalking its prey.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "instinct",
+                "feral",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_fortuna",
+            "name": "Avatar of Fortuna",
+            "description": "The Merchant, whose form shifts like gold coins.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "light",
+                "fortuna",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_jinx",
+            "name": "Avatar of Jinx",
+            "description": "The Trickster, grinning with chaotic intent.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "dark",
+                "jinx",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_krog",
+            "name": "Avatar of Krog",
+            "description": "A massive being of bark and stone with glowing green eyes, representing the Kingdom of Instinct.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "instinct",
+                "krog",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_lumos",
+            "name": "Avatar of Lumos",
+            "description": "The Scholar, surrounded by floating runes.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "light",
+                "lumos",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_malice",
+            "name": "Avatar of Malice",
+            "description": "The Tyrant, clad in spiked black iron.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "dark",
+                "malice",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_nox",
+            "name": "Avatar of Nox",
+            "description": "A cloaked figure whose face is an endless void, representing the Kingdom of Dark.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "dark",
+                "nox",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_raven",
+            "name": "Avatar of Raven",
+            "description": "The Scavenger, watching with beady eyes.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "instinct",
+                "raven",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_solas",
+            "name": "Avatar of Solas",
+            "description": "The Crusader, radiating justice and war.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "light",
+                "solas",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_sophia",
+            "name": "Avatar of Sophia",
+            "description": "The Saint, glowing with healing warmth.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "light",
+                "sophia",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_sylva",
+            "name": "Avatar of Sylva",
+            "description": "The Tamer, surrounded by nature's growth.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "instinct",
+                "sylva",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_umbra",
+            "name": "Avatar of Umbra",
+            "description": "The Cultist, shrouded in madness.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "dark",
+                "umbra",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_ursus",
+            "name": "Avatar of Ursus",
+            "description": "The Survivor, bearing scars of survival.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "instinct",
+                "ursus",
+                "avatar"
+            ]
+        },
+        {
+            "id": "avatar_vex",
+            "name": "Avatar of Vex",
+            "description": "The Warlock, whispering curses.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 25,
+            "tags": [
+                "dark",
+                "vex",
+                "avatar"
+            ]
+        },
+        {
+            "id": "bandit",
+            "name": "Bandit",
+            "description": "A rough-looking man with a scar across his cheek.",
+            "hp": 40,
+            "max_hp": 40,
+            "damage": 6,
+            "tags": [
+                "human",
+                "criminal"
+            ]
+        },
+        {
+            "id": "barbarian_dummy",
+            "name": "Barbarian Dummy",
+            "description": "A rugged dummy clad in furs, wielding a blunted axe.",
+            "hp": 5000,
+            "max_hp": 5000,
+            "damage": 8,
+            "tags": [
+                "martial",
+                "heavy",
+                "heavy_hitter"
+            ]
+        },
+        {
+            "id": "bark_golem",
+            "name": "Bark Golem",
+            "description": "A lumbering construct made of animated wood and vines.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 10,
+            "tags": [
+                "construct",
+                "instinct",
+                "guard"
+            ]
+        },
+        {
+            "id": "bear",
+            "name": "Brown Bear",
+            "description": "A massive bear with thick fur.",
+            "hp": 120,
+            "max_hp": 120,
+            "damage": 12,
+            "tags": [
+                "beast",
+                "instinct"
+            ]
+        },
+        {
+            "id": "crystal_golem",
+            "name": "Crystal Golem",
+            "description": "A lumbering construct made of jagged crystals.",
+            "hp": 80,
+            "max_hp": 80,
+            "damage": 8,
+            "tags": [
+                "construct",
+                "light"
+            ]
+        },
+        {
+            "id": "cultist",
+            "name": "Cultist",
+            "description": "A figure in dark robes chanting softly.",
+            "hp": 35,
+            "max_hp": 35,
+            "damage": 5,
+            "tags": [
+                "human",
+                "dark"
+            ]
+        },
+        {
+            "id": "dark_acolyte",
+            "name": "Dark Acolyte",
+            "description": "A robed figure chanting whispers to the void.",
+            "hp": 40,
+            "max_hp": 40,
+            "damage": 7,
+            "tags": [
+                "human",
+                "dark",
+                "mage"
+            ]
+        },
+        {
+            "id": "drunkard",
+            "name": "Drunkard",
+            "description": "He sways back and forth, mumbling incoherently.",
+            "hp": 40,
+            "max_hp": 40,
+            "damage": 3,
+            "tags": [
+                "human"
+            ]
+        },
+        {
+            "id": "feral_druid",
+            "name": "Feral Druid",
+            "description": "A wild-eyed human wearing furs and antlers.",
+            "hp": 45,
+            "max_hp": 45,
+            "damage": 7,
+            "tags": [
+                "human",
+                "instinct",
+                "mage"
+            ]
+        },
+        {
+            "id": "fire_elemental",
+            "name": "Fire Elemental",
+            "description": "A living column of flame.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 10,
+            "tags": [
+                "elemental",
+                "fire",
+                "aggressive"
+            ]
+        },
+        {
+            "id": "forgotten_mayor",
+            "name": "The Forgotten Mayor",
+            "description": "A skeletal figure in tattered noble finery. He clutches a rusted key.",
+            "hp": 300,
+            "max_hp": 300,
+            "damage": 15,
+            "tags": [
+                "undead",
+                "boss"
+            ]
+        },
+        {
+            "id": "ghost",
+            "name": "Restless Ghost",
+            "description": "A translucent spirit moaning softly.",
+            "hp": 30,
+            "max_hp": 30,
+            "damage": 5,
+            "tags": [
+                "undead",
+                "spirit"
+            ]
+        },
+        {
+            "id": "giant_wasp",
+            "name": "Giant Wasp",
+            "description": "A massive insect with a deadly stinger.",
+            "hp": 25,
+            "max_hp": 25,
+            "damage": 8,
+            "tags": [
+                "beast",
+                "instinct"
+            ]
+        },
+        {
+            "id": "goblin",
+            "name": "Goblin",
+            "description": "A small, green creature with a rusty knife.",
+            "hp": 30,
+            "max_hp": 30,
+            "damage": 5,
+            "tags": [
+                "dark",
+                "malice"
+            ]
+        },
+        {
+            "id": "hydra",
+            "name": "Swamp Hydra",
+            "description": "A massive reptilian beast with three snapping heads.",
+            "hp": 300,
+            "max_hp": 300,
+            "damage": 15,
+            "tags": [
+                "beast",
+                "boss",
+                "regenerator"
+            ]
+        },
+        {
+            "id": "ice_wolf",
+            "name": "Ice Wolf",
+            "description": "A wolf with fur as white as snow and eyes like blue ice.",
+            "hp": 65,
+            "max_hp": 65,
+            "damage": 9,
+            "tags": [
+                "beast",
+                "ice"
+            ]
+        },
+        {
+            "id": "illusionist_dummy",
+            "name": "Illusionist Dummy",
+            "description": "A dummy that seems to shift and blur, making it hard to focus on.",
+            "hp": 5000,
+            "max_hp": 5000,
+            "damage": 5,
+            "tags": [
+                "magic",
+                "illusion",
+                "utility"
+            ]
+        },
+        {
+            "id": "leech",
+            "name": "Giant Leech",
+            "description": "A slimy parasite looking for blood.",
+            "hp": 15,
+            "max_hp": 15,
+            "damage": 2,
+            "tags": [
+                "beast",
+                "aquatic"
+            ]
+        },
+        {
+            "id": "light_wisp",
+            "name": "Light Wisp",
+            "description": "A floating ball of warm light.",
+            "hp": 20,
+            "max_hp": 20,
+            "damage": 3,
+            "tags": [
+                "light",
+                "lumos"
+            ]
+        },
+        {
+            "id": "luminescent_beetle",
+            "name": "Luminescent Beetle",
+            "description": "A large beetle that glows softly.",
+            "hp": 15,
+            "max_hp": 15,
+            "damage": 2,
+            "tags": [
+                "beast",
+                "light"
+            ]
+        },
+        {
+            "id": "mage_dummy",
+            "name": "Mage Dummy",
+            "description": "A rune-carved wooden dummy that hums with arcane energy.",
+            "hp": 5000,
+            "max_hp": 5000,
+            "damage": 5,
+            "tags": [
+                "magic",
+                "arcane",
+                "caster"
+            ]
+        },
+        {
+            "id": "merchant",
+            "name": "Traveling Merchant",
+            "description": "A weary traveler with a large backpack.",
+            "hp": 50,
+            "max_hp": 50,
+            "damage": 4,
+            "tags": [
+                "human"
+            ]
+        },
+        {
+            "id": "monk_dummy",
+            "name": "Monk Dummy",
+            "description": "A wooden dummy wrapped in prayer beads, posed in a martial stance.",
+            "hp": 5000,
+            "max_hp": 5000,
+            "damage": 7,
+            "tags": [
+                "construct",
+                "monk"
+            ]
+        },
+        {
+            "id": "moss_golem",
+            "name": "Moss Golem",
+            "description": "A heavy construct of stone covered in thick moss.",
+            "hp": 90,
+            "max_hp": 90,
+            "damage": 9,
+            "tags": [
+                "construct",
+                "instinct"
+            ]
+        },
+        {
+            "id": "moss_wolf",
+            "name": "Moss Wolf",
+            "description": "A wolf with fur resembling thick green moss, blending perfectly with the forest floor.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 8,
+            "tags": [
+                "beast",
+                "instinct",
+                "aggressive",
+                "rally"
+            ]
+        },
+        {
+            "id": "mud_crab",
+            "name": "Mud Crab",
+            "description": "A large crab covered in hardened mud.",
+            "hp": 50,
+            "max_hp": 50,
+            "damage": 6,
+            "tags": [
+                "beast",
+                "aquatic",
+                "defense"
+            ]
+        },
+        {
+            "id": "paladin_dummy",
+            "name": "Paladin Dummy",
+            "description": "A shining dummy in plate armor, radiating a holy aura.",
+            "hp": 5000,
+            "max_hp": 5000,
+            "damage": 7,
+            "tags": [
+                "construct",
+                "paladin"
+            ]
+        },
+        {
+            "id": "prism_spider",
+            "name": "Prism Spider",
+            "description": "A spider with a translucent, refracting carapace.",
+            "hp": 25,
+            "max_hp": 25,
+            "damage": 6,
+            "tags": [
+                "beast",
+                "light"
+            ]
+        },
+        {
+            "id": "rat",
+            "name": "Giant Rat",
+            "description": "A large, filthy rat with beady eyes.",
+            "hp": 15,
+            "max_hp": 15,
+            "damage": 2,
+            "tags": [
+                "beast"
+            ]
+        },
+        {
+            "id": "river_drake",
+            "name": "River Drake",
+            "description": "A sleek, scaled predator that moves effortlessly through water.",
+            "hp": 120,
+            "max_hp": 120,
+            "damage": 12,
+            "tags": [
+                "dragon",
+                "instinct",
+                "aquatic"
+            ]
+        },
+        {
+            "id": "rogue_dummy",
+            "name": "Rogue Dummy",
+            "description": "A shadowy dummy that seems to fade in and out of view.",
+            "hp": 5000,
+            "max_hp": 5000,
+            "damage": 6,
+            "tags": [
+                "swift",
+                "lethal",
+                "speed"
+            ]
+        },
+        {
+            "id": "rot_sapling",
+            "name": "Rot Sapling",
+            "description": "A small, twisted tree creature dripping with dark ichor.",
+            "hp": 25,
+            "max_hp": 25,
+            "damage": 4,
+            "tags": [
+                "plant",
+                "dark",
+                "poison"
+            ]
+        },
+        {
+            "id": "rotwood_ancient",
+            "name": "Rotwood Ancient",
+            "description": "A massive, corrupted treant with glowing red eyes. The heart of the forest's decay.",
+            "hp": 800,
+            "max_hp": 800,
+            "damage": 20,
+            "tags": [
+                "plant",
+                "dark",
+                "boss"
+            ]
+        },
+        {
+            "id": "sand_worm",
+            "name": "Sand Worm",
+            "description": "A massive worm that burrows through the sand.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 15,
+            "tags": [
+                "beast",
+                "desert",
+                "boss"
+            ]
+        },
+        {
+            "id": "scorpion",
+            "name": "Giant Scorpion",
+            "description": "A menacing arachnid with a poisonous tail.",
+            "hp": 40,
+            "max_hp": 40,
+            "damage": 7,
+            "tags": [
+                "beast",
+                "desert",
+                "poison"
+            ]
+        },
+        {
+            "id": "shadow_stalker",
+            "name": "Shadow Stalker",
+            "description": "A vague humanoid shape that blends into the darkness.",
+            "hp": 45,
+            "max_hp": 45,
+            "damage": 8,
+            "tags": [
+                "dark",
+                "nox"
+            ]
+        },
+        {
+            "id": "shadow_wraith",
+            "name": "Shadow Wraith",
+            "description": "A floating spirit of pure darkness that chills the air.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 9,
+            "tags": [
+                "undead",
+                "dark",
+                "spirit"
+            ]
+        },
+        {
+            "id": "skeleton",
+            "name": "Skeleton",
+            "description": "A pile of bones held together by dark magic.",
+            "hp": 35,
+            "max_hp": 35,
+            "damage": 6,
+            "tags": [
+                "undead",
+                "dark"
+            ]
+        },
+        {
+            "id": "slime",
+            "name": "Green Slime",
+            "description": "A quivering blob of green goo.",
+            "hp": 25,
+            "max_hp": 25,
+            "damage": 4,
+            "tags": [
+                "beast",
+                "acid"
+            ]
+        },
+        {
+            "id": "street_urchin",
+            "name": "Street Urchin",
+            "description": "A dirty child with quick fingers.",
+            "hp": 20,
+            "max_hp": 20,
+            "damage": 2,
+            "tags": [
+                "human",
+                "thief"
+            ]
+        },
+        {
+            "id": "tavern_keeper",
+            "name": "The Tavern Keeper",
+            "description": "A burly man cleaning a mug with a dirty rag.",
+            "hp": 100,
+            "max_hp": 100,
+            "damage": 5,
+            "tags": [
+                "human",
+                "quest_giver"
+            ],
+            "quests": [
+                "fetch_sun_elixir"
+            ]
+        },
+        {
+            "id": "temple_guardian",
+            "name": "Temple Guardian",
+            "description": "A construct of gold and light, guarding the holy places.",
+            "hp": 120,
+            "max_hp": 120,
+            "damage": 12,
+            "tags": [
+                "construct",
+                "light",
+                "guard"
+            ]
+        },
+        {
+            "id": "thorn_sprite",
+            "name": "Thorn Sprite",
+            "description": "A tiny, fluttering creature made of sharp twigs and leaves.",
+            "hp": 30,
+            "max_hp": 30,
+            "damage": 5,
+            "tags": [
+                "fey",
+                "instinct",
+                "ranged"
+            ]
+        },
+        {
+            "id": "town_guard",
+            "name": "Town Guard",
+            "description": "A stoic guard in chainmail armor.",
+            "hp": 100,
+            "max_hp": 100,
+            "damage": 10,
+            "tags": [
+                "human",
+                "guard",
+                "quest_giver"
+            ],
+            "quests": [
+                "kill_goblins"
+            ]
+        },
+        {
+            "id": "training_dummy",
+            "name": "Training Dummy",
+            "description": "A straw-stuffed dummy for combat practice.",
+            "hp": 1000000,
+            "max_hp": 1000000,
+            "damage": 0,
+            "tags": [
+                "construct"
+            ]
+        },
+        {
+            "id": "traveler",
+            "name": "Weary Traveler",
+            "description": "A traveler resting by the side of the road.",
+            "hp": 40,
+            "max_hp": 40,
+            "damage": 5,
+            "tags": [
+                "human",
+                "passive"
+            ]
+        },
+        {
+            "id": "treant_sapling",
+            "name": "Treant Sapling",
+            "description": "A small walking tree with whipping branches.",
+            "hp": 40,
+            "max_hp": 40,
+            "damage": 5,
+            "tags": [
+                "plant",
+                "instinct"
+            ]
+        },
+        {
+            "id": "void_construct",
+            "name": "Void Construct",
+            "description": "A suit of black armor animated by void energy.",
+            "hp": 100,
+            "max_hp": 100,
+            "damage": 10,
+            "tags": [
+                "construct",
+                "dark"
+            ]
+        },
+        {
+            "id": "wall_of_fire",
+            "name": "Wall of Fire",
+            "description": "A roaring wall of magical flame.",
+            "hp": 100,
+            "max_hp": 100,
+            "damage": 8,
+            "tags": [
+                "construct",
+                "fire",
+                "immobile",
+                "aggressive"
+            ]
+        },
+        {
+            "id": "wild_boar",
+            "name": "Wild Boar",
+            "description": "An aggressive boar with sharp tusks.",
+            "hp": 50,
+            "max_hp": 50,
+            "damage": 6,
+            "tags": [
+                "instinct",
+                "krog"
+            ]
+        },
+        {
+            "id": "wild_dog",
+            "name": "Wild Dog",
+            "description": "A mangy dog with bared teeth.",
+            "hp": 30,
+            "max_hp": 30,
+            "damage": 5,
+            "tags": [
+                "beast"
+            ]
+        },
+        {
+            "id": "wild_stag",
+            "name": "Wild Stag",
+            "description": "A majestic deer with large antlers.",
+            "hp": 80,
+            "max_hp": 80,
+            "damage": 4,
+            "tags": [
+                "beast",
+                "passive"
+            ]
+        },
+        {
+            "id": "witch",
+            "name": "Swamp Witch",
+            "description": "A cackling hag stirring a cauldron.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 8,
+            "tags": [
+                "human",
+                "dark",
+                "mage"
+            ]
+        },
+        {
+            "id": "witch_boss",
+            "name": "The Swamp Witch",
+            "description": "A newly created creature.",
+            "hp": 500,
+            "max_hp": 500,
+            "damage": 1,
+            "tags": [
+                "witch_boss"
+            ],
+            "loadout": [
+                "witch_lantern"
+            ]
+        },
+        {
+            "id": "wolf",
+            "name": "Dire Wolf",
+            "description": "A large wolf with grey fur and intelligent eyes.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 8,
+            "tags": [
+                "beast",
+                "instinct"
+            ]
+        },
+        {
+            "id": "yeti",
+            "name": "Yeti",
+            "description": "A towering ape-like creature covered in white fur.",
+            "hp": 140,
+            "max_hp": 140,
+            "damage": 14,
+            "tags": [
+                "beast",
+                "ice"
+            ]
+        },
+        {
+            "id": "zombie",
+            "name": "Zombie",
+            "description": "A rotting corpse that hungers for flesh.",
+            "hp": 50,
+            "max_hp": 50,
+            "damage": 4,
+            "tags": [
+                "undead",
+                "dark"
+            ]
+        },
+        {
+            "id": "horse",
+            "name": "Riding Horse",
+            "description": "A sturdy brown horse, saddled and ready to ride.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 5,
+            "tags": [
+                "animal",
+                "mount",
+                "beast"
+            ],
+            "can_be_companion": true
         }
     ]
 }

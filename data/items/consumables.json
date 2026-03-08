@@ -1,0 +1,53 @@
+{
+    "items": [
+        {
+            "id": "potion_health_minor",
+            "name": "a minor health potion",
+            "keywords": ["potion", "health", "red"],
+            "description": "A small vial of red liquid that smells of strawberries.",
+            "type": "consumable",
+            "effects": { "hp": 20 },
+            "value": 10,
+            "tags": { "potion": 1, "healing": 1 }
+        },
+        {
+            "id": "potion_mana_minor",
+            "name": "a minor mana potion",
+            "keywords": ["potion", "mana", "blue"],
+            "description": "A small vial of blue liquid that hums with energy.",
+            "type": "consumable",
+            "effects": { "concentration": 20 },
+            "value": 15,
+            "tags": { "potion": 1, "magic": 1 }
+        },
+        {
+            "id": "food_ration",
+            "name": "a travel ration",
+            "keywords": ["ration", "food", "bread"],
+            "description": "A dry piece of bread and some dried meat.",
+            "type": "consumable",
+            "effects": { "stamina": 10 },
+            "value": 2,
+            "tags": { "food": 1 }
+        },
+        {
+            "id": "scroll_recall",
+            "name": "a scroll of recall",
+            "keywords": ["scroll", "recall", "paper"],
+            "description": "A parchment inscribed with runes of teleportation.",
+            "type": "consumable",
+            "effects": { "recall": 1 },
+            "value": 50,
+            "tags": { "scroll": 1, "magic": 1 }
+        },
+        {
+            "id": "item_torch",
+            "name": "a wooden torch",
+            "keywords": ["torch", "wood", "light"],
+            "description": "A wooden club dipped in pitch.",
+            "type": "light",
+            "value": 5,
+            "tags": { "light_source": 1 }
+        }
+    ]
+}

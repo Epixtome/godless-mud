@@ -1,0 +1,117 @@
+{
+    "shadow_dancer": {
+        "id": "shadow_dancer",
+        "name": "Shadow Dancer",
+        "description": "A prestige rogue who weaves through the battlefield using void-steps.",
+        "kingdom": "Universal",
+        "recipe": {
+            "dark": 6,
+            "martial": 4,
+            "utility": 4
+        },
+        "engine_passive": {
+            "name": "Void Waltz",
+            "description": "Every [utility] tagged blessing used grants a temporary stack of Evasion."
+        }
+    },
+    "warrior": {
+        "id": "warrior",
+        "name": "Warrior",
+        "description": "A master of all weapons who controls the flow of melee combat.",
+        "kingdom": "Universal",
+        "recipe": {
+            "martial": 8,
+            "utility": 4
+        },
+        "engine_passive": {
+            "name": "Combat Flow",
+            "description": "Using a [strike] blessing reduces the tick cooldown of your next [disruption] blessing by 1."
+        }
+    },
+    "dancer": {
+        "id": "dancer",
+        "name": "Dancer",
+        "description": "A rhythmic combatant who combines offensive buffs with disruptive effects.",
+        "kingdom": "Universal",
+        "recipe": {
+            "martial": 4,
+            "utility": 4,
+            "arcane": 4
+        },
+        "engine_passive": {
+            "name": "Rhythmic Step",
+            "description": "Moving and attacking in the same heartbeat increases your speed resonance by 2."
+        }
+    },
+    "gambler": {
+        "id": "gambler",
+        "name": "Gambler",
+        "description": "Thrives on risk and reward, using high-resonance lethality to create advantages.",
+        "kingdom": "Universal",
+        "recipe": {
+            "utility": 8,
+            "lethal": 4
+        },
+        "engine_passive": {
+            "name": "Loaded Dice",
+            "description": "Your [lethal] flavor scaling has a 10% chance to triple its multiplier on every hit."
+        }
+    },
+    "magician": {
+        "id": "magician",
+        "name": "Magician",
+        "description": "A control-based caster specializing in disruption and telekinesis.",
+        "kingdom": "Universal",
+        "recipe": {
+            "disruption": 6,
+            "arcane": 6
+        },
+        "engine_passive": {
+            "name": "Sleight of Hand",
+            "description": "[disruption] tagged blessings have their range increased by 2 rooms."
+        }
+    },
+    "puppet_master": {
+        "id": "puppet_master",
+        "name": "Puppet Master",
+        "description": "Summons controllable constructs that follow commands.",
+        "kingdom": "Universal",
+        "recipe": {
+            "utility": 7,
+            "arcane": 5
+        },
+        "engine_passive": {
+            "name": "String Puller",
+            "description": "Your constructs inherit 50% of your total Protection resonance."
+        }
+    },
+    "summoner": {
+        "id": "summoner",
+        "name": "Summoner",
+        "description": "Controls powerful but costly legendary creatures.",
+        "kingdom": "Universal",
+        "recipe": {
+            "instinct": 4,
+            "sorcery": 8
+        },
+        "engine_passive": {
+            "name": "Primal Bond",
+            "description": "Summoned entities deal 1% bonus damage per point of Instinct resonance."
+        }
+    },
+    "twin": {
+        "id": "twin",
+        "name": "Twin",
+        "description": "Two souls bound as one, capable of double casting and striking.",
+        "kingdom": "Universal",
+        "recipe": {
+            "utility": 5,
+            "speed": 2,
+            "arcane": 7
+        },
+        "engine_passive": {
+            "name": "Echo Strike",
+            "description": "Your [strike] blessings have a 20% chance to trigger a second time at half power."
+        }
+    }
+}

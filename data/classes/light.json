@@ -1,0 +1,209 @@
+{
+    "paladin": {
+        "id": "paladin",
+        "name": "Paladin",
+        "description": "A champion of Civilization who protects allies and smites evil.",
+        "kingdom": "Light",
+        "recipe": {
+            "holy": 5,
+            "martial": 3,
+            "protection": 2,
+            "restoration": 2
+        },
+        "engine_passive": {
+            "name": "Aura of Protection",
+            "description": "Your Protection resonance also applies to allies in the same room."
+        }
+    },
+    "bard": {
+        "id": "bard",
+        "name": "Bard",
+        "description": "A support-oriented musician who uses melodies to buff and disrupt.",
+        "kingdom": "Light",
+        "recipe": {
+            "holy": 4,
+            "disruption": 2,
+            "arcane": 3
+        },
+        "engine_passive": {
+            "name": "Harmonic Resonance",
+            "description": "Duration-based Manifestations last 2 ticks longer."
+        }
+    },
+    "cleric": {
+        "id": "cleric",
+        "name": "Cleric",
+        "description": "A divine caster focused on healing, protection, and purging evil.",
+        "kingdom": "Light",
+        "recipe": {
+            "holy": 6,
+            "restoration": 4,
+            "protection": 2
+        },
+        "engine_passive": {
+            "name": "Divine Conduit",
+            "description": "Restoration tagged blessings have a 10% chance to cleanse one negative Manifestation."
+        }
+    },
+    "elementalist": {
+        "id": "elementalist",
+        "name": "Elementalist",
+        "description": "A mage who chains elemental spells for devastating combos.",
+        "kingdom": "Light",
+        "recipe": {
+            "holy": 2,
+            "elemental": 5,
+            "arcane": 4
+        },
+        "engine_passive": {
+            "name": "Elemental Chain",
+            "description": "Switching between different Elemental flavors grants 5% increased Potency for 3 ticks."
+        }
+    },
+    "knight": {
+        "id": "knight",
+        "name": "Knight",
+        "description": "A heavily armored warrior with defensive magic and strong melee capabilities.",
+        "kingdom": "Light",
+        "recipe": {
+            "martial": 5,
+            "protection": 6,
+            "holy": 3
+        },
+        "engine_passive": {
+            "name": "Bulwark Stance",
+            "description": "While using a [weight] tagged piece of gear, Martial Potency is increased by 15%."
+        }
+    },
+    "chemist": {
+        "id": "chemist",
+        "name": "Chemist",
+        "description": "A battlefield support expert using potions for healing and buffs.",
+        "kingdom": "Light",
+        "recipe": {
+            "utility": 5,
+            "restoration": 2,
+            "toxic": 3
+        },
+        "engine_passive": {
+            "name": "Experimental Brew",
+            "description": "Blessings with the [utility] tag have a 20% chance to not trigger their cooldown tick."
+        }
+    },
+    "engineer": {
+        "id": "engineer",
+        "name": "Engineer",
+        "description": "A mid-range battlefield manipulator focused on deployables.",
+        "kingdom": "Light",
+        "recipe": {
+            "utility": 6,
+            "martial": 2,
+            "disruption": 3
+        },
+        "engine_passive": {
+            "name": "Tinker",
+            "description": "Manifestations originating from [utility] tagged blessings have 25% increased duration."
+        }
+    },
+    "machinist": {
+        "id": "machinist",
+        "name": "Machinist",
+        "description": "Excels at long-term battlefield management through autonomous drones.",
+        "kingdom": "Light",
+        "recipe": {
+            "utility": 8,
+            "arcane": 2
+        },
+        "engine_passive": {
+            "name": "Overdrive",
+            "description": "Your Utility-based Manifestations (Drones) tick twice per heartbeat."
+        }
+    },
+    "mage": {
+        "id": "mage",
+        "name": "Mage",
+        "description": "The Lord of Magic's disciple, wielding raw arcane force.",
+        "kingdom": "Light",
+        "recipe": {
+            "elemental": 3,
+            "arcane": 7
+        },
+        "engine_passive": {
+            "name": "Arcane Flow",
+            "description": "Direct damage blessings ([strike] or [projection]) cost 10% less resource/tick."
+        }
+    },
+    "priest": {
+        "id": "priest",
+        "name": "Priest",
+        "description": "The strongest raw healer, using divine magic to restore HP.",
+        "kingdom": "Light",
+        "recipe": {
+            "restoration": 8,
+            "holy": 4
+        },
+        "engine_passive": {
+            "name": "Sacrosanct",
+            "description": "While at full HP, your Restoration resonance is increased by 20%."
+        }
+    },
+    "soldier": {
+        "id": "soldier",
+        "name": "Soldier",
+        "description": "Tactically trained infantry excelling at weapon adaptability.",
+        "kingdom": "Light",
+        "recipe": {
+            "martial": 7,
+            "protection": 4,
+            "disruption": 2
+        },
+        "engine_passive": {
+            "name": "Weapon Versatility",
+            "description": "Increases the Scaling Factor of your primary weapon's Flavor tag (e.g., Slashing/Blunt) by 0.5."
+        }
+    },
+    "white_mage": {
+        "id": "white_mage",
+        "name": "White Mage",
+        "description": "A pure healer dedicated to restoration and protection.",
+        "kingdom": "Light",
+        "recipe": {
+            "restoration": 5,
+            "holy": 4,
+            "protection": 3
+        },
+        "engine_passive": {
+            "name": "Pure Heart",
+            "description": "Your Restoration effects cannot be interrupted by [disruption] tags."
+        }
+    },
+    "silver_mage": {
+        "id": "silver_mage",
+        "name": "Silver Mage",
+        "description": "A support-oriented caster enhancing speed and light.",
+        "kingdom": "Light",
+        "recipe": {
+            "holy": 4,
+            "speed": 2,
+            "arcane": 4
+        },
+        "engine_passive": {
+            "name": "Quickening",
+            "description": "Reduces the Tick Cooldown of all Blessings in your deck by 1."
+        }
+    },
+    "guardian": {
+        "id": "guardian",
+        "name": "Guardian",
+        "description": "A holy defender of the weak.",
+        "kingdom": "Light",
+        "recipe": {
+            "holy": 4,
+            "protection": 6
+        },
+        "engine_passive": {
+            "name": "Master of Guardian",
+            "description": "Standard passive for Guardian."
+        }
+    }
+}

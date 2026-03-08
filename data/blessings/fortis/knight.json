@@ -1,0 +1,52 @@
+{
+    "brace": {
+        "id": "brace",
+        "name": "Brace",
+        "description": "Prepare for impact, increasing mitigation by 20%.",
+        "identity_tags": ["martial", "protection", "weight"],
+        "requirements": {
+            "stamina": 15,
+            "class": "knight"
+        },
+        "effects": [
+            {
+                "id": "braced",
+                "duration": 4,
+                "target": "self"
+            }
+        ]
+    },
+    "shield_bash": {
+        "id": "shield_bash",
+        "name": "Shield Bash",
+        "description": "Slam your shield into the enemy.",
+        "identity_tags": ["martial", "strike", "blunt"],
+        "requirements": {
+            "shield": true,
+            "stamina": 10
+        },
+        "base_power": 5,
+        "on_hit": {
+            "apply_status": "off_balance",
+            "duration": 4
+        }
+    },
+    "intervene": {
+        "id": "intervene",
+        "name": "Intervene",
+        "description": "Leap to protect an ally.",
+        "identity_tags": ["martial", "protection", "speed"],
+        "requirements": {
+            "stamina": 15
+        }
+    },
+    "stand": {
+        "id": "stand",
+        "name": "Stand",
+        "description": "Recover from a prone position.",
+        "identity_tags": ["martial", "utility"],
+        "requirements": {
+            "stamina": 10
+        }
+    }
+}

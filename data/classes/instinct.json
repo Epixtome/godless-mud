@@ -1,0 +1,242 @@
+{
+    "barbarian": {
+        "id": "barbarian",
+        "name": "Barbarian",
+        "description": "A force of raw power focused on high-damage melee and disruptive presence.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 6,
+            "martial": 4,
+            "aoe": 4
+        },
+        "engine_passive": {
+            "name": "Savage Might",
+            "description": "Your Martial Potency increases by 1% for every 5% of HP you are missing."
+        }
+    },
+    "monk": {
+        "id": "monk",
+        "name": "Monk",
+        "description": "Uses stances to alter their combat style between aggression and defense.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "martial": 5,
+            "instinct": 4,
+            "disruption": 5
+        },
+        "engine_passive": {
+            "name": "Flowing Form",
+            "description": "Switching Manifestations (Stances) grants a temporary 10% Evasion boost."
+        }
+    },
+    "beastmaster": {
+        "id": "beastmaster",
+        "name": "Beastmaster",
+        "description": "A commander of the wild who uses beasts to harass and defend.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 7,
+            "elemental": 4,
+            "utility": 2
+        },
+        "engine_passive": {
+            "name": "Pack Leader",
+            "description": "Manifestations originating from [utility] tagged beast-summons have 20% increased Potency."
+        }
+    },
+    "juggernaut": {
+        "id": "juggernaut",
+        "name": "Juggernaut",
+        "description": "An unstoppable force of momentum and heavy protection.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "protection": 8,
+            "martial": 4,
+            "instinct": 2
+        },
+        "engine_passive": {
+            "name": "Momentum",
+            "description": "Reduces the duration of movement-impairing Manifestations by 50%."
+        }
+    },
+    "ranger": {
+        "id": "ranger",
+        "name": "Ranger",
+        "description": "A precision striker who controls range and tracks prey.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 5,
+            "martial": 4,
+            "utility": 3
+        },
+        "engine_passive": {
+            "name": "Wilderness Guide",
+            "description": "Your [utility] tagged blessings ignore terrain-based movement penalties."
+        }
+    },
+    "berserker": {
+        "id": "berserker",
+        "name": "Berserker",
+        "description": "An offensive powerhouse that thrives in the chaos of melee combat.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 8,
+            "martial": 6,
+            "lethal": 3
+        },
+        "engine_passive": {
+            "name": "Eternal Rage",
+            "description": "While in combat, you are immune to [disruption] tags that cause fear or charm."
+        }
+    },
+    "druid": {
+        "id": "druid",
+        "name": "Druid",
+        "description": "A guardian of nature who commands earth, storms, and growth.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 4,
+            "restoration": 6,
+            "elemental": 4
+        },
+        "engine_passive": {
+            "name": "Natural Attunement",
+            "description": "Regenerate 1% HP per tick while in a [wilderness] terrain zone."
+        }
+    },
+    "gunner": {
+        "id": "gunner",
+        "name": "Gunner",
+        "description": "A pure ranged damage dealer specializing in mechanical force.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "martial": 5,
+            "utility": 4,
+            "lethal": 3
+        },
+        "engine_passive": {
+            "name": "Ballistics",
+            "description": "Increases critical hit damage by 5% per Lethal Potency level."
+        }
+    },
+    "hunter": {
+        "id": "hunter",
+        "name": "Hunter",
+        "description": "A hybrid combatant excelling in tracking and taming.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 5,
+            "elemental": 3,
+            "martial": 3
+        },
+        "engine_passive": {
+            "name": "Marked Prey",
+            "description": "Your first [strike] against a new target deals 20% bonus damage."
+        }
+    },
+    "samurai": {
+        "id": "samurai",
+        "name": "Samurai",
+        "description": "Precision-based melee warrior with spirit-infused techniques.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "martial": 7,
+            "instinct": 3,
+            "lethal": 6
+        },
+        "engine_passive": {
+            "name": "Spirit Blade",
+            "description": "Your Martial damage ignores 10% of the target's Magic protection resonance."
+        }
+    },
+    "geomancer": {
+        "id": "geomancer",
+        "name": "Geomancer",
+        "description": "Manipulates the battlefield by using terrain features as sources of power.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 5,
+            "protection": 6,
+            "weight": 4
+        },
+        "engine_passive": {
+            "name": "Leyline Tap",
+            "description": "Elemental resonance is increased by 20% while standing on matching terrain."
+        }
+    },
+    "scout": {
+        "id": "scout",
+        "name": "Scout",
+        "description": "Mobile melee fighter specializing in hit-and-run tactics.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 4,
+            "utility": 6,
+            "speed": 2
+        },
+        "engine_passive": {
+            "name": "Pathfinder",
+            "description": "While [concealed], your next Utility blessing does not trigger a tick."
+        }
+    },
+    "sorcerer": {
+        "id": "sorcerer",
+        "name": "Sorcerer",
+        "description": "A conduit of raw magic who fuels spells with instinctual force.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 5,
+            "strike": 2,
+            "sorcery": 7
+        },
+        "engine_passive": {
+            "name": "Innate Surge",
+            "description": "When your HP is below 25%, all Magic Potency is doubled for 3 turns."
+        }
+    },
+    "viking": {
+        "id": "viking",
+        "name": "Viking",
+        "description": "A raider from the sea who excels with axes and shields.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "martial": 6,
+            "protection": 4,
+            "lightning": 2
+        },
+        "engine_passive": {
+            "name": "Sea Born",
+            "description": "Martial resonance increases by 10% while in Water or Rain conditions."
+        }
+    },
+    "warden": {
+        "id": "warden",
+        "name": "Warden",
+        "description": "A guardian of the wilds who protects nature with heavy armor.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "protection": 6,
+            "elemental": 4,
+            "instinct": 3
+        },
+        "engine_passive": {
+            "name": "Rooted",
+            "description": "You cannot be moved or knocked back while your Protection resonance is active."
+        }
+    },
+    "shaman": {
+        "id": "shaman",
+        "name": "Shaman",
+        "description": "Casts spells that evolve over time and summons ancestral spirits.",
+        "kingdom": "Instinct",
+        "recipe": {
+            "instinct": 5,
+            "disruption": 6,
+            "restoration": 3
+        },
+        "engine_passive": {
+            "name": "Spirit Link",
+            "description": "Every 5 ticks, your highest resonance is increased by 15% for one heartbeat."
+        }
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "archetypes": {
+        "bulwark": {
+            "name": "Bulwark",
+            "hp_mult": 2.0,
+            "damage_mult": 0.5,
+            "tags": [
+                "tank",
+                "guardian"
+            ],
+            "special_desc": "thick-skinned and protective",
+            "special": "pinned",
+            "ultimate": "gashed"
+        },
+        "predator": {
+            "name": "Predator",
+            "hp_mult": 0.8,
+            "damage_mult": 1.5,
+            "tags": [
+                "dps",
+                "fast"
+            ],
+            "special_desc": "lean and ferocious",
+            "special": "bleed",
+            "ultimate": "exposed"
+        },
+        "sentinel": {
+            "name": "Sentinel",
+            "hp_mult": 1.2,
+            "damage_mult": 1.0,
+            "tags": [
+                "utility",
+                "sturdy"
+            ],
+            "special_desc": "alert and focused",
+            "special": "blind",
+            "ultimate": "off-balance"
+        }
+    }
+}

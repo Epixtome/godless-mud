@@ -1,0 +1,67 @@
+{
+    "blessings": {
+        "lay_on_hands": {
+            "id": "lay_on_hands",
+            "name": "Lay on Hands",
+            "description": "Heal a target with divine energy.",
+            "identity_tags": [
+                "magic",
+                "divine",
+                "healing",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 25
+            },
+            "base_power": 30,
+            "scaling": [
+                {
+                    "scaling_tag": "divine",
+                    "multiplier": 2.0
+                }
+            ]
+        },
+        "cleanse": {
+            "id": "cleanse",
+            "name": "Cleanse",
+            "description": "Purify a target of all negative status effects.",
+            "identity_tags": [
+                "magic",
+                "divine",
+                "utility",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 15
+            }
+        },
+        "sanctify": {
+            "id": "sanctify",
+            "name": "Sanctify",
+            "description": "Hallow the ground, buffing allies and burning undead.",
+            "identity_tags": [
+                "magic",
+                "divine",
+                "aoe",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 20
+            }
+        },
+        "refresh": {
+            "id": "refresh",
+            "name": "Refresh",
+            "description": "Restore stamina to an ally.",
+            "identity_tags": [
+                "magic",
+                "divine",
+                "utility",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 10
+            }
+        }
+    }
+}

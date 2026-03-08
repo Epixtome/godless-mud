@@ -1,0 +1,93 @@
+{
+    "blessings": {
+        "tame": {
+            "id": "tame",
+            "name": "Tame",
+            "tier": 1,
+            "cost": 50,
+            "deity_id": "fenris",
+            "description": "Attempt to tame a weakened creature (HP < 5%).",
+            "identity_tags": [
+                "beast",
+                "utility"
+            ],
+            "logic_type": "command",
+            "action": "tame",
+            "requirements": {
+                "stamina": 15,
+                "class": "beastmaster"
+            }
+        },
+        "call": {
+            "id": "call",
+            "name": "Call Pet",
+            "tier": 1,
+            "cost": 50,
+            "deity_id": "fenris",
+            "description": "Call one of your tamed creatures from the shadows.",
+            "identity_tags": [
+                "beast",
+                "summon"
+            ],
+            "logic_type": "command",
+            "action": "call",
+            "requirements": {
+                "stamina": 20,
+                "class": "beastmaster"
+            }
+        },
+        "order": {
+            "id": "order",
+            "name": "Order Pet",
+            "tier": 1,
+            "cost": 50,
+            "deity_id": "fenris",
+            "description": "Command your active pet to attack, use a special, or unleash.",
+            "identity_tags": [
+                "beast",
+                "command"
+            ],
+            "logic_type": "command",
+            "action": "order",
+            "requirements": {
+                "stamina": 5,
+                "class": "beastmaster"
+            }
+        },
+        "whistle": {
+            "id": "whistle",
+            "name": "Whistle",
+            "tier": 1,
+            "cost": 25,
+            "deity_id": "fenris",
+            "description": "Calls your pet to your side, wherever it may be.",
+            "identity_tags": [
+                "beast",
+                "speed"
+            ],
+            "logic_type": "command",
+            "action": "whistle",
+            "requirements": {
+                "stamina": 10,
+                "class": "beastmaster"
+            }
+        },
+        "pets": {
+            "id": "pets",
+            "name": "Pets",
+            "tier": 1,
+            "cost": 0,
+            "deity_id": "fenris",
+            "description": "View your library of tamed creatures.",
+            "identity_tags": [
+                "beast",
+                "utility"
+            ],
+            "logic_type": "command",
+            "action": "pets",
+            "requirements": {
+                "class": "beastmaster"
+            }
+        }
+    }
+}

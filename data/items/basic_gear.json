@@ -1,0 +1,102 @@
+{
+    "items": [
+        {
+            "id": "weapon_sword_iron",
+            "name": "an iron sword",
+            "keywords": ["sword", "iron", "blade"],
+            "description": "A standard iron sword with a leather-wrapped hilt.",
+            "type": "weapon",
+            "damage_dice": "1d6",
+            "stats": {
+                "scaling": {"martial": 0.5},
+                "weight": 4
+            },
+            "tags": {"martial": 1, "slashing": 1, "metal": 1, "medium": 1},
+            "value": 50
+        },
+        {
+            "id": "weapon_axe_iron",
+            "name": "an iron axe",
+            "keywords": ["axe", "iron", "chopper"],
+            "description": "A heavy iron axe designed for chopping wood or bone.",
+            "type": "weapon",
+            "damage_dice": "1d8",
+            "stats": {
+                "scaling": {"martial": 0.6},
+                "weight": 6
+            },
+            "tags": {"martial": 1, "chopping": 1, "metal": 1, "heavy": 1},
+            "value": 60
+        },
+        {
+            "id": "weapon_dagger_iron",
+            "name": "an iron dagger",
+            "keywords": ["dagger", "iron", "knife"],
+            "description": "A short, sharp iron blade. Easy to hide.",
+            "type": "weapon",
+            "damage_dice": "1d4",
+            "stats": {
+                "scaling": {"speed": 0.5, "dex": 0.5},
+                "weight": 1
+            },
+            "tags": {"fast": 1, "swift": 1, "light": 1, "metal": 1},
+            "value": 25
+        },
+        {
+            "id": "weapon_staff_oak",
+            "name": "an oak staff",
+            "keywords": ["staff", "oak", "stick"],
+            "description": "A long, polished stick of oak. It hums faintly with potential.",
+            "type": "weapon",
+            "damage_dice": "1d6",
+            "stats": {
+                "scaling": {"arcane": 0.8},
+                "weight": 3
+            },
+            "tags": {"arcane": 1, "magic": 1, "wood": 1, "concentration_bonus": 5},
+            "value": 40
+        },
+        {
+            "id": "armor_leather_vest",
+            "name": "a leather vest",
+            "keywords": ["vest", "leather", "armor"],
+            "description": "A simple vest made of cured leather.",
+            "type": "armor",
+            "slot": "chest",
+            "stats": {
+                "defense": 8,
+                "weight": 5
+            },
+            "tags": {"light": 1, "leather": 1, "flexible": 1},
+            "value": 30
+        },
+        {
+            "id": "armor_chainmail",
+            "name": "an iron chainmail hauberk",
+            "keywords": ["chainmail", "chain", "armor", "hauberk"],
+            "description": "A heavy shirt of interlocking iron rings.",
+            "type": "armor",
+            "slot": "chest",
+            "stats": {
+                "defense": 14,
+                "weight": 15
+            },
+            "tags": {"medium": 1, "metal": 1, "iron": 1},
+            "value": 100
+        },
+        {
+            "id": "armor_shield_wood",
+            "name": "a wooden shield",
+            "keywords": ["shield", "wood", "buckler"],
+            "description": "A round shield made of reinforced wood.",
+            "type": "armor",
+            "slot": "off_hand",
+            "stats": {
+                "defense": 5,
+                "weight": 5
+            },
+            "tags": {"shield": 1, "wood": 1, "block": 1},
+            "value": 20
+        }
+    ]
+}

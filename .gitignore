@@ -1,51 +1,49 @@
-# Python
+# --- Godless Git Ignore Protocol ---
+
+# 1. Runtime Data (Never Upload)
+data/saves/
+data/live/
+data/world.db*
+data/world_state.json
+data/blacklist.txt
+blacklist.txt
+*.log
+server.log
+
+# 2. Analysis & Logs
+logs/
+tmp/
+outputs/
+coverage/
+.pytest_cache/
+
+# 3. Python Environment
 __pycache__/
+*.pyc
 *.py[cod]
 *$py.class
+venv/
+.venv/
+env/
 
-# Player Data (Sensitive!)
-data/saves/
-
-# Runtime State
-data/world_state.json
-
-# Logs
-*.log
-
-# OS Files
+# 4. OS Files
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
 
+# 5. AI & Development Metadata (Internal Protocols)
+.agents/
+.agent/
+.gemini/
+.antigravity/
 
-# Generators & Tools (Intellectual Property)
-utilities/generate_*.py
-utilities/Generate_*.py
-utilities/pipeline_*.py
-utilities/master_world_gen.py
-utilities/zone_generator.py
-utilities/world_gen_tool/
-utilities/constraint_map_generator.py
-utilities/simple_noise.py
-utilities/stitch_world.py
-utilities/reset_world.py
-utilities/resolve_hub.py
-utilities/visualize_*.py
-utilities/prune_world.py
-utilities/atlas_builder.py
-utilities/world_atlas.py
-utilities/world_builder.py
-utilities/cleanup_legacy.py
-utilities/data_migrator.py
-utilities/detect_overlaps.py
-utilities/flavor_injector.py
-utilities/populate_elderwood.py
-utilities/restore_admin.py
-utilities/unlock_hub.py
+# 6. Legacy / Backups
+*.bak
+*.old
+data/classes.old
+documentation/class_reference*.md
 
-# Documentation (Intellectual Property)
-*.md
-
-# 3. Ignore my local server security/config files
-blacklist.txt
+# 7. Environment & Config
 .env
-
+config.json

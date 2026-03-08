@@ -1,0 +1,104 @@
+{
+    "items": [
+        {
+            "id": "static_chest_iron",
+            "name": "a heavy iron-bound chest",
+            "keywords": ["chest", "iron", "box"],
+            "description": "A massive oak chest reinforced with thick iron bands. It looks too heavy to move.",
+            "type": "container",
+            "flags": ["no_get"],
+            "stats": { "capacity": 100, "max_weight": 500 },
+            "tags": { "storage": 1, "wood": 1, "iron": 1 }
+        },
+        {
+            "id": "static_weapon_rack",
+            "name": "a wooden weapon rack",
+            "keywords": ["rack", "weapon", "stand"],
+            "description": "A sturdy wooden frame designed to display weapons openly.",
+            "type": "container",
+            "flags": ["no_get", "transparent"],
+            "stats": { "capacity": 20, "max_weight": 200 },
+            "tags": { "storage": 1, "wood": 1, "display": 1 }
+        },
+        {
+            "id": "static_armor_stand",
+            "name": "an iron armor stand",
+            "keywords": ["stand", "armor", "display"],
+            "description": "A humanoid frame made of iron bars, built to hold a suit of armor.",
+            "type": "container",
+            "flags": ["no_get", "transparent"],
+            "stats": { "capacity": 10, "max_weight": 300 },
+            "tags": { "storage": 1, "iron": 1, "display": 1 }
+        },
+        {
+            "id": "static_table_banquet",
+            "name": "a long banquet table",
+            "keywords": ["table", "banquet", "surface"],
+            "description": "A long table made of dark wood, stained with years of feasts. You could place items on it.",
+            "type": "container",
+            "flags": ["no_get", "transparent"],
+            "stats": { "capacity": 200, "max_weight": 1000 },
+            "tags": { "storage": 1, "wood": 1, "surface": 1 }
+        },
+        {
+            "id": "static_cart_mine",
+            "name": "a rusted mining cart",
+            "keywords": ["cart", "mine", "wagon"],
+            "description": "An old iron cart sitting on rusted rails. It smells of dust and ore.",
+            "type": "container",
+            "flags": ["no_get"],
+            "stats": { "capacity": 300, "max_weight": 2000 },
+            "tags": { "storage": 1, "iron": 1 }
+        },
+        {
+            "id": "static_stump_hollow",
+            "name": "a hollowed-out stump",
+            "keywords": ["stump", "hollow", "tree"],
+            "description": "An old tree stump. The center has rotted away, creating a small natural hiding spot.",
+            "type": "container",
+            "flags": ["no_get"],
+            "stats": { "capacity": 15, "max_weight": 50 },
+            "tags": { "storage": 1, "wood": 1, "nature": 1 }
+        },
+        {
+            "id": "static_bookshelf",
+            "name": "a tall dusty bookshelf",
+            "keywords": ["bookshelf", "shelf", "bookcase"],
+            "description": "A towering bookshelf filled with cobwebs. It looks like it could hold many tomes.",
+            "type": "container",
+            "flags": ["no_get", "transparent"],
+            "stats": { "capacity": 50, "max_weight": 200 },
+            "tags": { "storage": 1, "wood": 1, "knowledge": 1 }
+        },
+        {
+            "id": "static_workbench",
+            "name": "an alchemist's workbench",
+            "keywords": ["workbench", "table", "alchemy"],
+            "description": "A cluttered table stained with strange chemicals and burn marks.",
+            "type": "container",
+            "flags": ["no_get", "transparent"],
+            "stats": { "capacity": 40, "max_weight": 150 },
+            "tags": { "storage": 1, "wood": 1, "alchemy": 1 }
+        },
+        {
+            "id": "static_sarcophagus",
+            "name": "a heavy stone sarcophagus",
+            "keywords": ["sarcophagus", "coffin", "tomb"],
+            "description": "A finely carved stone coffin. The lid is heavy but can be shifted to access the interior.",
+            "type": "container",
+            "flags": ["no_get"],
+            "stats": { "capacity": 150, "max_weight": 1000 },
+            "tags": { "storage": 1, "stone": 1, "death": 1 }
+        },
+        {
+            "id": "static_crate_rotten",
+            "name": "a rotten wooden crate",
+            "keywords": ["crate", "box", "wood"],
+            "description": "A flimsy wooden crate that looks like it's falling apart.",
+            "type": "container",
+            "flags": ["no_get"],
+            "stats": { "capacity": 25, "max_weight": 60 },
+            "tags": { "storage": 1, "wood": 1, "trash": 1 }
+        }
+    ]
+}

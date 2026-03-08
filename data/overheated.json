@@ -1,0 +1,12 @@
+{
+  "effects": [
+    {
+      "id": "overheated",
+      "name": "Overheated",
+      "description": "You have exceeded your heat capacity. Movement and strenuous actions are impossible until you cool down.",
+      "group": "temperature",
+      "blocks": ["movement", "combat", "skill", "spell"],
+      "cue": "[HOT]"
+    }
+  ]
+}

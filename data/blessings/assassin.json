@@ -1,0 +1,99 @@
+{
+    "blessings": {
+        "backstab": {
+            "id": "backstab",
+            "name": "Backstab",
+            "description": "Strike a target from hiding for massive damage.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "lethal",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 20,
+                "concealed": true
+            },
+            "base_power": 15,
+            "scaling": [
+                {
+                    "scaling_tag": "martial",
+                    "multiplier": 2.5
+                }
+            ]
+        },
+        "hide": {
+            "id": "hide",
+            "name": "Hide",
+            "description": "Attempt to vanish into the shadows.",
+            "identity_tags": [
+                "martial",
+                "stealth",
+                "utility",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 10
+            },
+            "on_hit": {
+                "apply_status": "concealed",
+                "duration": 60,
+                "target": "self"
+            }
+        },
+        "smoke_bomb": {
+            "id": "smoke_bomb",
+            "name": "Smoke Bomb",
+            "description": "Deploy a smoke screen to confuse enemies and escape.",
+            "identity_tags": [
+                "martial",
+                "utility",
+                "disruption",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 15
+            },
+            "on_hit": {
+                "apply_status": "confused",
+                "duration": 4
+            }
+        },
+        "dirt_kick": {
+            "id": "dirt_kick",
+            "name": "Dirt Kick",
+            "description": "Kick dirt into an enemy's eyes, blinding them.",
+            "identity_tags": [
+                "martial",
+                "utility",
+                "disruption",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 5
+            },
+            "on_hit": {
+                "apply_status": "blinded",
+                "duration": 3
+            }
+        },
+        "garrote": {
+            "id": "garrote",
+            "name": "Garrote",
+            "description": "Squeeze the life out of a target, silencing them.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "lethal",
+                "skill"
+            ],
+            "requirements": {
+                "stamina": 25
+            },
+            "on_hit": {
+                "apply_status": "silenced",
+                "duration": 5
+            }
+        }
+    }
+}

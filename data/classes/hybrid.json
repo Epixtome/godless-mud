@@ -1,0 +1,89 @@
+{
+    "wanderer": {
+        "id": "wanderer",
+        "name": "Wanderer",
+        "description": "A traveler with no specific allegiance. Higher resistance to Kingdom-based interference.",
+        "kingdom": "Universal",
+        "recipe": {},
+        "engine_passive": {
+            "name": "Blank Slate",
+            "description": "You can equip blessings from any Kingdom without the 20% Potency penalty."
+        }
+    },
+    "red_mage": {
+        "id": "red_mage",
+        "name": "Red Mage",
+        "description": "A versatile hybrid who weaves martial prowess with white and black magic.",
+        "kingdom": "Universal",
+        "recipe": {
+            "martial": 4,
+            "restoration": 4,
+            "elemental": 4,
+            "faith": 4
+        },
+        "engine_passive": {
+            "name": "Dualcast",
+            "description": "After using a Martial tagged blessing, your next Magic blessing has 0 cooldown."
+        }
+    },
+    "grey_mage": {
+        "id": "grey_mage",
+        "name": "Grey Mage",
+        "description": "A balancer of forces who walks the line between Light and Dark.",
+        "kingdom": "Universal",
+        "recipe": {
+            "holy": 5,
+            "dark": 5,
+            "void": 5
+        },
+        "engine_passive": {
+            "name": "Equilibrium",
+            "description": "Your Potency is calculated based on the average of your Holy and Dark resonance."
+        }
+    },
+    "dragoon": {
+        "id": "dragoon",
+        "name": "Dragoon",
+        "description": "A mobile warrior specializing in verticality and piercing strikes.",
+        "kingdom": "Universal",
+        "recipe": {
+            "martial": 6,
+            "utility": 4,
+            "piercing": 2
+        },
+        "engine_passive": {
+            "name": "High Jump",
+            "description": "Your first attack in a room deals 50% more damage if you just entered."
+        }
+    },
+    "alchemist": {
+        "id": "alchemist",
+        "name": "Alchemist",
+        "description": "A manipulator of matter and battlefield utility.",
+        "kingdom": "Universal",
+        "recipe": {
+            "utility": 6,
+            "elemental": 4,
+            "restoration": 2
+        },
+        "engine_passive": {
+            "name": "Transmutation",
+            "description": "You can convert 10 unused Essence points into a temporary shield [protection]."
+        }
+    },
+    "temporalist": {
+        "id": "temporalist",
+        "name": "Temporalist",
+        "description": "A master of space and time.",
+        "kingdom": "Universal",
+        "recipe": {
+            "arcane": 5,
+            "utility": 4,
+            "slow": 3
+        },
+        "engine_passive": {
+            "name": "Time Dilation",
+            "description": "Negative Manifestations (Debuffs) on you tick 50% slower."
+        }
+    }
+}

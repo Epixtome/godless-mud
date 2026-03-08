@@ -1,0 +1,226 @@
+{
+    "soul_reaver": {
+        "id": "soul_reaver",
+        "name": "Soul Reaver",
+        "description": "A blood knight who sacrifices health to maintain relentless aggression.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 6,
+            "martial": 4,
+            "lethal": 4
+        },
+        "engine_passive": {
+            "name": "Blood Frenzy",
+            "description": "While below 50% HP, your Martial scaling is increased by 20%."
+        }
+    },
+    "necromancer": {
+        "id": "necromancer",
+        "name": "Necromancer",
+        "description": "A master of life and death who fuels restoration with dark energy.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 7,
+            "restoration": 2,
+            "void": 4
+        },
+        "engine_passive": {
+            "name": "Soul Harvest",
+            "description": "Defeating an enemy restores 5% of your total HP per Dark Potency level."
+        }
+    },
+    "shadow_blade": {
+        "id": "shadow_blade",
+        "name": "Shadow Blade",
+        "description": "An assassin who strikes from the void with guaranteed lethality.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 5,
+            "martial": 5,
+            "utility": 4
+        },
+        "engine_passive": {
+            "name": "Void Strike",
+            "description": "Attacks made while [concealed] ignore 25% of the target's physical mitigation."
+        }
+    },
+    "warlock": {
+        "id": "warlock",
+        "name": "Warlock",
+        "description": "An anti-mage juggernaut who scales power with suffering and shuts down enemy engines.",
+        "kingdom": "Dark",
+        "recipe": {
+            "occult": 4,
+            "dark": 4
+        },
+        "engine_passive": {
+            "name": "Void Mastery",
+            "description": "Grants Desperation (Damage scales with missing HP) and Shield Breaker (Ignores magical defense)."
+        }
+    },
+    "defiler": {
+        "id": "defiler",
+        "name": "Defiler",
+        "description": "A master of curses and afflictions who wins through attrition.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 6,
+            "disruption": 8
+        },
+        "engine_passive": {
+            "name": "Lingering Rot",
+            "description": "Manifestations that deal damage over time (Toxic) last 2 extra ticks."
+        }
+    },
+    "assassin": {
+        "id": "assassin",
+        "name": "Assassin",
+        "description": "A dark-aligned specialist who excels at positioning and lethal backstabs.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 3,
+            "speed": 6,
+            "lethal": 4
+        },
+        "engine_passive": {
+            "name": "Opportune Moment",
+            "description": "Backstab damage multiplier is increased by your Lethal Potency."
+        }
+    },
+    "black_mage": {
+        "id": "black_mage",
+        "name": "Black Mage",
+        "description": "The epitome of raw magical destruction, specializing in high-damage AoE.",
+        "kingdom": "Dark",
+        "recipe": {
+            "aoe": 4,
+            "dark": 2,
+            "sorcery": 8
+        },
+        "engine_passive": {
+            "name": "Cataclysm",
+            "description": "Blessings with the [aoe] tag deal 10% more damage."
+        }
+    },
+    "death_knight": {
+        "id": "death_knight",
+        "name": "Death Knight",
+        "description": "A hybrid tank and dark caster who drains life to sustain in combat.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 5,
+            "protection": 5,
+            "martial": 3
+        },
+        "engine_passive": {
+            "name": "Vampiric Bulwark",
+            "description": "Converts 10% of all damage mitigated by [protection] tags into HP restoration."
+        }
+    },
+    "illusionist": {
+        "id": "illusionist",
+        "name": "Illusionist",
+        "description": "Deceives enemies by creating clones and distorting movement.",
+        "kingdom": "Dark",
+        "recipe": {
+            "arcane": 4,
+            "disruption": 5,
+            "utility": 3
+        },
+        "engine_passive": {
+            "name": "Mirage",
+            "description": "Increases Evasion chance by 1% per Utility Potency."
+        }
+    },
+    "ninja": {
+        "id": "ninja",
+        "name": "Ninja",
+        "description": "A fast-moving martial skirmisher specializing in precision and agility.",
+        "kingdom": "Dark",
+        "recipe": {
+            "martial": 6,
+            "utility": 4,
+            "lethal": 2,
+            "speed": 4
+        },
+        "engine_passive": {
+            "name": "Shadowstep",
+            "description": "Moving between rooms has a 20% chance to grant the [concealed] Manifestation."
+        }
+    },
+    "witch": {
+        "id": "witch",
+        "name": "Witch",
+        "description": "A weaver of fates who binds enemies with disruption and reflects malice.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 7,
+            "protection": 4,
+            "void": 3
+        },
+        "engine_passive": {
+            "name": "Fate Bind",
+            "description": "When you take damage, there is a 15% chance to apply a [disruption] tag effect to the attacker."
+        }
+    },
+    "rogue": {
+        "id": "rogue",
+        "name": "Rogue",
+        "description": "A versatile scoundrel who masters the art of utility and quick strikes.",
+        "kingdom": "Dark",
+        "recipe": {
+            "martial": 5,
+            "utility": 4,
+            "lethal": 4
+        },
+        "engine_passive": {
+            "name": "Scoundrel's Luck",
+            "description": "Utility tagged blessings have a 15% chance to not trigger their cooldown tick."
+        }
+    },
+    "thief": {
+        "id": "thief",
+        "name": "Thief",
+        "description": "A specialist in speed and acquisition who turns agility into profit.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 2,
+            "speed": 7,
+            "utility": 4
+        },
+        "engine_passive": {
+            "name": "Quick Fingers",
+            "description": "Your Attack Speed is increased by 2% for every point of Utility resonance."
+        }
+    },
+    "soul_weaver": {
+        "id": "soul_weaver",
+        "name": "Soul Weaver",
+        "description": "A weaver of life threads who manipulates the boundary between restoration and harm.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 5,
+            "restoration": 4,
+            "void": 4
+        },
+        "engine_passive": {
+            "name": "Ethereal Loom",
+            "description": "Restoration tagged blessings also apply a [protection] buff equal to 20% of the amount healed."
+        }
+    },
+    "shadow_dancer": {
+        "id": "shadow_dancer",
+        "name": "Shadow Dancer",
+        "description": "A lethal performer who weaves dark magic into martial arts.",
+        "kingdom": "Dark",
+        "recipe": {
+            "dark": 6,
+            "speed": 3,
+            "lethal": 3
+        },
+        "engine_passive": {
+            "name": "Danse Macabre",
+            "description": "Your Speed resonance increases your Lethal damage multiplier."
+        }
+    }
+}

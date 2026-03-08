@@ -1,26 +1,190 @@
 {
-  "deities": [
-    { "id": "solas", "name": "Solas, the Crusader", "kingdom": "light", "stat": "str" },
-    { "id": "pyraz", "name": "Pyraz, God of Civilization", "kingdom": "light", "stat": "str" },
-    { "id": "celeris", "name": "Celeris, the Duelist", "kingdom": "light", "stat": "dex" },
-    { "id": "aegis", "name": "Aegis, the Guardian", "kingdom": "light", "stat": "con" },
-    { "id": "lumos", "name": "Lumos, the Scholar", "kingdom": "light", "stat": "int" },
-    { "id": "aldildod", "name": "Aldildod, Lord of Magic", "kingdom": "light", "stat": "int" },
-    { "id": "sophia", "name": "Sophia, the Saint", "kingdom": "light", "stat": "wis" },
-    { "id": "fortuna", "name": "Fortuna, the Merchant", "kingdom": "light", "stat": "luk" },
-
-    { "id": "malice", "name": "Malice, the Tyrant", "kingdom": "dark", "stat": "str" },
-    { "id": "nox", "name": "Nox, the Unseen Blade", "kingdom": "dark", "stat": "dex" },
-    { "id": "blight", "name": "Blight, the Undying", "kingdom": "dark", "stat": "con" },
-    { "id": "vex", "name": "Vex, the Warlock", "kingdom": "dark", "stat": "int" },
-    { "id": "umbra", "name": "Umbra, the Cultist", "kingdom": "dark", "stat": "wis" },
-    { "id": "jinx", "name": "Jinx, the Trickster", "kingdom": "dark", "stat": "luk" },
-
-    { "id": "krog", "name": "Krog, the Iron Tusk", "kingdom": "instinct", "stat": "str" },
-    { "id": "feral", "name": "Feral, the Hunter", "kingdom": "instinct", "stat": "dex" },
-    { "id": "ursus", "name": "Ursus, the Survivor", "kingdom": "instinct", "stat": "con" },
-    { "id": "echo", "name": "Echo, the Storm", "kingdom": "instinct", "stat": "int" },
-    { "id": "sylva", "name": "Sylva, the Tamer", "kingdom": "instinct", "stat": "wis" },
-    { "id": "raven", "name": "Raven, the Scavenger", "kingdom": "instinct", "stat": "luk" }
-  ]
+  "deities": {
+    "valeros": {
+      "name": "Valeros",
+      "kingdom": "light",
+      "description": "The Arbiter of War and Justice.",
+      "domains": [
+        "martial",
+        "justice"
+      ],
+      "granted_classes": [
+        "barbarian"
+      ]
+    },
+    "celeris": {
+      "name": "Celeris",
+      "kingdom": "light",
+      "description": "The Fleet-Footed Messenger.",
+      "domains": [
+        "precision",
+        "speed"
+      ],
+      "granted_classes": [
+        "monk"
+      ]
+    },
+    "aurelius": {
+      "name": "Aurelius",
+      "kingdom": "light",
+      "description": "The Golden Shield of Sanctum.",
+      "domains": [
+        "protection",
+        "endurance"
+      ],
+      "granted_classes": [
+        "knight"
+      ]
+    },
+    "solara": {
+      "name": "Solara",
+      "kingdom": "light",
+      "description": "The Sun Mother and Keeper of Flame.",
+      "domains": [
+        "fire",
+        "light"
+      ],
+      "granted_classes": [
+        "mage"
+      ]
+    },
+    "veritas": {
+      "name": "Veritas",
+      "kingdom": "light",
+      "description": "The All-Seeing Eye of Truth.",
+      "domains": [
+        "healing",
+        "peace"
+      ],
+      "granted_classes": [
+        "cleric"
+      ]
+    },
+    "fortuna": {
+      "name": "Fortuna",
+      "kingdom": "light",
+      "description": "The Weaver of Destiny.",
+      "domains": [
+        "fortune",
+        "destiny"
+      ]
+    },
+    "goros": {
+      "name": "Goros",
+      "kingdom": "dark",
+      "description": "The Butcher of Noxus.",
+      "domains": [
+        "slaughter",
+        "pain"
+      ]
+    },
+    "nox": {
+      "name": "Nox",
+      "kingdom": "dark",
+      "description": "The Shadow that Walks.",
+      "domains": [
+        "stealth",
+        "poison"
+      ],
+      "granted_classes": [
+        "assassin"
+      ]
+    },
+    "xul": {
+      "name": "Xul",
+      "kingdom": "dark",
+      "description": "The Undying Blood Lord.",
+      "domains": [
+        "blood",
+        "undeath"
+      ],
+      "granted_classes": [
+        "defiler"
+      ]
+    },
+    "umbra": {
+      "name": "Umbra",
+      "kingdom": "dark",
+      "description": "The Voice of the Void.",
+      "domains": [
+        "void",
+        "shadow"
+      ]
+    },
+    "omen": {
+      "name": "Omen",
+      "kingdom": "dark",
+      "description": "The Oracle of Doom.",
+      "domains": [
+        "curse",
+        "fear"
+      ]
+    },
+    "vesper": {
+      "name": "Vesper",
+      "kingdom": "dark",
+      "description": "The Prince of Chaos.",
+      "domains": [
+        "chaos",
+        "gamble"
+      ]
+    },
+    "krog": {
+      "name": "Krog",
+      "kingdom": "instinct",
+      "description": "The Fury of the Wilds.",
+      "domains": [
+        "fury",
+        "strength"
+      ]
+    },
+    "fenris": {
+      "name": "Fenris",
+      "kingdom": "instinct",
+      "description": "The Unseen Hunter.",
+      "domains": [
+        "hunt",
+        "speed"
+      ],
+      "granted_classes": [
+        "beastmaster"
+      ]
+    },
+    "ursoc": {
+      "name": "Ursoc",
+      "kingdom": "instinct",
+      "description": "The Mountain That Breathes.",
+      "domains": [
+        "resilience",
+        "bear"
+      ]
+    },
+    "corvus": {
+      "name": "Corvus",
+      "kingdom": "instinct",
+      "description": "The Trickster Raven.",
+      "domains": [
+        "cunning",
+        "mind"
+      ]
+    },
+    "sylva": {
+      "name": "Sylva",
+      "kingdom": "instinct",
+      "description": "The Lifebinder.",
+      "domains": [
+        "nature",
+        "regrowth"
+      ]
+    },
+    "ranan": {
+      "name": "Ranan",
+      "kingdom": "instinct",
+      "description": "The Laughing Fox.",
+      "domains": [
+        "whimsy",
+        "opportunity"
+      ]
+    }
+  }
 }

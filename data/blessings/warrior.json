@@ -1,0 +1,19 @@
+{
+    "blessings": {
+        "warrior_init": {
+            "id": "warrior_init",
+            "name": "Warrior Awakening",
+            "tier": 1,
+            "cost": 0,
+            "description": "The fundamental identity of a Warrior.",
+            "identity_tags": [
+                "class_init",
+                "warrior"
+            ],
+            "logic_type": "passive",
+            "requirements": {
+                "class": "warrior"
+            }
+        }
+    }
+}

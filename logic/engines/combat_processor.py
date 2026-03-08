@@ -1,338 +1,219 @@
 import random
+import asyncio
 import logging
-from models import Corpse, Monster, Player
-from logic import mob_manager
+from models import Monster, Player
 from logic.engines import combat_engine
-from logic.engines import status_effects_engine
-from logic.engines import quest_engine
+from logic.core import event_engine
 from utilities.colors import Colors
-from utilities import combat_formatter
+from logic.engines import vision_engine
+from logic.engines import combat_actions
+from logic.engines import combat_ai
+from logic.engines import combat_lifecycle
+from utilities import telemetry
+
+# Initialize Passives (Register Listeners)
+import logic.passives
 
 logger = logging.getLogger("GodlessMUD")
 
+# Track rooms with active combat to ensure they spin down correctly when players leave
+_ACTIVE_COMBAT_ROOM_IDS = set()
+
 def process_round(game):
+    global _ACTIVE_COMBAT_ROOM_IDS
     """
     Main combat loop processor.
     Iterates through all rooms and handles combat rounds for players and mobs.
     """
-    for room in game.world.rooms.values():
+    # logger.debug("process_round executing")
+    
+    # Optimization: Only check rooms with players or active combat
+    rooms_to_process = {p.room for p in game.players.values() if p.room}
+    for room_id in _ACTIVE_COMBAT_ROOM_IDS:
+        room = game.world.rooms.get(room_id)
+        if room:
+            rooms_to_process.add(room)
+            
+    # logger.debug(f"Checking {len(rooms_to_process)} active rooms for combat.")
+    next_active_ids = set()
+
+    # Optimization: Cache visibility results for this tick to prevent redundant raycasts
+    visibility_cache = {}
+
+    for room in rooms_to_process:
+        # Start buffering for all players in the room to ensure atomic packet delivery
+        for p in room.players:
+            p.start_buffering()
+            
         # 0. Check for Aggro (Initiate Combat)
-        _check_aggro(room)
+        combat_ai.check_aggro(room)
 
         players_to_prompt = set()
         
-        # --- Player Turns ---
-        fighters = [p for p in room.players if p.fighting]
+        # Collect all active fighters
+        combatants = [p for p in room.players if p.fighting] + [m for m in room.monsters if m.fighting]
         
-        for combatant in fighters:
-            target = combatant.fighting
+        if combatants:
+            logger.debug(f"[COMBAT] Room {room.id}: Processing {len(combatants)} fighters.")
             
-            # Validate Target
-            is_valid = combat_engine.validate_target(combatant, target)
-            # Check if target is effectively dead (HP <= 0). 
-            # They might not be in the room anymore if another player killed them earlier in this tick.
-            target_is_dead = target and target.hp <= 0
-            
-            if not is_valid or target_is_dead:
-                # Target invalid/dead/gone. Check for other attackers.
-                valid_attackers = [a for a in combatant.attackers if combat_engine.validate_target(combatant, a)]
-                combatant.attackers = valid_attackers
-                
-                if valid_attackers:
-                    # Auto-switch to next attacker
-                    new_target = valid_attackers[0]
-                    combatant.fighting = new_target
-                    combatant.send_line(f"You turn to fight {new_target.name}!")
-                    target = new_target
-                else:
-                    # Only warn if target exists, is alive, but invalid (e.g. moved/bugged)
-                    if target and not target_is_dead:
-                        logger.warning(f"Dropping combat for {combatant.name}. Target {target.name} invalid.")
-                    combatant.send_line(f"You are no longer fighting.")
-                    combatant.fighting = None
-                    combatant.state = "normal"
-                    players_to_prompt.add(combatant)
-                    continue
-
-            # Calculate damage
-            raw_damage = combat_engine.calculate_player_damage(combatant)
-            
-            # Assassin Passive: First attack deals 20% more damage
-            # We check if the player is NOT yet in the target's attacker list
-            if combatant.active_class == 'assassin' and combatant not in target.attackers:
-                raw_damage = int(raw_damage * 1.20)
-                combatant.send_line(f"{Colors.CYAN}(Assassin) Critical opening strike!{Colors.RESET}")
-            
-            # Rogue Passive: Dodge Chance
-            # Base 5% + (DEX-10)*0.5%
-            target_dex = 10
-            if hasattr(target, 'get_stat'):
-                target_dex = target.get_stat('dex')
-            
-            dodge_chance = 5 + max(0, (target_dex - 10) * 0.5)
-            if hasattr(target, 'active_class') and target.active_class == 'rogue':
-                dodge_chance += 10 # Passive bonus
-            
-            if random.uniform(0, 100) < dodge_chance:
-                combatant.send_line(f"{Colors.YELLOW}{target.name} dodges your attack!{Colors.RESET}")
-                if hasattr(target, 'send_line'):
-                    target.send_line(f"{Colors.GREEN}You dodge {combatant.name}'s attack!{Colors.RESET}")
-                # Force prompt update
-                players_to_prompt.add(combatant)
-                continue # Skip damage application
-
-            # Apply Defense (Armor + Buffs)
-            defense = 0
-            if hasattr(target, 'get_defense'):
-                defense = target.get_defense()
-                
-            # Apply Body Part Multipliers
-            multiplier = 1.0
-            if hasattr(target, 'get_damage_modifier'):
-                multiplier = target.get_damage_modifier()
-
-            damage = max(1, int((raw_damage - defense) * multiplier))
-            
-            # Paladin Passive: Damage Reduction
-            if hasattr(target, 'active_class') and target.active_class == 'paladin':
-                damage = int(damage * 0.90) # 10% reduction
-                
-            target.hp -= damage
-            
-            if damage > 0:
-                att_msg, tgt_msg, room_msg = combat_formatter.format_damage(combatant.name, target.name, damage)
-                combatant.send_line(att_msg)
-                
-                # Weapon Effects (Bleed)
-                if combatant.equipped_weapon and "bleed" in combatant.equipped_weapon.flags:
-                    # Apply bleed for 10 seconds (5 ticks)
-                    status_effects_engine.apply_effect(target, "bleed", 10)
-                
-                # Broadcast to spectators
-                for p in room.players:
-                    if p != combatant and p != target:
-                        p.send_line(room_msg)
-                
-            if hasattr(target, 'send_line'):
-                target.send_line(tgt_msg)
-                if hasattr(target, 'get_prompt'):
-                    # Concentration Loss on Hit
-                    conc_loss = random.randint(1, 5)
-                    target.resources['concentration'] = max(0, target.resources.get('concentration', 0) - conc_loss)
-                    players_to_prompt.add(target)
-                    
-                    # Berserker Passive: Gain Momentum when taking damage
-                    if target.active_class == 'berserker':
-                        target.resources['momentum'] = min(100, target.resources.get('momentum', 0) + 5)
-                        # Optional: target.send_line(f"{Colors.RED}Pain fuels your rage! (+5 Momentum){Colors.RESET}")
-            
-            if target.hp <= 0:
-                combatant.send_line(f"{Colors.BOLD}{Colors.YELLOW}You have defeated {target.name}!{Colors.RESET}")
-                target.fighting = None
-                combatant.fighting = None
-                combatant.state = "normal"
-                
-                if isinstance(target, Monster):
-                    handle_mob_death(game, target, combatant)
-                elif isinstance(target, Player):
-                    handle_player_death(game, target, combatant)
-            
-            # Force prompt update every round
-            players_to_prompt.add(combatant)
-
-        # --- Monster Turns ---
-        mob_fighters = [m for m in room.monsters if m.fighting]
-        for mob in mob_fighters:
-            target = mob.fighting
-            
-            # Companion Logic
-            if mob.leader and mob.leader.room == mob.room:
-                leader_target = mob.leader.fighting
-                if leader_target and leader_target != mob and leader_target.hp > 0:
-                    if not target or target.hp <= 0:
-                        mob.fighting = leader_target
-                        if mob not in leader_target.attackers:
-                            leader_target.attackers.append(mob)
-            
-            # Auto-retaliate / Sticky Combat
-            if target:
-                if mob not in target.attackers:
-                    target.attackers.append(mob)
-                
-                if not target.fighting or target.fighting.hp <= 0:
-                    target.fighting = mob
-                    target.state = "combat"
-
-            # AI Turn (Spells/Skills)
-            # Check if mob wants to do something special instead of attacking
-            did_ai_act, ai_target_died = mob_manager.execute_ai_turn(game, mob, target)
-            if did_ai_act:
-                if ai_target_died:
-                    if isinstance(target, Player):
-                        handle_player_death(game, target, mob)
-                    elif isinstance(target, Monster):
-                        handle_mob_death(game, target, mob)
-                continue # Skip standard auto-attack
-
-            # Rally Mechanic (Summon Help)
-            if "rally" in mob.tags and mob.hp < mob.max_hp * 0.5:
-                # 5% chance per round to rally if hurt
-                if random.random() < 0.05:
-                    # Limit number of mobs in room to prevent infinite spam
-                    if len(room.monsters) < 6:
-                        room.broadcast(f"{Colors.RED}{mob.name} howls for reinforcements!{Colors.RESET}")
-                        # Spawn a copy of the same mob type
-                        mob_manager.spawn_mob(game, mob.prototype_id, room)
-
-            # Validate target
-            is_valid = combat_engine.validate_target(mob, target)
-            target_dead_pending = target and target.hp <= 0 and (target in room.monsters or target in room.players)
-            
-            if not is_valid and not target_dead_pending:
-                mob.fighting = None
-                continue
-                
-            # Calculate damage
-            damage = combat_engine.calculate_mob_damage(mob, target)
-            
-            target.hp -= damage
-            
-            if damage > 0:
-                _, tgt_msg, room_msg = combat_formatter.format_damage(mob.name, target.name, damage)
-                if hasattr(target, 'send_line'):
-                    target.send_line(tgt_msg)
-            
-                # Broadcast to spectators
-                for p in room.players:
-                    if p != target: # Target already got msg above
-                        p.send_line(room_msg)
-
-            if target.hp <= 0:
-                if hasattr(target, 'send_line'):
-                    target.send_line(f"\n{Colors.BOLD}{Colors.RED}You have been defeated by {mob.name}!{Colors.RESET}")
-                target.fighting = None
-                mob.fighting = None
-                
-                if isinstance(target, Player):
-                    handle_player_death(game, target, mob)
-                elif isinstance(target, Monster):
-                    handle_mob_death(game, target, mob)
-            else:
-                # Force prompt update for player being hit
-                if isinstance(target, Player):
-                    players_to_prompt.add(target)
+        for combatant in combatants:
+            _process_turn(combatant, room, game, players_to_prompt, visibility_cache)
 
         # Send prompts once per tick
-        for p in players_to_prompt:
-            p.send_line("")
-            p.send_line(p.get_prompt())
+        # [PATCH] Filter out players involved in death events (handled by Reaper to ensure message ordering)
+        deferred_players = set()
+        if hasattr(game, 'dead_entities'):
+            for d in game.dead_entities:
+                if isinstance(d.get('killer'), Player):
+                    deferred_players.add(d['killer'])
+                if isinstance(d.get('victim'), Player):
+                    deferred_players.add(d['victim'])
 
-def _check_aggro(room):
+        for p in players_to_prompt:
+            if p not in deferred_players:
+                p.send_line(p.get_prompt())
+            
+        # Track active combat for next tick
+        has_combat = False
+        if any(p.fighting for p in room.players):
+            has_combat = True
+        elif any(m.fighting for m in room.monsters):
+            has_combat = True
+            
+        if has_combat:
+            next_active_ids.add(room.id)
+
+        # Flush buffers for all players in the room
+        for p in room.players:
+            p.stop_buffering()
+            # [PATCH] Force push packets to client immediately (Fixes laggy output)
+            if hasattr(p, 'drain'):
+                asyncio.create_task(p.drain())
+
+    _ACTIVE_COMBAT_ROOM_IDS = next_active_ids
+    # logger.debug("process_round complete")
+    
+    # [REAPER] Process deferred deaths safely outside the iteration loop
+    combat_lifecycle.process_dead_queue(game)
+
+def _process_turn(combatant, room, game, players_to_prompt, visibility_cache=None):
     """
-    Checks if any mobs in the room should initiate combat.
-    Handles 'aggressive' and 'gatekeeper' tags.
+    Unified turn processor for both Players and Monsters.
     """
-    if not room.players:
+    if combatant.hp <= 0:
         return
 
-    for mob in room.monsters:
-        if mob.fighting:
-            continue
+    target = combatant.fighting
+    
+    # 1. Event: Turn Start
+    turn_ctx = {
+        'entity': combatant, 
+        'game': game, 
+        'target': target,
+        'action_taken': False
+    }
+    event_engine.dispatch("combat_turn_start", turn_ctx)
+    
+    if turn_ctx['action_taken']:
+        return # AI or something else handled the turn
+
+    # 2. Mob Specific AI/Behavior (Pre-Validation)
+    combat_ai.update_mob_tactics(combatant)
+
+    # 3. Validation & Targeting
+    target = combatant.fighting # Re-fetch in case changed
+    
+    is_valid = combat_engine.validate_target(combatant, target)
+    target_is_dead = target and target.hp <= 0
+    
+    # Visibility Check with Caching
+    can_see_target = False
+    if target:
+        if visibility_cache is not None:
+            cache_key = (combatant, target)
+            if cache_key not in visibility_cache:
+                visibility_cache[cache_key] = vision_engine.can_see(combatant, target)
+            can_see_target = visibility_cache[cache_key]
+        else:
+            can_see_target = vision_engine.can_see(combatant, target)
+    
+    if not is_valid or target_is_dead or not can_see_target:
+        if isinstance(combatant, Player):
+            # [PATCH] If target is dead and pending cleanup, do not drop combat yet.
+            # This prevents "You are no longer fighting" from appearing between the kill and the reaper cleanup.
+            if target_is_dead and getattr(target, 'pending_death', False):
+                return
+
+            # Player Auto-Switch
+            logger.debug(f"[COMBAT_TRACE] Auto-switch for {combatant.name}. Target dead/invalid. Checking {len(combatant.attackers)} attackers.")
+            valid_attackers = []
+            for a in combatant.attackers:
+                is_val = combat_engine.validate_target(combatant, a)
+                logger.debug(f"[COMBAT_TRACE] Checking attacker {a.name} (HP: {a.hp}): Valid={is_val}")
+                if is_val:
+                    valid_attackers.append(a)
+            combatant.attackers = valid_attackers
             
-        target = None
+            if valid_attackers:
+                new_target = valid_attackers[0]
+                combatant.fighting = new_target
+                combatant.send_line(f"You turn to fight {new_target.name}!")
+                target = new_target
+                # Assume valid for this turn to prevent skipping
+                is_valid = True
+                
+                # Update cache for new target
+                if visibility_cache is not None:
+                    cache_key = (combatant, target)
+                    if cache_key not in visibility_cache:
+                        visibility_cache[cache_key] = vision_engine.can_see(combatant, target)
+                    can_see_target = visibility_cache[cache_key]
+                else:
+                    can_see_target = vision_engine.can_see(combatant, target)
+            else:
+                if target and not target_is_dead and can_see_target:
+                     logger.warning(f"Dropping combat for {combatant.name}. Target {target.name} invalid.")
+                combatant.send_line(f"You are no longer fighting.")
+                combatant.fighting = None
+                combatant.state = "normal"
+                players_to_prompt.add(combatant)
+                return
+        else:
+            # Mob Logic
+            target_dead_pending = target and target.hp <= 0 and (target in room.monsters or target in room.players)
+            if (not is_valid or not can_see_target) and not target_dead_pending:
+                combatant.fighting = None
+                return
+            if target_dead_pending:
+                 pass # Continue to process death logic if needed
+            else:
+                 return
+
+    # 4. Execute Attack
+    if target and target.hp > 0:
+        # Skip attack if incapacitated or busy
+        is_stunned = "stun" in getattr(combatant, 'status_effects', {})
+        state = getattr(combatant, 'state', 'normal')
+        if is_stunned or state in ["stunned", "casting", "resting"]:
+            return
+            
+        # Mob Skill Logic
+        skill_to_use = combat_ai.select_mob_skill(combatant, game)
+            
+        combat_actions.execute_attack(combatant, target, room, game, players_to_prompt, blessing=skill_to_use)
         
-        # 1. Gatekeeper Logic (Attacks Criminals)
-        if "gatekeeper" in mob.tags:
-            for p in room.players:
-                if p.reputation < -10: # Criminal Threshold
-                    target = p
-                    room.broadcast(f"{Colors.BOLD}{Colors.YELLOW}{mob.name} shouts: 'Halt, criminal!'{Colors.RESET}")
-                    break
-        
-        # 2. Aggressive Logic (Attacks Random)
-        elif "aggressive" in mob.tags:
-            target = random.choice(room.players)
-            
-        if target and target.hp > 0:
-            mob.fighting = target
-            target.fighting = mob
-            target.state = "combat"
-            if mob not in target.attackers:
-                target.attackers.append(mob)
-            
-            room.broadcast(f"{Colors.RED}{mob.name} attacks {target.name}!{Colors.RESET}")
+        # 5. Event: Turn End (Post-Attack)
+        end_ctx = {'entity': combatant, 'target': target, 'game': game}
+        event_engine.dispatch("combat_turn_end", end_ctx)
 
 def handle_mob_death(game, mob, killer):
-    """Handles logic when a monster dies."""
-    room = mob.room
-    if not room:
-        logger.error(f"Mob {mob.name} died but has no room reference.")
-        return
-
-    # Create corpse
-    corpse = Corpse(f"corpse of {mob.name}", f"The dead body of {mob.name}.", mob.inventory)
-    room.items.append(corpse)
-    if mob in room.monsters:
-        room.monsters.remove(mob)
-    
-    # Notify mob manager for respawn
-    mob_manager.notify_death(game, mob)
-    
-    # Player specific rewards
-    if isinstance(killer, Player):
-        # Notify quest system
-        if hasattr(killer, 'active_quests'):
-            quest_engine.update_kill_progress(killer, mob.prototype_id)
-            
-        # Distribute Favor
-        combat_engine.distribute_favor(killer, mob, game)
+    """Legacy wrapper for backward compatibility with skill_utils."""
+    combat_lifecycle.handle_death(game, mob, killer)
 
 def handle_player_death(game, player, killer):
-    """Handles logic when a player dies."""
-    room = player.room
-    
-    # 1. Create Corpse with Gear
-    corpse_inv = player.inventory[:]
-    if player.equipped_armor:
-        corpse_inv.append(player.equipped_armor)
-        player.equipped_armor = None
-    if player.equipped_weapon:
-        corpse_inv.append(player.equipped_weapon)
-        player.equipped_weapon = None
-    
-    player.inventory = [] # Strip player
-    
-    p_corpse = Corpse(f"corpse of {player.name}", f"The broken body of {player.name}.", corpse_inv)
-    room.items.append(p_corpse)
-    room.broadcast(f"{player.name} falls dead, dropping to the ground.", exclude_player=player)
-    
-    # 2. Resurrect at start room
-    player.hp = player.max_hp
-    player.resources['stamina'] = 10
-    player.resources['concentration'] = 10
-    player.is_resting = False
-    player.state = "normal"
-    player.fighting = None
-    player.attackers = []
-    
-    # Determine Kingdom Respawn Point
-    kingdom = player.identity_tags[0] if player.identity_tags else "neutral"
-    target_id = getattr(game.world, 'landmarks', {}).get(f"{kingdom}_cap")
-    
-    start_room = game.world.rooms.get(target_id)
-    if not start_room:
-        start_room = game.world.start_room or list(game.world.rooms.values())[0]
-    
-    if player in room.players:
-        room.players.remove(player)
-    
-    player.room = start_room
-    start_room.players.append(player)
-    
-    player.send_line(f"\n{Colors.BOLD}{Colors.RED}You have died.{Colors.RESET}")
-    player.send_line(f"{Colors.YELLOW}You wake up in {start_room.name}, naked and vulnerable.{Colors.RESET}")
-    start_room.broadcast(f"{player.name} appears, looking dazed and recently deceased.", exclude_player=player)
-    
-    # Refresh view
-    from logic.actions import information
-    information.look(player, "")
+    """Legacy wrapper for backward compatibility."""
+    combat_lifecycle.handle_death(game, player, killer)
+
+def execute_attack(combatant, target, room, game, players_to_prompt, blessing=None):
+    """Legacy wrapper for backward compatibility with base_executor."""
+    combat_actions.execute_attack(combatant, target, room, game, players_to_prompt, blessing)

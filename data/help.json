@@ -1,112 +1,362 @@
 {
     "help": [
         {
-            "keywords": ["combat", "fighting", "kill"],
+            "keywords": [
+                "combat",
+                "fighting",
+                "kill"
+            ],
             "title": "Combat System",
             "body": "Combat in Godless is real-time and automatic. Once engaged (via 'kill' or being attacked), you will auto-attack every few seconds. You can weave Skills and Spells into combat using commands like 'cast fireball' or 'kick'.\n\nCombat is 'Sticky': You cannot switch targets freely without fleeing or defeating your current opponent. If you are attacked by multiple enemies, you will automatically switch to the next one if your target dies.",
             "category": "system"
         },
         {
-            "keywords": ["stats", "attributes", "str", "dex", "con", "wis", "int", "luk"],
-            "title": "Attributes & Stats",
-            "body": "Your character is defined by six primary attributes:\n\nSTR (Strength): Melee damage and carrying capacity.\nDEX (Dexterity): Accuracy, evasion, and critical hit chance.\nCON (Constitution): Max Health and resistance to status effects.\nWIS (Wisdom): Healing power, perception, and willpower.\nINT (Intelligence): Spell power and magical reserves.\nLUK (Luck): Critical hit chance, loot drops, and random events.",
-            "category": "system"
-        },
-        {
-            "keywords": ["resources", "hp", "stamina", "concentration", "favor"],
+            "keywords": [
+                "resources",
+                "hp",
+                "favor",
+                "chi"
+            ],
             "title": "Resources",
-            "body": "HP: Your life force. If it hits 0, you die.\nStamina: Physical energy used for movement and martial skills. Regenerates quickly.\nConcentration: Mental focus used for spells. Regenerates slowly. Taking damage reduces Concentration.\nFavor: Divine currency earned by killing mobs. Used to buy Blessings from Deities.",
+            "body": "HP: Your life force. If it hits 0, you die.\nChi: A specialized resource for martial abilities.\nFavor: Divine currency earned by killing mobs. Used to buy Blessings from Deities.",
             "category": "system"
         },
         {
-            "keywords": ["blessings", "deck", "skills", "spells"],
+            "keywords": [
+                "blessings",
+                "deck",
+                "skills",
+                "spells"
+            ],
             "title": "The Blessing Deck",
-            "body": "Your abilities come from Blessings granted by Deities. You can 'know' many blessings, but you can only 'equip' a limited number at once in your Deck.\n\nDeck Limits:\nTier 1 (Foundations): 4 Slots\nTier 2 (Sparks): 3 Slots\nTier 3 (Masteries): 2 Slots\nTier 4 (Ultimates): 1 Slot\n\nYour equipped blessings determine your Class Identity.",
+            "body": "Your abilities are determined by your active Class Kit. When you adopt a class (e.g. Monk, Knight), you are granted a specific set of Blessings and Gear known as a 'Kit'.\n\nYou can only use the blessings that belong to your current Kit. To change your available abilities, you must visit a Deity and swap your class.",
             "category": "system"
         },
         {
-            "keywords": ["class", "classes", "identity"],
+            "keywords": [
+                "class",
+                "classes",
+                "identity"
+            ],
             "title": "Class Identity",
-            "body": "You do not pick a class at character creation. Your class is determined dynamically by the Tags on your equipped Blessings. For example, equipping many [Fire] and [Spell] blessings might make you a Pyromancer.\n\nClasses provide passive bonuses and are often required to use Tier 4 Ultimate abilities. Use 'lore classes' to see specific requirements.",
+            "body": "Your Class is defined by your active Kit. You can change your class by visiting a Deity and asking to 'become' a new archetype (e.g. 'become monk').\n\nEach class comes with a pre-defined loadout of Gear and Blessings. You cannot mix-and-match abilities from different classes; you must fully embody the archetype.",
             "category": "system"
         },
         {
-            "keywords": ["synergy", "synergies"],
+            "keywords": [
+                "synergy",
+                "synergies"
+            ],
             "title": "Synergies",
-            "body": "Synergies are passive bonuses unlocked by having specific combinations of tags in your deck. For example, having 2 [Light] tags might grant 'Holy Fortitude' (+CON). These happen automatically.",
+            "body": "Synergies are passive bonuses inherent to certain Class Kits. They provide stat boosts or unique mechanics that reinforce the class's playstyle.",
             "category": "system"
         },
         {
-            "keywords": ["security", "sec", "pvp"],
+            "keywords": [
+                "security",
+                "sec",
+                "pvp"
+            ],
             "title": "Security Levels",
             "body": "The world is divided into security sectors based on distance from Capitals:\n\nHigh-Sec (1.0 - 0.5): Near capitals. No PvP. Guards kill aggressors.\nLow-Sec (0.4 - 0.1): Wilderness. PvP Allowed. Guards only at outposts.\nNull-Sec (0.0): Deep wilds/Warzones. Lawless. Free-for-all PvP. Best loot.",
             "category": "system"
         },
         {
-            "keywords": ["death", "dying"],
+            "keywords": [
+                "death",
+                "dying"
+            ],
             "title": "Death",
             "body": "If you die, you leave behind a corpse containing your items. You will respawn at your Kingdom's capital (or the starting area). You must return to your corpse to retrieve your gear. In High-Sec, you keep your items. In Null-Sec, anyone can loot your corpse.",
             "category": "system"
         },
         {
-            "keywords": ["crafting", "craft", "recipes"],
+            "keywords": [
+                "crafting",
+                "craft",
+                "recipes"
+            ],
             "title": "Crafting",
             "body": "You can craft items using materials found in the world. Use 'recipes' to see what you can make, and 'craft <item>' to create it. You need the ingredients in your inventory.",
             "category": "system"
         },
         {
-            "keywords": ["travel", "movement", "map"],
+            "keywords": [
+                "travel",
+                "movement",
+                "map"
+            ],
             "title": "Travel & Mapping",
             "body": "Move using cardinal directions (n, s, e, w, u, d). Use 'map' to see a grid of the surrounding area. 'scan' reveals nearby enemies. 'recall' returns you to your capital city.",
             "category": "system"
         },
         {
-            "keywords": ["commune"],
+            "keywords": [
+                "commune"
+            ],
             "title": "Commune",
-            "body": "Use 'commune' at a shrine or near a Deity Avatar to enter a trance. While communing, you can buy new blessings with Favor, and manage your deck using 'memorize' and 'forget'. You must be at the specific deity's shrine to modify their specific blessings.",
+            "body": "Use 'commune' at a shrine or near a Deity Avatar to enter a trance. While communing, you can 'become' new classes if you have enough Favor. This will automatically equip the class's Kit (Gear and Blessings).",
             "category": "system"
         },
         {
-            "keywords": ["sylva", "instinct"],
+            "keywords": [
+                "sylva",
+                "instinct"
+            ],
             "title": "Sylva, The Wild Mother",
             "body": "Sylva represents the untamed growth of nature and the wisdom of instinct. She is worshipped by druids, rangers, and those who reject the rigid order of Light or the nihilism of Dark. Her blessings focus on Wisdom, Nature, and Survival.",
             "category": "lore"
         },
         {
-            "keywords": ["krog", "instinct"],
+            "keywords": [
+                "krog",
+                "instinct"
+            ],
             "title": "Krog, The Primal Force",
             "body": "Krog is the embodiment of raw physical power and the survival of the fittest. He cares not for morality, only strength. His followers are often barbarians and warriors who seek to crush their enemies with overwhelming force.",
             "category": "lore"
         },
         {
-            "keywords": ["nox", "dark"],
+            "keywords": [
+                "nox",
+                "dark"
+            ],
             "title": "Nox, The Silent Blade",
             "body": "Nox is the patron of assassins, thieves, and those who operate in the shadows. He values precision and the element of surprise. His blessings enhance Dexterity, Stealth, and Critical Strikes.",
             "category": "lore"
         },
         {
-            "keywords": ["solara", "light"],
+            "keywords": [
+                "solara",
+                "light"
+            ],
             "title": "Solara, The Sun Queen",
             "body": "Solara brings the blinding truth of the sun. She represents order, hierarchy, and the burning purity of Light. Her followers are zealots and mages who wield fire and holy energy to purge the world of darkness.",
             "category": "lore"
         },
         {
-            "keywords": ["umbra", "dark"],
+            "keywords": [
+                "umbra",
+                "dark"
+            ],
             "title": "Umbra, The Void",
             "body": "Umbra is the emptiness between stars. She represents the arcane mysteries of the void and the power of the mind to unravel reality. Her blessings focus on Intelligence, Curses, and Anti-Magic.",
             "category": "lore"
         },
         {
-            "keywords": ["aurelius", "light"],
+            "keywords": [
+                "aurelius",
+                "light"
+            ],
             "title": "Aurelius, The Golden Shield",
             "body": "Aurelius is the defender of the weak and the champion of justice. He represents the protective aspect of Light. His blessings focus on Constitution, Defense, and Healing.",
             "category": "lore"
         },
         {
-            "keywords": ["kingdoms", "factions"],
+            "keywords": [
+                "kingdoms",
+                "factions"
+            ],
             "title": "The Three Kingdoms",
             "body": "The world is divided into three primal philosophies:\n\nLIGHT (Solas): Order, Civilization, Hierarchy. Capital: Sanctum.\nDARK (Umbra): Ambition, Mystery, Individualism. Capital: Noxus.\nINSTINCT (Sylva): Nature, Survival, Freedom. Capital: Ironbark.",
             "category": "lore"
+        },
+        {
+            "keywords": [
+                "strike"
+            ],
+            "title": "Tag: Strike",
+            "body": "Type: Physical Scaling\n\nAttacks with this tag are considered physical. Their damage effectiveness relies on your physical conditioning (Stamina/Stability).",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "martial"
+            ],
+            "title": "Tag: Martial",
+            "body": "Type: Physical / Identity\n\nThe fundamental tag of physical combat. Used by Warriors, Monks, and Soldiers.\n\n[Mechanics]\n- Scaling: Physical (Stamina/Stability)\n- Breakthrough: Reaching 10+ Martial voltage unlocks passive bonuses.\n- Synergy: Triggers 'Crimson Charges' for Red Mages.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "lethal"
+            ],
+            "title": "Tag: Lethal",
+            "body": "Type: Mechanic\n\nAttacks designed to finish off vulnerable opponents.\n\n[Mechanics]\n- Critical: If the target is [Off Balance], this attack has double (2x) the chance to Crit.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "heavy"
+            ],
+            "title": "Tag: Heavy",
+            "body": "Type: Physical / Weight\n\nRepresents massive, cumbersome power.\n\n[Mechanics]\n- Scaling: Physical (Stamina/Stability)\n- Movement: If you have the 'Heavy' tag (e.g. from Armor), movement stamina cost is tripled (3x).",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "weight"
+            ],
+            "title": "Tag: Weight",
+            "body": "Type: Mechanic\n\nAttacks that use mass to overwhelm the target.\n\n[Mechanics]\n- Knockdown: If the target is [Off Balance], this attack will knock them [Prone].",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "concussive"
+            ],
+            "title": "Tag: Concussive",
+            "body": "Type: Mechanic\n\nAttacks that rattle the target's senses or overheat their systems.\n\n[Mechanics]\n- Heat: Generates +15 Heat on the target.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "disruption"
+            ],
+            "title": "Tag: Disruption",
+            "body": "Type: Mechanic\n\nAttacks designed to break focus and interrupt casting.\n\n[Mechanics]\n- Drain: Removes 15 Concentration from the target.\n- Bonus: Deals increased damage to targets suffering from [Shattered Mind].",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "magic"
+            ],
+            "title": "Tag: Magic",
+            "body": "Type: Magical Scaling\n\nRaw magical energy.\n\n[Mechanics]\n- Scaling: Magical (Concentration)\n- Blocked By: [Mental Strain] and [Shattered Mind] status effects.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "arcane"
+            ],
+            "title": "Tag: Arcane",
+            "body": "Type: Magical / Identity\n\nThe tag of pure, unstable magic used by Mages and Sorcerers.\n\n[Mechanics]\n- Scaling: Magical (Concentration)\n- Breakthrough: Reaching 10+ Arcane voltage unlocks passive bonuses.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "holy"
+            ],
+            "title": "Tag: Holy",
+            "body": "Type: Magical / Identity\n\nThe tag of divine light used by Clerics and Paladins.\n\n[Mechanics]\n- Scaling: Magical (Concentration)\n- Breakthrough: Reaching 10+ Holy voltage unlocks passive bonuses.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "dark"
+            ],
+            "title": "Tag: Dark",
+            "body": "Type: Magical / Identity\n\nThe tag of shadow and void used by Warlocks and Assassins.\n\n[Mechanics]\n- Scaling: Magical (Concentration)\n- Breakthrough: Reaching 10+ Dark voltage unlocks passive bonuses.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "instinct"
+            ],
+            "title": "Tag: Instinct",
+            "body": "Type: Primal / Identity\n\nThe tag of nature and rage used by Druids and Barbarians.\n\n[Mechanics]\n- Breakthrough: Reaching 10+ Instinct voltage unlocks passive bonuses.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "restoration"
+            ],
+            "title": "Tag: Restoration",
+            "body": "Type: Healing\n\nMagic dedicated to mending wounds.\n\n[Mechanics]\n- Penalty: If your Concentration is 0 or less (Mental Debt), healing effectiveness is reduced by 50%.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "concealed",
+                "stealth",
+                "hidden"
+            ],
+            "title": "Tag: Concealed",
+            "body": "Type: Status / Mechanic\n\nRepresents being hidden from sight.\n\n[Mechanics]\n- Backstab: Attacking while Concealed deals 3.0x Damage.\n- Removal: Moving (without Sneaking) or Attacking removes this tag.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "blunt"
+            ],
+            "title": "Tag: Blunt",
+            "body": "Type: Physical\n\nCrushing damage type.\n\n[Mechanics]\n- Bonus: Deals increased damage to targets suffering from [Shattered Mind].",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "alchemy"
+            ],
+            "title": "Tag: Alchemy",
+            "body": "Type: Utility / Identity\n\nThe science of transmutation and brewing.\n\n[Mechanics]\n- Requirement: Used to unlock Alchemist class abilities.\n- Scaling: Affects potency of crafted items and thrown flasks.",
+            "category": "tags"
+        },
+        {
+            "keywords": [
+                "stun",
+                "stunned",
+                "dazed"
+            ],
+            "title": "Status: Stunned & Dazed",
+            "body": "Stunned: You cannot take any actions. Movement, attacks, and casting are all disabled.\nDazed: You are off-balance and take increased damage from critical strikes.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "intervene",
+                "rescue"
+            ],
+            "title": "Skill: Intervene & Rescue",
+            "body": "Knight/Paladin abilities used to protect allies. Intervening redirects the target's attackers to yourself, forcing the enemies to engage you instead.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "beastmaster",
+                "pet",
+                "pets",
+                "companion"
+            ],
+            "title": "Beastmaster Pets",
+            "body": "Beastmasters can recruit animals to fight alongside them. Use 'recruit' on a suitable beast. Pets share your room, follow you when you move, and automatically assist you in combat.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "sanctify",
+                "consecrate"
+            ],
+            "title": "Skill: Sanctify",
+            "body": "A Holy ability that purifies a target, removing negative status effects and dealing damage to undead or dark creatures.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "brace",
+                "braced"
+            ],
+            "title": "Skill: Brace",
+            "body": "A defensive maneuver that increases your resistance to all incoming physical damage for a short duration. Requires a certain amount of Martial voltage.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "magic_shield",
+                "mana_shield"
+            ],
+            "title": "Skill: Magic Shield",
+            "body": "An arcane barrier that absorbs a portion of incoming damage by consuming Mana instead of HP. Essential for glass-cannon casters.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "armor",
+                "defense",
+                "mitigation"
+            ],
+            "title": "Armor & Mitigation",
+            "body": "Defense reduces incoming raw damage by a flat amount (Damage - Defense = Final Damage). Mitigation is a percentage-based reduction applied after defense. Heavier armor provides more defense but drains stamina more quickly when moving.",
+            "category": "system"
         }
     ]
 }

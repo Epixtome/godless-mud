@@ -1,0 +1,117 @@
+{
+    "blessings": [
+        {
+            "id": "mage_init",
+            "name": "Mage Awakening",
+            "tier": 1,
+            "cost": 0,
+            "description": "Initialize Mage resources.",
+            "identity_tags": [
+                "mage",
+                "hidden"
+            ],
+            "action": "mage_init",
+            "requirements": {
+                "class": "mage"
+            }
+        },
+        {
+            "id": "lightning_bolt",
+            "name": "Lightning Bolt",
+            "tier": 1,
+            "cost": 20,
+            "base_power": 25,
+            "description": "Call down a bolt of electricity.",
+            "identity_tags": [
+                "magic",
+                "lightning",
+                "arcane",
+                "strike"
+            ],
+            "action": "lightning_bolt",
+            "requirements": {
+                "class": "mage"
+            },
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 1.5
+            }
+        },
+        {
+            "id": "fireball",
+            "name": "Fireball",
+            "tier": 3,
+            "cost": 35,
+            "base_power": 35,
+            "description": "A classic blast of flame.",
+            "identity_tags": [
+                "magic",
+                "fire",
+                "arcane",
+                "strike"
+            ],
+            "action": "fireball",
+            "requirements": {
+                "class": "mage"
+            },
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 2.0
+            }
+        },
+        {
+            "id": "magic_shield",
+            "name": "Magic Shield",
+            "tier": 2,
+            "cost": 30,
+            "description": "Protects the caster from physical damage.",
+            "identity_tags": [
+                "magic",
+                "arcane",
+                "buff"
+            ],
+            "action": "magic_shield",
+            "requirements": {
+                "class": "mage"
+            }
+        },
+        {
+            "id": "arcane_surge",
+            "name": "Arcane Surge",
+            "tier": 4,
+            "cost": 0,
+            "description": "Restores 40 Concentration, but stalls the caster for 3s.",
+            "identity_tags": [
+                "magic",
+                "arcane",
+                "utility"
+            ],
+            "action": "arcane_surge",
+            "requirements": {
+                "class": "mage"
+            }
+        },
+        {
+            "id": "frost_nova",
+            "name": "Frost Nova",
+            "tier": 4,
+            "cost": 45,
+            "base_power": 20,
+            "description": "AoE: Damages and freezes nearby enemies.",
+            "identity_tags": [
+                "magic",
+                "ice",
+                "arcane",
+                "strike"
+            ],
+            "action": "frost_nova",
+            "requirements": {
+                "class": "mage"
+            },
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 1.2
+            }
+        }
+    ]
+}

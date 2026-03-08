@@ -1,0 +1,139 @@
+{
+    "blessings": [
+        {
+            "id": "warlock_init",
+            "name": "Warlock Awakening",
+            "tier": 1,
+            "cost": 0,
+            "description": "Initialize Warlock resources.",
+            "identity_tags": [
+                "warlock",
+                "hidden"
+            ],
+            "action": "warlock_init",
+            "requirements": {
+                "class": "warlock"
+            }
+        },
+        {
+            "id": "malignant_bond",
+            "name": "Malignant Bond",
+            "tier": 2,
+            "cost": 25,
+            "base_power": 0,
+            "description": "Forge a dark link with your target, sharing their pain.",
+            "identity_tags": [
+                "warlock",
+                "occult",
+                "curse"
+            ],
+            "action": "malignant_bond",
+            "requirements": {
+                "class": "warlock"
+            }
+        },
+        {
+            "id": "chaos_drain",
+            "name": "Chaos Drain",
+            "tier": 2,
+            "cost": 30,
+            "base_power": 12,
+            "description": "Drain stability and stamina from the target.",
+            "identity_tags": [
+                "warlock",
+                "occult",
+                "drain"
+            ],
+            "action": "chaos_drain",
+            "requirements": {
+                "class": "warlock"
+            },
+            "scaling": {
+                "scaling_tag": "occult",
+                "multiplier": 1.2
+            }
+        },
+        {
+            "id": "blood_toll",
+            "name": "Blood Toll",
+            "tier": 3,
+            "cost": 40,
+            "base_power": 22,
+            "description": "Deals moderate dark damage.",
+            "identity_tags": [
+                "warlock",
+                "occult",
+                "dark",
+                "strike"
+            ],
+            "action": "blood_toll",
+            "requirements": {
+                "class": "warlock"
+            },
+            "scaling": {
+                "scaling_tag": "dark",
+                "multiplier": 1.5
+            }
+        },
+        {
+            "id": "siphon_life",
+            "name": "Siphon Life",
+            "tier": 4,
+            "cost": 0,
+            "base_power": 18,
+            "description": "Siphon life force. Costs 5% Max HP.",
+            "identity_tags": [
+                "warlock",
+                "occult",
+                "dark",
+                "drain"
+            ],
+            "action": "siphon_life",
+            "requirements": {
+                "class": "warlock"
+            },
+            "scaling": {
+                "scaling_tag": "occult",
+                "multiplier": 1.8
+            }
+        },
+        {
+            "id": "despair_aura",
+            "name": "Despair Aura",
+            "tier": 4,
+            "cost": 0,
+            "description": "Toggleable: Nearby enemies lose 5 stamina per tick.",
+            "identity_tags": [
+                "warlock",
+                "occult",
+                "aura"
+            ],
+            "action": "despair_aura",
+            "requirements": {
+                "class": "warlock"
+            }
+        },
+        {
+            "id": "void_blast",
+            "name": "Void Blast",
+            "tier": 5,
+            "cost": 0,
+            "base_power": 55,
+            "description": "Finisher: Consumes Decay stacks for massive damage. Costs 10% Max HP.",
+            "identity_tags": [
+                "warlock",
+                "occult",
+                "dark",
+                "finisher"
+            ],
+            "action": "void_blast",
+            "requirements": {
+                "class": "warlock"
+            },
+            "scaling": {
+                "scaling_tag": "dark",
+                "multiplier": 2.5
+            }
+        }
+    ]
+}

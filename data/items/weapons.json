@@ -1,0 +1,264 @@
+{
+    "items": [
+        {
+            "id": "abyssal_blade",
+            "type": "weapon",
+            "name": "Abyssal Blade",
+            "description": "A sword forged from black iron that seems to absorb light.",
+            "value": 55,
+            "weight": 8,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d8"
+            },
+            "scaling": {
+                "tag": "martial",
+                "mult": 0.8
+            },
+            "gear_tags": [
+                "dark",
+                "martial",
+                "slashing",
+                "light_gear"
+            ]
+        },
+        {
+            "id": "aeon_strung",
+            "type": "weapon",
+            "name": "Chronos Bolt",
+            "description": "A bow with a string made of solidified time.",
+            "value": 110,
+            "weight": 4,
+            "slot": "main_hand",
+            "hands": 2,
+            "stats": {
+                "damage_dice": "1d6"
+            },
+            "scaling": {
+                "tag": "precision",
+                "mult": 1.1
+            },
+            "gear_tags": [
+                "magic",
+                "speed",
+                "projection"
+            ]
+        },
+        {
+            "id": "firesword",
+            "type": "weapon",
+            "name": "Firebrand",
+            "description": "A blade that drips liquid flame with every swing.",
+            "value": 150,
+            "weight": 7,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "2d6"
+            },
+            "scaling": {
+                "tag": "martial",
+                "mult": 1.1
+            },
+            "gear_tags": [
+                "fire",
+                "elemental",
+                "martial",
+                "force"
+            ],
+            "flags": [
+                "light_source"
+            ]
+        },
+        {
+            "id": "glass_dagger",
+            "type": "weapon",
+            "name": "Glass Dagger",
+            "description": "A razor-sharp dagger made of tempered glass.",
+            "value": 40,
+            "weight": 1,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d4"
+            },
+            "scaling": {
+                "tag": "precision",
+                "mult": 1.2
+            },
+            "gear_tags": [
+                "precision",
+                "speed",
+                "fragile"
+            ]
+        },
+        {
+            "id": "ironwood_staff",
+            "type": "weapon",
+            "name": "Ironwood Staff",
+            "description": "A staff carved from incredibly hard wood.",
+            "value": 45,
+            "weight": 6,
+            "slot": "main_hand",
+            "hands": 2,
+            "stats": {
+                "damage_dice": "1d6"
+            },
+            "scaling": {
+                "tag": "insight",
+                "mult": 1.0
+            },
+            "gear_tags": [
+                "blunt",
+                "martial",
+                "insight"
+            ]
+        },
+        {
+            "id": "river_stone_hammer",
+            "type": "weapon",
+            "name": "River Stone Hammer",
+            "description": "A heavy hammer with a head made of smooth, dense river stone.",
+            "value": 90,
+            "weight": 22,
+            "slot": "main_hand",
+            "hands": 2,
+            "stats": {
+                "damage_dice": "1d10"
+            },
+            "scaling": {
+                "tag": "martial",
+                "mult": 1.4
+            },
+            "gear_tags": [
+                "blunt",
+                "force",
+                "weight",
+                "heavy_gear"
+            ],
+            "flags": [
+                "stun"
+            ]
+        },
+        {
+            "id": "abyssal_zweihander",
+            "type": "weapon",
+            "name": "Abyssal Zweihander",
+            "description": "A massive blade of dark iron that cleaves through souls.",
+            "value": 150,
+            "weight": 35,
+            "slot": "main_hand",
+            "hands": 2,
+            "stats": {
+                "damage_dice": "2d6"
+            },
+            "scaling": {
+                "tag": "martial",
+                "mult": 1.5
+            },
+            "gear_tags": [
+                "dark",
+                "martial",
+                "slashing",
+                "heavy_gear"
+            ]
+        },
+        {
+            "id": "void_rapier",
+            "type": "weapon",
+            "name": "Void Rapier",
+            "description": "A needle-thin blade that pierces reality.",
+            "value": 130,
+            "weight": 3,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d8"
+            },
+            "scaling": {
+                "tag": "precision",
+                "mult": 1.3
+            },
+            "gear_tags": [
+                "dark",
+                "martial",
+                "lethal",
+                "piercing"
+            ]
+        },
+        {
+            "id": "executioner_axe",
+            "type": "weapon",
+            "name": "Executioner's Axe",
+            "description": "A heavy axe designed for one purpose.",
+            "value": 140,
+            "weight": 28,
+            "slot": "main_hand",
+            "hands": 2,
+            "stats": {
+                "damage_dice": "1d12"
+            },
+            "scaling": {
+                "tag": "martial",
+                "mult": 1.6
+            },
+            "gear_tags": [
+                "martial",
+                "instinct",
+                "lethal",
+                "heavy_gear"
+            ]
+        },
+        {
+            "id": "cavaliers_rapier",
+            "type": "weapon",
+            "name": "Cavalier's Rapier",
+            "description": "A finely crafted blade used by mage-knights.",
+            "value": 200,
+            "weight": 4,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d8"
+            },
+            "scaling": {
+                "tag": "precision",
+                "mult": 1.2
+            },
+            "gear_tags": [
+                "martial",
+                "precision",
+                "arcane"
+            ],
+            "resonance": {
+                "tag": "arcane",
+                "threshold": 5,
+                "bonus_dmg": 5
+            }
+        },
+        {
+            "id": "spiked_knuckles",
+            "type": "weapon",
+            "name": "Spiked Knuckles",
+            "description": "Heavy metal bands with sharpened obsidian studs.",
+            "value": 45,
+            "weight": 2,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d4"
+            },
+            "scaling": {
+                "tag": "martial",
+                "mult": 0.5
+            },
+            "gear_tags": [
+                "martial",
+                "unarmed",
+                "piercing",
+                "martial_fists"
+            ]
+        }
+    ]
+}

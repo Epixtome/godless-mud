@@ -1,47 +1,42 @@
 from utilities.colors import Colors
+from logic.engines import combat_math
 
-VERB_PAIRS = {
-    "misses": "miss",
-    "scratches": "scratch",
-    "hits": "hit",
-    "mauls": "maul",
-    "decimates": "decimate",
-    "OBLITERATES": "OBLITERATE"
-}
-
-def format_damage(attacker_name, target_name, damage, source=None):
+def format_combat_messages(attacker, target, damage, blessing=None, is_god=False):
     """
-    Returns (attacker_msg, target_msg, room_msg) with colored verbs.
+    Generates tailored combat strings for attacker, target, and room.
     """
-    verb_3rd = "hits"
-    color = Colors.WHITE
+    damage_percent = 0.0
+    if hasattr(target, 'max_hp') and target.max_hp > 0:
+        damage_percent = damage / target.max_hp
     
-    if damage <= 0:
-        verb_3rd = "misses"
-    elif damage < 5:
-        verb_3rd = "scratches"
-    elif damage < 10:
-        verb_3rd = "hits"
-    elif damage < 20:
-        verb_3rd = "mauls"
-        color = Colors.YELLOW
-    elif damage < 40:
-        verb_3rd = "decimates"
-        color = Colors.RED
+    verb = combat_math.get_attack_verb(damage_percent)
+    verb_3rd = verb + "es" if verb.endswith("sh") or verb.endswith("ch") else verb + "s"
+
+    if is_god:
+        tgt_msg = f"{Colors.CYAN}You ignore the damage because you are a GOD.{Colors.RESET}"
+        att_msg = f"{Colors.YELLOW}Your attack strikes {target.name}, but they seem unharmed.{Colors.RESET}"
+        room_msg = f"{Colors.YELLOW}{attacker.name}'s attack strikes {target.name}, but it has no effect.{Colors.RESET}"
+        return att_msg, tgt_msg, room_msg
+
+    if blessing:
+        att_msg = f"{Colors.GREEN}You {verb} {target.name} with {blessing.name} for {Colors.YELLOW}{damage}{Colors.GREEN} damage.{Colors.RESET}"
+        tgt_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd} you with {blessing.name} for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
+        room_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd} {target.name} with {blessing.name} for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
     else:
-        verb_3rd = "OBLITERATES"
-        color = Colors.BOLD + Colors.RED
-        
-    verb_2nd = VERB_PAIRS.get(verb_3rd, verb_3rd) # You hit/maul
-    
-    colored_verb_3rd = f"{color}{verb_3rd}{Colors.RESET}"
-    colored_verb_2nd = f"{color}{verb_2nd}{Colors.RESET}"
-    
-    src_str = f" with {source}" if source else ""
-    dmg_str = f"{color}{damage}{Colors.RESET}"
-    
-    att_msg = f"You {colored_verb_2nd} {target_name}{src_str} for {dmg_str} damage."
-    tgt_msg = f"{attacker_name} {colored_verb_3rd} you{src_str} for {dmg_str} damage."
-    room_msg = f"{attacker_name} {colored_verb_3rd} {target_name}{src_str} for {dmg_str} damage."
-    
+        att_msg = f"{Colors.GREEN}You {verb} {target.name} for {Colors.YELLOW}{damage}{Colors.GREEN} damage.{Colors.RESET}"
+        tgt_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd} you for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
+        room_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd} {target.name} for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
+
     return att_msg, tgt_msg, room_msg
+
+def broadcast_combat_results(room, attacker, target, att_msg, tgt_msg, room_msg):
+    """Dispatches messages to the appropriate parties in the room."""
+    if hasattr(attacker, 'send_line'):
+        attacker.send_line(att_msg)
+    
+    if hasattr(target, 'send_line'):
+        target.send_line(tgt_msg)
+
+    for p in getattr(room, 'players', []):
+        if p != attacker and p != target:
+            p.send_line(room_msg)

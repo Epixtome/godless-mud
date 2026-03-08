@@ -1,17 +1,18 @@
 class Blessing:
-    def __init__(self, b_id, name, tier, base_power, scaling, requirements, identity_tags, charges, description, cost=0, deity_id=None, required_class=None):
-        self.id = b_id
+    def __init__(self, id, name, **kwargs):
+        self.id = id
         self.name = name
-        self.tier = tier
-        self.base_power = base_power
-        self.scaling = scaling          # {"str": 1.5}
-        self.requirements = requirements # {"str": 12}
-        self.identity_tags = identity_tags # ["paladin"]
-        self.charges = charges
-        self.description = description
-        self.cost = cost
-        self.deity_id = deity_id
-        self.required_class = required_class
+        # Set defaults for core engine fields
+        self.tier = kwargs.get('tier', 1)
+        self.requirements = kwargs.get('requirements', {})
+        self.identity_tags = kwargs.get('identity_tags', [])
+        self.charges = kwargs.get('charges', 1)
+        self.description = kwargs.get('description', "")
+        self.scaling = kwargs.get('scaling', {})
+        self.metadata = kwargs.get('metadata', {})
+        
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
     def __str__(self):
         return f"{self.name} (T{self.tier})"
@@ -26,20 +27,19 @@ class Quest:
         self.rewards = rewards
 
 class Class:
-    def __init__(self, c_id, name, description, requirements, bonuses, playstyle=""):
-        self.id = c_id
+    def __init__(self, id, name, **kwargs):
+        self.id = id
         self.name = name
-        self.description = description
-        self.requirements = requirements # {'tags': {'light': 3}}
-        self.bonuses = bonuses # {'str': 2}
-        self.playstyle = playstyle
+        self.description = kwargs.get('description', "")
+        
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
 class Deity:
-    def __init__(self, d_id, name, kingdom, stat):
+    def __init__(self, d_id, name, kingdom):
         self.id = d_id
         self.name = name
         self.kingdom = kingdom
-        self.stat = stat
 
 class Synergy:
     def __init__(self, s_id, name, requirements, bonuses):

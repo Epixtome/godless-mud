@@ -1,0 +1,81 @@
+{
+    "blessings": [
+        {
+            "id": "illusionist_init",
+            "name": "Illusionist Awakening",
+            "tier": 1,
+            "cost": 0,
+            "description": "Initialize Illusionist echoes and Negation logic.",
+            "identity_tags": [
+                "class_init",
+                "illusionist",
+                "passive"
+            ],
+            "requirements": {
+                "class": "illusionist"
+            }
+        },
+        {
+            "id": "blur",
+            "name": "Blur",
+            "tier": 1,
+            "cost": 20,
+            "description": "Distort your image, increasing evasion for 30s.",
+            "identity_tags": [
+                "illusionist",
+                "utility",
+                "buff",
+                "spell"
+            ],
+            "action": "blur",
+            "requirements": {
+                "class": "illusionist"
+            },
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 1.2
+            }
+        },
+        {
+            "id": "phantasm",
+            "name": "Phantasm",
+            "tier": 2,
+            "cost": 30,
+            "description": "Conjure an illusory echo. Echoes shatter to negate damage.",
+            "identity_tags": [
+                "illusionist",
+                "manifestation",
+                "skill"
+            ],
+            "action": "phantasm",
+            "requirements": {
+                "class": "illusionist"
+            },
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 1.0
+            }
+        },
+        {
+            "id": "mind_trick",
+            "name": "Mind Trick",
+            "tier": 2,
+            "cost": 40,
+            "description": "Confuse an enemy, causing them to attack at random.",
+            "identity_tags": [
+                "illusionist",
+                "disruption",
+                "debuff",
+                "spell"
+            ],
+            "action": "mind_trick",
+            "requirements": {
+                "class": "illusionist"
+            },
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 0.5
+            }
+        }
+    ]
+}

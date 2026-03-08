@@ -1,18 +1,19 @@
 {
-    "blessings": [
-        {
-            "id": "song_of_courage",
-            "name": "Song of Courage",
+    "blessings": {
+        "bard_init": {
+            "id": "bard_init",
+            "name": "Bard Awakening",
             "tier": 1,
-            "base_power": 0,
-            "scaling": {},
-            "requirements": {"tags": {"light": 1}},
-            "identity_tags": ["light", "buff", "song"],
-            "charges": 1,
-            "cost": 10,
-            "description": "A rousing melody that inspires allies, increasing damage by 15%. Drains Concentration over time.",
-            "deity_id": "fortuna",
-            "handler": "handle_song"
+            "cost": 0,
+            "description": "The fundamental identity of a Bard.",
+            "identity_tags": [
+                "class_init",
+                "bard"
+            ],
+            "logic_type": "passive",
+            "requirements": {
+                "class": "bard"
+            }
         }
-    ]
+    }
 }
