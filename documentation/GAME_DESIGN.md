@@ -1,4 +1,4 @@
-# GODLESS: GAME DESIGN DOCUMENT (V3.1)
+# GODLESS: GAME DESIGN DOCUMENT (V4.5)
 
 ## 1. PROJECT OVERVIEW
 **Godless** is an asynchronous, text-based MUD built in Python (`asyncio`). It features a level-less progression system where character identity is derived from a dynamic "deck" of **Blessings** and gear. Players navigate a contiguous 3D coordinate world, aligning with Deities across three Kingdoms (Light, Dark, Instinct).

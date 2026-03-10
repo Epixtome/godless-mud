@@ -46,7 +46,7 @@ def _display_blessing_help(player, b):
     if scaling_display:
         player.send_line(f"Scaling: {', '.join(scaling_display)}")
     
-    # Display Costs (V4.4)
+    # Display Costs (V4.5)
     from logic.engines.blessings_engine import Auditor
     costs = Auditor.calculate_costs(b, player)
     cost_str = []

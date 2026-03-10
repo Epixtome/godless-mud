@@ -55,7 +55,7 @@ def score(player, args):
 
     player.send_line(f" {vitals}")
 
-    # 2a. Active Status Effects (V4.4)
+    # 2a. Active Status Effects (V4.5)
     if hasattr(player, 'status_effects') and player.status_effects:
         from logic.core import effects
         effect_list = []
@@ -70,7 +70,7 @@ def score(player, args):
         if effect_list:
             player.send_line(f" Status: {', '.join(effect_list)}")
 
-    # 2b. Beastmaster Pet (V4.4)
+    # 2b. Beastmaster Pet (V4.5)
     if player.active_class == 'beastmaster':
         active_pet = None
         for mob in player.room.monsters:

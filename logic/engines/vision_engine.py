@@ -47,7 +47,7 @@ def check_door_block(current_room, next_room):
 
 def raycast(world, start_room, end_room):
     """
-    V5.0: Height-Aware Raycast. 
+    V4.5: Height-Aware Raycast. 
     Checks if terrain between rooms blocks the line of sight beam.
     """
     if not start_room or not end_room: return False, None
@@ -96,7 +96,7 @@ def can_detect(observer, target):
 
 def get_visible_rooms(start_room, radius=2, world=None, check_los=True, observer=None):
     """
-    V5.0: Re-enabled LoS with Top-Down Surface Scanning.
+    V4.5: Re-enabled LoS with Top-Down Surface Scanning.
     """
     if not start_room or not world: return {}
     spatial = spatial_engine.get_instance(world)
@@ -150,7 +150,7 @@ def get_visible_rooms(start_room, radius=2, world=None, check_los=True, observer
 
 def _find_best_room(spatial, x, y, z):
     """
-    V5.0: Enhanced Top-Down Surface Scanning.
+    V4.5: Enhanced Top-Down Surface Scanning.
     Finds the floor or peak most relevant to the viewpoint.
     """
     # 1. Preference for the same plane

@@ -1,9 +1,9 @@
 # Godless MUD: Architectural History & Changelog
 
 > [!IMPORTANT]
-> **V5.0: THE ARCHITECTURAL REALIGNMENT**: As of March 7th, 2026, the project has undergone a massive cleanup to resolve drift, shard God Objects, and unify logic domains.
+> **V4.5: THE ARCHITECTURAL REALIGNMENT**: As of March 7th, 2026, the project has undergone a massive cleanup to resolve drift, shard God Objects, and unify logic domains.
 
-## [[V5.0] ERA: The Great Realignment] - 2026-03-07
+## [[V4.5] ERA: The Great Realignment] - 2026-03-07
 ### Changed
 - **STRUCTURAL HOMOGENIZATION**: Moved root `/core/` to `logic/core/`. Consolidated duplicate handlers into `logic/handlers/`.
 - **SHARDED GOD OBJECTS**: 
@@ -16,7 +16,7 @@
 - **CLASS REGISTRY**: Created `documentation/class_registry.md` to track global event subscriptions (GCA Standard).
 - **ARCHIVE**: Formally archived legacy manuals in `documentation/archive/`.
 
-## [[V4.4] ERA: Scaling & Calibration] - 2026-03-07
+## [[V4.5] ERA: Scaling & Calibration] - 2026-03-07
 ### Added
 - **CALIBRATION**: Created `logic/calibration.py` for centralized game balance.
 - **POSTURE SYSTEM**: Integrated Off-Balance and Stance effects into the combat pipeline.
@@ -32,7 +32,7 @@
 ### Added
 - **LEGACY SHARDING**: Created `documentation/legacy/` directory to isolate outdated V2.x docs.
 - **LEGACY HEADERS**: Added `[!CAUTION]` headers to all files in the legacy folder to prevent architectural drift.
-- **ANCHORING**: Consolidated current standards into `ARCHITECTURE.md` (V3.1) and `GAME_DESIGN.md` (V3.1).
+- **ANCHORING**: Consolidated current standards into `ARCHITECTURE.md` (V4.5) and `GAME_DESIGN.md` (V4.5).
 
 ## [ERA: Data-Driven Refactor] - 2026-02-14
 ### CRITICAL ARCHITECTURAL RESET

@@ -1,4 +1,4 @@
-# Google Cloud Deployment Guide - Godless V5.0
+# Google Cloud Deployment Guide - Godless V4.5
 
 This document outlines the steps to deploy the Godless MUD engine to Google Cloud Platform (GCP).
 
@@ -12,16 +12,16 @@ Telnet MUDs require persistent TCP sockets. A VM on Compute Engine is the most s
 
 1. **Build and Tag the Image**:
    ```bash
-   docker build -t gcr.io/[PROJECT_ID]/godless-mud:v5.0 .
+   docker build -t gcr.io/[PROJECT_ID]/godless-mud:V4.5 .
    ```
 2. **Push to Google Container Registry**:
    ```bash
-   docker push gcr.io/[PROJECT_ID]/godless-mud:v5.0
+   docker push gcr.io/[PROJECT_ID]/godless-mud:V4.5
    ```
 3. **Create the Instance**:
    - Go to Compute Engine > VM Instances > Create.
    - select "Deploy a container image to this VM instance".
-   - Image: `gcr.io/[PROJECT_ID]/godless-mud:v5.0`.
+   - Image: `gcr.io/[PROJECT_ID]/godless-mud:V4.5`.
    - **Firewall**: Ensure Port `8888` is open in the VPC Firewall rules (Allow ingress TCP 8888 from 0.0.0.0/0).
 
 ## 3. Option B: Cloud Run (Serverless)
@@ -40,4 +40,4 @@ Telnet MUDs require persistent TCP sockets. A VM on Compute Engine is the most s
 Ensure your `.gitignore` is active before pushing to a private GCP Repo:
 1. `git rm -r --cached .` (To clear any files that were tracked but are now ignored)
 2. `git add .`
-3. `git commit -m "chore: prepare for GCP deployment with V5.0 architecture"`
+3. `git commit -m "chore: prepare for GCP deployment with V4.5 architecture"`

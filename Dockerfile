@@ -1,4 +1,4 @@
-# Godless MUD - V5.0 Cloud Container
+# Godless MUD - V4.5 Cloud Container
 FROM python:3.11-slim
 
 # Set working directory

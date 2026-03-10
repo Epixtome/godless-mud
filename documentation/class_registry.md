@@ -34,7 +34,7 @@
 
 ### ILLUSIONIST
 *   **Module**: `logic/modules/illusionist/`
-*   **Status**: ACTIVE DEVELOPMENT (V5.0 Expansion)
+*   **Status**: ACTIVE DEVELOPMENT (V4.5 Expansion)
 *   **Subscription**: `on_vision_scan` (Disguise/Mirror Image)
 
 ---

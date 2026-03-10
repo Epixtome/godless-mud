@@ -43,7 +43,7 @@ def get_prompt(player):
     from logic.core.engines.event_engine import dispatch
     dispatch("on_build_prompt", {'player': player, 'prompts': player.active_statuses_display})
     
-    # Generic Status Effect Display (V4.4)
+    # Generic Status Effect Display (V4.5)
     if player.status_effects:
         from logic.core import effects
         for eff_id in player.status_effects:

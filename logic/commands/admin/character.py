@@ -171,14 +171,14 @@ def become_class(player, args):
     target_class = candidates[0]
     class_id = target_class.id
 
-    # Try applying via kit first (Standardized V4.3+)
+    # Try applying via kit first (Standardized V4.5+)
     from logic.engines import class_engine
     success, msg = class_engine.apply_kit(player, class_id)
     if success:
         player.send_line(f"{Colors.GREEN}{msg}{Colors.RESET}")
         return
 
-    # Fallback to Greedy Search (V4.2 Legacy for unkitted classes)
+    # Fallback to Greedy Search (V4.5 Legacy for unkitted classes)
     player.send_line(f"{Colors.CYAN}No kit found for {target_class.name}, performing greedy blessing search...{Colors.RESET}")
     requirements = getattr(target_class, 'recipe', {})
     if not requirements:

@@ -1,7 +1,7 @@
 > [!CAUTION]
-> **LEGACY ARCHITECTURE**: This document reflects Godless MUD v2.x architecture (Pre-Feb 14, 2026 Reset). **Do not use for implementation.** Reference ARCHITECTURE.md for current V3.1+ standards.
+> **LEGACY ARCHITECTURE**: This document reflects Godless MUD v2.x architecture (Pre-Feb 14, 2026 Reset). **Do not use for implementation.** Reference ARCHITECTURE.md for current V4.5+ standards.
 
-# GODLESS: WORLD VISION & GENERATION RULES (V2.1)
+# GODLESS: WORLD VISION & GENERATION RULES (V4.5)
 
 ## 1. Global Topology & Kingdoms
 The world of Godless is a vast, contiguous landmass. There is no central hub; the world is a sprawling wilderness divided into three primary Kingdom spheres of influence. Danger and reward scale dynamically as players move further into the lawless "Borderlands."

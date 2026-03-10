@@ -1,4 +1,4 @@
-# GODLESS: Class Kit System (V3.0)
+# GODLESS: Class Kit System (V4.5)
 
 > **Status:** ACTIVE PROTOCOL
 > **Replaces:** Unified Tag Synergy (UTS)

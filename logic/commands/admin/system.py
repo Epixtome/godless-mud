@@ -51,7 +51,7 @@ def restart(player, args):
             if name in sys.modules:
                 importlib.reload(sys.modules[name])
                 
-        # Also run module_loader to get class modules (important for V5.0)
+        # Also run module_loader to get class modules (important for V4.5)
         from logic.commands import module_loader
         importlib.reload(module_loader)
         module_loader.register_all_modules()

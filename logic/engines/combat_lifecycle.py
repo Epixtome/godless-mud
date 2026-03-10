@@ -17,7 +17,7 @@ def handle_death(game, victim, killer):
     Public entry point to handle entity death.
     Routes to specific handlers based on entity type.
     """
-    # --- DEFERRED DEATH PROTOCOL (V4.3) ---
+    # --- DEFERRED DEATH PROTOCOL (V4.5) ---
     logger.debug(f"[DEATH_TRACE] handle_death called for {victim.name} (HP: {victim.hp}). Pending: {getattr(victim, 'pending_death', False)}")
 
     # To prevent race conditions during synchronous execution, we flag the entity
