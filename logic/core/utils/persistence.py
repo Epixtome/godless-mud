@@ -151,16 +151,8 @@ def load_kit(player, kit_name):
         
         if kit_name in kits:
             player.active_kit = kits[kit_name]
-            # Identity Mapping
-            from logic.constants import Tags
-            if kit_name == 'barbarian':
-                player.identity_tags = [Tags.MARTIAL]
-            elif kit_name == 'knight':
-                player.identity_tags = [Tags.MARTIAL, 'light']
-            elif kit_name == 'mage':
-                player.identity_tags = [Tags.MAGIC, 'arcane']
-            else:
-                player.identity_tags = ['adventurer']
+            # Data-Driven Identity Mapping (V4.5 Open-Closed)
+            player.identity_tags = kits[kit_name].get('identity_tags', ['adventurer'])
             
             player.trigger_module_inits()
             return True

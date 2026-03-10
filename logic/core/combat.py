@@ -71,10 +71,17 @@ def distribute_rewards(player: 'Player', victim: Any, game: Any) -> None:
     combat_logic.distribute_favor(player, victim, game)
 
 def is_target_valid(attacker: Any, target: Any) -> bool:
-    """Checks if combat between two entities is possible (distance, HP, etc)."""
+    """Checks if combat between two entities is possible (distance, HP, structure)."""
     if not target or getattr(target, 'hp', 0) <= 0: return False
+    
+    # Strict Schema Validation (Clean Border API)
+    required_attrs = ['hp', 'name', 'room']
+    if not all(hasattr(target, attr) for attr in required_attrs):
+        return False
+        
     if hasattr(attacker, 'room') and hasattr(target, 'room'):
         if attacker.room != target.room: return False
+        
     return True
 
 def kill_entity(victim: Any, killer: Optional[Any] = None) -> None:

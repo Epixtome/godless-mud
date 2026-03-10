@@ -7,11 +7,8 @@ from logic.core import event_engine
 from utilities.colors import Colors
 from logic.engines import vision_engine
 from logic.engines import combat_actions
-from logic.engines import combat_ai
-from logic.engines import combat_lifecycle
-from utilities import telemetry
+from logic.core.systems import ai
 
-# Initialize Passives (Register Listeners)
 import logic.passives
 
 logger = logging.getLogger("GodlessMUD")
@@ -41,8 +38,8 @@ def process_round(game):
     visibility_cache = {}
 
     for room in rooms_to_process:
-        # 0. Check for Aggro (Initiate Combat)
-        combat_ai.check_aggro(room)
+        # 0. Check for Aggro (Initiate Combat via Event)
+        event_engine.dispatch("room_combat_tick", room=room, game=game)
 
         # Mark that all players in combat rooms might need a prompt update
         for p in room.players:
@@ -96,8 +93,8 @@ def _process_turn(combatant, room, game, players_to_prompt, visibility_cache=Non
     if turn_ctx['action_taken']:
         return # AI or something else handled the turn
 
-    # 2. Mob Specific AI/Behavior (Pre-Validation)
-    combat_ai.update_mob_tactics(combatant)
+    # 2. Mob Specific AI/Behavior (Pre-Validation handled by Event)
+    # Event subscribed by logic/core/systems/ai.py
 
     # 3. Validation & Targeting
     target = combatant.fighting # Re-fetch in case changed
@@ -132,7 +129,7 @@ def _process_turn(combatant, room, game, players_to_prompt, visibility_cache=Non
             return
             
         # Mob Skill Logic
-        skill_to_use = combat_ai.select_mob_skill(combatant, game)
+        skill_to_use = ai.get_mob_skill(combatant, game)
             
         combat.handle_attack(combatant, target, room, game, blessing=skill_to_use)
         
