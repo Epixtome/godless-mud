@@ -33,63 +33,19 @@ def spawn(player, args):
         i_id = getattr(i, 'prototype_id', None) or getattr(i, 'id', 'unknown')
         matches.append(('ITEM', i_id, i))
 
-    # Fallback: Hot-load from data/mobs/
-    if not matches:
-        clean_term = search_term.replace(" ", "_")
-        filepath = f"data/mobs/{clean_term}.json"
-        if os.path.exists(filepath):
-            try:
-                with open(filepath, 'r') as f:
-                    data = json.load(f)
-                
-                m_id = data.get("id", clean_term)
-                proto = Monster(
-                    data.get("name", "Unknown"),
-                    data.get("description", "Loaded from file."),
-                    data.get("hp", 100),
-                    data.get("damage", 10),
-                    tags=data.get("tags", []),
-                    max_hp=data.get("max_hp", data.get("hp", 100)),
-                    prototype_id=m_id
-                )
-                player.game.world.monsters[m_id] = proto
-                matches.append(('MOB', m_id, proto))
-                player.send_line(f"{Colors.YELLOW}[System] Hot-loaded {m_id} from disk.{Colors.RESET}")
-            except Exception as e:
-                player.send_line(f"{Colors.RED}Error loading {filepath}: {e}{Colors.RESET}")
-
     if not matches:
         player.send_line(f"No mob or item found matching '{args}'.")
     elif len(matches) == 1:
         m_type, m_id, proto = matches[0]
-        for _ in range(count):
-            if m_type == 'MOB':
-                # Ensure we pull from the source prototype directly
-                new_obj = Monster(
-                    proto.name, proto.description, getattr(proto, 'max_hp', 100), proto.damage, 
-                    tags=proto.tags, max_hp=getattr(proto, 'max_hp', 100), prototype_id=m_id
-                )
-                new_obj.room = player.room
-                new_obj.game = player.game
-                new_obj.loadout = getattr(proto, 'loadout', [])
-                for item_id in new_obj.loadout:
-                    item_proto = player.game.world.items.get(item_id)
-                    if item_proto:
-                        item = item_proto.clone()
-                        if hasattr(item, 'type') and item.type != 'weapon' and not new_obj.equipped_offhand:
-                            new_obj.equipped_offhand = item
-                        else:
-                            new_obj.inventory.append(item)
-                player.room.monsters.append(new_obj)
-            else:
-                new_obj = proto.clone()
-                player.inventory.append(new_obj) # Spawn into inventory
-                player.send_line(f"You summon {new_obj.name} into your inventory.")
-                if hasattr(new_obj, 'flags') and "decay" in new_obj.flags:
-                    from logic import systems
-                    systems.register_decay(player.game, new_obj, player.room)
+        from logic.core import world_service
         
-        player.room.broadcast(f"{player.name} summons {count}x {proto.name}!", exclude_player=player)
+        if m_type == 'MOB':
+            world_service.spawn_monster(player.game, m_id, player.room, count=count)
+            player.room.broadcast(f"{player.name} summons {count}x {proto.name}!", exclude_player=player)
+        else:
+            world_service.spawn_item(player.game, m_id, player, count=count)
+            player.send_line(f"You summon {count}x {proto.name} into your inventory.")
+        
         player.send_line(f"Spawned {count}x {m_type.lower()}: {proto.name}")
     else:
         player.send_line("\nMultiple matches found. Please specify ID:")
@@ -167,11 +123,8 @@ def purge(player, args):
     """Clear room of mobs/items."""
     if not args: return player.send_line("Usage: @purge <mobs|items|all|target>")
     arg = args.lower()
-    room = player.room
-    if arg in ['all', 'mobs']:
-        for m in list(room.monsters): room.monsters.remove(m)
-    if arg in ['all', 'items']:
-        for i in list(room.items): room.items.remove(i)
+    from logic.core import world_service
+    world_service.purge_room(player.room, purge_type=arg)
     player.send_line("Purge complete.")
 
 @command_manager.register("@inspect", admin=True, category="admin")

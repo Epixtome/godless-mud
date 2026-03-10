@@ -13,7 +13,8 @@ if os.path.exists("data/decay.json"):
 
 def register_decay(game, item, room):
     """Signals the system to start tracking an item for decay."""
-    if not hasattr(game, 'decaying_items'):
+    if not game: return
+    if not hasattr(game, 'decaying_items') or game.decaying_items is None:
         game.decaying_items = set()
     game.decaying_items.add((item, room))
 

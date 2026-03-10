@@ -4,27 +4,29 @@ from utilities import mapper
 from utilities.colors import Colors
 
 # Terrain Opacity Modifiers (0.0 = Clear, 1.0 = Solid)
+# Fallback Opacity if data/terrain.json is missing
 TERRAIN_OPACITY = {
     "road": 0.0,
-    "cobblestone": 0.0,
-    "bridge": 0.0,
     "plains": 0.1,
-    "hills": 0.2,
-    "grass": 0.1,
     "forest": 0.4,
-    "dense_forest": 0.8,
     "mountain": 0.9,
     "peak": 1.0,
-    "indoors": 0.2,
-    "cave": 0.9,
-    "swamp": 0.3,
-    "water": 0.1,
-    "lake_deep": 0.1,
-    "underwater": 0.5
+    "indoors": 0.2
 }
 
-def get_opacity(room):
+def get_opacity(room, world=None):
     """Calculates the visual opacity of a room."""
+    # 1. Room-specific override
+    if hasattr(room, 'opacity') and room.opacity > 0:
+        return room.opacity
+
+    # 2. World configuration
+    if world and hasattr(world, 'terrain_config'):
+        config = world.terrain_config.get('opacity', TERRAIN_OPACITY)
+        opacity = config.get(room.terrain, 0.5)
+        return min(1.0, max(0.0, opacity))
+
+    # 3. Static fallback
     opacity = TERRAIN_OPACITY.get(room.terrain, 0.5)
     return min(1.0, max(0.0, opacity))
 
@@ -75,7 +77,7 @@ def raycast(world, start_room, end_room):
                     return False, r # Blocked by high terrain
                 
                 # If room is AT the beam level and opaque
-                if abs(r.z - beam_z) < 1.0 and get_opacity(r) >= 0.8:
+                if abs(r.z - beam_z) < 1.0 and get_opacity(r, world) >= 0.8:
                     return False, r
 
     return True, None

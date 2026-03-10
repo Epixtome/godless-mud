@@ -18,6 +18,7 @@ class BaseItem(GameEntity):
         self.timer = timer # Now ALL items support decay
         self.tags = tags or []
         self.properties = properties or {}
+        self.metadata = {}
 
     def clone(self):
         raise NotImplementedError("Subclasses must implement clone")
@@ -60,6 +61,7 @@ class Armor(BaseItem):
     def __init__(self, name, description, defense, value=10, flags=None, prototype_id=None, timer=None, tags=None, properties=None):
         super().__init__(name, description, value, flags, prototype_id, timer, tags, properties)
         self.defense = defense
+        self.bonus_hp = 0
 
     def __str__(self):
         return f"{self.name} (DEF: {self.defense})"

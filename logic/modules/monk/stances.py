@@ -4,7 +4,7 @@ Stance management for the Monk class.
 """
 from utilities.colors import Colors
 from logic.core import event_engine
-from logic.core import status_effects_engine
+from logic.core import effects
 from logic.actions.registry import register
 
 @register("crane_stance")
@@ -19,19 +19,19 @@ def execute_crane_stance(player, skill_data, args=None):
         return None, True
 
     # 1. Check Status Effect (Source of Truth)
-    if status_effects_engine.has_effect(player, "crane_stance"):
+    if effects.has_effect(player, "crane_stance"):
         # Toggle Off
-        status_effects_engine.remove_effect(player, "crane_stance")
+        effects.remove_effect(player, "crane_stance")
         monk_state['stance'] = None
         player.send_line(f"{Colors.YELLOW}You drop out of the Crane Stance.{Colors.RESET}")
             
     else:
         # Toggle On
         # 1. Clear conflicting stances
-        status_effects_engine.remove_effect(player, "turtle_stance")
+        effects.remove_effect(player, "turtle_stance")
         
         # 2. Apply Crane Stance
-        status_effects_engine.apply_effect(player, "crane_stance", 600)
+        effects.apply_effect(player, "crane_stance", 600)
         monk_state['stance'] = "crane"
         
         # Reset Flow when changing stances to prevent exploit-switching
@@ -55,17 +55,17 @@ def execute_turtle_stance(player, skill_data, args=None):
         player.send_line("You lack the discipline for this stance.")
         return None, True
 
-    if status_effects_engine.has_effect(player, "turtle_stance"):
+    if effects.has_effect(player, "turtle_stance"):
         # Toggle Off
-        status_effects_engine.remove_effect(player, "turtle_stance")
+        effects.remove_effect(player, "turtle_stance")
         monk_state['stance'] = None
         player.send_line(f"{Colors.YELLOW}You rise out of the Turtle Stance.{Colors.RESET}")
             
     else:
         # Toggle On
-        status_effects_engine.remove_effect(player, "crane_stance")
+        effects.remove_effect(player, "crane_stance")
         
-        status_effects_engine.apply_effect(player, "turtle_stance", 600)
+        effects.apply_effect(player, "turtle_stance", 600)
         monk_state['stance'] = "turtle"
         
         monk_state['flow_pips'] = 0

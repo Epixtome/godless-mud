@@ -2,7 +2,7 @@ import logging
 from utilities.colors import Colors
 from logic.constants import Tags
 from logic.core import event_engine
-from logic.core import status_effects_engine
+from logic.core import effects
 from utilities import telemetry
 # Re-export pacing functions to maintain API compatibility with blessings_engine
 from .pacing import check_pacing, on_status_removed

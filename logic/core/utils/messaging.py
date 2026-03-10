@@ -4,6 +4,8 @@ Domain: Telnet protocol, output formatting, and prompt construction.
 Ensures IAC GA (Go Ahead) compliance and buffer management.
 """
 import logging
+import time
+from datetime import datetime
 from typing import TYPE_CHECKING
 from utilities.colors import Colors
 from logic.constants import Tags
@@ -43,20 +45,20 @@ def get_prompt(player):
     
     # Generic Status Effect Display (V4.4)
     if player.status_effects:
-        from logic.core.engines import status_effects_engine
+        from logic.core import effects
         for eff_id in player.status_effects:
             # Skip internal/class resources already handled by on_build_prompt
             if eff_id in ['crane_stance', 'turtle_stance', 'magic_shield']:
                 continue
             
-            eff_def = status_effects_engine.get_effect_definition(eff_id, player.game)
+            eff_def = effects.get_effect_definition(eff_id, player.game)
             if eff_def:
                 name = eff_def.get('short_name') or eff_def.get('name', eff_id).title()
                 # Determine color based on type
                 color = Colors.YELLOW
-                if eff_id in status_effects_engine.HARD_DEBUFFS or eff_id in status_effects_engine.CRITICAL_STATES:
+                if eff_id in effects.HARD_DEBUFFS or eff_id in effects.CRITICAL_STATES:
                     color = Colors.RED
-                elif eff_id in status_effects_engine.SOFT_DEBUFFS:
+                elif eff_id in effects.SOFT_DEBUFFS:
                     color = Colors.YELLOW # Default to yellow if orange is missing
                 
                 player.active_statuses_display.append(f"{color}{name}{Colors.RESET}")
@@ -88,7 +90,7 @@ def get_prompt(player):
             if "dazed" in t_effects: statuses.append(f"{Colors.YELLOW}Dazed{Colors.RESET}")
 
             status_str = f" ({'/'.join(statuses)})" if statuses else ""
-            prompt += f" <{target.name}: {condition}{status_str}>"
+            prompt += f" ({target.name}: {condition}{status_str})"
             
     return prompt + " > "
 
@@ -98,14 +100,17 @@ def send_raw(player, message, include_prompt=False):
     Handles buffering and the critical Telnet Go Ahead (IAC GA) signal.
     """
     if include_prompt:
-        message += f"\r\n{player.get_prompt()}"
+        # Ensure message ends with a newline before the prompt, without double-padding
+        if message and not message.endswith("\n"):
+            message += "\r\n"
+        message += f"{player.get_prompt()}"
 
     if player.is_buffering:
         player.output_buffer.append(message)
     else:
         try:
             player.connection.write(message)
-            if include_prompt:
+            if include_prompt or message.endswith("> "):
                 # IAC GA is delegated to connection.flush() 
                 player.connection.flush()
         except Exception as e:
@@ -138,3 +143,18 @@ def show_next_page(player):
         
     if player.pagination_buffer:
         player.connection.write("\r\n[Press Enter for more, 'q' to quit] ")
+
+def send_line(player, message, include_prompt=False):
+    """Sends a message followed by a newline."""
+    if hasattr(player, 'is_auditing') and player.is_auditing:
+        # Only timestamp non-empty lines to prevent visual clutter
+        if message and str(message).strip():
+            ts = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            message = f"{Colors.DGREY}[{ts}]{Colors.RESET} {message}"
+    send_raw(player, f"{message}\r\n", include_prompt=include_prompt)
+
+def broadcast_room(room, message, exclude_player=None):
+    """Broadcasts a message to all players in a room."""
+    for player in room.players:
+        if player != exclude_player:
+            send_line(player, message)

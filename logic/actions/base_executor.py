@@ -2,7 +2,7 @@
 logic/actions/base_executor.py
 The Generic Engine: Handles standard skills (Damage, Healing, Buffs) via Data.
 """
-from logic.core import status_effects_engine
+from logic.core import effects
 from logic.engines import blessings_engine, magic_engine, combat_processor
 from logic.actions.skill_utils import _apply_damage
 from logic.common import find_by_index
@@ -31,8 +31,9 @@ def do_heal(player, target, skill, power, **kwargs):
     amount = kwargs.get("amount", power)
     if isinstance(amount, float):
         amount = int(power * amount)
-        
-    target.hp = min(target.max_hp, target.hp + amount)
+    from logic.core import resources
+    resources.modify_resource(target, "hp", amount, source=player, context="Heal")
+    
     player.send_line(f"{Colors.GREEN}You heal {target.name} for {amount}.{Colors.RESET}")
     if target != player and hasattr(target, 'send_line'):
         target.send_line(f"{Colors.GREEN}{player.name} heals you for {amount}.{Colors.RESET}")
@@ -55,7 +56,7 @@ def do_status(player, target, skill, power, **kwargs):
     if effect_id in STATUS_MAP:
         effect_id = STATUS_MAP[effect_id]
     
-    status_effects_engine.apply_effect(target, effect_id, duration)
+    effects.apply_effect(target, effect_id, duration)
     player.send_line(f"You apply {skill.name} to {target.name}.")
 
 def do_resource(player, target, skill, power, **kwargs):
@@ -64,14 +65,8 @@ def do_resource(player, target, skill, power, **kwargs):
     amount = kwargs.get("amount", 1)
     
     if resource and hasattr(player, 'resources'):
-        # Determine cap
-        cap = 100
-        if resource == Tags.CHI: cap = 5
-        elif resource == 'momentum': cap = 5
-        elif hasattr(player, 'get_max_resource'):
-            cap = player.get_max_resource(resource)
-            
-        player.resources[resource] = min(cap, player.resources.get(resource, 0) + amount)
+        from logic.core import resources
+        resources.modify_resource(player, resource, amount, source=player, context="Resource Skill")
         player.send_line(f"{Colors.YELLOW}You gain {amount} {resource.title()}.{Colors.RESET}")
 
 COMMAND_MAP = {

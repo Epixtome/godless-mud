@@ -8,7 +8,7 @@ from logic.core import loader as world_loader
 from logic.core.network_engine import Connection
 from logic.handlers import input_handler
 from logic import systems, mob_manager, spawner, commands
-from logic.core import status_effects_engine
+from logic.core import effects
 from logic.passives import hooks as passive_hooks
 from utilities import integrity, telemetry
 
@@ -23,9 +23,8 @@ HEARTBEAT_SUBSCRIBERS = [] # Initialized in GodlessGame to ensure fresh referenc
 class GodlessGame:
     def __init__(self):
         self.players = {}
-        self.world = world_loader.load_world(None)
-        self.world.game = self
         self.tick_count = 0
+        self.pulse_count = 0
         self.decaying_items = set()
         self.dead_entities = []
         
@@ -33,6 +32,10 @@ class GodlessGame:
         self.blacklist = set()
         self.connection_history = {} # IP -> list of timestamps
         self.load_blacklist()
+        
+        # Load World (Requires tick_count/decaying_items initialized)
+        self.world = world_loader.load_world(None)
+        self.world.game = self
         
         # Subscriptions
         from logic.core.systems import get_heartbeat_subscribers
@@ -89,18 +92,74 @@ class GodlessGame:
         self.decaying_items = set()
         systems.initialize_decay(self)
 
+    def process_command(self, player, command_line):
+        """
+        Central entry point for commands.
+        Decouples network engine from specific handlers.
+        """
+        from logic.handlers import input_handler
+        from logic.engines import combat_lifecycle
+        
+        if not player or not command_line:
+            return True
+
+        # Handle Commands with atomic buffering.
+        # We start buffering here, but we DO NOT stop/flush here.
+        # The 200ms Heartbeat Pulse handles the final atomic flush.
+        player.start_buffering()
+        try:
+            result = input_handler.handle(player, command_line)
+            
+            # Mark that a prompt is now required for this input cycle
+            player.prompt_requested = True
+        finally:
+            # Drop the buffering flag so the message system knows we're ready for the pulse to send.
+            player.is_buffering = False
+        
+        return result
+
+    def handle_disconnect(self, player):
+        """Dispatches disconnection cleanup to the Player Service."""
+        from logic.core.services import player_service
+        player_service.handle_disconnect(self, player)
+
     def _clean_input(self, text):
         return "".join([c for c in text if c.isprintable() or c in ['\x08', '\x7f']])
 
     async def heartbeat(self):
+        """
+        High-Resolution Heartbeat Engine.
+        Pulses every 200ms to flush buffers and provide snappy UI.
+        Full World Tick occurs every 2.0s (10 pulses).
+        """
         while True:
-            self.tick_count += 1
-            await asyncio.sleep(2)
+            await asyncio.sleep(0.2)
+            self.pulse_count += 1
+            is_world_tick = (self.pulse_count % 10 == 0)
+            
+            if is_world_tick:
+                self.tick_count += 1
+
             try:
-                for subscriber in self.subscribers:
-                    subscriber(self)
+                # 1. Process World Logic (Combat, Regen, AI) every 2.0s
+                if is_world_tick:
+                    for subscriber in self.subscribers:
+                        subscriber(self)
+                
+                # 2. Process Sync Frame (Render/Flush) every 200ms
+                # Includes the Reaper cleanup to ensure snappiness
+                from logic.engines import combat_lifecycle
+                combat_lifecycle.process_dead_queue(self)
+
+                for player in self.players.values():
+                    if player.is_buffering_content() or player.prompt_requested:
+                        player.send_prompt()
+                        player.stop_buffering()
+                        if hasattr(player, 'drain'):
+                            asyncio.create_task(player.drain())
+                            
             except Exception as e:
-                logger.error(f"Heartbeat error: {e}", exc_info=True)
+                logger.error(f"Heartbeat pulse error: {e}", exc_info=True)
 
     async def autosave(self):
         while True:

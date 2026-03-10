@@ -8,22 +8,24 @@ from logic.core.utils import display_utils
 @command_manager.register("look", "l", category="information")
 def look(player, args, with_prompt=True):
     """Look at the current room or an object."""
-    last_msg = None
+    output = []
 
     def send(msg):
-        nonlocal last_msg
-        if last_msg is not None: player.send_line(last_msg)
-        last_msg = str(msg)
+        output.append(str(msg))
 
     def flush():
-        nonlocal last_msg
-        if last_msg is not None:
-            if with_prompt:
-                player.send_raw(f"\r\n{last_msg}", include_prompt=True)
-                player.suppress_engine_prompt = True
-            else:
-                player.send_line(last_msg)
-        last_msg = None
+        if not output:
+            return
+        # Filter None and strip trailing empty lines but preserve internal breaks
+        cleaned = [str(line) for line in output]
+        full_text = "\r\n".join(cleaned).strip()
+        
+        if with_prompt:
+            player.send_raw(full_text + "\r\n", include_prompt=True)
+            player.suppress_engine_prompt = True
+        else:
+            player.send_line(full_text)
+        output.clear()
 
     room = player.room
     if args.lower().startswith("in "):
@@ -71,7 +73,8 @@ def look(player, args, with_prompt=True):
     if getattr(player, 'admin_vision', False):
         send(f"{Colors.MAGENTA}[DEBUG] ID: {room.id} | XYZ: {room.x},{room.y},{room.z}{Colors.RESET}")
 
-    send(f"{Colors.WHITE}{room.description}{Colors.RESET}")
+    desc = room.description.strip()
+    send(f"{Colors.WHITE}{desc}{Colors.RESET}")
     
     exits = []
     for direction, target_id in room.exits.items():
@@ -129,17 +132,15 @@ def where(player, args):
 def scan(player, args):
     """Scan for enemies in the immediate area."""
     player.send_line(f"\n{Colors.BOLD}Scanning area...{Colors.RESET}")
-    local_radius = 2
-    if hasattr(player, 'identity_tags') and "eagle_eye" in player.identity_tags: local_radius += 2
-    if hasattr(player, 'status_effects'):
-        if "eagle_eye" in player.status_effects: local_radius += 2
-        if "farsight" in player.status_effects: local_radius += 1
-
-    visible_grid = vision_engine.get_visible_rooms(player.room, radius=local_radius, world=player.game.world, check_los=True, observer=player)
-    sorted_rooms = sorted(visible_grid.items(), key=lambda item: abs(item[0][0]) + abs(item[0][1]))
+    visible_grid = vision_engine.get_visible_rooms(player.room, radius=1, world=player.game.world, check_los=True, observer=player)
     
-    for (rx, ry), room in sorted_rooms:
-        prefix = f"{Colors.YELLOW}Here:{Colors.RESET}" if (rx == 0 and ry == 0) else f"{Colors.CYAN}{rx},{ry}:{Colors.RESET}"
-        if room.monsters:
-            player.send_line(prefix)
-            for m in room.monsters: player.send_line(f"  {m.name}")
+    # Predefined directional map
+    dirs = {(0,0): "Here", (0,1): "North", (0,-1): "South", (1,0): "East", (-1,0): "West"}
+    
+    for (rx, ry) in dirs.keys():
+        room = visible_grid.get((rx, ry))
+        if room and room.monsters:
+            color = Colors.YELLOW if (rx == 0 and ry == 0) else Colors.CYAN
+            player.send_line(f"{color}{dirs[(rx, ry)]}:{Colors.RESET}")
+            for m in room.monsters:
+                player.send_line(f"  {m.name}")

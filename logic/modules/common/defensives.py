@@ -4,13 +4,13 @@ Domain: Mitigation & Reactive Logic.
 """
 from logic.actions.registry import register
 from logic.actions.skill_utils import _apply_damage
-from logic.core import status_effects_engine
+from logic.core import effects
 from utilities.colors import Colors
 from .utility import _get_target, _consume_resources
 
 @register("brace")
 def handle_brace(player, skill, args, target=None):
-    status_effects_engine.apply_effect(player, "braced", 2)
+    effects.apply_effect(player, "braced", 2)
     player.send_line(f"{Colors.GREEN}You brace for impact! (+20% Mitigation){Colors.RESET}")
     _consume_resources(player, skill)
     return None, True
@@ -27,7 +27,7 @@ def handle_shield_bash(player, skill, args, target=None):
     player.send_line(f"{Colors.RED}You slam your shield into {target.name}!{Colors.RESET}")
     player.room.broadcast(f"{player.name} slams their shield into {target.name}!", exclude_player=player)
     _apply_damage(player, target, 5, "Shield Bash")
-    status_effects_engine.apply_effect(target, "stun", 4)
+    effects.apply_effect(target, "stun", 4)
     _consume_resources(player, skill)
     return target, True
 
@@ -57,6 +57,6 @@ def handle_intervene(player, skill, args, target=None):
     target = _get_target(player, args, target, "Intervene for whom?")
     if not target: return None, True
     # ... Logic migrated ...
-    status_effects_engine.apply_effect(player, "intervening", 10, verbose=False)
+    effects.apply_effect(player, "intervening", 10, verbose=False)
     _consume_resources(player, skill)
     return target, True

@@ -4,7 +4,7 @@ Barbarian utility skills (Hurl, etc).
 """
 from logic.actions.registry import register
 from logic.common import _get_target, get_reverse_direction
-from logic.core import status_effects_engine
+from logic.core import effects
 from logic.engines import magic_engine
 from utilities.colors import Colors
 
@@ -57,8 +57,8 @@ def handle_hurl(player, skill, args, target=None):
             if hasattr(target, 'send_line'): target.send_line(f"{Colors.RED}You are hurled {direction}!{Colors.RESET}")
     else:
         # Failure: Wall Slam
-        status_effects_engine.apply_effect(target, "off_balance", 10)
-        status_effects_engine.apply_effect(target, "stun", 4)
+        effects.apply_effect(target, "off_balance", 10)
+        effects.apply_effect(target, "stun", 4)
         player.room.broadcast(f"{Colors.RED}{player.name} hurls {target.name} into the wall!{Colors.RESET}")
 
     _consume(player, skill)

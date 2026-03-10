@@ -3,7 +3,7 @@ logic/modules/knight/knight.py
 The Knight Domain: Defense, Mounted Combat, and Protection.
 """
 from logic.actions.registry import register
-from logic.core import event_engine, status_effects_engine, resource_engine
+from logic.core import event_engine, effects, resources
 from logic.engines import action_manager, blessings_engine, magic_engine
 from logic.actions.skill_utils import _apply_damage
 from utilities.colors import Colors
@@ -20,7 +20,7 @@ def _consume_resources(player, skill):
 def handle_brace(player, skill, args, target=None):
     """Increase mitigation for a short duration."""
     player.send_line(f"{Colors.BOLD}{Colors.WHITE}You plant your feet and brace for impact!{Colors.RESET}")
-    status_effects_engine.apply_effect(player, "braced", 10)
+    effects.apply_effect(player, "braced", 10)
     _consume_resources(player, skill)
     return None, True
 
@@ -38,7 +38,7 @@ def handle_shield_bash(player, skill, args, target=None):
     power = blessings_engine.calculate_power(skill, player, target)
     _apply_damage(player, target, power, "Shield Bash")
     
-    status_effects_engine.apply_effect(target, "off_balance", 4)
+    effects.apply_effect(target, "off_balance", 4)
     
     _consume_resources(player, skill)
     return target, True
@@ -149,7 +149,7 @@ def handle_stomp(player, skill, args, target=None):
     
     for t in targets:
         _apply_damage(player, t, int(power * 0.5), "Stomp")
-        status_effects_engine.apply_effect(t, "off_balance", 2)
+        effects.apply_effect(t, "off_balance", 2)
         
     _consume_resources(player, skill)
     return None, True

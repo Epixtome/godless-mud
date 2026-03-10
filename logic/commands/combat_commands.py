@@ -2,7 +2,7 @@ import random
 import logic.handlers.command_manager as command_manager
 import logic.search as search
 from logic.common import find_by_index
-from logic.engines import combat_engine
+from logic.core import combat
 from utilities.colors import Colors
 
 @command_manager.register("kill", "k", "attack", category="combat")
@@ -12,14 +12,10 @@ def kill(player, args):
         player.send_line("Kill whom?")
         return
         
-    # Try index search first (2.skeleton), then fall back to standard search
     target = find_by_index(player.room.monsters + player.room.players, args)
     
     if player.is_in_combat():
-        if not args:
-            player.send_line(f"You are already fighting {player.fighting.name}!")
-        else:
-            player.send_line("You are already in combat! You must flee or defeat your current target first.")
+        player.send_line("You are already in combat! You must flee or defeat your current target first.")
         return
     
     if not target:
@@ -33,19 +29,8 @@ def kill(player, args):
         player.send_line("Suicide is not the answer.")
         return
         
-    player.fighting = target
-    player.state = "combat"
+    combat.start_combat(player, target)
     
-    # If target is a mob, it fights back automatically via the system loop.
-    # If target is a player, we might want to auto-retaliate or wait for them to type kill.
-    if hasattr(target, 'fighting'):
-        if player not in target.attackers:
-            target.attackers.append(player)
-        if not target.fighting:
-            target.fighting = player
-        if hasattr(target, 'interaction_context') and target.interaction_context:
-            target.interaction_context.shatter(target)
-        
     player.send_line(f"{Colors.RED}You attack {target.name}!{Colors.RESET}")
     player.room.broadcast(f"{Colors.RED}{player.name} attacks {target.name}!{Colors.RESET}", exclude_player=player)
 
@@ -63,13 +48,11 @@ def flee(player, args):
         return
     
     direction = random.choice(exits)
-    
-    # Attempt move first. If it fails (stamina/blocked), do not clear combat.
     player.send_line(f"{Colors.YELLOW}You attempt to flee {direction}!{Colors.RESET}")
-    if not _move(player, direction):
-        return
 
-    player.stop_combat()
+    # Attempt move first. If it fails, do not clear combat.
+    if _move(player, direction):
+        combat.stop_combat(player)
 
 @command_manager.register("consider", "con", category="combat")
 def consider(player, args):
@@ -90,42 +73,8 @@ def consider(player, args):
         player.send_line("You check your own pulse. You seem alive.")
         return
 
-    # Estimate Player Offense
-    p_dmg = combat_engine.estimate_player_damage(player)
-    
-    # Estimate Target Offense
-    if hasattr(target, 'damage'):
-        # Mob
-        t_dmg = combat_engine.calculate_mob_damage(target, player)
-    else:
-        # Player
-        t_dmg = combat_engine.estimate_player_damage(target)
-        if player.equipped_armor:
-            t_dmg = max(1, t_dmg - player.equipped_armor.defense)
-
-    # Rounds to kill target (Target HP / Player Dmg)
-    rounds_to_kill = target.hp / max(1, p_dmg)
-    
-    # Rounds to die (Player HP / Target Dmg)
-    rounds_to_die = player.hp / max(1, t_dmg)
-    
-    diff = rounds_to_die - rounds_to_kill
-    
-    msg = f"You consider {target.name}...\n"
-    if diff > 10:
-        msg += "You could kill them in your sleep. (Very Easy)"
-    elif diff > 5:
-        msg += "You should have no trouble. (Easy)"
-    elif diff > 0:
-        msg += "It would be a fair fight. (Even)"
-    elif diff > -5:
-        msg += "They look tough. Be careful. (Hard)"
-    elif diff > -10:
-        msg += "You would likely die. (Very Hard)"
-    else:
-        msg += "DEATH WISH. (Impossible)"
-        
-    player.send_line(msg)
+    diff_msg = combat.calculate_difficulty(player, target)
+    player.send_line(f"You consider {target.name}...\n{diff_msg}")
 
 @command_manager.register("sacrifice", "sac", category="combat")
 def sacrifice(player, args):
@@ -158,9 +107,9 @@ def sacrifice(player, args):
         return
         
     # Calculate favor via the distribution engine
-    from logic.engines import combat_engine
+    from logic.core import combat
     # We pass the corpse as the 'target' as it now carries the mob's tags
-    combat_engine.distribute_favor(player, target, player.game)
+    combat.distribute_favor(player, target, player.game)
     
     player.room.items.remove(target)
     player.room.broadcast(f"{player.name} sacrifices {target.name}.", exclude_player=player)

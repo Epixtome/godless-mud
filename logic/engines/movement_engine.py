@@ -3,33 +3,20 @@ Handles pacing and rhythm for player movement to prevent spamming.
 """
 import time
 import math
-from logic.core import status_effects_engine
+from logic.core import effects
 from utilities.colors import Colors
 from utilities import telemetry
 
 EXHAUSTION_DURATION = 4.0  # 4.0 seconds
 MANDATORY_DELAY_SECONDS = 0.1
 
+# Fallback multipliers if data/terrain.json is missing
 TERRAIN_MULTIPLIERS = {
     "road": 1.0,
-    "cobblestone": 1.0,
-    "bridge": 1.0,
     "plains": 1.2,
-    "grass": 1.2,
     "forest": 1.8,
-    "dense_forest": 2.5,
-    "hills": 3.0,
     "mountain": 5.0,
-    "high_mountain": 10.0,
-    "peak": 15.0,
-    "swamp": 4.5,
-    "mud": 6.0,
-    "beach": 1.5,
-    "water": 4.0,
-    "shallow_water": 3.0,
-    "ocean": 20.0,
-    "indoors": 1.0,
-    "cave": 2.0
+    "indoors": 1.0
 }
 
 def check_move_pacing(player, room=None):
@@ -54,16 +41,17 @@ def check_move_pacing(player, room=None):
     terrain_mult = 1.0
     if room:
         terrain = getattr(room, 'terrain', 'road')
-        terrain_mult = TERRAIN_MULTIPLIERS.get(terrain, 1.0)
+        config = getattr(player.game.world, 'terrain_config', {}).get('multipliers', TERRAIN_MULTIPLIERS)
+        terrain_mult = config.get(terrain, 1.0)
 
     # Turtle Stance: Unstoppable (Ignores terrain delay)
-    if status_effects_engine.has_effect(player, "turtle_stance"):
+    if effects.has_effect(player, "turtle_stance"):
         terrain_mult = 1.0
 
     delay = base_delay * terrain_mult
 
     # Exhaustion Penalty
-    if status_effects_engine.has_effect(player, "exhausted"):
+    if effects.has_effect(player, "exhausted"):
         delay *= 3.0
 
     # 2. Check Timing
@@ -90,16 +78,17 @@ def calculate_move_cost(player, room):
     
     # Terrain Modifier
     terrain = getattr(room, 'terrain', 'indoors')
-    cost *= TERRAIN_MULTIPLIERS.get(terrain, 1.0)
+    config = getattr(player.game.world, 'terrain_config', {}).get('multipliers', TERRAIN_MULTIPLIERS)
+    cost *= config.get(terrain, 1.0)
     
     # Weight Modifier
     if getattr(player, 'is_heavy', False):
         cost *= 3.0
         
     # Stance Modifiers (The Interceptor)
-    if status_effects_engine.has_effect(player, "crane_stance"):
+    if effects.has_effect(player, "crane_stance"):
         cost *= 0.5
-    if status_effects_engine.has_effect(player, "turtle_stance"):
+    if effects.has_effect(player, "turtle_stance"):
         cost *= 1.5
         
     return int(math.ceil(max(1.0, cost)))

@@ -19,6 +19,11 @@ class Room:
         self.traversal_cost = 1 # Base cost
         self.symbol = None # ASCII override for mapping
         self.dirty = True
+        
+        # Loader internals (Linter Satisfied)
+        self._active_items_data = []
+        self._active_monsters_data = []
+        self._generated = False
 
         # Dynamic State (Non-persistent in new JSON standard)
         self.items = [] # List of Armor/Items
@@ -160,9 +165,8 @@ class Room:
 
     def broadcast(self, message, exclude_player=None):
         """Send a message to everyone in the room except the sender."""
-        for player in self.players:
-            if player != exclude_player:
-                player.send_line(message)
+        from logic.core import messaging
+        messaging.broadcast_room(self, message, exclude_player=exclude_player)
 
 class Door:
     def __init__(self, name, state='closed', key_id=None, transparency=0.0):

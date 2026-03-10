@@ -57,14 +57,14 @@ def score(player, args):
 
     # 2a. Active Status Effects (V4.4)
     if hasattr(player, 'status_effects') and player.status_effects:
-        from logic.core.engines import status_effects_engine
+        from logic.core import effects
         effect_list = []
         for eff_id in player.status_effects:
-            eff_def = status_effects_engine.get_effect_definition(eff_id, player.game)
+            eff_def = effects.get_effect_definition(eff_id, player.game)
             if eff_def:
                 name = eff_def.get('name', eff_id).title()
                 color = Colors.YELLOW
-                if eff_id in status_effects_engine.HARD_DEBUFFS or eff_id in status_effects_engine.CRITICAL_STATES:
+                if eff_id in effects.HARD_DEBUFFS or eff_id in effects.CRITICAL_STATES:
                     color = Colors.RED
                 effect_list.append(f"{color}{name}{Colors.RESET}")
         if effect_list:
@@ -151,11 +151,11 @@ def stats(player, args):
     width = 40
     player.send_line(f"\n{display_utils.render_header('Combat Math', width)}")
     
-    from logic.engines import combat_engine
+    from logic.core import combat
     
-    est_dmg = combat_engine.estimate_player_damage(player)
-    crit = combat_engine.estimate_crit_chance(player)
-    defense = combat_engine.estimate_defense(player)
+    est_dmg = combat.estimate_player_damage(player)
+    crit = combat.estimate_crit_chance(player)
+    defense = combat.estimate_defense(player)
     
     player.send_line(display_utils.render_labeled_value("Attack Power", est_dmg, 15, Colors.RED))
     player.send_line(display_utils.render_labeled_value("Crit Chance", f"{crit:.1f}%", 15, Colors.YELLOW))

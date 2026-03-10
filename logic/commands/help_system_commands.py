@@ -1,6 +1,6 @@
 from logic.handlers import command_manager
 from utilities.colors import Colors
-from logic.core.engines import status_effects_engine
+from logic.core import effects
 
 def _display_help(player, categories, title):
     output = [f"\n--- {Colors.BOLD}{title}{Colors.RESET} ---"]
@@ -107,7 +107,7 @@ def help_command(player, args):
             blessing_match = b
             break
 
-    status_help = status_effects_engine.get_status_help(search_term, player.game)
+    status_help = effects.get_status_help(search_term, player.game)
     
     if blessing_match or status_help:
         if blessing_match:
@@ -155,7 +155,7 @@ def help_command(player, args):
 
     # Search Status Effects
     # Core
-    for k, v in status_effects_engine.CORE_STATUS_DEFINITIONS.items():
+    for k, v in effects.CORE_STATUS_DEFINITIONS.items():
         if search_term in v.get('name', '').lower():
              matches.append((f"Status: {v.get('name')}", k, 'status'))
     # World
@@ -191,7 +191,7 @@ def help_command(player, args):
         elif type_ == 'deity':
             _display_deity_help(player, obj)
         elif type_ == 'status':
-            status_help = status_effects_engine.get_status_help(obj, player.game)
+            status_help = effects.get_status_help(obj, player.game)
             if status_help:
                 _display_help_entry(player, status_help)
         return

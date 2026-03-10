@@ -6,7 +6,7 @@ import random
 from logic.actions.registry import register
 from logic.actions.skill_utils import _apply_damage
 from logic.engines import blessings_engine
-from logic.core import event_engine, status_effects_engine, resource_engine
+from logic.core import event_engine, effects, resources
 from utilities.colors import Colors
 from .utility import _get_target, _consume_resources
 
@@ -42,7 +42,7 @@ def handle_trip(player, skill, args, target=None):
     target = _get_target(player, args, target, "Trip whom?")
     if not target: return None, True
     player.send_line(f"{Colors.RED}You sweep {target.name}'s legs!{Colors.RESET}")
-    status_effects_engine.apply_effect(target, "stun", 2)
+    effects.apply_effect(target, "stun", 2)
     _consume_resources(player, skill)
     return target, True
 
@@ -97,7 +97,7 @@ def handle_triple_kick(player, skill, args, target=None):
     
     for i in range(3):
         _apply_damage(player, target, damage_per_hit, "Triple Kick")
-        resource_engine.modify_resource(target, "stamina", -5, source=player.name, context="Triple Kick")
+        resources.modify_resource(target, "stamina", -5, source=player.name, context="Triple Kick")
 
     # Dispatch Event for Monk Flow Mastery (Daze)
     event_engine.dispatch("on_skill_execute", {'player': player, 'skill': skill, 'target': target})
@@ -110,7 +110,7 @@ def handle_dirt_kick(player, skill, args, target=None):
     target = _get_target(player, args, target, "Kick dirt at whom?")
     if not target: return None, True
     player.send_line(f"You kick dirt into {target.name}'s eyes!")
-    status_effects_engine.apply_effect(target, "blind", 6)
+    effects.apply_effect(target, "blind", 6)
     _apply_damage(player, target, 5, "Dirt Kick")
     _consume_resources(player, skill)
     return target, True

@@ -4,7 +4,7 @@ Implementation of Warlock specialized skills.
 """
 import asyncio
 from logic.actions.registry import register
-from logic.core import resource_engine, status_effects_engine
+from logic.core import resources, effects
 from logic import common
 from utilities.colors import Colors
 from logic.actions.skill_utils import _apply_damage
@@ -13,7 +13,7 @@ def _consume_resources(player, skill, hp_cost=0):
     from logic.engines import magic_engine
     if hp_cost > 0:
         actual_cost = int(player.max_hp * (hp_cost / 100))
-        resource_engine.modify_resource(player, "hp", -actual_cost, source="Blood Magic", context="Skill Cost")
+        resources.modify_resource(player, "hp", -actual_cost, source="Blood Magic", context="Skill Cost")
         player.send_line(f"{Colors.RED}You pay {actual_cost} HP for the manifestation...{Colors.RESET}")
     
     magic_engine.consume_resources(player, skill)
@@ -28,7 +28,7 @@ def handle_chaos_drain(player, skill, args, target=None):
     player.send_line(f"{Colors.MAGENTA}You twist the chaotic strands of {target.name}'s vitality!{Colors.RESET}")
     
     # Drain Stamina
-    resource_engine.modify_resource(target, "stamina", -25, source=player.name, context="Chaos Drain")
+    resources.modify_resource(target, "stamina", -25, source=player.name, context="Chaos Drain")
     if hasattr(target, 'send_line'):
         target.send_line(f"{Colors.MAGENTA}{player.name} drains your stamina!{Colors.RESET}")
     
@@ -47,7 +47,7 @@ def handle_blood_toll(player, skill, args, target=None):
     power = blessings_engine.MathBridge.calculate_power(skill, player)
     
     # Blood Toll Bonus: +50% if bleeding or poisoned
-    is_debilitated = status_effects_engine.has_effect(target, "bleed") or status_effects_engine.has_effect(target, "poison")
+    is_debilitated = effects.has_effect(target, "bleed") or effects.has_effect(target, "poison")
     if is_debilitated:
         power = int(power * 1.5)
         player.send_line(f"{Colors.RED}The blood scent empowers your strike!{Colors.RESET}")
@@ -71,7 +71,7 @@ def handle_siphon_life(player, skill, args, target=None):
         heal_amt = int(power * 0.5)
         
         _apply_damage(player, target, power, "Siphon Life")
-        resource_engine.modify_resource(player, "hp", heal_amt, source="Siphon", context="Healing")
+        resources.modify_resource(player, "hp", heal_amt, source="Siphon", context="Healing")
         player.send_line(f"{Colors.GREEN}You absorb {heal_amt} HP from {target.name}!{Colors.RESET}")
 
     from logic.engines import action_manager

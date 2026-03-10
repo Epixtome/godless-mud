@@ -2,8 +2,11 @@
 logic/core/utils/mob_logic.py
 Unified logic for Mob entities. Decouples Monster behavior from the data model.
 """
+import random
 import logging
 from utilities.colors import Colors
+from logic.core import effects
+from logic.factories import loot_factory
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -19,11 +22,11 @@ def get_defense(mob):
     # Add defense from status effects
     if hasattr(mob, 'game') and mob.game:
         for effect_id in mob.status_effects:
-            from logic.core.engines import status_effects_engine
-            effect_data = status_effects_engine.get_effect_definition(effect_id, mob.game)
-            if effect_data:
+            effect_data = effects.get_effect_definition(effect_id, mob.game)
+            if isinstance(effect_data, dict):
                 mods = effect_data.get('modifiers', {})
-                total_def += mods.get('defense_add', 0)
+                if isinstance(mods, dict):
+                    total_def += mods.get('defense_add', 0)
                 
     return total_def
 
@@ -33,16 +36,16 @@ def get_damage(mob):
     
     if hasattr(mob, 'game') and mob.game:
         for effect_id in mob.status_effects:
-            from logic.core.engines import status_effects_engine
-            effect_data = status_effects_engine.get_effect_definition(effect_id, mob.game)
-            if effect_data:
+            effect_data = effects.get_effect_definition(effect_id, mob.game)
+            if isinstance(effect_data, dict):
                 mods = effect_data.get('modifiers', {})
-                # Multiplicative
-                if 'damage_mult' in mods:
-                    total_dmg *= mods['damage_mult']
-                # Additive
-                if 'damage_add' in mods:
-                    total_dmg += mods['damage_add']
+                if isinstance(mods, dict):
+                    # Multiplicative
+                    if 'damage_mult' in mods:
+                        total_dmg *= mods['damage_mult']
+                    # Additive
+                    if 'damage_add' in mods:
+                        total_dmg += mods['damage_add']
     return int(total_dmg)
 
 def die(mob):
@@ -50,13 +53,11 @@ def die(mob):
     mob.stop_combat()
     # Loot Logic
     if mob.loot_table and mob.game:
-        import random
         # Pick one item ID
         item_id = random.choice(mob.loot_table)
         
         # Dynamic Loot Check
         if item_id.startswith("*"):
-            from logic.factories import loot_factory
             item = loot_factory.generate_loot(level=mob.level)
         # Static Loot Check
         elif item_id in mob.game.world.items:

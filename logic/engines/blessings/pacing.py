@@ -1,5 +1,5 @@
 from utilities.colors import Colors
-from logic.core import status_effects_engine
+from logic.core import effects
 from utilities import telemetry
 
 def check_pacing(player, weight=1.0, limit=5.0, pool='combat'):
@@ -11,7 +11,7 @@ def check_pacing(player, weight=1.0, limit=5.0, pool='combat'):
     if not game: return True, "OK"
     
     # Immunity Check (Knight's Turtle Stance)
-    if status_effects_engine.has_effect(player, "turtle_stance"):
+    if effects.has_effect(player, "turtle_stance"):
         return True, "OK"
     
     current_tick = game.tick_count
@@ -33,7 +33,7 @@ def check_pacing(player, weight=1.0, limit=5.0, pool='combat'):
     # Check Limit
     if state['cost'] + weight > limit:
         telemetry.log_event(player, "STALL_WARNING", {"actions_in_tick": state['cost']})
-        status_effects_engine.apply_effect(player, "stalled", 0.25, log_event=False)
+        effects.apply_effect(player, "stalled", 0.25, log_event=False)
         return False, f"{Colors.YELLOW}You are acting too fast! (Stalled){Colors.RESET}"
         
     # Increment

@@ -5,7 +5,7 @@ Magic logic: General Utility, Time, Bardic Songs, and Multi-Class Magic.
 import random
 import asyncio
 from logic.actions.registry import register
-from logic.core import status_effects_engine
+from logic.core import effects
 from logic.engines import magic_engine, action_manager, blessings_engine
 from logic.actions.skill_utils import _apply_damage, handle_dispel_magic
 from logic.common import find_by_index, find_player_online, _get_target
@@ -90,13 +90,13 @@ def handle_nexus(player, skill, args, target=None):
 
 @register("song_of_courage", "anthem")
 def handle_song_of_courage(player, skill, args, target=None):
-    status_effects_engine.apply_effect(player, "song_courage", 9999, verbose=False)
+    effects.apply_effect(player, "song_courage", 9999, verbose=False)
     
     # Party-wide Buff
     allies = [p for p in player.room.players] + [m for m in player.room.monsters if getattr(m, 'leader', None) == player]
     
     for t in allies:
-        status_effects_engine.apply_effect(t, "buff_courage", 30)
+        effects.apply_effect(t, "buff_courage", 30)
         if hasattr(t, 'send_line'):
             t.send_line(f"{Colors.CYAN}{player.name}'s song fills you with courage!{Colors.RESET}")
             
@@ -108,7 +108,7 @@ def handle_song_of_courage(player, skill, args, target=None):
 def handle_temporal(player, skill, args, target=None):
     """Phase shift or temporal effects."""
     if "phase_bubble" in skill.identity_tags:
-        status_effects_engine.apply_effect(player, "phased", 30, verbose=False)
+        effects.apply_effect(player, "phased", 30, verbose=False)
         player.send_line(f"{Colors.CYAN}You shift slightly out of phase with reality.{Colors.RESET}")
         player.room.broadcast(f"{player.name} begins to shimmer and turn translucent.", exclude_player=player)
     return None, True
@@ -123,7 +123,7 @@ def handle_lullaby(player, skill, args, target=None):
     targets += [p for p in player.room.players if p != player]
 
     for t in targets:
-        status_effects_engine.apply_effect(t, "sleep", 10)
+        effects.apply_effect(t, "sleep", 10)
         
     _consume_resources(player, skill)
     return None, True
@@ -133,7 +133,7 @@ def handle_haste(player, skill, args, target=None):
     target = _get_target(player, args, target, "Cast Haste on whom?")
     if not target: return None, True
 
-    status_effects_engine.apply_effect(target, "haste", 30)
+    effects.apply_effect(target, "haste", 30)
     player.send_line(f"{Colors.CYAN}You accelerate time around {target.name}!{Colors.RESET}")
     _consume_resources(player, skill)
     return target, True
@@ -143,7 +143,7 @@ def handle_slow(player, skill, args, target=None):
     target = _get_target(player, args, target, "Cast Slow on whom?")
     if not target: return None, True
 
-    status_effects_engine.apply_effect(target, "slow", 20)
+    effects.apply_effect(target, "slow", 20)
     player.send_line(f"{Colors.MAGENTA}You warp time around {target.name}, slowing them down!{Colors.RESET}")
     _consume_resources(player, skill)
     return target, True
@@ -202,7 +202,8 @@ def handle_summons(player, skill, args, target=None):
             if getattr(player, 'active_class', None) == "summoner":
                 bonus = int(minion.max_hp * 0.30)
                 minion.max_hp += bonus
-                minion.hp += bonus
+                from logic.core import resources
+                resources.modify_resource(minion, "hp", bonus, source="Summoner Bonus")
                 player.send_line(f"{Colors.MAGENTA}(Summoner) Your minion rises with empowered vigor!{Colors.RESET}")
             
             player.send_line(f"{minion.name} rises to serve you!")
@@ -242,7 +243,8 @@ def handle_prism(player, skill, args, target=None):
         return None, True
 
     power = blessings_engine.MathBridge.calculate_power(skill, player)
-    target.hp = min(target.max_hp, target.hp + power)
+    from logic.core import resources
+    resources.modify_resource(target, "hp", power, source=player, context="Prism")
     
     player.send_line(f"You cast Prism on {target.name}, healing them for {power}.")
     

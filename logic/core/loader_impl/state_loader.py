@@ -1,0 +1,106 @@
+"""
+logic/core/loader_impl/state_loader.py
+Handles dynamic state persistence and world saving.
+"""
+import os
+import json
+import logging
+from models import Weapon, Armor, Consumable, Corpse
+
+logger = logging.getLogger("GodlessMUD")
+DB_DIR = os.path.join("data", "live")
+
+def load_live_state(world, inst_item, inst_monster):
+    """Loads deltas from data/live/ state files."""
+    for zone_id in world.zones.keys():
+        state_file = os.path.join(DB_DIR, f"{zone_id}.state.json")
+        if not os.path.exists(state_file): continue
+        try:
+            with open(state_file, 'r') as f:
+                state_data = json.load(f)
+            for r_id, r_state in state_data.get('rooms', {}).items():
+                if r_id in world.rooms:
+                    room = world.rooms[r_id]
+                    for i_data in r_state.get('items', []):
+                        if it := inst_item(i_data): room.items.append(it)
+                    for m_data in r_state.get('monsters', []):
+                        if mob := inst_monster(m_data, world):
+                            mob.room = room
+                            room.monsters.append(mob)
+            world.unique_registry = state_data.get('unique_registry', {})
+        except Exception as e:
+            logger.error(f"Failed to load live state for {zone_id}: {e}")
+
+def save_world_db(world):
+    """Saves all blueprints and live state deltas."""
+    save_shards(world)
+    for zone_id in world.zones.keys(): save_zone_state(world, zone_id)
+
+def save_zone_state(world, zone_id):
+    """Saves dynamic deltas for a specific zone."""
+    rooms = {r.id: r.serialize_state() for r in world.rooms.values() if r.zone_id == zone_id}
+    rooms = {k: v for k, v in rooms.items() if v['items'] or v['monsters']}
+    if rooms:
+        state = {"zone_id": zone_id, "rooms": rooms, "unique_registry": getattr(world, 'unique_registry', {})}
+        try:
+            with open(os.path.join(DB_DIR, f"{zone_id}.state.json"), 'w') as f:
+                json.dump(state, f, indent=4)
+        except Exception as e:
+            logger.error(f"Failed to save state for {zone_id}: {e}")
+
+def save_shards(world):
+    """Exports world geography into JSON shards."""
+    z_map = {}
+    for room in world.rooms.values():
+        zid = room.zone_id or "orphaned"
+        if zid not in z_map: z_map[zid] = []
+        z_map[zid].append(room.to_definition())
+    
+    for zid, rooms in z_map.items():
+        z_obj = world.zones.get(zid)
+        data = {
+            "metadata": z_obj.to_dict() if z_obj else {"id": zid, "name": zid.title()},
+            "rooms": rooms
+        }
+        try:
+            with open(f"data/zones/{zid}.json", 'w') as f:
+                json.dump(data, f, indent=4)
+        except Exception as e:
+            logger.error(f"Failed to save shard {zid}: {e}")
+
+def save_items(world):
+    """Saves all item prototypes to data/items.json."""
+    items = []
+    for mid, it in sorted(world.items.items()):
+        itype = "item"
+        if isinstance(it, Weapon): itype = "weapon"
+        elif isinstance(it, Armor): itype = "armor"
+        elif isinstance(it, Consumable): itype = "consumable"
+        elif isinstance(it, Corpse): itype = "corpse"
+        
+        d = {"id": getattr(it, 'prototype_id', mid), "type": itype, "name": it.name, "description": it.description, "value": getattr(it, 'value', 0)}
+        if hasattr(it, 'flags') and it.flags: d['flags'] = it.flags
+        if hasattr(it, 'tags') and it.tags: d['tags'] = it.tags
+        if itype == "weapon":
+            d['damage_dice'] = getattr(it, 'damage_dice', "1d4")
+            d['scaling'] = getattr(it, 'scaling', {})
+        elif itype == "armor": d['defense'] = getattr(it, 'defense', 0)
+        elif itype == "consumable": d['effects'] = getattr(it, 'effects', {})
+        items.append(d)
+    try:
+        with open('data/items.json', 'w') as f: json.dump({"items": items}, f, indent=4)
+        return True, "Saved items."
+    except Exception as e: return False, str(e)
+
+def save_mobs(world):
+    """Saves monster prototypes to data/mobs.json."""
+    mobs = []
+    for mid, m in sorted(world.monsters.items()):
+        d = {"id": getattr(m, 'prototype_id', mid), "name": m.name, "description": m.description, "hp": m.max_hp, "max_hp": m.max_hp, "damage": m.damage, "tags": m.tags}
+        for k in ['quests', 'can_be_companion', 'body_parts', 'vulnerabilities', 'states', 'triggers', 'loadout']:
+            if hasattr(m, k) and getattr(m, k): d[k] = getattr(m, k)
+        mobs.append(d)
+    try:
+        with open('data/mobs.json', 'w') as f: json.dump({"monsters": mobs}, f, indent=4)
+        return True, "Saved mobs."
+    except Exception as e: return False, str(e)

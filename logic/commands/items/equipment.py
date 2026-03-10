@@ -2,7 +2,7 @@ from logic.handlers import command_manager
 from logic import search
 from logic.engines.resonance_engine import ResonanceAuditor
 from utilities import telemetry
-from logic.core import resource_engine
+from logic.core import resources
 
 @command_manager.register("wear", "equip", category="item")
 def equip_item(player, args):
@@ -107,7 +107,7 @@ def equip_item(player, args):
     player.send_line(f"You {verb} {item.name}.")
     ResonanceAuditor.calculate_resonance(player)
     telemetry.log_stat_snapshot(player, player.current_tags)
-    resource_engine.update_max_hp(player)
+    resources.update_max_hp(player)
 
 @command_manager.register("remove", "unequip", category="item")
 def remove_item(player, args):
@@ -150,7 +150,7 @@ def remove_item(player, args):
         else:
             ResonanceAuditor.calculate_resonance(player)
             telemetry.log_stat_snapshot(player, player.current_tags)
-            resource_engine.update_max_hp(player)
+            resources.update_max_hp(player)
         return
     
     # Generic Remove
@@ -174,7 +174,7 @@ def remove_item(player, args):
             player.send_line(f"You remove {item.name}.")
             ResonanceAuditor.calculate_resonance(player)
             telemetry.log_stat_snapshot(player, player.current_tags)
-            resource_engine.update_max_hp(player)
+            resources.update_max_hp(player)
             return
             
     player.send_line("You aren't equipping that.")

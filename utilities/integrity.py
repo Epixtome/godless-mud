@@ -29,6 +29,9 @@ def check_file_structure():
             continue
         for file in files:
             path = os.path.join(root, file)
+            # Ignore __init__.py files as they are required for package structure even if empty
+            if file == "__init__.py":
+                continue
             if os.path.getsize(path) == 0:
                 issues.append(f"Empty File: {path}")
 

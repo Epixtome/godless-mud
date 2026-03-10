@@ -4,13 +4,15 @@ from .decay import register_decay, initialize_decay, decay
 from .weather import weather, time_of_day
 from .ai import mob_ai
 from .environmental import monitor_terrain
+from . import status
+
 
 def get_heartbeat_subscribers():
     """Returns the list of functions to call every heartbeat."""
-    from logic.core.engines import status_effects_engine
+    from logic.core import effects
     from logic import mob_manager
     return [
-        status_effects_engine.process_effects,
+        effects.process_effects,
         auto_attack,
         process_death,
         process_rest,

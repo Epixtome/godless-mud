@@ -6,6 +6,9 @@ from models.items import Armor, Weapon, Consumable, Item
 from utilities.colors import Colors
 from logic.constants import Tags
 from logic import calibration
+from logic.core import event_engine, effects
+from logic.core.utils import persistence, messaging, combat_logic
+from logic.engines.resonance_engine import ResonanceAuditor
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -45,6 +48,7 @@ class Player:
         self.status_effects = {} # effect_id -> expiry_tick
         self.interaction_context = None # For multi-step interactions
         self.state = "normal" # normal, commune, combat, etc.
+        self.is_player = True
         self.minions = [] # List of mobs following this player
         self.friendship = {} # npc_id -> level (0-100)
         self.visited_rooms = set() # Set of room IDs visited
@@ -53,6 +57,13 @@ class Player:
         self.is_mounted = False
         self.is_resting = False
         self.admin_vision = False
+        
+        # UTS Cache (V4.5 Optimization)
+        self._cached_tags = {}
+        self.tags_are_dirty = True
+
+        self.interaction_data = {}
+        self.current_tags = {}
         self.base_concealment = 0
         self.base_perception = 10
         self.current_action = None # Reference to active ActionTask (Action Manager)
@@ -60,6 +71,7 @@ class Player:
         self.last_action = "none" # Last command entered
         self.last_action_time = 0 # Timestamp of last action (Hard Floor)
         self.suppress_engine_prompt = False
+        self.prompt_requested = False
         self.output_buffer = []
         self.is_buffering = False
         self.active_statuses_display = []
@@ -101,133 +113,95 @@ class Player:
 
     def flush_class_state(self):
         """Removes class-specific stances and passives."""
-        from logic.core import status_effects_engine
         
         # Identify effects to remove
         to_remove = []
         if self.status_effects:
             for eff_id in self.status_effects:
-                eff_def = status_effects_engine.get_effect_definition(eff_id, self.game)
+                eff_def = effects.get_effect_definition(eff_id, self.game)
                 if eff_def and eff_def.get('group') in ['stance', 'class_passive']:
                     to_remove.append(eff_id)
         
         for eff in to_remove:
-            status_effects_engine.remove_effect(self, eff)
+            effects.remove_effect(self, eff)
 
     def trigger_module_inits(self):
-        """Initializes state for all active modules."""
-        from logic.core.utils import persistence
+        """Initializes state for active modules."""
         persistence.trigger_module_inits(self)
+        self.mark_tags_dirty()
 
     def refresh_tokens(self):
-        """Refills movement tokens based on time elapsed."""
-        current_time = time.time()
-        delta = current_time - self.last_refill_time
-        
-        REFILL_RATE = 4.0 # Comfortable Walk Speed
-        self.move_tokens = min(5.0, self.move_tokens + (delta * REFILL_RATE))
-        self.last_refill_time = current_time
+        """Refills movement tokens via facade."""
+        from logic.core.utils import player_logic
+        player_logic.refresh_tokens(self)
 
     def to_dict(self):
-        """Serializes player state to a dictionary."""
-        from logic.core.utils import persistence
+        """Serializes player state."""
         return persistence.to_dict(self)
 
     def load_data(self, data):
-        """Hydrates player state from a dictionary."""
-        from logic.core.utils import persistence
+        """Hydrates player state."""
         persistence.load_data(self, data)
 
     def is_in_combat(self):
-        """Returns True if the player is currently in a fight."""
+        """Returns True if fighting."""
         return self.fighting is not None
 
     def load_kit(self, kit_name):
-        """Loads a kit from data/kits.json and applies it."""
-        from logic.core.utils import persistence
-        return persistence.load_kit(self, kit_name)
+        """Applies a specific class kit."""
+        success = persistence.load_kit(self, kit_name)
+        if success: self.mark_tags_dirty()
+        return success
 
     def get_class_bonus(self):
-        """
-        Returns a flat bonus based on the current kit.
-        """
-        kit_name = self.active_kit.get('name', '').lower()
+        """Returns bonus from current kit."""
         return self.active_kit.get('class_bonus', 0)
 
+    def mark_tags_dirty(self):
+        """Invalidates UTS cache."""
+        self.tags_are_dirty = True
+
     def get_global_tag_count(self, tag):
-        """
-        Retrieves the total tag count (Voltage) for a specific tag.
-        Wrapper for ResonanceAuditor to maintain compatibility.
-        """
-        # Inline import to prevent circular dependency
-        from logic.engines.resonance_engine import ResonanceAuditor
-        return ResonanceAuditor.get_voltage(self, tag)
+        """Retrieves UTS voltage via facade."""
+        if self.tags_are_dirty:
+            self._cached_tags = ResonanceAuditor.calculate_resonance(self)
+            self.tags_are_dirty = False
+        return self._cached_tags.get(tag, 0)
 
     def get_heat_efficiency(self):
-        """Returns heat cost multiplier based on kit."""
+        """Returns heat cost multiplier."""
         return self.active_kit.get('heat_efficiency', 1.0)
 
     @property
     def max_hp(self):
-        """Calculates Max HP."""
-        kit_name = self.active_kit.get('name', '').lower()
-        if kit_name == 'wanderer':
-            return 150
-        return calibration.MaxValues.HP
+        """Returns calculated Max HP."""
+        from logic.core.utils import player_logic
+        return player_logic.get_max_hp(self)
 
     def get_max_resource(self, resource_name):
-        """Calculates max resource value."""
-        if resource_name == 'chi': 
-            return self.active_kit.get('max_chi', 5)
-        
-        if resource_name == Tags.HEAT:
-            return self.active_kit.get('max_heat', 100)
-                
-        return 100
+        """Returns max resource via facade."""
+        from logic.core.utils import player_logic
+        return player_logic.get_max_resource(self, resource_name)
 
     def reset_resources(self):
-        """Fully restores and resets all resources to base state."""
-        self.hp = self.max_hp
-        if 'concentration' in self.resources:
-            self.resources['concentration'] = self.get_max_resource('concentration')
-        if Tags.HEAT in self.resources:
-            self.resources[Tags.HEAT] = 0
-        if 'stability' in self.resources:
-            self.resources['stability'] = self.get_max_resource('stability')
-        if 'chi' in self.resources:
-            self.resources['chi'] = 0
-        if 'stamina' in self.resources:
-            self.resources['stamina'] = self.get_max_resource('stamina')
-        
-        self.send_line(f"{Colors.CYAN}Your vitals and resources have been reset.{Colors.RESET}")
+        """Resets vitals via facade."""
+        from logic.core.utils import player_logic
+        player_logic.reset_resources(self)
 
     def take_damage(self, amount, source=None, context="Combat"):
         """
-        Applies damage to the player and dispatches events.
+        [DEPRECATED] Use logic.core.combat.apply_damage instead.
+        Applies damage to the player via the combat facade.
         """
-        from logic.core import event_engine
-        
-        # Dispatch Pre-Damage (For shielding/reduction)
-        ctx = {'target': self, 'damage': amount, 'source': source, 'context': context}
-        event_engine.dispatch("on_take_damage", ctx)
-        
-        actual_damage = ctx['damage']
-        self.hp = max(0, self.hp - actual_damage)
-        
-        if self.hp <= 0:
-            from logic.engines import combat_lifecycle
-            combat_lifecycle.handle_death(self.game, self, source)
-
-        return actual_damage
+        from logic.core import combat
+        return combat.apply_damage(self, amount, source=source, context=context)
 
     def stop_combat(self):
         """Clears combat state."""
-        from logic.core.utils import combat_logic
         combat_logic.stop_combat(self)
 
     def get_defense(self):
         """Calculates total defense from Armor + Buffs."""
-        from logic.core.utils import combat_logic
         return combat_logic.get_total_defense(self)
 
     @property
@@ -245,7 +219,6 @@ class Player:
 
     def stop_buffering(self):
         """Flushes the buffer and stops buffering."""
-        from logic.core.utils import messaging
         sent = self.flush()
         self.is_buffering = False
         if sent:
@@ -256,21 +229,32 @@ class Player:
 
     def flush(self):
         """Sends all buffered output immediately."""
-        from logic.core.utils import messaging
         return messaging.flush(self)
 
     def send_line(self, message, include_prompt=False):
-        """Send text to this player's telnet client."""
-        self.send_raw(f"\r\n{message}", include_prompt=include_prompt)
+        """Standard output entry point."""
+        messaging.send_line(self, message, include_prompt=include_prompt)
+
+    def get_class_module(self):
+        """[DEPRECATED] Use logic.core.class_service.get_class_module instead."""
+        from logic.core import class_service
+        return class_service.get_class_module(self.active_class)
 
     def send_raw(self, message, include_prompt=False):
         """Send raw text to this player's telnet client without prefix/suffix."""
-        from logic.core.utils import messaging
         messaging.send_raw(self, message, include_prompt=include_prompt)
 
+    def is_buffering_content(self):
+        """Returns True if there is text in the output buffer."""
+        return len(self.output_buffer) > 0
+
     def send_prompt(self):
-        """Sends the prompt immediately."""
-        self.send_line(self.get_prompt())
+        """Sends the prompt immediately and flushes the buffer."""
+        self.send_raw(self.get_prompt())
+        self.prompt_requested = False
+        
+        # Force flush if not in a complex command buffer
+        # (Heartbeat-based flush will handle this if pulsed)
         if not self.is_buffering:
             try:
                 self.connection.flush()
@@ -287,12 +271,10 @@ class Player:
 
     def get_prompt(self):
         """Returns the command prompt string."""
-        from logic.core.utils import messaging
         return messaging.get_prompt(self)
 
     def save(self):
         """Saves the player data to disk."""
-        from logic.core.utils import persistence
         persistence.save(self)
 
     def send_paginated(self, text):
@@ -303,5 +285,4 @@ class Player:
 
     def show_next_page(self):
         """Displays the next chunk of text from the buffer."""
-        from logic.core.utils import messaging
         messaging.show_next_page(self)

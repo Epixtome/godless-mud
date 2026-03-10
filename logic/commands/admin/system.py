@@ -3,6 +3,7 @@ import logic.handlers.command_manager as command_manager
 import importlib
 from utilities.colors import Colors
 from logic.core import loader
+from datetime import datetime
 
 @command_manager.register("@restart", admin=True)
 def restart(player, args):
@@ -21,17 +22,15 @@ def restart(player, args):
         import logic.engines.resonance_engine as resonance
         import logic.engines.synergy_engine as synergy
         import logic.engines.class_engine as class_engine
-        import logic.engines.combat_engine as combat
+        from logic.core import combat, effects, event_engine
         import logic.engines.magic_engine as magic
-        import logic.core.engines.status_effects_engine as status_effects
-        import logic.core.engines.event_engine as event_engine
         
         importlib.reload(resonance)
         importlib.reload(synergy)
         importlib.reload(class_engine)
         importlib.reload(combat)
         importlib.reload(magic)
-        importlib.reload(status_effects)
+        importlib.reload(effects)
         importlib.reload(event_engine)
         
         # 4. Reload World Loader
@@ -39,10 +38,8 @@ def restart(player, args):
         importlib.reload(world_loader)
         
         # 5. Reload Systems
-        import logic.systems as systems
         import logic.core.systems as core_systems
         importlib.reload(core_systems)
-        importlib.reload(systems)
         
         # 6. Reload Command Groupings (This repopulates COMMANDS)
         import logic.commands
@@ -60,7 +57,7 @@ def restart(player, args):
         module_loader.register_all_modules()
         
         # 7. Update Game Instance references
-        player.game.subscribers = systems.get_heartbeat_subscribers()
+        player.game.subscribers = core_systems.get_heartbeat_subscribers()
         
         # Reload passive hooks
         from logic.passives import hooks as passive_hooks
@@ -95,68 +92,45 @@ def save_world(player, args):
 
 @command_manager.register("@ban", admin=True)
 def ban_player(player, args):
-    """
-    Ban an IP address. Usage: @ban <ip> OR @ban <player_name>
-    """
+    """Ban an IP address or player."""
     if not args:
         player.send_line("Usage: @ban <ip> | <player_name>")
         return
         
+    from logic.core import network_service
     target_ip = args.strip()
     
-    # Check if arg is a player name
-    target_session = None
+    # Check if arg is a player name to resolve IP
     for name, p in player.game.players.items():
         if name.lower() == args.lower():
-            try:
-                addr = p.writer.get_extra_info('peername')
-                target_ip = addr[0]
-                target_session = p
-            except:
-                player.send_line("Could not determine IP for that player.")
-                return
+            target_ip = network_service.get_client_ip(p)
             break
             
-    # Add to blacklist file
-    with open("data/blacklist.txt", "a") as f:
-        f.write(f"{target_ip}\n")
-        
-    # Reload in memory
-    player.game.load_blacklist()
-    
-    player.send_line(f"Banned IP: {target_ip}")
-    
-    # Kick if online
-    if target_session:
-        target_session.send_line(f"{Colors.RED}You have been banned.{Colors.RESET}")
-        pass
+    if network_service.ban_ip(player.game, target_ip):
+        player.send_line(f"Successfully banned: {target_ip}")
+    else:
+        player.send_line(f"Failed to ban: {target_ip}")
 
 @command_manager.register("@reloadbans", admin=True)
 def reload_bans(player, args):
-    """Reloads the blacklist from data/blacklist.txt."""
-    player.game.load_blacklist()
+    """Reloads the blacklist via service."""
+    from logic.core import network_service
+    network_service.reload_blacklist(player.game)
     player.send_line(f"Blacklist reloaded. {len(player.game.blacklist)} IPs blocked.")
 
 @command_manager.register("@whoson", admin=True)
 def whos_on(player, args):
     """List online players and their IP addresses."""
+    from logic.core import network_service
     player.send_line(f"\n{Colors.BOLD}--- Online Players (Admin) ---{Colors.RESET}")
     player.send_line(f"{'Name':<20} {'IP Address':<20}")
     player.send_line("-" * 40)
     
     count = 0
     for name, p in player.game.players.items():
-        ip = "Unknown"
-        try:
-            addr = p.writer.get_extra_info('peername')
-            if addr:
-                ip = addr[0]
-        except:
-            pass
-        
+        ip = network_service.get_client_ip(p)
         player.send_line(f"{name:<20} {ip:<20}")
         count += 1
-        
     player.send_line(f"\nTotal: {count}")
 
 @command_manager.register("@kick", admin=True)
@@ -228,3 +202,11 @@ def compact_db(player, args):
     
     # For now, just inform the user that @save handles the active state.
     player.send_line("To fully compact: Stop server, delete 'data/world.db.*', restart, and run @save immediately.")
+
+@command_manager.register("@audit", admin=True)
+def toggle_audit(player, args):
+    """Toggles microsecond message timestamping for the current session."""
+    player.is_auditing = not getattr(player, 'is_auditing', False)
+    state = "ENABLED" if player.is_auditing else "DISABLED"
+    player.send_line(f"Message Auditor: {Colors.CYAN}{state}{Colors.RESET}")
+    player.send_line(f"[{datetime.now().strftime('%H:%M:%S.%f')[:-3]}] Auditor synced.")

@@ -21,14 +21,16 @@ def quaff(player, args):
     
     # Apply effects
     msg = []
+    from logic.core import resources
+    
     for effect, amount in target_item.effects.items():
         if effect == 'hp':
             old_hp = player.hp
-            player.hp = min(player.max_hp, player.hp + amount)
+            resources.modify_resource(player, "hp", amount, source="Consumable", context=target_item.name)
             actual_heal = player.hp - old_hp
             msg.append(f"heals you for {actual_heal} HP")
         elif effect in player.resources:
-            player.resources[effect] += amount
+            resources.modify_resource(player, effect, amount, source="Consumable", context=target_item.name)
             msg.append(f"restores {amount} {effect.title()}")
         
     # Remove item

@@ -6,7 +6,8 @@ import logging
 import asyncio
 from models import Corpse, Monster, Player
 from logic import mob_manager
-from logic.engines import combat_engine, quest_engine
+from logic.core import combat
+from logic.core import event_engine
 from utilities.colors import Colors
 
 logger = logging.getLogger("GodlessMUD")
@@ -32,6 +33,10 @@ def handle_death(game, victim, killer):
     if game is None:
         # Critical Fallback: If no game reference exists, process synchronously to avoid loss of state
         logger.warning(f"[DEATH] Game reference missing for {victim.name}. Processing synchronously.")
+            
+        # [FIX] Ensure we flag as dead even in synchronous mode to prevent double-processing
+        victim.pending_death = True
+            
         if isinstance(victim, Player):
             _handle_player_death(None, victim, killer)
         else:
@@ -55,7 +60,7 @@ def handle_death(game, victim, killer):
     elif isinstance(victim, Player):
         logger.debug(f"[DEATH] {victim.name} flagged for deferred resurrection.")
 
-def process_dead_queue(game, suppress_prompt=False):
+def process_dead_queue(game):
     """
     The Reaper: Processes all entities flagged for death during this tick.
     Must be called at the end of the game loop/tick or after async actions.
@@ -67,8 +72,6 @@ def process_dead_queue(game, suppress_prompt=False):
     queue = game.dead_entities[:]
     game.dead_entities = []
     logger.debug(f"[REAPER] Processing {len(queue)} dead entities.")
-    players_to_prompt = set()
-
     for context in queue:
         victim = context['victim']
         killer = context['killer']
@@ -78,26 +81,10 @@ def process_dead_queue(game, suppress_prompt=False):
                 _handle_player_death(game, victim, killer)
             else:
                 _handle_mob_death(game, victim, killer)
-            
-            # Queue prompts for involved players
-            if isinstance(killer, Player):
-                players_to_prompt.add(killer)
-            if isinstance(victim, Player):
-                players_to_prompt.add(victim)
         except Exception as e:
             logger.error(f"[REAPER] Error processing death for {victim.name}: {e}")
             import traceback
             logger.error(traceback.format_exc())
-            
-    # [PROMPT] Send deferred prompts now that all death messages (Favor, XP, etc) are sent
-    if not suppress_prompt:
-        for p in players_to_prompt:
-            p.send_prompt() # Uses messaging.py to include stats, effects, etc.
-            # [PATCH] Force push packets so the prompt appears immediately
-            if hasattr(p, 'connection') and hasattr(p.connection, 'writer'):
-                 asyncio.create_task(p.drain())
-
-    return list(players_to_prompt)
 
 def _handle_mob_death(game, mob, killer):
     """Handles logic when a monster dies."""
@@ -135,19 +122,28 @@ def _handle_mob_death(game, mob, killer):
     # Player specific rewards (Moved back to deferred phase for correct ordering)
     if isinstance(killer, Player):
         killer.send_line(f"{Colors.BOLD}{Colors.YELLOW}You have defeated {mob.name}!{Colors.RESET}")
+        room.broadcast(f"{Colors.YELLOW}{mob.name} has been defeated by {killer.name}!{Colors.RESET}", exclude_player=killer)
         
         # Notify quest system
         if hasattr(killer, 'active_quests'):
-            quest_engine.update_kill_progress(killer, mob.prototype_id)
+            from logic.core import quests
+            quests.update_kill_progress(killer, mob.prototype_id)
             
-        # Distribute Favor
+        # Distribute Rewards
         if game:
-            combat_engine.distribute_favor(killer, mob, game)
+            from logic.core import combat
+            combat.distribute_rewards(killer, mob, game)
+
     elif isinstance(killer, Monster) and killer.leader and isinstance(killer.leader, Player):
         # Companion Kill: Reward the leader
         killer.leader.send_line(f"{Colors.BOLD}{Colors.YELLOW}Your companion {killer.name} has defeated {mob.name}!{Colors.RESET}")
+        room.broadcast(f"{Colors.YELLOW}{mob.name} has been defeated by {killer.name}!{Colors.RESET}", exclude_player=killer.leader)
         if game:
-             combat_engine.distribute_favor(killer.leader, mob, game)
+             from logic.core import combat
+             combat.distribute_rewards(killer.leader, mob, game)
+    else:
+        # Non-player kill (e.g. mob vs mob)
+        room.broadcast(f"{Colors.YELLOW}{mob.name} has been defeated!{Colors.RESET}")
 
     
 def _handle_player_death(game, player, killer):
@@ -202,3 +198,14 @@ def _handle_player_death(game, player, killer):
     # Refresh view
     from logic.handlers import input_handler
     input_handler.handle(player, "look")
+
+def _on_death_event(ctx):
+    """Event listener for entity death."""
+    victim = ctx.get('victim')
+    killer = ctx.get('killer')
+    # Recover game reference from the entity since events are stateless
+    game = getattr(victim, 'game', None)
+    handle_death(game, victim, killer)
+
+# Subscribe to the global event bus
+event_engine.subscribe("on_death", _on_death_event)

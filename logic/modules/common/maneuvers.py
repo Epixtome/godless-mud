@@ -9,8 +9,8 @@ from logic.commands import movement_commands as movement
 from logic.actions.registry import register
 from logic.actions.skill_utils import _apply_damage
 from logic.common import get_reverse_direction
-from logic.core import status_effects_engine
-from logic.core import resource_engine
+from logic.core import effects
+from logic.core import resources
 from logic.calibration import ScalingRules
 from utilities.colors import Colors
 from .utility import _consume_resources
@@ -136,7 +136,7 @@ def handle_charge(player, skill, args, target=None):
     # Apply Heavy Penalty if over threshold
     if total_weight > ScalingRules.HEAVY_WEIGHT_THRESHOLD:
         penalty = 10
-        resource_engine.modify_resource(player, "stamina", -penalty, source="Overburdened Charge")
+        resources.modify_resource(player, "stamina", -penalty, source="Overburdened Charge")
         player.send_line(f"{Colors.YELLOW}[Heavy] Your weight makes the charge exhausting (-{penalty} Stamina).{Colors.RESET}")
 
     # --- Breakage Physics ---

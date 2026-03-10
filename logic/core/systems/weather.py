@@ -1,6 +1,6 @@
 import random
 from utilities.colors import Colors
-from logic.core import status_effects_engine
+from logic.core import effects
 
 WEATHER_TABLE = {
     "default": ["clear", "cloudy", "rain"],
@@ -35,7 +35,7 @@ def weather(game):
                 if new_weather in WEATHER_TO_STATUS:
                     status_id, duration = WEATHER_TO_STATUS[new_weather]
                     for entity in room.players + room.monsters:
-                        status_effects_engine.apply_effect(entity, status_id, duration)
+                        effects.apply_effect(entity, status_id, duration)
 
 def time_of_day(game):
     """Updates global time."""

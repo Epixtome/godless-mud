@@ -1,6 +1,6 @@
 # GEMINI.md: AI Engineering & Development Guide for Godless
 
-> **Status:** ACTIVE PROTOCOL (V4.4)  
+> **Status:** ACTIVE PROTOCOL (V4.5)  
 > **Target Audience:** Gemini, GCA, Antigravity, and any Agentic AI working on this codebase.  
 > **Mandatory Rule:** All structural, logic, and data changes MUST conform to this document. "Quick fixes" or "Scripting-style" code that violates these patterns will be rejected and refactored.
 
@@ -14,6 +14,7 @@ These are absolute constraints. Deviating from these pillars introduces technica
 3.  **The "Event-Driven" Decoupling**: Core engines MUST be class-agnostic. Use the `event_engine` to hook class-specific behaviors. **Never** use `if player.class == 'monk'` inside a core engine. Core display systems (Messaging/Prompts) follow this same pattern.
 4.  **The "Surgical" Edit Rule**: Do not rewrite files over 150 lines. Use windowed editing and granular function overrides. Perform a "Pre-and-Post Integrity Audit" (list functions before/after) to ensure no silent deletions.
 5.  **The "No-Band-Aid" Policy**: Fix the root cause (logic, path, or schema). Never use `try...except` to mask an `AttributeError` or data mismatch.
+6.  **The "Anemic Model" Delegation**: Domain models (`Player`, `Monster`) must not contain active business logic. They are passive data containers that delegate to core facades (e.g., `combat.apply_damage`) or services within `logic/core/`.
 
 ---
 
@@ -21,6 +22,7 @@ These are absolute constraints. Deviating from these pillars introduces technica
 Godless is an Asynchronous Domain-Driven engine. Logic is strictly sharded.
 
 - **`logic/core/`**: Providers. Universal, class-agnostic engines (Math, Systems).
+    - *Facades*: `combat.py`, `resources.py`, `effects.py`, `quests.py`. All logic must pass through these facades.
 - **`logic/handlers/`**: The Interface. Contains `input_handler.py` and `command_manager.py`.
 - **`data/`**: The Source of Truth. Sharded JSON for blessings, classes, items, and zones.
 - **`utilities/`**: Core Helpers. Engine-facing modules (Mapper, Telemetry, Colors) importable by `logic/`.
@@ -89,7 +91,7 @@ When multiple AIs work on the same class modules:
 1.  **Shard Sovereignty**: All class-specific logic MUST stay within `logic/modules/[class]/`. 
 2.  **Standardized Init**: Always use `initialize_[class](player)` in `state.py`.
 3.  **The "@" Prefix Protocol**: The `@` character is reserved strictly for Administrative commands.
-4.  **Late Imports**: All inter-system imports must occur *inside* methods.
+4.  **Facade Over Late Imports**: Use top-level imports from `logic/core/__init__.py`. **Late imports (inline) are deprecated** and should only be used as a last resort to break unavoidable circular dependencies. **Standard**: All core systems (Messaging, Combat, Resources) must be accessed via their specific `logic/core/` facade.
 5.  **The 300-Line Limit**: No Python file may exceed 300 lines. 
 
 ---

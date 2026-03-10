@@ -3,13 +3,12 @@ logic/modules/mage/mage.py
 The Mage Domain: Spells, Mana management, and Shielding logic.
 """
 from logic.actions.registry import register
-from logic.core import event_engine, status_effects_engine, resource_engine
-from logic.engines import action_manager
+from logic.core import event_engine, effects, resources
+from logic.engines import action_manager, magic_engine, blessings_engine
 from utilities.colors import Colors
-from logic import common
+from logic import common, search
 
 def _consume_resources(player, skill):
-    from logic.engines import magic_engine
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
     magic_engine.consume_pacing(player, skill)
@@ -22,8 +21,10 @@ def handle_magic_shield(player, skill, args, target=None):
     Magic Shield: Buffs the mage and toggles arcane_shield in ext_state.
     Provides huge defense but drains concentration on every hit.
     """
-    status_effects_engine.apply_effect(player, "magic_shield", 30) # 60 seconds
-    player.ext_state.get('mage', {})['arcane_shield'] = True
+    effects.apply_effect(player, "magic_shield", 30) # 60 seconds
+    if 'mage' not in player.ext_state:
+        player.ext_state['mage'] = {}
+    player.ext_state['mage']['arcane_shield'] = True
     player.send_line(f"{Colors.BLUE}You shroud yourself in a shimmering azure field!{Colors.RESET}")
     return player, True
 
@@ -36,26 +37,24 @@ def handle_magic_missile(player, skill, args, target=None):
     player.room.broadcast(f"{player.name} begins chanting.", exclude_player=player)
 
     async def _unleash():
-        if player.room != target.room:
-            player.send_line("Target out of range.")
+        if not target or target.room != player.room:
+            player.send_line("Target is no longer here.")
             return
             
         player.send_line(f"{Colors.CYAN}Three missiles of force streak towards {target.name}!{Colors.RESET}")
         player.room.broadcast(f"Three missiles of force streak from {player.name} to {target.name}!", exclude_player=player)
         
         # Power scaling from Int
-        from logic.engines import blessings_engine
         power = blessings_engine.MathBridge.calculate_power(skill, player)
         dmg_per_missile = int(power / 3) # Split total power into 3 bolts
         
         from logic.actions.skill_utils import _apply_damage
         import asyncio
         for _ in range(3):
-            if target.hp > 0:
+            if target and target.hp > 0:
                 _apply_damage(player, target, dmg_per_missile, "Magic Missile")
                 await asyncio.sleep(0.2)
 
-    from logic.engines import action_manager
     action_manager.start_action(player, 4.0, _unleash, tag="casting", fail_msg="Concentration broken!")
     _consume_resources(player, skill)
     return target, True
@@ -66,7 +65,6 @@ def handle_fireball(player, skill, args, target=None):
     player.room.broadcast(f"{player.name} begins gathering flames!", exclude_player=player)
 
     async def _unleash():
-        from logic.engines import blessings_engine
         power = blessings_engine.MathBridge.calculate_power(skill, player)
         aoe_power = int(power * 0.5)
         
@@ -83,7 +81,7 @@ def handle_fireball(player, skill, args, target=None):
         from logic.actions.skill_utils import _apply_damage
         for t in targets:
             _apply_damage(player, t, aoe_power, "Fireball")
-            status_effects_engine.apply_effect(t, "burn", 10)
+            effects.apply_effect(t, "burn", 10)
 
     action_manager.start_action(player, 2.0, _unleash, tag="casting", fail_msg="Concentration broken!")
     _consume_resources(player, skill)
@@ -101,12 +99,11 @@ def handle_freeze(player, skill, args, target=None):
     player.room.broadcast(f"{player.name} channels a freezing beam at {target.name}!", exclude_player=player)
 
     async def _unleash():
-        if player.room != target.room:
-            player.send_line("Target out of range.")
+        if not target or target.room != player.room:
+            player.send_line("Target is no longer here.")
             return
 
         # Power scaling (even though it's primarily a status skill, we might deal small damage)
-        from logic.engines import blessings_engine
         power = blessings_engine.MathBridge.calculate_power(skill, player)
         
         from logic.actions.skill_utils import _apply_damage
@@ -114,7 +111,7 @@ def handle_freeze(player, skill, args, target=None):
         
         # Frozen status is handled by apply_on_hit in generic logic if we didn't use a custom handler,
         # but since we are here, we handle it explicitly.
-        status_effects_engine.apply_effect(target, "frozen", 4)
+        effects.apply_effect(target, "frozen", 4)
         player.send_line(f"{Colors.BOLD}{Colors.CYAN}{target.name} is FROZEN!{Colors.RESET}")
 
     from logic.engines import action_manager
@@ -136,13 +133,12 @@ def handle_lightning_bolt(player, skill, args, target=None):
             player.send_line(f"You cannot call down lightning in {current_weather} weather! You need a storm.")
             return None, True
 
-    from logic.engines import blessings_engine
     power = blessings_engine.MathBridge.calculate_power(skill, player)
     
     # Dualcast Logic
-    casts = 2 if status_effects_engine.has_effect(player, "dualcast") else 1
+    casts = 2 if effects.has_effect(player, "dualcast") else 1
     if casts == 2:
-        status_effects_engine.remove_effect(player, "dualcast")
+        effects.remove_effect(player, "dualcast")
         player.send_line(f"{Colors.MAGENTA}Dualcast!{Colors.RESET}")
 
     from logic.actions.skill_utils import _apply_damage
@@ -155,7 +151,7 @@ def handle_lightning_bolt(player, skill, args, target=None):
 
 @register("dualcast")
 def handle_dualcast(player, skill, args, target=None):
-    status_effects_engine.apply_effect(player, "dualcast", 9999)
+    effects.apply_effect(player, "dualcast", 9999)
     player.send_line(f"{Colors.MAGENTA}You focus your mind to cast your next spell twice!{Colors.RESET}")
     _consume_resources(player, skill)
     return None, True
@@ -166,8 +162,8 @@ def handle_arcane_surge(player, skill, args, target=None):
     Arcane Surge: Restores 40 stamina but stumbles/stalls for 3s.
     """
     player.send_line(f"{Colors.LIGHT_CYAN}You draw raw arcane power directly into your lungs!{Colors.RESET}")
-    resource_engine.modify_resource(player, "stamina", 40)
-    status_effects_engine.apply_effect(player, "stalled", 3)
+    resources.modify_resource(player, "stamina", 40)
+    effects.apply_effect(player, "stalled", 3)
     _consume_resources(player, skill)
     return None, True
 
@@ -182,7 +178,6 @@ def handle_frost_nova(player, skill, args, target=None):
 
         targets = [m for m in player.room.monsters] + [p for p in player.room.players if p != player]
         
-        from logic.engines import blessings_engine
         power = blessings_engine.MathBridge.calculate_power(skill, player)
         aoe_power = int(power * 0.6) # Slightly higher base than fireball since ice is cooler
 
@@ -190,7 +185,7 @@ def handle_frost_nova(player, skill, args, target=None):
         for t in targets:
             _apply_damage(player, t, aoe_power, "Frost Nova")
             # 50% chance to freeze for longer
-            if status_effects_engine.apply_effect(t, "frozen", 6):
+            if effects.apply_effect(t, "frozen", 6):
                 player.send_line(f"{Colors.CYAN}{t.name} is encased in ice!{Colors.RESET}")
 
     action_manager.start_action(player, 1.5, _unleash, tag="casting", fail_msg="Concentration broken!")
@@ -219,7 +214,7 @@ def on_take_damage(ctx):
     if not player:
         return
         
-    if status_effects_engine.has_effect(player, 'magic_shield'):
+    if effects.has_effect(player, 'magic_shield'):
         # Warlock Passive: Ignore Magic Shields
         attacker = ctx.get('source')
         if attacker and getattr(attacker, 'active_class', None) == 'warlock':
@@ -227,7 +222,7 @@ def on_take_damage(ctx):
             
         shield_reduction = int(damage * 0.5)
         # Drain Conc instead of HP
-        resource_engine.modify_resource(player, 'concentration', -shield_reduction, source="Magic Shield", context="Absorbed")
+        resources.modify_resource(player, 'concentration', -shield_reduction, source="Magic Shield", context="Absorbed")
         ctx['damage'] = damage - shield_reduction
         player.send_line(f"{Colors.BLUE}Your Magic Shield absorbs {shield_reduction} damage!{Colors.RESET}")
 

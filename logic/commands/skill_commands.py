@@ -3,7 +3,7 @@ import asyncio
 import logic.handlers.command_manager as command_manager
 from logic.engines import blessings_engine
 from logic.engines import magic_engine
-from logic.core import status_effects_engine
+from logic.core import effects
 from logic import search
 from utilities.colors import Colors
 from utilities import telemetry
@@ -13,7 +13,16 @@ from logic.actions.skill_utils import _apply_damage
 from logic.actions.base_executor import execute as handle_generic
 
 # Ensure handlers are registered by importing them
-from logic.actions.handlers import combat_actions, magic_actions, status_actions, utility_actions, world_actions
+from logic.actions.handlers import (
+    combat_actions, 
+    magic_actions, 
+    status_actions, 
+    utility, 
+    world_actions,
+    thievery_actions,
+    engineering_actions,
+    alchemy_actions
+)
 
 MIN_ACTION_DELAY = 0.15 # 150ms Hard Floor
 
@@ -94,21 +103,12 @@ def _execute_skill(player, skill, args):
                     if player and player.game:
                         _execute_skill(player, skill, args)
                         
-                        # [REAPER] Process any deaths triggered by this async skill immediately.
-                        from logic.engines import combat_lifecycle
-                        involved_players = combat_lifecycle.process_dead_queue(player.game)
-
-                        # [SNAPPY FEEDBACK] Force push results to all players in the room
+                        # [SNAPPY FEEDBACK] Refresh prompt after buffered skill
                         if player.room:
                             for p in player.room.players:
-                                if p not in involved_players: # Reaper already handled involved_players
-                                    p.send_prompt()
-                                    if hasattr(p, 'drain'):
-                                        asyncio.create_task(p.drain())
-                        # Fallback for self if not in room or something weird happened
-                        elif player not in involved_players:
-                            player.send_prompt()
-                            await player.drain()
+                                p.prompt_requested = True
+                        else:
+                            player.prompt_requested = True
                 asyncio.create_task(_buffered_skill())
             except (IndexError, ValueError):
                 pass
@@ -164,14 +164,11 @@ def _execute_skill(player, skill, args):
 
                 break
 
-    # 3. Fallback to Generic Handler
     if not handled:
         handle_generic(player, skill, args)
-
-    # 4. Immediate Reaper Pulse (V4.4)
-    # Ensure targets killed by skills are cleaned up immediately.
-    from logic.engines import combat_lifecycle
-    combat_lifecycle.process_dead_queue(player.game)
+        
+    # Mark that the skill user needs a prompt update
+    player.prompt_requested = True
 
 def register_modules():
     """Sharded module registration via module_loader."""

@@ -12,6 +12,21 @@ def parse_direction(d):
     }
     return mapping.get(d, d)
 
+def get_offset_scalars(direction):
+    """Returns (dx, dy, dz) for a given normalized direction."""
+    d = parse_direction(direction)
+    if d == 'north': return 0, -1, 0
+    if d == 'south': return 0, 1, 0
+    if d == 'east': return 1, 0, 0
+    if d == 'west': return -1, 0, 0
+    if d == 'up': return 0, 0, 1
+    if d == 'down': return 0, 0, -1
+    if d == 'northeast': return 1, -1, 0
+    if d == 'northwest': return -1, -1, 0
+    if d == 'southeast': return 1, 1, 0
+    if d == 'southwest': return -1, 1, 0
+    return 0, 0, 0
+
 def find_room_at_fuzzy_z(spatial, x, y, target_z, tolerance=5):
     """Finds a room at x,y within +/- tolerance of target_z."""
     candidates = []

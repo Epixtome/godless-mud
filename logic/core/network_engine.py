@@ -26,7 +26,14 @@ class Connection:
 
     async def send(self, message):
         try:
-            self.writer.write(f"{message}\r\n".encode('utf-8'))
+            if not message: return
+            text = str(message)
+            # Smart strip: Keep trailing space for prompts and input requests
+            if not (text.endswith(" > ") or text.endswith(": ")):
+                text = text.rstrip()
+            
+            suffix = "" if (text.endswith(" > ") or text.endswith(": ") or text.endswith("\r\n") or text.endswith("\n")) else "\r\n"
+            self.writer.write(f"{text}{suffix}".encode('utf-8'))
             await self.writer.drain()
         except Exception:
             pass
@@ -102,14 +109,13 @@ class Connection:
             await self.disconnect()
 
     async def game_loop(self):
-        from logic.handlers import input_handler
-        from logic.engines import combat_lifecycle
+        """Main game loop for a connected player."""
         while True:
             command_line = await self.read_line()
-            
-            if command_line is None:
+            if command_line is None or self.player is None:
                 break
             
+            # Handle Pagination Interruption
             if self.player.pagination_buffer:
                 if not command_line:
                     self.player.show_next_page()
@@ -121,38 +127,25 @@ class Connection:
                 else:
                     self.player.pagination_buffer = []
 
+            # Dispatch Command
             if command_line:
-                if not input_handler.handle(self.player, command_line):
+                if getattr(self.player, 'is_auditing', False):
+                    from datetime import datetime
+                    logger.debug(f"[AUDIT] Input Received from {self.player.name} at {datetime.now().strftime('%H:%M:%S.%f')[:-3]}: {command_line}")
+                if not self.game.process_command(self.player, command_line):
                     break
-                
-                combat_lifecycle.process_dead_queue(self.game, suppress_prompt=True)
 
             if not self.player.suppress_engine_prompt:
-                self.player.send_prompt()
+                self.player.prompt_requested = True
             
             await self.player.drain()
             await asyncio.sleep(0) 
             self.player.suppress_engine_prompt = False
 
     async def disconnect(self):
+        """Handles socket closure and dispatches player cleanup."""
         if self.player:
-            logger.info(f"{self.name} disconnected")
-            self.player.save()
-            
-            if self.player.room:
-                if self.player in self.player.room.players:
-                    self.player.room.players.remove(self.player)
-                
-                for mob in self.player.room.monsters:
-                    if mob.fighting == self.player:
-                        mob.fighting = None
-                    if self.player in mob.attackers:
-                        mob.attackers.remove(self.player)
-
-                self.player.room.broadcast(f"{self.name} has vanished.", exclude_player=self.player)
-
-            if self.name in self.game.players:
-                del self.game.players[self.name]
+            self.game.handle_disconnect(self.player)
         
         try:
             self.writer.close()

@@ -2,7 +2,7 @@ import random
 from utilities.colors import Colors
 from models import Player
 from logic.actions import skill_utils
-from logic.core import status_effects_engine
+from logic.core import effects
 
 def trap_trigger(ctx):
     player = ctx.get('player')
@@ -26,7 +26,7 @@ def _trigger_trap(victim, room, trap):
     room.broadcast(f"{victim.name} triggers a {t_type} trap!", exclude_player=victim)
     
     if t_type == "net":
-        status_effects_engine.apply_effect(victim, "net", 10)
+        effects.apply_effect(victim, "net", 10)
         victim.send_line(f"{Colors.RED}You are entangled in a net! Use 'struggle' to break free.{Colors.RESET}")
     elif t_type == "fire":
         targets = [p for p in room.players] + [m for m in room.monsters]

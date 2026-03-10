@@ -4,8 +4,9 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-from logic.core import event_engine, resource_engine
-from logic.engines import combat_math, combat_engine, class_engine
+from logic.core import event_engine, resources
+from logic.core import combat
+from logic.engines import class_engine
 from models import Player, GameEntity
 from logic.core.world import World
 from logic.core import loader as world_loader
@@ -32,14 +33,18 @@ def simulate_h2h(kit1="monk", kit2="monk", rounds=5):
     module_loader.register_all_modules()
     
     # Setup Player 1
-    p1 = Player(game, None, "Attacker", game.world.start_room)
+    class MockConnection:
+        def write(self, *args, **kwargs): pass
+        def flush(self, *args, **kwargs): pass
+        
+    p1 = Player(game, MockConnection(), "Attacker", game.world.start_room)
     success, msg = class_engine.apply_kit(p1, kit1)
     if not success:
         print(f"Error applying kit {kit1}: {msg}")
         return
     
     # Setup Player 2 (Target)
-    p2 = Player(game, None, "Defender", game.world.start_room)
+    p2 = Player(game, MockConnection(), "Defender", game.world.start_room)
     success, msg = class_engine.apply_kit(p2, kit2)
     if not success:
         print(f"Error applying kit {kit2}: {msg}")
@@ -57,20 +62,20 @@ def simulate_h2h(kit1="monk", kit2="monk", rounds=5):
         # Round starts
         game.tick_count = i
         
-        # P1 Attacks P2
-        p1_dmg = combat_engine.calculate_player_damage(p1, p2)
+        # P1 Attacks P2 (Using facade calculate_player_damage equivalent)
+        p1_dmg = combat.calculate_base_damage(p1, p2)
         total_p1_dmg += p1_dmg
         print(f"Round {i}: {p1.name} hits {p2.name} for {Colors.RED}{p1_dmg}{Colors.RESET} damage.")
         
         # P2 Attacks P1
-        p2_dmg = combat_engine.calculate_player_damage(p2, p1)
+        p2_dmg = combat.calculate_base_damage(p2, p1)
         total_p2_dmg += p2_dmg
         print(f"Round {i}: {p2.name} hits {p1.name} for {Colors.RED}{p2_dmg}{Colors.RESET} damage.")
         
     print("-" * 40)
-    print(f"RESULTS (Avg/Round):")
-    print(f"  {p1.name}: {total_p1_dmg / rounds:.2f}")
-    print(f"  {p2.name}: {total_p2_dmg / rounds:.2f}")
+    print(f"RESULTS (Total Damage Output):")
+    print(f"  {p1.name}: {total_p1_dmg}")
+    print(f"  {p2.name}: {total_p2_dmg}")
 
 if __name__ == "__main__":
     # Standard classes to test

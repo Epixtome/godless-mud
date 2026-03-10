@@ -3,7 +3,7 @@ logic/modules/beastmaster/events.py
 Event subscriptions for the Beastmaster class.
 Decoupled logic that hooks into core engine events.
 """
-from logic.core import event_engine, status_effects_engine, resource_engine
+from logic.core import event_engine, effects, resources
 from utilities.colors import Colors
 
 def _get_active_pet(player):
@@ -41,7 +41,7 @@ def on_take_damage(ctx):
     target_damage = damage - redirected
     
     # Apply redirected damage to pet
-    resource_engine.modify_resource(pet, "hp", -redirected, source=target.name, context="Guarded")
+    resources.modify_resource(pet, "hp", -redirected, source=target.name, context="Guarded")
     
     # Update context for the original damage calculation
     ctx['damage'] = target_damage
@@ -95,7 +95,7 @@ def on_pet_death(ctx):
     owner = mob.game.players.get(owner_id) if mob.game else None
     if owner:
         owner.send_line(f"{Colors.BOLD}{Colors.RED}Your heart shatters as {mob.name} falls!{Colors.RESET}")
-        status_effects_engine.apply_effect(owner, "heartbroken", 60) # 30 ticks (60s)
+        effects.apply_effect(owner, "heartbroken", 60) # 30 ticks (60s)
         
         bm_state = owner.ext_state.get('beastmaster')
         if bm_state:

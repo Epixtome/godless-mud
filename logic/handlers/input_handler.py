@@ -5,7 +5,7 @@ from logic.engines.blessings_engine import Auditor
 import logic.handlers.state_manager as state_manager
 import logging
 from logic.engines import action_manager
-from logic.core import status_effects_engine
+from logic.core import effects
 from utilities.colors import Colors
 
 def handle(player, command_line):
@@ -33,7 +33,7 @@ def handle(player, command_line):
         player.send_line("You are dead and cannot do anything.")
         return True
 
-    blocked, reason = status_effects_engine.is_action_blocked(player, cmd_name)
+    blocked, reason = effects.is_action_blocked(player, cmd_name)
     if blocked:
         player.send_line(reason)
         return True

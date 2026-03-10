@@ -56,7 +56,10 @@ TERRAIN_PRIORITY = [
 ]
 
 def get_terrain_char(room):
-    """Gets the ASCII character for a given room object (supports custom symbols)."""
+    """Gets the ASCII character for a given room object or terrain name."""
+    if isinstance(room, str):
+        return TERRAIN_MAP.get(room, TERRAIN_MAP["default"])
+        
     # If the room has a custom prescribed symbol (e.g. from the Architect), use it.
     if hasattr(room, 'symbol') and room.symbol:
         return room.symbol

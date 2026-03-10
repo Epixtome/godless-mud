@@ -5,7 +5,7 @@ Decouples the 'aftermath' of combat from the real-time processing loop.
 import logging
 from models import Corpse, Monster, Player
 from logic import mob_manager
-from logic.engines import combat_engine, quest_engine
+from logic.core import combat, quest_engine
 from utilities.colors import Colors
 
 logger = logging.getLogger("GodlessMUD")
@@ -52,7 +52,7 @@ def _handle_mob_death(game, mob, killer):
             quest_engine.update_kill_progress(killer, mob.prototype_id)
             
         # Distribute Favor
-        combat_engine.distribute_favor(killer, mob, game)
+        combat.distribute_favor(killer, mob, game)
 
 def _handle_player_death(game, player, killer):
     """Handles logic when a player dies."""

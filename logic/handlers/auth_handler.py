@@ -20,6 +20,9 @@ async def handle_login(conn):
     # Check for save file
     save_file = f"data/saves/{name.lower()}.json"
     loaded_data = None
+    stored_pass = None
+    pwd = None
+    hashed_input = None
     start_room = game.world.start_room
 
     if os.path.exists(save_file):
@@ -79,8 +82,9 @@ async def handle_login(conn):
         await handle_kingdom_selection(conn)
         conn.player.send_line(f"Welcome, {name}. Type 'help' for commands.")
         
-    # Sync Resonance
+    # Sync Resonance and Logic
     ResonanceAuditor.calculate_resonance(conn.player)
+    conn.player.trigger_module_inits()
     telemetry.log_stat_snapshot(conn.player, conn.player.current_tags)
         
     game.players[name] = conn.player

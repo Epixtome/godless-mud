@@ -1,4 +1,4 @@
-from logic.core import status_effects_engine
+from logic.core import effects
 
 def monitor_terrain(game):
     """Applies terrain-based effects to entities."""
@@ -17,4 +17,4 @@ def monitor_terrain(game):
         if terrain in TERRAIN_EFFECTS:
             status_id = TERRAIN_EFFECTS[terrain]
             for entity in room.players + room.monsters:
-                status_effects_engine.apply_effect(entity, status_id, 3)
+                effects.apply_effect(entity, status_id, 3)

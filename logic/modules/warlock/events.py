@@ -1,4 +1,4 @@
-from logic.core import event_engine, resource_engine, status_effects_engine
+from logic.core import event_engine, resources, effects
 import utilities.telemetry as telemetry
 import time
 from utilities.colors import Colors
@@ -27,7 +27,7 @@ def handle_warlock_heartbeat(player):
         if targets:
             player.send_line(f"{Colors.DARK_GRAY}Your aura of Despair saps the will of those around you...{Colors.RESET}")
             for t in targets:
-                resource_engine.modify_resource(t, "stamina", -5, source=player.name, context="Despair Aura")
+                resources.modify_resource(t, "stamina", -5, source=player.name, context="Despair Aura")
 
 def on_calculate_damage_modifier(ctx):
     """
@@ -48,7 +48,7 @@ def on_calculate_damage_modifier(ctx):
     # Ignore Magic Shield (Passive)
     # The bypass is handled globally in mage.py on_take_damage
     # This prevents double-buffing while maintaining flavor
-    if target and status_effects_engine.has_effect(target, "magic_shield"):
+    if target and effects.has_effect(target, "magic_shield"):
         attacker.send_line(f"{Colors.RED}[SHIELD BREAKER] Your dark power ignores the magical defense!{Colors.RESET}")
 
 def on_combat_hit(ctx):
@@ -73,7 +73,7 @@ def on_combat_hit(ctx):
             attacker.send_line(f"{Colors.DARK_GRAY}Decay spreads to {target.name} ({stacks}/5).{Colors.RESET}")
             
             if stacks == 5:
-                status_effects_engine.apply_effect(target, "atrophy", 10) # 10s Atrophy
+                effects.apply_effect(target, "atrophy", 10) # 10s Atrophy
                 attacker.send_line(f"{Colors.RED}*** {target.name} has entered ATROPHY! ***{Colors.RESET}")
 
 def on_take_damage(ctx):
@@ -101,7 +101,7 @@ def on_take_damage(ctx):
             reflect_dmg = int(damage * 0.3)
             if reflect_dmg > 0:
                 target.send_line(f"{Colors.MAGENTA}Malignant Bond reflects {reflect_dmg} damage to {link_entity.name}!{Colors.RESET}")
-                resource_engine.modify_resource(link_entity, "hp", -reflect_dmg, source=target.name, context="Malignant Bond")
+                resources.modify_resource(link_entity, "hp", -reflect_dmg, source=target.name, context="Malignant Bond")
 
 def on_calculate_skill_cost(ctx):
     """Sanguine Exchange: High-tier skills cost HP instead of Stamina."""

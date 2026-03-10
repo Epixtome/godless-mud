@@ -15,6 +15,10 @@ class World:
         self.recipes = {} # result_id -> {ingredients}
         self.status_effects = {}
         self.start_room = None
+        self.game = None
         self.pending_respawns = [] # List of {'tick': int, 'room_id': str, 'mob_data': dict}
         self.unique_registry = {} # ID -> {'status': 'alive'|'dead'|'held', 'room_id': str}
         self.quests = {} # ID -> Quest prototype
+        self.deleted_rooms = set()
+        self.landmarks = {}
+        self.terrain_config = {}

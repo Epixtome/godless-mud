@@ -1,38 +1,6 @@
-"""
-logic/modules/beastmaster/actions.py
-Commands for the Beastmaster class.
-"""
-import json
-import os
 from logic.actions.registry import register
 from utilities.colors import Colors
-
-# --- HELPER FUNCTIONS ---
-
-def _get_bm_state(player):
-    """Safely retrieves the beastmaster state bucket."""
-    if not hasattr(player, 'ext_state'): return None
-    return player.ext_state.get('beastmaster')
-
-def _load_pet_archetypes():
-    """Loads pet archetypes from the data definition file."""
-    path = 'data/definitions/pets.json'
-    if not os.path.exists(path):
-        return {}
-    try:
-        with open(path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            return data.get('archetypes', {})
-    except Exception as e:
-        print(f"Error loading pet archetypes: {e}")
-        return {}
-
-def _consume_resources(player, skill):
-    """Utility to consume resources and set cooldowns for class skills."""
-    from logic.engines import magic_engine
-    magic_engine.consume_resources(player, skill)
-    magic_engine.set_cooldown(player, skill)
-    magic_engine.consume_pacing(player, skill)
+from logic.modules.beastmaster.utils import get_bm_state, load_pet_archetypes, consume_resources
 
 # --- SKILL HANDLERS ---
 
@@ -59,7 +27,7 @@ def handle_tame(player, skill, args, target=None):
         return None, True
 
     # Success!
-    bm_state = _get_bm_state(player)
+    bm_state = get_bm_state(player)
     if not bm_state: return False, "Beastmaster state not initialized."
 
     # Determine archetype based on tags (simple mapping)
@@ -84,7 +52,7 @@ def handle_tame(player, skill, args, target=None):
     if target in player.room.monsters:
         player.room.monsters.remove(target)
     
-    _consume_resources(player, skill)
+    consume_resources(player, skill)
     return target, True
 
 @register("call")
@@ -98,7 +66,7 @@ def handle_call(player, skill, args, target=None):
     if not args:
         return False, "Usage: @call <pet_name>"
 
-    bm_state = _get_bm_state(player)
+    bm_state = get_bm_state(player)
     if not bm_state: return False, "Beastmaster state not initialized."
 
     # Find the pet in the library
@@ -135,9 +103,10 @@ def handle_call(player, skill, args, target=None):
                         room.broadcast(f"{mob.name} retreats to the shadows.")
                     
     # 3. Instantiate and spawn
-    archetypes = _load_pet_archetypes()
-    arch_meta = archetypes.get(pet_data['archetype'], archetypes.get('sentinel', {}))
-    # Add the key into metadata for the class
+    archetypes = load_pet_archetypes()
+    arch_meta = archetypes.get(pet_data['archetype']) or archetypes.get('sentinel')
+    if not arch_meta: player.send_line("Archetype fail."); return None, True
+    arch_meta = arch_meta.copy() # Don't mutate original
     arch_meta['key'] = pet_data['archetype']
     
     new_pet = Pet(player, pet_data['name'], arch_meta)
@@ -149,7 +118,7 @@ def handle_call(player, skill, args, target=None):
     
     player.room.broadcast(f"{player.name} whistles, and a {new_pet.name} arrives from the shadows.", exclude_player=player)
     
-    _consume_resources(player, skill)
+    consume_resources(player, skill)
     return new_pet, True
 
 @register("order")
@@ -163,7 +132,7 @@ def handle_order(player, skill, args, target=None):
     if not args:
         return False, "Usage: @order <attack|special|unleash|guard>"
 
-    bm_state = _get_bm_state(player)
+    bm_state = get_bm_state(player)
     if not bm_state: return False, "Beastmaster state not initialized."
     
     active_pet = None
@@ -194,13 +163,13 @@ def handle_order(player, skill, args, target=None):
         bm_state['sync'] -= 25
         player.send_line(f"You gesture sharply. {active_pet.name} executes a specialized maneuver!")
         # Logic Hook for Archetype Status (implementation depends on effects engine)
-        from logic.core import status_effects_engine
-        archetypes = _load_pet_archetypes()
+        from logic.core import effects
+        archetypes = load_pet_archetypes()
         arch_data = archetypes.get(active_pet.archetype_key, {})
         status_id = arch_data.get('special', 'stun')
         
         if active_pet.fighting:
-            status_effects_engine.apply_effect(active_pet.fighting, status_id, 2)
+            effects.apply_effect(active_pet.fighting, status_id, 2)
             player.send_line(f"{active_pet.fighting.name} is now {status_id.upper()}!")
             
     elif subcmd == "unleash":
@@ -212,8 +181,8 @@ def handle_order(player, skill, args, target=None):
         player.send_line(f"{Colors.BOLD}{Colors.YELLOW}UNLEASH THE BEAST!{Colors.RESET}")
         # Final damage logic...
         if active_pet.fighting:
-            from logic.core import resource_engine
-            resource_engine.modify_resource(active_pet.fighting, "hp", -50, source=active_pet.name, context="Unleash")
+            from logic.core import resources
+            resources.modify_resource(active_pet.fighting, "hp", -50, source=active_pet.name, context="Unleash")
             player.send_line(f"{active_pet.name} tears into {active_pet.fighting.name} with primal fury!")
 
     elif subcmd == "guard":
@@ -225,7 +194,7 @@ def handle_order(player, skill, args, target=None):
         player.send_line(f"{Colors.YELLOW}Unknown order: {subcmd}. Use: attack, special, unleash, or guard.{Colors.RESET}")
         return None, True
         
-    _consume_resources(player, skill)
+    consume_resources(player, skill)
     return active_pet, True
 
 @register("whistle")
@@ -236,7 +205,7 @@ def handle_whistle(player, skill, args, target=None):
     if getattr(player, 'active_class', None) != 'beastmaster':
         return False, "Only Beastmasters can whistle for pets."
 
-    bm_state = _get_bm_state(player)
+    bm_state = get_bm_state(player)
     if not bm_state: return False, "Beastmaster state not initialized."
 
     # Find the pet anywhere in the world
@@ -262,7 +231,7 @@ def handle_whistle(player, skill, args, target=None):
     player.room.broadcast(f"{pet_obj.name} leaps from the shadows to {player.name}'s side.")
     player.send_line(f"You whistle sharply, and {pet_obj.name} appears!")
     
-    _consume_resources(player, skill)
+    consume_resources(player, skill)
     return pet_obj, True
 
 @register("pets")
@@ -273,7 +242,7 @@ def handle_pets(player, skill, args, target=None):
     if getattr(player, 'active_class', None) != 'beastmaster':
         return False, "Only Beastmasters can view their pet library."
 
-    bm_state = _get_bm_state(player)
+    bm_state = get_bm_state(player)
     if not bm_state: return False, "Beastmaster state not initialized."
 
     if not bm_state['tamed_library']:

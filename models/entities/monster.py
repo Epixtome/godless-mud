@@ -1,5 +1,7 @@
 import logging
 from utilities.colors import Colors
+from logic.core import event_engine
+from logic.core.utils import mob_logic
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -38,11 +40,24 @@ class Monster:
         self.known_blessings = [] # For class logic compatibility
         self.active_kit = {}
 
+        # UTS Cache (V4.5 Optimization)
+        self._cached_tags = {}
+        self.tags_are_dirty = True
+
+        # Advanced States (Linter Satisfied)
+        self.vulnerabilities = {}
+        self.states = {}
+        self.triggers = []
+        self.is_player = False
+        self.current_state = "normal"
+        self.temporary = False
+        self.ai_state = "idle"
+        self.flags = []
+
     def refresh_class(self):
         """Initializes class-specific state for the mob."""
         if not self.active_class:
             return
-        from logic.engines import class_engine
         # Ensure we have a dummy kit for compatibility
         self.active_kit = {'id': self.active_class}
         # In GCA, initialization is sharded. We need to call the right one.
@@ -51,7 +66,8 @@ class Monster:
             import importlib
             state_mod = importlib.import_module(f"logic.modules.{self.active_class}.state")
             init_func = getattr(state_mod, f"initialize_{self.active_class}")
-            init_func(self)
+            if init_func:
+                init_func(self)
         except (ImportError, AttributeError):
             pass
 
@@ -79,7 +95,6 @@ class Monster:
 
     def get_defense(self):
         """Calculates total defense via facade."""
-        from logic.core.utils import mob_logic
         return mob_logic.get_defense(self)
 
     def get_damage_modifier(self):
@@ -94,27 +109,16 @@ class Monster:
 
     def get_damage(self):
         """Calculates damage via facade."""
-        from logic.core.utils import mob_logic
         return mob_logic.get_damage(self)
 
     def take_damage(self, amount, source=None, context="Combat Hit"):
         """
-        Applies damage to the monster and dispatches events.
+        [DEPRECATED] Use logic.core.combat.apply_damage instead.
+        Applies damage to the monster via the combat facade.
         """
-        from logic.core import event_engine
+        from logic.core import combat
+        return combat.apply_damage(self, amount, source=source, context=context)
         
-        # Dispatch Pre-Damage (For shielding/reduction)
-        ctx = {'target': self, 'damage': amount, 'source': source, 'context': context}
-        event_engine.dispatch("on_take_damage", ctx)
-        
-        actual_damage = ctx['damage']
-        self.hp = max(0, self.hp - actual_damage)
-        
-        if self.hp <= 0:
-            from logic.engines import combat_lifecycle
-            combat_lifecycle.handle_death(self.game, self, source)
-
-        return actual_damage
 
     def stop_combat(self):
         """Clears combat state and notifies the target."""
@@ -130,14 +134,23 @@ class Monster:
 
     def die(self):
         """Handles death via facade."""
-        from logic.core.utils import mob_logic
         mob_logic.die(self)
         
+    def mark_tags_dirty(self):
+        """Invalidates the Unified Tag Synergy (UTS) cache."""
+        self.tags_are_dirty = True
+
     def get_global_tag_count(self, tag):
         """
-        Calculates tag count for mobs based on their tags list.
+        Retrieves the total tag count (Voltage) for a specific tag.
+        Uses cached resonance result if available.
         """
-        return self.tags.count(tag)
+        if self.tags_are_dirty:
+            from logic.engines.resonance_engine import ResonanceAuditor
+            self._cached_tags = ResonanceAuditor.calculate_resonance(self)
+            self.tags_are_dirty = False
+            
+        return self._cached_tags.get(tag, 0)
 
     def get_max_resource(self, resource_name):
         """Returns max resource. Defaults to 100 for mobs."""

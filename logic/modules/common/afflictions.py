@@ -12,5 +12,5 @@ Target Skills for Migration:
     - Cleanse (Generic magic removal)
 
 Architecture Note:
-    Should interface heavily with logic.core.status_effects_engine.
+    Should interface heavily with logic.core.effects.
 """

@@ -3,6 +3,7 @@ from utilities import combat_formatter
 from models import Monster, Player
 from logic.common import find_by_index
 from utilities import telemetry
+from logic.core import resources, effects
 
 def _apply_damage(attacker, target, damage, source_name, exploit_status=None):
     # Vaulting Evasion Check
@@ -30,14 +31,9 @@ def _apply_damage(attacker, target, damage, source_name, exploit_status=None):
             raw_damage = int(raw_damage * max(0.5, penalty))
             attacker.send_line(f"{Colors.YELLOW}[Attacking from Low Ground]{Colors.RESET}")
     
-    # 3. Apply Damage via Resource Engine (Handles events, clamping, and take_damage facade)
-    from logic.core import resource_engine
-    resource_engine.modify_resource(target, "hp", -raw_damage, source=attacker if attacker else "Effect", context=source_name)
-    
     # Reveal Attacker if they were hidden (Post-Damage)
     if attacker and hasattr(attacker, 'status_effects') and "concealed" in attacker.status_effects:
-        from logic.core import status_effects_engine
-        status_effects_engine.remove_effect(attacker, "concealed")
+        effects.remove_effect(attacker, "concealed")
         attacker.send_line(f"{Colors.YELLOW}You are revealed!{Colors.RESET}")
         if attacker.room:
             attacker.room.broadcast(f"{attacker.name} appears from the shadows!", exclude_player=attacker)
@@ -58,11 +54,16 @@ def _apply_damage(attacker, target, damage, source_name, exploit_status=None):
         att_msg = f"{Colors.BOLD}{Colors.YELLOW}EXPLOIT! You strike {target.name} while they are {exploit_status.upper()} for {raw_damage}!{Colors.RESET}"
         tgt_msg = f"{Colors.RED}{att_name} exploits your {exploit_status} for {raw_damage} damage!{Colors.RESET}"
     else:
-        att_msg, tgt_msg, _ = combat_formatter.format_damage(att_name, target.name, raw_damage, source=source_name)
+        # Use formatting engine for kinetic verbs
+        att_msg, tgt_msg, _ = combat_formatter.format_combat_messages(attacker, target, raw_damage)
         
     if attacker: attacker.send_line(att_msg)
     if hasattr(target, 'send_line'):
         target.send_line(tgt_msg)
+
+    # 3. Apply Damage via Resource Engine (Handles events, clamping, and take_damage facade)
+    # Moved AFTER messaging to ensure "You hit" appears before "is defeated"
+    resources.modify_resource(target, "hp", -raw_damage, source=attacker if attacker else "Effect", context=source_name)
         
     # Trigger Combat State (Auto-retaliate / Aggro) - Only if target is still alive
     if target.hp > 0 and attacker and attacker.room == target.room:

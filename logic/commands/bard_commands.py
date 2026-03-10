@@ -1,7 +1,7 @@
 import logic.handlers.command_manager as command_manager
 from logic import search
 from logic.engines import blessings_engine, magic_engine
-from logic.core import status_effects_engine
+from logic.core import effects
 from utilities.colors import Colors
 
 def handle_song(player, target, blessing):
@@ -16,7 +16,7 @@ def handle_song(player, target, blessing):
 
     # 2. Apply Upkeep to Caster
     # The engine handles the resource drain based on the 'resource_cost' in JSON
-    status_effects_engine.apply_effect(player, "song_of_courage_upkeep", duration=600)
+    effects.apply_effect(player, "song_of_courage_upkeep", duration=600)
     
     # 3. Apply Buff to Allies in Room
     # For now, we apply it to all players. In the future, check party/friendship.
@@ -26,7 +26,7 @@ def handle_song(player, target, blessing):
         # The idea is the Bard must keep singing (Upkeep) to refresh this? 
         # Or we just apply a long buff that gets removed if the song ends?
         # For this iteration: Apply a medium duration buff (20s) representing the lingering echo.
-        status_effects_engine.apply_effect(entity, "song_of_courage_buff", duration=20)
+        effects.apply_effect(entity, "song_of_courage_buff", duration=20)
         entity.send_line(f"{Colors.CYAN}{player.name}'s song fills you with courage!{Colors.RESET}")
         count += 1
         
@@ -85,7 +85,7 @@ def stop_singing(player, args):
         return
         
     for eff in active_songs:
-        status_effects_engine.remove_effect(player, eff)
+        effects.remove_effect(player, eff)
     
     player.send_line("You stop singing.")
     player.room.broadcast(f"{player.name} stops playing.", exclude_player=player)

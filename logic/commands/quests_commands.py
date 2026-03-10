@@ -1,6 +1,6 @@
 import logic.handlers.command_manager as command_manager
 from logic import search
-from logic.engines import quest_engine
+from logic.core import quest_engine
 from utilities.colors import Colors
 
 @command_manager.register("quest", category="social")

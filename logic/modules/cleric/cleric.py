@@ -3,14 +3,14 @@ logic/modules/cleric/cleric.py
 The Cleric Domain: Healing, Restoration, and Divine Protection.
 """
 from logic.actions.registry import register
-from logic.core import event_engine, status_effects_engine, resource_engine
+from logic.core import event_engine, effects, resources
+from logic.engines import magic_engine, blessings_engine
 from utilities.colors import Colors
 from logic import common
 
 # --- SKILL HANDLERS ---
 
 def _consume_resources(player, skill):
-    from logic.engines import magic_engine
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
     magic_engine.consume_pacing(player, skill)
@@ -23,10 +23,9 @@ def handle_lay_on_hands(player, skill, args, target=None):
     target = common._get_target(player, args, target)
     if not target: return None, True
     
-    from logic.engines import blessings_engine
     power = blessings_engine.MathBridge.calculate_power(skill, player)
     
-    resource_engine.modify_resource(target, "hp", power, source=player.name, context="Lay on Hands")
+    resources.modify_resource(target, "hp", power, source=player.name, context="Lay on Hands")
     player.send_line(f"{Colors.GREEN}Your touch mends {target.name}'s wounds! (+{power} HP){Colors.RESET}")
     if target != player and hasattr(target, 'send_line'):
         target.send_line(f"{Colors.GREEN}{player.name} lays hands on you, healing your wounds!{Colors.RESET}")
@@ -44,8 +43,8 @@ def handle_cleanse(player, skill, args, target=None):
     # List of "cleansable" effects (toxins, plagues, etc)
     TO_CLEANSE = ["poison", "plague", "bleed", "dazed", "curse", "blind", "silence", "slow", "weakness", "root"]
     for effect in TO_CLEANSE:
-        if status_effects_engine.has_effect(target, effect):
-            status_effects_engine.remove_effect(target, effect)
+        if effects.has_effect(target, effect):
+            effects.remove_effect(target, effect)
             cleansed.append(effect)
             
     if cleansed:
@@ -63,7 +62,7 @@ def handle_shield_of_faith(player, skill, args, target=None):
     target = common._get_target(player, args, player, "Cast Shield of Faith on whom?")
     if not target: return None, True
     
-    status_effects_engine.apply_effect(target, "shield_of_faith", 60)
+    effects.apply_effect(target, "shield_of_faith", 60)
     player.send_line(f"{Colors.YELLOW}You place a shimmering ward of faith upon {target.name}.{Colors.RESET}")
     if target != player and hasattr(target, 'send_line'):
         target.send_line(f"{Colors.YELLOW}{player.name} shields you with divine light!{Colors.RESET}")
@@ -81,7 +80,7 @@ def handle_sanctify(player, skill, args, target=None):
     allies = [p for p in player.room.players] + [m for m in player.room.monsters if getattr(m, 'leader', None) == player]
     
     for ally in allies:
-        status_effects_engine.apply_effect(ally, "sanctified", 30)
+        effects.apply_effect(ally, "sanctified", 30)
         if hasattr(ally, 'send_line'):
             ally.send_line(f"{Colors.YELLOW}You feel protected by the holy ground.{Colors.RESET}")
             
@@ -94,7 +93,6 @@ def handle_divine_wrath(player, skill, args, target=None):
     player.send_line(f"{Colors.YELLOW}You call down the wrath of the heavens!{Colors.RESET}")
     player.room.broadcast(f"{Colors.YELLOW}A pillar of holy fire descends from the sky!{Colors.RESET}", exclude_player=player)
     
-    from logic.engines import blessings_engine
     power = blessings_engine.MathBridge.calculate_power(skill, player)
     
     # Hostile Targeting: All mobs NOT leading/following player + All other players
@@ -116,8 +114,7 @@ def handle_refresh(player, skill, args, target=None):
     if not target: return None, True
     
     amount = 30 # Standard restoration
-    from logic.core import resource_engine
-    resource_engine.modify_resource(target, "stamina", amount, source=player.name, context="Refresh")
+    resources.modify_resource(target, "stamina", amount, source=player.name, context="Refresh")
     player.send_line(f"{Colors.CYAN}You restore {amount} Stamina to {target.name}.{Colors.RESET}")
     if target != player and hasattr(target, 'send_line'):
         target.send_line(f"{Colors.CYAN}{player.name} refreshes your spirit! (+{amount} Stamina){Colors.RESET}")

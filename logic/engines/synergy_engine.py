@@ -1,8 +1,8 @@
 import logging
 from utilities.colors import Colors
 from logic.constants import Tags
-from logic.core import resource_engine
-from logic.core import status_effects_engine
+from logic.core import resources
+from logic.core import effects
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -75,13 +75,13 @@ def apply_combat_synergies(attacker, target, blessing, attack_tags, damage):
     if attacker.synergies.get('red_mage'):
         # 1. Stability/Concentration Refund (Replaces standard Martial refund)
         if damage > 0 and Tags.MARTIAL in attack_tags:
-            resource_engine.modify_resource(attacker, Tags.CONCENTRATION, 4, source="Red Mage", context="Refund", log=True)
+            resources.modify_resource(attacker, Tags.CONCENTRATION, 4, source="Red Mage", context="Refund", log=True)
 
         # 2. Spellstrike (Concentration Refund)
         # Metadata: "synergy_type": "concentration_refund", "synergy_value": 10
         if blessing and getattr(blessing, 'metadata', {}).get('synergy_type') == 'concentration_refund':
             amount = blessing.metadata.get('synergy_value', 10)
-            resource_engine.modify_resource(attacker, Tags.CONCENTRATION, amount, source=blessing.name, context="Synergy")
+            resources.modify_resource(attacker, Tags.CONCENTRATION, amount, source=blessing.name, context="Synergy")
             if hasattr(attacker, 'send_line'):
                 attacker.send_line(f"{Colors.MAGENTA}[CHAIN_CAST] {blessing.name} restores {amount} Concentration!{Colors.RESET}")
         
@@ -94,13 +94,13 @@ def apply_combat_synergies(attacker, target, blessing, attack_tags, damage):
                 eff_to_remove = None
                 
                 for eff_id in list(attacker.status_effects.keys()):
-                    eff_def = status_effects_engine.get_effect_definition(eff_id, game)
+                    eff_def = effects.get_effect_definition(eff_id, game)
                     if eff_def and eff_def.get('metadata', {}).get('is_debuff'):
                         eff_to_remove = eff_id
                         break
                 
                 if eff_to_remove:
-                    status_effects_engine.remove_effect(attacker, eff_to_remove)
+                    effects.remove_effect(attacker, eff_to_remove)
                     if hasattr(attacker, 'send_line'):
                         attacker.send_line(f"{Colors.MAGENTA}[CHAIN_CAST] {blessing.name} purges {eff_to_remove}!{Colors.RESET}")
 

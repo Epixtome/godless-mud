@@ -106,8 +106,8 @@ def apply_effect_cmd(player, args):
     effect_id = parts[0]
     duration = int(parts[1]) if len(parts) > 1 else 10
     
-    from logic.core import status_effects_engine
-    status_effects_engine.apply_effect(player, effect_id, duration)
+    from logic.core import effects
+    effects.apply_effect(player, effect_id, duration)
 
 @command_manager.register("@clearvisited", admin=True, category="admin")
 def clear_visited(player, args):

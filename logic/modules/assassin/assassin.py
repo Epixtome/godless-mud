@@ -3,7 +3,7 @@ logic/modules/assassin/assassin.py
 The Assassin Domain: Stealth, Poisons, and Lethal strikes.
 """
 from logic.actions.registry import register
-from logic.core import event_engine, status_effects_engine, resource_engine
+from logic.core import event_engine, effects, resources
 from logic.engines import action_manager, blessings_engine, magic_engine
 from logic.actions.skill_utils import _apply_damage
 from utilities.colors import Colors
@@ -24,7 +24,7 @@ def handle_hide(player, skill, args, target=None):
         return None, True
 
     player.send_line(f"{Colors.BLUE}You slip into the shadows...{Colors.RESET}")
-    status_effects_engine.apply_effect(player, "concealed", 300) # 5 minutes or until reveal
+    effects.apply_effect(player, "concealed", 300) # 5 minutes or until reveal
     
     _consume_resources(player, skill)
     return None, True
@@ -49,7 +49,7 @@ def handle_backstab(player, skill, args, target=None):
     _apply_damage(player, target, final_power, "Backstab")
     
     # Reveal
-    status_effects_engine.remove_effect(player, "concealed")
+    effects.remove_effect(player, "concealed")
     
     _consume_resources(player, skill)
     return target, True
@@ -64,7 +64,7 @@ def handle_smoke_bomb(player, skill, args, target=None):
     enemies = [m for m in player.room.monsters if m.fighting == player]
     for e in enemies:
         action_manager.interrupt(e)
-        status_effects_engine.apply_effect(e, "confused", 6)
+        effects.apply_effect(e, "confused", 6)
         # Drop aggro
         if player in e.attackers:
             e.attackers.remove(player)
@@ -83,7 +83,7 @@ def handle_dirt_kick(player, skill, args, target=None):
     if not target: return None, True
 
     player.send_line(f"You kick a spray of dirt into {target.name}'s eyes!")
-    status_effects_engine.apply_effect(target, "blinded", 10)
+    effects.apply_effect(target, "blinded", 10)
     
     _consume_resources(player, skill)
     return target, True
@@ -95,7 +95,7 @@ def handle_garrote(player, skill, args, target=None):
     if not target: return None, True
 
     player.send_line(f"You wrap a wire around {target.name}'s throat!")
-    status_effects_engine.apply_effect(target, "silenced", 8)
+    effects.apply_effect(target, "silenced", 8)
     
     _consume_resources(player, skill)
     return target, True

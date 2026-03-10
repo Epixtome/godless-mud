@@ -1,6 +1,6 @@
 import random
 from utilities.colors import Colors
-from logic.engines import combat_engine
+from logic.core import combat
 from logic.actions import skill_utils
 
 def apply_assassin_opening(ctx):
@@ -42,7 +42,7 @@ def combat_turn_extra_attacks(ctx):
         if "fourth_attack" in deck: extra_attacks += 1
         
         if extra_attacks > 0:
-            dmg = combat_engine.calculate_player_damage(combatant)
+            dmg = combat.calculate_player_damage(combatant)
             for i in range(extra_attacks):
                 if target.hp <= 0: break
                 combatant.send_line(f"{Colors.YELLOW}You unleash a follow-up strike!{Colors.RESET}")
@@ -87,7 +87,8 @@ def malediction_reflection(ctx):
     if "malediction" in getattr(attacker, 'status_effects', {}):
         damage_attempt = ctx.get('damage', 0)
         backlash = max(1, int(damage_attempt * 0.20))
-        attacker.hp -= backlash
+        from logic.core import resources
+        resources.modify_resource(attacker, "hp", -backlash, source="Malediction")
         if hasattr(attacker, 'send_line'):
             attacker.send_line(f"{Colors.MAGENTA}The Malediction recoils upon you for {backlash} damage!{Colors.RESET}")
 

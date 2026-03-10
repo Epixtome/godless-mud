@@ -1,5 +1,5 @@
 from utilities.colors import Colors
-from logic.engines import combat_math
+from logic.core import combat
 
 def format_combat_messages(attacker, target, damage, blessing=None, is_god=False):
     """
@@ -9,7 +9,7 @@ def format_combat_messages(attacker, target, damage, blessing=None, is_god=False
     if hasattr(target, 'max_hp') and target.max_hp > 0:
         damage_percent = damage / target.max_hp
     
-    verb = combat_math.get_attack_verb(damage_percent)
+    verb = combat.get_attack_verb(damage_percent)
     verb_3rd = verb + "es" if verb.endswith("sh") or verb.endswith("ch") else verb + "s"
 
     if is_god:

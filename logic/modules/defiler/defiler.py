@@ -3,7 +3,7 @@ logic/modules/defiler/defiler.py
 The Defiler Domain: Afflictions, Life Siphoning, and Rot.
 """
 from logic.actions.registry import register
-from logic.core import event_engine, status_effects_engine, resource_engine
+from logic.core import event_engine, effects, resources
 from utilities.colors import Colors
 from logic import common
 
@@ -29,7 +29,7 @@ def handle_life_tap(player, skill, args, target=None):
     
     from logic.actions.skill_utils import _apply_damage
     _apply_damage(player, target, power, "Life Tap")
-    resource_engine.modify_resource(player, "hp", heal, source="Life Tap", context="Siphon")
+    resources.modify_resource(player, "hp", heal, source="Life Tap", context="Siphon")
     
     # Blood Well Bonus
     def_state = player.ext_state.get('defiler', {})
@@ -53,7 +53,8 @@ def handle_corpse_consumption(player, skill, args, target=None):
     player.room.broadcast(f"{Colors.RED}{player.name} brutally consumes the remains of {corpse.name}!{Colors.RESET}", exclude_player=player)
     
     heal = 40 # Standardized base heal
-    player.hp = min(player.max_hp, player.hp + heal)
+    from logic.core import resources
+    resources.modify_resource(player, "hp", heal, source="Corpse Consumption")
     
     def_state = player.ext_state.get('defiler', {})
     def_state['blood_well'] = min(def_state.get('blood_well', 0) + 50, 100)
@@ -80,7 +81,7 @@ def handle_afflictions(player, skill, args, target=None):
     
     eff_id, duration, color, desc = effect_map.get(skill.id, (skill.id, 10, Colors.RESET, "dark energy"))
     
-    status_effects_engine.apply_effect(target, eff_id, duration)
+    effects.apply_effect(target, eff_id, duration)
     player.send_line(f"You cast {color}{skill.name}{Colors.RESET} on {target.name}. A {desc} envelops them.")
     if hasattr(target, 'send_line'):
         target.send_line(f"{color}{player.name} has cursed you with {skill.name}!{Colors.RESET}")
@@ -100,7 +101,7 @@ def on_combat_hit(ctx):
         
     if damage > 0:
         leech = max(1, damage // 10)
-        resource_engine.modify_resource(attacker, 'hp', leech, source="Vile Exchange", context="Leech")
+        resources.modify_resource(attacker, 'hp', leech, source="Vile Exchange", context="Leech")
 
 def on_build_prompt(ctx):
     """Injects [WELL] display for Defilers."""

@@ -5,7 +5,7 @@ High-complexity combat logic: Executes, Disarms, AoE, Multi-hit.
 import random
 from logic.actions.registry import register
 from logic.actions.skill_utils import _apply_damage
-from logic.core import event_engine, status_effects_engine
+from logic.core import event_engine, effects
 from logic.engines import blessings_engine, magic_engine, action_manager
 from logic.common import _get_target
 from logic import common
@@ -98,10 +98,10 @@ def handle_jump(player, skill, args, target=None):
     player.send_line(f"{Colors.CYAN}You leap high into the air!{Colors.RESET}")
     player.room.broadcast(f"{player.name} leaps high into the air, disappearing from view!", exclude_player=player)
     
-    status_effects_engine.apply_effect(player, "vaulting", 4, verbose=False)
+    effects.apply_effect(player, "vaulting", 4, verbose=False)
     
     async def _land():
-        status_effects_engine.remove_effect(player, "vaulting")
+        effects.remove_effect(player, "vaulting")
         if player.room != target.room:
             player.send_line("You land, but your target is gone.")
             return
@@ -164,7 +164,7 @@ def handle_acid_vial(player, skill, args, target=None):
     power = blessings_engine.calculate_power(skill, player, target)
     _apply_damage(player, target, power, "Acid Vial")
     duration = skill.metadata.get('duration', 20)
-    status_effects_engine.apply_effect(target, "corroded", duration)
+    effects.apply_effect(target, "corroded", duration)
     
     _consume_resources(player, skill)
     return target, True
@@ -247,7 +247,7 @@ def handle_drag(player, skill, args, target=None):
         action_manager.interrupt(target)
 
     # Apply Stagger (Short stun)
-    status_effects_engine.apply_effect(target, "off_balance", 2)
+    effects.apply_effect(target, "off_balance", 2)
 
     _consume_resources(player, skill)
     return target, True

@@ -4,8 +4,8 @@ The Barbarian Domain: Momentum, Rage, and Brutality.
 """
 import asyncio
 from logic.core import event_engine
-from logic.core import status_effects_engine
-from logic.core import resource_engine
+from logic.core import effects
+from logic.core import resources
 from utilities.colors import Colors
 from logic.engines import combat_actions
 from logic.actions.registry import register
@@ -89,7 +89,6 @@ def on_combat_hit(ctx):
     current_pips = barb_state.get('momentum', 0)
     if current_pips < 5:
         barb_state['momentum'] = current_pips + 1
-        attacker.send_line(f"{Colors.YELLOW}[Momentum] {barb_state['momentum']}/5{Colors.RESET}")
 
     # Check for Extra Attacks (Passive Scaling)
     # 3 Pips = 1 Extra, 5 Pips = 2 Extra
@@ -100,19 +99,32 @@ def on_combat_hit(ctx):
         extra_hits = 1
 
     if extra_hits > 0:
-        asyncio.create_task(_perform_extra_attacks(attacker, target, extra_hits))
+        _perform_extra_attacks(attacker, target, extra_hits)
 
-async def _perform_extra_attacks(attacker, target, count):
-    """Executes rapid-fire extra attacks with a delay."""
+def _perform_extra_attacks(attacker, target, count):
+    """Executes rapid-fire extra attacks immediately within the tick."""
     barb_state = attacker.ext_state.get('barbarian', {})
     
     for _ in range(count):
-        await asyncio.sleep(0.05) # 50ms Inter-Command Delay
-        if attacker.hp <= 0 or target.hp <= 0: break
+        if attacker.hp <= 0 or target.hp <= 0 or getattr(target, 'pending_death', False):
+            break
         
         barb_state['is_extra_attack'] = True
-        combat_actions.execute_attack(attacker, target, attacker.room, attacker.game, set())
+        # Track the extra hit by prefixing the next attack context
+        combat_actions.execute_attack(attacker, target, attacker.room, attacker.game, set(), context_prefix=f"{Colors.YELLOW}[Extra Hit]{Colors.RESET} ")
         barb_state['is_extra_attack'] = False
+
+def on_build_prompt(ctx):
+    """Injects Momentum display into the prompt for Barbarians."""
+    player = ctx.get('player')
+    prompts = ctx.get('prompts')
+    
+    if getattr(player, 'active_class', None) == 'barbarian':
+        momentum = player.ext_state.get('barbarian', {}).get('momentum', 0)
+        if momentum > 0:
+            prompts.append(f"{Colors.YELLOW}[Momentum {momentum}/5]{Colors.RESET}")
 
 # Subscribe to events
 event_engine.subscribe("on_combat_hit", on_combat_hit)
+event_engine.subscribe("on_build_prompt", on_build_prompt)
+

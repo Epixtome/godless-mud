@@ -171,7 +171,8 @@ def load_kit(player, kit_name):
 def trigger_module_inits(player):
     """
     Dynamically initializes state for all active modules in logic/modules/.
-    This allows the engine to grow to 60+ classes without hardcoding.
+    Supports both generic 'initialize' and naming-conv 'initialize_[name]' 
+    at either the state submodule or package level.
     """
     import importlib
     import pkgutil
@@ -180,22 +181,33 @@ def trigger_module_inits(player):
     # Iterate through all sub-packages in logic.modules
     path = logic.modules.__path__
     for loader, module_name, is_pkg in pkgutil.iter_modules(path):
-        if is_pkg and module_name != 'common':
+        if not is_pkg or module_name == 'common':
+            continue
+            
+        try:
+            # 1. Try to initialize via state submodule (GCA Standard)
+            state_path = f"logic.modules.{module_name}.state"
             try:
-                # Try to import the state module (e.g., logic.modules.monk.state)
-                # Convention: state.py must exist and have enter/init logic
-                state_path = f"logic.modules.{module_name}.state"
                 state_mod = importlib.import_module(state_path)
-                
-                # Check for standardized initialize() or naming-conv initialize_name()
                 init_func = getattr(state_mod, 'initialize', None)
                 if not init_func:
                     init_func = getattr(state_mod, f"initialize_{module_name}", None)
                 
                 if init_func:
                     init_func(player)
-            except (ImportError, AttributeError):
-                # Silence expected misses for modules that don't need persistent state buckets
-                continue
-            except Exception as e:
-                logger.error(f"Failed to auto-discover init for {module_name}: {e}")
+                    continue # Successfully initialized via state
+            except ImportError:
+                pass # No state.py, falling back to package-level check
+
+            # 2. Fallback to package-level initialization
+            module_path = f"logic.modules.{module_name}"
+            class_mod = importlib.import_module(module_path)
+            init_func = getattr(class_mod, 'initialize', None)
+            if not init_func:
+                init_func = getattr(class_mod, f"initialize_{module_name}", None)
+            
+            if init_func:
+                init_func(player)
+
+        except Exception as e:
+            logger.error(f"Failed to auto-discover init for {module_name}: {e}")

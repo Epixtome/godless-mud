@@ -49,20 +49,10 @@ def start_action(entity, duration, callback, tag="generic", fail_msg="Action int
                 
             await callback()
             
-            # [REAPER] Process any deaths triggered by this action immediately.
-            from logic.engines import combat_lifecycle
-            involved_players = []
-            if hasattr(entity, 'game') and entity.game:
-                involved_players = combat_lifecycle.process_dead_queue(entity.game)
-
-            # [SNAPPY FEEDBACK] Force push any text (including the action results)
-            # Find everyone in the entity's current room. If no death occurred, involved_players is empty.
+            # Mark that participants need a prompt refresh
             if hasattr(entity, 'room') and entity.room:
                 for p in entity.room.players:
-                    if p not in involved_players: # Don't double-prompt if Reaper already did
-                        p.send_prompt()
-                        if hasattr(p, 'drain'):
-                            asyncio.create_task(p.drain())
+                    p.prompt_requested = True
 
         except asyncio.CancelledError:
             # Action was interrupted
@@ -77,10 +67,8 @@ def start_action(entity, duration, callback, tag="generic", fail_msg="Action int
                 on_interrupt()
             
             # [SNAPPY FEEDBACK] Refresh prompt on fail as well
-            if hasattr(entity, 'send_prompt'): 
-                entity.send_prompt()
-                if hasattr(entity, 'drain'):
-                    asyncio.create_task(entity.drain())
+            if hasattr(entity, 'prompt_requested'): 
+                entity.prompt_requested = True
 
     # 4. Schedule and Store
     task = asyncio.create_task(_runner())

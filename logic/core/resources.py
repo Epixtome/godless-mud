@@ -1,6 +1,6 @@
 import logging
 from utilities.colors import Colors
-from logic.core.engines import status_effects_engine
+from logic.core import effects
 from utilities import telemetry
 from logic.constants import Tags
 
@@ -96,9 +96,10 @@ def modify_resource(entity, resource, amount, source="System", context="Adjustme
     # 0. Handle HP (Attribute, not dict)
     if str(resource).lower() == "hp":
         if hasattr(entity, 'hp') and hasattr(entity, 'max_hp'):
-            if amount < 0 and hasattr(entity, 'take_damage'):
-                # Route through take_damage for event dispatching
-                actual = entity.take_damage(-amount, source=source, context=context)
+            if amount < 0:
+                # Route through combat facade for standardized damage pipeline
+                from . import combat
+                actual = combat.apply_damage(entity, -amount, source=source, context=context)
                 if log:
                     telemetry.log_resource_delta(entity, "HP", -actual, source.name if hasattr(source, 'name') else source, context=context)
                 return
@@ -191,7 +192,7 @@ def calculate_conc_regen(player):
 def calculate_stamina_regen(player):
     """Calculates stamina regeneration per tick."""
     # Check for Atrophy (Warlock Debuff)
-    if status_effects_engine.has_effect(player, "atrophy") or "atrophy" in getattr(player, 'status_effects', {}):
+    if effects.has_effect(player, "atrophy") or "atrophy" in getattr(player, 'status_effects', {}):
         return 0, player.get_max_resource("stamina")
 
     max_stamina = player.get_max_resource("stamina")

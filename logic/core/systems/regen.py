@@ -1,4 +1,4 @@
-from logic.core import event_engine, resource_engine
+from logic.core import event_engine, resources
 from logic.constants import Tags
 from utilities.colors import Colors
 
@@ -9,7 +9,7 @@ def passive_regen(game):
         event_engine.dispatch("on_combat_tick", player=player)
         
         # Delegate to Resource Engine
-        resource_engine.process_tick(player)
+        resources.process_tick(player)
 
         # Charge Regen (1 per 2 ticks)
         if game.tick_count % 2 == 0:

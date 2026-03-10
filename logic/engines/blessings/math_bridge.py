@@ -1,7 +1,7 @@
 import logging
 from utilities.utils import roll_dice
 from logic.core import event_engine
-from logic.core import status_effects_engine
+from logic.core import effects
 from utilities.colors import Colors
 from logic.constants import Tags
 
@@ -44,7 +44,7 @@ def apply_on_hit(player, target, blessing):
         status = on_hit.get('apply_status')
         if status:
             duration = on_hit.get('duration', 10)
-            status_effects_engine.apply_effect(target, status, duration)
+            effects.apply_effect(target, status, duration)
             # Broadcast the Opening
             if hasattr(target, 'room') and target.room:
                 target.room.broadcast(f"{Colors.YELLOW}{target.name} is knocked {status.replace('_', ' ').title()}!{Colors.RESET}", exclude_player=None)
@@ -58,9 +58,9 @@ def apply_on_hit(player, target, blessing):
             tgt_type = effect.get('target', 'enemy')
             
             if tgt_type == 'enemy' and target:
-                status_effects_engine.apply_effect(target, eff_id, duration)
+                effects.apply_effect(target, eff_id, duration)
             elif tgt_type == 'self' and player:
-                status_effects_engine.apply_effect(player, eff_id, duration)
+                effects.apply_effect(player, eff_id, duration)
 
 def calculate_duration(blessing, player):
     """Calculates duration (Simplified)."""

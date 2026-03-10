@@ -1,9 +1,9 @@
 import logging
 import asyncio
 import random
-from logic.core import event_engine, status_effects_engine
+from logic.core import event_engine, effects
 from utilities.colors import Colors
-from logic.engines import combat_engine
+from logic.core import combat
 from utilities import combat_formatter
 from utilities import telemetry
 from logic.constants import Tags
@@ -139,8 +139,8 @@ def consume_resources(player, blessing):
     # Stamina Consumption (V2 Unified)
     stamina_cost = final_costs.get('stamina', 0)
     if stamina_cost > 0:
-        from logic.core import resource_engine
-        resource_engine.modify_resource(player, 'stamina', -stamina_cost, source=blessing.name, context="Consumed")
+        from logic.core import resources
+        resources.modify_resource(player, 'stamina', -stamina_cost, source=blessing.name, context="Consumed")
 
     # Stability and Heat are deprecated and unified into Stamina.
     # The old consumption blocks are now removed.
@@ -159,13 +159,14 @@ def consume_resources(player, blessing):
             player.resources[Tags.CONCENTRATION] = -deficit # Go into debt
             
             # HP Drain (Burn)
-            player.hp -= deficit
+            from logic.core import resources
+            resources.modify_resource(player, "hp", -deficit, source="Overcast", context="HP Burn")
             player.send_line(f"{Colors.YELLOW}You burn {deficit} HP to fuel the spell!{Colors.RESET}")
             
             # Transcendent Will: Generate +20 Heat per cast
             heat_surge = 20
-            from logic.core import resource_engine
-            resource_engine.modify_resource(player, Tags.HEAT, heat_surge, source="Overcast", context="Heat Surge")
+            from logic.core import resources
+            resources.modify_resource(player, Tags.HEAT, heat_surge, source="Overcast", context="Heat Surge")
             player.send_line(f"{Colors.RED}The surge of raw magic overheats you! (+{heat_surge} Heat){Colors.RESET}")
             
             # Telemetry for Burn
