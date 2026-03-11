@@ -55,21 +55,17 @@ class Monster:
         self.flags = []
 
     def refresh_class(self):
-        """Initializes class-specific state for the mob."""
+        """Initializes class-specific state for the mob via persistence facade."""
         if not self.active_class:
             return
-        # Ensure we have a dummy kit for compatibility
-        self.active_kit = {'id': self.active_class}
-        # In GCA, initialization is sharded. We need to call the right one.
-        # For simplicity, we'll try to use the class_engine's logic or a registry.
-        try:
-            import importlib
-            state_mod = importlib.import_module(f"logic.modules.{self.active_class}.state")
-            init_func = getattr(state_mod, f"initialize_{self.active_class}")
-            if init_func:
-                init_func(self)
-        except (ImportError, AttributeError):
-            pass
+            
+        # Ensure we have a dummy kit for compatibility if needed
+        if not self.active_kit:
+            self.active_kit = {'id': self.active_class}
+            
+        # Centralized GCA initialization
+        from logic.core.utils import persistence
+        persistence.trigger_module_inits(self)
 
     def to_dict(self):
         return {

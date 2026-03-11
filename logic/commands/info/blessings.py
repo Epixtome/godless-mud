@@ -22,6 +22,8 @@ def deck(player, args):
         blessings.sort(key=lambda x: x.tier)
 
         for b in blessings:
+            if "hidden" in getattr(b, 'identity_tags', []): continue
+
             tier_color = Colors.WHITE
             if b.tier == 2: tier_color = Colors.GREEN
             elif b.tier == 3: tier_color = Colors.CYAN
@@ -30,9 +32,10 @@ def deck(player, args):
 
             tags = " ".join([f"#{t}" for t in b.identity_tags if t != "hidden"])
             
-            # Box-ish Layout
-            player.send_line(f" {tier_color}T{b.tier}{Colors.RESET} | {Colors.BOLD}{b.name:<20}{Colors.RESET} | {Colors.DGREY}{tags}{Colors.RESET}")
-            player.send_line(f"    {Colors.ITALIC}{b.description}{Colors.RESET}")
+            # Formatted Layout: Name and Desc on same line, Tags under
+            player.send_line(f" {tier_color}T{b.tier}{Colors.RESET} | {Colors.BOLD}{b.name:<18}{Colors.RESET} - {Colors.ITALIC}{b.description}{Colors.RESET}")
+            if tags:
+                player.send_line(f"      {Colors.DGREY}{tags}{Colors.RESET}")
     
     player.send_line(display_utils.render_line(width))
     
@@ -83,7 +86,7 @@ def list_blessings(player, args):
             player.send_line(f"\n {Colors.BOLD}{title}{Colors.RESET}")
             for item in sorted(list_): player.send_line(f"  {item}")
 
-@command_manager.register("passives", "bonuses", category="information")
+@command_manager.register("passives", "bonuses", "effects", "afflictions", category="information")
 def list_passives(player, args):
     """List active passive blessings and status effects."""
     player.send_line(f"\n{display_utils.render_header('Active Passives', 60)}")
@@ -96,7 +99,7 @@ def list_passives(player, args):
             found = True
     if not found: player.send_line(" No passive blessings.")
         
-    player.send_line(f"\n{display_utils.render_header('Active Effects', 60, '─')}")
+    player.send_line(f"\n{display_utils.render_header('Active Effects', 60, '-')}")
     if player.status_effects:
         for eff_id, expiry in player.status_effects.items():
             eff_data = player.game.world.status_effects.get(eff_id, {})

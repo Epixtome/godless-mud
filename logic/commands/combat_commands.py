@@ -14,21 +14,18 @@ def kill(player, args):
         
     target = find_by_index(player.room.monsters + player.room.players, args)
     
-    if player.is_in_combat():
-        player.send_line("You are already in combat! You must flee or defeat your current target first.")
+    if "panting" in getattr(player, 'status_effects', {}):
+        player.send_line("You are too winded to engage right now!")
         return
     
-    if not target:
-        target = search.find_living(player.room, args)
+    if player.fighting == target:
+        player.send_line(f"You are already fighting {target.name}!")
+        return
+        
+    if player.is_in_combat() and target != player.fighting:
+        player.send_line(f"{Colors.YELLOW}You turn your attention toward {target.name}!{Colors.RESET}")
+        # Symmetrical cleanup and start handled by combat.start_combat
     
-    if not target:
-        player.send_line("You don't see them here.")
-        return
-        
-    if target == player:
-        player.send_line("Suicide is not the answer.")
-        return
-        
     combat.start_combat(player, target)
     
     player.send_line(f"{Colors.RED}You attack {target.name}!{Colors.RESET}")
@@ -52,6 +49,8 @@ def flee(player, args):
 
     # Attempt move first. If it fails, do not clear combat.
     if _move(player, direction):
+        from logic.core import effects
+        effects.apply_effect(player, "panting", 3)
         combat.stop_combat(player)
 
 @command_manager.register("consider", "con", category="combat")

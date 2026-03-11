@@ -17,4 +17,4 @@ def monitor_terrain(game):
         if terrain in TERRAIN_EFFECTS:
             status_id = TERRAIN_EFFECTS[terrain]
             for entity in room.players + room.monsters:
-                effects.apply_effect(entity, status_id, 3)
+                effects.apply_effect(entity, status_id, 15)

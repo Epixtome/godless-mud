@@ -12,6 +12,7 @@ from . import help_system_commands
 from . import items
 from . import lore_commands
 from . import movement_commands
+from .movement import utility_movement
 from . import quests_commands
 from . import shop_commands
 from . import skill_commands

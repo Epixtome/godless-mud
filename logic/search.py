@@ -37,10 +37,11 @@ def search_list(collection, search_term):
 def find_matches(collection, search_term):
     """
     Returns a list of all objects in a collection matching a search term.
-    Priority: Exact (name/id) > Starts With (name/id) > Contains (name).
+    Priority: Exact (name/id) > Starts With (name/id) > Contains (name) > Keywords (all present).
     """
     if not search_term: return []
-    search = search_term.lower().replace(" ", "_")
+    search = search_term.lower().replace(" ", "_").strip()
+    keywords = search_term.lower().split()
     
     # 1. Exact matches
     exact = [obj for obj in collection if _match(obj, search)]
@@ -52,7 +53,20 @@ def find_matches(collection, search_term):
     
     # 3. Contains matches
     contains = [obj for obj in collection if _match_contain(obj, search)]
-    return contains
+    if contains: return contains
+    
+    # 4. Keyword matches (All search words must be present in name or ID)
+    if len(keywords) > 1:
+        keyword_matches = []
+        for obj in collection:
+            name = _get_val(obj, 'name')
+            obj_id = _get_val(obj, 'id')
+            combined = f"{name} {obj_id}".lower()
+            if all(k in combined for k in keywords):
+                keyword_matches.append(obj)
+        return keyword_matches
+        
+    return []
 
 def find_living(room, search_term):
     """Searches for monsters first, then players in a room."""
@@ -80,9 +94,13 @@ def find_nearby(start_room, search_term, max_range=1):
             return target, dist, first_dir
             
         if dist < max_range:
-            for direction, next_room in current_room.exits.items():
-                # Ignore non-cardinal for tracking logic simplicity if desired, 
-                # but let's support all.
+            for direction, next_room_id in current_room.exits.items():
+                world = getattr(current_room, 'world', None)
+                if not world: continue
+                
+                next_room = world.rooms.get(next_room_id)
+                if not next_room: continue
+
                 if next_room.id not in visited:
                     visited.add(next_room.id)
                     next_dir = first_dir if first_dir else direction

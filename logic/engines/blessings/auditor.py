@@ -27,19 +27,29 @@ class Auditor:
         tags = getattr(blessing, 'identity_tags', [])
         
         # Base Costs
-        stab = reqs.get('stability', 0)
-        conc = reqs.get('concentration', 0)
         stamina = reqs.get('stamina', 0)
+        conc = reqs.get('concentration', 0)
         chi = reqs.get('chi', 0)
         
-        # Default Stamina Cost
-        if stamina == 0 and "movement" in tags:
-            stamina = 3
-        elif stamina == 0:
-            stamina = 10
+        # V4.5 Hybrid: Check top-level 'cost' as fallback
+        if stamina == 0 and conc == 0:
+            top_cost = getattr(blessing, 'cost', 0)
+            if top_cost > 0:
+                if any(t in tags for t in ["magic", "spell", "arcane", "elemental"]):
+                    conc = top_cost
+                else:
+                    stamina = top_cost
+
+        # Default Stamina Cost (Physical exertion for non-spells)
+        if stamina == 0 and conc == 0 and "passive" not in tags:
+            if "movement" in tags:
+                stamina = 3
+            elif not any(t in tags for t in ["magic", "spell", "arcane", "elemental"]):
+                stamina = 10
             
         # V2 Resource Unification: Map legacy costs to Stamina (Heat)
         if reqs.get('heat', 0) > 0: stamina += reqs.get('heat', 0)
+        if reqs.get('stability', 0) > 0: stamina += reqs.get('stability', 0)
             
         costs = {
             "stability": 0, # Deprecated
@@ -127,13 +137,22 @@ class Auditor:
             if player.room.terrain not in req_terrain:
                 return False, f"Requires terrain: {', '.join(req_terrain)}"
 
-        # State Check
+        # State Check (Generalized for all classes)
         req_stance = blessing.requirements.get('stance')
-        if req_stance and player.ext_state.get('monk', {}).get('stance') != req_stance:
-            return False, f"You must be in {req_stance} stance."
+        if req_stance:
+            active_class = getattr(player, 'active_class', None)
+            if active_class:
+                # GCA Protocol: Class data lives in ext_state[class_name]
+                p_stance = player.ext_state.get(active_class, {}).get('stance')
+                if p_stance != req_stance:
+                    return False, f"You must be in {req_stance.replace('_', ' ').title()} stance."
+            else:
+                return False, "This maneuver requires a combat stance."
             
-        if blessing.requirements.get('mount') is True and not player.is_mounted:
-            return False, "You must be mounted."
+        # [V4.5 Robustness] Boolean requirements should use truthy checks 
+        # to account for variations in JSON encoders (True vs 1).
+        if blessing.requirements.get('mount') and not getattr(player, 'is_mounted', False):
+            return False, "You must be mounted to use this maneuver."
 
         # Weight Class Gate (MVP)
         req_weight = blessing.requirements.get('max_weight_class')

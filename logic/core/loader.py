@@ -31,6 +31,10 @@ def load_world(filepath=None):
     _link_exits(world)
     zone_loader.apply_grid_logic(world)
 
+    # Attach world reference to all rooms for easier navigation
+    for room in world.rooms.values():
+        room.world = world
+
     return world
 
 def _load_all_metadata(world):

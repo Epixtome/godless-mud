@@ -48,7 +48,13 @@ def find_nearby(start_room, search_term, max_range=1):
             return target, dist, first_dir
             
         if dist < max_range:
-            for direction, next_room in current_room.exits.items():
+            for direction, next_room_id in current_room.exits.items():
+                world = getattr(current_room, 'world', None)
+                if not world: continue
+                
+                next_room = world.rooms.get(next_room_id)
+                if not next_room: continue
+
                 if next_room.id not in visited:
                     visited.add(next_room.id)
                     next_dir = first_dir if first_dir else direction

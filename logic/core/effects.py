@@ -17,6 +17,10 @@ logger = logging.getLogger("GodlessMUD")
 def apply_effect(target, effect_id, duration, verbose=True, log_event=True):
     """Applies a status effect to the target, respecting hierarchy rules."""
     if not target: return
+    
+    # Normalize ID for case-insensitivity consistency across engines
+    effect_id = str(effect_id).lower().strip()
+    
     if effect_id in STATUS_MAP: effect_id = STATUS_MAP[effect_id]
 
     # Immunity Checks
@@ -26,7 +30,7 @@ def apply_effect(target, effect_id, duration, verbose=True, log_event=True):
             active_def = get_effect_definition(active_id, game)
             if isinstance(active_def, dict):
                 meta = active_def.get('metadata', {})
-                if isinstance(meta, dict) and effect_id in meta.get('immune_to', []):
+                if isinstance(meta, dict) and isinstance(meta.get('immune_to'), list) and effect_id in meta.get('immune_to', []):
                     if hasattr(target, 'send_line'):
                         target.send_line(f"{Colors.YELLOW}[!] You are immune to that effect!{Colors.RESET}")
                     return
@@ -50,6 +54,7 @@ def apply_effect(target, effect_id, duration, verbose=True, log_event=True):
 
 def remove_effect(target, effect_id, verbose=True):
     """Removes a status effect."""
+    effect_id = str(effect_id).lower().strip()
     if effect_id == "prone":
         game = getattr(target, 'game', None)
         current_tick = game.tick_count if game else 0
@@ -129,7 +134,10 @@ def get_status_help(keyword, game):
     defn = get_effect_definition(keyword, game)
     if not defn:
         for k, v in CORE_STATUS_DEFINITIONS.items():
-            if v.get('name', '').lower() == keyword: defn = v; break
+            name = v.get('name', '')
+            if isinstance(name, str) and name.lower() == keyword: 
+                defn = v
+                break
 
     if defn:
         name = defn.get('name', keyword.title())

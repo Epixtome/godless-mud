@@ -70,6 +70,10 @@ def distribute_rewards(player: 'Player', victim: Any, game: Any) -> None:
     """Awards Favor, XP, or Soul fragments for a kill."""
     combat_logic.distribute_favor(player, victim, game)
 
+def distribute_favor(player: 'Player', target: Any, game: Any) -> None:
+    """Standardized entry for favor distribution."""
+    combat_logic.distribute_favor(player, target, game)
+
 def is_target_valid(attacker: Any, target: Any) -> bool:
     """Checks if combat between two entities is possible (distance, HP, structure)."""
     if not target or getattr(target, 'hp', 0) <= 0: return False
@@ -139,6 +143,12 @@ def handle_target_loss(entity: Any) -> Any:
 
 def start_combat(player: 'Player', target: Any) -> None:
     """Initiates combat between two entities, handling symmetry and interrupts."""
+    # Handle switching targets (Clean up old observers)
+    old_target = getattr(player, 'fighting', None)
+    if old_target and old_target != target and hasattr(old_target, 'attackers'):
+        if player in old_target.attackers:
+            old_target.attackers.remove(player)
+
     player.fighting = target
     player.state = "combat"
     if hasattr(target, 'fighting'):

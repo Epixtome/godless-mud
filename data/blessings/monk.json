@@ -37,13 +37,47 @@
                 "multiplier": 1.0
             }
         },
+        "crane_stance": {
+            "id": "crane_stance",
+            "name": "Crane Stance",
+            "tier": 2,
+            "cost": 30,
+            "description": "Enter the fluid Crane Stance. Increases Wisdom and Total Defense while focusing your mind. Toggles on/off. Mutually exclusive with Turtle Stance.",
+            "identity_tags": [
+                "monk",
+                "martial",
+                "stance",
+                "wisdom"
+            ],
+            "action": "crane_stance",
+            "requirements": {
+                "class": "monk"
+            }
+        },
+        "turtle_stance": {
+            "id": "turtle_stance",
+            "name": "Turtle Stance",
+            "tier": 2,
+            "cost": 30,
+            "description": "Sink into the grounded Turtle Stance. Grants immunity to knockdowns and reduces all physical damage taken by 15%. Toggles on/off. Mutually exclusive with Crane Stance.",
+            "identity_tags": [
+                "monk",
+                "martial",
+                "stance",
+                "protection"
+            ],
+            "action": "turtle_stance",
+            "requirements": {
+                "class": "monk"
+            }
+        },
         "triple_kick": {
             "id": "triple_kick",
             "name": "Triple Kick",
-            "tier": 3,
+            "tier": 2,
             "cost": 40,
-            "base_power": 15,
-            "description": "Unleash three rapid kicks.",
+            "base_power": 22,
+            "description": "Unleash a rapid succession of three kicks against a single target. Scales with Martial voltage.",
             "identity_tags": [
                 "monk",
                 "martial",
@@ -56,7 +90,7 @@
             },
             "scaling": {
                 "scaling_tag": "martial",
-                "multiplier": 0.5
+                "multiplier": 1.5
             }
         },
         "iron_palm": {
@@ -65,11 +99,12 @@
             "tier": 4,
             "cost": 30,
             "base_power": 25,
-            "description": "A powerful palm strike that can daze targets.",
+            "description": "A powerful palm strike that can Daze targets. Deals heavy blunt damage.",
             "identity_tags": [
                 "monk",
                 "martial",
-                "strike"
+                "strike",
+                "blunt"
             ],
             "action": "iron_palm",
             "requirements": {
@@ -131,7 +166,7 @@
             "name": "Flow Mastery",
             "tier": 3,
             "cost": 0,
-            "description": "Passive: Each hit in the last 10s increases damage by 10%.",
+            "description": "Passive: Each hit in the last 10s increases your total damage by 10%. Scales with Flow Pips.",
             "identity_tags": [
                 "monk",
                 "passive",

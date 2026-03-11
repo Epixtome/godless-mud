@@ -3,7 +3,7 @@ logic/core/loader_impl/proto_loader.py
 Handles the instantiation of game entities from JSON prototypes.
 """
 import logging
-from models import Armor, Weapon, Consumable, Item, Corpse, Monster, Blessing
+from models import Armor, Weapon, Consumable, Item, Corpse, Monster, Blessing, HelpEntry
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -63,3 +63,6 @@ def load_prototypes(world, data, blessing_data, class_data, kit_data, deity_data
                 for term in ["Concentration", "Mana", "Stamina"]:
                     b.description = b.description.replace(f"Drains {term}", "").replace(term, "").replace(term.lower(), "")
                 b.description = b.description.strip()
+                
+    # 4. Help Entries
+    world.help = [HelpEntry(**h_data) for h_data in help_data if 'title' in h_data and 'body' in h_data]

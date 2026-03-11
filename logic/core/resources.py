@@ -204,9 +204,13 @@ def calculate_stamina_regen(player):
     if not getattr(player, 'is_heavy', False):
         regen += 5 
         
-    # Resting Bonus
+    # Resting & Training Bonus
     if player.is_resting:
         regen += 10
+        
+    if "meditating" in getattr(player, 'status_effects', {}):
+        # [V4.5] Meditate: Massive stamina recovery
+        regen += 20
         
     return regen, max_stamina
 

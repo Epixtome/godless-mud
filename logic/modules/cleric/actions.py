@@ -1,26 +1,22 @@
 """
-logic/modules/cleric/cleric.py
-The Cleric Domain: Healing, Restoration, and Divine Protection.
+logic/modules/cleric/actions.py
+Cleric Skill Handlers: Healing, Cleanse, Shield of Faith, etc.
 """
 from logic.actions.registry import register
-from logic.core import event_engine, effects, resources
+from logic.core import effects, resources, combat
 from logic.engines import magic_engine, blessings_engine
 from utilities.colors import Colors
 from logic import common
-
-# --- SKILL HANDLERS ---
 
 def _consume_resources(player, skill):
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
     magic_engine.consume_pacing(player, skill)
 
-# --- SKILL HANDLERS ---
-
 @register("lay_on_hands")
 def handle_lay_on_hands(player, skill, args, target=None):
     """High-potency heal scaling with faith/stats."""
-    target = common._get_target(player, args, target)
+    target = common._get_target(player, args, player)
     if not target: return None, True
     
     power = blessings_engine.MathBridge.calculate_power(skill, player)
@@ -93,16 +89,13 @@ def handle_divine_wrath(player, skill, args, target=None):
     player.send_line(f"{Colors.YELLOW}You call down the wrath of the heavens!{Colors.RESET}")
     player.room.broadcast(f"{Colors.YELLOW}A pillar of holy fire descends from the sky!{Colors.RESET}", exclude_player=player)
     
-    power = blessings_engine.MathBridge.calculate_power(skill, player)
-    
-    # Hostile Targeting: All mobs NOT leading/following player + All other players
-    # (In a real MUD we might check for 'party' or 'kingdom' flag)
+    # Hostile Targeting
     targets = [m for m in player.room.monsters if getattr(m, 'leader', None) != player]
     targets += [p for p in player.room.players if p != player]
     
-    from logic.actions.skill_utils import _apply_damage
     for t in targets:
-        _apply_damage(player, t, power, "Divine Wrath")
+        # Use combat facade
+        combat.handle_attack(player, t, player.room, player.game, blessing=skill)
         
     _consume_resources(player, skill)
     return None, True
@@ -110,10 +103,14 @@ def handle_divine_wrath(player, skill, args, target=None):
 @register("refresh")
 def handle_refresh(player, skill, args, target=None):
     """Restore stamina to an ally (Defaults to self)."""
-    target = common._get_target(player, args, player) # Default to self
+    target = common._get_target(player, args, player)
     if not target: return None, True
     
-    amount = 30 # Standard restoration
+    amount = 20 # Standard restoration
+    if target == player:
+        player.send_line("You cannot refresh yourself.")
+        return None, True
+        
     resources.modify_resource(target, "stamina", amount, source=player.name, context="Refresh")
     player.send_line(f"{Colors.CYAN}You restore {amount} Stamina to {target.name}.{Colors.RESET}")
     if target != player and hasattr(target, 'send_line'):
@@ -121,18 +118,3 @@ def handle_refresh(player, skill, args, target=None):
         
     _consume_resources(player, skill)
     return target, True
-
-# --- EVENT LISTENERS ---
-
-def on_build_prompt(ctx):
-    """Cleric-specific prompt logic (e.g. Aura display)."""
-    player = ctx.get('player')
-    prompts = ctx.get('prompts')
-    
-    if getattr(player, 'active_class', None) == 'cleric':
-        aura = player.ext_state.get('cleric', {}).get('aura')
-        if aura:
-            prompts.append(f"{Colors.YELLOW}[{aura.upper()}]{Colors.RESET}")
-
-# --- REGISTRATION ---
-event_engine.subscribe("on_build_prompt", on_build_prompt)

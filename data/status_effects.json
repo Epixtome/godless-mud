@@ -59,9 +59,20 @@
             "id": "crane_stance",
             "name": "Crane Stance",
             "group": "stance",
+            "description": "A fluid, defensive stance. Increases Wisdom and Defense.",
             "modifiers": {
                 "defense_add": 10,
                 "wis_mult": 1.2
+            }
+        },
+        {
+            "id": "turtle_stance",
+            "name": "Turtle Stance",
+            "group": "stance",
+            "description": "A defensive stance granting immunity to knockdowns.",
+            "modifiers": {
+                "defense_add": 5,
+                "str_mult": 1.1
             }
         },
         {

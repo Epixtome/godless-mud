@@ -129,7 +129,6 @@ def handle_rescue(player, skill, args, target=None):
 def handle_stand(player, skill, args, target=None):
     """Recover from prone/resting state."""
     if player.state == "resting":
-        player.is_resting = False
         player.state = "normal"
         player.send_line("You stand up.")
         player.room.broadcast(f"{player.name} stands up.", exclude_player=player)

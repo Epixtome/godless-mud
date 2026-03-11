@@ -14,8 +14,7 @@ def _consume_resources(player, skill, hp_cost=0):
     if hp_cost > 0:
         actual_cost = int(player.max_hp * (hp_cost / 100))
         resources.modify_resource(player, "hp", -actual_cost, source="Blood Magic", context="Skill Cost")
-        player.send_line(f"{Colors.RED}You pay {actual_cost} HP for the manifestation...{Colors.RESET}")
-    
+        
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
     magic_engine.consume_pacing(player, skill)
@@ -35,6 +34,13 @@ def handle_chaos_drain(player, skill, args, target=None):
     # Apply Decay (Via event or directly)
     # The event in events.py handles applying Decay on dark hits, but we can nudge it here too.
     
+    # Engage Combat
+    if target.hp > 0 and not player.fighting:
+        player.fighting = target
+        player.state = "combat"
+        if player not in target.attackers:
+            target.attackers.append(player)
+            
     _consume_resources(player, skill)
     return target, True
 

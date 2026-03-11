@@ -2,6 +2,7 @@
 logic/actions/handlers/status_actions.py
 Complex status effects: Stealth, Stances, Songs, Meditation.
 """
+import random
 from logic.actions.registry import register
 from logic.core import effects
 from logic.engines import magic_engine, action_manager
@@ -68,9 +69,19 @@ def handle_turtle_stance(player, skill, args, target=None):
     return None, True
 
 def _clear_stances(player):
-    for s in ["tiger_stance", "turtle_stance", "crane_stance", "sheathed_stance"]:
-        if s in player.status_effects:
-            effects.remove_effect(player, s)
+    """
+    Metadata-driven stance removal.
+    Clears any active status effects belonging to the 'stance' group.
+    """
+    to_remove = []
+    for eff_id in getattr(player, 'status_effects', {}):
+        # We use the effect engine facade to get definitions
+        defn = effects.get_effect_definition(eff_id, player.game)
+        if defn and defn.get('group') == 'stance':
+            to_remove.append(eff_id)
+            
+    for s in to_remove:
+        effects.remove_effect(player, s)
 
 @register("quick_step", "evasive_step")
 def handle_evasive_step(player, skill, args, target=None):

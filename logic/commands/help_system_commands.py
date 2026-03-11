@@ -23,12 +23,14 @@ def _display_help(player, categories, title):
 def _display_help_entry(player, entry):
     title = entry.get('title') if isinstance(entry, dict) else entry.title
     body = entry.get('body') if isinstance(entry, dict) else entry.body
-    player.send_line(f"\n{Colors.BOLD}--- {title} ---{Colors.RESET}")
+    player.send_line(f"{Colors.BOLD}--- {title} ---{Colors.RESET}")
     player.send_line(body)
 
 def _display_blessing_help(player, b):
-    player.send_line(f"\n{Colors.BOLD}Blessing:{Colors.RESET} {b.name} (T{b.tier})")
-    player.send_line(f"Tags: {', '.join(b.identity_tags)}")
+    player.send_line(f"{Colors.BOLD}Blessing:{Colors.RESET} {b.name} (T{b.tier})")
+    tags = getattr(b, 'identity_tags', [])
+    if tags:
+        player.send_line(f"Tags: {', '.join(tags)}")
     
     scaling_data = getattr(b, 'scaling', {})
     scaling_display = []
@@ -40,8 +42,11 @@ def _display_blessing_help(player, b):
                 m = entry.get('multiplier', 0)
                 scaling_display.append(f"{t.upper()}: x{m}")
     elif isinstance(scaling_data, dict):
-        for tag, val in scaling_data.items():
-            scaling_display.append(f"{tag.upper()}: {val}")
+        t = scaling_data.get('scaling_tag', 'Unknown')
+        m = scaling_data.get('multiplier', 0)
+        scaling_display.append(f"{t.upper()}: x{m}")
+    elif isinstance(scaling_data, (int, float)):
+        scaling_display.append(f"Power: {scaling_data}")
             
     if scaling_display:
         player.send_line(f"Scaling: {', '.join(scaling_display)}")
@@ -54,15 +59,20 @@ def _display_blessing_help(player, b):
     if costs.get('concentration', 0) > 0: cost_str.append(f"{costs['concentration']} Mana")
     if costs.get('chi', 0) > 0: cost_str.append(f"{costs['chi']} Chi")
     
-    # Also check JSON requirements directly for cooldown
-    req_cd = b.requirements.get('cooldown', 0)
+    # Check for cooldown at top level OR in requirements
+    req_cd = 0
+    if hasattr(b, 'requirements') and isinstance(b.requirements, dict):
+        req_cd = b.requirements.get('cooldown', 0)
+    if req_cd == 0:
+        req_cd = getattr(b, 'cooldown', 0)
+        
     if req_cd > 0:
         cost_str.append(f"{req_cd} Tick Cooldown")
 
     if cost_str:
         player.send_line(f"Cost: {', '.join(cost_str)}")
         
-    player.send_line(f"Description: {b.description}")
+    player.send_line(f"Description: {getattr(b, 'description', 'No description.')}")
 
 def _display_deity_help(player, d):
     player.send_line(f"\n{Colors.BOLD}Deity:{Colors.RESET} {d.name}")
@@ -156,8 +166,9 @@ def help_command(player, args):
     # Search Status Effects
     # Core
     for k, v in effects.CORE_STATUS_DEFINITIONS.items():
-        if search_term in v.get('name', '').lower():
-             matches.append((f"Status: {v.get('name')}", k, 'status'))
+        name = v.get('name', '')
+        if isinstance(name, str) and search_term in name.lower():
+             matches.append((f"Status: {name}", k, 'status'))
     # World
     if hasattr(player.game, 'world'):
         for k, v in player.game.world.status_effects.items():

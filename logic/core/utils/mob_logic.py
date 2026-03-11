@@ -66,7 +66,8 @@ def die(mob):
         else:
             item = None
 
-        # Add to room
-        if item and mob.room:
-            mob.room.add_content(item)
-            mob.room.broadcast(f"{mob.name} drops {item.name}.")
+        # Store in inventory (which will be transferred to the corpse in combat_lifecycle.py)
+        if item:
+            mob.inventory.append(item)
+            if hasattr(mob, 'room') and mob.room:
+                mob.room.broadcast(f"{mob.name} drops {item.name}.")

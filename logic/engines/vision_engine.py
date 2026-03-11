@@ -55,13 +55,19 @@ def raycast(world, start_room, end_room):
     # 1. Gather intermediate coordinates
     line = _get_line_coords(start_room.x, start_room.y, end_room.x, end_room.y)
     spatial = spatial_engine.get_instance(world)
+    if not spatial: return True, None
     
     # 2. Trace height beam
     z0, z1 = start_room.z, end_room.z
     steps = len(line) - 1
     if steps < 1: return True, None
 
-    for i, (lx, ly) in enumerate(line[:-1]):
+    accumulated_opacity = 0.0
+
+    for i, (lx, ly) in enumerate(line):
+        if i == 0: continue # Skip start room
+        if i == len(line) - 1: continue # End room doesn't block itself
+
         # Calculate beam height at this step
         t = i / steps
         beam_z = z0 + t * (z1 - z0)
@@ -77,8 +83,10 @@ def raycast(world, start_room, end_room):
                     return False, r # Blocked by high terrain
                 
                 # If room is AT the beam level and opaque
-                if abs(r.z - beam_z) < 1.0 and get_opacity(r, world) >= 0.8:
-                    return False, r
+                if abs(r.z - beam_z) < 1.0:
+                    accumulated_opacity += get_opacity(r, world)
+                    if accumulated_opacity >= 0.8:
+                        return False, r
 
     return True, None
 

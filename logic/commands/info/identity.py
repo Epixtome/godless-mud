@@ -88,12 +88,15 @@ def score(player, args):
     from logic.engines.resonance_engine import ResonanceAuditor
     ResonanceAuditor.calculate_resonance(player)
     
-    player.send_line(f" {Colors.BOLD}DOMINANT RESONANCE (VOLTAGE){Colors.RESET}")
+    player.send_line(f" {Colors.BOLD}ACTIVE RESONANCE (VOLTAGE){Colors.RESET}")
     if hasattr(player, 'current_tags') and player.current_tags:
-        filtered = {k: v for k, v in player.current_tags.items() if v > 0}
-        top_3 = sorted(filtered.items(), key=lambda x: x[1], reverse=True)[:3]
+        # Filter internal engine tags
+        internal_tags = ['hidden', 'monk', 'mage', 'barbarian', 'knight', 'assassin', 'cleric', 'defiler', 'warlock', 'illusionist', 'beastmaster', 'red_mage']
+        filtered = {k: v for k, v in player.current_tags.items() if v > 0 and k not in internal_tags}
+        all_tags = sorted(filtered.items(), key=lambda x: x[1], reverse=True)
         
-        for tag, val in top_3:
+        # Show top 5 or all if fewer
+        for tag, val in all_tags[:8]:
             bar = display_utils.render_progress_bar(val, 20, 20)
             player.send_line(f"  {tag.title():<15} {bar} {val}")
     
@@ -195,3 +198,37 @@ def list_synergies(player, args):
         if syn:
             bonuses = [f"+{val} {stat.upper()}" for stat, val in syn.bonuses.items()]
             player.send_line(f" {Colors.CYAN}{syn.name:<20}{Colors.RESET} {', '.join(bonuses)}")
+
+@command_manager.register("effects", "afflictions", "aff", category="information")
+def list_effects(player, args):
+    """Detailed breakdown of active status effects and their durations."""
+    if not player.status_effects:
+        player.send_line("You have no active status effects.")
+        return
+
+    width = 60
+    player.send_line(f"{display_utils.render_header('Status Effects', width)}")
+    
+    from logic.core import effects as fx_engine
+    
+    header = f" {Colors.CYAN}{'Effect':<20}{Colors.RESET} | {Colors.YELLOW}{'Time Remaining':<15}{Colors.RESET}"
+    player.send_line(header)
+    player.send_line(display_utils.render_line(width, "-"))
+
+    current_tick = player.game.tick_count
+    for eff_id, expiry in player.status_effects.items():
+        eff_def = fx_engine.get_effect_definition(eff_id, player.game)
+        if not eff_def: continue
+        
+        name = eff_def.get('name', eff_id).title()
+        remaining = max(0, int((expiry - current_tick) * 2.0)) # 2s per tick
+        
+        color = Colors.WHITE
+        if eff_id in fx_engine.HARD_DEBUFFS or eff_id in fx_engine.CRITICAL_STATES:
+            color = Colors.RED
+        elif eff_id in fx_engine.SOFT_DEBUFFS:
+            color = Colors.YELLOW
+            
+        player.send_line(f" {color}{name:<20}{Colors.RESET} | {remaining:>3}s")
+
+    player.send_line(display_utils.render_line(width))

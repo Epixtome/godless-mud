@@ -6,7 +6,7 @@ from logic.core.utils import display_utils
 @command_manager.register("inventory", "inv", "i", category="information")
 def inventory(player, args):
     """Show your inventory."""
-    player.send_line("\n--- Inventory ---")
+    player.send_line("--- Inventory ---")
     if not player.inventory:
         player.send_line("You are carrying nothing.")
     else:
@@ -21,7 +21,7 @@ def inventory(player, args):
 @command_manager.register("equipment", "eq", category="information")
 def equipment(player, args):
     """Show equipped items."""
-    player.send_line("\n--- Equipment ---")
+    player.send_line("--- Equipment ---")
     
     # Mapping of Display Name -> Player Attribute
     # Supports legacy attributes (equipped_armor) and new specific slots

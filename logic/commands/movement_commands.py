@@ -152,3 +152,20 @@ def move_west(player, _): return _move(player, "west")
 def move_up(player, _): return _move(player, "up")
 @command_manager.register("down", "d", category="movement")
 def move_down(player, _): return _move(player, "down")
+
+@command_manager.register("recall", category="movement")
+def recall(player, args):
+    """Teleport back to the world's starting room."""
+    if player.fighting:
+        player.send_line("You cannot recall while in combat!")
+        return 
+    
+    start_room = player.game.world.start_room
+    if not start_room:
+        player.send_line("The word of recall fails to find its tether.")
+        return
+
+    player.send_line(f"{Colors.CYAN}A swirling vortex of blue energy consumes you!{Colors.RESET}")
+    player.room.broadcast(f"{player.name} vanishes in a flash of azure light!", exclude_player=player)
+    
+    _finalize_move(player, "the aether", start_room, player.room)

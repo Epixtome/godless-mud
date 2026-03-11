@@ -70,10 +70,15 @@ def apply_buff_mitigation(ctx):
     effects = getattr(target, 'status_effects', {})
     damage = ctx.get('damage', 0)
     
-    # Magic Shield (Spells only)
-    if "magic_shield" in effects and ctx.get('type') == 'skill':
-        damage = int(damage * CONSTANTS["magic_shield_mitigation"])
+    # [V4.5] Class Buffs
+    if "braced" in effects:
+        # 20% mitigation as per Knight description
+        damage = int(damage * 0.80)
         
+    if "turtle_stance" in effects:
+        # 15% mitigation as per Monk description
+        damage = int(damage * 0.85)
+
     if "sanctified" in effects:
         damage = int(damage * CONSTANTS["sanctify_mitigation"])
         

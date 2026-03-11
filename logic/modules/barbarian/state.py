@@ -13,5 +13,6 @@ def initialize_barbarian(player):
     if 'barbarian' not in player.ext_state:
         player.ext_state['barbarian'] = {
             'momentum': 0,
-            'last_proc_tick': 0
+            'last_hit_tick': 0,
+            'is_extra_attack': False
         }

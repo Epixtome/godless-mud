@@ -139,8 +139,7 @@ class Connection:
                 self.player.prompt_requested = True
             
             await self.player.drain()
-            await asyncio.sleep(0) 
-            self.player.suppress_engine_prompt = False
+            await asyncio.sleep(0)
 
     async def disconnect(self):
         """Handles socket closure and dispatches player cleanup."""

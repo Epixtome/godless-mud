@@ -46,8 +46,16 @@ def on_calculate_damage_modifier(ctx):
     attacker, blessing = ctx.get('attacker'), ctx.get('blessing')
     if getattr(attacker, 'active_class', None) != 'monk' or not blessing: return
     
+    flow_data = attacker.ext_state.get('monk', {})
+    flow = flow_data.get('flow_pips', 0)
+    
+    # [PASSIVE] Flow Mastery: Scaling damage bonus per pip
+    if "flow_mastery" in getattr(attacker, 'equipped_blessings', []):
+        # 10% per pip as per JSON description
+        flow_mult = 1.0 + (flow * 0.1)
+        ctx['multiplier'] = ctx.get('multiplier', 1.0) * flow_mult
+
     if blessing.id == "dragon_strike":
-        flow = attacker.ext_state.get('monk', {}).get('flow_pips', 0)
         mult = 1.0 + (flow * 0.4) if flow <= 5 else 3.0 + (flow-5)*1.0 if flow <= 8 else 6.0 + (flow-8)*2.0
         ctx['multiplier'] = ctx.get('multiplier', 1.0) * mult
         ctx['bonus_flat'] = ctx.get('bonus_flat', 0) + (flow * 5) # Added flat scaling to ensure meaningful base damage
@@ -62,7 +70,6 @@ def on_skill_execute(ctx):
         player.ext_state.get('monk', {})['flow_pips'] = 0
     elif skill.id == "meditate":
         effects.apply_effect(player, "unsettled", 2)
-        resources.modify_resource(player, "stamina", 40)
 
 def on_check_requirements(ctx):
     player, blessing, costs = ctx.get('player'), ctx.get('blessing'), ctx.get('costs')

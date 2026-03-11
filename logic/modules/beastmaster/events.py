@@ -170,10 +170,11 @@ def on_combat_hit_assist(ctx):
         pet.fighting = target
         attacker.send_line(f"{pet.name} sees you strike and leaps into the fray!")
 
-# Subscribe to global engine events
-event_engine.subscribe("on_take_damage", on_take_damage)
-event_engine.subscribe("on_combat_tick", on_combat_tick) 
-event_engine.subscribe("on_mob_death", on_pet_death) 
-event_engine.subscribe("on_build_prompt", on_build_prompt)
-event_engine.subscribe("after_move", on_after_move)
-event_engine.subscribe("on_combat_hit", on_combat_hit_assist)
+def register_events():
+    # Subscribe to global engine events
+    event_engine.subscribe("on_take_damage", on_take_damage)
+    event_engine.subscribe("on_combat_tick", on_combat_tick) 
+    event_engine.subscribe("on_mob_death", on_pet_death) 
+    event_engine.subscribe("on_build_prompt", on_build_prompt)
+    event_engine.subscribe("after_move", on_after_move)
+    event_engine.subscribe("on_combat_hit", on_combat_hit_assist)

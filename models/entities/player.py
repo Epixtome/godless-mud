@@ -55,7 +55,6 @@ class Player:
         self.locked_target = None # For ranged combat (Ranger)
         self.reputation = 0 # -100 to 100. < -10 is Criminal.
         self.is_mounted = False
-        self.is_resting = False
         self.admin_vision = False
         
         # UTS Cache (V4.5 Optimization)
@@ -98,6 +97,19 @@ class Player:
     def id(self):
         """Technical identifier (lowercase name). Not an RPG stat."""
         return self.name.lower()
+
+    @property
+    def is_resting(self):
+        """Returns True if the player is in the 'resting' state."""
+        return self.state == "resting"
+
+    @is_resting.setter
+    def is_resting(self, value):
+        if value:
+            self.state = "resting"
+        else:
+            if self.state == "resting":
+                self.state = "normal"
 
 
     @property

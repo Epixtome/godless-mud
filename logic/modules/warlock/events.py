@@ -117,7 +117,6 @@ def on_calculate_skill_cost(ctx):
         hp_cost = int(player.max_hp * 0.05) # 5% Max HP cost
         costs["hp"] = hp_cost
         costs["stamina"] = 0
-        player.send_line(f"{Colors.RED}[BLOOD TO VOID] You sacrifice {hp_cost} HP for power.{Colors.RESET}")
 
 # Auto-register on import
 register_events()

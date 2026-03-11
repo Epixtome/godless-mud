@@ -144,3 +144,43 @@ def scan(player, args):
             player.send_line(f"{color}{dirs[(rx, ry)]}:{Colors.RESET}")
             for m in room.monsters:
                 player.send_line(f"  {m.name}")
+
+@command_manager.register("consider", "examine", "con", category="information")
+def consider(player, args):
+    """Size up a target to compare their strength to yours."""
+    if not args:
+        return player.send_line("Consider who?")
+        
+    target_name = args.lower()
+    target = None
+    for mob in player.room.monsters:
+        if target_name in mob.name.lower():
+            target = mob
+            break
+            
+    if not target:
+        for p in player.room.players:
+            if target_name in p.name.lower() and p != player:
+                target = p
+                break
+                
+    if not target:
+        return player.send_line(f"You don't see anyone named '{args}' here.")
+        
+    hp_ratio = target.hp / max(1, player.hp)
+    
+    if hp_ratio < 0.3:
+        msg = f"{Colors.GREEN}{target.name} looks like a weakling. You could crush them easily.{Colors.RESET}"
+    elif hp_ratio < 0.7:
+        msg = f"{Colors.CYAN}{target.name} looks weaker than you.{Colors.RESET}"
+    elif hp_ratio < 1.3:
+        msg = f"{Colors.YELLOW}{target.name} appears to be an even match.{Colors.RESET}"
+    elif hp_ratio < 2.0:
+        msg = f"{Colors.RED}{target.name} looks stronger than you. Be careful.{Colors.RESET}"
+    elif hp_ratio < 4.0:
+        msg = f"{Colors.RED}{Colors.BOLD}{target.name} would probably turn you into paste.{Colors.RESET}"
+    else:
+        msg = f"{Colors.MAGENTA}{Colors.BOLD}Flee immediately. {target.name} is a god compared to you.{Colors.RESET}"
+        
+    player.send_line(f"\n{Colors.BOLD}Considering {target.name}:{Colors.RESET}")
+    player.send_line(f" {msg}")

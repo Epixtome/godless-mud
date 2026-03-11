@@ -22,3 +22,4 @@ class World:
         self.deleted_rooms = set()
         self.landmarks = {}
         self.terrain_config = {}
+        self.help = []

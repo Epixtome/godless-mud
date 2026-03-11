@@ -74,7 +74,15 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
     event_engine.dispatch("on_calculate_mitigation", mit_ctx)
     
     damage = max(1, int(raw_damage - mit_ctx['defense']))
-    damage = min(getattr(calibration.MaxValues, 'DAMAGE', 9999), damage)
+    
+    # [V4.5] Dynamic Damage Cap: Scaled by Blessing Tier
+    # Standard: 75. Finishers/T5: 150.
+    final_cap = getattr(calibration.MaxValues, 'DAMAGE', 75)
+    if blessing:
+        if blessing.tier >= 5 or "finisher" in getattr(blessing, 'identity_tags', []):
+            final_cap = final_cap * 2.0
+            
+    damage = min(final_cap, damage)
 
     # Cost Processing (For Monsters or Blessing-driven attacks if not handled by Executor)
     if not getattr(attacker, 'is_player', False) and blessing:

@@ -23,8 +23,8 @@ CORE_STATUS_DEFINITIONS = {
     },
     "panting": {
         "name": "Panting",
-        "blocks": ["combat", "skills"],
-        "description": "Gasping for breath from over-exertion.",
+        "blocks": ["skills", "movement"],
+        "description": "Gasping for breath from over-exertion. You are too winded to use complex skills or move efficiently, but you can still defend yourself.",
         "metadata": {"is_debuff": True}
     },
     "exhausted": {
@@ -41,7 +41,7 @@ CORE_STATUS_DEFINITIONS = {
     },
     "dazed": {
         "name": "Dazed",
-        "blocks": ["combat"],
+        "blocks": ["combat", "skills"],
         "description": "Reeling from a heavy blow. Cannot attack.",
         "metadata": {"is_debuff": True}
     },
@@ -50,14 +50,21 @@ CORE_STATUS_DEFINITIONS = {
         "blocks": ["movement", "combat"],
         "metadata": {"is_debuff": True}
     },
+    "crane_stance": {
+        "name": "Crane Stance",
+        "description": "A fluid, defensive stance. Increases Wisdom and Defense, making the Monk harder to hit and more resilient to magical effects.",
+        "group": "stance",
+        "metadata": {"is_buff": True}
+    },
     "turtle_stance": {
         "name": "Turtle Stance",
-        "description": "A defensive stance granting immunity to knockdowns.",
-        "metadata": {"immune_to": ["prone", "knockback"]}
+        "description": "A low-profile, grounded stance. Grants immunity to knockdowns and reduces physical damage taken by 15%.",
+        "group": "stance",
+        "metadata": {"immune_to": ["prone", "knockback"], "mitigation_mult": 0.85}
     },
     "wet": {
         "name": "Wet",
-        "description": "Soaked with water. Lightning damage may be increased.",
+        "description": "Soaked with water. Increases Lightning damage taken and makes you susceptible to Freezing.",
         "metadata": {"is_debuff": True}
     },
     "atrophy": {
@@ -79,6 +86,85 @@ CORE_STATUS_DEFINITIONS = {
     "poison": {
         "name": "Poisoned",
         "description": "Toxic venom saps your vitality.",
+        "metadata": {"is_debuff": True}
+    },
+    "magic_shield": {
+        "name": "Magic Shield",
+        "description": "An arcane barrier redirects incoming damage to your Concentration.",
+        "metadata": {"is_buff": True}
+    },
+    "concealed": {
+        "name": "Concealed",
+        "description": "Hidden from sight. Your next attack will strike from the shadows.",
+        "metadata": {"is_buff": True}
+    },
+    "dualcast": {
+        "name": "Dualcast",
+        "description": "Focusing your mind to cast your next spell twice.",
+        "metadata": {"is_buff": True}
+    },
+    "braced": {
+        "name": "Braced",
+        "description": "Tightly holding your position, reducing physical damage taken.",
+        "metadata": {"is_buff": True}
+    },
+    "shield_of_faith": {
+        "name": "Shield of Faith",
+        "description": "Divine protection wards off harm.",
+        "metadata": {"is_buff": True}
+    },
+    "sanctified": {
+        "name": "Sanctified",
+        "description": "Blessed ground empowers your spirit.",
+        "metadata": {"is_buff": True}
+    },
+    "plague": {
+        "name": "Plague",
+        "description": "A virulent sickness saps your strength.",
+        "metadata": {"is_debuff": True}
+    },
+    "fear": {
+        "name": "Fear",
+        "description": "Paralyzing dread grips your heart.",
+        "blocks": ["combat", "skills"],
+        "metadata": {"is_debuff": True}
+    },
+    "curse": {
+        "name": "Cursed",
+        "description": "Dark energies hinder your fate.",
+        "metadata": {"is_debuff": True}
+    },
+    "hunger": {
+        "name": "Hunger",
+        "description": "An unnatural void gnaws at your essence.",
+        "metadata": {"is_debuff": True}
+    },
+    "malediction": {
+        "name": "Malediction",
+        "description": "A heavy doom weighs upon you.",
+        "metadata": {"is_debuff": True}
+    },
+    "frozen": {
+        "name": "Frozen",
+        "description": "Encased in absolute zero ice. You cannot move or act.",
+        "blocks": ["movement", "combat", "skills"],
+        "metadata": {"is_debuff": True}
+    },
+    "blinded": {
+        "name": "Blinded",
+        "description": "Your vision is obscured by darkness or debris.",
+        "metadata": {"is_debuff": True}
+    },
+    "silenced": {
+        "name": "Silenced",
+        "description": "You cannot utter spells or verbal commands.",
+        "blocks": ["skills"],
+        "metadata": {"is_debuff": True}
+    },
+    "confused": {
+        "name": "Confused",
+        "description": "Your mind is clouded and wandering.",
+        "blocks": ["skills"],
         "metadata": {"is_debuff": True}
     }
 }

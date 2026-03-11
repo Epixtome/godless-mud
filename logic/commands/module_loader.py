@@ -14,19 +14,28 @@ def register_all_modules():
 
 def _register_core_modules():
     """Original core system registrations."""
-    from logic.modules.monk import stances, monk
-    from logic.modules.knight import knight
-    from logic.modules.barbarian import barbarian, utility as barb_utility
-    from logic.modules.mage import mage
-    from logic.modules.assassin import assassin
-    from logic.modules.cleric import cleric
-    from logic.modules.defiler import defiler
-    from logic.modules.beastmaster import actions, events
+    from logic.modules.monk import stances, monk, events as monk_events
+    monk_events.register_events()
+    from logic.modules.knight import knight, events as knight_events
+    knight_events.register_events()
+    from logic.modules.barbarian import actions as barb_actions, events as barb_events
+    barb_events.register_events()
+    from logic.modules.mage import actions as mage_actions, events as mage_events
+    mage_events.register_events()
+    from logic.modules.assassin import actions as assassin_actions, events as assassin_events
+    assassin_events.register_events()
+    from logic.modules.cleric import actions as cleric_actions, events as cleric_events
+    cleric_events.register_events()
+    from logic.modules.defiler import actions as defiler_actions, events as defiler_events
+    defiler_events.register_events()
+    from logic.modules.beastmaster import actions as bm_actions, events as bm_events
+    bm_events.register_events()
 
 def _register_martial_modules():
     """Batch 1: Martial Front."""
     from logic.modules.warrior import events as warrior_ev
     from logic.modules.archer import events as archer_ev
+    archer_ev.register_events()
     from logic.modules.berserker import events as berserker_ev
     from logic.modules.dragoon import events as dragoon_ev
     from logic.modules.gunner import events as gunner_ev

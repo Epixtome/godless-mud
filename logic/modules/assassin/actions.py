@@ -1,9 +1,9 @@
 """
-logic/modules/assassin/assassin.py
-The Assassin Domain: Stealth, Poisons, and Lethal strikes.
+logic/modules/assassin/actions.py
+Assassin Skill Handlers: Backstab, Smoke Bomb, etc.
 """
 from logic.actions.registry import register
-from logic.core import event_engine, effects, resources
+from logic.core import effects, resources, combat
 from logic.engines import action_manager, blessings_engine, magic_engine
 from logic.actions.skill_utils import _apply_damage
 from utilities.colors import Colors
@@ -14,13 +14,11 @@ def _consume_resources(player, skill):
     magic_engine.set_cooldown(player, skill)
     magic_engine.consume_pacing(player, skill)
 
-# --- SKILL HANDLERS ---
-
 @register("hide")
 def handle_hide(player, skill, args, target=None):
     """Attempt to vanish into the shadows."""
-    if player.fighting:
-        player.send_line("You cannot hide while in active combat!")
+    if player.fighting or getattr(player, 'attackers', []):
+        player.send_line("You cannot hide while in active combat or while being hunted!")
         return None, True
 
     player.send_line(f"{Colors.BLUE}You slip into the shadows...{Colors.RESET}")
@@ -42,14 +40,18 @@ def handle_backstab(player, skill, args, target=None):
     player.send_line(f"{Colors.RED}You emerge from the shadows and drive your blade into {target.name}'s back!{Colors.RESET}")
     player.room.broadcast(f"{player.name} appears behind {target.name} and strikes!", exclude_player=player)
 
-    power = blessings_engine.calculate_power(skill, player, target)
+    power = blessings_engine.MathBridge.calculate_power(skill, player, target)
     # 3x multiplier for backstab
     final_power = int(power * 3.0)
     
-    _apply_damage(player, target, final_power, "Backstab")
+    # Use the core combat facade for consistent event triggering
+    combat.handle_attack(player, target, final_power, "Backstab")
     
     # Reveal
     effects.remove_effect(player, "concealed")
+    
+    # Hardlock (simulate recovery)
+    effects.apply_effect(player, "stunned", 2)
     
     _consume_resources(player, skill)
     return target, True
@@ -62,15 +64,18 @@ def handle_smoke_bomb(player, skill, args, target=None):
 
     # Interrupt all enemies fighting the player
     enemies = [m for m in player.room.monsters if m.fighting == player]
+    enemies += [p for p in player.room.players if p.fighting == player]
+    
     for e in enemies:
         action_manager.interrupt(e)
         effects.apply_effect(e, "confused", 6)
         # Drop aggro
-        if player in e.attackers:
+        if player in getattr(e, 'attackers', []):
             e.attackers.remove(player)
         e.fighting = None
 
     player.fighting = None
+    player.attackers = []
     player.state = "normal"
     
     _consume_resources(player, skill)
@@ -83,8 +88,18 @@ def handle_dirt_kick(player, skill, args, target=None):
     if not target: return None, True
 
     player.send_line(f"You kick a spray of dirt into {target.name}'s eyes!")
+    
+    # Simplified: Effects and engagement handled by common executor if possible, 
+    # but dirt kick is utility.
     effects.apply_effect(target, "blinded", 10)
     
+    # Engage Combat via facade
+    if target.hp > 0 and not player.fighting:
+        player.fighting = target
+        player.state = "combat"
+        if player not in target.attackers:
+            target.attackers.append(player)
+            
     _consume_resources(player, skill)
     return target, True
 

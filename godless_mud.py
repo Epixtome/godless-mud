@@ -110,8 +110,8 @@ class GodlessGame:
         try:
             result = input_handler.handle(player, command_line)
             
-            # Mark that a prompt is now required for this input cycle
-            player.prompt_requested = True
+            if not player.suppress_engine_prompt:
+                player.prompt_requested = True
         finally:
             # Drop the buffering flag so the message system knows we're ready for the pulse to send.
             player.is_buffering = False
@@ -152,9 +152,14 @@ class GodlessGame:
                 combat_lifecycle.process_dead_queue(self)
 
                 for player in self.players.values():
-                    if player.is_buffering_content() or player.prompt_requested:
-                        player.send_prompt()
+                    needs_prompt = player.prompt_requested
+                    if player.is_buffering_content():
                         player.stop_buffering()
+                        needs_prompt = True
+                    if needs_prompt and not player.suppress_engine_prompt:
+                        player.send_prompt()
+                    if needs_prompt:
+                        player.suppress_engine_prompt = False
                         if hasattr(player, 'drain'):
                             asyncio.create_task(player.drain())
                             

@@ -10,9 +10,8 @@ def check_pacing(player, weight=1.0, limit=5.0, pool='combat'):
     game = getattr(player, 'game', None)
     if not game: return True, "OK"
     
-    # Immunity Check (Knight's Turtle Stance)
-    if effects.has_effect(player, "turtle_stance"):
-        return True, "OK"
+    # [FIX] V4.5 Cleanup: No class should bypass pacing entirely.
+    # Stances like 'turtle_stance' provide defensive benefits, not action speed.
     
     current_tick = game.tick_count
     
