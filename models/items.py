@@ -58,9 +58,11 @@ class Item(BaseItem):
         return self.name
 
 class Armor(BaseItem):
-    def __init__(self, name, description, defense, value=10, flags=None, prototype_id=None, timer=None, tags=None, properties=None):
+    def __init__(self, name, description, defense, stability=None, weight_class="light", value=10, flags=None, prototype_id=None, timer=None, tags=None, properties=None):
         super().__init__(name, description, value, flags, prototype_id, timer, tags, properties)
         self.defense = defense
+        self.stability = stability if stability is not None else defense
+        self.weight_class = weight_class
         self.bonus_hp = 0
 
     def __str__(self):
@@ -68,15 +70,32 @@ class Armor(BaseItem):
 
     def clone(self):
         """Returns a deep copy of this armor."""
-        return Armor(self.name, self.description, self.defense, self.value, self.flags.copy(), self.prototype_id, self.timer, self.tags.copy(), self.properties.copy())
+        return Armor(self.name, self.description, self.defense, self.stability, self.weight_class, self.value, self.flags.copy(), self.prototype_id, self.timer, self.tags.copy(), self.properties.copy())
 
     @classmethod
     def from_dict(cls, data):
-        return cls(data['name'], data['description'], data['defense'], data.get('value', 10), data.get('flags'), data.get('prototype_id'), data.get('timer'), data.get('tags'), data.get('properties'))
+        return cls(
+            data['name'], 
+            data['description'], 
+            data['defense'], 
+            data.get('stability'), 
+            data.get('weight_class', 'light'),
+            data.get('value', 10), 
+            data.get('flags'), 
+            data.get('prototype_id'), 
+            data.get('timer'), 
+            data.get('tags') or data.get('gear_tags'), # Support both tag names
+            data.get('properties')
+        )
 
     def to_dict(self):
         data = super().to_dict()
-        data.update({"type": "armor", "defense": self.defense})
+        data.update({
+            "type": "armor", 
+            "defense": self.defense,
+            "stability": self.stability,
+            "weight_class": self.weight_class
+        })
         return data
 
 class Weapon(BaseItem):

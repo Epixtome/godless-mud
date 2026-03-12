@@ -14,6 +14,29 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger("GodlessMUD")
 
+def item_from_data(item_data, game=None):
+    """Reconstructs an item from a dictionary or string ID."""
+    if isinstance(item_data, str):
+        # Resolve from world prototypes if game is available
+        if game and item_data in game.world.items:
+            # We would need a way to clone prototypes. 
+            pass
+        return None
+
+    if not isinstance(item_data, dict):
+        return None
+
+    it_type = item_data.get('type')
+    if it_type == 'armor':
+        return Armor.from_dict(item_data)
+    elif it_type == 'weapon':
+        return Weapon.from_dict(item_data)
+    elif it_type == 'consumable':
+        return Consumable.from_dict(item_data)
+    elif it_type == 'item':
+        return Item.from_dict(item_data)
+    return None
+
 def to_dict(player: 'Player') -> dict:
     """Serializes player state to a dictionary for JSON saving."""
     return {
@@ -100,7 +123,7 @@ def load_data(player, data):
     if 'friendship' in data:
         player.friendship.update(data['friendship'])
         
-    player.visited_rooms = set(data.get('visited_rooms', []))
+    player.visited_rooms = data.get('visited_rooms', [])
     player.reputation = data.get('reputation', 0)
     player.ext_state = data.get('ext_state', {})
     player.admin_vision = data.get('admin_vision', False)
@@ -113,15 +136,9 @@ def load_data(player, data):
     # Reconstruct Inventory
     player.inventory = []
     for item_data in data.get('inventory', []):
-        it_type = item_data.get('type')
-        if it_type == 'armor':
-            player.inventory.append(Armor.from_dict(item_data))
-        elif it_type == 'weapon':
-            player.inventory.append(Weapon.from_dict(item_data))
-        elif it_type == 'consumable':
-            player.inventory.append(Consumable.from_dict(item_data))
-        elif it_type == 'item':
-            player.inventory.append(Item.from_dict(item_data))
+        item = item_from_data(item_data)
+        if item:
+            player.inventory.append(item)
     
     if data.get('equipped_armor'):
         player.equipped_armor = Armor.from_dict(data['equipped_armor'])

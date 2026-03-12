@@ -62,6 +62,12 @@ def handle_triple_kick(player, skill, args, target=None):
         # [V4.5] We use handle_attack with the skill to ensure correct scaling/events for each bolt
         combat.handle_attack(player, target, player.room, player.game, blessing=skill)
         
+        # 33% chance to stagger per kick
+        import random
+        if random.random() < 0.33:
+            effects.apply_effect(target, "staggered", 1)
+            player.send_line(f"{Colors.YELLOW}[!] Your kick staggers {target.name}!{Colors.RESET}")
+        
     consume_resources(player, skill)
     return target, True
 

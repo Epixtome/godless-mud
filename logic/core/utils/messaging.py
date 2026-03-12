@@ -33,6 +33,11 @@ def get_prompt(player):
         panting = f" {Colors.RED}(P){Colors.YELLOW}"
         
     parts.append(f"{Colors.YELLOW}STM: {stm}/{max_stm}{panting}{Colors.RESET}")
+    
+    # Universal Balance (V5.0 Posture)
+    bal = player.resources.get('balance', 100)
+    max_bal = player.get_max_resource('balance')
+    parts.append(f"{Colors.MAGENTA}BAL: {bal}/{max_bal}{Colors.RESET}")
 
     # Class-Specific Resources (Decoupled via Events)
     # Individual class modules (Mage, Monk, etc) now subscribe to 'on_build_prompt' 
@@ -89,8 +94,12 @@ def get_prompt(player):
             if "stun" in t_effects: statuses.append(f"{Colors.YELLOW}Stunned{Colors.RESET}")
             if "dazed" in t_effects: statuses.append(f"{Colors.YELLOW}Dazed{Colors.RESET}")
 
+            # Target Balance (Posture)
+            t_bal = target.resources.get('balance', 100) if hasattr(target, 'resources') else 100
+            t_max_bal = getattr(target, 'get_max_resource', lambda x: 100)('balance')
+            
             status_str = f" ({'/'.join(statuses)})" if statuses else ""
-            prompt += f" ({target.name}: {condition}{status_str})"
+            prompt += f" ({target.name} [{condition}] BAL: {t_bal}/{t_max_bal}{status_str})"
             
     return prompt + " > "
 

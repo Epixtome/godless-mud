@@ -129,6 +129,9 @@ def _print_console_mirror(entity, event_type, data, timestamp, room_id):
     elif event_type == "BUG_REPORT":
         note = data.get('note', '')
         print(f"{header} {Colors.RED}BUG: {note}{Colors.RESET}")
+        
+    elif event_type == "POSTURE_BREAK":
+        print(f"{header} {Colors.RED}*** POSTURE BROKEN! ***{Colors.RESET}")
 
 
 def _append_to_marks(payload):
@@ -215,6 +218,11 @@ def log_resource_delta(entity, resource, amount, source, context=None):
     elif hasattr(entity, 'resources'):
         # Try exact match then lowercase
         current = entity.resources.get(resource, entity.resources.get(str(resource).lower(), 0))
+    
+    if str(resource).lower() == "balance":
+        col = Colors.MAGENTA
+    else:
+        col = Colors.CYAN
         
     if amount == 0:
         return
@@ -226,6 +234,12 @@ def log_resource_delta(entity, resource, amount, source, context=None):
         "context": context,
         "current_value": current
     })
+
+def log_posture_break(entity):
+    """
+    Logs when a target's posture bar hits zero.
+    """
+    log_event(entity, "POSTURE_BREAK", {})
 
 def log_momentum_event(entity, overflow, pips_gained):
     """

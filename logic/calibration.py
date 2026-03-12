@@ -21,3 +21,15 @@ class ScalingRules:
 
 class CombatBalance:
     VOLTAGE_SCALING = 0.10 # 10% per point of Voltage (Tag Count)
+    
+    # [V5.0] Posture Protocol
+    BASE_MITIGATION_LIGHT = 0.05
+    BASE_MITIGATION_MEDIUM = 0.15
+    BASE_MITIGATION_HEAVY = 0.30
+    
+    STABILITY_SCALING = 0.5  # Stability subtracts from incoming posture damage
+    LETHALITY_MULT = 1.0     # Final damage multiplier
+    
+    # Stamina Penalties (Weight Based)
+    STAMINA_PENALTY_MEDIUM = 1.2
+    STAMINA_PENALTY_HEAVY = 1.6

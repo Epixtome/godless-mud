@@ -1,4 +1,7 @@
 from utilities.colors import Colors
+import re
+import time
+from logic.core.utils import vision_logic
 
 TERRAIN_MAP = {
     "road": f"{Colors.YELLOW}+{Colors.RESET}",
@@ -78,7 +81,7 @@ def get_map_header(room, world=None):
         
     return f"{Colors.BOLD}[ {zone_name} ({room.x}, {room.y}, {room.z}) ]{Colors.RESET}"
 
-def draw_grid(grid, player_room, radius=None, visited_rooms=None, ignore_fog=False, indent=0, world=None):
+def draw_grid(grid, player_room, radius=None, visited_rooms=None, ignore_fog=False, indent=0, world=None, observer=None, sight_grid=None, shading=True):
     """
     Draws a map from a pre-computed grid of rooms.
     grid: {(rx, ry): Room}
@@ -116,19 +119,71 @@ def draw_grid(grid, player_room, radius=None, visited_rooms=None, ignore_fog=Fal
             if (x, y) in grid:
                 room = grid[(x, y)]
                 is_visited = visited_rooms is None or room.id in visited_rooms
+                
+                # Knowledge: Anything within 7x7 radius is "Discoverable" (shows dimmed terrain)
+                dist = max(abs(x), abs(y))
+                is_knowledge = ignore_fog or dist <= 3
 
-                if ignore_fog or is_visited:
+                if is_visited or is_knowledge:
                     if room == player_room:
                         char = f"{Colors.BOLD}{Colors.RED}@{Colors.RESET}"
                     else:
                         base_char = get_terrain_char(room)
+                        has_entity = False
                         
-                        # Visual Depth Shading:
-                        # Higher rooms from player viewpoint = Bold
-                        # Lower/Level = Standard
-                        diff = getattr(room, 'elevation', 0) - getattr(player_room, 'elevation', 0)
-                        if diff > 0:
-                            char = f"{Colors.BOLD}{base_char}{Colors.RESET}"
+                        # Intelligence pass: Entities show based on current Sight/LOS
+                        in_sight = (sight_grid is None) or ((x, y) in sight_grid)
+                        if observer and in_sight:
+                            for p in room.players:
+                                if p != observer and vision_logic.can_see(observer, p):
+                                    base_char = f"{Colors.BLUE}P{Colors.RESET}"
+                                    has_entity = True
+                                    break
+                            
+                            # Priority 2: Major Threats (M) or Tracked Mobs (m)
+                            if not has_entity:
+                                for m in room.monsters:
+                                    if not vision_logic.can_see(observer, m): continue
+                                    
+                                    m_tags = getattr(m, 'identity_tags', []) + getattr(m, 'tags', [])
+                                    is_major = any(t in m_tags for t in ["aggressive", "elite", "boss"])
+                                    
+                                    # Check tracking list (id strings)
+                                    tracked = getattr(observer, 'ext_state', {}).get('tracked_entities', {})
+                                    is_tracked = str(id(m)) in tracked
+                                    
+                                    if is_major:
+                                        base_char = f"{Colors.RED}M{Colors.RESET}"
+                                        has_entity = True
+                                        break
+                                    elif is_tracked:
+                                        base_char = f"{Colors.YELLOW}m{Colors.RESET}"
+                                        has_entity = True
+                                        break
+                            
+                            # Priority 3: Combat Vibrations (?)
+                            # Vibrations bypass LoS (sound/tremors) but are limited to a tighter radius (e.g. 5)
+                            if not has_entity:
+                                if dist <= 5:
+                                    if any(m.fighting for m in room.monsters) or any(p.fighting for p in room.players):
+                                        base_char = f"{Colors.MAGENTA}?{Colors.RESET}"
+                                        has_entity = True
+
+                        # Terrain Formatting
+                        if not has_entity:
+                            # If only Knowledge (not visited), strip colors and dim
+                            if not is_visited and not ignore_fog:
+                                raw_symbol = re.sub(r'\x1b\[[0-9;]*m', '', base_char)
+                                base_char = f"{Colors.WHITE}{raw_symbol}{Colors.RESET}"
+                                
+                            if shading:
+                                diff = getattr(room, 'elevation', 0) - getattr(player_room, 'elevation', 0)
+                                if diff > 0:
+                                    char = f"{Colors.BOLD}{base_char}{Colors.RESET}"
+                                else:
+                                    char = base_char
+                            else:
+                                char = base_char
                         else:
                             char = base_char
             

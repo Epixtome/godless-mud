@@ -3,6 +3,7 @@ from utilities.colors import Colors
 from logic.constants import Tags
 from logic.core import event_engine
 from logic.core import effects
+from logic import calibration
 from utilities import telemetry
 # Re-export pacing functions to maintain API compatibility with blessings_engine
 from .pacing import check_pacing, on_status_removed
@@ -74,11 +75,20 @@ class Auditor:
                 costs[Tags.CONCENTRATION] += costs["stamina"]
                 costs["stamina"] = 0
 
+        # [V5.0] Weight Class Stamina Penalties
+        if player:
+            from logic.core.utils import combat_logic
+            w_class = combat_logic.get_weight_class(player)
+            if w_class == "heavy":
+                costs["stamina"] = int(costs["stamina"] * calibration.CombatBalance.STAMINA_PENALTY_HEAVY)
+            elif w_class == "medium":
+                costs["stamina"] = int(costs["stamina"] * calibration.CombatBalance.STAMINA_PENALTY_MEDIUM)
+
         # Allow class passives to modify costs
         if player and blessing:
             ctx = {'player': player, 'blessing': blessing, 'costs': costs}
             event_engine.dispatch("on_calculate_skill_cost", ctx)
-
+        
         return costs
 
     @staticmethod

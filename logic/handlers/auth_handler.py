@@ -1,6 +1,7 @@
 import os
 import json
 import logging
+from utilities.colors import Colors
 from models import Player
 from logic.engines import class_engine, synergy_engine
 from logic.engines.resonance_engine import ResonanceAuditor
@@ -47,6 +48,19 @@ async def handle_login(conn):
                 if hashed_input != stored_pass and pwd != stored_pass:
                     await conn.send("Incorrect password.")
                     return
+            else:
+                # Security: Existing account with no password? 
+                # Force a reset flow if it's a legacy or corrupted file.
+                await conn.send(f"{Colors.YELLOW}[SECURITY] No password found for this account. Please set a new one now.{Colors.RESET}")
+                conn.state = "CREATE_PASSWORD"
+                conn.writer.write(b"New Password: ")
+                await conn.writer.drain()
+                raw_pwd = await conn.read_line()
+                if not raw_pwd: return
+                hashed_input = conn._hash_password(raw_pwd)
+                # Keep pwd as hashed_input so upgrade logic works or just set it later.
+                pwd = raw_pwd 
+
         except Exception as e:
             logger.error(f"Error loading save for {name}: {e}")
             return
@@ -64,12 +78,17 @@ async def handle_login(conn):
             conn.player.send_line(f"Welcome back, {name}.")
             
             # Auto-upgrade legacy password to hash
-            if stored_pass and stored_pass == pwd and stored_pass != hashed_input:
+            if not conn.player.password and hashed_input:
+                conn.player.password = hashed_input
+                logger.info(f"Fixed missing/null password for {name}.")
+            elif stored_pass and stored_pass == pwd and stored_pass != hashed_input:
                 conn.player.password = hashed_input
                 logger.info(f"Upgraded legacy password for {name} to hash.")
         except Exception as e:
             logger.error(f"Failed to hydrate player {name}: {e}")
-            conn.player.send_line(f"Welcome, {name}. (Save data corrupted)")
+            conn.player.send_line(f"Welcome, {name}. (Save data corrupted - EMERGENCY LOCKDOWN: No-Save Mode Engaged)")
+            # Architectural Guard: Prevent overwriting good data with half-hydrated data
+            conn.player.save = lambda: logger.warning(f"BLOCKED: Prevented save of corrupted player {name}")
     else:
         # New Character
         conn.state = "CREATE_PASSWORD"
@@ -133,7 +152,7 @@ async def handle_kingdom_selection(conn):
                 if conn.game.world.start_room and conn.player in conn.game.world.start_room.players:
                     conn.game.world.start_room.players.remove(conn.player)
                 conn.player.room.players.append(conn.player)
-                conn.player.visited_rooms.add(conn.player.room.id)
+                conn.player.mark_room_visited(conn.player.room.id)
             break
         else:
             await conn.send("Invalid choice.")

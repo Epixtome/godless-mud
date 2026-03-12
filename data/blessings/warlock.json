@@ -1,21 +1,6 @@
 {
     "blessings": [
         {
-            "id": "warlock_init",
-            "name": "Warlock Awakening",
-            "tier": 1,
-            "cost": 0,
-            "description": "Initialize Warlock resources.",
-            "identity_tags": [
-                "warlock",
-                "hidden"
-            ],
-            "action": "warlock_init",
-            "requirements": {
-                "class": "warlock"
-            }
-        },
-        {
             "id": "malignant_bond",
             "name": "Malignant Bond",
             "tier": 2,
@@ -68,7 +53,8 @@
             ],
             "action": "blood_toll",
             "requirements": {
-                "class": "warlock"
+                "class": "warlock",
+                "cooldown": 3
             },
             "scaling": {
                 "scaling_tag": "dark",

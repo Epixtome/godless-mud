@@ -51,7 +51,7 @@ class Player:
         self.is_player = True
         self.minions = [] # List of mobs following this player
         self.friendship = {} # npc_id -> level (0-100)
-        self.visited_rooms = set() # Set of room IDs visited
+        self.visited_rooms = [] # List of room IDs (MRU, max 200)
         self.locked_target = None # For ranged combat (Ranger)
         self.reputation = 0 # -100 to 100. < -10 is Criminal.
         self.is_mounted = False
@@ -81,7 +81,7 @@ class Player:
 
         self.trigger_module_inits()
 
-        self.resources = {'heat': 0, 'stamina': 100}
+        self.resources = {'heat': 0, 'stamina': 100, 'balance': 100}
         
         # Kinetic Pacing Engine
         self.move_tokens = 5.0
@@ -91,7 +91,28 @@ class Player:
         self.room.players.append(self)
         # Mark start room as visited
         if self.room:
-            self.visited_rooms.add(self.room.id)
+            self.mark_room_visited(self.room.id)
+
+    def mark_room_visited(self, room_id):
+        """Adds a room and its immediate neighbors to history (MRU, cap 200)."""
+        if not hasattr(self, 'visited_rooms'): self.visited_rooms = []
+        if isinstance(self.visited_rooms, set): self.visited_rooms = list(self.visited_rooms)
+        
+        # 1. Discover target + immediate exits
+        to_add = [room_id]
+        if hasattr(self, 'game') and room_id in self.game.world.rooms:
+            curr = self.game.world.rooms[room_id]
+            for neighbor_id in curr.exits.values():
+                if neighbor_id not in to_add: to_add.append(neighbor_id)
+
+        # 2. Update MRU
+        for rid in to_add:
+            if rid in self.visited_rooms:
+                self.visited_rooms.remove(rid)
+            self.visited_rooms.append(rid)
+        
+        if len(self.visited_rooms) > 200:
+            self.visited_rooms = self.visited_rooms[-200:]
 
     @property
     def id(self):

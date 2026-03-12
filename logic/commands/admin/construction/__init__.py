@@ -6,3 +6,4 @@ from .cleanup_commands import delete_room, prune_map, merge_rooms, flatten
 from .mass_ops_commands import copy_room, mass_edit, replace_text
 from .zones import vision, layer_room, audit_zone, fix_ids
 from . import builder_state
+from .npcs import make_shopkeeper, persist_room_mobs, give_npc_item

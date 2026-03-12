@@ -27,18 +27,24 @@ def spawn_mob(room, mob_data, game):
                            proto.tags, proto.max_hp, prototype_id=mob_id, home_room_id=room.id, game=game)
         instance.quests = proto.quests
         instance.can_be_companion = proto.can_be_companion
-        instance.cooldowns = {} # Initialize for AI usage
         instance.active_class = None # Initialize for Engine compatibility
         instance.skills = getattr(proto, 'skills', []) # Copy skills
         instance.resources = {
-            Tags.CONCENTRATION: instance.get_max_resource(Tags.CONCENTRATION),
-            Tags.HEAT: 0,
-            Tags.CHI: 0
+            "concentration": instance.get_max_resource("concentration"),
+            "heat": 0,
+            "chi": 0
         }
         
         # Apply deltas
         for k, v in deltas.items():
-            if k != 'id':
+            if k == 'inventory' and v:
+                # Hydrate items
+                for item_data in v:
+                    from logic.core.utils import persistence
+                    item = persistence.item_from_data(item_data, game)
+                    if item:
+                        instance.inventory.append(item)
+            elif k != 'id':
                 setattr(instance, k, v)
         
         instance.room = room

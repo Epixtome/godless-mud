@@ -32,7 +32,14 @@ class Connection:
             if not (text.endswith(" > ") or text.endswith(": ")):
                 text = text.rstrip()
             
-            suffix = "" if (text.endswith(" > ") or text.endswith(": ") or text.endswith("\r\n") or text.endswith("\n")) else "\r\n"
+            suffix = ""
+            if text.endswith(" > ") or text.endswith(": "):
+                suffix = ""
+            elif text.endswith("\r\n") or text.endswith("\n"):
+                suffix = ""
+            else:
+                suffix = "\r\n"
+            
             self.writer.write(f"{text}{suffix}".encode('utf-8'))
             await self.writer.drain()
         except Exception:

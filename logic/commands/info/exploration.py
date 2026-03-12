@@ -60,14 +60,14 @@ def look(player, args, with_prompt=True):
     header = mapper.get_map_header(player.room, player.game.world)
     send(header)
     
-    local_radius = 2
+    local_radius = 3
     if hasattr(player, 'identity_tags') and "eagle_eye" in player.identity_tags: local_radius += 2
     if hasattr(player, 'status_effects'):
         if "eagle_eye" in player.status_effects: local_radius += 2
         if "farsight" in player.status_effects: local_radius += 1
 
-    visible_grid = vision_engine.get_visible_rooms(player.room, radius=local_radius, world=player.game.world, check_los=True, observer=player)
-    map_lines = mapper.draw_grid(visible_grid, player.room, radius=local_radius, visited_rooms=None, ignore_fog=True, indent=5, world=player.game.world)
+    visible_grid = vision_engine.get_visible_rooms(player.room, radius=local_radius, world=player.game.world, check_los=False, observer=player)
+    map_lines = mapper.draw_grid(visible_grid, player.room, radius=local_radius, visited_rooms=None, ignore_fog=True, indent=5, world=player.game.world, observer=None, shading=False)
     for line in map_lines: send(line)
 
     if getattr(player, 'admin_vision', False):
@@ -94,11 +94,34 @@ def look(player, args, with_prompt=True):
 
 @command_manager.register("map", category="information")
 def show_map(player, args):
-    """Shows a large map of visited areas."""
+    """Shows a large map of visited areas with live intelligence."""
+    import time
     radius = 7 + getattr(player.room, 'elevation', 0)
     radius = max(2, min(15, radius))
-    visible_grid = vision_engine.get_visible_rooms(player.room, radius=radius, world=player.game.world, check_los=False, observer=player)
-    map_lines = mapper.draw_grid(visible_grid, player.room, radius=radius, visited_rooms=player.visited_rooms, ignore_fog=False, indent=5, world=player.game.world)
+    
+    # Prune expired tracked entities
+    if 'tracked_entities' in player.ext_state:
+        now = time.time()
+        player.ext_state['tracked_entities'] = {eid: exp for eid, exp in player.ext_state['tracked_entities'].items() if exp > now}
+
+    # 1. Memory Grid (All terrain in radius - used to draw the static map)
+    memory_grid = vision_engine.get_visible_rooms(player.room, radius=radius, world=player.game.world, check_los=False, observer=player)
+    
+    # 2. Sight Grid (Only LOS-cleared rooms - used to draw live entity markers)
+    sight_grid = vision_engine.get_visible_rooms(player.room, radius=radius, world=player.game.world, check_los=True, observer=player)
+
+    map_lines = mapper.draw_grid(
+        memory_grid, 
+        player.room, 
+        radius=radius, 
+        visited_rooms=player.visited_rooms, 
+        ignore_fog=False, 
+        indent=5, 
+        world=player.game.world, 
+        observer=player,
+        sight_grid=sight_grid,
+        shading=True
+    )
 
     player.send_line(f"--- Map: {mapper.get_map_header(player.room, player.game.world)} [Elev: {player.room.elevation}] ---")
     for line in map_lines: player.send_line(line)
@@ -130,20 +153,37 @@ def where(player, args):
 
 @command_manager.register("scan", category="information")
 def scan(player, args):
-    """Scan for enemies in the immediate area."""
+    """Scan for enemies in the immediate area and track them for 60s."""
+    import time
     player.send_line(f"\n{Colors.BOLD}Scanning area...{Colors.RESET}")
+    
+    # Initialize tracking if missing
+    if 'tracked_entities' not in player.ext_state:
+        player.ext_state['tracked_entities'] = {} # id -> expiry_time
+
     visible_grid = vision_engine.get_visible_rooms(player.room, radius=1, world=player.game.world, check_los=True, observer=player)
     
-    # Predefined directional map
+    # Directional map
     dirs = {(0,0): "Here", (0,1): "North", (0,-1): "South", (1,0): "East", (-1,0): "West"}
+    now = time.time()
+    expiry = now + 60 # Track for 60 seconds
     
+    found_any = False
     for (rx, ry) in dirs.keys():
         room = visible_grid.get((rx, ry))
         if room and room.monsters:
+            found_any = True
             color = Colors.YELLOW if (rx == 0 and ry == 0) else Colors.CYAN
             player.send_line(f"{color}{dirs[(rx, ry)]}:{Colors.RESET}")
             for m in room.monsters:
-                player.send_line(f"  {m.name}")
+                # Add to tracking
+                player.ext_state['tracked_entities'][str(id(m))] = expiry
+                player.send_line(f"  {m.name} [Pinged]")
+    
+    if not found_any:
+        player.send_line("No life signatures detected nearby.")
+    else:
+        player.send_line(f"{Colors.GREEN}Signals locked on Tactical Map for 60s.{Colors.RESET}")
 
 @command_manager.register("consider", "examine", "con", category="information")
 def consider(player, args):

@@ -120,7 +120,7 @@ def handle_dualcast(player, skill, args, target=None):
 @register("arcane_surge")
 def handle_arcane_surge(player, skill, args, target=None):
     player.send_line(f"{Colors.LIGHT_CYAN}You draw raw arcane power directly into your lungs!{Colors.RESET}")
-    resources.modify_resource(player, "stamina", 40)
+    resources.modify_resource(player, "concentration", 40)
     effects.apply_effect(player, "stalled", 3)
     _consume_resources(player, skill)
     return None, True

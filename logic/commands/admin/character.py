@@ -112,15 +112,15 @@ def apply_effect_cmd(player, args):
 @command_manager.register("@clearvisited", admin=True, category="admin")
 def clear_visited(player, args):
     """Clears your visited rooms history (fixes map ghosts)."""
-    player.visited_rooms = set()
+    player.visited_rooms = []
     if player.room:
-        player.visited_rooms.add(player.room.id)
+        player.mark_room_visited(player.room.id)
     player.send_line("Visited rooms history cleared.")
 
 @command_manager.register("@revealmap", admin=True, category="admin")
 def reveal_map(player, args):
     """Reveals all rooms in the world (removes Fog of War)."""
-    player.visited_rooms = set(player.game.world.rooms.keys())
+    player.visited_rooms = list(player.game.world.rooms.keys())[-200:]
     player.send_line(f"Map revealed. You have now 'visited' {len(player.visited_rooms)} rooms.")
 
 @command_manager.register("@vision", admin=True, category="admin")

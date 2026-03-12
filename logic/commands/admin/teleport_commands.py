@@ -61,10 +61,7 @@ def teleport(player, room_name):
         player.room.broadcast(f"{player.name} vanishes.")
         player.room = target_room
         player.room.players.append(player)
-        if not hasattr(player, 'visited_rooms'): player.visited_rooms = []
-        if target_room.id not in player.visited_rooms:
-            player.visited_rooms.append(target_room.id)
-            if len(player.visited_rooms) > 200: player.visited_rooms = player.visited_rooms[-200:]
+        player.mark_room_visited(target_room.id)
         player.room.broadcast(f"{player.name} appears.")
         look(player, "")
     else:

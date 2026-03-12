@@ -29,6 +29,8 @@ def set_cooldown(player, blessing, game=None):
     if not hasattr(player, 'cooldowns'):
         player.cooldowns = {}
     cd_ticks = blessing.requirements.get('cooldown', 0)
+    if cd_ticks == 0:
+        cd_ticks = getattr(blessing, 'cooldown', 0)
     
     # EVENT: Calculate Cooldown
     ctx = {'player': player, 'skill': blessing, 'cooldown': cd_ticks}

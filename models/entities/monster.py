@@ -26,6 +26,7 @@ class Monster:
         self.home_room_id = home_room_id
         self.leader = None # Entity this mob follows
         self.can_be_companion = False # If True, can be recruited via friendship
+        self.is_shopkeeper = False
         self.room = None # Reference to the Room object containing this mob
         self.status_effects = {} # effect_id -> expiry_tick
         self.body_parts = {} # name -> {hp, max_hp, defense_bonus, destroyed}
@@ -34,8 +35,9 @@ class Monster:
         self.current_action = None # Reference to active ActionTask (Action Manager)
         self.skills = [] # List of blessing IDs this mob can use
         self.level = max(1, int(self.max_hp / 20)) # Estimate level from HP
-        self.resources = {'stamina': 100, 'concentration': 100, 'heat': 0, 'chi': 0}
+        self.resources = {'stamina': 100, 'concentration': 100, 'heat': 0, 'chi': 0, 'balance': 100}
         self.active_class = None
+        self.cooldowns = {} # ID -> tick when ready
         self.ext_state = {}
         self.known_blessings = [] # For class logic compatibility
         self.active_kit = {}
@@ -82,7 +84,9 @@ class Monster:
             "loadout": self.loadout,
             "equipped_offhand": self.equipped_offhand.to_dict() if self.equipped_offhand else None,
             "skills": self.skills,
-            "loot_table": self.loot_table
+            "loot_table": self.loot_table,
+            "is_shopkeeper": self.is_shopkeeper,
+            "inventory": [item.to_dict() if hasattr(item, 'to_dict') else item for item in self.inventory]
         }
 
     def is_in_combat(self):

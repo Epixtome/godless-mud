@@ -25,6 +25,11 @@ class ResonanceAuditor:
             return {}
             
         total_tags = {}
+        
+        # 0. Base Identity from active class (Decoupled Replacement for Awakening Blessings)
+        class_name = preferred_class or getattr(player, 'active_class', None)
+        if class_name:
+            total_tags[class_name] = total_tags.get(class_name, 0) + 1
 
         # 1. Sum Tags from Active Deck (Class Blessings)
         if hasattr(player, 'equipped_blessings'):

@@ -1,5 +1,6 @@
 import math
 from logic.engines import spatial_engine
+from logic.core.utils import vision_logic
 from utilities import mapper
 from utilities.colors import Colors
 
@@ -7,28 +8,40 @@ from utilities.colors import Colors
 # Fallback Opacity if data/terrain.json is missing
 TERRAIN_OPACITY = {
     "road": 0.0,
-    "plains": 0.1,
-    "forest": 0.4,
-    "mountain": 0.9,
+    "plains": 0.05,
+    "forest": 0.2,
+    "dark_forest": 0.35,
+    "dense_forest": 0.45,
+    "deep_forest": 0.5,
+    "mountain": 0.7,
     "peak": 1.0,
-    "indoors": 0.2
+    "indoors": 0.15
 }
 
-def get_opacity(room, world=None):
-    """Calculates the visual opacity of a room."""
+def get_opacity(room, world=None, origin_terrain=None):
+    """
+    Calculates the visual opacity of a room.
+    V5.0: Origin-aware reduction (If you're in forest, you see further in forest).
+    """
+    base_opacity = 0.5
+    
     # 1. Room-specific override
     if hasattr(room, 'opacity') and room.opacity > 0:
-        return room.opacity
-
+        base_opacity = room.opacity
     # 2. World configuration
-    if world and hasattr(world, 'terrain_config'):
+    elif world and hasattr(world, 'terrain_config'):
         config = world.terrain_config.get('opacity', TERRAIN_OPACITY)
-        opacity = config.get(room.terrain, 0.5)
-        return min(1.0, max(0.0, opacity))
-
+        base_opacity = config.get(room.terrain, 0.5)
     # 3. Static fallback
-    opacity = TERRAIN_OPACITY.get(room.terrain, 0.5)
-    return min(1.0, max(0.0, opacity))
+    else:
+        base_opacity = TERRAIN_OPACITY.get(room.terrain, 0.5)
+    
+    # [V5.0] Contextual Awareness:
+    # If the observer is in the SAME terrain, intermediate tiles are less "alien" and block less vision.
+    if origin_terrain and origin_terrain == room.terrain:
+        return base_opacity * 0.5
+        
+    return min(1.0, max(0.0, base_opacity))
 
 def check_door_block(current_room, next_room):
     """Checks if a door blocks vision between two adjacent rooms."""
@@ -51,6 +64,8 @@ def raycast(world, start_room, end_room):
     Checks if terrain between rooms blocks the line of sight beam.
     """
     if not start_room or not end_room: return False, None
+    
+    origin_terrain = start_room.terrain if hasattr(start_room, 'terrain') else None
     
     # 1. Gather intermediate coordinates
     line = _get_line_coords(start_room.x, start_room.y, end_room.x, end_room.y)
@@ -84,23 +99,17 @@ def raycast(world, start_room, end_room):
                 
                 # If room is AT the beam level and opaque
                 if abs(r.z - beam_z) < 1.0:
-                    accumulated_opacity += get_opacity(r, world)
+                    accumulated_opacity += get_opacity(r, world, origin_terrain=origin_terrain)
                     if accumulated_opacity >= 0.8:
                         return False, r
 
     return True, None
 
 def can_see(observer, target):
-    if observer == target: return True
-    if getattr(observer, 'admin_vision', False): return True
-    if hasattr(target, 'status_effects') and "concealed" in target.status_effects:
-        return can_detect(observer, target)
-    return True
+    return vision_logic.can_see(observer, target)
 
 def can_detect(observer, target):
-    perception_score = getattr(observer, 'perception', 10)
-    concealment_score = getattr(target, 'concealment', 10)
-    return perception_score >= concealment_score
+    return vision_logic.can_detect(observer, target)
 
 def get_visible_rooms(start_room, radius=2, world=None, check_los=True, observer=None):
     """

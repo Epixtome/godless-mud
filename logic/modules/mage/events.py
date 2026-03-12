@@ -18,7 +18,7 @@ def on_build_prompt(ctx):
         conc = player.resources.get('concentration', 0)
         max_conc = player.get_max_resource('concentration')
         # Display as MANA for flavor
-        prompts.append(f"{Colors.LIGHT_CYAN}MANA: {conc}/{max_conc}{Colors.RESET}")
+        prompts.append(f"{Colors.LIGHT_CYAN}Concentration: {conc}/{max_conc}{Colors.RESET}")
 
 def on_take_damage(ctx):
     """

@@ -7,10 +7,12 @@ import random
 from typing import Any, List, Set, Optional, TYPE_CHECKING
 from utilities.colors import Colors
 from logic.constants import Tags
+from logic.core import effects
 from logic import calibration
 
 if TYPE_CHECKING:
     from models.entities.player import Player
+    from models.entities.monster import Monster
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -143,26 +145,101 @@ def stop_combat(entity: Any) -> None:
     if hasattr(entity, 'attackers'):
         entity.attackers = []
 
-def get_total_defense(player: 'Player') -> int:
-    """Calculates total defense from Armor, Shields, Kit, and Buffs."""
-    total_def = 0
+def get_weight_class(entity: Any) -> str:
+    """Determines the Weight Class (light, medium, heavy) based on tags and items."""
+    # Check manual overrides or kit-based defaults
+    if hasattr(entity, 'active_kit') and isinstance(entity.active_kit, dict):
+        forced = entity.active_kit.get('weight_class')
+        if forced: return forced
+
+    # Check Equipped Armor
+    armor = getattr(entity, 'equipped_armor', None)
+    if armor:
+        tags = getattr(armor, 'gear_tags', [])
+        if "heavy_gear" in tags: return "heavy"
+        if "medium_gear" in tags: return "medium"
     
-    # 1. Armor & Shield
-    if hasattr(player, 'equipped_armor') and player.equipped_armor:
-        total_def += getattr(player.equipped_armor, 'defense', 0)
-    if hasattr(player, 'equipped_offhand') and player.equipped_offhand:
-        total_def += getattr(player.equipped_offhand, 'defense', 0)
+    # Check Monster Tags (Identity tags handle classification)
+    tags = getattr(entity, 'tags', [])
+    if "heavy" in tags: return "heavy"
+    if "medium" in tags: return "medium"
+    
+    return "light"
+
+def get_mitigation_multiplier(entity: Any) -> float:
+    """Returns the damage mitigation percentage (0.0 to 1.0) based on weight class."""
+    w_class = get_weight_class(entity)
+    if w_class == "heavy": return calibration.CombatBalance.BASE_MITIGATION_HEAVY
+    if w_class == "medium": return calibration.CombatBalance.BASE_MITIGATION_MEDIUM
+    return calibration.CombatBalance.BASE_MITIGATION_LIGHT
+
+def get_stability_rating(entity: Any) -> int:
+    """
+    Calculates Stability (Resistance to Balance Loss).
+    Re-uses old Defense logic but maps it to the Stability domain.
+    """
+    total_stability = 0
+    
+    # 1. Gear (Armor & Shield)
+    if hasattr(entity, 'equipped_armor') and entity.equipped_armor:
+        total_stability += getattr(entity.equipped_armor, 'defense', 0)
+    if hasattr(entity, 'equipped_offhand') and entity.equipped_offhand:
+        total_stability += getattr(entity.equipped_offhand, 'defense', 0)
         
-    # 2. Kit Bonus
-    if hasattr(player, 'active_kit'):
-        kit_mult = player.active_kit.get('defense_multiplier', 1.0) if isinstance(player.active_kit, dict) else 1.0
-        total_def = int(total_def * kit_mult)
+    # 2. Kit/Stance Bonus
+    if hasattr(entity, 'active_kit'):
+        kit_mult = entity.active_kit.get('stability_multiplier', 1.0) if isinstance(entity.active_kit, dict) else 1.0
+        total_stability = int(total_stability * kit_mult)
     
     # 3. Buffs/Effects
-    for effect_id in getattr(player, 'status_effects', {}):
-        effect_data = player.game.world.status_effects.get(effect_id)
+    for effect_id in getattr(entity, 'status_effects', {}):
+        # We look for 'stability_add' or use the old 'defense_add' legacy
+        effect_data = entity.game.world.status_effects.get(effect_id)
         if effect_data:
-            mods = effect_data.get('modifiers', {})
-            total_def += mods.get('defense_add', 0)
+            metadata = effect_data.get('metadata', {})
+            total_stability += metadata.get('stability_add', 0)
+            total_stability += metadata.get('defense_add', 0) # Legacy support
             
-    return min(calibration.MaxValues.DEFENSE, int(total_def))
+    return int(total_stability)
+
+def check_posture_break(target: Any, damage: float, source: Any = None, tags: Optional[Set[str]] = None):
+    """Handles the reduction of Posture and checks for BREAK state."""
+    if not hasattr(target, 'resources'): return
+    
+    tags = tags or set()
+    
+    # Base Posture Damage
+    raw_posture_damage = damage
+    
+    # [V5.0] Tag-based Posture Modifiers (Daggers & Hammers excel at breaking guard)
+    if any(t in tags for t in ["precision", "speed", "blunt", "weight"]):
+        raw_posture_damage *= 1.5
+    
+    # Posture (Balance) is stabilized by the Stability rating
+    stability = get_stability_rating(target)
+    net_posture_damage = max(1, int(raw_posture_damage - (stability * calibration.CombatBalance.STABILITY_SCALING)))
+    
+    current_bal = target.resources.get('balance', 100)
+    new_bal = max(0, current_bal - net_posture_damage)
+    target.resources['balance'] = new_bal
+    
+    if new_bal <= 0 and current_bal > 0:
+        # POSTURE BREAK
+        # Apply the 'off_balance' and 'prone' statuses
+        effects.apply_effect(target, "off_balance", 4)
+        effects.apply_effect(target, "prone", 2)
+        
+        if hasattr(target, 'send_line'):
+            target.send_line(f"{Colors.RED}*** YOUR POSTURE HAS BEEN BROKEN! ***{Colors.RESET}")
+        if hasattr(source, 'send_line'):
+            source.send_line(f"{Colors.GREEN}*** You have broken {target.name}'s posture! ***{Colors.RESET}")
+            
+        from utilities import telemetry
+        telemetry.log_posture_break(target)
+        
+        return True
+    return False
+
+def get_total_defense(player: 'Player') -> int:
+    """[DEPRECATED] Redirects to Stability in V5.0."""
+    return get_stability_rating(player)

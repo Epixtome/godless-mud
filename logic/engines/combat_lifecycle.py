@@ -93,6 +93,9 @@ def _handle_mob_death(game, mob, killer):
         logger.error(f"Mob {mob.name} died but has no room reference.")
         return
 
+    # Stop Combat (Clear references via Model logic) and process Death Loot
+    mob.die()
+
     # Create corpse (Preserves tags for sacrifice/favor logic)
     corpse = Corpse(f"corpse of {mob.name}", f"The dead body of {mob.name}.", mob.inventory, tags=getattr(mob, 'tags', []))
     room.items.append(corpse)
@@ -107,9 +110,6 @@ def _handle_mob_death(game, mob, killer):
     
     if mob in room.monsters:
         room.monsters.remove(mob)
-        
-    # Stop Combat (Clear references via Model logic)
-    mob.die()
     
     # Modular Hook for death reactions (Quests, Beastmaster penalties, etc)
     from logic.core import event_engine

@@ -68,12 +68,12 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
         players_to_prompt.add(attacker)
         return
 
-    # Mitigation (Defense Subtraction + Mitigation Events)
-    defense = target.get_defense() if hasattr(target, 'get_defense') else 0
-    mit_ctx = {'target': target, 'attacker': attacker, 'defense': defense, 'tags': attack_tags}
-    event_engine.dispatch("on_calculate_mitigation", mit_ctx)
+    # 5. Mitigation (V5.0 Percentage-based + Mitigation Events)
+    damage = combat.calculate_damage(attacker, target)
     
-    damage = max(1, int(raw_damage - mit_ctx['defense']))
+    mit_ctx = {'target': target, 'attacker': attacker, 'damage': damage, 'tags': attack_tags}
+    event_engine.dispatch("on_calculate_mitigation", mit_ctx)
+    damage = mit_ctx['damage']
     
     # [V4.5] Dynamic Damage Cap: Scaled by Blessing Tier
     # Standard: 75. Finishers/T5: 150.

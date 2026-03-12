@@ -127,11 +127,7 @@ def _finalize_move(player, direction, target_room, old_room):
         player.send_line(f"Auto-pasted brush.")
     
     # Fog of War
-    if not hasattr(player, 'visited_rooms'): player.visited_rooms = []
-    elif isinstance(player.visited_rooms, set): player.visited_rooms = list(player.visited_rooms)
-    if target_room.id in player.visited_rooms: player.visited_rooms.remove(target_room.id)
-    player.visited_rooms.append(target_room.id)
-    if len(player.visited_rooms) > 200: player.visited_rooms = player.visited_rooms[-200:]
+    player.mark_room_visited(target_room.id)
     
     event_engine.dispatch("on_enter_room", {'player': player, 'room': target_room})
     if player.room != target_room: return True # Trap/Teleport check

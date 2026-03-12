@@ -220,35 +220,35 @@ def admin_help_command(player, args):
     if not args:
         # Security check handled by input_handler, but double check doesn't hurt
         cats = command_manager.get_help_categories(show_admin=True, show_regular=False)
-        _display_help(player, cats, "Admin Commands")
+        _display_help(player, cats, "Godless Architect - Admin Commands")
         return
 
     search_term = args.lower()
     
-    # Resolve alias
+    # 1. Exact Match Command/Alias
     canonical = command_manager.ALIASES.get(search_term, search_term)
-    
-    # 1. Exact Match
-    if canonical in command_manager.COMMANDS and canonical in command_manager.ADMIN_ONLY:
-        desc = command_manager.DESCRIPTIONS.get(canonical, "No description.")
-        player.send_line(f"\n{Colors.BOLD}Command:{Colors.RESET} {canonical.upper()}")
-        player.send_line(f"{desc}")
-        return
+    if canonical and canonical in command_manager.COMMANDS:
+        is_admin_cmd = canonical.startswith('@') or canonical in command_manager.ADMIN_ONLY
+        if is_admin_cmd:
+            desc = command_manager.DESCRIPTIONS.get(canonical, "No description.")
+            player.send_line(f"\n{Colors.BOLD}{Colors.MAGENTA}Admin Command:{Colors.RESET} {canonical.upper()}")
+            player.send_line(f"{desc}")
+            return
 
-    # 2. Fuzzy Match
+    # 2. Fuzzy Match Admin Commands
     matches = []
     for cmd in command_manager.COMMANDS:
-        if cmd in command_manager.ADMIN_ONLY and search_term in cmd:
+        if (cmd.startswith('@') or cmd in command_manager.ADMIN_ONLY) and search_term in cmd.lower():
             matches.append(cmd)
             
     if not matches:
-        player.send_line(f"No admin command found matching '{args}'.")
+        player.send_line(f"No admin matching '{args}' found.")
     elif len(matches) == 1:
         cmd = matches[0]
         desc = command_manager.DESCRIPTIONS.get(cmd, "No description.")
-        player.send_line(f"\n{Colors.BOLD}Command:{Colors.RESET} {cmd.upper()}")
+        player.send_line(f"\n{Colors.BOLD}{Colors.MAGENTA}Admin Command:{Colors.RESET} {cmd.upper()}")
         player.send_line(f"{desc}")
     else:
-        player.send_line(f"\n{Colors.YELLOW}Multiple admin matches found for '{args}':{Colors.RESET}")
+        player.send_line(f"\n{Colors.YELLOW}Architect Matches for '{args}':{Colors.RESET}")
         for cmd in sorted(matches):
             player.send_line(f"  {cmd}")

@@ -166,5 +166,11 @@ CORE_STATUS_DEFINITIONS = {
         "description": "Your mind is clouded and wandering.",
         "blocks": ["skills"],
         "metadata": {"is_debuff": True}
+    },
+    "staggered": {
+        "name": "Staggered",
+        "description": "Momentarily off-balance. You cannot use complex skills or maneuvers.",
+        "blocks": ["skills"],
+        "metadata": {"is_debuff": True}
     }
 }

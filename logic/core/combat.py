@@ -54,10 +54,26 @@ def get_attack_verb(damage_percent: float) -> str:
     return combat_logic.get_attack_verb(damage_percent)
 
 def calculate_damage(attacker: Any, victim: Optional[Any] = None) -> int:
-    """Calculates final damage for an attack, respecting modifiers and armor."""
+    """
+    Calculates final damage for an attack, respecting modifiers and armor.
+    V5.0: Mitigation-based damage + Posture Damage side effects.
+    """
     raw = calculate_base_damage(attacker, victim)
-    defense = get_defense_rating(victim) if victim else 0
-    return max(1, raw - defense)
+    
+    # 1. Damage Mitigation (Percentage based on Weight Class)
+    mitigation = combat_logic.get_mitigation_multiplier(victim) if victim else 0.0
+    final_dmg = raw * (1.0 - mitigation)
+    
+    # 2. Side Effect: Impact Posture (Balance)
+    if victim:
+        # Determine attack tags to calculate bonus Posture Damage
+        tags = combat_logic.resolve_attack_tags(attacker)
+        
+        # Posture damage is usually proportional to raw damage 
+        # but mitigated by Stability rating.
+        combat_logic.check_posture_break(victim, raw, source=attacker, tags=tags)
+        
+    return max(1, int(final_dmg))
 
 def handle_attack(attacker: Any, victim: Any, room: Any, game: Any, blessing: Optional[Any] = None) -> List[Any]:
     """Executes a single combat exchange and processes results."""
