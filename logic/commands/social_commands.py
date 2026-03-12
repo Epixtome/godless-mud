@@ -1,5 +1,5 @@
 from logic.handlers import command_manager
-from logic import search
+from logic.core import search
 from models import Monster
 import logging
 

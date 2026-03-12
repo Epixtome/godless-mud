@@ -62,7 +62,13 @@ def calculate_damage(attacker: Any, victim: Optional[Any] = None) -> int:
     
     # 1. Damage Mitigation (Percentage based on Weight Class)
     mitigation = combat_logic.get_mitigation_multiplier(victim) if victim else 0.0
-    final_dmg = raw * (1.0 - mitigation)
+    
+    # [V5.0] Modifier Event (Class Scaling: e.g., Monk Flow, Barbarian Berserk)
+    mod_ctx = {'attacker': attacker, 'target': victim, 'multiplier': 1.0, 'bonus_flat': 0}
+    event_engine.dispatch("calculate_damage_modifier", mod_ctx)
+    
+    final_dmg = (raw * mod_ctx['multiplier']) + mod_ctx['bonus_flat']
+    final_dmg = final_dmg * (1.0 - mitigation)
     
     # 2. Side Effect: Impact Posture (Balance)
     if victim:
@@ -132,19 +138,39 @@ def apply_damage(target: Any, amount: int, source: Any = None, context: str = "C
     return actual_damage
 
 def can_act(entity: Any) -> bool:
-    """Checks if an entity is capable of taking a combat action (not stunned, resting, etc)."""
+    """
+    Checks if an entity is capable of taking a combat action.
+    V5.0: Respects status effect blockages (combat, skills).
+    """
     if getattr(entity, 'hp', 0) <= 0 or getattr(entity, 'pending_death', False):
         return False
-    is_stunned = "stun" in getattr(entity, 'status_effects', {})
+    
+    from logic.core import effects
+    game = getattr(entity, 'game', None)
+    
+    # Check current status effects
+    active_effects = getattr(entity, 'status_effects', {})
+    for eid in active_effects:
+        defn = effects.get_effect_definition(eid, game)
+        if defn and "combat" in defn.get("blocks", []):
+            return False
+
     state = getattr(entity, 'state', 'normal')
-    return not (is_stunned or state in ["stunned", "casting", "resting"])
+    return not (state in ["stunned", "casting", "resting"])
 
 def handle_target_loss(entity: Any) -> Any:
     """Handles logic when an entity loses their target."""
     from utilities.colors import Colors
     target = getattr(entity, 'fighting', None)
-    if target and getattr(target, 'hp', 0) <= 0 and getattr(target, 'pending_death', False):
-        return target
+    if target and getattr(target, 'hp', 0) <= 0:
+        # If the target is dead, we don't return it as a valid target to continue hitting.
+        # This prevents "corpse camping" by mobs.
+        pass
+    else:
+        # Keep the target if it's still alive
+        if target and is_target_valid(entity, target):
+            return target
+
     valid_attackers = [a for a in getattr(entity, 'attackers', []) if is_target_valid(entity, a)]
     if valid_attackers:
         new_target = valid_attackers[0]
@@ -152,8 +178,15 @@ def handle_target_loss(entity: Any) -> Any:
         if hasattr(entity, 'send_line'):
             entity.send_line(f"{Colors.YELLOW}You turn to fight {new_target.name}!{Colors.RESET}")
         return new_target
-    if hasattr(entity, 'send_line') and entity.fighting:
-        entity.send_line(f"You are no longer fighting.")
+    
+    # No valid targets left
+    if hasattr(entity, 'send_line') and hasattr(entity, 'fighting') and entity.fighting:
+        entity.send_line(f"You represent a victory over your fallen foe.")
+    
+    entity.fighting = None
+    if hasattr(entity, 'state') and entity.state == "combat":
+        entity.state = "normal"
+    
     stop_combat(entity)
     return None
 

@@ -25,7 +25,7 @@ def check_file_structure():
 
     # Rule 3: Empty Files (Ghost files from bad moves)
     for root, _, files in os.walk("."):
-        if "__pycache__" in root or ".git" in root:
+        if "__pycache__" in root or ".git" in root or "logs" in root:
             continue
         for file in files:
             path = os.path.join(root, file)

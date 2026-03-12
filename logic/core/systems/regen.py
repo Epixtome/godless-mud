@@ -26,15 +26,16 @@ def passive_regen(game):
         for mob in room.monsters:
             # Standard Regen
             if mob.hp < mob.max_hp and not mob.fighting:
-                mob.hp = min(mob.max_hp, mob.hp + 1)
+                resources.modify_resource(mob, "hp", 1, source="Regen", context="Passive", log=False)
             
             # Resource Regen for AI
             if hasattr(mob, 'resources'):
-                max_conc = mob.get_max_resource(Tags.CONCENTRATION)
-                mob.resources[Tags.CONCENTRATION] = min(max_conc, mob.resources.get(Tags.CONCENTRATION, 0) + 5)
+                resources.modify_resource(mob, Tags.CONCENTRATION, 5, source="Regen", context="Passive", log=False)
+                resources.modify_resource(mob, Tags.HEAT, -5, source="Regen", context="Passive", log=False)
                 
-                # Heat Decay
-                mob.resources[Tags.HEAT] = max(0, mob.resources.get(Tags.HEAT, 0) - 5)
+                # Balance Regen (Posture Protocol)
+                if mob.resources.get('balance', 0) < 100:
+                    resources.modify_resource(mob, "balance", 10, source="Regen", context="Passive", log=False)
 
             # Hydra/Regenerator Logic
             if "regenerator" in mob.tags and mob.body_parts:
@@ -59,4 +60,4 @@ def process_rest(game):
         if player.is_resting:
             # Rest Regen: 10% of Max HP per tick
             regen_amount = int(player.max_hp * 0.10)
-            player.hp = min(player.max_hp, player.hp + regen_amount)
+            resources.modify_resource(player, "hp", regen_amount, source="Rest", context="Passive")

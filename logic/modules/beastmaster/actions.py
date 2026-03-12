@@ -48,9 +48,9 @@ def handle_tame(player, skill, args, target=None):
     player.send_line(f"{Colors.GREEN}You successfully tame {target.name}! It has been added to your library as a {archetype}.{Colors.RESET}")
     player.room.broadcast(f"{player.name} performs a ritual of taming on {target.name}!", exclude_player=player)
     
-    # Remove the target mob from the room (it's now yours)
-    if target in player.room.monsters:
-        player.room.monsters.remove(target)
+    # [V5.1] Use Spatial Facade for removal
+    from logic.engines import spatial_engine
+    spatial_engine.move_entity(target, None, silent=True)
     
     consume_resources(player, skill)
     return target, True
@@ -110,8 +110,10 @@ def handle_call(player, skill, args, target=None):
     arch_meta['key'] = pet_data['archetype']
     
     new_pet = Pet(player, pet_data['name'], arch_meta)
-    new_pet.room = player.room
-    player.room.monsters.append(new_pet)
+    
+    # [V5.1] Use Spatial Facade for arriving
+    from logic.engines import spatial_engine
+    spatial_engine.move_entity(new_pet, player.room, silent=True)
     
     bm_state['active_pet_uuid'] = new_pet.id
     bm_state['sync'] = 0 # Fresh call
@@ -150,7 +152,8 @@ def handle_order(player, skill, args, target=None):
     if subcmd == "attack":
         # Order pet to attack player's target
         if player.fighting:
-            active_pet.fighting = player.fighting
+            from logic.core.utils import combat_logic
+            combat_logic.start_combat(active_pet, player.fighting)
             player.send_line(f"You point at {player.fighting.name}, and {active_pet.name} lunges forward!")
         else:
             player.send_line("Attack what?")
@@ -221,14 +224,12 @@ def handle_whistle(player, skill, args, target=None):
         player.send_line(f"{Colors.RED}You have no active pet to whistle for.{Colors.RESET}")
         return None, True
         
-    # Teleport
-    if pet_obj.room:
-        pet_obj.room.monsters.remove(pet_obj)
-        pet_obj.room.broadcast(f"{pet_obj.name} hears a whistle and vanishes.")
-        
-    pet_obj.room = player.room
-    player.room.monsters.append(pet_obj)
-    player.room.broadcast(f"{pet_obj.name} leaps from the shadows to {player.name}'s side.")
+    # Teleport via Facade
+    from logic.engines import spatial_engine
+    spatial_engine.move_entity(pet_obj, player.room, silent=False, 
+                               leave_msg=f"{pet_obj.name} hears a whistle and vanishes.",
+                               arrive_msg=f"{pet_obj.name} leaps from the shadows to {player.name}'s side.")
+    
     player.send_line(f"You whistle sharply, and {pet_obj.name} appears!")
     
     consume_resources(player, skill)

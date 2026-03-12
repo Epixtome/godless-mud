@@ -4,7 +4,7 @@ import logic.handlers.command_manager as command_manager
 from logic.engines import blessings_engine
 from logic.engines import magic_engine
 from logic.core import effects
-from logic import search
+from logic.core import search
 from utilities.colors import Colors
 from utilities import telemetry
 from logic.common import find_by_index

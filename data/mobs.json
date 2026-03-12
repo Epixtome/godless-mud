@@ -294,8 +294,20 @@
             "damage": 6,
             "tags": [
                 "human",
-                "criminal"
-            ]
+                "criminal",
+                "aggressive"
+            ],
+            "shouts": {
+                "aggro": [
+                    "Hands in the air!",
+                    "Your gold or your life!",
+                    "Look what we have here!"
+                ],
+                "combat": [
+                    "Die, whelp!",
+                    "You'll regret that!"
+                ]
+            }
         },
         {
             "id": "barbarian_dummy",
@@ -789,7 +801,11 @@
             "damage": 5,
             "tags": [
                 "human",
-                "quest_giver"
+                "quest_giver",
+                "shopkeeper"
+            ],
+            "shop_inventory": [
+                "sun_elixir"
             ],
             "quests": [
                 "fetch_sun_elixir"
@@ -805,8 +821,16 @@
             "tags": [
                 "construct",
                 "light",
-                "guard"
-            ]
+                "guard",
+                "gatekeeper"
+            ],
+            "shouts": {
+                "aggro": [
+                    "Halt! This ground is sanctified!",
+                    "None shall pass!",
+                    "You are not welcome here, sinner."
+                ]
+            }
         },
         {
             "id": "thorn_sprite",
@@ -1009,6 +1033,66 @@
                 "beast"
             ],
             "can_be_companion": true
+        },
+        {
+          "id": "training_golem_low",
+          "name": "Heavy Oak Golem",
+          "description": "A thick, iron-banded wooden golem. It's built to take a beating but slowly.",
+          "hp": 1000,
+          "max_hp": 1000,
+          "damage": 10,
+          "tags": ["construct", "training", "target"]
+        },
+        {
+          "id": "training_golem_med",
+          "name": "Living Iron Golem",
+          "description": "A dense block of walking metal. It hums with defensive energy.",
+          "hp": 5000,
+          "max_hp": 5000,
+          "damage": 15,
+          "tags": ["construct", "training", "target", "elite"]
+        },
+        {
+          "id": "training_golem_high",
+          "name": "Obsidian Colossus",
+          "description": "A towering monster of volcanic glass. It represents the absolute ceiling of physical durability.",
+          "hp": 25000,
+          "max_hp": 25000,
+          "damage": 25,
+          "tags": ["construct", "training", "target", "boss"]
+        },
+        {
+          "id": "elite_knight_trainer",
+          "name": "Ser Alaric the Unyielding",
+          "description": "A ghost-knight in shimmering plate. He stands in a perfect defensive stance, ready to counter-attack.",
+          "hp": 2000,
+          "max_hp": 2000,
+          "damage": 12,
+          "tags": ["undead", "elite", "class:knight", "tactical"],
+          "active_class": "knight",
+          "skills": ["brace", "shield_bash", "iron_will"]
+        },
+        {
+          "id": "monk_master_trainer",
+          "name": "Grandmaster Wei",
+          "description": "An elderly man sitting in meditation. His presence feels like a calm storm.",
+          "hp": 1500,
+          "max_hp": 1500,
+          "damage": 15,
+          "tags": ["human", "elite", "class:monk", "tactical"],
+          "active_class": "monk",
+          "skills": ["palm_strike", "triple_kick", "iron_palm", "dragon_strike", "crane_stance"]
+        },
+        {
+          "id": "testing_curator",
+          "name": "The Curator",
+          "description": "A being of pure geometric lines and light. They provide the tools needed for the Great Work.",
+          "hp": 10000,
+          "max_hp": 10000,
+          "damage": 0,
+          "tags": ["cosmic", "shopkeeper"],
+          "is_shopkeeper": true,
+          "inventory": []
         }
     ]
 }

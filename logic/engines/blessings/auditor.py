@@ -246,7 +246,7 @@ class Auditor:
                     player.send_line(f"{Colors.YELLOW}[!] You're off-balance, but preparing to strike...{Colors.RESET}")
                     return False, f"BUFFERED|{remaining * 2.0}"
                 else:
-                    return False, f"{Colors.YELLOW}[!] Your balance is too unsettled to use that again so soon.{Colors.RESET}"
+                    return False, f"{Colors.YELLOW}[!] You are still recovering your focus for that maneuver.{Colors.RESET}"
 
         # Global Cooldown Check (GCD)
         if hasattr(player, 'cooldowns') and 'gcd' in player.cooldowns:

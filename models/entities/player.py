@@ -94,25 +94,9 @@ class Player:
             self.mark_room_visited(self.room.id)
 
     def mark_room_visited(self, room_id):
-        """Adds a room and its immediate neighbors to history (MRU, cap 200)."""
-        if not hasattr(self, 'visited_rooms'): self.visited_rooms = []
-        if isinstance(self.visited_rooms, set): self.visited_rooms = list(self.visited_rooms)
-        
-        # 1. Discover target + immediate exits
-        to_add = [room_id]
-        if hasattr(self, 'game') and room_id in self.game.world.rooms:
-            curr = self.game.world.rooms[room_id]
-            for neighbor_id in curr.exits.values():
-                if neighbor_id not in to_add: to_add.append(neighbor_id)
-
-        # 2. Update MRU
-        for rid in to_add:
-            if rid in self.visited_rooms:
-                self.visited_rooms.remove(rid)
-            self.visited_rooms.append(rid)
-        
-        if len(self.visited_rooms) > 200:
-            self.visited_rooms = self.visited_rooms[-200:]
+        """Adds a room and its immediate neighbors to history via facade."""
+        from logic.core.utils import player_logic
+        player_logic.mark_room_visited(self, room_id)
 
     @property
     def id(self):
@@ -121,16 +105,11 @@ class Player:
 
     @property
     def is_resting(self):
-        """Returns True if the player is in the 'resting' state."""
         return self.state == "resting"
 
     @is_resting.setter
     def is_resting(self, value):
-        if value:
-            self.state = "resting"
-        else:
-            if self.state == "resting":
-                self.state = "normal"
+        self.state = "resting" if value else "normal"
 
 
     @property
@@ -268,10 +247,6 @@ class Player:
         """Standard output entry point."""
         messaging.send_line(self, message, include_prompt=include_prompt)
 
-    def get_class_module(self):
-        """[DEPRECATED] Use logic.core.class_service.get_class_module instead."""
-        from logic.core import class_service
-        return class_service.get_class_module(self.active_class)
 
     def send_raw(self, message, include_prompt=False):
         """Send raw text to this player's telnet client without prefix/suffix."""

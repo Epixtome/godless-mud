@@ -25,6 +25,17 @@
                     "scaling_tag": "instinct",
                     "multiplier": 0.5
                 }
+            ],
+            "potency_rules": {
+                "type": "pip_scaling",
+                "resource": "barbarian.momentum",
+                "tiers": [
+                    {"max": 5, "mult_per": 0.20, "base": 1.0}
+                ],
+                "consume": true
+            },
+            "ai_priority_rules": [
+                { "trigger": "resource_above", "resource": "barbarian.momentum", "value": 3, "bonus": 50 }
             ]
         },
         "hurl": {
@@ -88,7 +99,10 @@
                 "apply_status": "stunned",
                 "chance": 0.3,
                 "duration": 2
-            }
+            },
+            "ai_priority_rules": [
+                { "trigger": "target_missing_status", "status": "stunned", "bonus": 25 }
+            ]
         },
         "drag": {
             "id": "drag",

@@ -7,6 +7,10 @@ from logic.commands.admin.set_handlers import SET_CATEGORIES, FLAT_SET_MAP
 # Import Sharded Editors to register commands
 from logic.commands.admin.editors import item_editor, mob_editor, class_editor
 
+# Export handlers for input_handler
+handle_editor_input = item_editor.handle_editor_input
+handle_class_builder_input = class_editor.handle_class_builder_input
+
 # Import Helpers for @set dispatch
 from logic.commands.admin.editors.item_editor import _handle_set_item, edit_visual
 from logic.commands.admin.editors.mob_editor import _handle_set_mob, edit_mob_visual

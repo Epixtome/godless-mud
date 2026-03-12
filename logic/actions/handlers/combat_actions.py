@@ -102,7 +102,7 @@ def handle_jump(player, skill, args, target=None):
     
     async def _land():
         effects.remove_effect(player, "vaulting")
-        if player.room != target.room:
+        if not target or player.room != target.room:
             player.send_line("You land, but your target is gone.")
             return
             
@@ -226,7 +226,12 @@ def handle_push(player, skill, args, target=None):
             
             # Remove from attackers lists
             if player in target.attackers: target.attackers.remove(player)
-            if target in player.attackers: player.attackers.remove(target)
+            if target in player.attackers:
+                # Don't remove training dummies from player's attackers list
+                if any(t in getattr(target, 'tags', []) for t in ["training_dummy", "training", "target"]):
+                    pass
+                else:
+                    player.attackers.remove(target)
 
     else:
         player.send_line("There is nowhere to push them!")

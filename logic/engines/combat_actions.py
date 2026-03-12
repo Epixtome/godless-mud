@@ -26,7 +26,12 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
 
     # 1. Physics & Pacing Gates
     if effects.has_effect(attacker, "stalled"): return
-    if "training_dummy" in getattr(attacker, 'tags', []): return
+    
+    # [V5.0] Training Gates: Dummies can't attack, but Elite/Tactical targets can retaliate.
+    tags = getattr(attacker, 'tags', [])
+    if any(t in tags for t in ["training_dummy", "training", "target"]):
+        if not any(t in tags for t in ["elite", "tactical"]):
+            return
 
     if getattr(attacker, 'is_player', False) and not blessing:
         can_pace, _ = blessings_engine.check_pacing(attacker, weight=0.5, limit=5.0)
@@ -132,12 +137,7 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
         if getattr(attacker, 'is_player', False) and attacker.equipped_weapon and "bleed" in attacker.equipped_weapon.flags:
              effects.apply_effect(target, "bleed", 10)
         
-        if getattr(attacker, 'is_player', False):
-             if hasattr(target, 'fighting') and not target.fighting:
-                 target.fighting = attacker
-                 if hasattr(target, 'state'): target.state = "combat"
-             if hasattr(target, 'attackers') and attacker not in target.attackers:
-                 target.attackers.append(attacker)
+        # [REMOVED] Reciprocal Engagement now handled by systems/engagement.py
 
     # 11. Attrition (Resource Drains)
     if damage > 0 and hasattr(target, 'resources'):

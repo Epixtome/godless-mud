@@ -4,8 +4,11 @@ from .decay import register_decay, initialize_decay, decay
 from .weather import weather, time_of_day
 from .ai import mob_ai
 from .environmental import monitor_terrain
+from . import engagement
 from . import status
 
+# Initialize non-heartbeat systems
+engagement.initialize()
 
 def get_heartbeat_subscribers():
     """Returns the list of functions to call every heartbeat."""

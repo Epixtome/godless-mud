@@ -1,7 +1,7 @@
 import logging
 from utilities.colors import Colors
 from logic.core import event_engine
-from logic.core.utils import mob_logic
+from logic.core.utils import mob_logic, combat_logic
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -39,6 +39,9 @@ class Monster:
         self.active_class = None
         self.cooldowns = {} # ID -> tick when ready
         self.ext_state = {}
+        self.shouts = {} # aggro: [], victory: [], etc.
+        self.dialogue = {} # node-based conversation data
+        self.shop_inventory = [] # List of item IDs for sale
         self.known_blessings = [] # For class logic compatibility
         self.active_kit = {}
 
@@ -51,7 +54,8 @@ class Monster:
         self.states = {}
         self.triggers = []
         self.is_player = False
-        self.current_state = "normal"
+        self.state = "normal" 
+        self.current_state = "normal" # Legacy support
         self.temporary = False
         self.ai_state = "idle"
         self.flags = []
@@ -121,16 +125,8 @@ class Monster:
         
 
     def stop_combat(self):
-        """Clears combat state and notifies the target."""
-        if self.fighting:
-            target = self.fighting
-            self.fighting = None
-            # Reciprocal stop
-            if hasattr(target, 'stop_combat'):
-                target.stop_combat()
-            elif hasattr(target, 'fighting') and target.fighting == self:
-                target.fighting = None
-        self.attackers = []
+        """Clears combat state via centralized facade."""
+        combat_logic.stop_combat(self)
 
     def die(self):
         """Handles death via facade."""

@@ -17,6 +17,7 @@ from . import quests_commands
 from . import shop_commands
 from . import skill_commands
 from . import social_commands
+from . import interaction_commands
 from . import spell_commands
 
 # Note: handlers package is imported by skill_commands.py

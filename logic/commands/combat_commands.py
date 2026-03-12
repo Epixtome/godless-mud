@@ -1,6 +1,6 @@
 import random
 import logic.handlers.command_manager as command_manager
-import logic.search as search
+from logic.core import search
 from logic.common import find_by_index
 from logic.core import combat
 from utilities.colors import Colors

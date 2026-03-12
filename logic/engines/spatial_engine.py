@@ -56,3 +56,39 @@ def invalidate():
     global _INSTANCE
     if _INSTANCE:
         _INSTANCE.rebuild()
+
+def move_entity(entity, target_room, silent=False, leave_msg=None, arrive_msg=None):
+    """
+    Unified facade for moving players or monsters between rooms.
+    Handles cleanup of old rooms and notifications.
+    """
+    old_room = getattr(entity, 'room', None)
+    
+    # 1. Removal from source
+    if old_room:
+        from models import Player, Monster
+        if isinstance(entity, Player):
+            if entity in old_room.players:
+                old_room.players.remove(entity)
+        elif isinstance(entity, Monster):
+            if entity in old_room.monsters:
+                old_room.monsters.remove(entity)
+        
+        if not silent and leave_msg:
+            old_room.broadcast(leave_msg, exclude_player=entity)
+            
+    # 2. Update reference
+    entity.room = target_room
+    
+    # 3. Addition to target
+    if target_room:
+        from models import Player, Monster
+        if isinstance(entity, Player):
+            if entity not in target_room.players:
+                target_room.players.append(entity)
+        elif isinstance(entity, Monster):
+            if entity not in target_room.monsters:
+                target_room.monsters.append(entity)
+            
+        if not silent and arrive_msg:
+            target_room.broadcast(arrive_msg, exclude_player=entity)

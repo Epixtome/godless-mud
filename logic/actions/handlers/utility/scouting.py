@@ -5,7 +5,7 @@ Vision and Intel skills: Scout, Track, Analyze, and Farsight.
 from logic.actions.registry import register
 from logic.engines import vision_engine
 from logic.common import _get_target
-from logic import search
+from logic.core import search
 from utilities.colors import Colors
 from utilities import mapper
 

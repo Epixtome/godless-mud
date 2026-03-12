@@ -13,6 +13,9 @@ def dispatch(player, command):
     if i_type == 'commune':
         _handle_commune(player, command, data)
         return True
+    elif i_type == 'dialogue':
+        _handle_dialogue(player, command, data)
+        return True
     else:
         player.send_line("You are in an unknown interaction state. Type 'exit' to break free.")
         if command.lower() == 'exit':
@@ -245,3 +248,84 @@ def _handle_commune(player, command, data):
         
     else:
         player.send_line("Unknown command. Type 'help' or 'exit'.")
+
+# --- Dialogue System (V5.6) ---
+
+def display_dialogue(player):
+    """Displays the current dialogue node and options to the player."""
+    data = player.interaction_data
+    npc = data.get('npc')
+    node_id = data.get('node', 'start')
+    
+    player.send_line(f"\n{Colors.BOLD}{Colors.YELLOW}[ Conversation with {npc.name} ]{Colors.RESET}")
+    
+    # 1. Base Dialogue Text
+    # For now, we'll synthesize text based on NPC status if no specific JSON node exists
+    dialogue_text = "How can I help you today?"
+    if "quest_giver" in npc.tags:
+        dialogue_text = "I have tasks that need doing, if you're brave enough."
+    elif "shopkeeper" in npc.tags:
+        dialogue_text = "Welcome to my shop! See anything you like?"
+        
+    # Check for Quest Giver specific text if applicable
+    if node_id == 'start' and hasattr(npc, 'quests') and npc.quests:
+        # Just use the first available quest text as a teaser for now
+        q_id = npc.quests[0]
+        quest = player.game.world.quests.get(q_id)
+        if quest:
+            dialogue_text = quest.giver_text
+            
+    player.send_line(f"\n {Colors.WHITE}{dialogue_text}{Colors.RESET}")
+    
+    # 2. Options
+    player.send_line(f"\n{Colors.CYAN}Possible responses:{Colors.RESET}")
+    options = []
+    
+    if "shopkeeper" in npc.tags:
+        options.append(("1", "List wares", "shop list"))
+    
+    if "quest_giver" in npc.tags:
+        options.append(("2", "Ask for work", "quest list"))
+        
+    options.append(("0", "Leave", "exit"))
+    
+    # Save options for the handler to interpret
+    data['options'] = options
+    
+    for key, label, _ in options:
+        player.send_line(f"  {Colors.BOLD}{key}{Colors.RESET}) {label}")
+    
+    player.prompt_requested = True
+
+def _handle_dialogue(player, command, data):
+    """Interprets input for the dialogue state."""
+    cmd = command.strip().lower()
+    
+    if cmd in ['exit', 'quit', 'bye', '0']:
+        player.send_line(f"You bid {data.get('target_name')} farewell.")
+        player.state = "normal"
+        player.interaction_data = {}
+        return
+
+    # Check numeric options
+    options = data.get('options', [])
+    for key, label, action in options:
+        if cmd == key or cmd == label.lower():
+            # Process Action
+            if action == 'exit':
+                player.state = "normal"
+                player.interaction_data = {}
+                return
+            
+            # Internal shortcut commands
+            from logic.handlers import input_handler
+            # Temporarily exit interaction state to run the command, then resume
+            player.state = "normal"
+            input_handler.handle(player, action)
+            player.state = "interaction"
+            
+            # Re-display dialogue (refreshed)
+            display_dialogue(player)
+            return
+            
+    player.send_line("I'm not sure what you mean. Choose a number from the list or type 'exit'.")

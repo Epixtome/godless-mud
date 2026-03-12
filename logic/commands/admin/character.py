@@ -21,7 +21,7 @@ def learn(player, args):
         player.send_line("Usage: @learn <blessing_id>")
         return
     
-    from logic import search
+    from logic.core import search
     candidates = search.find_matches(player.game.world.blessings.values(), args)
     
     if len(candidates) > 1:
@@ -156,7 +156,7 @@ def become_class(player, args):
         player.send_line("Usage: @become <class_id>")
         return
 
-    from logic import search
+    from logic.core import search
     candidates = search.find_matches(player.game.world.classes.values(), args)
     
     if len(candidates) > 1:

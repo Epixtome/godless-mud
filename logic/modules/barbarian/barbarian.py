@@ -35,17 +35,6 @@ def handle_whirlwind(player, skill, args, target=None):
     from logic.engines import blessings_engine
     power = blessings_engine.MathBridge.calculate_power(skill, player)
     
-    # Barbarian Momentum Bonus
-    barb_state = player.ext_state.get('barbarian', {})
-    momentum = barb_state.get('momentum', 0)
-    if momentum > 0:
-        # Scale damage by momentum and reset it
-        multiplier = 1.0 + (momentum * 0.20)
-        power = int(power * multiplier)
-        barb_state['momentum'] = 0
-        player.send_line(f"{Colors.YELLOW}You expend {momentum} Momentum to empower the whirlwind!{Colors.RESET}")
-        # Note: Brutalize/Extra attack logic is handled in on_combat_hit
-    
     from logic.actions.skill_utils import _apply_damage
     for t in targets:
         _apply_damage(player, t, power, "Whirlwind")

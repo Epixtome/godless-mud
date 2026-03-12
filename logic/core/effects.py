@@ -30,10 +30,12 @@ def apply_effect(target, effect_id, duration, verbose=True, log_event=True):
             active_def = get_effect_definition(active_id, game)
             if isinstance(active_def, dict):
                 meta = active_def.get('metadata', {})
-                if isinstance(meta, dict) and isinstance(meta.get('immune_to'), list) and effect_id in meta.get('immune_to', []):
-                    if hasattr(target, 'send_line'):
-                        target.send_line(f"{Colors.YELLOW}[!] You are immune to that effect!{Colors.RESET}")
-                    return
+                if isinstance(meta, dict):
+                    immune_list = meta.get('immune_to', [])
+                    if isinstance(immune_list, list) and effect_id in immune_list:
+                        if hasattr(target, 'send_line'):
+                            target.send_line(f"{Colors.YELLOW}[!] You are immune to that effect!{Colors.RESET}")
+                        return
 
     # Critical State Exclusivity
     if effect_id in CRITICAL_STATES:
@@ -73,6 +75,21 @@ def remove_effect(target, effect_id, verbose=True):
         return True
     return False
 
+def clear_state(target):
+    """Purges all status effects and reset states (Use for death/reset)."""
+    if not hasattr(target, 'status_effects'): return
+    
+    # Copy keys to avoid mutation during iteration
+    for eid in list(target.status_effects.keys()):
+        remove_effect(target, eid, verbose=False)
+        
+    if hasattr(target, 'status_effect_starts'):
+        target.status_effect_starts.clear()
+        
+    # [V5.1] Clear skill buffers
+    if hasattr(target, 'pending_skill'):
+        target.pending_skill = None
+
 def has_effect(target, effect_id):
     """Checks if target has a specific effect."""
     return effect_id in getattr(target, 'status_effects', {})
@@ -81,6 +98,7 @@ def process_effects(game):
     """Called by heartbeat to expire effects."""
     for entity in list(game.players.values()): _process_entity_effects(game, entity)
     for room in game.world.rooms.values():
+        _process_entity_effects(game, room) # Room-wide persistence effects
         for entity in list(room.monsters):
             if not getattr(entity, 'pending_death', False):
                 _process_entity_effects(game, entity)
@@ -144,9 +162,10 @@ def get_status_help(keyword, game):
         body = defn.get('description', "No info available.")
         extras = []
         if (blocks := defn.get('blocks', [])): extras.append(f"Blocks: {', '.join(blocks).title()}")
-        if (mods := defn.get('modifiers', {})):
-            ml = [f"{str(k).replace('_', ' ').title()}: {v}" for k, v in mods.items()]
-            extras.append(f"Modifiers: {', '.join(ml)}")
+        if (mods := defn.get('modifiers')):
+            if isinstance(mods, dict):
+                ml = [f"{str(k).replace('_', ' ').title()}: {v}" for k, v in mods.items()]
+                extras.append(f"Modifiers: {', '.join(ml)}")
         if extras: body += "\n\n" + "\n".join(extras)
         return {"keywords": [keyword, name.lower()], "title": f"Status: {name}", "body": body, "category": "status"}
     return None

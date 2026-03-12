@@ -21,7 +21,7 @@ def spawn(player, args):
         search_term = args.lower()
 
     # Search Logic
-    from logic import search
+    from logic.core import search
     m_candidates = search.find_matches(player.game.world.monsters.values(), search_term)
     i_candidates = search.find_matches(player.game.world.items.values(), search_term)
     
@@ -98,7 +98,7 @@ def force_fight(player, args):
     if not args: return player.send_line("Usage: @forcefight <mob1> <mob2>")
     parts = args.split()
     if len(parts) < 2: return player.send_line("Need two targets.")
-    from logic import search
+    from logic.core import search
     m1 = search.search_list(player.room.monsters, parts[0])
     m2 = search.search_list(player.room.monsters, parts[1])
     if m1 and m2 and m1 != m2:
@@ -111,7 +111,7 @@ def force_fight(player, args):
 def recruit_mob(player, args):
     """Force a mob to become your minion."""
     if not args: return player.send_line("Recruit what?")
-    from logic import search
+    from logic.core import search
     target = search.find_living(player.room, args)
     if target and isinstance(target, Monster):
         target.leader = player
@@ -131,7 +131,7 @@ def purge(player, args):
 def inspect(player, args):
     """Inspect entity attributes."""
     if not args: return player.send_line("Inspect what?")
-    from logic import search
+    from logic.core import search
     t = search.search_list(player.room.monsters, args) or search.search_list(player.room.items, args)
     if t:
         player.send_line(f"\n{Colors.BOLD}--- {t.name} ---{Colors.RESET}")
@@ -144,7 +144,7 @@ def inspect(player, args):
 def check_class_data(player, args):
     """Raw data dump of a class."""
     if not args: return player.send_line("Check what class?")
-    from logic import search
+    from logic.core import search
     fits = search.find_matches(player.game.world.classes.values(), args)
     if fits:
         import pprint

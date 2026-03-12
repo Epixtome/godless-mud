@@ -7,7 +7,7 @@ from logic.actions.registry import register
 from logic.core import event_engine, effects
 from logic.engines import blessings_engine, vision_engine
 from logic.common import find_by_index, _get_target
-from logic import search
+from logic.core import search
 from utilities.colors import Colors
 from utilities import mapper
 

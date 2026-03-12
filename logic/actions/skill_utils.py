@@ -62,7 +62,9 @@ def _apply_damage(attacker, target, damage, source_name, exploit_status=None):
         target.send_line(tgt_msg)
 
     # 3. Apply Damage via Resource Engine (Handles events, clamping, and take_damage facade)
-    # Moved AFTER messaging to ensure "You hit" appears before "is defeated"
+    from logic.core import event_engine
+    event_engine.dispatch("on_combat_hit", {'attacker': attacker, 'target': target, 'damage': raw_damage})
+    
     resources.modify_resource(target, "hp", -raw_damage, source=attacker if attacker else "Effect", context=source_name)
         
     # Trigger Combat State (Auto-retaliate / Aggro) - Only if target is still alive

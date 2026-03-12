@@ -37,7 +37,11 @@
     "identity_tags": [
       "martial",
       "light"
-    ]
+    ],
+    "passive_attributes": {
+        "max_stamina_bonus": 50,
+        "movement_delay_mult": 0.8
+    }
   },
   "monk": {
     "name": "Monk",
@@ -53,12 +57,15 @@
       "turtle_stance",
       "triple_kick",
       "iron_palm",
-      "dragon_strike",
-      "meditate"
+      "dragon_strike"
     ],
     "identity_tags": [
       "adventurer"
-    ]
+    ],
+    "passive_attributes": {
+        "regen_stamina_bonus": 2,
+        "evasion_bonus": 10
+    }
   },
   "mage": {
     "name": "Mage",

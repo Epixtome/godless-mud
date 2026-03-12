@@ -24,6 +24,19 @@
             "rewards": [
                 {"type": "gold", "amount": 75}
             ]
+        },
+        {
+            "id": "aetherial_peak_visit",
+            "name": "The Aetherial Peak",
+            "giver_text": "The Chronicler points towards the mountains. 'The air at the summit of the Peak is said to be thin enough to touch the stars. Go there, and bring back the memory of the view.'",
+            "log_text": "Visit the summit of the Aetherial Peak (63, 63, 5).",
+            "objectives": [
+                {"type": "visit", "id": "peak_summit", "coords": [63, 63, 5]}
+            ],
+            "rewards": [
+                {"type": "gold", "amount": 50},
+                {"type": "favor", "deity": "lumos", "amount": 100}
+            ]
         }
     ]
 }

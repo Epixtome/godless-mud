@@ -3,7 +3,7 @@ logic/commands/movement/mount_commands.py
 Logic for mounting and dismounting entities.
 """
 from logic.handlers import command_manager
-from logic import search
+from logic.core import search
 
 @command_manager.register("mount", category="movement")
 def mount(player, args):

@@ -94,7 +94,7 @@ def _instantiate_item(data):
     return Item.from_dict(data)
 
 def _instantiate_monster(data, world):
-    mob = Monster(data['name'], data['description'], data['hp'], data.get('damage', 1), data.get('tags'), data.get('max_hp'), prototype_id=data.get('prototype_id'), home_room_id=data.get('home_room_id'))
+    mob = Monster(data['name'], data['description'], data['hp'], data.get('damage', 1), data.get('tags'), data.get('max_hp'), prototype_id=data.get('prototype_id'), home_room_id=data.get('home_room_id'), game=getattr(world, 'game', None))
     # Re-apply prototype data if available
     if mob.prototype_id and mob.prototype_id in world.monsters:
         proto = world.monsters[mob.prototype_id]

@@ -199,7 +199,7 @@ def list_synergies(player, args):
             bonuses = [f"+{val} {stat.upper()}" for stat, val in syn.bonuses.items()]
             player.send_line(f" {Colors.CYAN}{syn.name:<20}{Colors.RESET} {', '.join(bonuses)}")
 
-@command_manager.register("effects", "afflictions", "aff", category="information")
+@command_manager.register("effects", "afflictions", "aff", "manifestations", category="information")
 def list_effects(player, args):
     """Detailed breakdown of active status effects and their durations."""
     if not player.status_effects:

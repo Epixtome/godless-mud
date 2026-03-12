@@ -98,8 +98,13 @@ def _handle_mob_death(game, mob, killer):
 
     # Create corpse (Preserves tags for sacrifice/favor logic)
     corpse = Corpse(f"corpse of {mob.name}", f"The dead body of {mob.name}.", mob.inventory, tags=getattr(mob, 'tags', []))
-    room.items.append(corpse)
-    room.dirty = True
+    if corpse:
+        room.items.append(corpse)
+        room.dirty = True
+        
+    # [V5.4] Apply Environmental Blood
+    from logic.core import effects
+    effects.apply_effect(room, "bloodspattered", 30) # Lasts 30 ticks (1 min)
     
     # Register Decay
     try:
@@ -108,8 +113,9 @@ def _handle_mob_death(game, mob, killer):
     except Exception as e:
         logger.error(f"Failed to register decay for {mob.name}: {e}")
     
-    if mob in room.monsters:
-        room.monsters.remove(mob)
+    # [V5.1] Use Spatial Facade for removal
+    from logic.engines import spatial_engine
+    spatial_engine.move_entity(mob, None, silent=True)
     
     # Modular Hook for death reactions (Quests, Beastmaster penalties, etc)
     from logic.core import event_engine
@@ -150,20 +156,30 @@ def _handle_player_death(game, player, killer):
     """Handles logic when a player dies."""
     room = player.room
     
-    # 1. Create Corpse with Gear
-    corpse_inv = player.inventory[:]
-    if player.equipped_armor:
-        corpse_inv.append(player.equipped_armor)
-        player.equipped_armor = None
-    if player.equipped_weapon:
-        corpse_inv.append(player.equipped_weapon)
-        player.equipped_weapon = None
+    # 1. Use Items Facade to strip and move items to corpse
+    from logic.core import items
     
-    player.inventory = [] # Strip player
-    
+    # Standardize slots to strip (could be expanded)
+    slots = ["equipped_armor", "equipped_weapon", "equipped_offhand", "equipped_head", "equipped_neck", "equipped_arms", "equipped_hands", "equipped_legs", "equipped_feet"]
+    for slot in slots:
+        it = getattr(player, slot, None)
+        if it:
+            items.unequip_item(player, it, silent=True)
+            
+    corpse_inv = player.inventory[:] # Snapshot of stripped inventory
     p_corpse = Corpse(f"corpse of {player.name}", f"The broken body of {player.name}.", corpse_inv)
+    
+    # Deep Transfer: Move items from player to corpse list to avoid shared references
+    for it in list(player.inventory):
+        items.transfer_item(it, player, p_corpse)
+        
     room.items.append(p_corpse)
     room.dirty = True
+    
+    # [V5.4] Apply Environmental Blood
+    from logic.core import effects
+    effects.apply_effect(room, "bloodspattered", 60) # Lasts 60 ticks (2 min)
+
     room.broadcast(f"{player.name} falls dead, dropping to the ground.", exclude_player=player)
     
     # Register Decay
@@ -171,11 +187,17 @@ def _handle_player_death(game, player, killer):
     systems.register_decay(game, p_corpse, room)
     
     # 2. Resurrect at start room
-    player.hp = player.max_hp
+    from logic.core import resources, effects, combat
+    
+    resources.modify_resource(player, "hp", player.max_hp, source="Resurrection", context="Death")
     player.is_resting = False
+    
+    # [V5.1] Use Facades for state and combat cleanup
+    effects.clear_state(player) # Clears blocks/effects
     player.state = "normal"
-    player.fighting = None
-    player.attackers = []
+    combat.stop_combat(player)
+    
+    player.pending_death = False
     
     # Determine Kingdom Respawn Point
     kingdom = player.identity_tags[0] if player.identity_tags else "neutral"
@@ -185,11 +207,9 @@ def _handle_player_death(game, player, killer):
     if not start_room:
         start_room = game.world.start_room or list(game.world.rooms.values())[0]
     
-    if player in room.players:
-        room.players.remove(player)
-    
-    player.room = start_room
-    start_room.players.append(player)
+    # [V5.1] Use Spatial Facade for movement
+    from logic.engines import spatial_engine
+    spatial_engine.move_entity(player, start_room, silent=True)
     
     player.send_line(f"\n{Colors.BOLD}{Colors.RED}You have died.{Colors.RESET}")
     player.send_line(f"{Colors.YELLOW}You wake up in {start_room.name}, naked and vulnerable.{Colors.RESET}")

@@ -7,14 +7,80 @@ from logic.constants import Tags
 
 logger = logging.getLogger("GodlessMUD")
 
+def _get_resource_value(player, key):
+    """Helper to traverse player state for resources (e.g. 'monk.flow_pips')."""
+    if not player or not key: return 0
+    parts = key.split('.')
+    if len(parts) == 2:
+        return player.ext_state.get(parts[0], {}).get(parts[1], 0)
+    return 0
+
+def _set_resource_value(player, key, value):
+    """Helper to set player state resources (e.g. resetting 'barbarian.momentum')."""
+    if not player or not key: return
+    parts = key.split('.')
+    if len(parts) == 2:
+        player.ext_state.setdefault(parts[0], {})[parts[1]] = value
+
+def process_potency_modifiers(blessing, player, target=None):
+    """
+    Evaluates complex scaling rules defined in JSON shards.
+    Pillar 6: Physics and Math should live in Data, not Logic.
+    """
+    mult = 1.0
+    flat = 0
+    rules = getattr(blessing, 'potency_rules', [])
+    if not isinstance(rules, list):
+        # Handle single rule dict
+        rules = [rules] if isinstance(rules, dict) else []
+
+    for rule in rules:
+        r_type = rule.get('type')
+        if r_type == 'pip_scaling' and player:
+            resource_key = rule.get('resource') 
+            pips = _get_resource_value(player, resource_key)
+            
+            tiers = rule.get('tiers', [])
+            matched_tier = None
+            for tier in tiers:
+                if pips <= tier.get('max', 999):
+                    matched_tier = tier
+                    break
+            
+            if matched_tier:
+                base = matched_tier.get('base', 1.0)
+                per = matched_tier.get('mult_per', 0)
+                offset = matched_tier.get('offset', 0)
+                mult *= (base + (pips - offset) * per)
+            
+            flat += pips * rule.get('flat_per', 0)
+
+            # [V5.3] Consumption Support (e.g. Barbarian Momentum expense)
+            if rule.get('consume'):
+                _set_resource_value(player, resource_key, 0)
+            
+        elif r_type == 'hp_inverse' and player:
+            # Desperation Scaling (Warlock)
+            hp_percent = player.hp / max(1, player.max_hp)
+            max_bonus = rule.get('max_bonus', 2.0)
+            mult *= (1.0 + (1.0 - hp_percent) * max_bonus)
+
+        elif r_type == 'status_mod' and player:
+            # Conditional multiplier based on status presence
+            status_id = rule.get('status_id')
+            if status_id and (effects.has_effect(player, status_id) or effects.has_effect(player, f"{status_id}_echo")):
+                mult *= rule.get('multiplier', 1.0)
+            
+    return mult, flat
+
 def calculate_power(blessing, player, target=None):
     """
     Calculates the final power output based on base_power and scaling tags.
-    Power = Base + (Voltage * Multiplier)
+    V5.1: Integrated Dynamic Potency Rules from JSON.
     """
     base = getattr(blessing, 'base_power', 0)
     
-    # Scaling Logic (Tag Synergy)
+    # [V1] Legacy Scaling Logic (Tag Synergy)
     scaling_bonus = 0
     scaling = getattr(blessing, 'scaling', [])
     if isinstance(scaling, dict): scaling = [scaling]
@@ -29,6 +95,23 @@ def calculate_power(blessing, player, target=None):
     
     total = base + scaling_bonus
     
+    # [V5.1] Dynamic Potency Rules (Current Action)
+    dyn_mult, dyn_flat = process_potency_modifiers(blessing, player, target)
+    
+    # [V5.2] Global Passives (Equipped Blessings of type 'passive')
+    if player and hasattr(player, 'game') and player.game:
+        # We look at equipped blessings to find passives with potency rules
+        for b_id in getattr(player, 'equipped_blessings', []):
+            if b_id == blessing.id: continue # Don't double-process if action itself is passive
+            
+            pass_blessing = player.game.world.blessings.get(b_id)
+            if pass_blessing and getattr(pass_blessing, 'logic_type', None) == 'passive':
+                p_mult, p_flat = process_potency_modifiers(pass_blessing, player, target)
+                dyn_mult *= p_mult
+                dyn_flat += p_flat
+
+    total = (total * dyn_mult) + dyn_flat
+
     # Dispatch Modifier Event (Decoupled Logic)
     ctx = {'attacker': player, 'blessing': blessing, 'target': target, 'multiplier': 1.0, 'bonus_flat': 0, 'power': total}
     event_engine.dispatch("calculate_damage_modifier", ctx)
@@ -50,9 +133,9 @@ def apply_on_hit(player, target, blessing):
                 target.room.broadcast(f"{Colors.YELLOW}{target.name} is knocked {status.replace('_', ' ').title()}!{Colors.RESET}", exclude_player=None)
 
     # Apply V2 Effects List (MVP)
-    effects = getattr(blessing, 'effects', [])
-    if effects:
-        for effect in effects:
+    effect_list = getattr(blessing, 'effects', [])
+    if effect_list:
+        for effect in effect_list:
             eff_id = effect.get('id')
             duration = effect.get('duration', 4)
             tgt_type = effect.get('target', 'enemy')

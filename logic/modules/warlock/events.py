@@ -39,11 +39,9 @@ def on_calculate_damage_modifier(ctx):
     if not attacker or getattr(attacker, 'active_class', None) != 'warlock':
         return
 
-    # Scaling: 1.0x at 100% HP, up to 3.0x at 1% HP.
-    hp_percent = attacker.hp / attacker.max_hp
-    if hp_percent < 1.0:
-        multiplier = 1.0 + (1.0 - hp_percent) * 2.0
-        ctx['multiplier'] = ctx.get('multiplier', 1.0) * multiplier
+    # Desperation and other potency rules are now handled by the 
+    # Blessings Engine's dynamic potency evaluator via JSON shards.
+    pass
 
     # Ignore Magic Shield (Passive)
     # The bypass is handled globally in mage.py on_take_damage

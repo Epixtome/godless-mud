@@ -162,6 +162,25 @@ def modify_resource(entity, resource, amount, source="System", context="Adjustme
     if log:
         telemetry.log_resource_delta(entity, resource, amount, source, context=context)
 
+def calculate_balance_regen(entity):
+    """Calculates balance (posture) regeneration per tick."""
+    max_bal = 100
+    if hasattr(entity, 'get_max_resource'):
+        max_bal = entity.get_max_resource('balance')
+        
+    regen = 10 # Base 10% per tick (2.0s)
+    
+    # Class-specific bonuses
+    if "meditating" in getattr(entity, 'status_effects', {}):
+        regen += 20
+        
+    # Penalty if hit recently (Friction)
+    if hasattr(entity, 'game') and hasattr(entity, 'last_hit_tick'):
+        if (entity.game.tick_count - entity.last_hit_tick) <= 2:
+            regen = int(regen * 0.5)
+
+    return regen, max_bal
+
 def calculate_conc_regen(player):
     """Calculates concentration regeneration per tick."""
     max_conc = player.get_max_resource(Tags.CONCENTRATION)
@@ -268,6 +287,17 @@ def process_tick(player):
         heat_decay, max_heat = calculate_heat_decay(player)
         modify_resource(player, Tags.HEAT, -heat_decay, source="Dissipation", context="Passive", log=False)
 
-    # 5. Vitals Snapshot (Every 10s / 5 ticks)
+    # 5. Balance Regeneration (Posture Protocol)
+    if 'balance' in player.resources and player.resources.get('balance', 0) < 100:
+        bal_regen, max_bal = calculate_balance_regen(player)
+        modify_resource(player, "balance", bal_regen, source="Regen", context="Passive", log=False)
+
+    # 6. Status/State Cleanup
+    # [V5.0] Auto-clear Panting if stamina recovered > 50%
+    if player.resources.get("stamina", 0) > (player.get_max_resource("stamina") * 0.5):
+        if "panting" in getattr(player, 'status_effects', {}):
+            effects.remove_effect(player, "panting", verbose=True)
+
+    # 7. Vitals Snapshot (Every 10s / 5 ticks)
     if player.game.tick_count % 5 == 0:
         telemetry.log_vitals(player)

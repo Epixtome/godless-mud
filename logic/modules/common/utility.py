@@ -2,7 +2,7 @@
 logic/modules/common/utility.py
 Shared helpers and utility skills for the Common Martial Domain.
 """
-from logic import search
+from logic.core import search
 from logic.engines import magic_engine
 from logic.actions.registry import register
 from logic.core import event_engine

@@ -7,6 +7,7 @@ from models import Room
 from logic.core.world import get_room_id
 import logic.commands.admin.construction.utils as construction_utils
 from logic.engines import spatial_engine
+from utilities.colors import Colors
 from logic.commands.info_commands import look
 
 @command_manager.register("@tp", "@teleport", admin=True)
@@ -64,5 +65,20 @@ def teleport(player, room_name):
         player.mark_room_visited(target_room.id)
         player.room.broadcast(f"{player.name} appears.")
         look(player, "")
-    else:
-        player.send_line(f"Destination '{room_name}' not found.")
+@command_manager.register("@testbed", admin=True)
+def testbed(player, args):
+    """Jump to the official Testing Grounds hub."""
+    target_id = "testing.0.0.0"
+    target_room = player.game.world.rooms.get(target_id)
+    
+    if not target_room:
+        player.send_line(f"{Colors.RED}Testing Grounds not found.{Colors.RESET} Please ensure data/zones/testing.json is loaded.")
+        return
+
+    if player in player.room.players: player.room.players.remove(player)
+    player.room.broadcast(f"{player.name} steps through a shimmering rift.")
+    player.room = target_room
+    player.room.players.append(player)
+    player.mark_room_visited(target_room.id)
+    player.room.broadcast(f"{player.name} arrives from a shimmering rift.")
+    look(player, "")

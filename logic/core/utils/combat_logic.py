@@ -139,11 +139,68 @@ def get_defense_rating(entity: Any) -> int:
     return 0
 
 def stop_combat(entity: Any) -> None:
-    """Safely ends combat for an entity."""
+    """Safely ends combat for an entity and its observers."""
     entity.fighting = None
-    entity.state = "normal"
+    if hasattr(entity, 'state') and entity.state == "combat":
+        entity.state = "normal"
+    
+    # 1. Clear my own attackers list
     if hasattr(entity, 'attackers'):
         entity.attackers = []
+        
+    # 2. Reciprocal Cleanup: Remove myself from other entities' focus
+    if hasattr(entity, 'room') and entity.room:
+        others = (entity.room.players + entity.room.monsters)
+        for other in others:
+            if other == entity: continue
+            
+            # Remove from their attackers list
+            if hasattr(other, 'attackers') and entity in other.attackers:
+                other.attackers.remove(entity)
+            
+            # If they are fighting me, they must find a new target or stop
+            if hasattr(other, 'fighting') and other.fighting == entity:
+                # We don't call stop_combat(other) to avoid recursion, 
+                # instead let handle_target_loss deal with it next tick or clear now.
+                other.fighting = None
+                if hasattr(other, 'state') and other.state == "combat":
+                    other.state = "normal"
+
+def start_combat(attacker: Any, target: Any) -> bool:
+    """
+    Unified Facade for initiating combat between two entities.
+    Ensures state transitions and reciprocal updates are handled.
+    """
+    if not attacker or not target:
+        return False
+        
+    if attacker == target:
+        return False
+        
+    # 1. Set Primary Targeting
+    if not attacker.fighting:
+        attacker.fighting = target
+        
+    if hasattr(attacker, 'state'):
+        attacker.state = "combat"
+        
+    # 2. Add to victim's attackers list
+    if hasattr(target, 'attackers'):
+        if attacker not in target.attackers:
+            target.attackers.append(attacker)
+            
+    # 3. Reciprocal Engagement (Only if not already fighting)
+    if not target.fighting:
+        # Check for Practice Dummy gate
+        tags = getattr(target, 'tags', [])
+        is_dummy = "training_dummy" in tags or ("target" in tags and "elite" not in tags and "tactical" not in tags)
+        
+        if not is_dummy:
+            target.fighting = attacker
+            if hasattr(target, 'state'):
+                target.state = "combat"
+                
+    return True
 
 def get_weight_class(entity: Any) -> str:
     """Determines the Weight Class (light, medium, heavy) based on tags and items."""
@@ -192,13 +249,23 @@ def get_stability_rating(entity: Any) -> int:
         total_stability = int(total_stability * kit_mult)
     
     # 3. Buffs/Effects
+    from logic.core import effects
+    game = getattr(entity, 'game', None)
+    
     for effect_id in getattr(entity, 'status_effects', {}):
-        # We look for 'stability_add' or use the old 'defense_add' legacy
-        effect_data = entity.game.world.status_effects.get(effect_id)
-        if effect_data:
+        # Use centralized definition getter (handles game=None via core map)
+        effect_data = effects.get_effect_definition(effect_id, game)
+        if isinstance(effect_data, dict):
             metadata = effect_data.get('metadata', {})
-            total_stability += metadata.get('stability_add', 0)
-            total_stability += metadata.get('defense_add', 0) # Legacy support
+            if isinstance(metadata, dict):
+                # Robust numeric extraction to handle varied metadata types (V4.5 Guard)
+                s_add = metadata.get('stability_add', 0)
+                if isinstance(s_add, (int, float)):
+                    total_stability += int(s_add)
+                    
+                d_add = metadata.get('defense_add', 0)
+                if isinstance(d_add, (int, float)):
+                    total_stability += int(d_add)
             
     return int(total_stability)
 
@@ -232,7 +299,7 @@ def check_posture_break(target: Any, damage: float, source: Any = None, tags: Op
         if hasattr(target, 'send_line'):
             target.send_line(f"{Colors.RED}*** YOUR POSTURE HAS BEEN BROKEN! ***{Colors.RESET}")
         if hasattr(source, 'send_line'):
-            source.send_line(f"{Colors.GREEN}*** You have broken {target.name}'s posture! ***{Colors.RESET}")
+            source.send_line(f"{Colors.BOLD}{Colors.RED}*** You have SHATTERED {target.name}'s posture! They collapse to the ground! ***{Colors.RESET}")
             
         from utilities import telemetry
         telemetry.log_posture_break(target)

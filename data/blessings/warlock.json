@@ -59,6 +59,10 @@
             "scaling": {
                 "scaling_tag": "dark",
                 "multiplier": 1.5
+            },
+            "potency_rules": {
+                "type": "hp_inverse",
+                "max_bonus": 2.0
             }
         },
         {
@@ -119,6 +123,10 @@
             "scaling": {
                 "scaling_tag": "dark",
                 "multiplier": 2.5
+            },
+            "potency_rules": {
+                "type": "hp_inverse",
+                "max_bonus": 3.0
             }
         }
     ]

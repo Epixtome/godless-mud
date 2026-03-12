@@ -9,26 +9,31 @@ from logic.core import event_engine
 logger = logging.getLogger("GodlessMUD")
 
 def on_room_combat_tick(ctx):
-    room = ctx.get('room')
+    room, game = ctx.get('room'), ctx.get('game')
     if not room or not getattr(room, 'players', None):
         return
 
     for mob in room.monsters:
         if mob.fighting: continue
         target = None
+        shout_key = None
         
+        # 1. Behavior: Gatekeeper (Reputation Based)
         if "gatekeeper" in mob.tags:
             for p in room.players:
                 if getattr(p, 'godmode', False): continue
                 if not vision_engine.can_see(mob, p): continue
                 if p.reputation < -10:
                     target = p
-                    room.broadcast(f"{Colors.BOLD}{Colors.YELLOW}{mob.name} shouts: 'Halt, criminal!'{Colors.RESET}")
+                    shout_key = "aggro"
                     break
+        
+        # 2. Behavior: Aggressive (Sight Based)
         elif "aggressive" in mob.tags:
             targets = [p for p in room.players if not getattr(p, 'godmode', False) and vision_engine.can_see(mob, p)]
             if targets:
                 target = random.choice(targets)
+                shout_key = "aggro"
             
         if target and target.hp > 0:
             mob.fighting = target
@@ -36,7 +41,15 @@ def on_room_combat_tick(ctx):
             target.state = "combat"
             if mob not in target.attackers:
                 target.attackers.append(mob)
-            room.broadcast(f"{Colors.RED}{mob.name} attacks {target.name}!{Colors.RESET}")
+            
+            # [V5.5] Dynamic Shouts from JSON
+            shouts = getattr(mob, 'shouts', {})
+            if shout_key and shouts.get(shout_key):
+                msg = random.choice(shouts[shout_key])
+                room.broadcast(f"{Colors.BOLD}{Colors.YELLOW}{mob.name} shouts: '{msg}'{Colors.RESET}")
+            else:
+                # Fallback
+                room.broadcast(f"{Colors.RED}{mob.name} attacks {target.name}!{Colors.RESET}")
 
 def on_combat_turn_start(ctx):
     combatant = ctx.get('entity')
@@ -54,7 +67,7 @@ def on_combat_turn_start(ctx):
                     leader_target.attackers.append(combatant)
                 target = leader_target
 
-    if target:
+    if target and target.hp > 0:
         if combatant not in target.attackers:
             target.attackers.append(combatant)
         if not target.fighting or target.fighting.hp <= 0:
@@ -62,35 +75,22 @@ def on_combat_turn_start(ctx):
             if hasattr(target, 'state') and target.state == "normal":
                 target.state = "combat"
 
+
 def get_mob_skill(mob, game):
-    if not isinstance(mob, Monster) or not getattr(mob, 'skills', []): return None
+    """
+    Determines which skill a mob should use.
+    Uses the Archetype Decision Engine for tactical evaluation.
+    """
+    if not isinstance(mob, Monster) or not getattr(mob, 'skills', []):
+        return None
 
-    if mob.active_class:
-        skill_id = None
-        if mob.active_class == 'knight':
-            if mob.hp < (mob.max_hp * 0.4) and "brace" in mob.skills:
-                skill_id = "brace"
-            elif "shield_bash" in mob.skills and random.random() < 0.3:
-                skill_id = "shield_bash"
-        elif mob.active_class == 'monk':
-            flow = mob.ext_state.get('monk', {}).get('flow_pips', 0)
-            if flow >= 10 and "dragon_strike" in mob.skills:
-                skill_id = "dragon_strike"
-            elif flow >= 5 and "iron_palm" in mob.skills and random.random() < 0.5:
-                skill_id = "iron_palm"
-            else:
-                strikes = [s for s in mob.skills if s in ["triple_kick", "kick", "palm_strike"]]
-                if strikes: skill_id = random.choice(strikes)
+    target = mob.fighting
+    if not target:
+        return None
 
-        if skill_id:
-            skill = game.world.blessings.get(skill_id)
-            if skill and _can_afford(mob, skill): return skill
-
-    if random.random() < 0.20:
-        skill_id = random.choice(mob.skills)
-        skill = game.world.blessings.get(skill_id)
-        if skill and _can_afford(mob, skill): return skill
-    return None
+    # Use the Tactical Decision Engine
+    from . import decision_engine
+    return decision_engine.evaluate_tactics(mob, target, game)
 
 def _can_afford(mob, skill):
     costs = Auditor.calculate_costs(skill, mob)

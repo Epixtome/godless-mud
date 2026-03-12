@@ -19,6 +19,14 @@ class Room:
         self.traversal_cost = 1 # Base cost
         self.symbol = None # ASCII override for mapping
         self.dirty = True
+
+        # Status Effects (Dynamic)
+        self.status_effects = {} # effect_id -> expiry_tick
+        self.status_effect_starts = {} # effect_id -> start_tick
+
+        # Environmental Metadata (Dynamic Persistence)
+        self.flags = [] # List of strings: ["dark", "peaceful", "unmapped"]
+        self.metadata = {} # Generic K/V: {"sign": "Beware the Grue", "blood_level": 5}
         
         # Loader internals (Linter Satisfied)
         self._active_items_data = []
@@ -157,10 +165,14 @@ class Room:
         return room
 
     def serialize_state(self):
-        """Returns the dynamic state of the room (items, monsters)."""
+        """Returns the dynamic state of the room (items, monsters, effects)."""
         return {
             "items": [item.to_dict() for item in self.items],
-            "monsters": [mob.to_dict() for mob in self.monsters]
+            "monsters": [mob.to_dict() for mob in self.monsters if not getattr(mob, 'temporary', False)],
+            "status_effects": self.status_effects,
+            "status_effect_starts": self.status_effect_starts,
+            "flags": self.flags,
+            "metadata": self.metadata
         }
 
     def broadcast(self, message, exclude_player=None):

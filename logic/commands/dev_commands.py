@@ -30,7 +30,7 @@ def do_class(player, args):
     search_term = args.split()[0].lower()
     
     # Fuzzy Search Kits
-    from logic import search
+    from logic.core import search
     # We need to adapt kits to a list of dicts or just search keys
     kit_list = [{"id": k, "name": k} for k in kits.keys()]
     candidates = search.find_matches(kit_list, search_term)

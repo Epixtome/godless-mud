@@ -5,6 +5,10 @@ Shards the registration to keep skill_commands.py under the 300-line limit.
 
 def register_all_modules():
     """Main entry point to register all modules."""
+    # 0. Core Systems
+    from logic.core import quests as quest_engine
+    quest_engine.register_events()
+
     _register_common_modules() # Common skills can be overridden by specialized classes
     _register_core_modules()
     _register_martial_modules()

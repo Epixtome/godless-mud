@@ -6,7 +6,8 @@ import random
 from logic.actions.registry import register
 from logic.core import event_engine
 from logic.engines import magic_engine, action_manager
-from logic import mob_manager, search
+from logic import mob_manager
+from logic.core import search
 from utilities.colors import Colors
 
 def _consume(player, skill):
@@ -33,9 +34,6 @@ def handle_arcane_blink(player, skill, args, target=None):
     
     from logic.handlers import input_handler
     input_handler.handle(player, "look")
-
-    _consume(player, skill)
-    return None, True
 
     _consume(player, skill)
     return None, True

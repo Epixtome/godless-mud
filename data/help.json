@@ -429,6 +429,18 @@
             "title": "Status: Dazed",
             "body": "When Dazed, your concentration is broken. You take 50% extra damage from all sources and cannot use complex skills or spells that require focus. It is often caused by crushing blunt impacts.",
             "category": "system"
+        },
+        {
+            "keywords": ["stance", "crane", "turtle", "monk"],
+            "title": "Monk Stances",
+            "body": "Monks utilize stances to adapt to the flow of battle. Stances are TOGGLED blessings.\n\nCrane Stance: Focuses on Wisdom and Defense. Increases evasion and magical soul-mitigation.\nTurtle Stance: Focuses on Stability. Grants immunity to being knocked Prone and reduces physical damage taken by 15%.\n\nOnly one stance can be active at a time. To activate a stance, use the command (e.g., 'turtle_stance'). Use it again to turn it off.",
+            "category": "classes"
+        },
+        {
+            "keywords": ["balance", "posture", "stability"],
+            "title": "Balance & Posture",
+            "body": "Every combatant has a 'Balance' resource (visible on some prompts or via scanning). Taking damage reduces Balance.\n\nWhen Balance hits 0, your Posture is BROKEN. You become [Off-Balance] and [Prone].\n\nOff-Balance: You take 1.5x damage and cannot use complex skills.\nProne: You are knocked to the ground and cannot move or attack until you 'stand'.",
+            "category": "system"
         }
     ]
 }

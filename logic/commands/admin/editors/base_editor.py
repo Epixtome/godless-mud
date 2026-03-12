@@ -3,7 +3,7 @@ logic/commands/admin/editors/base_editor.py
 Shared utilities and constants for the Editor suite.
 """
 from logic.common import find_by_index
-from logic import search
+from logic.core import search
 
 FIELD_HELP = {
     "name": "Set the item's name.\nUsage: name <new name>",

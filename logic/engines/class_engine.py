@@ -149,6 +149,10 @@ def apply_kit(player, archetype, kits=None):
     ResonanceAuditor.calculate_resonance(player, preferred_class=archetype)
     player.active_class = archetype
     
+    # [V5.9] State Isolation (GCA Standard)
+    if archetype not in player.ext_state:
+        player.ext_state[archetype] = {}
+    
     if hasattr(player, 'reset_resources'):
         player.reset_resources()
         

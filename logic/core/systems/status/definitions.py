@@ -18,7 +18,13 @@ CORE_STATUS_DEFINITIONS = {
     "prone": {
         "name": "Prone",
         "blocks": ["movement", "combat", "skills"],
-        "description": "Knocked to the ground. You must 'stand' to act.",
+        "description": "Knocked to the ground. You are critically exposed (1.5x damage) and must 'stand' before you can act again.",
+        "metadata": {"is_debuff": True}
+    },
+    "off_balance": {
+        "name": "Off-Balance",
+        "blocks": ["skills"],
+        "description": "Your posture is shattered. You are critically exposed (1.5x damage) and cannot use complex maneuvers or skills.",
         "metadata": {"is_debuff": True}
     },
     "panting": {
@@ -172,5 +178,21 @@ CORE_STATUS_DEFINITIONS = {
         "description": "Momentarily off-balance. You cannot use complex skills or maneuvers.",
         "blocks": ["skills"],
         "metadata": {"is_debuff": True}
+    },
+    # Environmental / Room Effects
+    "bloodspattered": {
+        "name": "Bloodspattered",
+        "description": "The floor is slick with fresh blood.",
+        "metadata": {"is_environmental": True, "movement_slip_chance": 0.05}
+    },
+    "blighted": {
+        "name": "Blighted",
+        "description": "The very air in this place feels toxic and necrotic.",
+        "metadata": {"is_environmental": True, "healing_reduction": 0.5}
+    },
+    "frozen_ground": {
+        "name": "Frozen Ground",
+        "description": "The ground is covered in a dangerous layer of magical ice.",
+        "metadata": {"is_environmental": True, "traversal_penalty": 2}
     }
 }

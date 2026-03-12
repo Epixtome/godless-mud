@@ -1,5 +1,5 @@
 import logic.handlers.command_manager as command_manager
-from logic import search
+from logic.core import search
 from logic.core import quest_engine
 from utilities.colors import Colors
 

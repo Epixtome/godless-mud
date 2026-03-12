@@ -1,7 +1,7 @@
 import logic.handlers.command_manager as command_manager
 from utilities.colors import Colors
 from logic.core.utils import display_utils
-from logic import search
+from logic.core import search
 
 @command_manager.register("who", category="information")
 def who(player, args):

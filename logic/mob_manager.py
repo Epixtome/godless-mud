@@ -27,12 +27,15 @@ def spawn_mob(room, mob_data, game):
                            proto.tags, proto.max_hp, prototype_id=mob_id, home_room_id=room.id, game=game)
         instance.quests = proto.quests
         instance.can_be_companion = proto.can_be_companion
+        instance.shouts = getattr(proto, 'shouts', {})
         instance.active_class = None # Initialize for Engine compatibility
         instance.skills = getattr(proto, 'skills', []) # Copy skills
         instance.resources = {
-            "concentration": instance.get_max_resource("concentration"),
+            "stamina": 100,
+            "concentration": 100,
             "heat": 0,
-            "chi": 0
+            "chi": 0,
+            "balance": 100
         }
         
         # Apply deltas

@@ -1,11 +1,7 @@
-import logic.handlers.command_manager as command_manager
-import logic.engines.magic_engine as magic_engine
-import logic.search as search
-from logic.engines.blessings_engine import Auditor
-import logic.handlers.state_manager as state_manager
 import logging
+from logic.core import effects, magic_engine, search, Auditor
 from logic.engines import action_manager
-from logic.core import effects
+from logic.handlers import command_manager, state_manager
 from utilities.colors import Colors
 
 def handle(player, command_line):
@@ -21,15 +17,18 @@ def handle(player, command_line):
     args = " ".join(parts[1:]) if len(parts) > 1 else ""
     player.last_action = cmd_name # Track action for Heat dissipation logic
 
+    # Admin commands (@) bypass state checks to prevent getting stuck in menus.
+    is_admin_cmd = cmd_name.startswith('@')
+
     # Global Interruption Check
     # If the player performs a non-info action, cancel their current delayed task.
     if hasattr(player, 'current_action') and player.current_action:
         allowed_channeling_cmds = ['look', 'l', 'score', 'sc', 'inv', 'i', 'eq', 'equipment', 'map', 'who', 'help']
-        if cmd_name not in allowed_channeling_cmds:
+        if cmd_name not in allowed_channeling_cmds and not is_admin_cmd:
             action_manager.interrupt(player)
 
     # Gatekeeper: Centralized Checks (Dead, Stunned, Sleeping, etc.)
-    if player.hp <= 0:
+    if player.hp <= 0 and not is_admin_cmd:
         player.send_line("You are dead and cannot do anything.")
         return True
 

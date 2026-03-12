@@ -49,19 +49,13 @@ def on_calculate_damage_modifier(ctx):
     flow_data = attacker.ext_state.get('monk', {})
     flow = flow_data.get('flow_pips', 0)
     
-    # [PASSIVE] Flow Mastery: Scaling damage bonus per pip
-    if "flow_mastery" in getattr(attacker, 'equipped_blessings', []):
-        # 10% per pip as per JSON description
-        flow_mult = 1.0 + (flow * 0.1)
-        ctx['multiplier'] = ctx.get('multiplier', 1.0) * flow_mult
+    # [PASSIVE] Flow Mastery and other potency rules are now
+    # handled automatically by the blessings engine via JSON shards.
+    pass
 
-    if blessing.id == "dragon_strike":
-        mult = 1.0 + (flow * 0.4) if flow <= 5 else 3.0 + (flow-5)*1.0 if flow <= 8 else 6.0 + (flow-8)*2.0
-        ctx['multiplier'] = ctx.get('multiplier', 1.0) * mult
-        ctx['bonus_flat'] = ctx.get('bonus_flat', 0) + (flow * 5) # Added flat scaling to ensure meaningful base damage
-
-    elif blessing.id == "triple_kick" and (effects.has_effect(attacker, "turtle_stance") or effects.has_effect(attacker, "turtle_echo")):
-        ctx['multiplier'] = ctx.get('multiplier', 1.0) * 1.5
+    # Other potency rules (Dragon Strike, Triple Kick) are now 
+    # handled by the blessings engine via JSON shards.
+    pass
 
 def on_skill_execute(ctx):
     player, skill = ctx.get('player'), ctx.get('skill')

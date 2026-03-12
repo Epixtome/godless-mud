@@ -53,6 +53,11 @@ def load_prototypes(world, data, blessing_data, class_data, kit_data, deity_data
         mob.triggers = m_data.get('triggers', [])
         mob.current_state = m_data.get('current_state', 'normal')
         mob.loadout = m_data.get('loadout', [])
+        mob.shouts = m_data.get('shouts', {})
+        mob.dialogue = m_data.get('dialogue', {})
+        mob.shop_inventory = m_data.get('shop_inventory', [])
+        if 'skills' in m_data:
+            mob.skills = m_data['skills']
 
     # 3. Blessings (Skills)
     for b_data in blessing_data:

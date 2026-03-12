@@ -1,27 +1,14 @@
 from logic.handlers import command_manager
-from logic import search
+from logic.core import search
 from logic.common import find_by_index
 from logic.engines.resonance_engine import ResonanceAuditor
 from models.items import Currency
 
-def _process_pickup(player, item, source=None):
-    """Handles the actual logic of adding an item to inventory or processing it."""
-    if isinstance(item, Currency):
-        player.gold += item.amount
-        player.send_line(f"You pick up {item.name}. ({item.amount} added to gold)")
-        return True
+from logic.core import items
 
-    if len(player.inventory) >= player.inventory_limit:
-        player.send_line("Your inventory is full.")
-        return False
-        
-    player.inventory.append(item)
-    if source:
-        player.send_line(f"You get {item.name} from {source.name}.")
-    else:
-        player.send_line(f"You pick up {item.name}.")
-    ResonanceAuditor.calculate_resonance(player)
-    return True
+def _process_pickup(player, item, source=None):
+    """Bridge to the Items Facade."""
+    return items.give_item(player, item, source_container=source)
 
 @command_manager.register("get", "take", category="item")
 def get_item(player, args):
@@ -136,11 +123,7 @@ def drop_item(player, args):
             return
             
         for item in list(player.inventory):
-            player.inventory.remove(item)
-            player.room.items.append(item)
-            player.send_line(f"You drop {item.name}.")
-        
-        player.room.broadcast(f"{player.name} drops everything.", exclude_player=player)
+            items.drop_item(player, item)
         return
         
     item = search.search_list(player.inventory, args)
@@ -148,10 +131,7 @@ def drop_item(player, args):
         player.send_line("You aren't carrying that.")
         return
         
-    player.inventory.remove(item)
-    player.room.items.append(item)
-    player.send_line(f"You drop {item.name}.")
-    player.room.broadcast(f"{player.name} drops {item.name}.", exclude_player=player)
+    items.drop_item(player, item)
 
 @command_manager.register("put", category="item")
 def put_item(player, args):
@@ -188,14 +168,10 @@ def put_item(player, args):
             return
             
         count = 0
-        # Iterate copy of list since we are modifying it
         for item in list(player.inventory):
-            # Don't put the container inside itself (if in inventory)
-            if item == container:
-                continue
-            player.inventory.remove(item)
-            container.inventory.append(item)
-            count += 1
+            if item == container: continue
+            if items.transfer_item(item, player, container):
+                count += 1
             
         player.send_line(f"You put {count} items into {container.name}.")
         player.room.broadcast(f"{player.name} puts several items into {container.name}.", exclude_player=player)
@@ -207,7 +183,6 @@ def put_item(player, args):
         player.send_line("You aren't carrying that.")
         return
 
-    player.inventory.remove(item)
-    container.inventory.append(item)
-    player.send_line(f"You put {item.name} into {container.name}.")
-    player.room.broadcast(f"{player.name} puts {item.name} into {container.name}.", exclude_player=player)
+    if items.transfer_item(item, player, container):
+        player.send_line(f"You put {item.name} into {container.name}.")
+        player.room.broadcast(f"{player.name} puts {item.name} into {container.name}.", exclude_player=player)

@@ -27,6 +27,14 @@ def load_live_state(world, inst_item, inst_monster):
                         if mob := inst_monster(m_data, world):
                             mob.room = room
                             room.monsters.append(mob)
+                    
+                    # Restore Status Effects (Dynamic)
+                    room.status_effects = r_state.get('status_effects', {})
+                    room.status_effect_starts = r_state.get('status_effect_starts', {})
+                    
+                    # Restore Environmental Metadata
+                    room.flags = r_state.get('flags', [])
+                    room.metadata = r_state.get('metadata', {})
             world.unique_registry = state_data.get('unique_registry', {})
         except Exception as e:
             logger.error(f"Failed to load live state for {zone_id}: {e}")
@@ -39,7 +47,8 @@ def save_world_db(world):
 def save_zone_state(world, zone_id):
     """Saves dynamic deltas for a specific zone."""
     rooms = {r.id: r.serialize_state() for r in world.rooms.values() if r.zone_id == zone_id}
-    rooms = {k: v for k, v in rooms.items() if v['items'] or v['monsters']}
+    # Save room if it has items, monsters, effects, flags, or custom metadata
+    rooms = {k: v for k, v in rooms.items() if v['items'] or v['monsters'] or v['status_effects'] or v['flags'] or v['metadata']}
     if rooms:
         state = {"zone_id": zone_id, "rooms": rooms, "unique_registry": getattr(world, 'unique_registry', {})}
         try:

@@ -1,6 +1,6 @@
 from logic.handlers import command_manager
 from utilities.colors import Colors
-from logic import search
+from logic.core import search
 from logic.core.utils import display_utils
 
 @command_manager.register("inventory", "inv", "i", category="information")
