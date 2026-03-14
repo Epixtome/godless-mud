@@ -11,7 +11,7 @@ def equip_item(player, args):
     if args.lower() == "all":
         equipped_count = 0
         for item in list(player.inventory):
-            if items.equip_item(player, item):
+            if items.equip_item(player, item, only_empty=True):
                 equipped_count += 1
         
         if equipped_count == 0:

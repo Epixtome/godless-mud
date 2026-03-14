@@ -1,16 +1,17 @@
 {
     "brace": {
         "id": "brace",
-        "name": "Brace",
-        "description": "Prepare for impact, increasing mitigation by 20%.",
-        "identity_tags": ["martial", "protection", "weight"],
+        "name": "Bulwark",
+        "description": "Brace for impact behind your shield for 4s. Deterministically blocks non-blunt strikes. Success grants [Riposte].",
+        "identity_tags": ["martial", "protection", "weight", "reaction"],
         "requirements": {
             "stamina": 15,
-            "class": "knight"
+            "class": "knight",
+            "shield": true
         },
         "effects": [
             {
-                "id": "braced",
+                "id": "ready_bulwark",
                 "duration": 4,
                 "target": "self"
             }

@@ -1,201 +1,119 @@
 {
     "blessings": {
-        "kick": {
-            "id": "kick",
-            "name": "Kick",
-            "tier": 1,
-            "cost": 15,
-            "base_power": 12,
-            "description": "A basic martial kick.",
-            "identity_tags": [
-                "monk",
-                "martial",
-                "strike"
-            ],
-            "action": "kick",
-            "requirements": {
-                "class": "monk",
-                "cooldown": 1
-            },
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 1.0
-            }
-        },
-        "crane_stance": {
-            "id": "crane_stance",
-            "name": "Crane Stance",
-            "tier": 2,
-            "cost": 30,
-            "description": "Enter the fluid Crane Stance. Increases Wisdom and Total Defense while focusing your mind. Toggles on/off. Mutually exclusive with Turtle Stance.",
-            "identity_tags": [
-                "monk",
-                "martial",
-                "stance",
-                "wisdom"
-            ],
-            "action": "crane_stance",
-            "requirements": {
-                "class": "monk"
-            },
-            "ai_priority_rules": [
-                { "trigger": "resource_below", "resource": "stamina", "value": 40, "bonus": 40 },
-                { "trigger": "is_not_toggled", "bonus": 10 }
-            ]
-        },
-        "turtle_stance": {
-            "id": "turtle_stance",
-            "name": "Turtle Stance",
-            "tier": 2,
-            "cost": 30,
-            "description": "Sink into the grounded Turtle Stance. Grants immunity to knockdowns and reduces all physical damage taken by 15%. Toggles on/off. Mutually exclusive with Crane Stance.",
-            "identity_tags": [
-                "monk",
-                "martial",
-                "stance",
-                "protection"
-            ],
-            "action": "turtle_stance",
-            "requirements": {
-                "class": "monk"
-            },
-            "ai_priority_rules": [
-                { "trigger": "hp_pct_below", "value": 40, "bonus": 50 },
-                { "trigger": "is_not_toggled", "bonus": 10 }
-            ]
-        },
         "triple_kick": {
             "id": "triple_kick",
             "name": "Triple Kick",
-            "tier": 2,
-            "cost": 40,
-            "base_power": 22,
-            "description": "Unleash a rapid succession of three kicks against a single target. Scales with Martial voltage.",
-            "identity_tags": [
-                "monk",
-                "martial",
-                "combo"
-            ],
+            "tier": 1,
+            "cost": 10,
+            "description": "Builder: Three rapid kicks. Each hit generates 1 Chi.",
+            "identity_tags": ["monk", "martial", "speed", "builder"],
             "action": "triple_kick",
             "requirements": {
                 "class": "monk",
-                "cooldown": 4
+                "stamina": 10,
+                "cooldown": 2
             },
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 1.5
-            },
-            "potency_rules": {
-                "type": "status_mod",
-                "status_id": "turtle_stance",
-                "multiplier": 1.5
-            }
-        },
-        "iron_palm": {
-            "id": "iron_palm",
-            "name": "Iron Palm",
-            "tier": 4,
-            "cost": 30,
-            "base_power": 25,
-            "description": "A powerful palm strike that can Daze targets. Deals heavy blunt damage.",
-            "identity_tags": [
-                "monk",
-                "martial",
-                "strike",
-                "blunt"
-            ],
-            "action": "iron_palm",
-            "requirements": {
-                "class": "monk",
-                "cooldown": 5
-            },
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 1.5
-            }
-        },
-        "dragon_strike": {
-            "id": "dragon_strike",
-            "name": "Dragon Strike",
-            "tier": 5,
-            "cost": 60,
-            "base_power": 45,
-            "description": "A finishing move that consumes all Flow for massive damage.",
-            "identity_tags": [
-                "monk",
-                "finisher",
-                "martial",
-                "strike"
-            ],
-            "action": "dragon_strike",
-            "requirements": {
-                "class": "monk",
-                "cooldown": 8
-            },
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 2.5
-            },
-            "potency_rules": [
-                {
-                    "type": "pip_scaling",
-                    "resource": "monk.flow_pips",
-                    "tiers": [
-                        {"max": 5, "mult_per": 0.4, "base": 1.0},
-                        {"max": 8, "mult_per": 1.0, "base": 3.0, "offset": 5},
-                        {"max": 10, "mult_per": 2.0, "base": 6.0, "offset": 8}
-                    ],
-                    "flat_per": 5
-                }
-            ],
-            "ai_priority_rules": [
-                { "trigger": "resource_above", "resource": "monk.flow_pips", "value": 8, "bonus": 70 },
-                { "trigger": "resource_below", "resource": "monk.flow_pips", "value": 4, "bonus": -100 }
-            ]
-        },
-        "palm_strike": {
-            "id": "palm_strike",
-            "name": "Palm Strike",
-            "tier": 2,
-            "cost": 10,
-            "base_power": 12,
-            "description": "Rapid strike that stuns for 1 tick.",
-            "identity_tags": [
-                "monk",
-                "martial",
-                "strike"
-            ],
-            "action": "palm_strike",
-            "requirements": {
-                "class": "monk",
-                "cooldown": 1
-            },
+            "base_power": 6,
             "scaling": {
                 "scaling_tag": "martial",
                 "multiplier": 0.8
             }
         },
-        "flow_mastery": {
-            "id": "flow_mastery",
-            "name": "Flow Mastery",
-            "tier": 3,
-            "cost": 0,
-            "description": "Passive: Each hit in the last 10s increases your total damage by 10%. Scales with Flow Pips.",
-            "identity_tags": [
-                "monk",
-                "passive",
-                "flow"
-            ],
-            "logic_type": "passive",
+        "snap_kick": {
+            "id": "snap_kick",
+            "name": "Snap Kick",
+            "tier": 2,
+            "cost": 15,
+            "description": "Utility: A lightning-fast kick that interrupts the target's current action.",
+            "identity_tags": ["monk", "martial", "utility", "interrupt"],
+            "action": "snap_kick",
             "requirements": {
-                "class": "monk"
+                "class": "monk",
+                "stamina": 15,
+                "cooldown": 4
             },
-            "potency_rules": {
-                "type": "pip_scaling",
-                "resource": "monk.flow_pips",
-                "tiers": [
-                    {"max": 10, "mult_per": 0.1, "base": 1.0}
-                ]
+            "base_power": 12,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.0
+            }
+        },
+        "seven_fists": {
+            "id": "seven_fists",
+            "name": "Seven Fists",
+            "tier": 3,
+            "cost": 20,
+            "description": "Reaction: Enter a defensive parry for 3s. You cannot auto-attack, but you counter every hit taken with a room-wide strike.",
+            "identity_tags": ["monk", "martial", "reaction", "counter"],
+            "action": "seven_fists",
+            "requirements": {
+                "class": "monk",
+                "stamina": 20,
+                "cooldown": 10
+            },
+            "base_power": 10,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.0
+            }
+        },
+        "dragon_strike": {
+            "id": "dragon_strike",
+            "name": "Dragon Strike",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Consumes all Chi to deal devastating damage. Damage scales massively with Chi spent.",
+            "identity_tags": ["monk", "martial", "lethal", "payoff"],
+            "action": "dragon_strike",
+            "requirements": {
+                "class": "monk",
+                "chi": 1,
+                "cooldown": 6
+            },
+            "base_power": 25,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 2.0
+            }
+        },
+        "flow_stance": {
+            "id": "flow_stance",
+            "name": "Flow Stance",
+            "tier": 2,
+            "cost": 10,
+            "description": "Agile Stance: +15% Evasion and +10 Stamina Regen. Focuses on speed and fluidity.",
+            "identity_tags": ["monk", "martial", "stance"],
+            "action": "flow_stance",
+            "requirements": {
+                "class": "monk",
+                "cooldown": 1
+            }
+        },
+        "iron_stance": {
+            "id": "iron_stance",
+            "name": "Iron Stance",
+            "tier": 2,
+            "cost": 10,
+            "description": "Heavy Stance: +15% Damage and +10% Mitigation, but -10% Evasion. Focuses on crushing impact.",
+            "identity_tags": ["monk", "martial", "stance"],
+            "action": "iron_stance",
+            "requirements": {
+                "class": "monk",
+                "cooldown": 1
+            }
+        },
+        "centering": {
+            "id": "centering",
+            "name": "Centering",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Consumes 2 Chi to restore 20% HP and 50 Balance.",
+            "identity_tags": ["monk", "focus", "utility"],
+            "action": "centering",
+            "requirements": {
+                "class": "monk",
+                "chi": 2,
+                "cooldown": 6
             }
         }
     }

@@ -43,11 +43,21 @@ def resolve_attack_tags(attacker: Any, blessing: Any = None) -> set:
 
 def get_attack_verb(damage_percent: float) -> str:
     """Determines the verb used in combat messages based on damage severity."""
+    if damage_percent >= 0.75:
+        return "ERADICATE"
     if damage_percent >= 0.50:
-        return "OBLITERATE"
-    elif damage_percent >= 0.20:
+        return "ANNIHILATE"
+    if damage_percent >= 0.40:
+        return "obliterate"
+    if damage_percent >= 0.30:
+        return "massacre"
+    if damage_percent >= 0.20:
         return "decimate"
-    return "strike"
+    if damage_percent >= 0.10:
+        return "maim"
+    if damage_percent >= 0.05:
+        return "strike"
+    return "scratch"
 
 def estimate_player_damage(player: 'Player') -> int:
     """Estimates average damage for the consider command."""
@@ -138,6 +148,22 @@ def get_defense_rating(entity: Any) -> int:
         return entity.get_defense()
     return 0
 
+def calculate_accuracy(entity: Any) -> int:
+    """[V6.0] Calculates total accuracy rating (Base 100)."""
+    accuracy = 100
+    
+    game = getattr(entity, 'game', None)
+    for effect_id in getattr(entity, 'status_effects', {}):
+        effect_data = effects.get_effect_definition(effect_id, game)
+        if isinstance(effect_data, dict):
+            metadata = effect_data.get('metadata', {})
+            if isinstance(metadata, dict):
+                penalty = metadata.get('accuracy_penalty', 0)
+                if isinstance(penalty, (int, float)):
+                    accuracy -= int(penalty)
+    
+    return max(0, accuracy)
+
 def stop_combat(entity: Any) -> None:
     """Safely ends combat for an entity and its observers."""
     entity.fighting = None
@@ -203,25 +229,24 @@ def start_combat(attacker: Any, target: Any) -> bool:
     return True
 
 def get_weight_class(entity: Any) -> str:
-    """Determines the Weight Class (light, medium, heavy) based on tags and items."""
-    # Check manual overrides or kit-based defaults
-    if hasattr(entity, 'active_kit') and isinstance(entity.active_kit, dict):
-        forced = entity.active_kit.get('weight_class')
-        if forced: return forced
+    """[V6.0] Determines Weight Class based on physical LBS (Total Weight)."""
+    if not getattr(entity, 'is_player', False):
+        # Monsters still use identity tags for classification
+        tags = getattr(entity, 'tags', [])
+        if "heavy" in tags: return "heavy"
+        if "medium" in tags: return "medium"
+        return "light"
 
-    # Check Equipped Armor
-    armor = getattr(entity, 'equipped_armor', None)
-    if armor:
-        tags = getattr(armor, 'gear_tags', [])
-        if "heavy_gear" in tags: return "heavy"
-        if "medium_gear" in tags: return "medium"
+    from logic.core.utils import player_logic
+    from logic import calibration
     
-    # Check Monster Tags (Identity tags handle classification)
-    tags = getattr(entity, 'tags', [])
-    if "heavy" in tags: return "heavy"
-    if "medium" in tags: return "medium"
+    total_lbs = player_logic.calculate_total_weight(entity, only_equipped=True)
     
-    return "light"
+    if total_lbs <= calibration.ScalingRules.WEIGHT_LIGHT_MAX:
+        return "light"
+    if total_lbs <= calibration.ScalingRules.WEIGHT_MEDIUM_MAX:
+        return "medium"
+    return "heavy"
 
 def get_mitigation_multiplier(entity: Any) -> float:
     """Returns the damage mitigation percentage (0.0 to 1.0) based on weight class."""

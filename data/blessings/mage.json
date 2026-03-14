@@ -45,20 +45,29 @@
             }
         },
         {
-            "id": "magic_shield",
-            "name": "Magic Shield",
+            "id": "phase_shift",
+            "name": "Phase Shift",
             "tier": 2,
-            "cost": 30,
-            "description": "Protects the caster from physical damage.",
+            "cost": 25,
+            "description": "Reaction: Briefly shift into the ethereal plane (2s). Negates physical hits, but arcane/magic strikes will anchor and damage you.",
             "identity_tags": [
                 "magic",
                 "arcane",
-                "buff"
+                "reaction"
             ],
-            "action": "magic_shield",
+            "action": "phase_shift",
             "requirements": {
-                "class": "mage"
-            }
+                "class": "mage",
+                "concentration": 20,
+                "cooldown": 6
+            },
+            "effects": [
+                {
+                    "id": "phase_shifted",
+                    "duration": 2,
+                    "target": "self"
+                }
+            ]
         },
         {
             "id": "arcane_surge",

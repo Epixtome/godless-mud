@@ -1,6 +1,6 @@
 # GEMINI.md: AI Engineering & Development Guide for Godless
 
-> **Status:** ACTIVE PROTOCOL (V4.5)  
+> **Status:** ACTIVE PROTOCOL (V5.3 - Updated from Monk Overhaul)  
 > **Target Audience:** Gemini, GCA, Antigravity, and any Agentic AI working on this codebase.  
 > **Mandatory Rule:** All structural, logic, and data changes MUST conform to this document. "Quick fixes" or "Scripting-style" code that violates these patterns will be rejected and refactored.
 
@@ -10,11 +10,13 @@
 These are absolute constraints. Deviating from these pillars introduces technical debt and circular dependencies.
 
 1.  **The "Clean Border" Protocol**: No self-healing logic or `isinstance()` checks inside logic modules. Assume data is 100% valid once it reaches the game logic. Validation happens at the entry point (Persistence or Input Handlers).
-2.  **The "Facade" Import Standard**: Never reach deep into sub-directories. Use `from logic.core import event_engine` instead of the full path. All core systems are exported via `logic/core/__init__.py`. Use Relative Imports (`from . import ...`) for files within the same module.
+2.  **The "Modular Initialization" Protocol**: Core engine MUST only initialize modules relevant to the player's `active_class` plus `common`. Never permit "Omni-init" (loading all 50+ classes per player).
+3.  **The "Facade" Import Standard**: Never reach deep into sub-directories. Use `from logic.core import event_engine` instead of the full path. All core systems are exported via `logic/core/__init__.py`. Use Relative Imports (`from . import ...`) for files within the same module.
 3.  **The "Event-Driven" Decoupling**: Core engines MUST be class-agnostic. Use the `event_engine` to hook class-specific behaviors. **Never** use `if player.class == 'monk'` inside a core engine. Core display systems (Messaging/Prompts) follow this same pattern.
 4.  **The "Surgical" Edit Rule**: Do not rewrite files over 150 lines. Use windowed editing and granular function overrides. Perform a "Pre-and-Post Integrity Audit" (list functions before/after) to ensure no silent deletions.
 5.  **The "No-Band-Aid" Policy**: Fix the root cause (logic, path, or schema). Never use `try...except` to mask an `AttributeError` or data mismatch.
 6.  **The "Anemic Model" Delegation**: Domain models (`Player`, `Monster`) must not contain active business logic. They are passive data containers that delegate to core facades (e.g., `combat.apply_damage`) or services within `logic/core/`.
+7.  **The "Naming Ghost" Protocol**: Maintain absolute naming consistency. Do not use variations like `DGREY` vs `dGREY`. Standardize on **UPPER_CASE** for constants and utilities.
 
 ---
 
@@ -38,7 +40,10 @@ The GCA is the universal blueprint for all 50+ classes. New classes (Illusionist
 Class-specific variables **must not** be added to the base `Player`.
 - **Standard**: All class data lives in `player.ext_state['class_name']`.
 - **Initialization**: Provide an `initialize_[class](player)` function inside `state.py`.
-- **Logic-Data Wall**: Python handles the *process*; Data (JSON) handles the *potency* (numbers/scaling).
+- **Logic-Data Wall (V5.3)**: Python handles *Event Process/Side Effects*; JSON handles *Potency (Math/Scaling)*. 
+    - **No Math in Listeners**: All scaling factors must be defined in JSON `potency_rules`.
+    - **Evaluator Gateway**: All damage calculations must pass through `logic.engines.blessings.math_bridge.calculate_power()`.
+- **Unified Resource Management (URM)**: Use the `logic/core/resource_registry.py` for class resources (Chi, Fury, Entropy). Never modify `ext_state` directly outside of initialization; use `resources.modify_resource(player, name, delta)`.
 
 ### B. Event Hooks (`events.py`)
 Class logic is injected into the global loop via `event_engine` subscriptions.

@@ -10,17 +10,16 @@
             "slot": "main_hand",
             "hands": 1,
             "stats": {
-                "damage_dice": "1d6"
-            },
-            "scaling": {
-                "tag": "insight",
-                "mult": 1.2
+                "damage_dice": "1d6",
+                "scaling_tag": "insight",
+                "scaling_mult": 1.2
             },
             "tags": [
                 "magic",
                 "light",
                 "illusion"
-            ]
+            ],
+            "weight_class": "light"
         },
         {
             "id": "refractive_cloak",
@@ -36,7 +35,8 @@
                 "illusion",
                 "evasion",
                 "light_gear"
-            ]
+            ],
+            "weight_class": "light"
         }
     ]
 }

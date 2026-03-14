@@ -1,18 +1,18 @@
 """
 logic/modules/monk/utils.py
-Helper functions and constants for the Monk class.
+Helper functions and constants for the Monk Kinetic Engine.
 """
 import logic.common as common
 from logic.engines import magic_engine
 
-FLOW_MAX = 10
+CHI_MAX = 5
 
-def consume_flow(player, amount):
-    """Consumes flow from the player's ext_state."""
+def consume_chi(player, amount):
+    """Consumes chi from the player's ext_state."""
     monk_data = player.ext_state.setdefault('monk', {})
-    current = monk_data.get('flow_pips', 0)
+    current = monk_data.get('chi', 0)
     if current >= amount:
-        monk_data['flow_pips'] = current - amount
+        monk_data['chi'] = current - amount
         return True
     return False
 

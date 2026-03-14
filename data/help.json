@@ -369,77 +369,78 @@
         },
         {
             "keywords": [
-                "barbarian",
-                "fury"
-            ],
-            "title": "Class: Barbarian",
-            "body": "The Barbarian is a relentless engine of destruction. Unlike other classes that rely on Mana or Chi, the Barbarian generates 'Momentum' through aggressive combat. Their abilities consume Momentum to unleash devastating AOE strikes like Whirlwind. High Momentum also provides passive extra attacks (3 pips = 1 extra hit, 5 pips = 2 extra hits).",
-            "category": "classes"
-        },
-        {
-            "keywords": [
-                "momentum"
-            ],
-            "title": "Mechanic: Momentum",
-            "body": "Momentum is the core resource of the Barbarian. It is generated automatically during combat as you land hits (Max 5). It decays after 6 seconds of inactivity. High Momentum empowers Whirlwind and grants passive multi-attacks.",
-            "category": "system"
-        },
-        {
-            "keywords": [
                 "warlock",
-                "blood",
-                "dark"
+                "entropy"
             ],
             "title": "Class: Warlock",
-            "body": "The Warlock is a master of dark arts and occult sacrifice. Unlike other casters who rely on pure concentration, Warlocks often fuel their most powerful spells with their own vitality (Max HP). They excel at weakening foes with curses and sustaining themselves through life-draining rituals.",
+            "body": "The Warlock is a master of dark arts and occult sacrifice. Unlike other casters who rely on pure concentration, Warlocks fuel their spells with ENTROPY. They excel at weakening foes with curses and sustaining themselves through metamorphosis.",
             "category": "classes"
         },
         {
             "keywords": [
                 "illusionist",
                 "echo",
-                "echoes",
-                "negation"
+                "echoes"
             ],
             "title": "Class: Illusionist",
-            "body": "The Illusionist manipulates reality to deceive and disorient. Their primary mechanic is 'Echoes'—manifestations of their image that can be shattered to negate incoming damage. By managing echos and using spells like Blur, they become incredibly difficult for enemies to hit.",
+            "body": "The Illusionist manipulates reality to deceive and disorient. Their primary mechanic is 'Echoes'—manifestations that can be shattered to negate incoming damage or used to confuse enemies during escape.",
             "category": "classes"
         },
         {
             "keywords": [
-                "echo",
-                "echoes"
+                "barbarian",
+                "brute"
             ],
-            "title": "Mechanic: Echoes",
-            "body": "Echoes are unique to the Illusionist. They represent multiple copies of the caster in the room. When an Illusionist takes damage, an Echo may 'shatter' in their place, negating the hit entirely. Maintaining multiple echoes is key to survival.",
-            "category": "system"
-        },
-        {
-            "keywords": [
-                "recall"
-            ],
-            "title": "Command: Recall",
-            "body": "Teleports you back to your Kingdom's capital or the starting crossroads. This command cannot be used while in combat. It is the safest way to return to civilization after a long excursion.",
-            "category": "system"
-        },
-        {
-            "keywords": [
-                "dazed"
-            ],
-            "title": "Status: Dazed",
-            "body": "When Dazed, your concentration is broken. You take 50% extra damage from all sources and cannot use complex skills or spells that require focus. It is often caused by crushing blunt impacts.",
-            "category": "system"
+            "title": "Class: Barbarian",
+            "body": "The Barbarian is a giant of primal power, fueled by MOMENTUM and FURY. They excel at sustained combat and high-damage finishers like Whirlwind and Execute.",
+            "category": "classes"
         },
         {
             "keywords": ["stance", "crane", "turtle", "monk"],
             "title": "Monk Stances",
-            "body": "Monks utilize stances to adapt to the flow of battle. Stances are TOGGLED blessings.\n\nCrane Stance: Focuses on Wisdom and Defense. Increases evasion and magical soul-mitigation.\nTurtle Stance: Focuses on Stability. Grants immunity to being knocked Prone and reduces physical damage taken by 15%.\n\nOnly one stance can be active at a time. To activate a stance, use the command (e.g., 'turtle_stance'). Use it again to turn it off.",
+            "body": "Monks utilize stances to adapt to the flow of battle. Stances are TOGGLED blessings.\n\nCrane Stance: Focuses on Wisdom and Defense.\nTurtle Stance: Focuses on Stability. Grants immunity to being knocked Prone.\n\nOnly one stance can be active at a time.",
             "category": "classes"
         },
         {
             "keywords": ["balance", "posture", "stability"],
             "title": "Balance & Posture",
-            "body": "Every combatant has a 'Balance' resource (visible on some prompts or via scanning). Taking damage reduces Balance.\n\nWhen Balance hits 0, your Posture is BROKEN. You become [Off-Balance] and [Prone].\n\nOff-Balance: You take 1.5x damage and cannot use complex skills.\nProne: You are knocked to the ground and cannot move or attack until you 'stand'.",
+            "body": "Every combatant has a 'Balance' resource. Taking damage reduces Balance.\n\nWhen Balance hits 0, your Posture is BROKEN, causing you to be Off-Balance and Prone.",
+            "category": "system"
+        },
+        {
+            "keywords": ["fury", "rage", "raging"],
+            "title": "Fury (Resource)",
+            "body": "Fury is the primal resource of the Barbarian. It is generated by dealing and taking damage in combat.\n\n[Mechanics]\n- Generation: 1 Fury per hit taken (minimum), plus bonus Fury per 2 damage received.\n- Usage: Reaching 100 Fury allows the use of 'BLOODRAGE'.\n- Bloodrage: Grants immunity to CC (Stun, Slow, etc.) and 20% Damage Mitigation for a short duration.",
+            "category": "resources"
+        },
+        {
+            "keywords": ["momentum"],
+            "title": "Momentum (Resource)",
+            "body": "Momentum represents forward combat energy. It is gained through successful weapon strikes.\n\n[Mechanics]\n- Generation: +1 per successful hit.\n- Max: 5.\n- Passive: +1 Extra Attack at 3 Momentum, +2 Extra Attacks at 5 Momentum.\n- Decay: Decays quickly if you stop attacking.",
+            "category": "resources"
+        },
+        {
+            "keywords": ["blind", "blinded", "dirt kick"],
+            "title": "Status: Blinded",
+            "body": "While blinded, your accuracy is severely reduced, causing most of your physical and ranged attacks to fail.\n\n[Mechanics]\n- Accuracy: 90% chance to miss on auto-attacks and targeted skills.\n- Removal: Automatically wears off after its duration, or can be cleansed by light magic.",
+            "category": "system"
+        },
+        {
+            "keywords": ["bash", "stunning"],
+            "title": "Skill: Bash",
+            "body": "A fundamental martial opener used to disable a target before they can react.\n\n[Mechanics]\n- Effect: Applies [Stunned] for 3 seconds.\n- Posture: Deals significant Balance damage.\n- Requirement: Barbarian class (Note: Unlike 'Shield Bash', this does not require a shield).",
+            "category": "system"
+        },
+        {
+            "keywords": ["shield bash"],
+            "title": "Skill: Shield Bash",
+            "body": "A tactical maneuver used to shatter an opponent's guard.\n\n[Mechanics]\n- Effect: Applies [Off-Balance] for 4 seconds.\n- Posture: Increases the likelihood of a posture break.\n- Requirement: Knight class AND an equipped Shield (Buckler, Targe, etc.).",
+            "category": "system"
+        },
+        {
+            "keywords": ["whirlwind", "momentum"],
+            "title": "Skill: Whirlwind",
+            "body": "A devastating area-of-effect finisher for the Barbarian.\n\n[Mechanics]\n- Effect: Deals massive physical damage to all enemies in the room.\n- Scaling: Damage is multiplied by (1.0 + 0.25 per Momentum).\n- Consumption: Consumes ALL Momentum upon use.\n- Requirement: Barbarian class.",
             "category": "system"
         }
     ]

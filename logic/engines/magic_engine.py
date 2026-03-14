@@ -14,20 +14,33 @@ logger = logging.getLogger("GodlessMUD")
 def check_cooldown(player, blessing, game=None):
     """Checks if the blessing is on cooldown."""
     game_ref = game if game else getattr(player, 'game', None)
-    if hasattr(player, 'cooldowns') and blessing.id in player.cooldowns:
-        current_tick = game_ref.tick_count if game_ref else 0
+    if not hasattr(player, 'cooldowns'):
+        return True, "OK"
+    
+    current_tick = game_ref.tick_count if game_ref else 0
+
+    # 1. Global Cooldown Check
+    if 'gcd' in player.cooldowns:
+        remaining_gcd = player.cooldowns['gcd'] - current_tick
+        if remaining_gcd > 0:
+            # Note: Auditor.check_requirements allows acting with Double Stamina during GCD.
+            # This check here acts as the strict final gate for automated actions.
+            pass # We let Auditor handle GCD logic for flexibility, but update set_cooldown to be reliable.
+
+    # 2. Skill Specific Check
+    if blessing.id in player.cooldowns:
         remaining = player.cooldowns[blessing.id] - current_tick
         if remaining > 0:
             return False, f"{blessing.name} is on cooldown for {remaining}s."
+            
     return True, "OK"
 
 def set_cooldown(player, blessing, game=None):
     """Sets the cooldown for a blessing."""
-    # Cooldown in JSON is in ticks (2s per tick) or seconds? 
-    # Let's assume JSON 'cooldown' is in TICKS for game balance.
     game_ref = game if game else getattr(player, 'game', None)
     if not hasattr(player, 'cooldowns'):
         player.cooldowns = {}
+    
     cd_ticks = blessing.requirements.get('cooldown', 0)
     if cd_ticks == 0:
         cd_ticks = getattr(blessing, 'cooldown', 0)
@@ -37,12 +50,14 @@ def set_cooldown(player, blessing, game=None):
     event_engine.dispatch("magic_calculate_cooldown", ctx)
     final_ticks = max(0, int(ctx['cooldown']))
     
+    # Set Skill Specific Cooldown
     if final_ticks > 0 and game_ref:
         target_tick = game_ref.tick_count + final_ticks
         current_tick = player.cooldowns.get(blessing.id, 0)
         player.cooldowns[blessing.id] = max(current_tick, target_tick)
         
-        # Set Global Cooldown (1 Tick = 2.0s)
+    # [V5.6] Enforce Global Cooldown (1 Tick = 2.0s) ALWAYS
+    if game_ref:
         gcd_target = game_ref.tick_count + 1
         player.cooldowns['gcd'] = max(player.cooldowns.get('gcd', 0), gcd_target)
 
@@ -98,24 +113,27 @@ def consume_resources(player, blessing):
     consume_charges(player, blessing)
 
     # Calculate Dynamic Costs
-    from logic.engines.blessings_engine import Auditor
+    from logic.engines.blessings.auditor import Auditor
     costs = Auditor.calculate_costs(blessing, player, verbose=True)
     reqs = blessing.requirements
 
-    # Trigger Synergy Hooks (Red Mage Charge Generation)
-    synergy_engine.on_blessing_cast(player, blessing)
-
-    # Trigger Class Mechanics (Red Mage Charge Consumption/Penalty)
-    from logic.engines import blessings_engine
-    blessings_engine.process_red_mage_mechanics(player, blessing)
-    
     # Prepare Cost Context
     ctx = {
         'player': player,
         'skill': blessing,
-        'costs': costs
+        'costs': {} 
     }
+    
+    # [V6.0] Hybrid Cost/CD Harvesting
+    costs = Auditor.calculate_costs(blessing, player, ctx=ctx)
+    ctx['costs'] = costs
 
+    # Trigger Synergy Hooks (Red Mage Charge Generation)
+    synergy_engine.on_blessing_cast(player, blessing)
+
+    # Trigger Class Mechanics (Decoupled via Events)
+    event_engine.dispatch("magic_on_blessing_cast", ctx)
+    
     # EVENT: Calculate Cost
     event_engine.dispatch("magic_calculate_cost", ctx)
     final_costs = ctx['costs']
@@ -135,17 +153,11 @@ def consume_resources(player, blessing):
             context=f"Stamina:{final_costs.get('stamina',0)} Conc:{final_costs.get('concentration',0)}"
         )
 
-    if final_costs.get('chi', 0) > 0:
-        player.resources['chi'] = max(0, player.resources.get('chi', 0) - final_costs['chi'])
-
-    # Stamina Consumption (V2 Unified)
-    stamina_cost = final_costs.get('stamina', 0)
-    if stamina_cost > 0:
-        from logic.core import resources
-        resources.modify_resource(player, 'stamina', -stamina_cost, source=blessing.name, context="Consumed")
-
-    # Stability and Heat are deprecated and unified into Stamina.
-    # The old consumption blocks are now removed.
+    # [V6.0] Unified Resource Consumption via Centralized logic
+    from logic.core import resources
+    for res_name, cost_val in final_costs.items():
+        if cost_val > 0 and res_name not in [Tags.CONCENTRATION]:
+            resources.modify_resource(player, res_name, -cost_val, source=blessing.name, context="Consumed")
 
     # Concentration Consumption & Negative Dip
     conc_cost = final_costs.get('concentration', 0)

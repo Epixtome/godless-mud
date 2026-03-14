@@ -182,6 +182,58 @@
             "blocks": [
                 "stamina_regen"
             ]
+        },
+        {
+            "id": "haste",
+            "name": "Haste",
+            "description": "Your movements are supernaturally fast. Increases attack frequency and evasion.",
+            "type": "buff",
+            "metadata": {
+                "extra_attacks": 1,
+                "evasion_bonus": 15
+            }
+        },
+        {
+            "id": "blind",
+            "name": "Blinded",
+            "description": "Your vision is obscured by a brilliant spray of shifting colors. Accuracy reduced.",
+            "type": "debuff",
+            "metadata": {
+                "accuracy_penalty": 20
+            }
+        },
+        {
+            "id": "echo_shield",
+            "name": "Echo Shield",
+            "description": "Surrounded by illusory doubles that can absorb physical impact.",
+            "type": "buff"
+        },
+        {
+            "id": "blur",
+            "name": "Blur",
+            "description": "Your form is shimmering and difficult to target.",
+            "type": "buff",
+            "modifiers": {
+                "defense_add": 2
+            }
+        },
+        {
+            "id": "hexed",
+            "name": "Hexed",
+            "description": "Marked by entropic energy. Defense reduced.",
+            "type": "debuff",
+            "modifiers": {
+                "defense_add": -5
+            }
+        },
+        {
+            "id": "metamorphosis",
+            "name": "Metamorphosis",
+            "description": "Transformed into a demonic entity. Strength and dark resonance increased.",
+            "type": "buff",
+            "modifiers": {
+                "str_mult": 1.3
+            }
         }
     ]
 }

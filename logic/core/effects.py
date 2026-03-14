@@ -53,6 +53,9 @@ def apply_effect(target, effect_id, duration, verbose=True, log_event=True):
     
     if hasattr(target, "mark_tags_dirty"): target.mark_tags_dirty()
     if log_event: telemetry.log_status_change(target, effect_id, "applied", duration)
+    
+    # [V5.1] Immediate Feedback Hook
+    event_engine.dispatch("on_status_applied", {"entity": target, "effect_id": effect_id, "duration": duration})
 
 def remove_effect(target, effect_id, verbose=True):
     """Removes a status effect."""
@@ -140,6 +143,13 @@ def get_effect_definition(effect_id, game):
                     return data
             except: pass
     return None
+
+def get_effect_metadata(effect_id, game=None):
+    """Retrieves the metadata dictionary for a specific effect."""
+    defn = get_effect_definition(effect_id, game)
+    if defn and isinstance(defn, dict):
+        return defn.get('metadata', {})
+    return {}
 
 def is_action_blocked(player, cmd_name):
     """Standardized action blocking via logic shard."""

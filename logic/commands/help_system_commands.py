@@ -104,11 +104,12 @@ def help_command(player, args):
             player.send_line(f"{desc}")
             return
 
-    # Check Help Entries (Exact Keyword)
-    for entry in player.game.world.help:
-        if search_term in [k.lower() for k in entry.keywords]:
-            _display_help_entry(player, entry)
-            return
+    # Check Help Entries (Lazy Loaded)
+    from logic.core.help_manager import help_system
+    entry = help_system.get_entry(search_term)
+    if entry:
+        _display_help_entry(player, entry)
+        return
 
     # Check Blessings & Status Effects (Exact Name/ID)
     blessing_match = None
@@ -136,14 +137,9 @@ def help_command(player, args):
     matches = []
 
     # Search Help Entries
-    for entry in player.game.world.help:
-        if search_term in entry.title.lower():
-            matches.append((f"Help: {entry.title}", entry, 'help'))
-            continue
-        for k in entry.keywords:
-            if search_term in k.lower():
-                matches.append((f"Help: {entry.title}", entry, 'help'))
-                break
+    help_matches = help_system.find_fuzzy_matches(search_term)
+    for entry in help_matches:
+        matches.append((f"Help: {entry.get('title')}", entry, 'help'))
     
     # Search Commands
     for cmd in command_manager.COMMANDS:
@@ -156,6 +152,9 @@ def help_command(player, args):
     # Search Blessings
     for b in player.game.world.blessings.values():
         if search_term in b.name.lower():
+            # Skip hidden Awakening/Identity blessings from help search
+            if "class_init" in getattr(b, 'identity_tags', []):
+                continue
             matches.append((f"Blessing: {b.name}", b, 'blessing'))
 
     # Search Deities

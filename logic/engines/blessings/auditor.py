@@ -10,73 +10,44 @@ from .pacing import check_pacing, on_status_removed
 
 logger = logging.getLogger("GodlessMUD")
 
-KIT_RESOURCE_CONVERSIONS = {
-    'physical_focus': ['knight', 'squire', 'paladin'], # Converts Conc -> Stamina
-    'mental_focus': ['mage', 'wizard', 'sorcerer', 'red_mage'], # Converts Stamina -> Conc
-    'free_focus': ['wanderer'] # No Concentration cost
-}
-
 class Auditor:
     """Handles validation of requirements and identity."""
 
     @staticmethod
-    def calculate_costs(blessing, player=None, verbose=False):
+    def calculate_costs(blessing, player=None, verbose=False, ctx=None):
         """
-        Extracts resource costs directly from the blessing's JSON requirements.
+        [V6.0] Extracts resource costs directly from data.
+        Pillar: Systems should be agnostic to the 'Name' of the resource.
         """
-        reqs = blessing.requirements
-        tags = getattr(blessing, 'identity_tags', [])
+        reqs = getattr(blessing, 'requirements', {})
         
-        # Base Costs
-        stamina = reqs.get('stamina', 0)
-        conc = reqs.get('concentration', 0)
-        chi = reqs.get('chi', 0)
+        # 1. Harvest all numeric requirements as costs
+        costs = {}
+        for key, val in reqs.items():
+            if isinstance(val, (int, float)) and key not in ["class", "cooldown", "count", "tier", "terrain", "mount", "shield"]:
+                costs[key] = val
         
-        # V4.5 Hybrid: Check top-level 'cost' as fallback
-        if stamina == 0 and conc == 0:
-            top_cost = getattr(blessing, 'cost', 0)
-            if top_cost > 0:
-                if any(t in tags for t in ["magic", "spell", "arcane", "elemental"]):
-                    conc = top_cost
-                else:
-                    stamina = top_cost
-
-        # Default Stamina Cost (Physical exertion for non-spells)
-        if stamina == 0 and conc == 0 and "passive" not in tags:
-            if "movement" in tags:
-                stamina = 3
-            elif not any(t in tags for t in ["magic", "spell", "arcane", "elemental"]):
-                stamina = 10
-            
-        # V2 Resource Unification: Map legacy costs to Stamina (Heat)
-        if reqs.get('heat', 0) > 0: stamina += reqs.get('heat', 0)
-        if reqs.get('stability', 0) > 0: stamina += reqs.get('stability', 0)
-            
-        costs = {
-            "stability": 0, # Deprecated
-            Tags.CONCENTRATION: conc,
-            "stamina": stamina,
-            Tags.CHI: chi
-        }
+        # 2. Dynamic Rule Evaluation (Passives)
+        if player and hasattr(player, 'equipped_blessings'):
+            for b_id in player.equipped_blessings:
+                pass_blessing = player.game.world.blessings.get(b_id) if hasattr(player, 'game') else None
+                if pass_blessing and getattr(pass_blessing, 'logic_type', None) == 'passive':
+                    rules = getattr(pass_blessing, 'potency_rules', [])
+                    for rule in rules:
+                        if rule.get('type') == 'cost_mod':
+                            status_id = rule.get('status_id')
+                            if not status_id or effects.has_effect(player, status_id):
+                                target_res = rule.get('resource', 'stamina')
+                                if target_res in costs:
+                                    costs[target_res] = int(costs[target_res] * rule.get('multiplier', 1.0))
+                        
+                        elif rule.get('type') == 'cooldown_mod' and ctx is not None and 'cooldown' in ctx:
+                             status_id = rule.get('status_id')
+                             if not status_id or effects.has_effect(player, status_id):
+                                 ctx['cooldown'] *= rule.get('multiplier', 1.0)
         
-        if player and hasattr(player, 'active_kit'):
-            kit_name = player.active_kit.get('name', '').lower()
-            
-            if kit_name in KIT_RESOURCE_CONVERSIONS['free_focus']:
-                costs[Tags.CONCENTRATION] = 0
-                
-            elif kit_name in KIT_RESOURCE_CONVERSIONS['physical_focus']:
-                # Convert all mental cost to physical exertion
-                costs["stamina"] += costs[Tags.CONCENTRATION]
-                costs[Tags.CONCENTRATION] = 0
-                
-            elif kit_name in KIT_RESOURCE_CONVERSIONS['mental_focus']:
-                # Convert all physical cost to mental focus
-                costs[Tags.CONCENTRATION] += costs["stamina"]
-                costs["stamina"] = 0
-
-        # [V5.0] Weight Class Stamina Penalties
-        if player:
+        # 3. Weight Class Stamina Penalties (Physical Law)
+        if player and "stamina" in costs:
             from logic.core.utils import combat_logic
             w_class = combat_logic.get_weight_class(player)
             if w_class == "heavy":
@@ -84,49 +55,42 @@ class Auditor:
             elif w_class == "medium":
                 costs["stamina"] = int(costs["stamina"] * calibration.CombatBalance.STAMINA_PENALTY_MEDIUM)
 
-        # Allow class passives to modify costs
+        # Legacy Hook
         if player and blessing:
-            ctx = {'player': player, 'blessing': blessing, 'costs': costs}
-            event_engine.dispatch("on_calculate_skill_cost", ctx)
+            event_ctx = {'player': player, 'blessing': blessing, 'costs': costs}
+            event_engine.dispatch("on_calculate_skill_cost", event_ctx)
         
         return costs
 
     @staticmethod
     def check_requirements(blessing, player, command=None, args=None):
         """Checks if player meets stat, item, and resource requirements."""
-        # Check Flow Bypass Availability (Data-Driven)
         has_flow_bypass = False
         bypass_cost = blessing.metadata.get('flow_bypass_cost', 0) if hasattr(blessing, 'metadata') else 0
         if bypass_cost > 0 and player.ext_state.get('monk', {}).get('flow_pips', 0) >= bypass_cost:
             has_flow_bypass = True
 
-        # 0. Hard Gate: Stalled (Physical Lockout)
         if "stalled" in getattr(player, 'status_effects', {}) and not has_flow_bypass:
-            # If a command was passed, queue it instead of failing.
             if command:
                 if not hasattr(player, 'command_queue'):
                     player.command_queue = []
-                # To prevent spam, only queue one command.
                 if not player.command_queue:
                     player.command_queue.append(command)
                     player.send_line(f"{Colors.YELLOW}You are stalled. Your action has been queued.{Colors.RESET}")
                 return False, "Command Queued"
-            return False, f"{Colors.RED}You are too exhausted to act!{Colors.RESET}"
+            return False, f"{Colors.YELLOW}[!] You are momentarily off-balance and cannot use skills.{Colors.RESET}"
             
-        # Class Gate (Strict Class-Based System)
         req_class = blessing.requirements.get('class')
         if req_class:
             if not hasattr(player, 'active_class') or player.active_class != req_class:
                 return False, f"You must be a {req_class.title()} to use this."
 
-        # Dynamic Cost Check (Calculated early for Shattered Mind logic)
-        costs = Auditor.calculate_costs(blessing, player)
+        ctx = {'player': player, 'blessing': blessing, 'command': command}
+        costs = Auditor.calculate_costs(blessing, player, ctx=ctx)
+        ctx['costs'] = costs
 
-        # Event Hook for Logic Overrides (e.g. Monk Flow-Kick)
-        ctx = {'player': player, 'blessing': blessing, 'costs': costs, 'command': command}
         event_engine.dispatch("on_check_requirements", ctx)
 
-        # --- Pacing / Stalled Logic ---
         weight = 1.0
         pool = 'combat'
         tags = getattr(blessing, 'identity_tags', [])
@@ -135,43 +99,35 @@ class Auditor:
             pool = 'travel'
         
         can_pace, reason_pace = check_pacing(player, weight=weight, limit=5.0, pool=pool)
-        if not can_pace:
-            return False, reason_pace
+        if not can_pace: return False, reason_pace
 
-        # Terrain Check
         req_terrain = blessing.requirements.get('terrain')
         if req_terrain:
-            if isinstance(req_terrain, str):
-                req_terrain = [req_terrain]
-            
+            if isinstance(req_terrain, str): req_terrain = [req_terrain]
             if player.room.terrain not in req_terrain:
                 return False, f"Requires terrain: {', '.join(req_terrain)}"
 
-        # State Check (Generalized for all classes)
         req_stance = blessing.requirements.get('stance')
         if req_stance:
             active_class = getattr(player, 'active_class', None)
             if active_class:
-                # GCA Protocol: Class data lives in ext_state[class_name]
                 p_stance = player.ext_state.get(active_class, {}).get('stance')
                 if p_stance != req_stance:
                     return False, f"You must be in {req_stance.replace('_', ' ').title()} stance."
             else:
                 return False, "This maneuver requires a combat stance."
             
-        # [V4.5 Robustness] Boolean requirements should use truthy checks 
-        # to account for variations in JSON encoders (True vs 1).
-        if blessing.requirements.get('mount') and not getattr(player, 'is_mounted', False):
+        req_mount = blessing.requirements.get('mount')
+        if req_mount and not getattr(player, 'is_mounted', False):
             return False, "You must be mounted to use this maneuver."
 
-        # Weight Class Gate (MVP)
         req_weight = blessing.requirements.get('max_weight_class')
         if req_weight == 'light' and getattr(player, 'is_heavy', False):
-            return False, "You are too heavy to perform this maneuver!"
+            if player.get_global_tag_count("juggernaut") == 0:
+                return False, "You are too heavy to perform this maneuver!"
 
-        # Arbitrary Status Requirements (e.g. "concealed": True)
         for req_key, req_val in blessing.requirements.items():
-            if req_key in ["stamina", "concentration", "chi", "stability", "class", "terrain", "stance", "mount", "shield", "equipped_weapon_type", "max_weight_class", "martial", "arcane", "divine", "nature", "instinct", "song"]:
+            if req_key in ["stamina", "concentration", "chi", "stability", "class", "terrain", "stance", "mount", "shield", "equipped_weapon_type", "max_weight_class", "cooldown"]:
                 continue
             
             if req_val is True:
@@ -179,68 +135,48 @@ class Auditor:
                     return False, f"Requires status: {req_key.replace('_', ' ').title()}"
             elif req_val is False:
                 if req_key in getattr(player, 'status_effects', {}):
-                    return False, f"Cannot have status: {req_key.replace('_', ' ').title()}"
+                    return False, f"Cannot use while: {req_key.replace('_', ' ').title()}"
+            
+            elif isinstance(req_val, (int, float)):
+                curr_val = 0
+                if player.active_class and req_key in player.ext_state.get(player.active_class, {}):
+                    curr_val = player.ext_state[player.active_class].get(req_key, 0)
+                elif req_key in player.resources:
+                    curr_val = player.resources[req_key]
+                
+                if curr_val < req_val:
+                    return False, f"Not enough {req_key.title()} ({curr_val}/{req_val})"
 
-        # Equipment Check
         req_shield = blessing.requirements.get('shield')
         if req_shield:
             has_shield = False
-            # Check Body Armor (Legacy/Simple)
-            if player.equipped_armor and ("shield" in player.equipped_armor.name.lower() or "buckler" in player.equipped_armor.name.lower()):
+            if player.equipped_armor and any(s in player.equipped_armor.name.lower() for s in ["shield", "buckler", "pavise", "targe"]):
                 has_shield = True
-            # Check Offhand Slot (Standard)
-            if player.equipped_offhand and ("shield" in player.equipped_offhand.name.lower() or "buckler" in player.equipped_offhand.name.lower()):
+            if player.equipped_offhand and any(s in player.equipped_offhand.name.lower() for s in ["shield", "buckler", "pavise", "targe"]):
                 has_shield = True
-            
             if not has_shield:
-                return False, "You must have a shield equipped."
+                return False, f"You must have a shield equipped to use {blessing.name}."
                 
         req_weapon_type = blessing.requirements.get('equipped_weapon_type')
         if req_weapon_type:
             if not player.equipped_weapon or req_weapon_type not in player.equipped_weapon.name.lower():
-                return False, f"Requires a {req_weapon_type} to be equipped."
+                return False, f"Requires a {req_weapon_type} to be equipped to use {blessing.name}."
 
-        # Stability check removed (Legacy)
+        if costs:
+            for res_name, res_cost in costs.items():
+                curr_val = player.resources.get(res_name, 0)
+                if curr_val < res_cost:
+                    return False, f"Not enough {res_name.title()}."
 
-        if costs[Tags.CONCENTRATION] > 0:
-            # Mage Overcast Logic (Arcane Breakthrough)
-            if getattr(player, 'breakthroughs', {}).get('arcane'):
-                pass
-            elif player.resources.get(Tags.CONCENTRATION, 0) < costs[Tags.CONCENTRATION]:
-                return False, "You lack the Concentration!"
-
-        # Strategic Balance: Double Stamina Cost if on GCD (Over-exertion)
-        if hasattr(player, 'cooldowns') and 'gcd' in player.cooldowns:
-            game = getattr(player, 'game', None)
-            current_tick = game.tick_count if game else 0
-            # Don't double if Flow Bypass is active
-            is_flow_bypass = (bypass_cost > 0 and player.ext_state.get('monk', {}).get('flow_pips', 0) >= bypass_cost)
-            
-            if player.cooldowns['gcd'] > current_tick and not is_flow_bypass:
-                costs["stamina"] *= 2
-
-        if costs["stamina"] > 0:
-            current_stamina = player.resources.get("stamina", 0)
-            if current_stamina < costs["stamina"]:
-                return False, "Not enough Stamina."
-
-        if costs[Tags.CHI] > 0:
-            if player.resources.get(Tags.CHI, 0) < costs[Tags.CHI]:
-                return False, "Not enough Chi."
-
-        # Mandatory Cooldown Check (Tactical Friction)
         if hasattr(player, 'cooldowns') and blessing.id in player.cooldowns:
             game = getattr(player, 'game', None)
             current_tick = game.tick_count if game else 0
             if player.cooldowns[blessing.id] > current_tick:
                 remaining = player.cooldowns[blessing.id] - current_tick
-                
-                # Flow Synergy: Burn Momentum to bypass
                 if has_flow_bypass:
                     player.ext_state['monk']['flow_pips'] -= bypass_cost
                     player.send_line(f"{Colors.MAGENTA}[FLOW] You burn momentum to bypass the delay!{Colors.RESET}")
                     player.cooldowns[blessing.id] = 0
-                # Buttery Buffer: If < 0.5s (0.25 ticks), queue it
                 elif remaining <= 0.25 and args is not None:
                     player.pending_skill = {'skill': blessing, 'args': args}
                     player.send_line(f"{Colors.YELLOW}[!] You're off-balance, but preparing to strike...{Colors.RESET}")
@@ -248,7 +184,6 @@ class Auditor:
                 else:
                     return False, f"{Colors.YELLOW}[!] You are still recovering your focus for that maneuver.{Colors.RESET}"
 
-        # Global Cooldown Check (GCD)
         if hasattr(player, 'cooldowns') and 'gcd' in player.cooldowns:
             game = getattr(player, 'game', None)
             current_tick = game.tick_count if game else 0
@@ -265,36 +200,25 @@ class Auditor:
 
     @staticmethod
     def check_identity(blessing, player):
-        """Checks if blessing is in the player's active kit."""
         if not hasattr(player, 'active_kit') or not player.active_kit:
             return False, "You do not have an active kit."
-        
         if blessing.id in player.active_kit.get('blessings', []):
             return True, "OK"
-        
         return False, "Blessing not in active kit."
 
     @staticmethod
     def can_invoke(blessing, player, command=None):
-        """Runs all checks."""
-        # Lazy import to prevent circular dependency with magic_engine
         from logic.engines import magic_engine
-
         valid_id, reason_id = Auditor.check_identity(blessing, player)
         if not valid_id: return False, reason_id
-
         valid_req, reason_req = Auditor.check_requirements(blessing, player, command=command)
         if not valid_req: return False, reason_req
-
         valid_cd, reason_cd = magic_engine.check_cooldown(player, blessing)
         if not valid_cd: return False, reason_cd
-
         valid_chg, reason_chg = magic_engine.check_charges(player, blessing)
         if not valid_chg: return False, reason_chg
-
         valid_item, reason_item = magic_engine.check_items(player, blessing)
         if not valid_item: return False, reason_item
-
         return True, "OK"
 
 event_engine.subscribe("on_status_removed", on_status_removed)

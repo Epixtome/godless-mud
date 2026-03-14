@@ -17,6 +17,7 @@ def register_all():
     event_engine.subscribe("calculate_base_damage", offensive.apply_assassin_opening)
     event_engine.subscribe("on_combat_hit", offensive.apply_mark_damage)
     event_engine.subscribe("on_combat_hit", offensive.apply_warrior_damage)
+    event_engine.subscribe("calculate_extra_attacks", offensive.apply_haste_extra_attacks)
     event_engine.subscribe("combat_turn_end", offensive.combat_turn_extra_attacks)
     event_engine.subscribe("calculate_damage_modifier", offensive.dragoon_jump_mastery)
     event_engine.subscribe("combat_after_damage", offensive.apply_retribution_damage)
@@ -34,12 +35,11 @@ def register_all():
     # Resource
     event_engine.subscribe("combat_after_damage", resource.apply_berserker_momentum)
     event_engine.subscribe("combat_turn_start", resource.combat_turn_momentum)
-    event_engine.subscribe("combat_after_damage", resource.monk_stance_on_hit)
-    event_engine.subscribe("combat_turn_start", resource.monk_stance_regen)
     event_engine.subscribe("on_calculate_skill_cost", resource.black_mage_cost)
     event_engine.subscribe("on_calculate_skill_cost", resource.red_mage_momentum)
     event_engine.subscribe("combat_after_damage", resource.red_mage_melee_concentration)
     event_engine.subscribe("on_calculate_skill_cost", resource.apply_mana_reduction)
+    event_engine.subscribe("on_status_removed", resource.handle_posture_recovery)
 
     # --- Systems ---
     from logic.factories.mob_loot_system import on_mob_spawned

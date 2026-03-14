@@ -58,35 +58,43 @@ class Item(BaseItem):
         return self.name
 
 class Armor(BaseItem):
-    def __init__(self, name, description, defense, stability=None, weight_class="light", value=10, flags=None, prototype_id=None, timer=None, tags=None, properties=None):
+    def __init__(self, name, description, defense=0, stability=None, weight_class="light", value=10, flags=None, prototype_id=None, timer=None, tags=None, properties=None, **kwargs):
         super().__init__(name, description, value, flags, prototype_id, timer, tags, properties)
         self.defense = defense
         self.stability = stability if stability is not None else defense
         self.weight_class = weight_class
         self.bonus_hp = 0
+        
+        # Set arbitrary attributes (slot, requirements, etc)
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
     def __str__(self):
         return f"{self.name} (DEF: {self.defense})"
 
     def clone(self):
         """Returns a deep copy of this armor."""
-        return Armor(self.name, self.description, self.defense, self.stability, self.weight_class, self.value, self.flags.copy(), self.prototype_id, self.timer, self.tags.copy(), self.properties.copy())
+        # Use __dict__ to ensure all arbitrary attributes are cloned
+        new_armor = Armor(self.name, self.description, self.defense, self.stability, self.weight_class, self.value, self.flags.copy(), self.prototype_id, self.timer, self.tags.copy(), self.properties.copy())
+        for key, value in self.__dict__.items():
+            if key not in ['name', 'description', 'defense', 'stability', 'weight_class', 'value', 'flags', 'prototype_id', 'timer', 'tags', 'properties']:
+                setattr(new_armor, key, value)
+        return new_armor
 
     @classmethod
     def from_dict(cls, data):
-        return cls(
-            data['name'], 
-            data['description'], 
-            data['defense'], 
-            data.get('stability'), 
-            data.get('weight_class', 'light'),
-            data.get('value', 10), 
-            data.get('flags'), 
-            data.get('prototype_id'), 
-            data.get('timer'), 
-            data.get('tags') or data.get('gear_tags'), # Support both tag names
-            data.get('properties')
-        )
+        # Extract core fields
+        core_fields = ['name', 'description', 'defense', 'stability', 'weight_class', 'value', 'flags', 'prototype_id', 'timer', 'tags', 'properties']
+        base_data = {k: data[k] for k in core_fields if k in data}
+        
+        # Handle tags/gear_tags mapping
+        if 'tags' not in base_data and 'gear_tags' in data:
+            base_data['tags'] = data['gear_tags']
+            
+        # Pass remaining data as kwargs
+        extra_data = {k: v for k, v in data.items() if k not in core_fields and k != 'type'}
+        
+        return cls(**base_data, **extra_data)
 
     def to_dict(self):
         data = super().to_dict()
@@ -96,25 +104,48 @@ class Armor(BaseItem):
             "stability": self.stability,
             "weight_class": self.weight_class
         })
+        # Add all other attributes
+        for key, value in self.__dict__.items():
+            if key not in data and not key.startswith('_'):
+                data[key] = value
         return data
 
 class Weapon(BaseItem):
-    def __init__(self, name, description, damage_dice, scaling, value=10, flags=None, prototype_id=None, timer=None, tags=None, properties=None):
+    def __init__(self, name, description, damage_dice="1d4", scaling=None, value=10, flags=None, prototype_id=None, timer=None, tags=None, properties=None, **kwargs):
         super().__init__(name, description, value, flags, prototype_id, timer, tags, properties)
         self.damage_dice = damage_dice  # e.g., "2d3"
-        self.scaling = scaling          # e.g., {"fire": 1.2}
+        self.scaling = scaling or {}     # e.g., {"fire": 1.2}
+        
+        # Set arbitrary attributes (slot, hands, etc)
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
     def clone(self):
         """Returns a deep copy of this weapon."""
-        return Weapon(self.name, self.description, self.damage_dice, self.scaling.copy(), self.value, self.flags.copy(), self.prototype_id, self.timer, self.tags.copy(), self.properties.copy())
+        new_weapon = Weapon(self.name, self.description, self.damage_dice, self.scaling.copy(), self.value, self.flags.copy(), self.prototype_id, self.timer, self.tags.copy(), self.properties.copy())
+        for key, value in self.__dict__.items():
+            if key not in ['name', 'description', 'damage_dice', 'scaling', 'value', 'flags', 'prototype_id', 'timer', 'tags', 'properties']:
+                setattr(new_weapon, key, value)
+        return new_weapon
 
     @classmethod
     def from_dict(cls, data):
-        return cls(data['name'], data['description'], data['damage_dice'], data['scaling'], data.get('value', 10), data.get('flags'), data.get('prototype_id'), data.get('timer'), data.get('tags'), data.get('properties'))
+        # Extract core fields
+        core_fields = ['name', 'description', 'damage_dice', 'scaling', 'value', 'flags', 'prototype_id', 'timer', 'tags', 'properties']
+        base_data = {k: data[k] for k in core_fields if k in data}
+        
+        # Pass remaining data as kwargs
+        extra_data = {k: v for k, v in data.items() if k not in core_fields and k != 'type'}
+        
+        return cls(**base_data, **extra_data)
 
     def to_dict(self):
         data = super().to_dict()
         data.update({"type": "weapon", "damage_dice": self.damage_dice, "scaling": self.scaling})
+        # Add all other attributes
+        for key, value in self.__dict__.items():
+            if key not in data and not key.startswith('_'):
+                data[key] = value
         return data
 
 class Consumable(BaseItem):

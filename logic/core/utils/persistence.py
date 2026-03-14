@@ -2,6 +2,7 @@
 logic/core/utils/persistence.py
 Domain: Serialization, Save/Load, and Entity Hydration.
 Ensures data parity for JSON player saves.
+V5.3: Integrated "Archive Health" and Kit Migration Protocols.
 """
 import os
 import json
@@ -15,27 +16,26 @@ if TYPE_CHECKING:
 logger = logging.getLogger("GodlessMUD")
 
 def item_from_data(item_data, game=None):
-    """Reconstructs an item from a dictionary or string ID."""
+    """Reconstructs an item from a dictionary or string ID (Prototype)."""
     if isinstance(item_data, str):
-        # Resolve from world prototypes if game is available
+        # Resolve from world prototypes (Department of Manufacturing)
         if game and item_data in game.world.items:
-            # We would need a way to clone prototypes. 
-            pass
+            prototype = game.world.items[item_data]
+            return prototype.clone() if hasattr(prototype, 'clone') else prototype
         return None
 
     if not isinstance(item_data, dict):
         return None
 
-    it_type = item_data.get('type')
+    it_type = item_data.get('type', 'item')
     if it_type == 'armor':
         return Armor.from_dict(item_data)
     elif it_type == 'weapon':
         return Weapon.from_dict(item_data)
     elif it_type == 'consumable':
         return Consumable.from_dict(item_data)
-    elif it_type == 'item':
-        return Item.from_dict(item_data)
-    return None
+    
+    return Item.from_dict(item_data)
 
 def to_dict(player: 'Player') -> dict:
     """Serializes player state to a dictionary for JSON saving."""
@@ -43,9 +43,9 @@ def to_dict(player: 'Player') -> dict:
         "name": player.name,
         "room_id": player.room.id if player.room else None,
         "hp": player.hp,
-        "identity_tags": player.identity_tags,
-        "known_blessings": player.known_blessings,
-        "equipped_blessings": player.equipped_blessings,
+        "identity_tags": list(set(player.identity_tags)), # Deduplicate
+        "known_blessings": list(set(player.known_blessings)),
+        "equipped_blessings": list(set(player.equipped_blessings)),
         "blessing_charges": player.blessing_charges,
         "blessing_xp": player.blessing_xp,
         "resources": player.resources,
@@ -73,70 +73,71 @@ def to_dict(player: 'Player') -> dict:
         "ext_state": player.ext_state,
         "admin_vision": player.admin_vision,
         "active_kit": player.active_kit,
+        "kit_version": getattr(player, 'kit_version', 0),
         "last_hit_tick": player.last_hit_tick,
         "last_action": player.last_action
     }
 
 def load_data(player, data):
-    """Hydrates player state from a dictionary."""
+    """Hydrates player state from a dictionary with Migration support."""
     player.hp = data.get('hp', player.hp)
     player.gold = data.get('gold', 0)
     
-    player.identity_tags = data.get('identity_tags', player.identity_tags)
-    player.known_blessings = data.get('known_blessings', [])
-    player.equipped_blessings = data.get('equipped_blessings', [])
+    # Pillar 1: Clean Identity
+    player.identity_tags = list(set(data.get('identity_tags', player.identity_tags)))
+    player.known_blessings = list(set(data.get('known_blessings', [])))
+    player.equipped_blessings = list(set(data.get('equipped_blessings', [])))
     
-    if 'blessing_charges' in data:
-        player.blessing_charges.update(data['blessing_charges'])
-        
-    if 'blessing_xp' in data:
-        player.blessing_xp.update(data['blessing_xp'])
-        
-    if 'resources' in data:
-        player.resources.update(data['resources'])
-            
-    favor_data = data.get('favor', {})
-    if isinstance(favor_data, dict):
-        player.favor.update(favor_data)
+    player.blessing_charges.update(data.get('blessing_charges', {}))
+    player.blessing_xp.update(data.get('blessing_xp', {}))
+    player.resources.update(data.get('resources', {}))
+    player.favor.update(data.get('favor', {}))
         
     player._active_class = data.get('active_class')
     player.unlocked_classes = data.get('unlocked_classes', [])
-    if 'aliases' in data:
-        player.aliases.update(data['aliases'])
+    player.aliases.update(data.get('aliases', {}))
+    # [V5.3 Standard] Sanitize Absolute Tick References (Prevention of Snapshot Poisoning)
+    # Since tick_count resets to 0 on server restarts, any absolute ticks in saves
+    # must be cleared or they will cause infinite locks (Cooldowns) or permanent buffs.
+    player.cooldowns = {}
+    player.status_effects = {}
+    player.last_hit_tick = 0
+    player.last_action = "none"
     
-    if 'cooldowns' in data:
-        player.cooldowns.update(data['cooldowns'])
+    # We do NOT update from data for these keys to ensure clean-slate on connect.
+    # player.cooldowns.update(data.get('cooldowns', {})) # DEPRECATED
         
     player.is_resting = data.get('is_resting', False)
     player.rest_until = data.get('rest_until', 0)
-
     player.active_quests = data.get('active_quests', {})
     player.completed_quests = data.get('completed_quests', [])
-
-    if 'status_effects' in data:
-        player.status_effects.update(data['status_effects'])
+    # player.status_effects.update(data.get('status_effects', {})) # DEPRECATED
     
     player.password = data.get('password')
     player.is_admin = data.get('is_admin', False)
     player.is_building = data.get('is_building', False)
-    
-    if 'friendship' in data:
-        player.friendship.update(data['friendship'])
-        
+    player.friendship.update(data.get('friendship', {}))
     player.visited_rooms = data.get('visited_rooms', [])
     player.reputation = data.get('reputation', 0)
     player.ext_state = data.get('ext_state', {})
     player.admin_vision = data.get('admin_vision', False)
-    player.last_hit_tick = data.get('last_hit_tick', 0)
-    player.last_action = data.get('last_action', "none")
+    # player.last_hit_tick = data.get('last_hit_tick', 0) # DEPRECATED
+    # player.last_action = data.get('last_action', "none") # DEPRECATED
     player.active_kit = data.get('active_kit', {})
+    player.kit_version = data.get('kit_version', 0)
+
+    # Pillar 2: The Archive Health Check (Kit Synchronization)
+    if player._active_class:
+        # If the kit version is old or missing, force a migration
+        # This prevents "Snapshot Poisoning" where the player is stuck with old skills
+        load_kit(player, player._active_class)
     
     player.trigger_module_inits()
     
-    # Reconstruct Inventory
+    # Reconstruct Inventory (with game world resolution)
     player.inventory = []
     for item_data in data.get('inventory', []):
-        item = item_from_data(item_data)
+        item = item_from_data(item_data, game=player.game)
         if item:
             player.inventory.append(item)
     
@@ -150,73 +151,99 @@ def load_data(player, data):
     player.reset_resources()
 
 def save(player):
-    """Saves the player data to disk."""
+    """Saves the player data to disk (Department of Archives)."""
     try:
         os.makedirs(os.path.join("data", "saves"), exist_ok=True)
         filename = os.path.join("data", "saves", f"{player.name.lower()}.json")
         with open(filename, 'w') as f:
             json.dump(to_dict(player), f, indent=4)
-        logger.info(f"Saved {player.name}")
+        logger.info(f"Saved Archive: {player.name}")
     except Exception as e:
         logger.error(f"Failed to save {player.name}: {e}")
 
 def load_kit(player, kit_name):
-    """Loads a kit from data/kits.json and applies it."""
+    """Loads a kit from data/kits.json and applies it with V5.3 migration support."""
     try:
         with open(os.path.join("data", "kits.json"), "r") as f:
             kits = json.load(f)
         
         if kit_name in kits:
-            player.active_kit = kits[kit_name]
-            # Data-Driven Identity Mapping (V4.5 Open-Closed)
-            player.identity_tags = kits[kit_name].get('identity_tags', ['adventurer'])
+            kit_data = kits[kit_name]
+            current_version = kit_data.get('version', 1)
+            player_version = getattr(player, 'kit_version', 0)
+
+            # [V5.3 Standard] Force Migration if versions differ
+            if player_version < current_version:
+                migrate_kit(player, kit_data)
             
-            player.trigger_module_inits()
+            # Update live kit data in player object
+            player.active_kit = kit_data
+            player.kit_version = current_version
+            
+            # Ensure identity tags are synced
+            kit_tags = kit_data.get('identity_tags', [])
+            for tag in kit_tags:
+                if tag not in player.identity_tags:
+                    player.identity_tags.append(tag)
+            
             return True
     except Exception as e:
         logger.error(f"Failed to load kit {kit_name}: {e}")
     return False
 
+def migrate_kit(player, kit_data):
+    """Surgically reconciles player blessings with the global Kit Blueprint."""
+    new_blessings = kit_data.get('blessings', [])
+    old_kit_blessings = player.active_kit.get('blessings', []) if player.active_kit else []
+    
+    # 1. Removal: Take away any "Old Kit" blessings that the player shouldn't have anymore
+    # We compare what was in the old kit vs the new kit
+    to_remove = set(old_kit_blessings) - set(new_blessings)
+    for b_id in to_remove:
+        if b_id in player.known_blessings:
+            player.known_blessings.remove(b_id)
+        if b_id in player.equipped_blessings:
+            player.equipped_blessings.remove(b_id)
+            
+    # 2. Injection: Add the new Blueprint blessings
+    for b_id in new_blessings:
+        if b_id not in player.known_blessings:
+            player.known_blessings.append(b_id)
+        if b_id not in player.equipped_blessings:
+            player.equipped_blessings.append(b_id)
+            
+    logger.info(f"[MIGRATION] Synchronized {player.name} to {kit_data.get('name')} v{kit_data.get('version')}")
+
 def trigger_module_inits(player):
     """
-    Dynamically initializes state for all active modules in logic/modules/.
-    Supports both generic 'initialize' and naming-conv 'initialize_[name]' 
-    at either the state submodule or package level.
+    Initializes state for the active class module and common modules.
+    Replaces the legacy 'Initialize All' approach.
     """
     import importlib
-    import pkgutil
-    import logic.modules
+    
+    # We always load 'common', plus the active class
+    active_class = getattr(player, 'active_class', None)
+    target_modules = ['common']
+    if active_class:
+        target_modules.append(active_class.lower())
 
-    # Iterate through all sub-packages in logic.modules
-    path = logic.modules.__path__
-    for loader, module_name, is_pkg in pkgutil.iter_modules(path):
-        if not is_pkg or module_name == 'common':
-            continue
-            
+    for module_name in target_modules:
         try:
-            # 1. Try to initialize via state submodule (GCA Standard)
+            # GCA Standard: logic.modules.[classname].state
             state_path = f"logic.modules.{module_name}.state"
             try:
                 state_mod = importlib.import_module(state_path)
+                
+                # Check for multiple init patterns (initialize or initialize_name)
                 init_func = getattr(state_mod, 'initialize', None)
                 if not init_func:
                     init_func = getattr(state_mod, f"initialize_{module_name}", None)
                 
                 if init_func:
                     init_func(player)
-                    continue # Successfully initialized via state
             except ImportError:
-                pass # No state.py, falling back to package-level check
-
-            # 2. Fallback to package-level initialization
-            module_path = f"logic.modules.{module_name}"
-            class_mod = importlib.import_module(module_path)
-            init_func = getattr(class_mod, 'initialize', None)
-            if not init_func:
-                init_func = getattr(class_mod, f"initialize_{module_name}", None)
-            
-            if init_func:
-                init_func(player)
+                # No state.py found for this module, which is fine for simple modules
+                pass 
 
         except Exception as e:
-            logger.error(f"Failed to auto-discover init for {module_name}: {e}")
+            logger.error(f"Failed to initialize department logic for {module_name}: {e}")

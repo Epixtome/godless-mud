@@ -1,0 +1,162 @@
+{
+    "monsters": [
+        {
+            "id": "gargoyle",
+            "name": "Obsidian Gargoyle",
+            "description": "An animate statue with razor-sharp claws and a focused, predatory gaze.",
+            "hp": 180,
+            "max_hp": 180,
+            "damage": 12,
+            "tags": [
+                "aggressive",
+                "demon",
+                "class:monk"
+            ]
+        },
+        {
+            "id": "goblin",
+            "name": "Goblin",
+            "description": "A small, green creature with a rusty knife.",
+            "hp": 45,
+            "max_hp": 45,
+            "damage": 5,
+            "tags": [
+                "dark",
+                "malice"
+            ],
+            "loot_table": [
+                "*iron_dagger",
+                "*rusty_key",
+                "common_knuckles"
+            ]
+        },
+        {
+            "id": "light_wisp",
+            "name": "Light Wisp",
+            "description": "A floating ball of warm light.",
+            "hp": 30,
+            "max_hp": 30,
+            "damage": 3,
+            "tags": [
+                "light",
+                "lumos"
+            ]
+        },
+        {
+            "id": "rot_sapling",
+            "name": "Rot Sapling",
+            "description": "A small, twisted tree creature dripping with dark ichor.",
+            "hp": 37,
+            "max_hp": 37,
+            "damage": 4,
+            "tags": [
+                "plant",
+                "dark",
+                "poison"
+            ]
+        },
+        {
+            "id": "rotwood_ancient",
+            "name": "Rotwood Ancient",
+            "description": "A massive, corrupted treant with glowing red eyes. The heart of the forest's decay.",
+            "hp": 1200,
+            "max_hp": 1200,
+            "damage": 20,
+            "tags": [
+                "plant",
+                "dark",
+                "boss"
+            ]
+        },
+        {
+            "id": "shadow_stalker",
+            "name": "Shadow Stalker",
+            "description": "A vague humanoid shape that blends into the darkness.",
+            "hp": 67,
+            "max_hp": 67,
+            "damage": 8,
+            "tags": [
+                "dark",
+                "nox"
+            ]
+        },
+        {
+            "id": "thorn_sprite",
+            "name": "Thorn Sprite",
+            "description": "A tiny, fluttering creature made of sharp twigs and leaves.",
+            "hp": 45,
+            "max_hp": 45,
+            "damage": 5,
+            "tags": [
+                "fey",
+                "instinct",
+                "ranged"
+            ]
+        },
+        {
+            "id": "treant_sapling",
+            "name": "Treant Sapling",
+            "description": "A small walking tree with whipping branches.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 5,
+            "tags": [
+                "plant",
+                "instinct"
+            ]
+        },
+        {
+            "id": "wild_boar",
+            "name": "Wild Boar",
+            "description": "An aggressive boar with sharp tusks.",
+            "hp": 75,
+            "max_hp": 75,
+            "damage": 6,
+            "tags": [
+                "instinct",
+                "krog"
+            ]
+        },
+        {
+            "id": "witch_boss",
+            "name": "The Swamp Witch",
+            "description": "A newly created creature.",
+            "hp": 750,
+            "max_hp": 750,
+            "damage": 1,
+            "tags": [
+                "witch_boss"
+            ],
+            "loadout": [
+                "witch_lantern"
+            ]
+        },
+        {
+            "id": "testing_curator",
+            "name": "The Curator",
+            "description": "A being of pure geometric lines and light. They provide the tools needed for the Great Work.",
+            "hp": 10000,
+            "max_hp": 10000,
+            "damage": 0,
+            "tags": [
+                "cosmic",
+                "shopkeeper"
+            ],
+            "is_shopkeeper": true,
+            "inventory": []
+        },
+        {
+            "id": "illusionist_echo",
+            "name": "Illusory Echo",
+            "description": "A perfect double of the Illusionist, moving with eerie synchronization.",
+            "hp": 50,
+            "max_hp": 50,
+            "damage": 5,
+            "tags": [
+                "illusion",
+                "temporary",
+                "decoy"
+            ]
+        }
+    ]
+}

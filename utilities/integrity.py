@@ -35,6 +35,10 @@ def check_file_structure():
             if os.path.getsize(path) == 0:
                 issues.append(f"Empty File: {path}")
 
+    # Rule 4: Class Data Parity (Monk scaling check)
+    monk_issues = check_monk_scaling()
+    issues.extend(monk_issues)
+
     if issues:
         logger.warning("=== INTEGRITY CHECK FAILED ===")
         for issue in issues:
@@ -44,3 +48,36 @@ def check_file_structure():
     
     logger.info("Integrity check passed. File structure is clean.")
     return True
+
+def check_monk_scaling():
+    """Ensures all Monk blessings have required scaling data."""
+    import json
+    issues = []
+    base_dir = "data/blessings"
+    
+    for root, _, files in os.walk(base_dir):
+        for file in files:
+            if not file.endswith(".json"): continue
+            try:
+                with open(os.path.join(root, file), 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    
+                blessings = []
+                if "blessings" in data:
+                    blessings = data["blessings"].values()
+                elif isinstance(data, list):
+                    blessings = data
+                    
+                for b in blessings:
+                    if not isinstance(b, dict): continue
+                    tags = b.get("identity_tags", [])
+                    if "monk" in tags:
+                        # Stances and strictly utility passives don't require scaling
+                        is_combat_skill = not any(t in tags for t in ["stance", "passive", "utility"])
+                        if is_combat_skill and "scaling" not in b:
+                            issues.append(f"Missing Scaling: Blessing '{b.get('id')}' in {file}")
+                        if "action" not in b and b.get("logic_type") not in ["passive", "recovery"]:
+                            issues.append(f"Missing Action Handler: Blessing '{b.get('id')}' in {file}")
+            except Exception:
+                continue
+    return issues

@@ -1,0 +1,168 @@
+{
+    "monsters": [
+        {
+            "id": "stone_golem",
+            "name": "Stone Golem",
+            "description": "A massive automaton carved from solid granite. It stands unyielding.",
+            "hp": 375,
+            "max_hp": 375,
+            "damage": 15,
+            "tags": [
+                "aggressive",
+                "construct",
+                "class:knight"
+            ],
+            "shouts": [
+                "The golem's stone limbs grind together with a deafening roar!",
+                "GRRRR-OOOOM.",
+                "The earth trembles beneath the golem's footfalls."
+            ]
+        },
+        {
+            "id": "bark_golem",
+            "name": "Bark Golem",
+            "description": "A lumbering construct made of animated wood and vines.",
+            "hp": 225,
+            "max_hp": 225,
+            "damage": 10,
+            "tags": [
+                "construct",
+                "instinct",
+                "guard"
+            ]
+        },
+        {
+            "id": "crystal_golem",
+            "name": "Crystal Golem",
+            "description": "A lumbering construct made of jagged crystals.",
+            "hp": 120,
+            "max_hp": 120,
+            "damage": 8,
+            "tags": [
+                "construct",
+                "light"
+            ]
+        },
+        {
+            "id": "moss_golem",
+            "name": "Moss Golem",
+            "description": "A heavy construct of stone covered in thick moss.",
+            "hp": 135,
+            "max_hp": 135,
+            "damage": 9,
+            "tags": [
+                "construct",
+                "instinct"
+            ]
+        },
+        {
+            "id": "temple_guardian",
+            "name": "Temple Guardian",
+            "description": "A construct of gold and light, guarding the holy places.",
+            "hp": 180,
+            "max_hp": 180,
+            "damage": 12,
+            "tags": [
+                "construct",
+                "light",
+                "guard",
+                "gatekeeper"
+            ],
+            "shouts": {
+                "aggro": [
+                    "Halt! This ground is sanctified!",
+                    "None shall pass!",
+                    "You are not welcome here, sinner."
+                ]
+            }
+        },
+        {
+            "id": "void_construct",
+            "name": "Void Construct",
+            "description": "A suit of black armor animated by void energy.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 10,
+            "tags": [
+                "construct",
+                "dark"
+            ]
+        },
+        {
+            "id": "wall_of_fire",
+            "name": "Wall of Fire",
+            "description": "A roaring wall of magical flame.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 8,
+            "tags": [
+                "construct",
+                "fire",
+                "immobile",
+                "aggressive"
+            ],
+            "shouts": [
+                "The wall of fire erupts in a shower of sparks!",
+                "CRACKLE. FLASH."
+            ]
+        },
+        {
+            "id": "training_golem_low",
+            "name": "Heavy Oak Golem",
+            "description": "A thick, iron-banded wooden golem. It's built to take a beating but slowly.",
+            "hp": 1000,
+            "max_hp": 1000,
+            "damage": 10,
+            "tags": [
+                "construct",
+                "training",
+                "target"
+            ]
+        },
+        {
+            "id": "training_golem_med",
+            "name": "Living Iron Golem",
+            "description": "A dense block of walking metal. It hums with defensive energy.",
+            "hp": 5000,
+            "max_hp": 5000,
+            "damage": 15,
+            "tags": [
+                "construct",
+                "training",
+                "target",
+                "elite"
+            ]
+        },
+        {
+            "id": "training_golem_high",
+            "name": "Obsidian Colossus",
+            "description": "A towering monster of volcanic glass. It represents the absolute ceiling of physical durability.",
+            "hp": 25000,
+            "max_hp": 25000,
+            "damage": 25,
+            "tags": [
+                "construct",
+                "training",
+                "target",
+                "boss"
+            ]
+        },
+        {
+            "id": "screaming_wall",
+            "name": "Screaming Wall",
+            "description": "A wall of wailing spectral faces that disrupts the very air around it.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 5,
+            "tags": [
+                "construct",
+                "spectral",
+                "illusion",
+                "temporary"
+            ],
+            "skills": [
+                "spectral_wail"
+            ]
+        }
+    ]
+}

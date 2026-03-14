@@ -42,7 +42,7 @@ def combat_turn_extra_attacks(ctx):
         if "fourth_attack" in deck: extra_attacks += 1
         
         if extra_attacks > 0:
-            dmg = combat.calculate_player_damage(combatant)
+            dmg = combat.calculate_damage(combatant, target)
             for i in range(extra_attacks):
                 if target.hp <= 0: break
                 combatant.send_line(f"{Colors.YELLOW}You unleash a follow-up strike!{Colors.RESET}")
@@ -139,3 +139,26 @@ def black_mage_power(ctx):
         tags = skill.identity_tags
         if "spell" in tags or "fire" in tags or "ice" in tags or "lightning" in tags:
             ctx['multiplier'] += 0.20
+
+def apply_haste_extra_attacks(ctx):
+    """
+    Event: calculate_extra_attacks
+    Standardized extra hits for Haste. 
+    Illusionists get 100% chance; others get 50%.
+    """
+    attacker = ctx.get('attacker')
+    if attacker and "haste" in getattr(attacker, 'status_effects', {}):
+        chance = 0.5
+        # Illusionists are masters of haste logic
+        if getattr(attacker, 'active_class', None) == 'illusionist':
+            chance = 1.0
+            
+        if random.random() < chance:
+            ctx['extra_attacks'] = ctx.get('extra_attacks', 0) + 1
+            
+            # Message Lock: Prevent spam if multi-hit burst is hasted
+            current_tick = getattr(attacker.game, 'tick_count', 0)
+            if getattr(attacker, '_last_haste_tick', -1) != current_tick:
+                attacker._last_haste_tick = current_tick
+                if hasattr(attacker, 'send_line'):
+                    attacker.send_line(f"{Colors.YELLOW}You strike with blinding haste!{Colors.RESET}")

@@ -1,66 +1,58 @@
 {
     "blessings": [
         {
-            "id": "blur",
-            "name": "Blur",
+            "id": "color_spray",
+            "name": "Color Spray",
             "tier": 1,
-            "cost": 20,
-            "description": "Distort your image, increasing evasion for 30s.",
-            "identity_tags": [
-                "illusionist",
-                "utility",
-                "buff",
-                "spell"
-            ],
-            "action": "blur",
-            "requirements": {
-                "class": "illusionist"
-            },
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 1.2
-            }
+            "cost": 25,
+            "description": "Apply: Blind and confuse your enemies with a spray of light.",
+            "identity_tags": ["illusionist", "light", "debuff"],
+            "action": "color_spray",
+            "requirements": { "class": "illusionist", "concentration": 15, "cooldown": 4 },
+            "on_hit": { "apply_status": "confused", "duration": 6 }
         },
         {
-            "id": "phantasm",
-            "name": "Phantasm",
+            "id": "mirror_image",
+            "name": "Mirror Image",
             "tier": 2,
-            "cost": 30,
-            "description": "Conjure an illusory echo. Echoes shatter to negate damage.",
-            "identity_tags": [
-                "illusionist",
-                "manifestation",
-                "skill"
-            ],
-            "action": "phantasm",
-            "requirements": {
-                "class": "illusionist"
-            },
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 1.0
-            }
+            "cost": 45,
+            "description": "Deny: A 3s reactive window. The next strike hits an illusion, confusing the attacker.",
+            "identity_tags": ["illusionist", "trick", "reaction"],
+            "requirements": { "class": "illusionist", "concentration": 20, "cooldown": 12 },
+            "effects": [
+                { "id": "mirror_image_active", "duration": 3, "target": "self" }
+            ]
         },
         {
-            "id": "mind_trick",
-            "name": "Mind Trick",
+            "id": "shatter_sanity",
+            "name": "Shatter Sanity",
+            "tier": 3,
+            "cost": 50,
+            "description": "Payoff: Deals massive psychic damage to [Confused] targets and extends the duration.",
+            "identity_tags": ["illusionist", "psychic", "finisher"],
+            "requirements": { "class": "illusionist", "concentration": 30, "cooldown": 2 },
+            "base_power": 25,
+            "scaling": { "scaling_tag": "magic", "multiplier": 1.5 }
+        },
+        {
+            "id": "haste",
+            "name": "Haste",
             "tier": 2,
-            "cost": 40,
-            "description": "Confuse an enemy, causing them to attack at random.",
-            "identity_tags": [
-                "illusionist",
-                "disruption",
-                "debuff",
-                "spell"
-            ],
-            "action": "mind_trick",
-            "requirements": {
-                "class": "illusionist"
-            },
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 0.5
-            }
+            "cost": 50,
+            "description": "Supercharge your reflexes, granting extra attacks and evasion.",
+            "identity_tags": ["illusionist", "utility", "buff"],
+            "action": "haste",
+            "requirements": { "class": "illusionist", "concentration": 30 }
+        },
+        {
+            "id": "screaming_wall",
+            "name": "Screaming Wall",
+            "tier": 3,
+            "cost": 60,
+            "description": "Conjure a wall of spectral agony that disrupts enemy balance.",
+            "identity_tags": ["illusionist", "manifestation", "breaker"],
+            "action": "screaming_wall",
+            "requirements": { "class": "illusionist", "stamina": 40 }
         }
     ]
 }

@@ -1,19 +1,31 @@
 {
     "blessings": {
-        "red_mage_init": {
-            "id": "red_mage_init",
-            "name": "Red Mage Awakening",
-            "tier": 1,
-            "cost": 0,
-            "description": "The fundamental identity of a Red Mage.",
-            "identity_tags": [
-                "class_init",
-                "red_mage"
-            ],
-            "logic_type": "passive",
-            "requirements": {
-                "class": "red_mage"
-            }
+        "spellstrike_frost": {
+            "id": "spellstrike_frost",
+            "name": "Spellstrike: Frost",
+            "description": "Apply: Imbue your rapier with ice. The next hit applies [Jarred] and slows balance recovery.",
+            "identity_tags": ["red_mage", "martial", "ice"],
+            "requirements": { "class": "red_mage", "concentration": 15, "cooldown": 5 },
+            "on_hit": { "apply_status": "jarred", "duration": 4 }
+        },
+        "fencers_ward": {
+            "id": "fencers_ward",
+            "name": "Fencer's Ward",
+            "description": "Deny: A 3s reactive window. Successfully parrying a physical hit grants [Dualcast].",
+            "identity_tags": ["red_mage", "martial", "reaction"],
+            "requirements": { "class": "red_mage", "stamina": 15, "cooldown": 10 },
+            "effects": [
+                { "id": "fencers_ward_active", "duration": 3, "target": "self" }
+            ]
+        },
+        "dualcast_burst": {
+            "id": "dualcast_burst",
+            "name": "Dualcast Burst",
+            "description": "Payoff: Consumes [Dualcast] to cast your next spell twice for 100% extra damage.",
+            "identity_tags": ["red_mage", "arcane", "finisher"],
+            "requirements": { "class": "red_mage", "concentration": 40, "cooldown": 2 },
+            "base_power": 20,
+            "scaling": { "scaling_tag": "magic", "multiplier": 1.2 }
         }
     }
 }

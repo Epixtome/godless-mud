@@ -20,8 +20,9 @@ def _consume_resources(player, skill):
 def handle_brace(player, skill, args, target=None):
     """Increase mitigation for a short duration."""
     player.send_line(f"{Colors.BOLD}{Colors.WHITE}You plant your feet and brace for impact!{Colors.RESET}")
-    effects.apply_effect(player, "braced", 10)
-    _consume_resources(player, skill)
+    # Use generic executor to apply status effects (braced) from JSON
+    from logic.actions.base_executor import execute as handle_generic
+    handle_generic(player, skill, args, target=player)
     return None, True
 
 @register("shield_bash")
@@ -30,15 +31,12 @@ def handle_shield_bash(player, skill, args, target=None):
     target = common._get_target(player, args, target, "Shield bash whom?")
     if not target: return None, True
 
-    # Shield Check already handled by Auditor.check_requirements (which I fixed)
-
-    player.send_line(f"You slam your shield into {target.name}!")
-    player.room.broadcast(f"{player.name} slams their shield into {target.name}!", exclude_player=player)
-
-    power = blessings_engine.calculate_power(skill, player, target)
-    _apply_damage(player, target, power, "Shield Bash")
+    # Shield Check already handled by Auditor.check_requirements.
     
-    effects.apply_effect(target, "off_balance", 4)
+    # Delegate to processor for damage and on_hit (off_balance)
+    from logic.engines import combat_processor
+    prompts = set()
+    combat_processor.execute_attack(player, target, player.room, player.game, prompts, blessing=skill)
     
     _consume_resources(player, skill)
     return target, True

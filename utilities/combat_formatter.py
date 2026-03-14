@@ -23,9 +23,16 @@ def format_combat_messages(attacker, target, damage, blessing=None, is_god=False
         tgt_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd} you with {blessing.name} for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
         room_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd} {target.name} with {blessing.name} for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
     else:
-        att_msg = f"{Colors.GREEN}You {verb} {target.name} for {Colors.YELLOW}{damage}{Colors.GREEN} damage.{Colors.RESET}"
-        tgt_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd} you for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
-        room_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd} {target.name} for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
+        # Crit Check Branding
+        crit_tag = ""
+        from logic.core import effects as fx
+        # Only brand auto-attacks for now to avoid double-branding skills which have their own flair
+        if any(s in getattr(target, 'status_effects', {}) for s in fx.CRITICAL_STATES):
+            crit_tag = f" {Colors.BOLD}{Colors.RED}[CRIT]{Colors.RESET}"
+
+        att_msg = f"{Colors.GREEN}You {verb}{crit_tag} {target.name} for {Colors.YELLOW}{damage}{Colors.GREEN} damage.{Colors.RESET}"
+        tgt_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd}{crit_tag} you for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
+        room_msg = f"{Colors.YELLOW}{attacker.name} {verb_3rd} {target.name}{crit_tag} for {Colors.RED}{damage}{Colors.YELLOW} damage.{Colors.RESET}"
 
     return att_msg, tgt_msg, room_msg
 

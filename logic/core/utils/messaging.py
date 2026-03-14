@@ -39,11 +39,33 @@ def get_prompt(player):
     max_bal = player.get_max_resource('balance')
     parts.append(f"{Colors.MAGENTA}BAL: {bal}/{max_bal}{Colors.RESET}")
 
-    # Class-Specific Resources (Decoupled via Events)
-    # Individual class modules (Mage, Monk, etc) now subscribe to 'on_build_prompt' 
-    # to inject their specific resource displays.
+    # Class-Specific Resources (Decoupled: Automated via Registry)
+    from logic.core import resource_registry
+    kit_id = player.active_kit.get('id') if hasattr(player, 'active_kit') else None
+    if kit_id:
+        definitions = resource_registry.get_resources_for_kit(kit_id)
+        for rd in definitions:
+            # Resolve Current Value
+            current = 0
+            if hasattr(player, 'ext_state') and player.active_class in player.ext_state:
+                current = player.ext_state[player.active_class].get(rd.id, 0)
+            elif hasattr(player, 'resources'):
+                current = player.resources.get(rd.id, 0)
+            
+            # Resolve Max
+            t_max = rd.max
+            if rd.max_getter:
+                try:
+                    t_max = rd.max_getter(player)
+                except:
+                    pass
+            
+            # Visibility Gate
+            if current > 0 or rd.always_show:
+                label = rd.shorthand or rd.display_name[:3].upper()
+                parts.append(f"{rd.color}{label}: {current}/{t_max}{Colors.RESET}")
 
-    # Modular Hooks
+    # Modular Hooks for complex status displays (Stances, etc)
     player.active_statuses_display = []
     from logic.core.engines.event_engine import dispatch
     dispatch("on_build_prompt", {'player': player, 'prompts': player.active_statuses_display})
@@ -52,13 +74,21 @@ def get_prompt(player):
     if player.status_effects:
         from logic.core import effects
         for eff_id in player.status_effects:
-            # Skip internal/class resources already handled by on_build_prompt
-            if eff_id in ['crane_stance', 'turtle_stance', 'magic_shield']:
-                continue
-            
             eff_def = effects.get_effect_definition(eff_id, player.game)
-            if eff_def:
-                name = eff_def.get('short_name') or eff_def.get('name', eff_id).title()
+            if isinstance(eff_def, dict):
+                # [GCA MODERNIZATION] Dynamic Prompt Visibility
+                # Prioritize explicit metadata flag over legacy hardcoded lists
+                meta = eff_def.get('metadata', {})
+                if isinstance(meta, dict):
+                    if meta.get('display_in_prompt') is False or meta.get('hidden') is True:
+                        continue
+                
+                # Group-based exclusion (Stances and Class Passives handled by on_build_prompt)
+                if eff_def.get('group') in ['stance', 'class_passive', 'resource']:
+                    continue
+
+                name = eff_def.get('short_name') or eff_def.get('name', eff_id)
+                name = str(name).title()
                 # Determine color based on type
                 color = Colors.YELLOW
                 if eff_id in effects.HARD_DEBUFFS or eff_id in effects.CRITICAL_STATES:

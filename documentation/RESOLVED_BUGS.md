@@ -11,3 +11,8 @@
 | 2026-03-06 | kip | Dragon Strike scaling | Exponential scaling implemented: 10 Flow = 10x DMG. |
 | 2026-03-06 | kip | Missing POI tree in Sylvanis | Added "Ancient Gnarled Oak" to deterministic POI logic. |
 | 2026-03-06 | kip | Everything named "Null_Void" | Corrected zone boundary logic in `master_architect.py`. |
+| 2026-03-13 | Antigravity | Module Initialization Pollution | Refactored `persistence.py` to only init active class + common. |
+| 2026-03-13 | Antigravity | Resource Score Bloat | Enhanced `sync_resources` with aggressive pruning and kit-matching. |
+| 2026-03-13 | Antigravity | Monk Finisher Multipliers | Unified Dragon Strike/Iron Palm with `handle_attack` pipeline. |
+| 2026-03-13 | Antigravity | Warlock `consume_pacing` Crashes | Removed deprecated legacy calls from warlock actions. |
+| 2026-03-13 | Antigravity | Prompt Clutter (Stances) | Meta-flag `display_in_prompt` implemented in messaging engine. |

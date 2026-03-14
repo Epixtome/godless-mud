@@ -77,6 +77,7 @@ class Player:
         
         # Modular Socket Architecture
         self.active_kit = {} 
+        self.kit_version = 0 # Track which version of the kit is applied
         self.ext_state = {}
 
         self.trigger_module_inits()
@@ -247,6 +248,18 @@ class Player:
         """Standard output entry point."""
         messaging.send_line(self, message, include_prompt=include_prompt)
 
+
+    def get_global_tag_count(self, tag):
+        """
+        Retrieves the total tag count (Voltage) for a specific tag.
+        Uses cached resonance result if available.
+        """
+        if self.tags_are_dirty:
+            from logic.engines.resonance_engine import ResonanceAuditor
+            self.current_tags = ResonanceAuditor.calculate_resonance(self)
+            self.tags_are_dirty = False
+            
+        return self.current_tags.get(tag, 0)
 
     def send_raw(self, message, include_prompt=False):
         """Send raw text to this player's telnet client without prefix/suffix."""

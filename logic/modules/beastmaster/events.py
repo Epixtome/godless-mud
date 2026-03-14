@@ -71,14 +71,14 @@ def on_combat_tick(ctx):
         
     if not pet:
         # Gradually lose sync if no pet is active
-        bm_state['sync'] = max(0, bm_state['sync'] - 5)
+        resources.modify_resource(player, 'sync', -5, source="Neglect")
         return
         
     # Same room check
     if pet.room == player.room:
-        bm_state['sync'] = min(100, bm_state['sync'] + 5)
+        resources.modify_resource(player, 'sync', 5, source="Proximity")
     else:
-        bm_state['sync'] = max(0, bm_state['sync'] - 10)
+        resources.modify_resource(player, 'sync', -10, source="Distance")
 
 def on_pet_death(ctx):
     """
@@ -100,7 +100,7 @@ def on_pet_death(ctx):
         bm_state = owner.ext_state.get('beastmaster')
         if bm_state:
             bm_state['active_pet_uuid'] = None
-            bm_state['sync'] = 0
+            resources.modify_resource(owner, 'sync', -100, source="Heartbroken")
 
 def on_build_prompt(ctx):
     """

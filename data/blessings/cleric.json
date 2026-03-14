@@ -4,64 +4,54 @@
             "id": "lay_on_hands",
             "name": "Lay on Hands",
             "description": "Heal a target with divine energy.",
-            "identity_tags": [
-                "magic",
-                "divine",
-                "healing",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 25
-            },
+            "identity_tags": ["magic", "divine", "healing"],
+            "action": "lay_on_hands",
+            "requirements": { "stamina": 25 },
             "base_power": 30,
-            "scaling": [
-                {
-                    "scaling_tag": "divine",
-                    "multiplier": 2.0
-                }
+            "scaling": { "scaling_tag": "divine", "multiplier": 2.0 }
+        },
+        "holy_blast": {
+            "id": "holy_blast",
+            "name": "Holy Blast",
+            "description": "Apply: A burst of light that dazzles the enemy for 6s.",
+            "identity_tags": ["magic", "divine", "strike", "dazzle"],
+            "requirements": { "stamina": 15, "cooldown": 4 },
+            "on_hit": { "apply_status": "dazzled", "duration": 6 }
+        },
+        "divine_grace": {
+            "id": "divine_grace",
+            "name": "Divine Grace",
+            "description": "Deny: A 3s reactive window. Negates the next hit and restores 20 Concentration.",
+            "identity_tags": ["magic", "divine", "reaction"],
+            "requirements": { "stamina": 15, "cooldown": 12 },
+            "effects": [
+                { "id": "divine_grace_ready", "duration": 3, "target": "self" }
             ]
+        },
+        "exorcism": {
+            "id": "exorcism",
+            "name": "Exorcism",
+            "description": "Payoff: Deals massive divine damage to Undead or Dazzled targets.",
+            "identity_tags": ["magic", "divine", "strike", "finisher"],
+            "requirements": { "stamina": 20, "cooldown": 2 },
+            "base_power": 20,
+            "scaling": { "scaling_tag": "divine", "multiplier": 1.5 }
         },
         "cleanse": {
             "id": "cleanse",
             "name": "Cleanse",
             "description": "Purify a target of all negative status effects.",
-            "identity_tags": [
-                "magic",
-                "divine",
-                "utility",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 15
-            }
-        },
-        "sanctify": {
-            "id": "sanctify",
-            "name": "Sanctify",
-            "description": "Hallow the ground, buffing allies and burning undead.",
-            "identity_tags": [
-                "magic",
-                "divine",
-                "aoe",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 20
-            }
+            "identity_tags": ["magic", "divine", "utility"],
+            "action": "cleanse",
+            "requirements": { "stamina": 15 }
         },
         "refresh": {
             "id": "refresh",
             "name": "Refresh",
             "description": "Restore stamina to an ally.",
-            "identity_tags": [
-                "magic",
-                "divine",
-                "utility",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 10
-            }
+            "identity_tags": ["magic", "divine", "utility"],
+            "action": "refresh",
+            "requirements": { "stamina": 10 }
         }
     }
 }

@@ -60,8 +60,10 @@ def on_blessing_cast(player, blessing):
     # Red Mage: Martial casts build Crimson Charges
     if player.synergies.get('red_mage'):
         if "martial" in blessing.identity_tags:
-            if player.crimson_charges < 3:
-                player.crimson_charges += 1
+            # Safely handle the charges attribute
+            current = getattr(player, 'crimson_charges', 0)
+            if current < 3:
+                player.crimson_charges = current + 1
                 player.send_line(f"{Colors.RED}[SYNERGY] Your blade hums with crimson energy.{Colors.RESET}")
 
 def apply_combat_synergies(attacker, target, blessing, attack_tags, damage):
@@ -110,6 +112,7 @@ def on_combat_hit(player, attack_tags):
     if not hasattr(player, 'synergies'): return
     if player.synergies.get('red_mage'):
         if "martial" in attack_tags:
-            if player.crimson_charges < 3:
-                player.crimson_charges += 1
+            current = getattr(player, 'crimson_charges', 0)
+            if current < 3:
+                player.crimson_charges = current + 1
                 player.send_line(f"{Colors.RED}[SYNERGY] Your blade hums with crimson energy.{Colors.RESET}")

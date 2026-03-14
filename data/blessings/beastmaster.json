@@ -3,91 +3,61 @@
         "tame": {
             "id": "tame",
             "name": "Tame",
-            "tier": 1,
-            "cost": 50,
-            "deity_id": "fenris",
             "description": "Attempt to tame a weakened creature (HP < 5%).",
-            "identity_tags": [
-                "beast",
-                "utility"
-            ],
-            "logic_type": "command",
+            "identity_tags": ["beast", "utility"],
             "action": "tame",
-            "requirements": {
-                "stamina": 15,
-                "class": "beastmaster"
-            }
+            "requirements": { "stamina": 15, "class": "beastmaster" }
         },
         "call": {
             "id": "call",
             "name": "Call Pet",
-            "tier": 1,
-            "cost": 50,
-            "deity_id": "fenris",
             "description": "Call one of your tamed creatures from the shadows.",
-            "identity_tags": [
-                "beast",
-                "summon"
-            ],
-            "logic_type": "command",
+            "identity_tags": ["beast", "summon"],
             "action": "call",
-            "requirements": {
-                "stamina": 20,
-                "class": "beastmaster"
-            }
+            "requirements": { "stamina": 20, "class": "beastmaster" }
+        },
+        "bestial_reflex": {
+            "id": "bestial_reflex",
+            "name": "Bestial Reflex",
+            "description": "Deny: A 3s reactive window. Your pet intercept the hit, and your next strike is free.",
+            "identity_tags": ["beast", "reflex", "reaction"],
+            "requirements": { "stamina": 15, "class": "beastmaster", "cooldown": 10 },
+            "effects": [
+                { "id": "bestial_bond_active", "duration": 3, "target": "self" }
+            ]
+        },
+        "coordinated_strike": {
+            "id": "coordinated_strike",
+            "name": "Coordinated Strike",
+            "description": "Payoff: Strike alongside your pet. Deals 2x damage if the target is [stunned] or [prone].",
+            "identity_tags": ["beast", "strike", "finisher"],
+            "requirements": { "stamina": 20, "class": "beastmaster", "cooldown": 4 },
+            "base_power": 15,
+            "scaling": { "scaling_tag": "beast", "multiplier": 1.5 }
+        },
+        "pounce": {
+            "id": "pounce",
+            "name": "Pounce",
+            "description": "Apply: Command your pet to leap onto the target, knocking them [prone].",
+            "identity_tags": ["beast", "strike", "weight"],
+            "requirements": { "stamina": 25, "class": "beastmaster", "cooldown": 8 },
+            "on_hit": { "apply_status": "prone", "duration": 3 }
         },
         "order": {
             "id": "order",
             "name": "Order Pet",
-            "tier": 1,
-            "cost": 50,
-            "deity_id": "fenris",
             "description": "Command your active pet to attack, use a special, or unleash.",
-            "identity_tags": [
-                "beast",
-                "command"
-            ],
-            "logic_type": "command",
+            "identity_tags": ["beast", "command"],
             "action": "order",
-            "requirements": {
-                "stamina": 5,
-                "class": "beastmaster"
-            }
+            "requirements": { "stamina": 5, "class": "beastmaster" }
         },
         "whistle": {
             "id": "whistle",
             "name": "Whistle",
-            "tier": 1,
-            "cost": 25,
-            "deity_id": "fenris",
             "description": "Calls your pet to your side, wherever it may be.",
-            "identity_tags": [
-                "beast",
-                "speed"
-            ],
-            "logic_type": "command",
+            "identity_tags": ["beast", "speed"],
             "action": "whistle",
-            "requirements": {
-                "stamina": 10,
-                "class": "beastmaster"
-            }
-        },
-        "pets": {
-            "id": "pets",
-            "name": "Pets",
-            "tier": 1,
-            "cost": 0,
-            "deity_id": "fenris",
-            "description": "View your library of tamed creatures.",
-            "identity_tags": [
-                "beast",
-                "utility"
-            ],
-            "logic_type": "command",
-            "action": "pets",
-            "requirements": {
-                "class": "beastmaster"
-            }
+            "requirements": { "stamina": 10, "class": "beastmaster" }
         }
     }
 }

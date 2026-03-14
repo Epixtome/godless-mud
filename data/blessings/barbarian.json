@@ -1,137 +1,148 @@
 {
     "blessings": {
-        "whirlwind": {
-            "id": "whirlwind",
-            "name": "Whirlwind",
-            "description": "Spin in a circle, striking all nearby enemies with your weapon.",
-            "identity_tags": [
-                "martial",
-                "aoe",
-                "strike",
-                "skill"
-            ],
-            "cooldown": 2,
-            "requirements": {
-                "stamina": 25,
-                "martial": 3
-            },
-            "base_power": 12,
-            "scaling": [
-                {
-                    "scaling_tag": "martial",
-                    "multiplier": 1.5
-                },
-                {
-                    "scaling_tag": "instinct",
-                    "multiplier": 0.5
-                }
-            ],
-            "potency_rules": {
-                "type": "pip_scaling",
-                "resource": "barbarian.momentum",
-                "tiers": [
-                    {"max": 5, "mult_per": 0.20, "base": 1.0}
-                ],
-                "consume": true
-            },
-            "ai_priority_rules": [
-                { "trigger": "resource_above", "resource": "barbarian.momentum", "value": 3, "bonus": 50 }
-            ]
-        },
-        "hurl": {
-            "id": "hurl",
-            "name": "Hurl",
-            "description": "Throw a heavy object or weapon at a distant foe.",
-            "identity_tags": [
-                "martial",
-                "ranged",
-                "impact",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 15,
-                "martial": 2
-            },
-            "base_power": 18,
-            "scaling": [
-                {
-                    "scaling_tag": "martial",
-                    "multiplier": 2.2
-                }
-            ]
-        },
-        "sunder": {
-            "id": "sunder",
-            "name": "Sunder",
-            "description": "A powerful strike that reduces target's physical resistance.",
-            "identity_tags": [
-                "martial",
-                "strike",
-                "disruption",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 20,
-                "martial": 4
-            },
-            "base_power": 15,
-            "on_hit": {
-                "apply_status": "sundered",
-                "duration": 6
-            }
-        },
         "bash": {
             "id": "bash",
             "name": "Bash",
-            "description": "Slam the enemy with blunt force, potentially stunning them.",
-            "identity_tags": [
-                "martial",
-                "strike",
-                "blunt",
-                "skill"
-            ],
+            "tier": 1,
+            "cost": 25,
+            "description": "Opener: Slam target with your shoulder. Stuns for 2s.",
+            "identity_tags": ["martial", "strike", "blunt", "opener"],
+            "action": "bash",
             "requirements": {
-                "stamina": 10,
-                "martial": 1
+                "class": "barbarian",
+                "stamina": 25,
+                "cooldown": 4
             },
-            "base_power": 8,
+            "base_power": 15,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.5
+            },
             "on_hit": {
                 "apply_status": "stunned",
-                "chance": 0.3,
-                "duration": 2
+                "duration": 2,
+                "balance_damage": 15,
+                "interrupt": true
+            }
+        },
+        "dirt_kick": {
+            "id": "dirt_kick",
+            "name": "Dirt Kick",
+            "tier": 1,
+            "cost": 10,
+            "description": "Debuff: Kick grit into the target's eyes, blinding them.",
+            "identity_tags": ["martial", "utility", "debuff"],
+            "action": "dirt_kick",
+            "requirements": {
+                "class": "barbarian",
+                "stamina": 10,
+                "cooldown": 6
             },
-            "ai_priority_rules": [
-                { "trigger": "target_missing_status", "status": "stunned", "bonus": 25 }
-            ]
+            "on_hit": {
+                "apply_status": "blinded",
+                "duration": 6
+            }
         },
         "drag": {
             "id": "drag",
             "name": "Drag",
-            "description": "Grab an enemy and pull them into your space.",
-            "identity_tags": [
-                "martial",
-                "utility",
-                "disruption",
-                "skill"
-            ],
+            "tier": 2,
+            "cost": 20,
+            "description": "Utility: Grabs the target and moves both of you to a new room.",
+            "identity_tags": ["martial", "utility", "disruption"],
+            "action": "drag",
             "requirements": {
-                "stamina": 15,
-                "instinct": 2
+                "class": "barbarian",
+                "stamina": 20,
+                "cooldown": 8
             }
         },
         "push": {
             "id": "push",
             "name": "Push",
-            "description": "Forcefully shove an enemy away.",
-            "identity_tags": [
-                "martial",
-                "utility",
-                "disruption",
-                "skill"
-            ],
+            "tier": 1,
+            "cost": 15,
+            "description": "Deny: Forcefully shove an enemy into an adjacent room.",
+            "identity_tags": ["martial", "utility", "deny"],
+            "action": "push",
             "requirements": {
-                "stamina": 10
+                "class": "barbarian",
+                "stamina": 15,
+                "cooldown": 4
             }
+        },
+        "struggle": {
+            "id": "struggle",
+            "name": "Struggle",
+            "tier": 1,
+            "cost": 5,
+            "description": "Utility: Instantly break free from nets and other entanglements.",
+            "identity_tags": ["martial", "utility", "recovery"],
+            "action": "struggle",
+            "requirements": {
+                "class": "barbarian",
+                "stamina": 5,
+                "cooldown": 2
+            }
+        },
+        "whirlwind": {
+            "id": "whirlwind",
+            "name": "Whirlwind",
+            "tier": 3,
+            "cost": 0,
+            "description": "AOE: Consumes 50 Fury to deal massive damage to everyone in the room.",
+            "identity_tags": ["martial", "aoe", "strike", "finisher"],
+            "action": "whirlwind",
+            "requirements": {
+                "class": "barbarian",
+                "fury": 50,
+                "cooldown": 2
+            },
+            "base_power": 25,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.2
+            }
+        },
+        "bloodrage": {
+            "id": "bloodrage",
+            "name": "Bloodrage",
+            "tier": 4,
+            "cost": 0,
+            "description": "Ultimate: Spend 100 Fury to become immune to CC and gain 20% Mitigation for 10s.",
+            "identity_tags": ["martial", "focus", "buff", "ultimate"],
+            "action": "bloodrage",
+            "requirements": {
+                "class": "barbarian",
+                "fury": 100,
+                "cooldown": 30
+            },
+            "effects": [
+                {
+                    "type": "status",
+                    "id": "bloodrage",
+                    "duration": 10,
+                    "target": "self"
+                }
+            ]
+        },
+        "counter": {
+            "id": "counter",
+            "name": "Savage Brace",
+            "description": "Ready yourself to trade blood for steel (4s). You take 50% damage from the next hit but immediately strike back.",
+            "identity_tags": ["martial", "fury", "reaction"],
+            "requirements": {
+                "class": "barbarian",
+                "stamina": 15,
+                "cooldown": 10
+            },
+            "effects": [
+                {
+                    "id": "blood_counter_ready",
+                    "duration": 4,
+                    "target": "self"
+                }
+            ]
         }
     }
 }

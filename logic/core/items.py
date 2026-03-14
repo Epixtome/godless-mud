@@ -87,7 +87,7 @@ def drop_item(player, item, silent=False):
         return True
     return False
 
-def equip_item(player, item, silent=False):
+def equip_item(player, item, silent=False, only_empty=False):
     """
     Facade for wearing/wielding gear.
     Handles swapping, inventory limits, and stat updates.
@@ -101,10 +101,13 @@ def equip_item(player, item, silent=False):
     slot_attr_map = {
         "head": "equipped_head", "neck": "equipped_neck",
         "chest": "equipped_armor", "body": "equipped_armor",
+        "shoulders": "equipped_shoulders",
         "arms": "equipped_arms", "hands": "equipped_hands",
         "legs": "equipped_legs", "feet": "equipped_feet",
         "main_hand": "equipped_weapon", "wield": "equipped_weapon",
+        "two_hand": "equipped_weapon", # 2H weapons go in weapon slot
         "off_hand": "equipped_offhand", "shield": "equipped_offhand",
+        "finger": "equipped_finger_l", # Default, logic below handles swapping/picking
         "floating": "equipped_floating", "mount": "equipped_mount"
     }
     
@@ -113,9 +116,15 @@ def equip_item(player, item, silent=False):
         if not silent: player.send_line(f"Invalid slot: {target_slot}")
         return False
 
+    # [V5.3] Finger Slot Selection Logic
+    if player_attr == "equipped_finger_l":
+        if getattr(player, "equipped_finger_l", None) and not getattr(player, "equipped_finger_r", None):
+            player_attr = "equipped_finger_r"
+
     # Check for Swap
     current_item = getattr(player, player_attr, None)
     if current_item:
+        if only_empty: return False
         if len(player.inventory) >= player.inventory_limit:
             if not silent: player.send_line(f"Inventory full, cannot swap {target_slot}.")
             return False

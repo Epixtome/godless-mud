@@ -8,8 +8,12 @@ def subscribe(event_name, callback):
     """Registers a function to be called when an event fires."""
     if event_name not in _SUBSCRIBERS:
         _SUBSCRIBERS[event_name] = []
-    _SUBSCRIBERS[event_name].append(callback)
-    logger.debug(f"Subscribed {callback.__name__} to {event_name}")
+    
+    # GCA Fix: Prevent duplicate subscriptions (V5.6)
+    if callback not in _SUBSCRIBERS[event_name]:
+        _SUBSCRIBERS[event_name].append(callback)
+        # Use a lower than DEBUG level (e.g., 5) to minimize boot noise.
+        logger.log(5, f"Subscribed {callback.__name__} to {event_name}")
 
 def dispatch(event_name, context=None, **kwargs):
     """

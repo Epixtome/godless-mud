@@ -14,18 +14,18 @@ def kill(player, args):
         
     target = find_by_index(player.room.monsters + player.room.players, args)
     
+    if not target:
+        player.send_line("You don't see them here.")
+        return
+    
     if "panting" in getattr(player, 'status_effects', {}):
         player.send_line("You are too winded to engage right now!")
         return
     
-    if player.fighting == target:
-        player.send_line(f"You are already fighting {target.name}!")
+    if player.fighting and player.fighting != target:
+        player.send_line("You are already engaged in combat! Finish your opponent or flee first.")
         return
         
-    if player.is_in_combat() and target != player.fighting:
-        player.send_line(f"{Colors.YELLOW}You turn your attention toward {target.name}!{Colors.RESET}")
-        # Symmetrical cleanup and start handled by combat.start_combat
-    
     combat.start_combat(player, target)
     
     player.send_line(f"{Colors.RED}You attack {target.name}!{Colors.RESET}")
@@ -111,6 +111,7 @@ def sacrifice(player, args):
     combat.distribute_favor(player, target, player.game)
     
     player.room.items.remove(target)
+    player.send_line(f"{Colors.YELLOW}You sacrifice {target.name} to the gods.{Colors.RESET}")
     player.room.broadcast(f"{player.name} sacrifices {target.name}.", exclude_player=player)
 
 @command_manager.register("aim", "lock", category="combat")

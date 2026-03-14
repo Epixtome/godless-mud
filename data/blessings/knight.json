@@ -10,6 +10,7 @@
                 "weight",
                 "skill"
             ],
+            "action": "brace",
             "requirements": {
                 "stamina": 15,
                 "class": "knight",
@@ -17,6 +18,7 @@
             },
             "effects": [
                 {
+                    "type": "status",
                     "id": "braced",
                     "duration": 4,
                     "target": "self"
@@ -26,13 +28,14 @@
         "shield_bash": {
             "id": "shield_bash",
             "name": "Shield Bash",
-            "description": "Slam your shield into the enemy.",
+            "description": "Slam your shield into the enemy, knocking them off-balance.",
             "identity_tags": [
                 "martial",
                 "strike",
                 "blunt",
                 "skill"
             ],
+            "action": "shield_bash",
             "requirements": {
                 "shield": true,
                 "stamina": 10,
@@ -54,6 +57,7 @@
                 "speed",
                 "skill"
             ],
+            "action": "intervene",
             "requirements": {
                 "stamina": 15
             }
@@ -68,6 +72,7 @@
                 "strike",
                 "skill"
             ],
+            "action": "charge",
             "requirements": {
                 "stamina": 20,
                 "mount": true,
@@ -85,9 +90,17 @@
                 "speed",
                 "skill"
             ],
+            "action": "mount",
             "requirements": {
                 "stamina": 10
-            }
+            },
+            "effects": [
+                {
+                    "type": "status",
+                    "id": "mounted",
+                    "target": "self"
+                }
+            ]
         },
         "rescue": {
             "id": "rescue",
@@ -99,6 +112,7 @@
                 "utility",
                 "skill"
             ],
+            "action": "rescue",
             "requirements": {
                 "stamina": 15
             }
@@ -112,6 +126,7 @@
                 "utility",
                 "skill"
             ],
+            "action": "stand",
             "requirements": {
                 "stamina": 10
             }

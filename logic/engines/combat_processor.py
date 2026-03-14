@@ -128,10 +128,29 @@ def _process_turn(combatant, room, game, players_to_prompt, visibility_cache=Non
         if not combat.can_act(combatant):
             return
             
-        # Mob Skill Logic
-        skill_to_use = ai.get_mob_skill(combatant, game)
-            
-        combat.handle_attack(combatant, target, room, game, blessing=skill_to_use)
+        # [V5.0] Extra Attack Loop (Momentum, Flurry, Haste)
+        extra_ctx = {'attacker': combatant, 'target': target, 'extra_attacks': 0}
+        event_engine.dispatch("calculate_extra_attacks", extra_ctx)
+        
+        num_attacks = 1 + extra_ctx.get('extra_attacks', 0)
+        
+        for i in range(num_attacks):
+            # Re-check targets and status between burst hits 
+            # (First hit might kill target or stun attacker)
+            if i > 0:
+                if not combat.is_target_valid(combatant, target):
+                    target = combat.handle_target_loss(combatant)
+                    if not target: break 
+                if not combat.can_act(combatant):
+                    break
+                    
+            # Mob Skill Logic (Initial hit only or every hit? Standard: Initial only)
+            skill_to_use = None
+            if i == 0:
+                skill_to_use = ai.get_mob_skill(combatant, game)
+                
+            prefix = None
+            combat.handle_attack(combatant, target, room, game, blessing=skill_to_use, context_prefix=prefix)
         
         # 5. Event: Turn End (Post-Attack)
         end_ctx = {'entity': combatant, 'target': target, 'game': game}

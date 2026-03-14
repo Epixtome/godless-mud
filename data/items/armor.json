@@ -297,6 +297,122 @@
                 "light_gear"
             ],
             "flags": []
+        },
+        {
+            "id": "heavy_plate",
+            "type": "armor",
+            "name": "Heavy Plate",
+            "description": "Thick steel plates that offer superior protection.",
+            "value": 150,
+            "defense": 12,
+            "bonus_hp": 40,
+            "weight": 55,
+            "flags": [
+                "metallic"
+            ],
+            "weight_class": "heavy",
+            "tags": [
+                "protection",
+                "martial",
+                "heavy_gear"
+            ]
+        },
+        {
+            "id": "heavy_leather_tunic",
+            "type": "armor",
+            "name": "Heavy Leather Tunic",
+            "description": "Tough hide that can turn a blade.",
+            "value": 40,
+            "defense": 5,
+            "bonus_hp": 15,
+            "weight": 12,
+            "weight_class": "medium",
+            "tags": [
+                "martial",
+                "protection",
+                "medium_gear"
+            ]
+        },
+        {
+            "id": "dark_leather_mask",
+            "type": "armor",
+            "name": "Dark Leather Mask",
+            "description": "A mask that hides the wearer's face in shadow.",
+            "value": 30,
+            "defense": 1,
+            "weight": 1,
+            "slot": "head",
+            "weight_class": "light",
+            "tags": [
+                "martial",
+                "stealth",
+                "light_gear"
+            ]
+        },
+        {
+            "id": "silk_wraps",
+            "type": "armor",
+            "name": "Silk Wraps",
+            "description": "Soft silk wraps for the hands and feet.",
+            "value": 20,
+            "defense": 1,
+            "weight": 1,
+            "slot": "hands",
+            "weight_class": "light",
+            "tags": [
+                "martial",
+                "speed",
+                "light_gear"
+            ]
+        },
+        {
+            "id": "monk_robes",
+            "type": "armor",
+            "name": "Monk Robes",
+            "description": "Simple robes that offer complete freedom of movement.",
+            "value": 30,
+            "defense": 2,
+            "bonus_hp": 5,
+            "weight": 3,
+            "slot": "armor",
+            "weight_class": "light",
+            "tags": [
+                "martial",
+                "speed",
+                "light_gear"
+            ]
+        },
+        {
+            "id": "wooden_sandals",
+            "type": "armor",
+            "name": "Wooden Sandals",
+            "description": "Simple, sturdy sandals.",
+            "value": 5,
+            "defense": 1,
+            "weight": 2,
+            "slot": "feet",
+            "weight_class": "light",
+            "tags": [
+                "martial",
+                "utility",
+                "light_gear"
+            ]
+        },
+        {
+            "id": "bone_armor",
+            "type": "armor",
+            "name": "Bone Armor",
+            "description": "Armor made from the bleached bones of fallen foes.",
+            "value": 80,
+            "defense": 7,
+            "bonus_hp": 20,
+            "weight": 25,
+            "weight_class": "heavy",
+            "tags": [
+                "dark",
+                "protection",
+                "medium_gear"
+            ]
         }
     ]
 }

@@ -10,13 +10,12 @@
             "slot": "main_hand",
             "hands": 1,
             "stats": {
-                "damage_dice": "1d8"
+                "damage_dice": "1d8",
+                "scaling_tag": "martial",
+                "scaling_mult": 0.8
             },
-            "scaling": {
-                "tag": "martial",
-                "mult": 0.8
-            },
-            "gear_tags": [
+            "weight_class": "medium",
+            "tags": [
                 "dark",
                 "martial",
                 "slashing",
@@ -33,13 +32,12 @@
             "slot": "main_hand",
             "hands": 2,
             "stats": {
-                "damage_dice": "1d6"
+                "damage_dice": "1d6",
+                "scaling_tag": "precision",
+                "scaling_mult": 1.1
             },
-            "scaling": {
-                "tag": "precision",
-                "mult": 1.1
-            },
-            "gear_tags": [
+            "weight_class": "light",
+            "tags": [
                 "magic",
                 "speed",
                 "projection"
@@ -55,20 +53,19 @@
             "slot": "main_hand",
             "hands": 1,
             "stats": {
-                "damage_dice": "2d6"
+                "damage_dice": "2d6",
+                "scaling_tag": "martial",
+                "scaling_mult": 1.1
             },
-            "scaling": {
-                "tag": "martial",
-                "mult": 1.1
-            },
-            "gear_tags": [
+            "flags": [
+                "light_source"
+            ],
+            "weight_class": "medium",
+            "tags": [
                 "fire",
                 "elemental",
                 "martial",
                 "force"
-            ],
-            "flags": [
-                "light_source"
             ]
         },
         {
@@ -81,13 +78,12 @@
             "slot": "main_hand",
             "hands": 1,
             "stats": {
-                "damage_dice": "1d4"
+                "damage_dice": "1d4",
+                "scaling_tag": "precision",
+                "scaling_mult": 1.2
             },
-            "scaling": {
-                "tag": "precision",
-                "mult": 1.2
-            },
-            "gear_tags": [
+            "weight_class": "light",
+            "tags": [
                 "precision",
                 "speed",
                 "fragile"
@@ -103,13 +99,12 @@
             "slot": "main_hand",
             "hands": 2,
             "stats": {
-                "damage_dice": "1d6"
+                "damage_dice": "1d6",
+                "scaling_tag": "insight",
+                "scaling_mult": 1.0
             },
-            "scaling": {
-                "tag": "insight",
-                "mult": 1.0
-            },
-            "gear_tags": [
+            "weight_class": "medium",
+            "tags": [
                 "blunt",
                 "martial",
                 "insight"
@@ -125,20 +120,19 @@
             "slot": "main_hand",
             "hands": 2,
             "stats": {
-                "damage_dice": "1d10"
+                "damage_dice": "1d10",
+                "scaling_tag": "martial",
+                "scaling_mult": 1.4
             },
-            "scaling": {
-                "tag": "martial",
-                "mult": 1.4
-            },
-            "gear_tags": [
+            "flags": [
+                "stun"
+            ],
+            "weight_class": "heavy",
+            "tags": [
                 "blunt",
                 "force",
                 "weight",
                 "heavy_gear"
-            ],
-            "flags": [
-                "stun"
             ]
         },
         {
@@ -151,13 +145,12 @@
             "slot": "main_hand",
             "hands": 2,
             "stats": {
-                "damage_dice": "2d6"
+                "damage_dice": "2d6",
+                "scaling_tag": "martial",
+                "scaling_mult": 1.5
             },
-            "scaling": {
-                "tag": "martial",
-                "mult": 1.5
-            },
-            "gear_tags": [
+            "weight_class": "heavy",
+            "tags": [
                 "dark",
                 "martial",
                 "slashing",
@@ -174,13 +167,12 @@
             "slot": "main_hand",
             "hands": 1,
             "stats": {
-                "damage_dice": "1d8"
+                "damage_dice": "1d8",
+                "scaling_tag": "precision",
+                "scaling_mult": 1.3
             },
-            "scaling": {
-                "tag": "precision",
-                "mult": 1.3
-            },
-            "gear_tags": [
+            "weight_class": "light",
+            "tags": [
                 "dark",
                 "martial",
                 "lethal",
@@ -197,13 +189,12 @@
             "slot": "main_hand",
             "hands": 2,
             "stats": {
-                "damage_dice": "1d12"
+                "damage_dice": "1d12",
+                "scaling_tag": "martial",
+                "scaling_mult": 1.6
             },
-            "scaling": {
-                "tag": "martial",
-                "mult": 1.6
-            },
-            "gear_tags": [
+            "weight_class": "heavy",
+            "tags": [
                 "martial",
                 "instinct",
                 "lethal",
@@ -220,22 +211,21 @@
             "slot": "main_hand",
             "hands": 1,
             "stats": {
-                "damage_dice": "1d8"
+                "damage_dice": "1d8",
+                "scaling_tag": "precision",
+                "scaling_mult": 1.2
             },
-            "scaling": {
-                "tag": "precision",
-                "mult": 1.2
-            },
-            "gear_tags": [
-                "martial",
-                "precision",
-                "arcane"
-            ],
             "resonance": {
                 "tag": "arcane",
                 "threshold": 5,
                 "bonus_dmg": 5
-            }
+            },
+            "weight_class": "light",
+            "tags": [
+                "martial",
+                "precision",
+                "arcane"
+            ]
         },
         {
             "id": "spiked_knuckles",
@@ -244,20 +234,122 @@
             "description": "Heavy metal bands with sharpened obsidian studs.",
             "value": 45,
             "weight": 2,
-            "slot": "main_hand",
+            "slot": "hands",
             "hands": 1,
             "stats": {
-                "damage_dice": "1d4"
+                "damage_dice": "1d6",
+                "scaling_tag": "martial",
+                "scaling_mult": 0.9
             },
-            "scaling": {
-                "tag": "martial",
-                "mult": 0.5
-            },
-            "gear_tags": [
+            "weight_class": "light",
+            "tags": [
                 "martial",
                 "unarmed",
                 "piercing",
-                "martial_fists"
+                "martial_fists",
+                "lethal",
+                "fast"
+            ]
+        },
+        {
+            "id": "iron_sword",
+            "type": "weapon",
+            "name": "Iron Sword",
+            "description": "A standard iron sword, reliable and sharp.",
+            "value": 30,
+            "weight": 8,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d8",
+                "scaling_tag": "martial"
+            },
+            "weight_class": "medium",
+            "tags": [
+                "martial",
+                "slashing",
+                "light_gear"
+            ]
+        },
+        {
+            "id": "iron_maul",
+            "type": "weapon",
+            "name": "Iron Maul",
+            "description": "A massive hunk of iron on a thick handle.",
+            "value": 50,
+            "weight": 25,
+            "slot": "main_hand",
+            "hands": 2,
+            "stats": {
+                "damage_dice": "1d10",
+                "scaling_tag": "martial",
+                "scaling_mult": 1.4
+            },
+            "weight_class": "heavy",
+            "tags": [
+                "martial",
+                "blunt",
+                "heavy_gear"
+            ]
+        },
+        {
+            "id": "willow_staff",
+            "type": "weapon",
+            "name": "Willow Staff",
+            "description": "A flexible staff that hums with arcane energy.",
+            "value": 35,
+            "weight": 5,
+            "slot": "main_hand",
+            "hands": 2,
+            "stats": {
+                "damage_dice": "1d6",
+                "scaling_tag": "martial"
+            },
+            "weight_class": "light",
+            "tags": [
+                "magic",
+                "arcane",
+                "blunt"
+            ]
+        },
+        {
+            "id": "holy_mace",
+            "type": "weapon",
+            "name": "Holy Mace",
+            "description": "A mace blessed by the divine.",
+            "value": 70,
+            "weight": 10,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d8",
+                "scaling_tag": "martial"
+            },
+            "weight_class": "medium",
+            "tags": [
+                "martial",
+                "divine",
+                "blunt"
+            ]
+        },
+        {
+            "id": "ichor_blade",
+            "type": "weapon",
+            "name": "Ichor Blade",
+            "description": "A blade that drips with a foul green ichor.",
+            "value": 90,
+            "weight": 6,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d8",
+                "scaling_tag": "martial"
+            },
+            "weight_class": "medium",
+            "tags": [
+                "dark",
+                "martial",
+                "poison"
             ]
         }
     ]

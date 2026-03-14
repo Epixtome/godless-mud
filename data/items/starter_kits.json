@@ -1,97 +1,6 @@
 {
     "items": [
         {
-            "id": "iron_sword",
-            "type": "weapon",
-            "name": "Iron Sword",
-            "description": "A standard iron sword, reliable and sharp.",
-            "value": 30,
-            "weight": 8,
-            "slot": "main_hand",
-            "hands": 1,
-            "stats": {
-                "damage_dice": "1d8"
-            },
-            "gear_tags": [
-                "martial",
-                "slashing",
-                "light_gear"
-            ]
-        },
-        {
-            "id": "heavy_plate",
-            "type": "armor",
-            "name": "Heavy Plate",
-            "description": "Thick steel plates that offer superior protection.",
-            "value": 150,
-            "defense": 12,
-            "bonus_hp": 40,
-            "weight": 55,
-            "gear_tags": [
-                "protection",
-                "martial",
-                "heavy_gear"
-            ],
-            "flags": [
-                "metallic"
-            ]
-        },
-        {
-            "id": "iron_maul",
-            "type": "weapon",
-            "name": "Iron Maul",
-            "description": "A massive hunk of iron on a thick handle.",
-            "value": 50,
-            "weight": 25,
-            "slot": "main_hand",
-            "hands": 2,
-            "stats": {
-                "damage_dice": "1d10"
-            },
-            "scaling": {
-                "tag": "martial",
-                "mult": 1.4
-            },
-            "gear_tags": [
-                "martial",
-                "blunt",
-                "heavy_gear"
-            ]
-        },
-        {
-            "id": "heavy_leather_tunic",
-            "type": "armor",
-            "name": "Heavy Leather Tunic",
-            "description": "Tough hide that can turn a blade.",
-            "value": 40,
-            "defense": 5,
-            "bonus_hp": 15,
-            "weight": 12,
-            "gear_tags": [
-                "martial",
-                "protection",
-                "medium_gear"
-            ]
-        },
-        {
-            "id": "willow_staff",
-            "type": "weapon",
-            "name": "Willow Staff",
-            "description": "A flexible staff that hums with arcane energy.",
-            "value": 35,
-            "weight": 5,
-            "slot": "main_hand",
-            "hands": 2,
-            "stats": {
-                "damage_dice": "1d6"
-            },
-            "gear_tags": [
-                "magic",
-                "arcane",
-                "blunt"
-            ]
-        },
-        {
             "id": "focus_crystal",
             "type": "item",
             "name": "Focus Crystal",
@@ -99,28 +8,11 @@
             "value": 60,
             "weight": 2,
             "slot": "off_hand",
-            "gear_tags": [
+            "weight_class": "light",
+            "tags": [
                 "magic",
                 "arcane",
                 "insight"
-            ]
-        },
-        {
-            "id": "holy_mace",
-            "type": "weapon",
-            "name": "Holy Mace",
-            "description": "A mace blessed by the divine.",
-            "value": 70,
-            "weight": 10,
-            "slot": "main_hand",
-            "hands": 1,
-            "stats": {
-                "damage_dice": "1d8"
-            },
-            "gear_tags": [
-                "martial",
-                "divine",
-                "blunt"
             ]
         },
         {
@@ -131,104 +23,11 @@
             "value": 50,
             "weight": 1,
             "slot": "neck",
-            "gear_tags": [
+            "weight_class": "light",
+            "tags": [
                 "divine",
                 "magic",
                 "protection"
-            ]
-        },
-        {
-            "id": "dark_leather_mask",
-            "type": "armor",
-            "name": "Dark Leather Mask",
-            "description": "A mask that hides the wearer's face in shadow.",
-            "value": 30,
-            "defense": 1,
-            "weight": 1,
-            "slot": "head",
-            "gear_tags": [
-                "martial",
-                "stealth",
-                "light_gear"
-            ]
-        },
-        {
-            "id": "silk_wraps",
-            "type": "armor",
-            "name": "Silk Wraps",
-            "description": "Soft silk wraps for the hands and feet.",
-            "value": 20,
-            "defense": 1,
-            "weight": 1,
-            "slot": "hands",
-            "gear_tags": [
-                "martial",
-                "speed",
-                "light_gear"
-            ]
-        },
-        {
-            "id": "monk_robes",
-            "type": "armor",
-            "name": "Monk Robes",
-            "description": "Simple robes that offer complete freedom of movement.",
-            "value": 30,
-            "defense": 2,
-            "bonus_hp": 5,
-            "weight": 3,
-            "slot": "armor",
-            "gear_tags": [
-                "martial",
-                "speed",
-                "light_gear"
-            ]
-        },
-        {
-            "id": "wooden_sandals",
-            "type": "armor",
-            "name": "Wooden Sandals",
-            "description": "Simple, sturdy sandals.",
-            "value": 5,
-            "defense": 1,
-            "weight": 2,
-            "slot": "feet",
-            "gear_tags": [
-                "martial",
-                "utility",
-                "light_gear"
-            ]
-        },
-        {
-            "id": "bone_armor",
-            "type": "armor",
-            "name": "Bone Armor",
-            "description": "Armor made from the bleached bones of fallen foes.",
-            "value": 80,
-            "defense": 7,
-            "bonus_hp": 20,
-            "weight": 25,
-            "gear_tags": [
-                "dark",
-                "protection",
-                "medium_gear"
-            ]
-        },
-        {
-            "id": "ichor_blade",
-            "type": "weapon",
-            "name": "Ichor Blade",
-            "description": "A blade that drips with a foul green ichor.",
-            "value": 90,
-            "weight": 6,
-            "slot": "main_hand",
-            "hands": 1,
-            "stats": {
-                "damage_dice": "1d8"
-            },
-            "gear_tags": [
-                "dark",
-                "martial",
-                "poison"
             ]
         },
         {
@@ -239,7 +38,8 @@
             "value": 50,
             "weight": 2,
             "slot": "off_hand",
-            "gear_tags": [
+            "weight_class": "light",
+            "tags": [
                 "dark",
                 "magic",
                 "disruption"

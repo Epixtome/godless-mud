@@ -1,0 +1,187 @@
+{
+    "monsters": [
+        {
+            "id": "bandit",
+            "name": "Bandit",
+            "description": "A rough-looking man with a scar across his cheek.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 6,
+            "tags": [
+                "human",
+                "criminal",
+                "aggressive"
+            ],
+            "shouts": {
+                "aggro": [
+                    "Hands in the air!",
+                    "Your gold or your life!",
+                    "Look what we have here!"
+                ],
+                "combat": [
+                    "Die, whelp!",
+                    "You'll regret that!"
+                ]
+            },
+            "loot_table": [
+                "*iron_dagger",
+                "*healing_elixir",
+                "iron_maul"
+            ]
+        },
+        {
+            "id": "cultist",
+            "name": "Cultist",
+            "description": "A figure in dark robes chanting softly.",
+            "hp": 52,
+            "max_hp": 52,
+            "damage": 5,
+            "tags": [
+                "human",
+                "dark"
+            ]
+        },
+        {
+            "id": "dark_acolyte",
+            "name": "Dark Acolyte",
+            "description": "A robed figure chanting whispers to the void.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 7,
+            "tags": [
+                "human",
+                "dark",
+                "mage"
+            ]
+        },
+        {
+            "id": "drunkard",
+            "name": "Drunkard",
+            "description": "He sways back and forth, mumbling incoherently.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 3,
+            "tags": [
+                "human"
+            ]
+        },
+        {
+            "id": "feral_druid",
+            "name": "Feral Druid",
+            "description": "A wild-eyed human wearing furs and antlers.",
+            "hp": 67,
+            "max_hp": 67,
+            "damage": 7,
+            "tags": [
+                "human",
+                "instinct",
+                "mage"
+            ]
+        },
+        {
+            "id": "merchant",
+            "name": "Traveling Merchant",
+            "description": "A weary traveler with a large backpack.",
+            "hp": 75,
+            "max_hp": 75,
+            "damage": 4,
+            "tags": [
+                "human"
+            ]
+        },
+        {
+            "id": "street_urchin",
+            "name": "Street Urchin",
+            "description": "A dirty child with quick fingers.",
+            "hp": 30,
+            "max_hp": 30,
+            "damage": 2,
+            "tags": [
+                "human",
+                "thief"
+            ]
+        },
+        {
+            "id": "tavern_keeper",
+            "name": "The Tavern Keeper",
+            "description": "A burly man cleaning a mug with a dirty rag.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 5,
+            "tags": [
+                "human",
+                "quest_giver",
+                "shopkeeper"
+            ],
+            "shop_inventory": [
+                "sun_elixir"
+            ],
+            "quests": [
+                "fetch_sun_elixir"
+            ]
+        },
+        {
+            "id": "town_guard",
+            "name": "Town Guard",
+            "description": "A stoic guard in chainmail armor.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 10,
+            "tags": [
+                "human",
+                "guard",
+                "quest_giver"
+            ],
+            "quests": [
+                "kill_goblins"
+            ]
+        },
+        {
+            "id": "traveler",
+            "name": "Weary Traveler",
+            "description": "A traveler resting by the side of the road.",
+            "hp": 60,
+            "max_hp": 60,
+            "damage": 5,
+            "tags": [
+                "human",
+                "passive"
+            ]
+        },
+        {
+            "id": "witch",
+            "name": "Swamp Witch",
+            "description": "A cackling hag stirring a cauldron.",
+            "hp": 90,
+            "max_hp": 90,
+            "damage": 8,
+            "tags": [
+                "human",
+                "dark",
+                "mage"
+            ]
+        },
+        {
+            "id": "monk_master_trainer",
+            "name": "Grandmaster Wei",
+            "description": "An elderly man sitting in meditation. His presence feels like a calm storm.",
+            "hp": 1500,
+            "max_hp": 1500,
+            "damage": 15,
+            "tags": [
+                "human",
+                "elite",
+                "class:monk",
+                "tactical"
+            ],
+            "active_class": "monk",
+            "skills": [
+                "palm_strike",
+                "triple_kick",
+                "iron_palm",
+                "dragon_strike",
+                "crane_stance"
+            ]
+        }
+    ]
+}

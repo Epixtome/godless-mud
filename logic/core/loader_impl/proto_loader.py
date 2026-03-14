@@ -13,22 +13,17 @@ def load_prototypes(world, data, blessing_data, class_data, kit_data, deity_data
     
     # 1. Items
     for i_data in data.get('items', []):
-        tags = i_data.get('tags') or i_data.get('gear_tags')
         i_type = i_data.get('type', 'item')
         if i_type == 'armor':
-            armor = Armor(i_data['name'], i_data['description'], i_data.get('defense', 0), value=i_data.get('value', 10), flags=i_data.get('flags'), prototype_id=i_data['id'], tags=tags)
-            armor.bonus_hp = i_data.get('bonus_hp', 0)
-            world.items[i_data['id']] = armor
+            world.items[i_data['id']] = Armor.from_dict(i_data)
         elif i_type == 'weapon':
-            stats = i_data.get('stats', {})
-            damage_dice = stats.get('damage_dice') if stats else i_data.get('damage_dice', '1d4')
-            world.items[i_data['id']] = Weapon(i_data['name'], i_data['description'], damage_dice, i_data.get('scaling', {}), value=i_data.get('value', 10), flags=i_data.get('flags'), prototype_id=i_data['id'], tags=tags)
+            world.items[i_data['id']] = Weapon.from_dict(i_data)
         elif i_type == 'consumable':
-            world.items[i_data['id']] = Consumable(i_data['name'], i_data['description'], i_data['effects'], value=i_data.get('value', 5), flags=i_data.get('flags'), prototype_id=i_data['id'], tags=tags)
+            world.items[i_data['id']] = Consumable.from_dict(i_data)
         elif i_type == 'corpse':
-            world.items[i_data['id']] = Corpse(i_data['name'], i_data['description'], [], flags=i_data.get('flags'), tags=tags)
+            world.items[i_data['id']] = Corpse.from_dict(i_data)
         else:
-            world.items[i_data['id']] = Item(i_data['name'], i_data['description'], value=i_data.get('value', 10), flags=i_data.get('flags'), prototype_id=i_data['id'], tags=tags)
+            world.items[i_data['id']] = Item.from_dict(i_data)
 
     # 2. Monsters
     for m_data in data.get('monsters', []):
@@ -59,15 +54,23 @@ def load_prototypes(world, data, blessing_data, class_data, kit_data, deity_data
         if 'skills' in m_data:
             mob.skills = m_data['skills']
 
-    # 3. Blessings (Skills)
+    # 3. Classes
+    for c_data in class_data:
+        if 'id' in c_data and 'name' in c_data:
+            from models import Class
+            world.classes[c_data['id']] = Class(**c_data)
+
+    # 4. Blessings (Skills)
     for b_data in blessing_data:
         if 'id' in b_data and 'name' in b_data:
             world.blessings[b_data['id']] = Blessing(**b_data)
             b = world.blessings[b_data['id']]
             if b.description:
-                for term in ["Concentration", "Mana", "Stamina"]:
-                    b.description = b.description.replace(f"Drains {term}", "").replace(term, "").replace(term.lower(), "")
-                b.description = b.description.strip()
+                # [V4.5] Description Cleanup: Remove legacy resource mentions if specified
+                if b.metadata.get('clean_description', False):
+                    for term in ["Concentration", "Mana", "Stamina"]:
+                        b.description = b.description.replace(f"Drains {term}", "").replace(term, "").replace(term.lower(), "")
+                    b.description = b.description.strip()
                 
-    # 4. Help Entries
+    # 5. Help Entries
     world.help = [HelpEntry(**h_data) for h_data in help_data if 'title' in h_data and 'body' in h_data]

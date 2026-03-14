@@ -1,0 +1,215 @@
+{
+    "help": [
+        {
+            "keywords": [
+                "combat",
+                "fighting",
+                "kill"
+            ],
+            "title": "Combat System",
+            "body": "Combat in Godless is real-time and automatic. Once engaged (via 'kill' or being attacked), you will auto-attack every few seconds. You can weave Skills and Spells into combat using commands like 'cast fireball' or 'kick'.\n\nCombat is 'Sticky': You cannot switch targets freely without fleeing or defeating your current opponent. If you are attacked by multiple enemies, you will automatically switch to the next one if your target dies.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "resources",
+                "hp",
+                "favor",
+                "chi"
+            ],
+            "title": "Resources",
+            "body": "HP: Your life force. If it hits 0, you die.\nChi: A specialized resource for martial abilities.\nFavor: Divine currency earned by killing mobs. Used to buy Blessings from Deities.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "blessings",
+                "deck",
+                "skills",
+                "spells"
+            ],
+            "title": "The Blessing Deck",
+            "body": "Your abilities are determined by your active Class Kit. When you adopt a class (e.g. Monk, Knight), you are granted a specific set of Blessings and Gear known as a 'Kit'.\n\nYou can only use the blessings that belong to your current Kit. To change your available abilities, you must visit a Deity and swap your class.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "class",
+                "classes",
+                "identity"
+            ],
+            "title": "Class Identity",
+            "body": "Your Class is defined by your active Kit. You can change your class by visiting a Deity and asking to 'become' a new archetype (e.g. 'become monk').\n\nEach class comes with a pre-defined loadout of Gear and Blessings. You cannot mix-and-match abilities from different classes; you must fully embody the archetype.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "synergy",
+                "synergies"
+            ],
+            "title": "Synergies",
+            "body": "Synergies are passive bonuses inherent to certain Class Kits. They provide stat boosts or unique mechanics that reinforce the class's playstyle.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "security",
+                "sec",
+                "pvp"
+            ],
+            "title": "Security Levels",
+            "body": "The world is divided into security sectors based on distance from Capitals:\n\nHigh-Sec (1.0 - 0.5): Near capitals. No PvP. Guards kill aggressors.\nLow-Sec (0.4 - 0.1): Wilderness. PvP Allowed. Guards only at outposts.\nNull-Sec (0.0): Deep wilds/Warzones. Lawless. Free-for-all PvP. Best loot.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "death",
+                "dying"
+            ],
+            "title": "Death",
+            "body": "If you die, you leave behind a corpse containing your items. You will respawn at your Kingdom's capital (or the starting area). You must return to your corpse to retrieve your gear. In High-Sec, you keep your items. In Null-Sec, anyone can loot your corpse.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "crafting",
+                "craft",
+                "recipes"
+            ],
+            "title": "Crafting",
+            "body": "You can craft items using materials found in the world. Use 'recipes' to see what you can make, and 'craft <item>' to create it. You need the ingredients in your inventory.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "travel",
+                "movement",
+                "map"
+            ],
+            "title": "Travel & Mapping",
+            "body": "Move using cardinal directions (n, s, e, w, u, d). Use 'map' to see a grid of the surrounding area. 'scan' reveals nearby enemies. 'recall' returns you to your capital city.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "commune"
+            ],
+            "title": "Commune",
+            "body": "Use 'commune' at a shrine or near a Deity Avatar to enter a trance. While communing, you can 'become' new classes if you have enough Favor. This will automatically equip the class's Kit (Gear and Blessings).",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "stun",
+                "stunned",
+                "dazed"
+            ],
+            "title": "Status: Stunned & Dazed",
+            "body": "Stunned: You cannot take any actions. Movement, attacks, and casting are all disabled.\nDazed: You are off-balance and take increased damage from critical strikes.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "intervene",
+                "rescue"
+            ],
+            "title": "Skill: Intervene & Rescue",
+            "body": "Knight/Paladin abilities used to protect allies. Intervening redirects the target's attackers to yourself, forcing the enemies to engage you instead.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "beastmaster",
+                "pet",
+                "pets",
+                "companion"
+            ],
+            "title": "Beastmaster Pets",
+            "body": "Beastmasters can recruit animals to fight alongside them. Use 'recruit' on a suitable beast. Pets share your room, follow you when you move, and automatically assist you in combat.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "sanctify",
+                "consecrate"
+            ],
+            "title": "Skill: Sanctify",
+            "body": "A Holy ability that purifies a target, removing negative status effects and dealing damage to undead or dark creatures.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "brace",
+                "braced"
+            ],
+            "title": "Skill: Brace",
+            "body": "A defensive maneuver that increases your resistance to all incoming physical damage for a short duration. Requires a certain amount of Martial voltage.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "magic_shield",
+                "mana_shield"
+            ],
+            "title": "Skill: Magic Shield",
+            "body": "An arcane barrier that absorbs a portion of incoming damage by consuming Mana instead of HP. Essential for glass-cannon casters.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "armor",
+                "defense",
+                "mitigation"
+            ],
+            "title": "Armor & Mitigation",
+            "body": "Defense reduces incoming raw damage by a flat amount (Damage - Defense = Final Damage). Mitigation is a percentage-based reduction applied after defense. Heavier armor provides more defense but drains stamina more quickly when moving.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "balance",
+                "posture",
+                "stability"
+            ],
+            "title": "Balance & Posture",
+            "body": "Every combatant has a 'Balance' resource. Taking damage reduces Balance.\n\nWhen Balance hits 0, your Posture is BROKEN, causing you to be Off-Balance and Prone.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "blind",
+                "blinded",
+                "dirt kick"
+            ],
+            "title": "Status: Blinded",
+            "body": "While blinded, your accuracy is severely reduced, causing most of your physical and ranged attacks to fail.\n\n[Mechanics]\n- Accuracy: 90% chance to miss on auto-attacks and targeted skills.\n- Removal: Automatically wears off after its duration, or can be cleansed by light magic.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "bash",
+                "stunning"
+            ],
+            "title": "Skill: Bash",
+            "body": "A fundamental martial opener used to disable a target before they can react.\n\n[Mechanics]\n- Effect: Applies [Stunned] for 3 seconds.\n- Posture: Deals significant Balance damage.\n- Requirement: Barbarian class (Note: Unlike 'Shield Bash', this does not require a shield).",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "shield bash"
+            ],
+            "title": "Skill: Shield Bash",
+            "body": "A tactical maneuver used to shatter an opponent's guard.\n\n[Mechanics]\n- Effect: Applies [Off-Balance] for 4 seconds.\n- Posture: Increases the likelihood of a posture break.\n- Requirement: Knight class AND an equipped Shield (Buckler, Targe, etc.).",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "whirlwind",
+                "momentum"
+            ],
+            "title": "Skill: Whirlwind",
+            "body": "A devastating area-of-effect finisher for the Barbarian.\n\n[Mechanics]\n- Effect: Deals massive physical damage to all enemies in the room.\n- Scaling: Damage is multiplied by (1.0 + 0.25 per Momentum).\n- Consumption: Consumes ALL Momentum upon use.\n- Requirement: Barbarian class.",
+            "category": "system"
+        }
+    ]
+}

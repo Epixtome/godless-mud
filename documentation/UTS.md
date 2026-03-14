@@ -42,7 +42,13 @@ When a player runs `become <class>` at a shrine:
     *   `player.active_kit` is populated with the data from `kits.json`.
     *   **Auto-Equip:** The system automatically strips old gear/blessings and equips the items/skills defined in the Kit.
 
-## 4. The Auditor's Role
+## 5. Global Tag Synergy (UTS Resonance)
+As of V5.0, the system uses a **Resonance Cache** to provide O(1) synergy calculations.
+*   **Method**: `player.get_global_tag_count(tag)`
+*   **Invalidation**: The cache must be invalidated via `player.mark_tags_dirty()` whenever gear is changed or status effects are applied/removed.
+*   **Source of Truth**: The `ResonanceAuditor` in `logic/engines/resonance_engine.py` handles the raw aggregation of tags from Deck, Gear, and active Effects.
+
+## 6. The Auditor's Role
 The `Auditor` (`logic/engines/blessings/auditor.py`) enforces the Kit boundaries.
 *   **Identity Check:** `check_identity` verifies that any blessing the player attempts to use is present in their `active_kit`.
 *   **Result:** If you try to cast *Fireball* while in the *Warrior* kit, the Auditor rejects it, even if you technically "know" the spell from a previous life.

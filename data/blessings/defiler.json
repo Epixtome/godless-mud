@@ -4,81 +4,49 @@
             "id": "life_tap",
             "name": "Life Tap",
             "description": "Drain life from a target to heal yourself.",
-            "identity_tags": [
-                "magic",
-                "dark",
-                "drain",
-                "occult",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 15
-            },
+            "identity_tags": ["magic", "dark", "drain"],
+            "action": "life_tap",
+            "requirements": { "stamina": 15 },
             "base_power": 15,
-            "scaling": [
-                {
-                    "scaling_tag": "dark",
-                    "multiplier": 1.5
-                }
+            "scaling": { "scaling_tag": "dark", "multiplier": 1.5 }
+        },
+        "blood_veil": {
+            "id": "blood_veil",
+            "name": "Blood Veil",
+            "description": "Deny: A 3s reactive window. Converts 50% of the next hit's damage into [Malediction] on the attacker.",
+            "identity_tags": ["magic", "dark", "reaction"],
+            "requirements": { "stamina": 20, "cooldown": 10 },
+            "effects": [
+                { "id": "blood_veil_active", "duration": 3, "target": "self" }
             ]
+        },
+        "rotting_burst": {
+            "id": "rotting_burst",
+            "name": "Rotting Burst",
+            "description": "Payoff: Deals massive dark damage. Power increases by 30% for every unique debuff on the target.",
+            "identity_tags": ["magic", "dark", "strike", "finisher"],
+            "requirements": { "stamina": 25, "cooldown": 4 },
+            "base_power": 20,
+            "scaling": { "scaling_tag": "dark", "multiplier": 1.2 }
         },
         "plague": {
             "id": "plague",
             "name": "Plague",
-            "description": "Infect a target with a spreading disease.",
-            "identity_tags": [
-                "magic",
-                "dark",
-                "poison",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 20
-            },
-            "on_hit": {
-                "apply_status": "plagued",
-                "duration": 10
-            }
-        },
-        "malediction": {
-            "id": "malediction",
-            "name": "Malediction",
-            "description": "Curse a target, reducing their defenses.",
-            "identity_tags": [
-                "magic",
-                "dark",
-                "utility",
-                "occult",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 15
-            },
-            "on_hit": {
-                "apply_status": "cursed",
-                "duration": 6
-            }
+            "description": "Apply: Infect a target with a disease that drains HP and Balance.",
+            "identity_tags": ["magic", "dark", "poison"],
+            "action": "plague",
+            "requirements": { "stamina": 20, "cooldown": 8 },
+            "on_hit": { "apply_status": "plagued", "duration": 10 }
         },
         "bone_spear": {
             "id": "bone_spear",
             "name": "Bone Spear",
             "description": "Hurl a spear of bone at your foe.",
-            "identity_tags": [
-                "magic",
-                "dark",
-                "strike",
-                "skill"
-            ],
-            "requirements": {
-                "stamina": 25
-            },
+            "identity_tags": ["magic", "dark", "strike"],
+            "action": "bone_spear",
+            "requirements": { "stamina": 25 },
             "base_power": 20,
-            "scaling": [
-                {
-                    "scaling_tag": "dark",
-                    "multiplier": 2.0
-                }
-            ]
+            "scaling": { "scaling_tag": "dark", "multiplier": 2.0 }
         }
     }
 }

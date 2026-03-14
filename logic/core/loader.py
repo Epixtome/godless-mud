@@ -48,7 +48,7 @@ def _load_all_metadata(world):
     deity_data = _load_single_json('data/deities.json', 'deities')
     synergy_data = _load_single_json('data/synergies.json', 'synergies')
     quest_data = _load_single_json('data/quests.json', 'quests')
-    help_data = _load_single_json('data/help.json', 'help')
+    help_data = _load_fragmented_json('data/help', 'help', 'data/help.json')
     recipe_data = _load_single_json('data/recipes.json', 'recipes')
     status_data = _load_fragmented_json('data/status_effects', 'effects', 'data/status_effects.json')
 
@@ -95,10 +95,21 @@ def _instantiate_item(data):
 
 def _instantiate_monster(data, world):
     mob = Monster(data['name'], data['description'], data['hp'], data.get('damage', 1), data.get('tags'), data.get('max_hp'), prototype_id=data.get('prototype_id'), home_room_id=data.get('home_room_id'), game=getattr(world, 'game', None))
-    # Re-apply prototype data if available
+    
+    # Apply saved deltas (Resources, Statuses, Inventory)
+    for k, v in data.items():
+        if k in ['resources', 'status_effects', 'ext_state', 'flags', 'metadata']:
+            setattr(mob, k, v)
+        elif k == 'inventory':
+            from logic.core.utils import persistence
+            mob.inventory = [persistence.item_from_data(i, world.game) for i in v if i]
+
+    # Re-apply prototype data for constant fields
     if mob.prototype_id and mob.prototype_id in world.monsters:
         proto = world.monsters[mob.prototype_id]
         mob.quests = getattr(proto, 'quests', [])
+        if not mob.tags: mob.tags = getattr(proto, 'tags', [])
+        
     return mob
 
 def _link_exits(world):

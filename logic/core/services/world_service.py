@@ -19,14 +19,13 @@ def spawn_monster(game, proto_id, room, count=1):
         logger.warning(f"WorldService: Attempted to spawn non-existent prototype {proto_id}")
         return None
 
+    from logic.core.factory import get_monster
     spawned = []
     for _ in range(count):
-        # 1. Clone/Instantiate
-        new_mob = Monster(
-            proto.name, proto.description, getattr(proto, 'max_hp', 100), proto.damage, 
-            tags=getattr(proto, 'tags', []), max_hp=getattr(proto, 'max_hp', 100), 
-            prototype_id=proto_id
-        )
+        # 1. Instantiate via Factory to ensure Prototype Consistency
+        new_mob = get_monster(proto_id, game.world)
+        if not new_mob: continue
+        
         new_mob.game = game
         new_mob.room = room
         
@@ -58,9 +57,12 @@ def spawn_item(game, proto_id, target, count=1):
     if not proto:
         return None
 
+    from logic.core.factory import get_item
     spawned = []
     for _ in range(count):
-        item = proto.clone()
+        # Use Dynamic Factory to build a validated item instance
+        item = get_item(proto_id, game.world)
+        if not item: continue
         
         if hasattr(target, 'inventory'): # Entity (Player/Monster)
             target.inventory.append(item)
@@ -75,6 +77,31 @@ def spawn_item(game, proto_id, target, count=1):
         spawned.append(item)
     
     return spawned
+
+def move_entity(entity, target_room):
+    """
+    Service: Unified movement for Players and Monsters.
+    Handles room registration and reference cleanup.
+    """
+    if not entity or not target_room:
+        return False
+
+    old_room = getattr(entity, 'room', None)
+    if old_room:
+        if entity in old_room.players:
+            old_room.players.remove(entity)
+        if entity in old_room.monsters:
+            old_room.monsters.remove(entity)
+
+    entity.room = target_room
+    if getattr(entity, 'is_player', False):
+        if entity not in target_room.players:
+            target_room.players.append(entity)
+    else:
+        if entity not in target_room.monsters:
+            target_room.monsters.append(entity)
+    
+    return True
 
 def purge_room(room, purge_type="all"):
     """Safely clears a room of entities."""

@@ -25,6 +25,7 @@ class Monster:
         self.quests = [] # List of quest IDs this mob can give
         self.home_room_id = home_room_id
         self.leader = None # Entity this mob follows
+        self.owner_id = None # ID of the player who created this mob
         self.can_be_companion = False # If True, can be recruited via friendship
         self.is_shopkeeper = False
         self.room = None # Reference to the Room object containing this mob
@@ -35,7 +36,13 @@ class Monster:
         self.current_action = None # Reference to active ActionTask (Action Manager)
         self.skills = [] # List of blessing IDs this mob can use
         self.level = max(1, int(self.max_hp / 20)) # Estimate level from HP
-        self.resources = {'stamina': 100, 'concentration': 100, 'heat': 0, 'chi': 0, 'balance': 100}
+        self.resources = {
+            'stamina': 100, 
+            'concentration': 100, 
+            'heat': 0, 
+            'chi': 0, 
+            'balance': 20 + (self.level * 5)
+        }
         self.active_class = None
         self.cooldowns = {} # ID -> tick when ready
         self.ext_state = {}
@@ -56,6 +63,11 @@ class Monster:
         self.is_player = False
         self.state = "normal" 
         self.current_state = "normal" # Legacy support
+
+    @property
+    def equipped_blessings(self):
+        """Standardized access for MathBridge and synergy logic."""
+        return self.skills or self.known_blessings
         self.temporary = False
         self.ai_state = "idle"
         self.flags = []

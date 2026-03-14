@@ -15,20 +15,21 @@ Defined in kingdom-sharded files (e.g., `light.json`).
         - `name`: string
         - `description`: string
 
-## 2. Blessings (`data/blessings/[Kingdom]/[Deity]/tier_[N].json`)
-- **Key**: String (Blessing ID, e.g., `dragon_strike`)
+## 2. Blessings (`data/blessings/[class].json`)
+- **Key**: String (Blessing ID, e.g., `double_strike`)
 - **Structure**:
-    - `id`: string
-    - `name`: string
-    - `description`: string
-    - `deity_id`: string
+    - `id`: string (Identical to key)
+    - `name`: string (Display Name)
     - `tier`: integer (1-4)
-    - `identity_tags`: list[string] (Metadata tags for resonance/logic)
-    - `requirements`: object (Resource costs or state checks)
-    - `scaling`: list[object] (Damage/Effect calculation entries)
+    - `cost`: integer (Resource cost to acquire or use)
+    - `description`: string (User-facing text)
+    - `identity_tags`: list[string] (Metadata for scaling and resonance)
+    - `action`: string (Reference to Python function in `blessing_actions.py`)
+    - `requirements`: object (Required class, stamina, chi, etc.)
+    - `scaling`: object (Single object or list of objects for math)
         - `scaling_tag`: string (Stat/Resonance being used)
         - `multiplier`: float
-        - `base_value`: integer
+        - `base_value`: integer (optional)
 
 ## 3. Zones (`data/zones/*.json`)
 - **Structure**:

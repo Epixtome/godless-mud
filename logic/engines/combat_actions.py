@@ -4,6 +4,7 @@ Separates the 'How' of combat from the 'When' of the processor loop.
 """
 import logging
 import time
+import random
 from models import Player, Monster
 from utilities.colors import Colors
 from logic.constants import Tags
@@ -25,7 +26,7 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
     if target == attacker: return
 
     # 1. Physics & Pacing Gates
-    if effects.has_effect(attacker, "stalled"): return
+    # [V5.0] Stalled only blocks skills (Auditor), auto-attacks continue.
     
     # [V5.0] Training Gates: Dummies can't attack, but Elite/Tactical targets can retaliate.
     tags = getattr(attacker, 'tags', [])
@@ -57,15 +58,44 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
     
     if is_backstab:
         raw_damage = int(raw_damage * 3.0)
-
-    # 5. Defense & Mitigation (Unified)
-    # Dodge Check
-    dodge_ctx = {'attacker': attacker, 'target': target, 'dodged': False}
-    event_engine.dispatch("combat_check_dodge", dodge_ctx)
     
-    # Prone/Off-Balance Penalty (Dodge is impossible)
-    if "prone" in getattr(target, 'status_effects', {}) or "off_balance" in getattr(target, 'status_effects', {}):
-        dodge_ctx['dodged'] = False
+    # [V6.0] Riposte Bonus (Payoff for successful parry)
+    if "riposte_ready" in getattr(attacker, 'status_effects', {}):
+        raw_damage = int(raw_damage * 2.5)
+        effects.remove_effect(attacker, "riposte_ready")
+        if hasattr(attacker, 'send_line'):
+            attacker.send_line(f"{Colors.MAGENTA}[RIPOSTE] You strike while they are open!{Colors.RESET}")
+
+    # 5. Reaction Gate (Parry/Block)
+    reaction_hit, reaction_msg, reaction_mods = blessings_engine.resolve_reaction(attacker, target, attack_tags)
+    if reaction_hit:
+        if hasattr(target, 'send_line'): target.send_line(f"{Colors.GREEN}{reaction_msg}{Colors.RESET}")
+        if hasattr(attacker, 'send_line'): attacker.send_line(f"{Colors.RED}{target.name} parries your strike!{Colors.RESET}")
+        # Terminate attack early
+        players_to_prompt.add(attacker)
+        players_to_prompt.add(target)
+        return
+
+    # 5b. Defense & Mitigation (Unified)
+    # 5b. Defense & Hit Check
+    from logic.core.utils import combat_logic
+    accuracy = combat_logic.calculate_accuracy(attacker)
+    dodge_ctx = {'attacker': attacker, 'target': target, 'dodged': False, 'accuracy': accuracy}
+    
+    # AOE skills and Sure-Hit skills ignore evasion
+    is_area = "aoe" in attack_tags
+    if not is_area:
+        event_engine.dispatch("combat_check_dodge", dodge_ctx)
+    
+        # Prone/Off-Balance Penalty (Dodge is impossible)
+        if "prone" in getattr(target, 'status_effects', {}) or "off_balance" in getattr(target, 'status_effects', {}):
+            dodge_ctx['dodged'] = False
+            
+        # [V6.0] Deterministic Accuracy Fail (If accuracy < 100, checking vs entropy)
+        if not dodge_ctx['dodged'] and accuracy < 100:
+            if random.randint(1, 100) > accuracy:
+                dodge_ctx['dodged'] = True
+                if hasattr(attacker, 'send_line'): attacker.send_line(f"{Colors.YELLOW}You are too blurred to strike accurately!{Colors.RESET}")
         
     if dodge_ctx['dodged']:
         if hasattr(attacker, 'send_line'): attacker.send_line(f"{target.name} dodges your attack!")
@@ -74,7 +104,7 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
         return
 
     # 5. Mitigation (V5.0 Percentage-based + Mitigation Events)
-    damage = combat.calculate_damage(attacker, target)
+    damage = combat.calculate_damage(attacker, target, blessing=blessing)
     
     mit_ctx = {'target': target, 'attacker': attacker, 'damage': damage, 'tags': attack_tags}
     event_engine.dispatch("on_calculate_mitigation", mit_ctx)
@@ -109,10 +139,18 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
         damage = int(damage * 1.5)
         if hasattr(target, 'send_line') and damage > 0:
             target.send_line(f"{Colors.RED}You are CRITICALLY EXPOSED! (1.5x Damage){Colors.RESET}")
+        if hasattr(attacker, 'send_line') and damage > 0:
+            attacker.send_line(f"{Colors.BOLD}{Colors.RED}*** {target.name.upper()} IS CRITICALLY EXPOSED! (1.5x Damage) ***{Colors.RESET}")
 
-    # 7. Godmode Handling
+    # 7. GODMODE & REACTION RESULTS
     is_god = getattr(target, 'godmode', False)
     if is_god: damage = 0
+
+    # Handle Counter Strikes (Barbarian Logic)
+    if reaction_mods.get('counter_strike') and not context_prefix:
+        if hasattr(target, 'send_line'):
+             target.send_line(f"{Colors.RED}Your counter-strike connects!{Colors.RESET}")
+        execute_attack(target, attacker, room, game, players_to_prompt, context_prefix="[Counter] ")
 
     # 8. Feedback & Messaging (Sharded)
     if damage > 0 or is_god:
@@ -130,17 +168,17 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
             if damage > 0:
                 synergy_engine.apply_combat_synergies(attacker, target, blessing, attack_tags, damage)
         
-        if blessing:
-            blessings_engine.apply_on_hit(attacker, target, blessing)
-
-        # 10. Secondary Effects (Bleed, Retaliation)
-        if getattr(attacker, 'is_player', False) and attacker.equipped_weapon and "bleed" in attacker.equipped_weapon.flags:
-             effects.apply_effect(target, "bleed", 10)
+        # Centralized On-Hit (Handles both Blessing logic and Weapon flags)
+        blessings_engine.apply_on_hit(attacker, target, blessing)
+            
+        # [V5.0] Auto-Attack Posture Logic (Redundant check removed)
         
         # [REMOVED] Reciprocal Engagement now handled by systems/engagement.py
 
     # 11. Attrition (Resource Drains)
     if damage > 0 and hasattr(target, 'resources'):
+        # Removed redundant check_posture_break
+
         if Tags.DISRUPTION in attack_tags:
             target.resources[Tags.CONCENTRATION] = max(0, target.resources.get(Tags.CONCENTRATION, 0) - 15)
         if Tags.CONCUSSIVE in attack_tags:
@@ -149,7 +187,7 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
             effects.apply_effect(target, "prone", 3, log_event=True)
 
     # 12. Final HP Modification & Death
-    resources.modify_resource(target, "hp", -damage, source=attacker, context="Combat Hit")
+    resources.modify_resource(target, "hp", -damage, source=attacker, context=f"{context_prefix or ''}Combat Hit".strip())
     target.last_hit_tick = game.tick_count 
 
     if damage > 0:

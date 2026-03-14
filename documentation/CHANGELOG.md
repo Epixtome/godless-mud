@@ -3,6 +3,17 @@
 > [!IMPORTANT]
 > **V4.5: THE ARCHITECTURAL REALIGNMENT**: As of March 7th, 2026, the project has undergone a massive cleanup to resolve drift, shard God Objects, and unify logic domains.
 
+## [[V5.0] ERA: The Modular Evolution] - 2026-03-13
+### Changed
+- **GATED MODULE INITIALIZATION**: Refactored `trigger_module_inits` in `persistence.py` to only initialize the `common` module and the player's `active_class`. This prevents omni-init pollution and cross-class state leakage.
+- **RESOURCE PURGE PROTOCOL**: Enhanced `sync_resources` to aggressively prune attributes not belonging to the active kit (Fixes "Score Bloat").
+- **MONK FINISHER STANDARDIZATION**: Dragon Strike and Iron Palm now utilize the `handle_attack` pipeline instead of `apply_damage`, ensuring full compatibility with Stance multipliers and UTS scaling.
+- **UTS CACHE SYSTEM**: Implemented `get_global_tag_count` on `Player` for O(1) tag synergy checks, utilizing a dirty-flagged cache.
+
+### Added
+- **DYNAMIC PROMPT VISIBILITY**: Introduced `display_in_prompt: False` metadata flag for status effects, allowing hidden mechanics (Stances/Flow) while keeping them registered.
+- **CHARACTER SCORE ENHANCEMENT**: Added `Weight Class` and `Crit Chance` to the `score` summary.
+
 ## [[V4.5] ERA: The Great Realignment] - 2026-03-07
 ### Changed
 - **STRUCTURAL HOMOGENIZATION**: Moved root `/core/` to `logic/core/`. Consolidated duplicate handlers into `logic/handlers/`.

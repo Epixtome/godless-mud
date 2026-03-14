@@ -34,8 +34,8 @@ def passive_regen(game):
                 resources.modify_resource(mob, Tags.HEAT, -5, source="Regen", context="Passive", log=False)
                 
                 # Balance Regen (Posture Protocol)
-                if mob.resources.get('balance', 0) < 100:
-                    resources.modify_resource(mob, "balance", 10, source="Regen", context="Passive", log=False)
+                if mob.resources.get('balance', 0) < 100 and not mob.fighting:
+                    resources.modify_resource(mob, "balance", 5, source="Regen", context="Passive", log=False)
 
             # Hydra/Regenerator Logic
             if "regenerator" in mob.tags and mob.body_parts:

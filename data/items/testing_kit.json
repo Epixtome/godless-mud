@@ -1,86 +1,125 @@
 {
-  "items": [
-    {
-      "id": "training_blade",
-      "name": "Heavy Iron Training Blade",
-      "description": "A massive, blunted greatsword made for shattering practice targets.",
-      "type": "weapon",
-      "slot": "main_hand",
-      "damage_dice": "3d10+10",
-      "value": 0,
-      "tags": ["martial", "heavy", "training"],
-      "scaling": {
-        "martial": 1.5
-      }
-    },
-    {
-      "id": "master_shroud",
-      "name": "Shroud of the Grandmaster",
-      "description": "Simple linen wraps that hum with incredible internal energy.",
-      "type": "armor",
-      "slot": "body",
-      "defense": 50,
-      "value": 0,
-      "tags": ["monk", "martial", "chi_mastery"],
-      "scaling": {
-        "martial": 2.0
-      }
-    },
-    {
-      "id": "bulwark_plate",
-      "name": "Wall of the Fortress",
-      "description": "A set of plate armor so heavy it practically stands on its own.",
-      "type": "armor",
-      "slot": "body",
-      "defense": 150,
-      "value": 0,
-      "tags": ["knight", "martial", "indestructible"],
-      "scaling": {
-        "protection": 1.5
-      }
-    },
-    {
-      "id": "test_catalyst",
-      "name": "Void Echo Catalyst",
-      "description": "A floating orb that amplifies all ritualistic and magic energies.",
-      "type": "weapon",
-      "slot": "off_hand",
-      "damage_dice": "1d4",
-      "value": 0,
-      "tags": ["mage", "magic", "arcane"],
-      "scaling": {
-        "magic": 2.5
-      }
-    },
-    {
-      "id": "wooden_shield",
-      "name": "Simple Wooden Shield",
-      "description": "A basic circular shield made of oak and banded in iron.",
-      "type": "armor",
-      "slot": "off_hand",
-      "defense": 10,
-      "tags": ["martial", "shield", "wooden"],
-      "weight": 5
-    },
-    {
-      "id": "iron_shield",
-      "name": "Iron Tower Shield",
-      "description": "A heavy, rectangular shield that offers massive coverage.",
-      "type": "armor",
-      "slot": "off_hand",
-      "defense": 30,
-      "tags": ["martial", "shield", "heavy", "knight"],
-      "weight": 25
-    },
-    {
-      "id": "monk_wraps",
-      "name": "Focused Wraps",
-      "description": "Stiffened cloth wraps focused on channeling Flow.",
-      "type": "weapon",
-      "slot": "off_hand",
-      "damage_dice": "1d4",
-      "tags": ["monk", "martial_fists", "flow"],
-      "weight": 1
-    }
-  ]
+    "items": [
+        {
+            "id": "training_blade",
+            "name": "Heavy Iron Training Blade",
+            "description": "A massive, blunted greatsword made for shattering practice targets.",
+            "type": "weapon",
+            "slot": "main_hand",
+            "damage_dice": "3d10+10",
+            "value": 0,
+            "tags": [
+                "martial",
+                "heavy",
+                "training"
+            ],
+            "stats": {
+                "scaling_tag": "martial",
+                "scaling_mult": 1.0
+            }
+        },
+        {
+            "id": "master_shroud",
+            "name": "Shroud of the Grandmaster",
+            "description": "Simple linen wraps that hum with incredible internal energy.",
+            "type": "armor",
+            "slot": "body",
+            "defense": 50,
+            "value": 0,
+            "tags": [
+                "monk",
+                "martial",
+                "chi_mastery"
+            ],
+            "stats": {
+                "scaling_tag": "martial",
+                "scaling_mult": 1.0
+            }
+        },
+        {
+            "id": "bulwark_plate",
+            "name": "Wall of the Fortress",
+            "description": "A set of plate armor so heavy it practically stands on its own.",
+            "type": "armor",
+            "slot": "body",
+            "defense": 150,
+            "value": 0,
+            "tags": [
+                "knight",
+                "martial",
+                "indestructible"
+            ],
+            "stats": {
+                "scaling_tag": "martial",
+                "scaling_mult": 1.0
+            }
+        },
+        {
+            "id": "test_catalyst",
+            "name": "Void Echo Catalyst",
+            "description": "A floating orb that amplifies all ritualistic and magic energies.",
+            "type": "weapon",
+            "slot": "off_hand",
+            "damage_dice": "1d4",
+            "value": 0,
+            "tags": [
+                "mage",
+                "magic",
+                "arcane"
+            ],
+            "stats": {
+                "scaling_tag": "martial",
+                "scaling_mult": 1.0
+            }
+        },
+        {
+            "id": "wooden_shield",
+            "name": "Simple Wooden Shield",
+            "description": "A basic circular shield made of oak and banded in iron.",
+            "type": "armor",
+            "slot": "off_hand",
+            "defense": 10,
+            "tags": [
+                "martial",
+                "shield",
+                "wooden"
+            ],
+            "weight": 5,
+            "weight_class": "light"
+        },
+        {
+            "id": "iron_shield",
+            "name": "Iron Tower Shield",
+            "description": "A heavy, rectangular shield that offers massive coverage.",
+            "type": "armor",
+            "slot": "off_hand",
+            "defense": 30,
+            "tags": [
+                "martial",
+                "shield",
+                "heavy",
+                "knight"
+            ],
+            "weight": 25,
+            "weight_class": "heavy"
+        },
+        {
+            "id": "monk_wraps",
+            "name": "Focused Wraps",
+            "description": "Stiffened cloth wraps focused on channeling Flow.",
+            "type": "weapon",
+            "slot": "off_hand",
+            "damage_dice": "1d4",
+            "tags": [
+                "monk",
+                "martial_fists",
+                "flow"
+            ],
+            "weight": 1,
+            "stats": {
+                "scaling_tag": "martial"
+            },
+            "weight_class": "light"
+        }
+    ]
 }

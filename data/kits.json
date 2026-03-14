@@ -1,209 +1,273 @@
 {
-  "barbarian": {
-    "name": "Barbarian",
-    "description": "A relentless warrior who dominates through a flurry of auto-attacks.",
-    "gear": [
-      "heavy_leather_tunic",
-      "iron_maul"
-    ],
-    "blessings": [
-      "whirlwind",
-      "hurl",
-      "sunder",
-      "bash",
-      "drag",
-      "push"
-    ],
-    "identity_tags": [
-      "martial"
-    ]
-  },
-  "knight": {
-    "name": "Knight",
-    "description": "A stalwart defender capable of devastating mounted maneuvers.",
-    "gear": [
-      "iron_sword",
-      "wooden_shield",
-      "heavy_plate"
-    ],
-    "blessings": [
-      "charge",
-      "mount",
-      "shield_bash",
-      "brace",
-      "intervene",
-      "rescue"
-    ],
-    "identity_tags": [
-      "martial",
-      "light"
-    ],
-    "passive_attributes": {
-        "max_stamina_bonus": 50,
-        "movement_delay_mult": 0.8
+    "barbarian": {
+        "name": "Barbarian",
+        "description": "The Juggernaut. Builds Momentum through speed and Fury through pain. A relentless blender of destruction.",
+        "gear": [
+            "heavy_leather_tunic",
+            "iron_maul"
+        ],
+        "blessings": [
+            "bash",
+            "dirt_kick",
+            "drag",
+            "push",
+            "struggle",
+            "whirlwind",
+            "bloodrage",
+            "counter"
+        ],
+        "identity_tags": [
+            "martial",
+            "juggernaut"
+        ],
+        "resources": ["stamina", "fury"],
+        "version": 4
+    },
+    "knight": {
+        "name": "Knight",
+        "description": "A stalwart defender capable of devastating mounted maneuvers.",
+        "gear": [
+            "iron_sword",
+            "wooden_shield",
+            "heavy_plate"
+        ],
+        "blessings": [
+            "charge",
+            "mount",
+            "shield_bash",
+            "brace",
+            "intervene",
+            "rescue"
+        ],
+        "identity_tags": [
+            "martial",
+            "light"
+        ],
+        "resources": ["stamina"],
+        "resource_conversion": "physical_focus",
+        "passive_attributes": {
+            "max_stamina_bonus": 50,
+            "movement_delay_mult": 0.8
+        },
+        "version": 2
+    },
+    "monk": {
+        "name": "Monk",
+        "description": "A high-flow martial artist focused on stances and evasion.",
+        "gear": [
+            "silk_wraps",
+            "monk_robes",
+            "wooden_sandals",
+            "spiked_knuckles"
+        ],
+        "blessings": [
+            "triple_kick",
+            "snap_kick",
+            "seven_fists",
+            "dragon_strike",
+            "flow_stance",
+            "iron_stance",
+            "centering"
+        ],
+        "identity_tags": [
+            "adventurer"
+        ],
+        "resources": ["stamina", "chi", "concentration"],
+        "passive_attributes": {
+            "regen_stamina_bonus": 2,
+            "evasion_bonus": 10
+        },
+        "version": 3
+    },
+    "mage": {
+        "name": "Mage",
+        "description": "A glass weaver who trades physical stamina for high-impact arcane logic.",
+        "gear": [
+            "wizard_robes",
+            "willow_staff",
+            "focus_crystal"
+        ],
+        "blessings": [
+            "lightning_bolt",
+            "frost_nova",
+            "phase_shift",
+            "fireball"
+        ],
+        "identity_tags": [
+            "magic",
+            "arcane"
+        ],
+        "resources": ["stamina", "concentration", "heat"],
+        "resource_conversion": "mental_focus",
+        "version": 3
+    },
+    "assassin": {
+        "name": "Assassin",
+        "description": "A shadow-dweller who uses precision to bypass armor.",
+        "gear": [
+            "dark_leather_mask",
+            "shadow_cloak",
+            "glass_dagger"
+        ],
+        "blessings": [
+            "backstab",
+            "hide",
+            "smoke_bomb",
+            "dirt_kick",
+            "garrote"
+        ],
+        "identity_tags": [
+            "martial",
+            "stealth",
+            "stiletto"
+        ],
+        "resources": ["stamina"],
+        "version": 2
+    },
+    "cleric": {
+        "name": "Cleric",
+        "description": "The party's logistics officer. Manages stamina and cleanses statuses while punishing the unholy.",
+        "gear": [
+            "holy_mace",
+            "reinforced_mail",
+            "blessed_pendant"
+        ],
+        "blessings": [
+            "lay_on_hands",
+            "cleanse",
+            "holy_blast",
+            "divine_grace",
+            "exorcism",
+            "refresh"
+        ],
+        "identity_tags": [
+            "divine",
+            "support",
+            "anti_undead"
+        ],
+        "resources": ["stamina", "concentration"],
+        "version": 2
+    },
+    "defiler": {
+        "name": "Defiler",
+        "description": "A dark caster who siphons life and punishes victims for their weaknesses.",
+        "gear": [
+            "bone_armor",
+            "ichor_blade",
+            "vile_talisman"
+        ],
+        "blessings": [
+            "life_tap",
+            "plague",
+            "blood_veil",
+            "rotting_burst",
+            "bone_spear"
+        ],
+        "identity_tags": [
+            "dark",
+            "occult",
+            "pestilence"
+        ],
+        "resources": ["stamina", "concentration"],
+        "version": 2
+    },
+    "beastmaster": {
+        "name": "Beastmaster",
+        "description": "A commander of the wild who uses pets to harass enemies and intercept strikes.",
+        "gear": [
+            "heavy_leather_tunic",
+            "iron_maul"
+        ],
+        "blessings": [
+            "tame",
+            "call",
+            "order",
+            "whistle",
+            "bestial_reflex",
+            "coordinated_strike",
+            "pounce"
+        ],
+        "identity_tags": [
+            "beast",
+            "master",
+            "feral"
+        ],
+        "resources": ["stamina"],
+        "version": 2
+    },
+    "red_mage": {
+        "name": "Red Mage",
+        "description": "A versatile hybrid who weaves martial prowess with white and black magic. The ultimate fencer.",
+        "gear": [
+            "red_robes",
+            "rapier",
+            "wooden_shield"
+        ],
+        "blessings": [
+            "spellstrike_frost",
+            "fencers_ward",
+            "dualcast_burst"
+        ],
+        "identity_tags": [
+            "martial",
+            "arcane",
+            "spellblade"
+        ],
+        "resources": ["stamina", "concentration"],
+        "resource_conversion": "mental_focus",
+        "version": 2
+    },
+    "warlock": {
+        "name": "Warlock",
+        "description": "The Hexblade. A symbiotic hybrid who weaves dark spells to build Entropy, then discharges it through devastating melee strikes.",
+        "gear": [
+            "bone_armor",
+            "abyssal_blade",
+            "acolyte_hood"
+        ],
+        "blessings": [
+            "hex",
+            "eldritch_blast",
+            "netherstep",
+            "soul_cleave",
+            "metamorphosis",
+            "eldritch_ward"
+        ],
+        "identity_tags": [
+            "occult",
+            "symbiosis"
+        ],
+        "resources": ["stamina", "concentration", "entropy"],
+        "version": 5
+    },
+    "illusionist": {
+        "name": "Illusionist",
+        "description": "A master of deception who manipulates reality to evade and confuse foes.",
+        "gear": [
+            "prism_shards",
+            "refractive_cloak"
+        ],
+        "blessings": [
+            "color_spray",
+            "screaming_wall",
+            "mirror_image",
+            "haste",
+            "phantasmal_inferno",
+            "shatter_sanity"
+        ],
+        "identity_tags": [
+            "adventurer",
+            "trickster",
+            "illusion"
+        ],
+        "resources": ["stamina", "concentration"],
+        "resource_conversion": "mental_focus",
+        "version": 5
+    },
+    "wanderer": {
+        "name": "Wanderer",
+        "description": "A free spirit who moves across the land without mental strain.",
+        "blessings": [],
+        "resource_conversion": "free_focus"
     }
-  },
-  "monk": {
-    "name": "Monk",
-    "description": "A high-flow martial artist focused on stances and evasion.",
-    "gear": [
-      "silk_wraps",
-      "monk_robes",
-      "wooden_sandals",
-      "spiked_knuckles"
-    ],
-    "blessings": [
-      "crane_stance",
-      "turtle_stance",
-      "triple_kick",
-      "iron_palm",
-      "dragon_strike"
-    ],
-    "identity_tags": [
-      "adventurer"
-    ],
-    "passive_attributes": {
-        "regen_stamina_bonus": 2,
-        "evasion_bonus": 10
-    }
-  },
-  "mage": {
-    "name": "Mage",
-    "description": "A glass weaver who trades physical stamina for high-impact arcane logic.",
-    "gear": [
-      "wizard_robes",
-      "willow_staff",
-      "focus_crystal"
-    ],
-    "blessings": [
-      "lightning_bolt",
-      "freeze",
-      "magic_shield",
-      "fireball"
-    ],
-    "identity_tags": [
-      "magic",
-      "arcane"
-    ]
-  },
-  "assassin": {
-    "name": "Assassin",
-    "description": "A shadow-dweller who uses precision to bypass armor.",
-    "gear": [
-      "dark_leather_mask",
-      "shadow_cloak",
-      "glass_dagger"
-    ],
-    "blessings": [
-      "backstab",
-      "hide",
-      "smoke_bomb",
-      "dirt_kick",
-      "garrote"
-    ],
-    "identity_tags": [
-      "adventurer"
-    ]
-  },
-  "cleric": {
-    "name": "Cleric",
-    "description": "The party's logistics officer. Manages stamina and cleanses statuses.",
-    "gear": [
-      "holy_mace",
-      "reinforced_mail",
-      "blessed_pendant"
-    ],
-    "blessings": [
-      "lay_on_hands",
-      "cleanse",
-      "sanctify",
-      "shield_bash",
-      "refresh"
-    ],
-    "identity_tags": [
-      "adventurer"
-    ]
-  },
-  "defiler": {
-    "name": "Defiler",
-    "description": "A dark caster who siphons life and applies debilitating toxins.",
-    "gear": [
-      "bone_armor",
-      "ichor_blade",
-      "vile_talisman"
-    ],
-    "blessings": [
-      "life_tap",
-      "plague",
-      "malediction",
-      "bone_spear"
-    ],
-    "identity_tags": [
-      "adventurer"
-    ]
-  },
-  "beastmaster": {
-    "name": "Beastmaster",
-    "description": "A commander of the wild who uses pets to harass enemies.",
-    "gear": [
-      "heavy_leather_tunic",
-      "iron_maul"
-    ],
-    "blessings": [
-      "tame",
-      "call",
-      "order",
-      "whistle"
-    ],
-    "identity_tags": [
-      "adventurer"
-    ]
-  },
-  "red_mage": {
-    "name": "Red Mage",
-    "description": "A versatile hybrid who weaves martial prowess with white and black magic.",
-    "gear": [
-      "red_robes",
-      "rapier",
-      "wooden_shield"
-    ],
-    "blessings": [],
-    "identity_tags": [
-      "adventurer"
-    ]
-  },
-  "warlock": {
-    "name": "Warlock",
-    "description": "An anti-mage juggernaut who scales power with suffering and shuts down enemy engines.",
-    "gear": [
-      "bone_armor",
-      "abyssal_blade",
-      "acolyte_hood"
-    ],
-    "blessings": [
-      "malignant_bond",
-      "chaos_drain",
-      "blood_toll",
-      "siphon_life"
-    ],
-    "identity_tags": [
-      "adventurer"
-    ]
-  },
-  "illusionist": {
-    "name": "Illusionist",
-    "description": "A master of deception who manipulates reality to evade and confuse foes.",
-    "gear": [
-      "prism_shards",
-      "refractive_cloak"
-    ],
-    "blessings": [
-      "blur",
-      "phantasm",
-      "mind_trick"
-    ],
-    "identity_tags": [
-      "adventurer"
-    ]
-  }
 }

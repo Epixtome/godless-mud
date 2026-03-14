@@ -127,7 +127,7 @@ def populate_world(game):
             new_mob.game = game
             new_mob.quests = proto.quests
             new_mob.can_be_companion = proto.can_be_companion
-            new_mob.resources = {"stamina": 100, "concentration": 100, "mana": 100}
+            new_mob.resources = {'stamina': 100, 'concentration': 100, 'heat': 0, 'chi': 0, 'balance': 100}
             new_mob.cooldowns = {}
             new_mob.active_class = None
             new_mob.temporary = True

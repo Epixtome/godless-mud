@@ -134,9 +134,6 @@ class ResonanceAuditor:
         if hasattr(player, '_cached_tags'):
             player._cached_tags = total_tags
             player.tags_are_dirty = False
-
-        # Simplified identity update
-        player.identity_tags = list(set(["adventurer"] + list(total_tags.keys())))
         
         # [KIT_SYNC] Snapshot
         # Deduplicate logs: Only log if tags changed

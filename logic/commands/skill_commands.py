@@ -36,11 +36,25 @@ def try_execute_skill(player, command_line):
     trigger = parts[0].lower()
     args = " ".join(parts[1:]) if len(parts) > 1 else ""
     
-    # Fuzzy Resolution Logic
-    # Priority:
-    # 1. Exact Match (slug or name)
-    # 2. Word Match (trigger is a distinct word in the name, e.g. "charge" in "mounted charge")
-    # 3. Starts With (trigger is the start of the name)
+    # fuzzy Resolution Logic
+    # GCA Fix: Protect core verbs from being intercepted by greedy fuzzy matching.
+    CORE_VERBS = {
+        'n', 's', 'e', 'w', 'u', 'd', 'nw', 'ne', 'sw', 'se',
+        'north', 'south', 'east', 'west', 'up', 'down',
+        'look', 'l', 'score', 'sc', 'i', 'inv', 'inventory', 'map', 'who', 'help', '?'
+    }
+
+    if trigger in CORE_VERBS:
+        # For core verbs, we ONLY allow an exact match to a skill ID or slug.
+        # This prevents 'l' from matching 'Leopard Strike' and blocking 'look'.
+        for b_id in player.equipped_blessings:
+            b = player.game.world.blessings.get(b_id)
+            if not b: continue
+            b_slug = b.name.lower().replace(" ", "_")
+            if b_slug == trigger or b_id.lower() == trigger:
+                _execute_skill(player, b, args)
+                return True
+        return False # Fall back to command_manager for core verbs
     
     candidates = []
     

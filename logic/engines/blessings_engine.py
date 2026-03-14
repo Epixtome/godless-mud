@@ -10,9 +10,8 @@ from logic.engines.blessings.math_bridge import (
     calculate_duration, 
     calculate_weapon_power, 
     resolve_blessing_effect,
-    process_red_mage_mechanics
+    resolve_reaction
 )
-from logic.engines.blessings.stance_hooks import on_calculate_cooldown
 
 # Re-export for compatibility
 __all__ = [
@@ -23,8 +22,7 @@ __all__ = [
     'calculate_duration',
     'calculate_weapon_power',
     'resolve_blessing_effect',
+    'resolve_reaction',
     'check_pacing',
-    'process_red_mage_mechanics',
     'on_status_removed',
-    'on_calculate_cooldown'
 ]

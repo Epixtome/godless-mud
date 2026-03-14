@@ -1,0 +1,99 @@
+{
+    "monsters": [
+        {
+            "id": "forgotten_mayor",
+            "name": "The Forgotten Mayor",
+            "description": "A skeletal figure in tattered noble finery. He clutches a rusted key.",
+            "hp": 450,
+            "max_hp": 450,
+            "damage": 15,
+            "tags": [
+                "undead",
+                "boss"
+            ]
+        },
+        {
+            "id": "ghost",
+            "name": "Restless Ghost",
+            "description": "A translucent spirit moaning softly.",
+            "hp": 45,
+            "max_hp": 45,
+            "damage": 5,
+            "tags": [
+                "undead",
+                "spirit"
+            ]
+        },
+        {
+            "id": "shadow_wraith",
+            "name": "Shadow Wraith",
+            "description": "A floating spirit of pure darkness that chills the air.",
+            "hp": 90,
+            "max_hp": 90,
+            "damage": 9,
+            "tags": [
+                "undead",
+                "dark",
+                "spirit"
+            ]
+        },
+        {
+            "id": "skeleton",
+            "name": "Skeleton",
+            "description": "A pile of bones held together by dark magic.",
+            "hp": 52,
+            "max_hp": 52,
+            "damage": 6,
+            "tags": [
+                "undead",
+                "dark"
+            ]
+        },
+        {
+            "id": "screaming_wall",
+            "name": "Screaming Wall",
+            "description": "A wall of spectral faces wailing in agony. It blocks all passage.",
+            "hp": 200,
+            "max_hp": 200,
+            "damage": 5,
+            "tags": [
+                "construct",
+                "spirit",
+                "immobile",
+                "blocker"
+            ]
+        },
+        {
+            "id": "zombie",
+            "name": "Zombie",
+            "description": "A rotting corpse that hungers for flesh.",
+            "hp": 75,
+            "max_hp": 75,
+            "damage": 4,
+            "tags": [
+                "undead",
+                "dark"
+            ]
+        },
+        {
+            "id": "elite_knight_trainer",
+            "name": "Ser Alaric the Unyielding",
+            "description": "A ghost-knight in shimmering plate. He stands in a perfect defensive stance, ready to counter-attack.",
+            "hp": 2000,
+            "max_hp": 2000,
+            "damage": 12,
+            "tags": [
+                "undead",
+                "elite",
+                "class:knight",
+                "tactical"
+            ],
+            "active_class": "knight",
+            "skills": [
+                "brace",
+                "shield_bash",
+                "iron_will"
+            ]
+        }
+    ]
+}

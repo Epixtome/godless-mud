@@ -6,13 +6,14 @@ Static data for core status effects.
 STATUS_MAP = {
     'hidden': 'concealed',
     'sneaking': 'concealed',
-    'stealth': 'concealed'
+    'stealth': 'concealed',
+    'stun': 'stunned'
 }
 
 # Status Hierarchy
-CRITICAL_STATES = {"prone", "off_balance", "jarred", "stun"}
+CRITICAL_STATES = {"prone", "off_balance", "jarred", "stun", "stunned", "incapacitated", "shattered_mind"}
 HARD_DEBUFFS = {"shocked", "overheated", "webbed", "frozen", "silence", "disarmed"}
-SOFT_DEBUFFS = {"wet", "cold", "muddy", "bleed", "corroded", "blind", "panting", "poison", "burn"}
+SOFT_DEBUFFS = {"wet", "cold", "muddy", "bleed", "corroded", "blinded", "panting", "poison", "burn"}
 
 CORE_STATUS_DEFINITIONS = {
     "prone": {
@@ -51,6 +52,18 @@ CORE_STATUS_DEFINITIONS = {
         "description": "Reeling from a heavy blow. Cannot attack.",
         "metadata": {"is_debuff": True}
     },
+    "stunned": {
+        "name": "Stunned",
+        "blocks": ["movement", "combat", "skills"],
+        "description": "Completely incapacitated. You cannot move, fight, or use skills.",
+        "metadata": {"is_debuff": True}
+    },
+    "stun": {
+        "name": "Stunned",
+        "blocks": ["movement", "combat", "skills"],
+        "description": "Completely incapacitated. You cannot move, fight, or use skills.",
+        "metadata": {"is_debuff": True}
+    },
     "overheated": {
         "name": "Overheated",
         "blocks": ["movement", "combat"],
@@ -58,15 +71,47 @@ CORE_STATUS_DEFINITIONS = {
     },
     "crane_stance": {
         "name": "Crane Stance",
-        "description": "A fluid, defensive stance. Increases Wisdom and Defense, making the Monk harder to hit and more resilient to magical effects.",
+        "description": "The Wind. A fluid, defensive stance. Doubled Stamina regeneration and increased Evasion.",
         "group": "stance",
-        "metadata": {"is_buff": True}
+        "metadata": {"is_buff": True, "stamina_regen_mult": 2.0, "display_in_prompt": False}
     },
     "turtle_stance": {
         "name": "Turtle Stance",
-        "description": "A low-profile, grounded stance. Grants immunity to knockdowns and reduces physical damage taken by 15%.",
+        "description": "The Mountain. A low-profile, grounded stance. Grants immunity to [Prone], reduces incoming damage, and regenerates Balance.",
         "group": "stance",
-        "metadata": {"immune_to": ["prone", "knockback"], "mitigation_mult": 0.85}
+        "metadata": {"is_buff": True, "immune_to": ["prone", "knockback"], "mitigation_mult": 0.85, "balance_regen_bonus": 20, "display_in_prompt": False}
+    },
+    "tiger_stance": {
+        "name": "Tiger Stance",
+        "description": "The Breaker. An aggressive, high-impact stance. Increased damage and Crit chance, but double Stamina costs.",
+        "group": "stance",
+        "metadata": {"is_buff": True, "damage_mult": 1.25, "crit_chance_bonus": 0.15, "stamina_cost_mult": 2.0, "display_in_prompt": False}
+    },
+    "mantis_stance": {
+        "name": "Mantis Stance",
+        "description": "The Trap. A precise, opportunistic stance. Counter-attacks when hit, but disables all resource regeneration.",
+        "group": "stance",
+        "metadata": {"is_buff": True, "counter_chance": 1.0, "regen_suppressed": True, "display_in_prompt": False}
+    },
+    "predator_flow": {
+        "name": "Predator Flow",
+        "description": "Tiger flow: Your next strike is a guaranteed critical hit.",
+        "metadata": {"is_buff": True, "display_in_prompt": False}
+    },
+    "water_flow": {
+        "name": "Water Flow",
+        "description": "Crane flow: Your heightened perception allows you to automatically evade the next attack.",
+        "metadata": {"is_buff": True, "display_in_prompt": False}
+    },
+    "stone_flow": {
+        "name": "Stone Flow",
+        "description": "Turtle flow: Instant restoration of physical composure (Balance).",
+        "metadata": {"is_buff": True, "display_in_prompt": False}
+    },
+    "razor_flow": {
+        "name": "Razor Flow",
+        "description": "Mantis flow: Your next attack will slice deep, causing your target to bleed.",
+        "metadata": {"is_buff": True, "display_in_prompt": False}
     },
     "wet": {
         "name": "Wet",
@@ -178,6 +223,15 @@ CORE_STATUS_DEFINITIONS = {
         "description": "Momentarily off-balance. You cannot use complex skills or maneuvers.",
         "blocks": ["skills"],
         "metadata": {"is_debuff": True}
+    },
+    "bloodrage": {
+        "name": "Bloodrage",
+        "description": "YOUR BLOOD BOILS! You are immune to crowd control and gain 20% damage mitigation.",
+        "metadata": {
+            "is_buff": True, 
+            "immune_to": ["prone", "stunned", "stun", "dazed", "fear", "off_balance"],
+            "mitigation_mult": 0.80
+        }
     },
     # Environmental / Room Effects
     "bloodspattered": {

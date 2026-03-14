@@ -32,30 +32,29 @@ def handle(player, command_line):
         player.send_line("You are dead and cannot do anything.")
         return True
 
+    # 1. Effects/Status Blocking (Stunned, Bound, etc.)
     blocked, reason = effects.is_action_blocked(player, cmd_name)
     if blocked:
         player.send_line(reason)
         return True
 
+    # 2. Combat movement restriction
     state = getattr(player, 'state', 'normal')
-    
-    if state == "stunned":
-        player.send_line("You are stunned and cannot act!")
-        return True
-
     if state == "combat":
         move_cmds = ["n", "s", "e", "w", "u", "d", "north", "south", "east", "west", "up", "down", "ne", "nw", "se", "sw"]
         if cmd_name in move_cmds:
             player.send_line("You are in combat! You cannot walk away. Use 'flee' to escape!")
             return True
 
-    if state == "resting":
+    # 3. Handle specific state-based messaging (Optional, as effects system covers blocks)
+    # But we keep it for user feedback if needed
+    if effects.has_effect(player, "resting"):
         allowed = ["look", "l", "score", "sc", "inv", "i", "eq", "help", "who", "chat", "gchat", "say", "'", "equipment", "inventory", "map"]
         if cmd_name not in allowed:
             player.send_line("You are resting. Stand up or move to break your rest.")
             return True
 
-    if state == "casting":
+    if effects.has_effect(player, "casting") or state == "casting":
         allowed = ["look", "l", "score", "sc", "inv", "i", "eq", "help", "who", "chat", "gchat", "equipment", "inventory", "map"]
         if cmd_name not in allowed:
             player.send_line("You are focusing on an action!")
@@ -96,10 +95,23 @@ def handle(player, command_line):
         return handle(player, f"{player.aliases[cmd_name]} {args}".strip())
 
     # Resolve System Aliases (e.g., 'n' -> 'north', 'l' -> 'look')
-    if cmd_name in command_manager.ALIASES:
-        cmd_name = command_manager.ALIASES[cmd_name]
+    system_alias = command_manager.ALIASES.get(cmd_name)
+    if system_alias:
+        cmd_name = system_alias
 
-    # 2. Check Registered Commands
+    # 2. Check for Dynamic Skills (Equipped Blessings with 'skill' tag)
+    # GCA Protocol: Skills take precedence over general commands to prevent naming collisions.
+    from logic.commands import skill_commands
+    try:
+        # We pass cmd_name and args separately for precision
+        if skill_commands.try_execute_skill(player, command_line):
+            return True
+    except Exception as e:
+        logging.getLogger("GodlessMUD").error(f"Skill Error: {e}", exc_info=True)
+        player.send_line("An error occurred while using that skill.")
+        return True
+
+    # 3. Check Registered Commands
     if cmd_name in command_manager.COMMANDS:
         func = command_manager.COMMANDS[cmd_name]
         try:
@@ -112,16 +124,6 @@ def handle(player, command_line):
             logging.getLogger("GodlessMUD").error(f"Command Error ({cmd_name}): {e}", exc_info=True)
             player.send_line("An error occurred while executing that command.")
             return True
-
-    # 3. Check for Dynamic Skills (Equipped Blessings with 'skill' tag)
-    from logic.commands import skill_commands
-    try:
-        if skill_commands.try_execute_skill(player, command_line):
-            return True
-    except Exception as e:
-        logging.getLogger("GodlessMUD").error(f"Skill Error: {e}", exc_info=True)
-        player.send_line("An error occurred while using that skill.")
-        return True
 
     player.send_line("Unknown command.")
     return True

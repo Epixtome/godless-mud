@@ -1,76 +1,64 @@
 """
 logic/modules/monk/stances.py
-Stance management for the Monk class.
+Kinetic Engine: Stance and Flow management for the Monk class.
 """
 from utilities.colors import Colors
-from logic.core import event_engine
-from logic.core import effects
+from logic.core import event_engine, effects
 from logic.actions.registry import register
+import logic.handlers.command_manager as command_manager
 
-@register("crane_stance")
-def execute_crane_stance(player, skill_data, args=None):
+STANCE_MAP = {
+    "flow": {"color": Colors.CYAN, "msg": "You enter the fluid Flow Stance, your movements becoming like water."},
+    "iron": {"color": Colors.RED, "msg": "You shift into the heavy Iron Stance, grounding yourself with the density of stone."}
+}
+
+@command_manager.register("stance", "st", category="actions")
+def stance_cmd(player, args):
     """
-    Logic for Toggling Crane Stance.
-    Sets the player's internal stance variable in ext_state.
+    Unified command to switch Monk stances.
+    Usage: stance <flow|iron>
     """
-    monk_state = player.ext_state.get('monk')
-    if not monk_state:
-        player.send_line("You lack the discipline for this stance.")
-        return None, True
+    if getattr(player, 'active_class', None) != 'monk':
+        player.send_line("You lack the discipline for these forms.")
+        return True
 
-    # 1. Check Status Effect (Source of Truth)
-    if effects.has_effect(player, "crane_stance"):
-        # Toggle Off
-        effects.remove_effect(player, "crane_stance")
-        monk_state['stance'] = None
-        player.send_line(f"{Colors.YELLOW}You drop out of the Crane Stance.{Colors.RESET}")
-            
-    else:
-        # Toggle On
-        # 1. Clear conflicting stances
-        effects.remove_effect(player, "turtle_stance")
-        
-        # 2. Apply Crane Stance
-        effects.apply_effect(player, "crane_stance", 600)
-        monk_state['stance'] = "crane"
-        
-        # Reset Flow when changing stances to prevent exploit-switching
-        monk_state['flow_pips'] = 0
-        player.send_line(f"{Colors.CYAN}You enter {Colors.BOLD}Crane Stance{Colors.RESET}{Colors.CYAN}.{Colors.RESET}")
-        
-        # Visual feedback for others in the room
-        player.room.broadcast(f"{player.name} balances on one leg, entering the Crane Stance.")
+    ms = player.ext_state.get('monk', {})
+    if not args:
+        curr = ms.get('stance', 'none')
+        player.send_line(f"Current Stance: {Colors.BOLD}{curr.upper()}{Colors.RESET}")
+        player.send_line(f"Available: {', '.join([s.title() for s in STANCE_MAP.keys()])}")
+        return True
 
-    event_engine.dispatch("on_stance_change", {"player": player, "new_stance": monk_state['stance']})
+    new_stance = args.strip().lower()
+    if new_stance not in STANCE_MAP:
+        player.send_line(f"Unknown stance: {new_stance}. Use 'stance flow' or 'stance iron'.")
+        return True
+
+    if ms.get('stance') == new_stance:
+        player.send_line(f"You are already in {new_stance} stance.")
+        return True
+
+    old = ms.get('stance')
+    ms['stance'] = new_stance
+    
+    # Switch Bonus: "Stance Dance"
+    if old:
+        effects.apply_effect(player, "stance_swapped", 5) # 5s bonus (Handle logic in events.py)
+        player.send_line(f"{Colors.MAGENTA}[DANCE] Stance switched! You gain a temporary performance boost.{Colors.RESET}")
+
+    s_info = STANCE_MAP[new_stance]
+    player.send_line(f"{s_info['color']}{s_info['msg']}{Colors.RESET}")
+    player.room.broadcast(f"{player.name} shifts their form into the {new_stance.title()} Stance.", exclude_player=player)
+
+    return True
+
+# Map blessing actions to the command
+@register("flow_stance")
+def flow_act(p, s, a, t=None): 
+    stance_cmd(p, "flow")
     return None, True
 
-@register("turtle_stance")
-def execute_turtle_stance(player, skill_data, args=None):
-    """
-    Logic for Toggling Turtle Stance.
-    Sets the player's internal stance variable in ext_state.
-    """
-    monk_state = player.ext_state.get('monk')
-    if not monk_state:
-        player.send_line("You lack the discipline for this stance.")
-        return None, True
-
-    if effects.has_effect(player, "turtle_stance"):
-        # Toggle Off
-        effects.remove_effect(player, "turtle_stance")
-        monk_state['stance'] = None
-        player.send_line(f"{Colors.YELLOW}You rise out of the Turtle Stance.{Colors.RESET}")
-            
-    else:
-        # Toggle On
-        effects.remove_effect(player, "crane_stance")
-        
-        effects.apply_effect(player, "turtle_stance", 600)
-        monk_state['stance'] = "turtle"
-        
-        monk_state['flow_pips'] = 0
-        player.send_line(f"{Colors.GREEN}You enter {Colors.BOLD}Turtle Stance{Colors.RESET}{Colors.GREEN}.{Colors.RESET}")
-        player.room.broadcast(f"{player.name} sinks into a defensive Turtle Stance.")
-
-    event_engine.dispatch("on_stance_change", {"player": player, "new_stance": monk_state['stance']})
+@register("iron_stance")
+def iron_act(p, s, a, t=None): 
+    stance_cmd(p, "iron")
     return None, True

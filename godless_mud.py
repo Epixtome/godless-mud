@@ -67,6 +67,24 @@ class GodlessGame:
         # Register Class Modules
         commands.skill_commands.register_modules()
 
+        # World Stats
+        self.log_world_stats()
+
+    def log_world_stats(self):
+        """Displays interesting world statistics on boot."""
+        zone_counts = {}
+        for room in self.world.rooms.values():
+            zone = room.id.split('.')[0]
+            zone_counts[zone] = zone_counts.get(zone, 0) + 1
+        
+        logger.info(f"--- World Stats ---")
+        for zone, count in zone_counts.items():
+            logger.info(f"  Zone: {zone:<20} | {count:>5} rooms")
+        
+        logger.info(f"  Total Items: {len(self.world.items)}")
+        logger.info(f"  Landmarks  : {len(self.world.landmarks)}")
+        logger.info(f"-------------------")
+
     def load_blacklist(self):
         self.blacklist.clear()
         if os.path.exists("data/blacklist.txt"):
@@ -87,8 +105,11 @@ class GodlessGame:
     def reload_world(self):
         self.world = world_loader.load_world('data/world_data.json')
         for p in self.players.values():
-            p.room = self.world.rooms.get(p.room.id, list(self.world.rooms.values())[0])
-            p.room.players.append(p)            
+            default_room = list(self.world.rooms.values())[0] if self.world.rooms else None
+            old_room_id = p.room.id if p.room else ""
+            p.room = self.world.rooms.get(old_room_id, default_room)
+            if p.room:
+                p.room.players.append(p)            
         self.decaying_items = set()
         systems.initialize_decay(self)
 

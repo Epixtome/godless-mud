@@ -13,14 +13,23 @@
 
 ---
 
-## 3. CHARACTER PROGRESSION (POTENCY OVER PROCESS)
-Character growth in Godless is horizontal and gear-driven.
-* **Voltage (Tags)**: Characters do not have base stats (STR/INT). Instead, they accumulate **Voltage** from their equipped Gear, Blessings, and active Status Effects.
-* **Potency Scaling**: All skills and actions scale their damage or effectiveness directly from specific Tag totals (e.g., a sword strike scales with `martial` voltage).
-* **Breakthroughs**: Reaching high thresholds in a tag (e.g., 10 `arcane`) unlocks **Passive Breakthroughs**—stat-altering milestones that represent extreme proficiency.
-* **Favor**: Divine currency earned via combat; used to purchase Blessings from Shines or Deities.
+## 3. CHARACTER PROGRESSION (IDENTITY & POTENCY)
+Character growth in Godless is horizontal and gear-driven, anchored by the **Kit System**.
 
+### 3.1 The Kit (Explicit Identity)
+A player's class is determined by their equipped **Kit** (defined in `data/kits.json`).
+*   **Explicit Identity**: You are a "Monk" because you have the Monk kit equipped.
+*   **Registration**: Equipping a kit automatically registers the player with that class's specialized logic module (in `logic/modules/`).
+*   **Initial Gear**: Kits provide a starting set of gear and baseline blessings.
 
+### 3.2 Voltage & Scaling
+*   **Voltage (Tags)**: Characters do not have base stats (STR/INT). Instead, they accumulate **Voltage** from their equipped Gear, Blessings, and active Status Effects.
+*   **Potency Scaling**: All skills scale their damage or effectiveness directly from specific Tag totals (e.g., a sword strike scales with `martial` voltage).
+*   **Breakthroughs**: Reaching high thresholds in a tag (e.g., 10 `arcane`) unlocks **Passive Breakthroughs**—stat-altering milestones.
+*   **Favor**: Divine currency earned via combat; used to purchase Blessings.
+
+### 3.3 Passive Synergies
+The system monitors tag combinations for minor stat boosts. These represent the character's affinity with specific domains but do not alter their core Class identity.
 
 
 ---
@@ -31,7 +40,6 @@ Magic and skills utilize a **Tagging Layer** between data and logic.
 * **Metadata**: The Tags (e.g., `[lightning]`, `[strike]`).
 * **The Math Bridge**: Core engines use tags to calculate final power. Tags represent the *potency* (numbers), while the Python module handles the *process* (logic).
 * **Synergies**: Minor passive bonuses triggered by tag combinations (e.g., +5% Fire Damage if `fire >= 5`).
-* **Kits**: Skills are granted by equipping a **Class Kit**. Classes are NOT unlocked by tags; they are explicit identities.
 
 ---
 
@@ -64,7 +72,7 @@ Magic and skills utilize a **Tagging Layer** between data and logic.
 
 ## 7. PERSISTENCE & DATA
 * **Static Data**: Loaded from `data/zones/*.json` (Factory Defaults).
-* **Dynamic State**: `world_state.json` tracks dropped items, dead bosses, and current room modifications. **State overrides Static Data on load.**
+* **Live State**: `world_state.json` tracks dropped items, dead bosses, and current room modifications. **State overrides Static Data on load.**
 * **Looting**: Full support for container-based looting (`get all from corpse`) with indexed targeting (`2.corpse`).
 
 ---
@@ -72,14 +80,3 @@ Magic and skills utilize a **Tagging Layer** between data and logic.
 ## 8. COMPANIONS & SOCIAL
 * **Friendship**: Trust built via the `gift` command. Recruitment available at 50/100 threshold.
 * **Behavior**: Recruited NPCs utilize `Follow` and `Assist` behaviors to support the player in real-time.
-
-# GDD UPDATE: THE RESILIENT IDENTITY PROTOCOL
-
-## 1. THE KIT SYSTEM
-Character identity is determined by the active **Kit** (defined in `data/kits.json`).
-1. **Explicit Identity**: A player is a "Monk" because they have equipped the Monk kit, not because they have specific tags.
-2. **Initial Gear**: Kits provide a starting set of gear and baseline blessings.
-3. **Module Registration**: Equipping a kit registers the player with that class's specialized logic module (found in `logic/modules/`).
-
-## 2. PASSIVE SYNERGIES
-The system monitors tag combinations for minor stat boosts. These represent the character's affinity with specific domains but do not alter their core Class identity.

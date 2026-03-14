@@ -6,14 +6,24 @@
             "name": "Cavalier's Rapier",
             "description": "A finely crafted blade used by mage-knights.",
             "value": 200,
-            "damage_dice": "1d8",
-            "scaling": {"martial": 1.2},
-            "tags": {"martial": 2, "precision": 2},
-            "resonance_bonus": {
-                "if_arcane_5": {
-                    "damage_type": "magic",
-                    "bonus_damage": 5
-                }
+            "weight": 4,
+            "weight_class": "light",
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d8",
+                "scaling_tag": "precision",
+                "scaling_mult": 1.2
+            },
+            "tags": [
+                "martial",
+                "precision",
+                "arcane"
+            ],
+            "resonance": {
+                "tag": "arcane",
+                "threshold": 5,
+                "bonus_dmg": 5
             }
         }
     ]

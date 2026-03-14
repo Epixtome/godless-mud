@@ -13,4 +13,5 @@ from . import system
 from . import editor
 from . import builder
 from . import mob_builder
+from . import factory_commands
 print(" [DEBUG] Admin Package Loaded.")

@@ -1,148 +1,126 @@
 """
 logic/modules/warlock/actions.py
-Implementation of Warlock specialized skills.
+Hexblade Overhaul: Entropy Symbiosis Implementation.
 """
-import asyncio
 from logic.actions.registry import register
-from logic.core import resources, effects
+from logic.core import resources, effects, combat
 from logic import common
 from utilities.colors import Colors
-from logic.actions.skill_utils import _apply_damage
+from logic.engines import blessings_engine, magic_engine
 
-def _consume_resources(player, skill, hp_cost=0):
-    from logic.engines import magic_engine
-    if hp_cost > 0:
-        actual_cost = int(player.max_hp * (hp_cost / 100))
-        resources.modify_resource(player, "hp", -actual_cost, source="Blood Magic", context="Skill Cost")
-        
+def _consume_resources(player, skill, entropy_gain=0):
+    """Handles resource consumption and entropy generation."""
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
-    magic_engine.consume_pacing(player, skill)
-
-@register("chaos_drain")
-def handle_chaos_drain(player, skill, args, target=None):
-    target = common._get_target(player, args, target, "Chaos Drain who?")
-    if not target: return None, True
-
-    player.send_line(f"{Colors.MAGENTA}You twist the chaotic strands of {target.name}'s vitality!{Colors.RESET}")
     
-    # Drain Stamina
-    resources.modify_resource(target, "stamina", -25, source=player.name, context="Chaos Drain")
+    if entropy_gain > 0:
+        w_state = player.ext_state.setdefault('warlock', {})
+        old_entropy = w_state.get('entropy', 0)
+        max_e = w_state.get('max_entropy', 5)
+        
+        # In Metamorphosis, entropy is locked at max
+        if not w_state.get('is_metamorphosed', False):
+            w_state['entropy'] = min(max_e, old_entropy + entropy_gain)
+            if w_state['entropy'] > old_entropy:
+                player.send_line(f"{Colors.MAGENTA}[+] Entropy: {w_state['entropy']}/{max_e}{Colors.RESET}")
+            elif old_entropy >= max_e:
+                player.send_line(f"{Colors.PURPLE}[!] Entropy at maximum capacity!{Colors.RESET}")
+        else:
+            w_state['entropy'] = max_e
+
+@register("hex")
+def handle_hex(player, skill, args, target=None):
+    """Primer: Generates 2 Entropy. Applies Hexed debuff."""
+    target = common._get_target(player, args, target, "Hex whom?")
+    if not target: return None, True
+    
+    player.send_line(f"{Colors.MAGENTA}You weave a web of entropic despair around {target.name}!{Colors.RESET}")
+    effects.apply_effect(target, "hexed", 20) # 20 seconds
+    
     if hasattr(target, 'send_line'):
-        target.send_line(f"{Colors.MAGENTA}{player.name} drains your stamina!{Colors.RESET}")
+        target.send_line(f"{Colors.RED}You feel a dark mark burning into your soul!{Colors.RESET}")
+        
+    _consume_resources(player, skill, entropy_gain=2)
+    return target, True
+
+@register("eldritch_blast")
+def handle_eldritch_blast(player, skill, args, target=None):
+    """Builder: Generates 1 Entropy. Ranged dark damage."""
+    target = common._get_target(player, args, target, "Blast whom?")
+    if not target: return None, True
     
-    # Apply Decay (Via event or directly)
-    # The event in events.py handles applying Decay on dark hits, but we can nudge it here too.
+    player.send_line(f"{Colors.DARK_GRAY}A beam of crackling force erupts from your hand!{Colors.RESET}")
+    power = blessings_engine.MathBridge.calculate_power(skill, player, target)
     
-    # Engage Combat
-    if target.hp > 0 and not player.fighting:
-        player.fighting = target
-        player.state = "combat"
-        if player not in target.attackers:
-            target.attackers.append(player)
-            
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    
+    _consume_resources(player, skill, entropy_gain=1)
+    return target, True
+
+@register("netherstep")
+def handle_netherstep(player, skill, args, target=None):
+    """Utility: Teleport and Stun. Generates 1 Entropy."""
+    target = common._get_target(player, args, target, "Step towards whom?")
+    if not target: return None, True
+    
+    player.send_line(f"{Colors.BOLD}{Colors.PURPLE}You step through the void, appearing behind {target.name}!{Colors.RESET}")
+    player.room.broadcast(f"{player.name} vanishes into shadows and reappears behind {target.name}!", exclude_player=player)
+    
+    effects.apply_effect(target, "stun", 1) # 1s Stun
+    
+    _consume_resources(player, skill, entropy_gain=1)
+    return target, True
+
+@register("soul_cleave")
+def handle_soul_cleave(player, skill, args, target=None):
+    """Detonator: Consumes ALL Entropy. +25% Dmg and +10% Heal per stack."""
+    target = common._get_target(player, args, target, "Cleave whose soul?")
+    if not target: return None, True
+    
+    w_state = player.ext_state.setdefault('warlock', {})
+    stacks = w_state.get('entropy', 0)
+    
+    player.send_line(f"{Colors.BOLD}{Colors.RED}SOUL CLEAVE!{Colors.RESET} Your blade wails with chaotic hunger!")
+    
+    # Calculate Multiplier: 1.0 base + 0.25 per stack
+    dmg_mult = 1.0 + (stacks * 0.25)
+    
+    # Calculate Heal
+    heal_pct = stacks * 0.10
+    heal_amt = int(player.max_hp * heal_pct)
+    
+    # Execute Attack
+    power = blessings_engine.MathBridge.calculate_power(skill, player, target)
+    final_dmg = int(power * dmg_mult)
+    
+    # Manual attack trigger with custom damage to ensure scaling is applied before mitigation
+    # Or use calculate_damage_modifier event in events.py (preferred for GCA)
+    # But Soul Cleave is a specific strike, we'll pass the multiplier through context or just calc here
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill, context_prefix=f"[Entropy:{stacks}] ")
+    
+    if heal_amt > 0:
+        resources.modify_resource(player, "hp", heal_amt, source="Soul Cleave", context="Healing")
+        player.send_line(f"{Colors.GREEN}You absorb {heal_amt} HP from the soul essence!{Colors.RESET}")
+        
+    # Discharge Entropy (unless metastasized)
+    if not w_state.get('is_metamorphosed', False):
+        w_state['entropy'] = 0
+        player.send_line(f"{Colors.DARK_GRAY}Entropy discharged.{Colors.RESET}")
+        
     _consume_resources(player, skill)
     return target, True
 
-@register("blood_toll")
-def handle_blood_toll(player, skill, args, target=None):
-    target = common._get_target(player, args, target, "Collect blood from whom?")
-    if not target: return None, True
-
-    from logic.engines import blessings_engine
-    power = blessings_engine.MathBridge.calculate_power(skill, player)
+@register("metamorphosis")
+def handle_metamorphosis(player, skill, args, target=None):
+    """Ultimate: Transforms the warlock. Locks Entropy at 5."""
+    player.send_line(f"{Colors.BOLD}{Colors.PURPLE}You erupt in a pillar of violet flame!{Colors.RESET}")
+    player.room.broadcast(f"{player.name} is enveloped in dark fire and transforms into a towering demon!", exclude_player=player)
     
-    # Blood Toll Bonus: +50% if bleeding or poisoned
-    is_debilitated = effects.has_effect(target, "bleed") or effects.has_effect(target, "poison")
-    if is_debilitated:
-        power = int(power * 1.5)
-        player.send_line(f"{Colors.RED}The blood scent empowers your strike!{Colors.RESET}")
-
-    _apply_damage(player, target, power, "Blood Toll")
-    _consume_resources(player, skill)
-    return target, True
-
-@register("siphon_life")
-def handle_siphon_life(player, skill, args, target=None):
-    target = common._get_target(player, args, target, "Siphon life from whom?")
-    if not target: return None, True
-
-    player.send_line(f"{Colors.DARK_GRAY}You begin siphoning the life essence of {target.name}...{Colors.RESET}")
-
-    async def _siphon():
-        if player.room != target.room: return
-        
-        from logic.engines import blessings_engine
-        power = blessings_engine.MathBridge.calculate_power(skill, player)
-        heal_amt = int(power * 0.5)
-        
-        _apply_damage(player, target, power, "Siphon Life")
-        resources.modify_resource(player, "hp", heal_amt, source="Siphon", context="Healing")
-        player.send_line(f"{Colors.GREEN}You absorb {heal_amt} HP from {target.name}!{Colors.RESET}")
-
-    from logic.engines import action_manager
-    action_manager.start_action(player, 2.0, _siphon, tag="channeling", fail_msg="Siphon broken!")
+    effects.apply_effect(player, "metamorphosis", 30) # 30 seconds
     
-    # Costs 5% Max HP
-    _consume_resources(player, skill, hp_cost=5)
-    return target, True
-
-@register("malignant_bond")
-def handle_malignant_bond(player, skill, args, target=None):
-    target = common._get_target(player, args, target, "Bond with whom?")
-    if not target: return None, True
-
-    warlock_state = player.ext_state.get('warlock', {})
-    import time
-    warlock_state['link_target'] = target.id
-    warlock_state['link_expiry'] = time.time() + 10 # 10 seconds
+    w_state = player.ext_state.setdefault('warlock', {})
+    w_state['is_metamorphosed'] = True
+    w_state['entropy'] = w_state.get('max_entropy', 5)
     
-    player.send_line(f"{Colors.MAGENTA}You force a Malignant Bond upon {target.name}!{Colors.RESET}")
-    if hasattr(target, 'send_line'):
-        target.send_line(f"{Colors.RED}A dark chain of energy links you to {player.name}!{Colors.RESET}")
-        
-    _consume_resources(player, skill)
-    return target, True
-
-@register("despair_aura")
-def handle_despair_aura(player, skill, args, target=None):
-    warlock_state = player.ext_state.get('warlock', {})
-    current = warlock_state.get('despair_aura', False)
-    warlock_state['despair_aura'] = not current
-    
-    if warlock_state['despair_aura']:
-        player.send_line(f"{Colors.MAGENTA}You begin radiating a palpable aura of Despair.{Colors.RESET}")
-        player.room.broadcast(f"A dark, oppressive aura begins to radiate from {player.name}!", exclude_player=player)
-    else:
-        player.send_line(f"{Colors.MAGENTA}You dissipate the aura of Despair.{Colors.RESET}")
-        player.room.broadcast(f"The dark aura around {player.name} fades.", exclude_player=player)
-        
     _consume_resources(player, skill)
     return None, True
-
-@register("void_blast")
-def handle_void_blast(player, skill, args, target=None):
-    target = common._get_target(player, args, target, "Unleash the Void on whom?")
-    if not target: return None, True
-
-    warlock_state = player.ext_state.get('warlock', {})
-    decay_map = warlock_state.get('decay_stacks', {})
-    stacks = decay_map.get(target.id, 0)
-    
-    if stacks < 1:
-        player.send_line(f"{target.name} is not sufficiently Decayed to unleash a Void Blast.")
-        return None, True
-
-    player.send_line(f"{Colors.BOLD}{Colors.PURPLE}VOID BLAST! You implode the decay within {target.name}!{Colors.RESET}")
-    player.room.broadcast(f"{player.name} implodes the darkness within {target.name} with a Void Blast!", exclude_player=player)
-
-    # Damage: 20 per stack
-    burst_dmg = stacks * 20
-    _apply_damage(player, target, burst_dmg, "Void Blast")
-    
-    # Clear stacks
-    decay_map[target.id] = 0
-    
-    # Costs 10% Max HP
-    _consume_resources(player, skill, hp_cost=10)
-    return target, True

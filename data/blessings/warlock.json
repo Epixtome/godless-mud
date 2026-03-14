@@ -1,133 +1,124 @@
 {
     "blessings": [
         {
-            "id": "malignant_bond",
-            "name": "Malignant Bond",
-            "tier": 2,
-            "cost": 25,
-            "base_power": 0,
-            "description": "Forge a dark link with your target, sharing their pain.",
+            "id": "hex",
+            "name": "Hex",
+            "tier": 1,
+            "cost": 15,
+            "description": "Mark a target with entropic energy. Increases damage taken by 20% and generates +2 Entropy.",
             "identity_tags": [
                 "warlock",
                 "occult",
-                "curse"
+                "curse",
+                "spell"
             ],
-            "action": "malignant_bond",
+            "action": "hex",
             "requirements": {
                 "class": "warlock"
             }
         },
         {
-            "id": "chaos_drain",
-            "name": "Chaos Drain",
-            "tier": 2,
-            "cost": 30,
+            "id": "eldritch_blast",
+            "name": "Eldritch Blast",
+            "tier": 1,
+            "cost": 10,
             "base_power": 12,
-            "description": "Drain stability and stamina from the target.",
+            "description": "Launch a beam of crackling force. Generates +1 Entropy.",
             "identity_tags": [
                 "warlock",
                 "occult",
-                "drain"
+                "dark",
+                "spell"
             ],
-            "action": "chaos_drain",
+            "action": "eldritch_blast",
             "requirements": {
                 "class": "warlock"
             },
             "scaling": {
-                "scaling_tag": "occult",
+                "scaling_tag": "magic",
                 "multiplier": 1.2
             }
         },
         {
-            "id": "blood_toll",
-            "name": "Blood Toll",
+            "id": "netherstep",
+            "name": "Netherstep",
+            "tier": 2,
+            "cost": 25,
+            "description": "Phase through the void to close the gap. Stuns target and generates +1 Entropy.",
+            "identity_tags": [
+                "warlock",
+                "utility",
+                "dark",
+                "movement"
+            ],
+            "action": "netherstep",
+            "requirements": {
+                "class": "warlock"
+            }
+        },
+        {
+            "id": "soul_cleave",
+            "name": "Soul Cleave",
             "tier": 3,
-            "cost": 40,
-            "base_power": 22,
-            "description": "Deals moderate dark damage.",
+            "cost": 20,
+            "base_power": 15,
+            "description": "Harvest the soul. Consumes all Entropy to deal massive damage and heal the warlock.",
             "identity_tags": [
                 "warlock",
-                "occult",
-                "dark",
-                "strike"
-            ],
-            "action": "blood_toll",
-            "requirements": {
-                "class": "warlock",
-                "cooldown": 3
-            },
-            "scaling": {
-                "scaling_tag": "dark",
-                "multiplier": 1.5
-            },
-            "potency_rules": {
-                "type": "hp_inverse",
-                "max_bonus": 2.0
-            }
-        },
-        {
-            "id": "siphon_life",
-            "name": "Siphon Life",
-            "tier": 4,
-            "cost": 0,
-            "base_power": 18,
-            "description": "Siphon life force. Costs 5% Max HP.",
-            "identity_tags": [
-                "warlock",
-                "occult",
-                "dark",
-                "drain"
-            ],
-            "action": "siphon_life",
-            "requirements": {
-                "class": "warlock"
-            },
-            "scaling": {
-                "scaling_tag": "occult",
-                "multiplier": 1.8
-            }
-        },
-        {
-            "id": "despair_aura",
-            "name": "Despair Aura",
-            "tier": 4,
-            "cost": 0,
-            "description": "Toggleable: Nearby enemies lose 5 stamina per tick.",
-            "identity_tags": [
-                "warlock",
-                "occult",
-                "aura"
-            ],
-            "action": "despair_aura",
-            "requirements": {
-                "class": "warlock"
-            }
-        },
-        {
-            "id": "void_blast",
-            "name": "Void Blast",
-            "tier": 5,
-            "cost": 0,
-            "base_power": 55,
-            "description": "Finisher: Consumes Decay stacks for massive damage. Costs 10% Max HP.",
-            "identity_tags": [
-                "warlock",
-                "occult",
+                "strike",
                 "dark",
                 "finisher"
             ],
-            "action": "void_blast",
+            "action": "soul_cleave",
             "requirements": {
                 "class": "warlock"
             },
             "scaling": {
-                "scaling_tag": "dark",
-                "multiplier": 2.5
-            },
-            "potency_rules": {
-                "type": "hp_inverse",
-                "max_bonus": 3.0
+                "scaling_tag": "martial",
+                "multiplier": 1.5
             }
+        },
+        {
+            "id": "metamorphosis",
+            "name": "Metamorphosis",
+            "tier": 5,
+            "cost": 100,
+            "description": "Ultimate: Assume a demonic form. Entropy is locked at maximum capacity.",
+            "identity_tags": [
+                "warlock",
+                "ultimate",
+                "transformation",
+                "dark"
+            ],
+            "action": "metamorphosis",
+            "requirements": {
+                "class": "warlock"
+            }
+        },
+        {
+            "id": "eldritch_ward",
+            "name": "Eldritch Ward",
+            "tier": 2,
+            "cost": 20,
+            "description": "Reaction: Open a rift in reality (3s). Swallows the next hit and restores 15 Concentration.",
+            "identity_tags": [
+                "warlock",
+                "occult",
+                "reaction"
+            ],
+            "action": "eldritch_ward",
+            "requirements": {
+                "class": "warlock",
+                "stamina": 20,
+                "cooldown": 12
+            },
+            "effects": [
+                {
+                    "id": "eldritch_ward_ready",
+                    "duration": 3,
+                    "target": "self"
+                }
+            ]
         }
     ]
 }

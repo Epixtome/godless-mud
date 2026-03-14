@@ -6,67 +6,154 @@
         "crane_stance": {
             "id": "crane_stance",
             "name": "Crane Stance",
-            "description": "Toggle a light posture. Reaching Peak Flow (5) grants [Evasive].",
-            "identity_tags": ["martial", "speed", "reflex"],
+            "description": "The Wind. Doubled Stamina regeneration and increased Evasion. Reaching Peak Flow (5) grants [Evasive]. Reduces stance-sensitive cooldowns by 30%.",
+            "identity_tags": ["monk", "martial", "speed", "reflex", "stance"],
             "logic_type": "special",
-            "requirements": { "stamina": 15 },
-            "base_cooldown": 2
+            "action": "crane_stance",
+            "requirements": { 
+                "class": "monk",
+                "stamina": 15,
+                "cooldown": 2
+            }
         },
         "turtle_stance": {
             "id": "turtle_stance",
             "name": "Turtle Stance",
-            "description": "Toggle a heavy posture. Grants [Knockback] immunity.",
-            "identity_tags": ["martial", "protection", "weight"],
+            "description": "The Mountain. +15% Damage Mitigation and +20 Balance Regen. Grants immunity to [Prone/Knockback]. Increases stance-sensitive cooldowns by 20%.",
+            "identity_tags": ["monk", "martial", "protection", "weight", "stance"],
             "logic_type": "special",
-            "requirements": { "stamina": 15 },
-            "base_cooldown": 2
+            "action": "turtle_stance",
+            "requirements": { 
+                "class": "monk",
+                "stamina": 15,
+                "cooldown": 2
+            }
         },
         "triple_kick": {
             "id": "triple_kick",
             "name": "Triple Kick",
-            "identity_tags": ["martial", "speed", "disruption"],
+            "tier": 3,
+            "cost": 30,
+            "description": "Speed: Three rapid hits. Drains target stamina.",
+            "identity_tags": ["monk", "martial", "speed", "disruption"],
             "logic_type": "standard",
+            "action": "triple_kick",
             "requirements": {
+                "class": "monk",
                 "stamina": 30,
                 "cooldown": 2
             },
-            "damage_dice": "3d4",
+            "base_power": 12,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.2
+            },
             "on_hit": { "stamina_damage": 5 }
         },
         "stand": {
             "id": "stand",
             "name": "Stand",
-            "identity_tags": ["martial", "utility"],
+            "identity_tags": ["monk", "martial", "utility"],
             "logic_type": "recovery",
+            "action": "stand",
             "requirements": { "stamina": 10 }
         },
         "iron_palm": {
             "id": "iron_palm",
             "name": "Iron Palm",
             "description": "Consumes 5 Flow to deal a stunning blow.",
-            "identity_tags": ["martial", "disruption", "debuff"],
+            "identity_tags": ["monk", "martial", "disruption", "debuff"],
             "logic_type": "standard",
-            "requirements": { "stamina": 25 },
-            "base_cooldown": 5
+            "action": "iron_palm",
+            "requirements": { "stamina": 25, "cooldown": 5 },
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.2
+            }
         },
         "dragon_strike": {
             "id": "dragon_strike",
             "name": "Dragon Strike",
-            "description": "Consumes all Flow to unleash a devastating attack.",
-            "identity_tags": ["martial", "finisher"],
+            "tier": 4,
+            "cost": 40,
+            "description": "The Breaker. Consumes all Flow to unleash a devastating finishing attack. Deals 8d8 base damage.",
+            "identity_tags": ["monk", "martial", "finisher"],
             "logic_type": "standard",
-            "requirements": { "stamina": 40 },
-            "base_cooldown": 10,
-            "damage_dice": "1d4"
+            "action": "dragon_strike",
+            "requirements": { "class": "monk", "stamina": 40, "cooldown": 10 },
+            "damage_dice": "8d8",
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.5
+            }
         },
         "meditate": {
             "id": "meditate",
             "name": "Meditate",
             "description": "Recover 40 stamina, but become unsettled for 2s.",
-            "identity_tags": ["utility", "recovery"],
+            "identity_tags": ["monk", "utility", "recovery"],
             "logic_type": "special",
-            "requirements": { "stamina": 0 },
-            "base_cooldown": 15
+            "action": "meditate",
+            "requirements": { "stamina": 0, "cooldown": 15 },
+            "scaling": {
+                "scaling_tag": "utility",
+                "multiplier": 1.0
+            }
+        },
+        "flow_mastery": {
+            "id": "flow_mastery",
+            "name": "Flow Mastery",
+            "description": "Engage a high-rhythm defensive state for 3s. Parries any physical attack that isn't [Weight] or [Sweep]. Success grants [Riposte].",
+            "identity_tags": ["monk", "martial", "reflex", "reaction"],
+            "logic_type": "special",
+            "action": "flow_mastery",
+            "requirements": { "class": "monk", "stamina": 20, "cooldown": 8 },
+            "base_power": 5,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 0.5
+            },
+            "effects": [
+                {
+                    "id": "flow_mastery",
+                    "duration": 3,
+                    "target": "self"
+                }
+            ]
+        },
+        "monk_passives": {
+            "id": "monk_passives",
+            "name": "Monk Passives",
+            "logic_type": "passive",
+            "identity_tags": ["monk", "passive"],
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "status_id": "tiger_stance",
+                    "multiplier": 1.25
+                },
+                {
+                    "type": "mitigation_mod",
+                    "status_id": "turtle_stance",
+                    "multiplier": 0.85
+                },
+                {
+                    "type": "cost_mod",
+                    "status_id": "tiger_stance",
+                    "resource": "stamina",
+                    "multiplier": 2.0
+                },
+                {
+                    "type": "cooldown_mod",
+                    "status_id": "crane_stance",
+                    "multiplier": 0.7
+                },
+                {
+                    "type": "cooldown_mod",
+                    "status_id": "turtle_stance",
+                    "multiplier": 1.2
+                }
+            ]
         }
     }
 }

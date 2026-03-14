@@ -47,7 +47,10 @@ def start_action(entity, duration, callback, tag="generic", fail_msg="Action int
             if target_state and hasattr(entity, 'state') and entity.state == target_state:
                 entity.state = "combat" if getattr(entity, 'fighting', None) else "normal"
                 
-            await callback()
+            if asyncio.iscoroutinefunction(callback):
+                await callback()
+            else:
+                callback()
             
             # Mark that participants need a prompt refresh
             if hasattr(entity, 'room') and entity.room:

@@ -1,10 +1,7 @@
 """
 logic/modules/barbarian/__init__.py
-Barbarian class initialization.
 """
-from .actions import *
-from .events import register_events
+from . import actions, events, state
 
-def initialize(player):
-    from .state import initialize_barbarian
-    initialize_barbarian(player)
+def initialize_barbarian(player):
+    state.initialize_barbarian(player)

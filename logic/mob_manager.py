@@ -35,7 +35,7 @@ def spawn_mob(room, mob_data, game):
             "concentration": 100,
             "heat": 0,
             "chi": 0,
-            "balance": 100
+            "balance": instance.resources.get('balance', 20)
         }
         
         # Apply deltas

@@ -1,81 +1,111 @@
 """
 logic/modules/monk/events.py
-Monk Event Listeners: Flow, Stances, and UI.
+Kinetic Engine: Event listeners for Stances, Flow, and Physics triggers.
 """
-from logic.core import event_engine, effects, resources
+from logic.core import event_engine, effects, resources, combat
 from utilities.colors import Colors
 
 def register_events():
-    event_engine.subscribe("on_combat_hit", on_combat_hit)
-    event_engine.subscribe("on_take_damage", on_take_damage)
-    event_engine.subscribe("on_stance_change", on_stance_change)
     event_engine.subscribe("calculate_damage_modifier", on_calculate_damage_modifier)
-    event_engine.subscribe("on_skill_execute", on_skill_execute)
-    event_engine.subscribe("on_check_requirements", on_check_requirements)
+    event_engine.subscribe("on_take_damage", on_take_damage)
+    event_engine.subscribe("on_calculate_mitigation", on_calculate_mitigation)
+    event_engine.subscribe("combat_check_dodge", on_check_dodge)
     event_engine.subscribe("on_build_prompt", on_build_prompt)
-    event_engine.subscribe("on_status_removed", on_status_removed)
-
-def on_combat_hit(ctx):
-    attacker = ctx.get('attacker')
-    if getattr(attacker, 'active_class', None) == 'monk':
-        monk_data = attacker.ext_state.setdefault('monk', {})
-        monk_data['flow_pips'] = min(10, monk_data.get('flow_pips', 0) + 1)
-
-def on_take_damage(ctx):
-    target, damage = ctx.get('target'), ctx.get('damage')
-    if damage > (getattr(target, 'max_hp', 100) * 0.1) and getattr(target, 'active_class', None) == 'monk':
-        monk_data = target.ext_state.get('monk', {})
-        if 'flow_pips' in monk_data: monk_data['flow_pips'] = 0
-        target.send_line(f"{Colors.RED}Your Flow is broken!{Colors.RESET}")
-
-def on_stance_change(ctx):
-    player = ctx.get('player')
-    if getattr(player, 'active_class', None) == 'monk':
-        effects.apply_effect(player, "evasive_step", 4)
-        player.send_line(f"{Colors.MAGENTA}[FLOW] Your form shifts!{Colors.RESET}")
-
-def on_status_removed(ctx):
-    player, status_id = ctx.get('player'), ctx.get('status_id')
-    if getattr(player, 'active_class', None) != 'monk': return
-    if status_id == "crane_stance":
-        effects.apply_effect(player, "crane_echo", 2, verbose=False)
-    elif status_id == "turtle_stance":
-        effects.apply_effect(player, "turtle_echo", 2, verbose=False)
+    event_engine.subscribe("on_combat_tick", on_combat_tick)
 
 def on_calculate_damage_modifier(ctx):
-    attacker, blessing = ctx.get('attacker'), ctx.get('blessing')
-    if getattr(attacker, 'active_class', None) != 'monk' or not blessing: return
+    attacker = ctx.get('attacker')
+    if getattr(attacker, 'active_class', None) != 'monk': return
     
-    flow_data = attacker.ext_state.get('monk', {})
-    flow = flow_data.get('flow_pips', 0)
+    ms = attacker.ext_state.get('monk', {})
+    blessing = ctx.get('blessing')
     
-    # [PASSIVE] Flow Mastery and other potency rules are now
-    # handled automatically by the blessings engine via JSON shards.
-    pass
+    # 1. Iron Stance Bonus (+15% Damage)
+    if ms.get('stance') == 'iron':
+        ctx['multiplier'] *= 1.15
 
-    # Other potency rules (Dragon Strike, Triple Kick) are now 
-    # handled by the blessings engine via JSON shards.
-    pass
+    # 2. Stance Switched Bonus (+15% Damage for 5s)
+    if effects.has_effect(attacker, "stance_swapped"):
+        ctx['multiplier'] *= 1.15
+        
+    # 3. Dragon Strike / Finisher Scaling Gate
+    if hasattr(attacker, 'monk_dragon_multiplier'):
+        ctx['multiplier'] *= attacker.monk_dragon_multiplier
 
-def on_skill_execute(ctx):
-    player, skill = ctx.get('player'), ctx.get('skill')
-    if getattr(player, 'active_class', None) != 'monk': return
-    if skill.id == "dragon_strike":
-        player.ext_state.get('monk', {})['flow_pips'] = 0
-    elif skill.id == "meditate":
-        effects.apply_effect(player, "unsettled", 2)
+    # 4. Seven Fists Guard: Cannot auto-attack during reaction phase
+    if not blessing and effects.has_effect(attacker, "seven_fists_active"):
+        ctx['multiplier'] = 0
 
-def on_check_requirements(ctx):
-    player, blessing, costs = ctx.get('player'), ctx.get('blessing'), ctx.get('costs')
-    if blessing.id == 'triple_kick' and player.resources.get('stamina', 0) < costs.get('stamina', 0):
-        monk_data = player.ext_state.get('monk', {})
-        if monk_data.get('flow_pips', 0) >= 1:
-            monk_data['flow_pips'] -= 1; costs['stamina'] = 0
-            player.send_line(f"{Colors.MAGENTA}[FLOW] Cost waived.{Colors.RESET}")
+def on_calculate_mitigation(ctx):
+    target = ctx.get('target')
+    if getattr(target, 'active_class', None) != 'monk': return
+    
+    ms = target.ext_state.get('monk', {})
+    
+    # 1. Iron Stance Bonus (10% Mitigation)
+    if ms.get('stance') == 'iron':
+        ctx['damage'] = int(ctx.get('damage', 0) * 0.9)
+
+def on_take_damage(ctx):
+    target = ctx.get('target')
+    attacker = ctx.get('source')
+    context = ctx.get('context', "")
+    
+    if getattr(target, 'active_class', None) != 'monk': return
+    if "[Counter]" in context: return
+
+    # --- SEVEN FISTS REACTION ---
+    if effects.has_effect(target, "seven_fists_active") and attacker and attacker != target:
+        target.send_line(f"{Colors.YELLOW}[REACTION] SEVEN FISTS!{Colors.RESET} You catch the strike and counter-attack everyone!")
+        
+        # Room-wide Counter Strike
+        targets = list(target.room.monsters) + list(target.room.players)
+        for t in targets:
+            if t == target or t.hp <= 0: continue
+            if combat.is_target_valid(target, t):
+                combat.handle_attack(target, t, target.room, target.game, context_prefix="[Counter] ")
+
+def on_check_dodge(ctx):
+    target = ctx.get('target')
+    if getattr(target, 'active_class', None) != 'monk': return
+
+    ms = target.ext_state.get('monk', {})
+    
+    # 1. Flow Stance (+15% Evasion)
+    if ms.get('stance') == 'flow':
+        ctx['evasion_bonus'] = ctx.get('evasion_bonus', 0) + 15
+        
+    # 2. Iron Stance (-10% Evasion)
+    elif ms.get('stance') == 'iron':
+        ctx['evasion_bonus'] = ctx.get('evasion_bonus', 0) - 10
+
+    # 3. Stance Switched Bonus (+10% Evasion)
+    if effects.has_effect(target, "stance_swapped"):
+        ctx['evasion_bonus'] = ctx.get('evasion_bonus', 0) + 10
+
+def on_combat_tick(ctx):
+    entity = ctx.get('entity') or ctx.get('player')
+    if not entity or getattr(entity, 'active_class', None) != 'monk': return
+    
+    ms = entity.ext_state.get('monk', {})
+    
+    # 1. Flow Stance Stamina Regen (+10 per tick)
+    if ms.get('stance') == 'flow':
+        resources.modify_resource(entity, 'stamina', 10, source="Flow Stance")
 
 def on_build_prompt(ctx):
-    player, prompts = ctx.get('player'), ctx.get('prompts')
+    player = ctx.get('player')
+    prompts = ctx.get('prompts')
     if getattr(player, 'active_class', None) == 'monk':
-        md = player.ext_state.get('monk', {})
-        prompts.append(f"{Colors.CYAN}FLW: {md.get('flow_pips',0)}/10{Colors.RESET}")
-        prompts.append(f"[{ (md.get('stance') or 'None').title() }]")
+        ms = player.ext_state.get('monk', {})
+        stance = ms.get('stance', 'none')
+        chi = ms.get('chi', 0)
+        
+        s_color = Colors.CYAN if stance == 'flow' else Colors.RED
+        prompts.append(f"{s_color}[{stance.upper()}]{Colors.RESET}")
+        
+        if effects.has_effect(player, "stance_swapped"):
+            prompts.append(f"{Colors.MAGENTA}<<DANCING>>{Colors.RESET}")
+        
+        if effects.has_effect(player, "seven_fists_active"):
+            prompts.append(f"{Colors.YELLOW}[PARRYING]{Colors.RESET}")

@@ -1,7 +1,19 @@
-"""
-logic/modules/beastmaster/state.py
-State management for the Beastmaster class.
-"""
+from logic.core.resource_registry import ResourceDefinition, register_resource
+from utilities.colors import Colors
+
+BM_RESOURCES = [
+    ResourceDefinition(
+        id='sync',
+        display_name='SYNC',
+        max=100,
+        storage_key='sync',
+        color=Colors.GREEN
+    )
+]
+
+# Registration
+for res in BM_RESOURCES:
+    register_resource('beastmaster', res)
 
 def initialize_beastmaster(player):
     """
@@ -50,6 +62,6 @@ def sanitize_beastmaster_data(player):
     for key, initial_val in required_keys.items():
         if key not in bm_state:
             bm_state[key] = initial_val
-
+    
     # Ensure sync is within bounds
     bm_state['sync'] = max(0, min(100, bm_state.get('sync', 0)))

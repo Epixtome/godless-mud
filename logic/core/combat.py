@@ -22,18 +22,9 @@ def calculate_base_damage(attacker: Any, target: Any, blessing: Any = None) -> i
     raw_damage = 0
     if blessing:
         raw_damage = blessings_engine.calculate_power(blessing, attacker, target)
-    elif hasattr(attacker, 'equipped_weapon') and hasattr(attacker, 'current_tags'):
+    elif hasattr(attacker, 'equipped_weapon'):
         if attacker.equipped_weapon:
-            weapon_dmg = blessings_engine.calculate_weapon_power(attacker.equipped_weapon, attacker)
-            scaling = getattr(attacker.equipped_weapon, 'scaling', {})
-            if not scaling and hasattr(attacker.equipped_weapon, 'stats'):
-                scaling = attacker.equipped_weapon.stats.get('scaling', {})
-            
-            scale_tag = scaling.get('tag', 'martial')
-            scale_mult = scaling.get('mult', 1.0)
-            tag_val = attacker.current_tags.get(scale_tag, 0)
-            power_mult = 1.0 + (tag_val * calibration.CombatBalance.VOLTAGE_SCALING * scale_mult)
-            raw_damage = int(weapon_dmg * power_mult)
+            raw_damage = blessings_engine.calculate_weapon_power(attacker.equipped_weapon, attacker)
         else:
             raw_damage = 1 # Unarmed base
 
@@ -53,39 +44,35 @@ def get_attack_verb(damage_percent: float) -> str:
     """Determines the verb used in combat messages based on damage severity."""
     return combat_logic.get_attack_verb(damage_percent)
 
-def calculate_damage(attacker: Any, victim: Optional[Any] = None) -> int:
+def calculate_damage(attacker: Any, victim: Optional[Any] = None, blessing: Any = None) -> int:
     """
     Calculates final damage for an attack, respecting modifiers and armor.
-    V5.0: Mitigation-based damage + Posture Damage side effects.
+    V5.0: Mitigation-based damage calculation.
     """
-    raw = calculate_base_damage(attacker, victim)
+    raw = calculate_base_damage(attacker, victim, blessing)
     
     # 1. Damage Mitigation (Percentage based on Weight Class)
     mitigation = combat_logic.get_mitigation_multiplier(victim) if victim else 0.0
     
+    # [V6.0] Finesse Bypasses Half Mitigation
+    attack_tags = resolve_attack_tags(attacker, blessing)
+    if "finesse" in attack_tags or "precision" in attack_tags:
+        mitigation *= 0.5
+    
     # [V5.0] Modifier Event (Class Scaling: e.g., Monk Flow, Barbarian Berserk)
-    mod_ctx = {'attacker': attacker, 'target': victim, 'multiplier': 1.0, 'bonus_flat': 0}
+    mod_ctx = {'attacker': attacker, 'target': victim, 'multiplier': 1.0, 'bonus_flat': 0, 'blessing': blessing}
     event_engine.dispatch("calculate_damage_modifier", mod_ctx)
     
     final_dmg = (raw * mod_ctx['multiplier']) + mod_ctx['bonus_flat']
     final_dmg = final_dmg * (1.0 - mitigation)
     
-    # 2. Side Effect: Impact Posture (Balance)
-    if victim:
-        # Determine attack tags to calculate bonus Posture Damage
-        tags = combat_logic.resolve_attack_tags(attacker)
-        
-        # Posture damage is usually proportional to raw damage 
-        # but mitigated by Stability rating.
-        combat_logic.check_posture_break(victim, raw, source=attacker, tags=tags)
-        
     return max(1, int(final_dmg))
 
-def handle_attack(attacker: Any, victim: Any, room: Any, game: Any, blessing: Optional[Any] = None) -> List[Any]:
+def handle_attack(attacker: Any, victim: Any, room: Any, game: Any, blessing: Optional[Any] = None, context_prefix: Optional[str] = None) -> List[Any]:
     """Executes a single combat exchange and processes results."""
     from logic.engines import combat_actions
     prompts: Set[Any] = set()
-    combat_actions.execute_attack(attacker, victim, room, game, prompts, blessing=blessing)
+    combat_actions.execute_attack(attacker, victim, room, game, prompts, blessing=blessing, context_prefix=context_prefix)
     return list(prompts)
 
 def distribute_rewards(player: 'Player', victim: Any, game: Any) -> None:
@@ -126,13 +113,19 @@ def get_defense_rating(entity: Any) -> int:
     """Calculates total defense for any entity (Player or Mob)."""
     return combat_logic.get_defense_rating(entity)
 
-def apply_damage(target: Any, amount: int, source: Any = None, context: str = "Combat") -> int:
+def apply_damage(target: Any, amount: int, source: Any = None, context: str = "Combat", tags: Optional[Set[str]] = None) -> int:
     """Standardized pipeline for applying damage to any entity."""
-    ctx = {'target': target, 'damage': amount, 'source': source, 'context': context}
+    ctx = {'target': target, 'damage': amount, 'source': source, 'context': context, 'tags': tags or set()}
     event_engine.dispatch("on_take_damage", ctx)
     actual_damage = ctx['damage']
+    
     if hasattr(target, 'hp'):
         target.hp = max(0, target.hp - actual_damage)
+        
+        # [V5.1] Posture Protocol Integration
+        from logic.core.utils import combat_logic
+        combat_logic.check_posture_break(target, actual_damage, source=source, tags=ctx['tags'])
+        
         if target.hp <= 0:
             event_engine.dispatch("on_death", {'victim': target, 'killer': source, 'debug_source': f"Combat.apply_damage({context})"})
     return actual_damage

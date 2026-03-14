@@ -20,6 +20,8 @@ def get_item(player, args):
     # Handle "get <item> from <container>"
     # Also handle "get <item> <container>" (implicit from)
     parts = args.split()
+    target_name = ""
+    container_name = ""
     
     # Check for explicit 'from'
     if "from" in [p.lower() for p in parts]:
@@ -67,7 +69,9 @@ def get_item(player, args):
                 count = 0
                 for item in list(container.inventory):
                     if _process_pickup(player, item, container):
-                        container.inventory.remove(item)
+                        # Safe removal (Currency might have removed itself in itemsFacade)
+                        if item in container.inventory:
+                            container.inventory.remove(item)
                         count += 1
                     else:
                         break # Inventory full
@@ -80,7 +84,8 @@ def get_item(player, args):
                 return
                 
             if _process_pickup(player, item, container):
-                container.inventory.remove(item)
+                if item in container.inventory:
+                    container.inventory.remove(item)
             return
 
     # Standard "get <item>" from room

@@ -1,6 +1,8 @@
 import logic.handlers.command_manager as command_manager
 from utilities.colors import Colors
 from logic.core.utils import display_utils
+from logic.constants import Tags
+from logic.core.utils import combat_logic
 
 @command_manager.register("score", "sc", category="information")
 def score(player, args):
@@ -8,14 +10,8 @@ def score(player, args):
     width = 60
     player.send_line(f"\n{display_utils.render_header(player.name, width)}")
     
-    # 1. Identity
-    cls_id = player.active_class or "wanderer"
-    cls_obj = player.game.world.classes.get(cls_id)
-    cls_name = cls_obj.name if cls_obj else cls_id.capitalize()
-    identity = player.active_identity.title() if hasattr(player, 'active_identity') else 'Mortal'
-    
-    player.send_line(display_utils.render_labeled_value("Class", cls_name, 10, Colors.CYAN))
-    player.send_line(display_utils.render_labeled_value("Identity", identity, 10, Colors.YELLOW))
+    # Identifiers removed from score per user request, moved to attributes.
+    pass
     
     # 2. Vitals
     hp_pct = (player.hp / player.max_hp) * 100
@@ -23,35 +19,48 @@ def score(player, args):
     vitals = f"HP: {hp_color}{player.hp}/{player.max_hp}{Colors.RESET}"
     
     if hasattr(player, 'resources'):
+        # Ensure resources are synced before display (Atomic cleanup)
+        from logic.core.utils import player_logic
+        player_logic.sync_resources(player)
+        
         # Sort resources for consistent display
-        order = ['stamina', 'concentration', 'heat', 'chi', 'momentum']
+        order = ['stamina', 'concentration', 'heat', 'chi', 'momentum', 'balance']
         res_to_show = sorted(player.resources.items(), key=lambda x: order.index(x[0]) if x[0] in order else 99)
         
         for res, val in res_to_show:
+            if val <= 0 and res not in ['stamina', 'balance', 'concentration']:
+                continue # Hide empty specialized resources
+                
             name = res.title()
             
-            # Contextual Filtering & Renaming
+            # Contextual Filtering & Renaming (GCA Standard)
             if res == 'concentration':
-                if player.active_class in ['mage', 'wizard', 'sorcerer', 'red_mage']:
+                if player.active_class in ['mage', 'wizard', 'sorcerer', 'red_mage', 'illusionist']:
                     name = 'Mana'
                 elif player.active_class == 'warlock':
                     name = 'Void'
-                else: 
-                    # Hide Concentration for purely martial classes if at 100% (Less clutter)
-                    if player.active_class in ['monk', 'knight', 'assassin'] and val >= 100:
-                        continue
-                    if player.active_class == 'barbarian':
-                        continue # Barbarians NEVER show concentration
-            
-            # Class-Specific Gates
-            if res == 'chi' and player.active_class != 'monk':
-                continue
-            if res == 'momentum' and player.active_class != 'barbarian':
-                continue
-
+                    
             # Color Coding
-            res_color = Colors.CYAN if res in ['concentration', 'stamina'] else (Colors.RED if res == 'heat' else Colors.YELLOW)
+            res_color = Colors.CYAN
+            if res == 'stamina': res_color = Colors.GREEN
+            elif res == 'balance': res_color = Colors.YELLOW
+            elif res == Tags.HEAT: res_color = Colors.RED
+            elif res == 'chi': res_color = Colors.WHITE
+            elif res == 'momentum': res_color = Colors.YELLOW
+            
             vitals += f" | {res_color}{name}: {val}{Colors.RESET}"
+
+        # Class Specific Engine Resources (Entropy, Flow)
+        if getattr(player, 'active_class', None) == 'warlock':
+            ext = player.ext_state.get('warlock', {})
+            ent = ext.get('entropy', 0)
+            max_ent = ext.get('max_entropy', 100)
+            player.send_line(f" {Colors.MAGENTA}Entropy: {Colors.BOLD}{ent}/{max_ent}{Colors.RESET}")
+        elif getattr(player, 'active_class', None) == 'illusionist':
+            ext = player.ext_state.get('illusionist', {})
+            echoes = ext.get('echoes', 0)
+            max_e = ext.get('max_echoes', 3)
+            player.send_line(f" {Colors.CYAN}Echoes:  {Colors.BOLD}{echoes}/{max_e}{Colors.RESET}")
 
     player.send_line(f" {vitals}")
 
@@ -105,7 +114,8 @@ def score(player, args):
     if breakthroughs:
         player.send_line(f"\n {Colors.BOLD}BREAKTHROUGHS:{Colors.RESET} {', '.join(breakthroughs)}")
         
-    player.send_line(f"\n{display_utils.render_line(width, '=')}")
+        player.send_line(f"\n {Colors.ITALIC}Resonance (Voltage) combines Soul power with Gear tags.{Colors.RESET}")
+    player.send_line(f"{display_utils.render_line(width, '=')}")
 
 @command_manager.register("attributes", "attr", "sheet", category="information")
 def attributes(player, args):
@@ -115,6 +125,14 @@ def attributes(player, args):
     
     from logic.engines.resonance_engine import ResonanceAuditor
     ResonanceAuditor.calculate_resonance(player)
+    
+    # 1. Identity (Moved from Score)
+    cls_name = (player.game.world.classes.get(player.active_class).name if player.active_class in player.game.world.classes else "Wanderer")
+    player.send_line(f" Name:     {Colors.BOLD}{player.name}{Colors.RESET}")
+    player.send_line(f" Class:    {Colors.CYAN}{cls_name}{Colors.RESET}")
+    player.send_line(f" Kingdom:  {Colors.BOLD}{player.kingdom.upper()}{Colors.RESET}")
+    player.send_line(f" Wealth:   {Colors.YELLOW}{getattr(player, 'gold', 0)} gold{Colors.RESET}")
+    player.send_line(display_utils.render_line(width, "-"))
     
     total_tags = player.current_tags or {}
     gear_tags = {}
@@ -130,7 +148,7 @@ def attributes(player, args):
                 for t, v in tags.items(): gear_tags[t] = gear_tags.get(t, 0) + v
             else:
                 for t in tags: gear_tags[t] = gear_tags.get(t, 0) + 1
-
+    
     header = display_utils.render_table_header(["TAG", "TOTAL", "SOUL", "GEAR"], [20, 8, 8, 8])
     player.send_line(f" {header}")
     player.send_line(display_utils.render_line(width, "-"))
@@ -146,7 +164,14 @@ def attributes(player, args):
         player.send_line(f" {row}")
 
     player.send_line(display_utils.render_line(width, "-"))
-    player.send_line(f" {Colors.ITALIC}Soul = Deck + Effects | Gear = Equipped Items{Colors.RESET}")
+    # Determine Weight Class
+    w_class = combat_logic.get_weight_class(player)
+    crit_chance = combat_logic.get_crit_chance(player)
+
+    player.send_line(f" Weight:   {w_class.upper()}")
+    player.send_line(f" Crit:     {crit_chance:>3.1f}%")
+    player.send_line(display_utils.render_line(width, "-"))
+    player.send_line(f" {Colors.ITALIC}Attributes: Soul = Deck/Passives | Gear = Equipped Items{Colors.RESET}")
 
 @command_manager.register("stats", category="information")
 def stats(player, args):

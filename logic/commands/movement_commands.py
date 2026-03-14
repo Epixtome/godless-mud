@@ -19,18 +19,19 @@ def _move(player, direction):
     blocked, reason = effects.is_action_blocked(player, "move")
     if blocked:
         player.send_line(f"{Colors.RED}{reason}{Colors.RESET}")
-        return True
+        return False
 
     # 1. Spacing Cap
     if player.move_tokens < 0.99:
-        return True
+        player.send_line("You are moving too fast! Wait for your tokens to refresh.")
+        return False
 
     # EVENT: Before Move
     before_ctx = {'player': player, 'direction': direction, 'can_move': True, 'reason': ''}
     event_engine.dispatch("before_move", before_ctx)
     if not before_ctx['can_move']:
         player.send_line(before_ctx['reason'])
-        return True
+        return False
 
     room = player.room
     if direction not in room.exits:
@@ -42,38 +43,38 @@ def _move(player, direction):
             player.send_line(f"Auto-dug {direction} to {new_room.name}.")
         else:
             player.send_line("You cannot go that way.")
-            return True
+            return False
 
     # Door Check
     door = room.doors.get(direction)
     if door and door.state != 'open':
         player.send_line(f"The {door.name} is {door.state}.")
-        return True
+        return False
 
     # EVENT: On Exit
     exit_ctx = {'player': player, 'room': room, 'can_exit': True, 'reason': ''}
     event_engine.dispatch("on_exit_room", exit_ctx)
-    if not exit_ctx['can_exit']: return True
+    if not exit_ctx['can_exit']: return False
 
     target_id = room.exits[direction]
     target_room = player.game.world.rooms.get(target_id)
     if not target_room:
         player.send_line("That exit leads to the void.")
-        return True
+        return False
 
     # Physics Constraints
     if not getattr(player, 'godmode', False):
         if room.terrain == 'bridge' and target_room.terrain in ['water', 'ocean', 'lake_deep']:
             player.send_line("A sturdy railing prevents you from falling.")
-            return True
+            return False
             
         climb_diff = target_room.elevation - room.elevation
         if climb_diff > 2:
             player.send_line("Too steep to scale.")
-            return True
+            return False
         if climb_diff < -3:
             player.send_line("A sheer drop prevents you from jumping.")
-            return True
+            return False
 
     # Resource Calculation
     base_cost = movement_engine.calculate_move_cost(player, room)
@@ -86,7 +87,7 @@ def _move(player, direction):
     if not getattr(player, 'godmode', False):
         if player.resources.get("stamina", 0) < final_cost:
             player.send_line(f"{Colors.RED}Too exhausted to move!{Colors.RESET}")
-            return True
+            return False
             
         resources.modify_resource(player, "stamina", -final_cost, source="Movement", context=direction)
         player.move_tokens = max(0.0, player.move_tokens - 1.0)
@@ -102,7 +103,7 @@ def _move(player, direction):
     if room.terrain == "swamp" and not getattr(player, 'godmode', False):
         player.send_line("The swamp sucks at your feet...")
         action_manager.start_action(player, 0.5, lambda: _finalize_move(player, direction, target_room, room), tag="moving")
-        return True
+        return True # Note: Technically 'true' as the action is successfully queued, but flee might clear combat too soon.
 
     return _finalize_move(player, direction, target_room, room)
 

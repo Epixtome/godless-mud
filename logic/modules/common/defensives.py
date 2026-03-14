@@ -15,7 +15,7 @@ def handle_brace(player, skill, args, target=None):
     _consume_resources(player, skill)
     return None, True
 
-@register("shield", "bash", "shield_bash")
+@register("shield_bash")
 def handle_shield_bash(player, skill, args, target=None):
     target = _get_target(player, args, target, "Bash whom?")
     if not target: return None, True

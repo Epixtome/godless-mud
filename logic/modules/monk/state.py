@@ -1,7 +1,21 @@
-"""
-logic/modules/monk/state.py
-State management for the Monk class.
-"""
+from logic.core.resource_registry import ResourceDefinition, register_resource
+from utilities.colors import Colors
+
+MONK_RESOURCES = [
+    ResourceDefinition(
+        id='chi',
+        display_name='CHI',
+        max=5,
+        storage_key='chi',
+        color=Colors.CYAN,
+        shorthand='CHI',
+        always_show=True
+    )
+]
+
+# Registration
+for res in MONK_RESOURCES:
+    register_resource('monk', res)
 
 def initialize_monk(player):
     """
@@ -18,10 +32,9 @@ def initialize_monk(player):
         
     if 'monk' not in player.ext_state:
         player.ext_state['monk'] = {
-            'flow_pips': 0, 
-            'stance': None, 
-            'throttle': {'tick': 0, 'count': 0},
-            'recent_hits': []
+            'chi': 0, 
+            'stance': 'flow', 
+            'last_swap_tick': 0
         }
 
     # Ensure data is clean (Self-Healing)
@@ -35,3 +48,11 @@ def sanitize_monk_data(player):
         monk_state = player.ext_state['monk']
         if not isinstance(monk_state.get('throttle'), dict):
             monk_state['throttle'] = {'tick': 0, 'count': 0}
+        
+        # Migrations
+        if 'flow_pips' in monk_state:
+            monk_state['chi'] = min(5, monk_state.pop('flow_pips') // 2)
+        if 'chi' not in monk_state:
+            monk_state['chi'] = 0
+        if 'flow' not in monk_state:
+            monk_state['flow'] = None

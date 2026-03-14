@@ -10,6 +10,7 @@
                 "lethal",
                 "skill"
             ],
+            "action": "backstab",
             "requirements": {
                 "stamina": 50,
                 "concealed": true
@@ -32,6 +33,7 @@
                 "utility",
                 "skill"
             ],
+            "action": "hide",
             "requirements": {
                 "stamina": 10
             },
@@ -44,20 +46,26 @@
         "smoke_bomb": {
             "id": "smoke_bomb",
             "name": "Smoke Bomb",
-            "description": "Deploy a smoke screen to confuse enemies and escape.",
+            "description": "Reaction: Deploy a smoke screen (3s). Negates physical strikes and grants brief [Concealment].",
             "identity_tags": [
                 "martial",
                 "utility",
-                "disruption",
-                "skill"
+                "stealth",
+                "reaction"
             ],
+            "action": "smoke_bomb",
             "requirements": {
-                "stamina": 15
+                "class": "assassin",
+                "stamina": 20,
+                "cooldown": 12
             },
-            "on_hit": {
-                "apply_status": "confused",
-                "duration": 4
-            }
+            "effects": [
+                {
+                    "id": "smoke_screen",
+                    "duration": 3,
+                    "target": "self"
+                }
+            ]
         },
         "dirt_kick": {
             "id": "dirt_kick",
@@ -69,6 +77,7 @@
                 "disruption",
                 "skill"
             ],
+            "action": "dirt_kick",
             "requirements": {
                 "stamina": 5
             },
@@ -87,6 +96,7 @@
                 "lethal",
                 "skill"
             ],
+            "action": "garrote",
             "requirements": {
                 "stamina": 25
             },

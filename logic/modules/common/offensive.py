@@ -68,53 +68,6 @@ def handle_disarm(player, skill, args, target=None):
     _consume_resources(player, skill)
     return target, True
 
-@register("whirlwind", "whirl")
-def handle_whirlwind(player, skill, args, target=None):
-    targets = [m for m in player.room.monsters] + [p for p in player.room.players if p != player]
-    if not targets: return None, True
-    player.send_line(f"{Colors.RED}You spin in a deadly whirlwind!{Colors.RESET}")
-    power = blessings_engine.MathBridge.calculate_power(skill, player)
-    
-    # Barbarian Momentum Logic (Standardized)
-    momentum = player.resources.get('momentum', 0)
-    if momentum > 0:
-        power = int(power * (1.0 + (momentum * 0.20)))
-        player.resources['momentum'] = 0
-    
-    for t in targets:
-        _apply_damage(player, t, power, "Whirlwind")
-    _consume_resources(player, skill)
-    return None, True
-
-@register("triple_kick")
-def handle_triple_kick(player, skill, args, target=None):
-    target = _get_target(player, args, target, "Triple kick whom?")
-    if not target: return None, True
-
-    player.send_line(f"{Colors.MAGENTA}You launch a flurry of kicks at {target.name}!{Colors.RESET}")
-    total_power = blessings_engine.MathBridge.calculate_power(skill, player, target)
-    damage_per_hit = max(1, int(total_power / 3))
-    
-    for i in range(3):
-        _apply_damage(player, target, damage_per_hit, "Triple Kick")
-        resources.modify_resource(target, "stamina", -5, source=player.name, context="Triple Kick")
-
-    # Dispatch Event for Monk Flow Mastery (Daze)
-    event_engine.dispatch("on_skill_execute", {'player': player, 'skill': skill, 'target': target})
-
-    _consume_resources(player, skill)
-    return target, True
-
-@register("dirt_kick")
-def handle_dirt_kick(player, skill, args, target=None):
-    target = _get_target(player, args, target, "Kick dirt at whom?")
-    if not target: return None, True
-    player.send_line(f"You kick dirt into {target.name}'s eyes!")
-    effects.apply_effect(target, "blind", 6)
-    _apply_damage(player, target, 5, "Dirt Kick")
-    _consume_resources(player, skill)
-    return target, True
-
 @register("kick")
 def handle_kick(player, skill, args, target=None):
     target = _get_target(player, args, target, "Kick whom?")
@@ -122,16 +75,5 @@ def handle_kick(player, skill, args, target=None):
     dmg = blessings_engine.MathBridge.calculate_power(skill, player, target)
     player.send_line(f"You kick {target.name}!")
     _apply_damage(player, target, dmg, "Kick")
-    _consume_resources(player, skill)
-    return target, True
-
-@register("dragon_strike")
-def handle_dragon_strike(player, skill, args, target=None):
-    target = _get_target(player, args, target, "Dragon Strike whom?")
-    if not target: return None, True
-    power = blessings_engine.MathBridge.calculate_power(skill, player, target)
-    player.send_line(f"{Colors.CYAN}You focus your Chi into a devastating Dragon Strike!{Colors.RESET}")
-    _apply_damage(player, target, power, "Dragon Strike")
-    event_engine.dispatch("on_skill_execute", {'player': player, 'skill': skill, 'target': target})
     _consume_resources(player, skill)
     return target, True
