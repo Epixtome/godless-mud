@@ -27,6 +27,7 @@ I use specific files to track the "Live State" of the project's systems:
 -   **`class_registry.md`**: Which class hooks are active. I check this before adding new event listeners.
 -   **`SCHEMA.md`**: Structural requirements for data files. I use this to validate and create new JSON content.
 -   **`COMMAND_REFERENCE.md`**: Available admin and player commands.
+-   **`engine_v5_3_refinement.md`**: Summary of V5.3 structural fixes and handover details.
 
 ### 3. The Structural Layer (Facades)
 I never search for local utility functions if a system-wide facade exists. I always prioritize:
