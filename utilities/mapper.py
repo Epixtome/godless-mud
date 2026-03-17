@@ -169,6 +169,33 @@ def draw_grid(grid, player_room, radius=None, visited_rooms=None, ignore_fog=Fal
                                         base_char = f"{Colors.MAGENTA}?{Colors.RESET}"
                                         has_entity = True
 
+                            # [V6.0] Priority 4: Traps (^)
+                            if not has_entity:
+                                if hasattr(room, 'metadata') and 'traps' in room.metadata:
+                                    for trap in room.metadata['traps']:
+                                        is_owner = trap.get('owner') == observer.name
+                                        
+                                        # Kingdom Check
+                                        obs_kingdom = "none"
+                                        if hasattr(observer, 'identity_tags'):
+                                            for k in ["light", "shadow", "dark", "instinct"]:
+                                                if k in observer.identity_tags:
+                                                    obs_kingdom = k
+                                                    break
+                                        is_teammate = trap.get('owner_kingdom') == obs_kingdom and obs_kingdom != "none"
+                                        
+                                        # Visibility Logic
+                                        visible = False
+                                        if is_owner:
+                                            visible = True 
+                                        elif is_teammate and dist <= 3:
+                                            visible = True
+                                        
+                                        if visible:
+                                            base_char = f"{Colors.BLUE}^{Colors.RESET}"
+                                            has_entity = True
+                                            break
+
                         # Terrain Formatting
                         if not has_entity:
                             # If only Knowledge (not visited), strip colors and dim

@@ -60,16 +60,9 @@ def handle_drag(player, skill, args, target=None):
 
     old_room = player.room
     
-    if player in old_room.players: old_room.players.remove(player)
-    player.room = dest_room
-    dest_room.players.append(player)
-    
-    if target in old_room.players: old_room.players.remove(target)
-    elif target in old_room.monsters: old_room.monsters.remove(target)
-    
-    target.room = dest_room
-    if hasattr(target, 'send_line'): dest_room.players.append(target)
-    else: dest_room.monsters.append(target)
+    from logic.core.services import world_service
+    world_service.move_entity(player, dest_room)
+    world_service.move_entity(target, dest_room)
     
     player.send_line(f"{Colors.RED}You drag {target.name} {direction}!{Colors.RESET}")
     old_room.broadcast(f"{player.name} drags {target.name} {direction}!", exclude_player=player)
@@ -216,13 +209,8 @@ def handle_push(player, skill, args, target=None):
         player.send_line("That path is blocked.")
         return target, True
 
-    # Move Target
-    if target in old_room.players: old_room.players.remove(target)
-    elif target in old_room.monsters: old_room.monsters.remove(target)
-    
-    target.room = dest_room
-    if hasattr(target, 'send_line'): dest_room.players.append(target)
-    else: dest_room.monsters.append(target)
+    from logic.core.services import world_service
+    world_service.move_entity(target, dest_room)
     
     player.send_line(f"{Colors.RED}You forcefully push {target.name} {direction}!{Colors.RESET}")
     old_room.broadcast(f"{player.name} pushes {target.name} {direction}!", exclude_player=player)
@@ -231,6 +219,10 @@ def handle_push(player, skill, args, target=None):
     if hasattr(target, 'send_line'):
         target.send_line(f"{Colors.RED}{player.name} pushes you {direction}!{Colors.RESET}")
         information.look(target, "")
+
+    # [V6.1] Immediate Engagement Check: If target is gone, exit combat state now.
+    from logic.core import combat
+    combat.handle_target_loss(player)
 
     _consume_resources(player, skill)
     return target, True

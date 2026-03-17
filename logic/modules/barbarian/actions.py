@@ -98,24 +98,24 @@ def drag(attacker, skill, args, target=None):
 def whirlwind(attacker, skill, args, target=None):
     """AOE: Consumes 50 Fury for massive damage."""
     attacker.send_line(f"{Colors.BOLD}{Colors.RED}You enter a cyclone of steel!{Colors.RESET}")
+    attacker.room.broadcast(f"{Colors.RED}{attacker.name} spins in a devastating whirlwind!{Colors.RESET}", exclude_player=attacker)
     
     # Calculate power once
     power = blessings_engine.calculate_power(skill, attacker, None)
     
-    # Get all targets in room
-    targets = [m for m in attacker.room.monsters if m != attacker]
+    # Get all targets in room (Monsters AND hostile players for PvP)
+    targets = [m for m in attacker.room.monsters if m != attacker and m.hp > 0]
+    targets += [p for p in attacker.room.players if p != attacker and p.hp > 0]
+    
     if not targets:
         attacker.send_line("There is no one here to strike.")
         return None, True
         
     for t in targets:
-        if t.hp <= 0: continue
         # Initiate combat so they retaliate
         combat.start_combat(attacker, t)
-        
-        # Apply pre-calculated power
-        attacker.send_line(f"Your whirlwind strikes {t.name} for {Colors.RED}{power}{Colors.RESET}!")
-        combat.apply_damage(t, power, source=attacker, context="Whirlwind")
+        _apply_damage(attacker, t, power, "Whirlwind")
+        blessings_engine.apply_on_hit(attacker, t, skill)
 
     _consume_resources(attacker, skill)
     return None, True
@@ -141,7 +141,24 @@ def bloodrage(attacker, skill, args, target=None):
     attacker.send_line(f"{Colors.BOLD}{Colors.RED}YOUR BLOOD BOILS! YOU ARE UNSTOPPABLE!{Colors.RESET}")
     attacker.room.broadcast(f"{Colors.BOLD}{Colors.RED}{attacker.name} screams in primal fury as their muscles swell!{Colors.RESET}", exclude_player=attacker)
     
-    # Use generic executor to apply status effects and consume resources from JSON
-    from logic.actions.base_executor import execute as handle_generic
-    handle_generic(attacker, skill, args, target=attacker)
+    # [BUG FIX] Directly apply the effect from JSON instead of delegating to base_executor.
+    # base_executor.execute() also calls consume_resources() internally, causing double-Fury drain.
+    from logic.core import effects
+    effects.apply_effect(attacker, "bloodrage", 10)
+    
+    # Consume Fury cost (100) and set cooldown
+    _consume_resources(attacker, skill)
+    return None, True
+
+@register("counter")
+def counter(attacker, skill, args, target=None):
+    """Deny: Ready a savage brace — take 50% damage from next hit and instantly counter."""
+    attacker.send_line(f"{Colors.BOLD}{Colors.YELLOW}You plant your feet and BRACE for impact!{Colors.RESET}")
+    attacker.send_line(f"{Colors.YELLOW}Next hit deals half damage and triggers an instant counter-strike.{Colors.RESET}")
+    attacker.room.broadcast(f"{Colors.YELLOW}{attacker.name} assumes a savage brace, daring an attack!{Colors.RESET}", exclude_player=attacker)
+    
+    from logic.core import effects
+    effects.apply_effect(attacker, "blood_counter_ready", 4)
+    
+    _consume_resources(attacker, skill)
     return None, True

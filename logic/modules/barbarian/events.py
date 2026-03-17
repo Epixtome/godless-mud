@@ -103,10 +103,7 @@ def on_build_prompt(ctx):
     state = player.ext_state.get('barbarian', {})
     prompts = ctx.get('prompts')
     
-    # 1. Fury Display (Always show for Barbarians)
-    current_fury = player.resources.get('fury', 0)
-    max_fury = 100 # Standard max
-    prompts.append(f"{Colors.RED}FRY: {current_fury}/{max_fury}{Colors.RESET}")
-
+    # [MODERNIZATION] Fury display is now handled automatically by the Resource Registry
+    # in logic/core/utils/messaging.py. We only keep the RAGING status flag here.
     if state.get('is_raging', False):
         prompts.append(f"{Colors.BOLD}{Colors.RED}[RAGING]{Colors.RESET}")

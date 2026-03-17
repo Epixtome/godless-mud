@@ -7,8 +7,37 @@ import os
 from utilities.colors import Colors
 
 # Ensure logs directory exists
-if not os.path.exists("logs"):
-    os.makedirs("logs")
+# Ensure directory structure
+if not os.path.exists("logs/archives"):
+    os.makedirs("logs/archives")
+
+def rotate_session_logs():
+    """
+    Archives logs from the previous session into a dated folder.
+    """
+    files_to_archive = [f for f in os.listdir("logs") if f.endswith((".jsonl", ".log", ".md"))]
+    if not files_to_archive:
+        return
+
+    # Use the modification time of the most recent log as the session end time
+    latest_mod = 0.0
+    for f in files_to_archive:
+        f_path = os.path.join("logs", f)
+        latest_mod = max(latest_mod, os.path.getmtime(f_path))
+    
+    session_ts = datetime.datetime.fromtimestamp(latest_mod).strftime("%Y%m%d_%H%M%S")
+    archive_dir = os.path.join("logs", "archives", f"session_{session_ts}")
+    
+    if not os.path.exists(archive_dir):
+        os.makedirs(archive_dir)
+        for f in files_to_archive:
+            try:
+                os.rename(os.path.join("logs", f), os.path.join(archive_dir, f))
+            except Exception:
+                pass
+
+# Prune old sessions before starting fresh
+rotate_session_logs()
 
 # Configure Telemetry Loggers
 telemetry_logger = logging.getLogger("telemetry")
@@ -29,25 +58,25 @@ marker_logger.setLevel(logging.INFO)
 marker_logger.propagate = False
 
 if not telemetry_logger.handlers:
-    _handler = RotatingFileHandler("logs/telemetry.jsonl", maxBytes=1024*1024, backupCount=5, encoding='utf-8')
+    _handler = logging.FileHandler("logs/telemetry.jsonl", encoding='utf-8')
     _formatter = logging.Formatter('%(message)s')
     _handler.setFormatter(_formatter)
     telemetry_logger.addHandler(_handler)
 
 if not construction_logger.handlers:
-    _c_handler = RotatingFileHandler("logs/construction.jsonl", maxBytes=1024*1024, backupCount=5, encoding='utf-8')
+    _c_handler = logging.FileHandler("logs/construction.jsonl", encoding='utf-8')
     _c_formatter = logging.Formatter('%(message)s')
     _c_handler.setFormatter(_c_formatter)
     construction_logger.addHandler(_c_handler)
 
 if not bug_logger.handlers:
-    _b_handler = RotatingFileHandler("logs/bugs.jsonl", maxBytes=1024*1024, backupCount=5, encoding='utf-8')
+    _b_handler = logging.FileHandler("logs/bugs.jsonl", encoding='utf-8')
     _b_formatter = logging.Formatter('%(message)s')
     _b_handler.setFormatter(_b_formatter)
     bug_logger.addHandler(_b_handler)
 
 if not marker_logger.handlers:
-    _m_handler = RotatingFileHandler("logs/markers.jsonl", maxBytes=1024*1024, backupCount=5, encoding='utf-8')
+    _m_handler = logging.FileHandler("logs/markers.jsonl", encoding='utf-8')
     _m_formatter = logging.Formatter('%(message)s')
     _m_handler.setFormatter(_m_formatter)
     marker_logger.addHandler(_m_handler)
@@ -84,10 +113,18 @@ def _print_console_mirror(entity, event_type, data, timestamp, room_id):
         src = data.get('source', 'Unknown')
         ctx = data.get('context', 'None')
         
-        col = Colors.CYAN
-        if str(res).lower() == "hp": col = Colors.RED
-        elif str(res).lower() == "stamina": col = Colors.YELLOW
-        elif str(res).lower() == "concentration": col = Colors.BLUE
+        # Agnostic Resource Coloring
+        colors = {
+            "hp": Colors.RED,
+            "stamina": Colors.YELLOW,
+            "concentration": Colors.BLUE,
+            "fury": Colors.RED,
+            "chi": Colors.CYAN,
+            "entropy": Colors.MAGENTA,
+            "balance": Colors.MAGENTA,
+            "heat": Colors.YELLOW
+        }
+        col = colors.get(str(res).lower(), Colors.CYAN)
         
         print(f"{header} {col}{str(res).upper()}: {amt} ({src}: {ctx}) | Current: {curr}{Colors.RESET}")
         
@@ -111,9 +148,10 @@ def _print_console_mirror(entity, event_type, data, timestamp, room_id):
         else:
             print(f"{header} {Colors.GREEN}SKILL: {skill}{Colors.RESET}")
         
-    elif event_type == "MOMENTUM_GEN":
-        pips = data.get('current_pips', 0)
-        print(f"{header} {Colors.YELLOW}MOMENTUM: {pips} Pips{Colors.RESET}")
+    elif event_type == "RESOURCE_PULSE":
+        # Standardized tick-based resource generation feedback
+        res = data.get('resource', 'Unknown')
+        print(f"{header} {Colors.YELLOW}{res.upper()} PULSE: {data.get('amount', 0)}{Colors.RESET}")
         
     elif event_type == "BUILD_ACTION":
         action = data.get('action', 'Unknown')
@@ -132,6 +170,13 @@ def _print_console_mirror(entity, event_type, data, timestamp, room_id):
         
     elif event_type == "POSTURE_BREAK":
         print(f"{header} {Colors.RED}*** POSTURE BROKEN! ***{Colors.RESET}")
+        
+    elif event_type == "COMMAND_EXECUTE":
+        cmd = data.get('command', 'Unknown')
+        args = data.get('args', '')
+        # Don't print passwords to console if we ever log them (though we shouldn't)
+        if "password" in cmd.lower(): args = "****"
+        print(f"{header} {Colors.YELLOW}CMD: {cmd} {args}{Colors.RESET}")
 
 
 def _append_to_marks(payload):
@@ -241,15 +286,9 @@ def log_posture_break(entity):
     """
     log_event(entity, "POSTURE_BREAK", {})
 
-def log_momentum_event(entity, overflow, pips_gained):
-    """
-    Logs momentum generation.
-    """
-    log_event(entity, "MOMENTUM_GEN", {
-        "overflow": overflow,
-        "pips_gained": pips_gained,
-        "current_pips": getattr(entity, 'momentum_pips', 0)
-    })
+def log_resource_pulse(entity, resource, amount):
+    """Logs standardized resource generation/pulses."""
+    log_event(entity, "RESOURCE_PULSE", {"resource": resource, "amount": amount})
 
 def log_status_change(entity, effect_id, action, duration=None):
     """
@@ -356,4 +395,13 @@ def log_bug_report(player, note):
     log_event(player, "BUG_REPORT", {
         "note": note,
         "coords": coords
+    })
+
+def log_command(player, command, args):
+    """
+    Records a player command for diagnostic auditing.
+    """
+    log_event(player, "COMMAND_EXECUTE", {
+        "command": command,
+        "args": args
     })

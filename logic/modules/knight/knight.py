@@ -150,3 +150,30 @@ def handle_stomp(player, skill, args, target=None):
         
     _consume_resources(player, skill)
     return None, True
+
+@register("execute")
+def handle_execute(player, skill, args, target=None):
+    """Payoff: Finishing blow on a Prone target. Deals 3x damage."""
+    target = common._get_target(player, args, target, "Execute whom?")
+    if not target: return None, True
+
+    # The prone:true requirement is already gated in auditor.check_requirements.
+    # We know they're prone if we get here.
+    player.send_line(f"{Colors.BOLD}{Colors.RED}EXECUTE! You bring your weapon down with crushing finality!{Colors.RESET}")
+    player.room.broadcast(f"{Colors.RED}{player.name} executes a devastating finishing blow on the prone {target.name}!{Colors.RESET}", exclude_player=player)
+
+    # Apply 3x damage multiplier for this strike only
+    player.execute_multiplier = 3.0
+    try:
+        from logic.engines import combat_processor
+        prompts = set()
+        combat_processor.execute_attack(player, target, player.room, player.game, prompts, blessing=skill)
+    finally:
+        if hasattr(player, 'execute_multiplier'):
+            del player.execute_multiplier
+
+    # Knock them out of prone — the execution ends their grounded state
+    effects.remove_effect(target, "prone", verbose=False)
+
+    _consume_resources(player, skill)
+    return target, True

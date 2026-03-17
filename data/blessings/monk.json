@@ -7,6 +7,7 @@
             "cost": 10,
             "description": "Builder: Three rapid kicks. Each hit generates 1 Chi.",
             "identity_tags": ["monk", "martial", "speed", "builder"],
+            "axis": "tempo",
             "action": "triple_kick",
             "requirements": {
                 "class": "monk",
@@ -26,6 +27,7 @@
             "cost": 15,
             "description": "Utility: A lightning-fast kick that interrupts the target's current action.",
             "identity_tags": ["monk", "martial", "utility", "interrupt"],
+            "axis": "tempo",
             "action": "snap_kick",
             "requirements": {
                 "class": "monk",
@@ -45,6 +47,7 @@
             "cost": 20,
             "description": "Reaction: Enter a defensive parry for 3s. You cannot auto-attack, but you counter every hit taken with a room-wide strike.",
             "identity_tags": ["monk", "martial", "reaction", "counter"],
+            "axis": "endurance",
             "action": "seven_fists",
             "requirements": {
                 "class": "monk",
@@ -62,8 +65,9 @@
             "name": "Dragon Strike",
             "tier": 4,
             "cost": 0,
-            "description": "Payoff: Consumes all Chi to deal devastating damage. Damage scales massively with Chi spent.",
+            "description": "Spender: Consumes all Chi for devastating force. Deals massive damage scaled to Chi spent. Also leaves target [Staggered] — the key setup for Iron Palm.",
             "identity_tags": ["monk", "martial", "lethal", "payoff"],
+            "axis": "tempo",
             "action": "dragon_strike",
             "requirements": {
                 "class": "monk",
@@ -74,6 +78,10 @@
             "scaling": {
                 "scaling_tag": "martial",
                 "multiplier": 2.0
+            },
+            "on_hit": {
+                "apply_status": "staggered",
+                "duration": 4
             }
         },
         "flow_stance": {
@@ -83,9 +91,11 @@
             "cost": 10,
             "description": "Agile Stance: +15% Evasion and +10 Stamina Regen. Focuses on speed and fluidity.",
             "identity_tags": ["monk", "martial", "stance"],
+            "axis": "endurance",
             "action": "flow_stance",
             "requirements": {
                 "class": "monk",
+                "stamina": 10,
                 "cooldown": 1
             }
         },
@@ -96,9 +106,11 @@
             "cost": 10,
             "description": "Heavy Stance: +15% Damage and +10% Mitigation, but -10% Evasion. Focuses on crushing impact.",
             "identity_tags": ["monk", "martial", "stance"],
+            "axis": "endurance",
             "action": "iron_stance",
             "requirements": {
                 "class": "monk",
+                "stamina": 10,
                 "cooldown": 1
             }
         },
@@ -109,11 +121,34 @@
             "cost": 0,
             "description": "Utility: Consumes 2 Chi to restore 20% HP and 50 Balance.",
             "identity_tags": ["monk", "focus", "utility"],
+            "axis": "endurance",
             "action": "centering",
             "requirements": {
                 "class": "monk",
                 "chi": 2,
                 "cooldown": 6
+            }
+        },
+        "iron_palm": {
+            "id": "iron_palm",
+            "name": "Iron Palm",
+            "tier": 5,
+            "cost": 0,
+            "description": "Finisher: Requires target to be [Staggered] (from Dragon Strike). A single devastating palm strike that ignores all armor and balance. Cannot miss. The conclusion of the monk's combo chain.",
+            "identity_tags": ["monk", "martial", "lethal", "finisher", "strike"],
+            "axis": "tempo",
+            "action": "iron_palm",
+            "requirements": {
+                "class": "monk",
+                "stamina": 30,
+                "staggered": true,
+                "fighting": true,
+                "cooldown": 10
+            },
+            "base_power": 50,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 2.5
             }
         }
     }

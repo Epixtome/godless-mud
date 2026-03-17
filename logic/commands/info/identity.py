@@ -170,6 +170,12 @@ def attributes(player, args):
 
     player.send_line(f" Weight:   {w_class.upper()}")
     player.send_line(f" Crit:     {crit_chance:>3.1f}%")
+
+    # [V6.0] Combat Rating Integration
+    from logic.core.utils import rating_engine
+    cr = rating_engine.calculate_entity_rating(player)
+    player.send_line(f" Rating:   {Colors.BOLD}{Colors.YELLOW}{cr}{Colors.RESET} GCR")
+    
     player.send_line(display_utils.render_line(width, "-"))
     player.send_line(f" {Colors.ITALIC}Attributes: Soul = Deck/Passives | Gear = Equipped Items{Colors.RESET}")
 

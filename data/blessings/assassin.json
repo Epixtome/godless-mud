@@ -89,7 +89,7 @@
         "garrote": {
             "id": "garrote",
             "name": "Garrote",
-            "description": "Squeeze the life out of a target, silencing them.",
+            "description": "Finisher: Requires [Circle] positioning. Loop a wire around the target's throat, silencing them for 8s and stunning for 2s. A lethal follow-up to Circle.",
             "identity_tags": [
                 "martial",
                 "strike",
@@ -100,9 +100,65 @@
             "requirements": {
                 "stamina": 25
             },
+            "base_power": 10,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.5
+            },
             "on_hit": {
                 "apply_status": "silenced",
                 "duration": 5
+            }
+        },
+        "circle": {
+            "id": "circle",
+            "name": "Circle",
+            "description": "Combat maneuver to strike from behind, shattering balance.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "maneuver",
+                "skill"
+            ],
+            "action": "circle",
+            "requirements": {
+                "stamina": 15,
+                "fighting": true,
+                "cooldown": 4
+            },
+            "base_power": 12
+        },
+        "venom": {
+            "id": "venom",
+            "name": "Venom",
+            "description": "Apply a lethal poison coating to your currently EQUIPPED weapon. The weapon must be equipped (not just in inventory).",
+            "identity_tags": [
+                "martial",
+                "utility",
+                "poison",
+                "skill"
+            ],
+            "action": "venom",
+            "requirements": {
+                "stamina": 10,
+                "weapon": true,
+                "cooldown": 30
+            }
+        },
+        "trap": {
+            "id": "trap",
+            "name": "Set Trap",
+            "description": "Set a hidden trap in the room.",
+            "identity_tags": [
+                "martial",
+                "utility",
+                "trap",
+                "skill"
+            ],
+            "action": "trap",
+            "requirements": {
+                "stamina": 20,
+                "cooldown": 10
             }
         }
     }

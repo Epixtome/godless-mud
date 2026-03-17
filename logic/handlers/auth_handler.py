@@ -107,6 +107,7 @@ async def handle_login(conn):
     telemetry.log_stat_snapshot(conn.player, conn.player.current_tags)
         
     game.players[name] = conn.player
+    conn.player.is_hydrated = True
     
     # Ensure player is registered in the room
     if conn.player.room and conn.player not in conn.player.room.players:
@@ -141,10 +142,11 @@ async def handle_kingdom_selection(conn):
         
         kingdom = None
         if choice == '1' or choice == 'light': kingdom = 'light'
-        elif choice == '2' or choice == 'dark': kingdom = 'shadow'
+        elif choice == '2' or choice == 'dark': kingdom = 'dark'
         elif choice == '3' or choice == 'instinct': kingdom = 'instinct'
         
         if kingdom:
+            conn.player.kingdom = kingdom
             conn.player.identity_tags = [kingdom, "adventurer"]
             cap_id = conn.game.world.landmarks.get(f"{kingdom}_cap")
             if cap_id and cap_id in conn.game.world.rooms:

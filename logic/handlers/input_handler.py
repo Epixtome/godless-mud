@@ -3,6 +3,7 @@ from logic.core import effects, magic_engine, search, Auditor
 from logic.engines import action_manager
 from logic.handlers import command_manager, state_manager
 from utilities.colors import Colors
+from utilities import telemetry
 
 def handle(player, command_line):
     """
@@ -16,6 +17,9 @@ def handle(player, command_line):
     cmd_name = parts[0].lower()
     args = " ".join(parts[1:]) if len(parts) > 1 else ""
     player.last_action = cmd_name # Track action for Heat dissipation logic
+    
+    # [V6.0] Tracer Logic: Record intent for diagnostic review
+    telemetry.log_command(player, cmd_name, args)
 
     # Admin commands (@) bypass state checks to prevent getting stuck in menus.
     is_admin_cmd = cmd_name.startswith('@')
@@ -33,18 +37,26 @@ def handle(player, command_line):
         return True
 
     # 1. Effects/Status Blocking (Stunned, Bound, etc.)
-    blocked, reason = effects.is_action_blocked(player, cmd_name)
-    if blocked:
-        player.send_line(reason)
-        return True
+    # Admin commands bypass status blocks for diagnostic purposes.
+    if not is_admin_cmd:
+        blocked, reason = effects.is_action_blocked(player, cmd_name)
+        if blocked:
+            player.send_line(reason)
+            return True
 
-    # 2. Combat movement restriction
+    # 2. Combat movement restriction (Stay & Fight)
     state = getattr(player, 'state', 'normal')
     if state == "combat":
         move_cmds = ["n", "s", "e", "w", "u", "d", "north", "south", "east", "west", "up", "down", "ne", "nw", "se", "sw"]
         if cmd_name in move_cmds:
-            player.send_line("You are in combat! You cannot walk away. Use 'flee' to escape!")
-            return True
+            # [V6.1] Precision Check: Only block if combat is still authentic.
+            from logic.core import combat
+            if not combat.is_target_valid(player, player.fighting):
+                # Target is gone or dead. Use facade to clean up and allow the move.
+                combat.handle_target_loss(player)
+            else:
+                player.send_line("You are in combat! You cannot walk away. Use 'flee' to escape!")
+                return True
 
     # 3. Handle specific state-based messaging (Optional, as effects system covers blocks)
     # But we keep it for user feedback if needed
@@ -71,8 +83,8 @@ def handle(player, command_line):
         return True
         
     if player.state == "mob_editor":
-        from logic.commands.admin import mob_builder
-        mob_builder.handle_mob_editor_input(player, command_line)
+        from logic.commands.admin.editors import mob_editor
+        mob_editor.handle_mob_editor_input(player, command_line)
         return True
         
     if player.state == "class_builder":

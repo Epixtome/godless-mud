@@ -22,14 +22,16 @@ def handle_hide(player, skill, args, target=None):
         return None, True
 
     player.send_line(f"{Colors.BLUE}You slip into the shadows...{Colors.RESET}")
-    effects.apply_effect(player, "concealed", 300) # 5 minutes or until reveal
+    # [V6.0] Concealed now gives a massive concealment bonus in vision_logic
+    effects.apply_effect(player, "concealed", 300) 
+    player.concealment = 30 # Baseline 10 + 20 from status = 30
     
     _consume_resources(player, skill)
     return None, True
 
 @register("backstab")
 def handle_backstab(player, skill, args, target=None):
-    """Strike from concealment for massive damage."""
+    """Strike from concealment for massive damage. Scales with Daggers/Precision."""
     target = common._get_target(player, args, target, "Backstab whom?")
     if not target: return None, True
 
@@ -37,24 +39,98 @@ def handle_backstab(player, skill, args, target=None):
         player.send_line("You must be concealed to backstab!")
         return None, True
 
+    # [V6.0] Weapon-Based Damage Logic
+    w = player.equipped_weapon
+    w_tags = getattr(w, 'tags', [])
+    
+    # Base multiplier for backstab (3x)
+    backstab_mult = 3.0
+    
+    # Dagger/Precision/Stiletto bonus
+    if any(tag in w_tags for tag in ["precision", "stiletto", "dagger", "finesse"]):
+        backstab_mult = 4.0
+        player.send_line(f"{Colors.CYAN}The precision of your blade finds the perfect gap!{Colors.RESET}")
+    elif any(tag in w_tags for tag in ["weight", "heavy_gear", "blunt"]):
+        backstab_mult = 0.5
+        player.send_line(f"{Colors.YELLOW}Your weapon is too unwieldy for a clean backstab!{Colors.RESET}")
+
     player.send_line(f"{Colors.RED}You emerge from the shadows and drive your blade into {target.name}'s back!{Colors.RESET}")
     player.room.broadcast(f"{player.name} appears behind {target.name} and strikes!", exclude_player=player)
 
     power = blessings_engine.MathBridge.calculate_power(skill, player, target)
-    # 3x multiplier for backstab
-    final_power = int(power * 3.0)
+    final_power = int(power * backstab_mult)
     
-    # Use the core combat facade for consistent event triggering
+    # Use the core combat facade
     combat.handle_attack(player, target, final_power, "Backstab")
     
     # Reveal
     effects.remove_effect(player, "concealed")
+    player.concealment = 10
     
-    # Hardlock (simulate recovery)
+    # Hardlock recovery
     effects.apply_effect(player, "stunned", 2)
     
     _consume_resources(player, skill)
     return target, True
+
+@register("circle")
+def handle_circle(player, skill, args, target=None):
+    """Combat maneuver to strike from behind, shattering balance."""
+    target = common._get_target(player, args, target, "Circle whom?")
+    if not target: return None, True
+
+    if not player.fighting:
+        player.send_line("Circle is a combat maneuver; you are not currently fighting.")
+        return None, True
+
+    player.send_line(f"{Colors.BLUE}You dance around {target.name}, circling behind their guard!{Colors.RESET}")
+    
+    # [V6.0] Track positioning for Garrote/Finisher
+    if 'assassin' not in player.ext_state:
+        player.ext_state['assassin'] = {}
+    player.ext_state['assassin']['positioning'] = {
+        'target_id': target.name,
+        'expire_tick': player.game.tick_count + 6 # 12s window
+    }
+
+    power = blessings_engine.MathBridge.calculate_power(skill, player, target)
+    
+    # Circle deals good damage and heavy balance damage
+    combat.handle_attack(player, target, int(power * 1.5), "Circle")
+    from logic.core.utils import combat_logic
+    combat_logic.check_posture_break(target, 45, source=player, tags={"precision", "speed"})
+    
+    _consume_resources(player, skill)
+    return target, True
+
+@register("venom")
+def handle_venom(player, skill, args, target=None):
+    """Apply a lethal coating to your current weapon."""
+    if not player.equipped_weapon:
+        player.send_line("You have no weapon to poison!")
+        return None, True
+
+    player.send_line(f"{Colors.GREEN}You coat your {player.equipped_weapon.name} in a shimmering dark venom.{Colors.RESET}")
+    # Apply a status that MathBridge checks or just add the tag to the weapon
+    # For simplicity and persistence, we'll add a status effect to the player that on_hit logic can check
+    effects.apply_effect(player, "poisoned_weapon", 60)
+    
+    _consume_resources(player, skill)
+    return None, True
+
+@register("trap")
+def handle_set_trap(player, skill, args, target=None):
+    """Set a hidden trap in the room. Types: trip, blind, web, sleep, fire."""
+    if not args:
+        player.send_line("Usage: trap <trip|blind|web|sleep|fire>")
+        return None, True
+
+    trap_type = args.lower().strip()
+    from .utility import set_trap
+    if set_trap(player, trap_type):
+        _consume_resources(player, skill)
+    
+    return None, True
 
 @register("smoke_bomb")
 def handle_smoke_bomb(player, skill, args, target=None):
@@ -88,12 +164,9 @@ def handle_dirt_kick(player, skill, args, target=None):
     if not target: return None, True
 
     player.send_line(f"You kick a spray of dirt into {target.name}'s eyes!")
-    
-    # Simplified: Effects and engagement handled by common executor if possible, 
-    # but dirt kick is utility.
     effects.apply_effect(target, "blinded", 10)
     
-    # Engage Combat via facade
+    # Engage Combat
     if target.hp > 0 and not player.fighting:
         player.fighting = target
         player.state = "combat"
@@ -105,12 +178,32 @@ def handle_dirt_kick(player, skill, args, target=None):
 
 @register("garrote")
 def handle_garrote(player, skill, args, target=None):
-    """Silences the target."""
+    """Silences and stuns the target from behind."""
     target = common._get_target(player, args, target, "Garrote whom?")
     if not target: return None, True
 
-    player.send_line(f"You wrap a wire around {target.name}'s throat!")
+    # [V6.0] Positioning Requirement (Requires Circle)
+    pos = player.ext_state.get('assassin', {}).get('positioning', {})
+    if pos.get('target_id') != target.name or pos.get('expire_tick', 0) < player.game.tick_count:
+        player.send_line(f"{Colors.YELLOW}You must circle behind {target.name} before you can use the garrote!{Colors.RESET}")
+        return None, True
+
+    player.send_line(f"{Colors.RED}You loop the wire around {target.name}'s throat and pull tight!{Colors.RESET}")
+    player.room.broadcast(f"{player.name} looms behind {target.name} and cinches a garrote wire around their throat!", exclude_player=player)
+    
+    # Apply hard CC
     effects.apply_effect(target, "silenced", 8)
+    effects.apply_effect(target, "stunned", 2)
+    
+    # Engage Combat
+    if target.hp > 0 and not player.fighting:
+        player.fighting = target
+        player.state = "combat"
+        if player not in target.attackers:
+            target.attackers.append(player)
+
+    # Clear positioning advantage
+    player.ext_state['assassin']['positioning'] = {}
     
     _consume_resources(player, skill)
     return target, True

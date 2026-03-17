@@ -21,6 +21,7 @@
             "name": "Bestial Reflex",
             "description": "Deny: A 3s reactive window. Your pet intercept the hit, and your next strike is free.",
             "identity_tags": ["beast", "reflex", "reaction"],
+            "action": "bestial_reflex",
             "requirements": { "stamina": 15, "class": "beastmaster", "cooldown": 10 },
             "effects": [
                 { "id": "bestial_bond_active", "duration": 3, "target": "self" }
@@ -29,9 +30,10 @@
         "coordinated_strike": {
             "id": "coordinated_strike",
             "name": "Coordinated Strike",
-            "description": "Payoff: Strike alongside your pet. Deals 2x damage if the target is [stunned] or [prone].",
+            "description": "Payoff: Strike alongside your pet. Requires target to be [Prone] (set up with Pounce). Pack Tactics fires automatically for bonus damage via beast tag synergy.",
             "identity_tags": ["beast", "strike", "finisher"],
-            "requirements": { "stamina": 20, "class": "beastmaster", "cooldown": 4 },
+            "action": "coordinated_strike",
+            "requirements": { "stamina": 20, "class": "beastmaster", "prone": true, "fighting": true, "cooldown": 4 },
             "base_power": 15,
             "scaling": { "scaling_tag": "beast", "multiplier": 1.5 }
         },
@@ -40,8 +42,12 @@
             "name": "Pounce",
             "description": "Apply: Command your pet to leap onto the target, knocking them [prone].",
             "identity_tags": ["beast", "strike", "weight"],
+            "action": "pounce",
             "requirements": { "stamina": 25, "class": "beastmaster", "cooldown": 8 },
-            "on_hit": { "apply_status": "prone", "duration": 3 }
+            "base_power": 8,
+            "scaling": { "scaling_tag": "beast", "multiplier": 1.2 },
+            "on_hit": { "apply_status": "prone", "duration": 3 },
+            "potency": 1.0
         },
         "order": {
             "id": "order",

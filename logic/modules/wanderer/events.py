@@ -10,4 +10,8 @@ def on_build_prompt(ctx):
         res = state.get('resource', 0)
         prompts.append(f"{Colors.CYAN}WANDERER: {res}{Colors.RESET}")
 
-event_engine.subscribe('on_build_prompt', on_build_prompt)
+def register_events():
+    """
+    Registers wanderer-specific event listeners.
+    """
+    event_engine.subscribe('on_build_prompt', on_build_prompt)

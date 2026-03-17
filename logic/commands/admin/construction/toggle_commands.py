@@ -4,7 +4,7 @@ Commands for toggling construction modes: Auto-dig, Auto-stitch, etc.
 """
 import logic.handlers.command_manager as command_manager
 
-@command_manager.register("@autodig", admin=True)
+@command_manager.register("@autodig", admin=True, category="admin_building")
 def autodig(player, args):
     """Toggle auto-dig mode."""
     player.autodig = not getattr(player, 'autodig', False)
@@ -17,7 +17,7 @@ def autodig(player, args):
         state = "enabled" if player.autodig else "disabled"
         player.send_line(f"Auto-dig {state}.")
 
-@command_manager.register("@auto", admin=True)
+@command_manager.register("@auto", admin=True, category="admin_building")
 def auto_toggle(player, args):
     """Toggles construction auto-modes."""
     if not hasattr(player, 'autodig'): player.autodig = False

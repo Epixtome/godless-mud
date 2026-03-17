@@ -3,6 +3,36 @@
 > [!IMPORTANT]
 > **V4.5: THE ARCHITECTURAL REALIGNMENT**: As of March 7th, 2026, the project has undergone a massive cleanup to resolve drift, shard God Objects, and unify logic domains.
 
+## [[V6.0] ERA: Admin & Stability] - 2026-03-15
+### Fixed
+- **DEITY VOID RESOLUTION**: Populated `world.deities` in `proto_loader.py` and added guard clauses to `distribute_favor`. Prevents server-crashing `IndexError` on mob death. (V6.0 Milestone).
+- **SOCKET SURVIVABILITY**: Updated `network_engine.py` to pipe connection-killing exceptions to `telemetry.log_bug_report`, ensuring all server crashes are recorded in `bugs.jsonl`.
+- **STATUS BYPASS**: Admin commands (`@`) now bypass status effect blocks (Stunned, Bound, etc.), ensuring server-side maintenance is always possible via `input_handler.py`.
+- **ITEM TRANSFER INTEGRITY**: Fixed `transfer_item` in `logic/core/items.py` to correctly handle room-to-inventory transfers by referencing `room.items`.
+
+### Changed
+- **PERSISTENT ADMIN VISION**: Refactored `@vision` into a persistent toggle that enhances `look`, `inventory`, and `equipment` with ID-level metadata.
+- **SURGICAL PURGE**: Enhanced `@purge` to support targeted deletion of specific IDs in both rooms and player inventories.
+
+### Added
+- **DEBUG LESSONS LEARNED**: Created `debug_lessons_learned.md` to track recurring architectural pitfalls and improved debugging protocols.
+
+## [[V5.3] ERA: Housekeeping & Bug Resolutions] - 2026-03-14
+### Fixed
+- **STEALTH STABILITY**: Added property setters for `concealment` and `perception` in `Player` model (Fixes crash on `hide`).
+- **COMBAT EXIT SNAPPINESS**: 
+    - Forced `handle_target_loss` immediately after a successful `push`.
+    - Refined `input_handler.py` to allow movement if the current target is gone/dead, bypassing the 2.0s World Tick delay.
+- **SHATTER-LOOP PREVENTION**: Recovery from breakage statuses (`prone`, `off_balance`, `stunned`) now automatically resets `Balance` to 100 in `effects.py`.
+- **SCAN DIRECTION**: Corrected Y-axis inversion (North is -Y).
+
+### Changed
+- **HELP SHARDING**: Decomposed massive `help.json` into sharded files in `data/help/` (System, Classes, Lore, Tags) as per GEMINI.md standards.
+- **PLAYER MODEL REFACTOR**: Sharded class-logic out of `player.py` to `player_logic.py`, reducing core model to 297 lines (Complies with 300-line limit).
+
+### Added
+- **SYSTEM ARCHITECTURE ARTIFACT**: Created `system_architecture.md` as a living technical reference for AI agents to reduce token usage during re-analysis.
+
 ## [[V5.0] ERA: The Modular Evolution] - 2026-03-13
 ### Changed
 - **GATED MODULE INITIALIZATION**: Refactored `trigger_module_inits` in `persistence.py` to only initialize the `common` module and the player's `active_class`. This prevents omni-init pollution and cross-class state leakage.

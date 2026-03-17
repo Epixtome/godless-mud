@@ -8,7 +8,7 @@ from utilities.colors import Colors
 import logic.commands.admin.construction.utils as construction_utils
 from logic.commands import movement_commands as movement
 
-@command_manager.register("@dig", admin=True)
+@command_manager.register("@dig", admin=True, category="admin_building")
 def dig(player, args):
     """Dig a new room in a direction."""
     if not args:
@@ -43,7 +43,7 @@ def dig(player, args):
         player.send_line(f"Dug {direction} to {new_room.name} ({new_room.id}).")
         player.room.broadcast(f"{player.name} reshapes reality, creating a path {direction}.")
 
-@command_manager.register("@building", admin=True)
+@command_manager.register("@building", admin=True, category="admin_tools")
 def building_help(player, args):
     """Shows a guide for building commands."""
     player.send_line(f"\n{Colors.BOLD}--- Building Commands ---{Colors.RESET}")

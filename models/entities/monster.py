@@ -14,6 +14,7 @@ class Monster:
         self.max_hp = max_hp if max_hp is not None else hp
         self.damage = damage
         self.base_mitigation = base_mitigation
+        self.combat_rating = 1.0 # [V6.0] Godless Combat Rating
         self.fighting = None
         self.attackers = [] # List of entities attacking this mob
         self.inventory = []

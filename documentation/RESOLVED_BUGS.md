@@ -16,3 +16,6 @@
 | 2026-03-13 | Antigravity | Monk Finisher Multipliers | Unified Dragon Strike/Iron Palm with `handle_attack` pipeline. |
 | 2026-03-13 | Antigravity | Warlock `consume_pacing` Crashes | Removed deprecated legacy calls from warlock actions. |
 | 2026-03-13 | Antigravity | Prompt Clutter (Stances) | Meta-flag `display_in_prompt` implemented in messaging engine. |
+| 2026-03-15 | Antigravity | V6.0 Deity Void Crash | Populated `world.deities` in loader and added safety checks in `combat_logic.py`. |
+| 2026-03-15 | Antigravity | Admin Cmd Status Block | Bypassed status effect blocks for commands starting with `@` in input handler. |
+| 2026-03-15 | Antigravity | Targeted Purge Syntax | Enhanced `@purge` to handle targeting IDs in room and inventory. |

@@ -9,14 +9,10 @@ from logic.constants import Tags
 from utilities.colors import Colors
 
 def get_max_hp(player):
-    """Calculates Max HP based on kit's passive attributes (V5.9)."""
+    """Calculates Max HP based on kit's passive attributes (V6.0)."""
     base_hp = calibration.MaxValues.HP
     passives = player.active_kit.get('passive_attributes', {})
     bonus = passives.get('max_hp_bonus', 0)
-    
-    # Legacy support
-    if player.active_kit.get('name', '').lower() == 'wanderer':
-        bonus = 50
     
     return base_hp + bonus
 
@@ -24,22 +20,26 @@ def get_max_resource(player, resource_name):
     """Calculates max resource values via sharded passive attributes."""
     passives = player.active_kit.get('passive_attributes', {})
     
+    # 1. Base Logic
     if resource_name == 'stamina':
         return 100 + passives.get('max_stamina_bonus', 0)
 
-    if resource_name == 'chi': 
-        return passives.get('max_chi', 5)
+    # 2. Dynamic Attribute Lookup (Agnostic)
+    # Checks for 'max_chi', 'max_heat', 'max_entropy', etc.
+    attr_key = f"max_{resource_name.lower()}"
+    if attr_key in passives:
+        return passives.get(attr_key, 100)
     
-    if resource_name == 'momentum':
-        return 5
-    
-    if resource_name == 'entropy':
-        return 5
-
-    if resource_name == Tags.HEAT:
-        return passives.get('max_heat', 100)
+    # 3. Defaults for common Godless resources
+    fallbacks = {
+        'chi': 5,
+        'momentum': 5,
+        'entropy': 5,
+        'balance': 100,
+        Tags.HEAT: 100
+    }
             
-    return 100
+    return fallbacks.get(resource_name.lower(), 100)
 
 def reset_resources(player):
     """Fully restores and resets all resources to base state."""
@@ -106,10 +106,24 @@ def mark_room_visited(player, room_id):
     to_add = [room_id]
     if hasattr(player, 'game') and room_id in player.game.world.rooms:
         curr = player.game.world.rooms[room_id]
+        
+        # Add explicit exits (handles Z-plane shifts or distant links)
         if hasattr(curr, 'exits'):
             for neighbor_id in curr.exits.values():
                 if neighbor_id not in to_add:
                     to_add.append(neighbor_id)
+        
+        # [V6.1] 8-Direction Spatial Reveal (Fog of War)
+        # Reveals diagonal neighbors on the same Z-plane even if no explicit exit exists
+        from logic.engines import spatial_engine
+        spatial = spatial_engine.get_instance(player.game.world)
+        if spatial:
+            for dx in range(-1, 2):
+                for dy in range(-1, 2):
+                    if dx == 0 and dy == 0: continue
+                    neighbor = spatial.get_room(curr.x + dx, curr.y + dy, curr.z)
+                    if neighbor and neighbor.id not in to_add:
+                        to_add.append(neighbor.id)
 
     # 2. Update MRU (Most Recently Used)
     for rid in to_add:
@@ -136,11 +150,39 @@ def calculate_total_weight(player, only_equipped=False):
     for attr in attrs:
         item = getattr(player, attr, None)
         if item:
-            total += getattr(item, 'weight', 0)
+            total += (getattr(item, 'weight', 0) or 0)
             
     # 2. Inventory (Optional)
     if not only_equipped:
         for item in player.inventory:
-            total += getattr(item, 'weight', 0)
-        
+            total += (getattr(item, 'weight', 0) or 0)
+            
     return total
+
+def flush_class_state(player):
+    """Removes class-specific stances and passives."""
+    from logic.core import effects
+    to_remove = []
+    if player.status_effects:
+        for eff_id in player.status_effects:
+            eff_def = effects.get_effect_definition(eff_id, player.game)
+            if eff_def and eff_def.get('group') in ['stance', 'class_passive']:
+                to_remove.append(eff_id)
+    
+    for eff in to_remove:
+        effects.remove_effect(player, eff)
+
+def load_kit(player, kit_name):
+    """Applies a specific class kit via persistence shard."""
+    from logic.core.utils import persistence
+    success = persistence.load_kit(player, kit_name)
+    if success: player.mark_tags_dirty()
+    return success
+
+def get_class_bonus(player):
+    """Returns the numeric bonus associated with the current kit."""
+    return player.active_kit.get('class_bonus', 0)
+
+def get_heat_efficiency(player):
+    """Returns the heat cost multiplier for the current kit."""
+    return player.active_kit.get('heat_efficiency', 1.0)

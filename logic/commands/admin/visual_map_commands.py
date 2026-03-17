@@ -8,7 +8,7 @@ from collections import defaultdict
 from utilities import mapper
 from logic.engines import spatial_engine, vision_engine
 
-@command_manager.register("@worldmap", admin=True)
+@command_manager.register("@worldmap", admin=True, category="admin_tools")
 def world_map_visual(player, args):
     """Visualizes the global world grid."""
     parts = args.split() if args else []
@@ -53,7 +53,7 @@ def world_map_visual(player, args):
                 row += f"{Colors.CYAN}#{Colors.RESET}" if "light" in zid else f"{Colors.MAGENTA}#{Colors.RESET}" if "dark" in zid else "#"
         player.send_line(row)
 
-@command_manager.register("@zonemap", admin=True)
+@command_manager.register("@zonemap", admin=True, category="admin_tools")
 def zonemap(player, args):
     """Local or specific zone visualization."""
     parts = args.split()
@@ -78,7 +78,7 @@ def zonemap(player, args):
                 else: line += "  "
             player.send_line(line)
 
-@command_manager.register("@layer", admin=True)
+@command_manager.register("@layer", admin=True, category="admin_tools")
 def layer_map(player, args):
     """View a specific Z-layer."""
     parts = args.split()

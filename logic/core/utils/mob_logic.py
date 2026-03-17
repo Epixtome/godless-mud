@@ -71,3 +71,8 @@ def die(mob):
             mob.inventory.append(item)
             if hasattr(mob, 'room') and mob.room:
                 mob.room.broadcast(f"{mob.name} drops {item.name}.")
+
+def get_combat_rating(mob):
+    """[V6.0] Calculates the Godless Combat Rating (GCR) for a monster."""
+    from logic.core.utils import rating_engine
+    return rating_engine.calculate_entity_rating(mob)

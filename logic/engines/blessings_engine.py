@@ -10,7 +10,9 @@ from logic.engines.blessings.math_bridge import (
     calculate_duration, 
     calculate_weapon_power, 
     resolve_blessing_effect,
-    resolve_reaction
+    resolve_reaction,
+    calculate_gear_damage_mult,
+    calculate_gear_power_bonus
 )
 
 # Re-export for compatibility
@@ -23,6 +25,8 @@ __all__ = [
     'calculate_weapon_power',
     'resolve_blessing_effect',
     'resolve_reaction',
+    'calculate_gear_damage_mult',
+    'calculate_gear_power_bonus',
     'check_pacing',
     'on_status_removed',
 ]

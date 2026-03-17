@@ -2,7 +2,7 @@ import logic.handlers.command_manager as command_manager
 from logic.factories import loot_factory
 from utilities.colors import Colors
 
-@command_manager.register("@factory", category="admin")
+@command_manager.register("@factory", category="admin_entities", admin=True)
 def factory_generate(player, args):
     """
     Admin command to test loot generation.

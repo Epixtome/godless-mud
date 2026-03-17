@@ -5,6 +5,7 @@
             "name": "Spellstrike: Frost",
             "description": "Apply: Imbue your rapier with ice. The next hit applies [Jarred] and slows balance recovery.",
             "identity_tags": ["red_mage", "martial", "ice"],
+            "action": "spellstrike_frost",
             "requirements": { "class": "red_mage", "concentration": 15, "cooldown": 5 },
             "on_hit": { "apply_status": "jarred", "duration": 4 }
         },
@@ -13,6 +14,7 @@
             "name": "Fencer's Ward",
             "description": "Deny: A 3s reactive window. Successfully parrying a physical hit grants [Dualcast].",
             "identity_tags": ["red_mage", "martial", "reaction"],
+            "action": "fencers_ward",
             "requirements": { "class": "red_mage", "stamina": 15, "cooldown": 10 },
             "effects": [
                 { "id": "fencers_ward_active", "duration": 3, "target": "self" }
@@ -23,6 +25,7 @@
             "name": "Dualcast Burst",
             "description": "Payoff: Consumes [Dualcast] to cast your next spell twice for 100% extra damage.",
             "identity_tags": ["red_mage", "arcane", "finisher"],
+            "action": "dualcast_burst",
             "requirements": { "class": "red_mage", "concentration": 40, "cooldown": 2 },
             "base_power": 20,
             "scaling": { "scaling_tag": "magic", "multiplier": 1.2 }

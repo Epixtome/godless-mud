@@ -10,7 +10,7 @@ from logic.engines import spatial_engine
 from logic.commands.info_commands import look
 import logic.commands.admin.construction.utils as construction_utils
 
-@command_manager.register("@link", admin=True)
+@command_manager.register("@link", admin=True, category="admin_building")
 def link_room(player, args):
     """Link the current room to another room."""
     if not args:
@@ -53,7 +53,7 @@ def link_room(player, args):
             msg += f" and back ({rev})"
     player.send_line(f"{msg}.")
 
-@command_manager.register("@unlink", admin=True)
+@command_manager.register("@unlink", admin=True, category="admin_building")
 def unlink_room(player, args):
     """Remove an exit. Unlinks both ways by default."""
     if not args:
@@ -79,7 +79,7 @@ def unlink_room(player, args):
     else:
         player.send_line("No exit in that direction.")
 
-@command_manager.register("@dig_portal", admin=True)
+@command_manager.register("@dig_portal", admin=True, category="admin_building")
 def dig_portal(player, args):
     """Create a portal to a distant pocket dimension."""
     parts = args.split()
@@ -90,6 +90,9 @@ def dig_portal(player, args):
     name = " ".join(parts[2:]) if len(parts) > 2 else "Interior"
     tx, ty, tz = player.room.x + 5000, player.room.y + 5000, player.room.z
     spatial = spatial_engine.get_instance(player.game.world)
+    if not spatial:
+        player.send_line("Spatial index unavailable.")
+        return
     while spatial.get_room(tx, ty, tz): tx += 10
     
     nid = get_room_id(player.room.zone_id, tx, ty, tz)

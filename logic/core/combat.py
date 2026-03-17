@@ -2,9 +2,9 @@
 logic/core/combat.py
 Unified Facade for the Godless Combat System.
 Decouples engines from the business logic layer.
+All business logic results are delegated to combat_logic.py.
 """
 from typing import TYPE_CHECKING, List, Set, Optional, Any
-from logic.core import event_engine
 from logic.core.utils import combat_logic
 
 if TYPE_CHECKING:
@@ -16,57 +16,15 @@ def resolve_attack_tags(attacker: Any, blessing: Any = None) -> set:
 
 def calculate_base_damage(attacker: Any, target: Any, blessing: Any = None) -> int:
     """Calculates the raw base damage before events and modifiers."""
-    from logic.engines import blessings_engine
-    from logic import calibration
-    
-    raw_damage = 0
-    if blessing:
-        raw_damage = blessings_engine.calculate_power(blessing, attacker, target)
-    elif hasattr(attacker, 'equipped_weapon'):
-        if attacker.equipped_weapon:
-            raw_damage = blessings_engine.calculate_weapon_power(attacker.equipped_weapon, attacker)
-        else:
-            raw_damage = 1 # Unarmed base
-
-        attack_tags = resolve_attack_tags(attacker, blessing)
-        ctx = {'attacker': attacker, 'target': target, 'damage': raw_damage, 'tags': attack_tags}
-        event_engine.dispatch("calculate_base_damage", ctx)
-        raw_damage = ctx['damage']
-    elif hasattr(attacker, 'damage'):
-        raw_damage = getattr(attacker, 'damage', 1)
-        ctx = {'attacker': attacker, 'target': target, 'damage': raw_damage}
-        event_engine.dispatch("calculate_base_damage", ctx)
-        raw_damage = ctx['damage']
-            
-    return max(1, int(raw_damage))
+    return combat_logic.calculate_base_damage(attacker, target, blessing)
 
 def get_attack_verb(damage_percent: float) -> str:
     """Determines the verb used in combat messages based on damage severity."""
     return combat_logic.get_attack_verb(damage_percent)
 
 def calculate_damage(attacker: Any, victim: Optional[Any] = None, blessing: Any = None) -> int:
-    """
-    Calculates final damage for an attack, respecting modifiers and armor.
-    V5.0: Mitigation-based damage calculation.
-    """
-    raw = calculate_base_damage(attacker, victim, blessing)
-    
-    # 1. Damage Mitigation (Percentage based on Weight Class)
-    mitigation = combat_logic.get_mitigation_multiplier(victim) if victim else 0.0
-    
-    # [V6.0] Finesse Bypasses Half Mitigation
-    attack_tags = resolve_attack_tags(attacker, blessing)
-    if "finesse" in attack_tags or "precision" in attack_tags:
-        mitigation *= 0.5
-    
-    # [V5.0] Modifier Event (Class Scaling: e.g., Monk Flow, Barbarian Berserk)
-    mod_ctx = {'attacker': attacker, 'target': victim, 'multiplier': 1.0, 'bonus_flat': 0, 'blessing': blessing}
-    event_engine.dispatch("calculate_damage_modifier", mod_ctx)
-    
-    final_dmg = (raw * mod_ctx['multiplier']) + mod_ctx['bonus_flat']
-    final_dmg = final_dmg * (1.0 - mitigation)
-    
-    return max(1, int(final_dmg))
+    """Calculates final damage for an attack, respecting modifiers and armor."""
+    return combat_logic.calculate_damage(attacker, victim, blessing)
 
 def handle_attack(attacker: Any, victim: Any, room: Any, game: Any, blessing: Optional[Any] = None, context_prefix: Optional[str] = None) -> List[Any]:
     """Executes a single combat exchange and processes results."""
@@ -85,20 +43,11 @@ def distribute_favor(player: 'Player', target: Any, game: Any) -> None:
 
 def is_target_valid(attacker: Any, target: Any) -> bool:
     """Checks if combat between two entities is possible (distance, HP, structure)."""
-    if not target or getattr(target, 'hp', 0) <= 0: return False
-    
-    # Strict Schema Validation (Clean Border API)
-    required_attrs = ['hp', 'name', 'room']
-    if not all(hasattr(target, attr) for attr in required_attrs):
-        return False
-        
-    if hasattr(attacker, 'room') and hasattr(target, 'room'):
-        if attacker.room != target.room: return False
-        
-    return True
+    return combat_logic.is_target_valid(attacker, target)
 
 def kill_entity(victim: Any, killer: Optional[Any] = None) -> None:
     """Dispatches a global death event to trigger the reaper phase."""
+    from logic.core import event_engine
     event_engine.dispatch("on_death", {'victim': victim, 'killer': killer})
 
 def estimate_player_damage(player: 'Player') -> int:
@@ -115,91 +64,19 @@ def get_defense_rating(entity: Any) -> int:
 
 def apply_damage(target: Any, amount: int, source: Any = None, context: str = "Combat", tags: Optional[Set[str]] = None) -> int:
     """Standardized pipeline for applying damage to any entity."""
-    ctx = {'target': target, 'damage': amount, 'source': source, 'context': context, 'tags': tags or set()}
-    event_engine.dispatch("on_take_damage", ctx)
-    actual_damage = ctx['damage']
-    
-    if hasattr(target, 'hp'):
-        target.hp = max(0, target.hp - actual_damage)
-        
-        # [V5.1] Posture Protocol Integration
-        from logic.core.utils import combat_logic
-        combat_logic.check_posture_break(target, actual_damage, source=source, tags=ctx['tags'])
-        
-        if target.hp <= 0:
-            event_engine.dispatch("on_death", {'victim': target, 'killer': source, 'debug_source': f"Combat.apply_damage({context})"})
-    return actual_damage
+    return combat_logic.apply_damage(target, amount, source=source, context=context, tags=tags)
 
 def can_act(entity: Any) -> bool:
-    """
-    Checks if an entity is capable of taking a combat action.
-    V5.0: Respects status effect blockages (combat, skills).
-    """
-    if getattr(entity, 'hp', 0) <= 0 or getattr(entity, 'pending_death', False):
-        return False
-    
-    from logic.core import effects
-    game = getattr(entity, 'game', None)
-    
-    # Check current status effects
-    active_effects = getattr(entity, 'status_effects', {})
-    for eid in active_effects:
-        defn = effects.get_effect_definition(eid, game)
-        if defn and "combat" in defn.get("blocks", []):
-            return False
-
-    state = getattr(entity, 'state', 'normal')
-    return not (state in ["stunned", "casting", "resting"])
+    """Checks if an entity is capable of taking a combat action."""
+    return combat_logic.can_act(entity)
 
 def handle_target_loss(entity: Any) -> Any:
     """Handles logic when an entity loses their target."""
-    from utilities.colors import Colors
-    target = getattr(entity, 'fighting', None)
-    if target and getattr(target, 'hp', 0) <= 0:
-        # If the target is dead, we don't return it as a valid target to continue hitting.
-        # This prevents "corpse camping" by mobs.
-        pass
-    else:
-        # Keep the target if it's still alive
-        if target and is_target_valid(entity, target):
-            return target
-
-    valid_attackers = [a for a in getattr(entity, 'attackers', []) if is_target_valid(entity, a)]
-    if valid_attackers:
-        new_target = valid_attackers[0]
-        entity.fighting = new_target
-        if hasattr(entity, 'send_line'):
-            entity.send_line(f"{Colors.YELLOW}You turn to fight {new_target.name}!{Colors.RESET}")
-        return new_target
-    
-    # No valid targets left
-    if hasattr(entity, 'send_line') and hasattr(entity, 'fighting') and entity.fighting:
-        entity.send_line(f"You represent a victory over your fallen foe.")
-    
-    entity.fighting = None
-    if hasattr(entity, 'state') and entity.state == "combat":
-        entity.state = "normal"
-    
-    stop_combat(entity)
-    return None
+    return combat_logic.handle_target_loss(entity)
 
 def start_combat(player: 'Player', target: Any) -> None:
     """Initiates combat between two entities, handling symmetry and interrupts."""
-    # Handle switching targets (Clean up old observers)
-    old_target = getattr(player, 'fighting', None)
-    if old_target and old_target != target and hasattr(old_target, 'attackers'):
-        if player in old_target.attackers:
-            old_target.attackers.remove(player)
-
-    player.fighting = target
-    player.state = "combat"
-    if hasattr(target, 'fighting'):
-        if hasattr(target, 'attackers') and player not in target.attackers:
-            target.attackers.append(player)
-        if not getattr(target, 'fighting', None):
-            target.fighting = player
-        if hasattr(target, 'interaction_context') and target.interaction_context:
-            target.interaction_context.shatter(target)
+    combat_logic.start_combat(player, target)
 
 def stop_combat(entity: Any) -> None:
     """Safely ends combat for an entity."""

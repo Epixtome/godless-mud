@@ -7,7 +7,7 @@ from models import Zone
 from logic.common import get_reverse_direction
 import logic.commands.admin.construction.utils as construction_utils
 
-@command_manager.register("@zone", admin=True)
+@command_manager.register("@zone", admin=True, category="admin_building")
 def zone_cmd(player, args):
     """Manage zones (list, create, name, rooms, bounds)."""
     parts = args.split() if args else []
@@ -34,7 +34,7 @@ def zone_cmd(player, args):
         min_y, max_y = min(r.y for r in rs), max(r.y for r in rs)
         player.send_line(f"Zone {zid}: X[{min_x}, {max_x}] Y[{min_y}, {max_y}]")
 
-@command_manager.register("@stitch", admin=True)
+@command_manager.register("@stitch", admin=True, category="admin_building")
 def stitch_zones(player, args):
     """Stitches a zone to an anchor room to fix coordinates."""
     parts = args.split()
@@ -45,7 +45,7 @@ def stitch_zones(player, args):
         player.send_line("Stitched."); from logic.engines import spatial_engine; spatial_engine.invalidate()
     else: player.send_line("Stitch failed.")
 
-@command_manager.register("@floodzone", admin=True)
+@command_manager.register("@floodzone", admin=True, category="admin_building")
 def flood_zone(player, args):
     """Flood fills a zone ID to connected rooms of the same terrain."""
     parts = args.split()
@@ -67,7 +67,7 @@ def flood_zone(player, args):
                 visited.add(n.id); queue.append(n)
     player.send_line(f"Rezoned {count} rooms to '{new_zid}'.")
 
-@command_manager.register("@savezone", "@exportzone", admin=True)
+@command_manager.register("@savezone", "@exportzone", admin=True, category="admin_building")
 def save_zone(player, args):
     """Saves a zone to disk."""
     from logic.core import loader

@@ -10,7 +10,7 @@ from logic.engines import spatial_engine
 from utilities.colors import Colors
 from logic.commands.info_commands import look
 
-@command_manager.register("@tp", "@teleport", admin=True)
+@command_manager.register("@tp", "@teleport", admin=True, category="admin_travel")
 def teleport(player, room_name):
     """Teleport to a room, zone, or coordinates."""
     target_room = None
@@ -65,7 +65,7 @@ def teleport(player, room_name):
         player.mark_room_visited(target_room.id)
         player.room.broadcast(f"{player.name} appears.")
         look(player, "")
-@command_manager.register("@testbed", admin=True)
+@command_manager.register("@testbed", admin=True, category="admin_travel")
 def testbed(player, args):
     """Jump to the official Testing Grounds hub."""
     target_id = "testing.0.0.0"

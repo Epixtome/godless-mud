@@ -21,7 +21,19 @@ def _is_skill_command(player, cmd_name: str) -> bool:
         return True
     if not hasattr(player, 'equipped_blessings'):
         return False
-    return any(b.id == cmd_name or b.name.strip().lower() == cmd_name for b_id in player.equipped_blessings if (b := player.game.world.blessings.get(b_id)))
+    return any(b_id == cmd_name or (b.name.strip().lower() == cmd_name if (b := player.game.world.blessings.get(b_id)) else False) for b_id in player.equipped_blessings)
+
+def _is_mobility_skill(player, cmd_name: str) -> bool:
+    """Checks if a command uses a skill with mobility/movement tags."""
+    if not hasattr(player, 'equipped_blessings'):
+        return False
+    for b_id in player.equipped_blessings:
+        b = player.game.world.blessings.get(b_id)
+        if not b: continue
+        if b.id == cmd_name or b.name.strip().lower() == cmd_name:
+            tags = getattr(b, 'identity_tags', [])
+            return any(t in tags for t in ["movement", "mobility", "speed"])
+    return False
 
 def is_action_blocked(player, cmd_name: str, get_defn_func) -> tuple[bool, str | None]:
     """
@@ -49,5 +61,7 @@ def is_action_blocked(player, cmd_name: str, get_defn_func) -> tuple[bool, str |
             return True, f"You cannot fight while {effect_name.lower()}!"
         if "skills" in blocked_types and _is_skill_command(player, cmd_name):
             return True, f"You cannot use skills while {effect_name.lower()}!"
+        if "mobility" in blocked_types and _is_mobility_skill(player, cmd_name):
+            return True, f"You cannot use mobility skills while {effect_name.lower()}!"
 
     return False, None

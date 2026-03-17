@@ -49,13 +49,24 @@ def save_zone_state(world, zone_id):
     rooms = {r.id: r.serialize_state() for r in world.rooms.values() if r.zone_id == zone_id}
     # Save room if it has items, monsters, effects, flags, or custom metadata
     rooms = {k: v for k, v in rooms.items() if v['items'] or v['monsters'] or v['status_effects'] or v['flags'] or v['metadata']}
+    
+    file_path = os.path.join(DB_DIR, f"{zone_id}.state.json")
+    
     if rooms:
         state = {"zone_id": zone_id, "rooms": rooms, "unique_registry": getattr(world, 'unique_registry', {})}
         try:
-            with open(os.path.join(DB_DIR, f"{zone_id}.state.json"), 'w') as f:
+            with open(file_path, 'w') as f:
                 json.dump(state, f, indent=4)
         except Exception as e:
             logger.error(f"Failed to save state for {zone_id}: {e}")
+    else:
+        # Zone is clean. Remove the state file if it exists to prevent stalling deltas.
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+                logger.info(f"Purged stale live state for zone: {zone_id}")
+            except Exception as e:
+                logger.error(f"Failed to remove stale state file {file_path}: {e}")
 
 def save_shards(world):
     """Exports world geography into JSON shards."""

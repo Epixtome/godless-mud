@@ -3,8 +3,9 @@ from models import Room
 from logic.core.world import get_room_id
 from logic.common import get_reverse_direction
 import logic.commands.admin.construction.utils as construction_utils
+from logic.engines import spatial_engine
 
-@command_manager.register("@gen_instinct", admin=True)
+@command_manager.register("@gen_instinct", admin=True, category="admin_building")
 def gen_instinct(player, args):
     """
     Generates the Instinct Kingdom layout (20x20) and stitches it.
@@ -65,8 +66,10 @@ def gen_instinct(player, args):
                 grid[ty+dy][tx+dx] = 4
 
     # Generate Rooms
-    from logic.engines import spatial_engine
     spatial = spatial_engine.get_instance(player.game.world)
+    if not spatial:
+        player.send_line("Spatial index unavailable.")
+        return
 
     for y in range(height):
         for x in range(width):
@@ -115,7 +118,11 @@ def gen_instinct(player, args):
     # Rebuild Spatial Index
     spatial_engine.invalidate()
     spatial = spatial_engine.get_instance(player.game.world)
-    spatial.rebuild()
+    if spatial:
+        spatial.rebuild()
+    else:
+        player.send_line("Warning: Spatial index unavailable, skipping stitching.")
+        return
     
     # Auto-stitch (Link neighbors)
     links = 0
@@ -145,7 +152,7 @@ def gen_instinct(player, args):
     
     player.send_line(f"Generated Instinct Kingdom ({created_count} rooms) and stitched {links} exits at {start_x},{start_y}.")
 
-@command_manager.register("@gen_grid", admin=True)
+@command_manager.register("@gen_grid", admin=True, category="admin_building")
 def gen_grid(player, args):
     """
     Generates a rectangular zone grid.
@@ -192,12 +199,18 @@ def gen_grid(player, args):
     else:
         start_x, start_y = player.room.x, player.room.y
         
+    if start_x is None or start_y is None: # Safety check
+        player.send_line("Error: Could not determine start coordinates.")
+        return
+        
     start_z = player.room.z
     created_count = 0
     updated_count = 0
 
-    from logic.engines import spatial_engine
     spatial = spatial_engine.get_instance(player.game.world)
+    if not spatial:
+        player.send_line("Spatial index unavailable.")
+        return
     
     for y in range(height):
         for x in range(width):
@@ -221,7 +234,12 @@ def gen_grid(player, args):
             
     # Rebuild Spatial & Stitch
     spatial_engine.invalidate()
-    spatial_engine.get_instance(player.game.world).rebuild()
+    spatial = spatial_engine.get_instance(player.game.world)
+    if spatial:
+        spatial.rebuild()
+    else:
+        player.send_line("Warning: Spatial index unavailable, skipping stitching.")
+        return
     
     # Auto-stitch (Link neighbors)
     links = 0
@@ -231,6 +249,9 @@ def gen_grid(player, args):
     }
     
     spatial = spatial_engine.get_instance(player.game.world)
+    if not spatial:
+        player.send_line("Warning: Spatial index unavailable, skipping stitching.")
+        return
     for y in range(height):
         for x in range(width):
             world_x = start_x + x

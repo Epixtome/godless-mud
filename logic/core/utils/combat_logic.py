@@ -1,14 +1,19 @@
 """
 logic/core/utils/combat_logic.py
 Internal logic and math for the combat system.
+Refactored (V6.1) to eliminate circular dependencies and adhere to Clean Border API.
 """
 import logging
 import random
+import math
 from typing import Any, List, Set, Optional, TYPE_CHECKING
 from utilities.colors import Colors
 from logic.constants import Tags
-from logic.core import effects
+from logic.core import effects, event_engine
 from logic import calibration
+from logic.engines import blessings_engine
+from logic.core.utils import player_logic
+from utilities import telemetry
 
 if TYPE_CHECKING:
     from models.entities.player import Player
@@ -61,13 +66,59 @@ def get_attack_verb(damage_percent: float) -> str:
 
 def estimate_player_damage(player: 'Player') -> int:
     """Estimates average damage for the consider command."""
-    from logic.engines import blessings_engine
     damage = 0
     if player.equipped_weapon:
         damage = blessings_engine.calculate_weapon_power(player.equipped_weapon, player, avg=True)
     else:
         damage = 1
     return damage
+
+def calculate_base_damage(attacker: Any, target: Any, blessing: Any = None) -> int:
+    """Calculates the raw base damage before events and modifiers."""
+    raw_damage = 0
+    if blessing:
+        raw_damage = blessings_engine.calculate_power(blessing, attacker, target)
+    elif hasattr(attacker, 'equipped_weapon'):
+        if attacker.equipped_weapon:
+            raw_damage = blessings_engine.calculate_weapon_power(attacker.equipped_weapon, attacker)
+        else:
+            raw_damage = 1 # Unarmed base
+
+        attack_tags = resolve_attack_tags(attacker, blessing)
+        ctx = {'attacker': attacker, 'target': target, 'damage': raw_damage, 'tags': attack_tags}
+        event_engine.dispatch("calculate_base_damage", ctx)
+        raw_damage = ctx['damage']
+    elif hasattr(attacker, 'damage'):
+        raw_damage = getattr(attacker, 'damage', 1)
+        ctx = {'attacker': attacker, 'target': target, 'damage': raw_damage}
+        event_engine.dispatch("calculate_base_damage", ctx)
+        raw_damage = ctx['damage']
+            
+    return max(1, int(raw_damage))
+
+def calculate_damage(attacker: Any, victim: Optional[Any] = None, blessing: Any = None) -> int:
+    """
+    Calculates final damage for an attack, respecting modifiers and armor.
+    V5.0: Mitigation-based damage calculation.
+    """
+    raw = calculate_base_damage(attacker, victim, blessing)
+    
+    # 1. Damage Mitigation (Percentage based on Weight Class)
+    mitigation = get_mitigation_multiplier(victim) if victim else 0.0
+    
+    # [V6.0] Finesse Bypasses Half Mitigation
+    attack_tags = resolve_attack_tags(attacker, blessing)
+    if "finesse" in attack_tags or "precision" in attack_tags:
+        mitigation *= 0.5
+    
+    # [V5.0] Modifier Event (Class Scaling: e.g., Monk Flow, Barbarian Berserk)
+    mod_ctx = {'attacker': attacker, 'target': victim, 'multiplier': 1.0, 'bonus_flat': 0, 'blessing': blessing}
+    event_engine.dispatch("calculate_damage_modifier", mod_ctx)
+    
+    final_dmg = (raw * mod_ctx['multiplier']) + mod_ctx['bonus_flat']
+    final_dmg = final_dmg * (1.0 - mitigation)
+    
+    return max(1, int(final_dmg))
 
 def get_crit_chance(player: 'Player') -> float:
     """Calculates critical hit chance for the player based on Kit."""
@@ -117,19 +168,20 @@ def distribute_favor(player: 'Player', target: Any, game: Any) -> None:
         
         splash = max(1, int(base_favor * 0.2))
         for d in primary_candidates:
-            if d.id != favored.id:
+            if hasattr(d, 'id') and d.id != favored.id:
                 player.favor[d.id] = player.favor.get(d.id, 0) + splash
 
     if secondary_candidates:
         splash = max(1, int(base_favor * 0.1))
         for d in secondary_candidates:
-            player.favor[d.id] = player.favor.get(d.id, 0) + splash
+            d_id = getattr(d, 'id', None)
+            if d_id:
+                player.favor[d_id] = player.favor.get(d_id, 0) + splash
 
 def calculate_difficulty(player: 'Player', target: Any) -> str:
     """Returns a human-readable string describing the threat level of a target."""
-    from logic.core import combat
-    p_dmg = combat.calculate_damage(player, target)
-    t_dmg = combat.calculate_damage(target, player)
+    p_dmg = calculate_damage(player, target)
+    t_dmg = calculate_damage(target, player)
     
     rounds_to_kill = target.hp / max(1, p_dmg)
     rounds_to_die = player.hp / max(1, t_dmg)
@@ -170,78 +222,48 @@ def stop_combat(entity: Any) -> None:
     if hasattr(entity, 'state') and entity.state == "combat":
         entity.state = "normal"
     
-    # 1. Clear my own attackers list
     if hasattr(entity, 'attackers'):
         entity.attackers = []
         
-    # 2. Reciprocal Cleanup: Remove myself from other entities' focus
     if hasattr(entity, 'room') and entity.room:
         others = (entity.room.players + entity.room.monsters)
         for other in others:
             if other == entity: continue
-            
-            # Remove from their attackers list
             if hasattr(other, 'attackers') and entity in other.attackers:
                 other.attackers.remove(entity)
-            
-            # If they are fighting me, they must find a new target or stop
             if hasattr(other, 'fighting') and other.fighting == entity:
-                # We don't call stop_combat(other) to avoid recursion, 
-                # instead let handle_target_loss deal with it next tick or clear now.
                 other.fighting = None
                 if hasattr(other, 'state') and other.state == "combat":
                     other.state = "normal"
 
 def start_combat(attacker: Any, target: Any) -> bool:
-    """
-    Unified Facade for initiating combat between two entities.
-    Ensures state transitions and reciprocal updates are handled.
-    """
-    if not attacker or not target:
+    """Unified Facade for initiating combat between two entities."""
+    if not attacker or not target or attacker == target:
         return False
-        
-    if attacker == target:
-        return False
-        
-    # 1. Set Primary Targeting
     if not attacker.fighting:
         attacker.fighting = target
-        
     if hasattr(attacker, 'state'):
         attacker.state = "combat"
-        
-    # 2. Add to victim's attackers list
     if hasattr(target, 'attackers'):
         if attacker not in target.attackers:
             target.attackers.append(attacker)
-            
-    # 3. Reciprocal Engagement (Only if not already fighting)
     if not target.fighting:
-        # Check for Practice Dummy gate
         tags = getattr(target, 'tags', [])
-        is_dummy = "training_dummy" in tags or ("target" in tags and "elite" not in tags and "tactical" not in tags)
-        
-        if not is_dummy:
+        if "training_dummy" not in tags:
             target.fighting = attacker
             if hasattr(target, 'state'):
                 target.state = "combat"
-                
     return True
 
 def get_weight_class(entity: Any) -> str:
     """[V6.0] Determines Weight Class based on physical LBS (Total Weight)."""
     if not getattr(entity, 'is_player', False):
-        # Monsters still use identity tags for classification
         tags = getattr(entity, 'tags', [])
         if "heavy" in tags: return "heavy"
         if "medium" in tags: return "medium"
         return "light"
 
-    from logic.core.utils import player_logic
-    from logic import calibration
-    
     total_lbs = player_logic.calculate_total_weight(entity, only_equipped=True)
-    
     if total_lbs <= calibration.ScalingRules.WEIGHT_LIGHT_MAX:
         return "light"
     if total_lbs <= calibration.ScalingRules.WEIGHT_MEDIUM_MAX:
@@ -256,81 +278,103 @@ def get_mitigation_multiplier(entity: Any) -> float:
     return calibration.CombatBalance.BASE_MITIGATION_LIGHT
 
 def get_stability_rating(entity: Any) -> int:
-    """
-    Calculates Stability (Resistance to Balance Loss).
-    Re-uses old Defense logic but maps it to the Stability domain.
-    """
+    """Calculates Stability (Resistance to Balance Loss)."""
     total_stability = 0
-    
-    # 1. Gear (Armor & Shield)
     if hasattr(entity, 'equipped_armor') and entity.equipped_armor:
         total_stability += getattr(entity.equipped_armor, 'defense', 0)
     if hasattr(entity, 'equipped_offhand') and entity.equipped_offhand:
         total_stability += getattr(entity.equipped_offhand, 'defense', 0)
-        
-    # 2. Kit/Stance Bonus
-    if hasattr(entity, 'active_kit'):
-        kit_mult = entity.active_kit.get('stability_multiplier', 1.0) if isinstance(entity.active_kit, dict) else 1.0
+    if hasattr(entity, 'active_kit') and isinstance(entity.active_kit, dict):
+        kit_mult = entity.active_kit.get('stability_multiplier', 1.0)
         total_stability = int(total_stability * kit_mult)
     
-    # 3. Buffs/Effects
-    from logic.core import effects
     game = getattr(entity, 'game', None)
-    
     for effect_id in getattr(entity, 'status_effects', {}):
-        # Use centralized definition getter (handles game=None via core map)
         effect_data = effects.get_effect_definition(effect_id, game)
         if isinstance(effect_data, dict):
             metadata = effect_data.get('metadata', {})
             if isinstance(metadata, dict):
-                # Robust numeric extraction to handle varied metadata types (V4.5 Guard)
-                s_add = metadata.get('stability_add', 0)
-                if isinstance(s_add, (int, float)):
-                    total_stability += int(s_add)
-                    
-                d_add = metadata.get('defense_add', 0)
-                if isinstance(d_add, (int, float)):
-                    total_stability += int(d_add)
-            
+                total_stability += int(metadata.get('stability_add', 0))
+                total_stability += int(metadata.get('defense_add', 0))
     return int(total_stability)
 
 def check_posture_break(target: Any, damage: float, source: Any = None, tags: Optional[Set[str]] = None):
     """Handles the reduction of Posture and checks for BREAK state."""
-    if not hasattr(target, 'resources'): return
-    
+    if not hasattr(target, 'resources') or getattr(target, 'hp', 0) <= 0: return False
     tags = tags or set()
-    
-    # Base Posture Damage
     raw_posture_damage = damage
-    
-    # [V5.0] Tag-based Posture Modifiers (Daggers & Hammers excel at breaking guard)
     if any(t in tags for t in ["precision", "speed", "blunt", "weight"]):
         raw_posture_damage *= 1.5
-    
-    # Posture (Balance) is stabilized by the Stability rating
     stability = get_stability_rating(target)
     net_posture_damage = max(1, int(raw_posture_damage - (stability * calibration.CombatBalance.STABILITY_SCALING)))
-    
     current_bal = target.resources.get('balance', 100)
     new_bal = max(0, current_bal - net_posture_damage)
     target.resources['balance'] = new_bal
-    
     if new_bal <= 0 and current_bal > 0:
-        # POSTURE BREAK
-        # Apply the 'off_balance' and 'prone' statuses
-        effects.apply_effect(target, "off_balance", 4)
-        effects.apply_effect(target, "prone", 2)
-        
+        effects.apply_effect(target, "prone", 4)
         if hasattr(target, 'send_line'):
             target.send_line(f"{Colors.RED}*** YOUR POSTURE HAS BEEN BROKEN! ***{Colors.RESET}")
         if hasattr(source, 'send_line'):
-            source.send_line(f"{Colors.BOLD}{Colors.RED}*** You have SHATTERED {target.name}'s posture! They collapse to the ground! ***{Colors.RESET}")
-            
-        from utilities import telemetry
+            source.send_line(f"{Colors.BOLD}{Colors.RED}*** You have SHATTERED {target.name}'s posture! ***{Colors.RESET}")
         telemetry.log_posture_break(target)
-        
         return True
     return False
+
+def is_target_valid(attacker: Any, target: Any) -> bool:
+    """Checks if combat between two entities is possible."""
+    if not target or getattr(target, 'hp', 0) <= 0: return False
+    required_attrs = ['hp', 'name', 'room']
+    if not all(hasattr(target, attr) for attr in required_attrs): return False
+    if hasattr(attacker, 'room') and hasattr(target, 'room') and attacker.room != target.room: return False
+    return True
+
+def can_act(entity: Any) -> bool:
+    """Checks if an entity is capable of taking a combat action."""
+    if getattr(entity, 'hp', 0) <= 0 or getattr(entity, 'pending_death', False): return False
+    game = getattr(entity, 'game', None)
+    active_effects = getattr(entity, 'status_effects', {})
+    for eid in active_effects:
+        defn = effects.get_effect_definition(eid, game)
+        if defn and "combat" in defn.get("blocks", []): return False
+    state = getattr(entity, 'state', 'normal')
+    return not (state in ["stunned", "casting", "resting"])
+
+def handle_target_loss(entity: Any) -> Any:
+    """Handles logic when an entity loses their target."""
+    if getattr(entity, 'hp', 0) <= 0: return None
+    target = getattr(entity, 'fighting', None)
+    if not (target and is_target_valid(entity, target)):
+        valid_attackers = [a for a in getattr(entity, 'attackers', []) if is_target_valid(entity, a)]
+        if valid_attackers:
+            new_target = valid_attackers[0]
+            entity.fighting = new_target
+            if hasattr(entity, 'send_line'):
+                entity.send_line(f"{Colors.YELLOW}You turn to fight {new_target.name}!{Colors.RESET}")
+            return new_target
+        entity.fighting = None
+        if hasattr(entity, 'state') and entity.state == "combat":
+            entity.state = "normal"
+        stop_combat(entity)
+        return None
+    return target
+
+def apply_damage(target: Any, amount: int, source: Any = None, context: str = "Combat", tags: Optional[Set[str]] = None) -> int:
+    """Standardized pipeline for applying damage to any entity."""
+    ctx = {'target': target, 'damage': amount, 'source': source, 'context': context, 'tags': tags or set()}
+    event_engine.dispatch("on_take_damage", ctx)
+    actual_damage = ctx['damage']
+    if hasattr(target, 'hp'):
+        target.hp = max(0, target.hp - actual_damage)
+        if target.hp <= 0:
+            if not getattr(target, 'pending_death', False):
+                if getattr(source, 'is_player', False):
+                    source.send_line(f"{Colors.BOLD}{Colors.YELLOW}You have defeated {target.name}!{Colors.RESET}")
+                    if hasattr(target, 'room'): target.room.broadcast(f"{Colors.YELLOW}{target.name} has been defeated by {source.name}!{Colors.RESET}", exclude_player=source)
+                elif hasattr(target, 'room'): target.room.broadcast(f"{Colors.YELLOW}{target.name} has been defeated!{Colors.RESET}")
+            event_engine.dispatch("on_death", {'victim': target, 'killer': source})
+            return actual_damage
+        check_posture_break(target, actual_damage, source=source, tags=ctx['tags'])
+    return actual_damage
 
 def get_total_defense(player: 'Player') -> int:
     """[DEPRECATED] Redirects to Stability in V5.0."""

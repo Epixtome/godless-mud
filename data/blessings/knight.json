@@ -28,7 +28,7 @@
         "shield_bash": {
             "id": "shield_bash",
             "name": "Shield Bash",
-            "description": "Slam your shield into the enemy, knocking them off-balance.",
+            "description": "Apply: Slam your shield into the enemy, knocking them [Off-Balance]. Off-Balance targets hit by blunt weapons become [Prone]. Prone targets can be Executed.",
             "identity_tags": [
                 "martial",
                 "strike",
@@ -129,6 +129,32 @@
             "action": "stand",
             "requirements": {
                 "stamina": 10
+            }
+        },
+        "execute": {
+            "id": "execute",
+            "name": "Execute",
+            "description": "Payoff: Deliver a thunderous killing blow to a [Prone] enemy. Deals 3x weapon damage. Cannot be used on standing foes — set them up with Shield Bash.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "blunt",
+                "lethal",
+                "finisher",
+                "skill"
+            ],
+            "action": "execute",
+            "requirements": {
+                "stamina": 35,
+                "shield": true,
+                "prone": true,
+                "fighting": true,
+                "cooldown": 8
+            },
+            "base_power": 45,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.0
             }
         }
     }

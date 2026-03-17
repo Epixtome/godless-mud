@@ -96,7 +96,7 @@ def get_item(player, args):
             
         taken_count = 0
         for item in list(player.room.items):
-            if _process_pickup(player, item):
+            if _process_pickup(player, item, source=player.room):
                 player.room.items.remove(item)
                 taken_count += 1
             else:
@@ -111,7 +111,7 @@ def get_item(player, args):
         player.send_line("You don't see that here.")
         return
         
-    if _process_pickup(player, item):
+    if _process_pickup(player, item, source=player.room):
         player.room.items.remove(item)
         player.room.broadcast(f"{player.name} picks up {item.name}.", exclude_player=player)
 
@@ -191,3 +191,42 @@ def put_item(player, args):
     if items.transfer_item(item, player, container):
         player.send_line(f"You put {item.name} into {container.name}.")
         player.room.broadcast(f"{player.name} puts {item.name} into {container.name}.", exclude_player=player)
+
+@command_manager.register("sacrifice", "sac", category="item")
+def sacrifice_item(player, args):
+    """Destroy an item, offering it to the gods."""
+    if not args:
+        player.send_line("Sacrifice what?")
+        return
+
+    # Check inventory first
+    item = search.search_list(player.inventory, args)
+    source = player.inventory
+    
+    # Check room if not in inventory
+    if not item:
+        item = search.search_list(player.room.items, args)
+        source = player.room.items
+
+    if not item:
+        player.send_line("You don't see that here.")
+        return
+
+    item_name = item.name
+    
+    # Check if sacrifice is allowed (don't sac containers with things in them?)
+    if hasattr(item, 'inventory') and item.inventory:
+        player.send_line(f"You cannot sacrifice {item_name} while it still contains items.")
+        return
+
+    # Remove from world/inventory
+    source.remove(item)
+    
+    # Snappy feedback
+    from utilities.colors import Colors
+    player.send_line(f"{Colors.MAGENTA}You sacrifice {item_name} to the gods.{Colors.RESET}")
+    player.room.broadcast(f"{Colors.MAGENTA}{player.name} sacrifices {item_name} in a burst of ethereal light.{Colors.RESET}", exclude_player=player)
+
+    # Telemetry
+    from utilities import telemetry
+    telemetry.log_event(player, "ITEM_SACRIFICE", {"item": item_name, "value": getattr(item, 'value', 0)})

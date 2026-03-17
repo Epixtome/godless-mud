@@ -19,6 +19,12 @@ class BaseItem(GameEntity):
         self.tags = tags or []
         self.properties = properties or {}
         self.metadata = {}
+        self.combat_rating = 1.0 # [V6.0] Godless Combat Rating
+        self.power = 1.0         # Legacy multiplier
+        self.slot = "none"       # chest, head, main_hand, etc
+        self.material = "iron"
+        self.weight = 1
+        self.weight_class = "light"
 
     def clone(self):
         raise NotImplementedError("Subclasses must implement clone")
@@ -32,7 +38,13 @@ class BaseItem(GameEntity):
             "prototype_id": self.prototype_id,
             "timer": self.timer,
             "tags": self.tags,
-            "properties": self.properties
+            "properties": self.properties,
+            "combat_rating": self.combat_rating,
+            "power": self.power,
+            "slot": self.slot,
+            "material": self.material,
+            "weight": self.weight,
+            "weight_class": self.weight_class
         }
 
 class Item(BaseItem):
@@ -43,11 +55,25 @@ class Item(BaseItem):
         self.key_id = key_id
 
     def clone(self):
-        return Item(self.name, self.description, self.value, self.flags.copy(), self.prototype_id, self.state, self.key_id, self.timer, self.tags.copy(), self.properties.copy())
+        it = Item(self.name, self.description, self.value, self.flags.copy(), self.prototype_id, self.state, self.key_id, self.timer, self.tags.copy(), self.properties.copy())
+        it.combat_rating = self.combat_rating
+        it.power = self.power
+        it.slot = self.slot
+        it.material = self.material
+        it.weight = self.weight
+        it.weight_class = self.weight_class
+        return it
 
     @classmethod
     def from_dict(cls, data):
-        return cls(data['name'], data['description'], data.get('value', 10), data.get('flags'), data.get('prototype_id'), data.get('state', 'open'), data.get('key_id'), data.get('timer'), data.get('tags'), data.get('properties'))
+        it = cls(data['name'], data['description'], data.get('value', 10), data.get('flags'), data.get('prototype_id'), data.get('state', 'open'), data.get('key_id'), data.get('timer'), data.get('tags'), data.get('properties'))
+        it.combat_rating = data.get('combat_rating', 1.0)
+        it.power = data.get('power', 1.0)
+        it.slot = data.get('slot', 'none')
+        it.material = data.get('material', 'iron')
+        it.weight = data.get('weight', 1)
+        it.weight_class = data.get('weight_class', 'light')
+        return it
 
     def to_dict(self):
         data = super().to_dict()
@@ -94,7 +120,13 @@ class Armor(BaseItem):
         # Pass remaining data as kwargs
         extra_data = {k: v for k, v in data.items() if k not in core_fields and k != 'type'}
         
-        return cls(**base_data, **extra_data)
+        it = cls(**base_data, **extra_data)
+        it.combat_rating = data.get('combat_rating', 1.0)
+        it.power = data.get('power', 1.0)
+        it.slot = data.get('slot', 'chest')
+        it.material = data.get('material', 'iron')
+        it.weight = data.get('weight', 10)
+        return it
 
     def to_dict(self):
         data = super().to_dict()
@@ -137,7 +169,14 @@ class Weapon(BaseItem):
         # Pass remaining data as kwargs
         extra_data = {k: v for k, v in data.items() if k not in core_fields and k != 'type'}
         
-        return cls(**base_data, **extra_data)
+        it = cls(**base_data, **extra_data)
+        it.combat_rating = data.get('combat_rating', 1.0)
+        it.power = data.get('power', 1.0)
+        it.slot = data.get('slot', 'main_hand')
+        it.material = data.get('material', 'iron')
+        it.weight = data.get('weight', 5)
+        it.weight_class = data.get('weight_class', 'medium')
+        return it
 
     def to_dict(self):
         data = super().to_dict()

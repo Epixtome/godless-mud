@@ -32,12 +32,17 @@ def on_calculate_damage_modifier(ctx):
     if hasattr(attacker, 'monk_dragon_multiplier'):
         ctx['multiplier'] *= attacker.monk_dragon_multiplier
 
-    # 4. Seven Fists Guard: Cannot auto-attack during reaction phase
+    # 4. Iron Palm: Armor-ignoring finisher — +50% damage on top of base
+    if hasattr(attacker, 'iron_palm_active'):
+        ctx['multiplier'] *= 1.5
+
+    # 5. Seven Fists Guard: Cannot auto-attack during reaction phase
     if not blessing and effects.has_effect(attacker, "seven_fists_active"):
         ctx['multiplier'] = 0
 
 def on_calculate_mitigation(ctx):
     target = ctx.get('target')
+    attacker = ctx.get('source')
     if getattr(target, 'active_class', None) != 'monk': return
     
     ms = target.ext_state.get('monk', {})
@@ -45,6 +50,10 @@ def on_calculate_mitigation(ctx):
     # 1. Iron Stance Bonus (10% Mitigation)
     if ms.get('stance') == 'iron':
         ctx['damage'] = int(ctx.get('damage', 0) * 0.9)
+
+    # 2. Iron Palm: If the attacker is mid Iron Palm, negate target's armor
+    if attacker and hasattr(attacker, 'iron_palm_active'):
+        ctx['armor_bypass'] = True  # Signal to combat pipeline to skip armor
 
 def on_take_damage(ctx):
     target = ctx.get('target')
@@ -90,7 +99,7 @@ def on_combat_tick(ctx):
     ms = entity.ext_state.get('monk', {})
     
     # 1. Flow Stance Stamina Regen (+10 per tick)
-    if ms.get('stance') == 'flow':
+    if ms and ms.get('stance') == 'flow':
         resources.modify_resource(entity, 'stamina', 10, source="Flow Stance")
 
 def on_build_prompt(ctx):

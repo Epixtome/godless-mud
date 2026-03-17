@@ -2,7 +2,7 @@
 import logic.handlers.command_manager as command_manager
 from utilities.colors import Colors
 
-@command_manager.register("@favor", admin=True, category="admin")
+@command_manager.register("@favor", admin=True, category="admin_character")
 def favor(player, args):
     """Grant yourself favor."""
     try:
@@ -14,7 +14,7 @@ def favor(player, args):
     except ValueError:
         player.send_line("Usage: @favor <amount>")
 
-@command_manager.register("@learn", admin=True, category="admin")
+@command_manager.register("@learn", admin=True, category="admin_character")
 def learn(player, args):
     """Instantly learn and equip a blessing by ID."""
     if not args:
@@ -51,7 +51,7 @@ def learn(player, args):
     else:
         player.send_line(f"{b.name} is already in your deck.")
 
-@command_manager.register("@allblessings", admin=True, category="admin")
+@command_manager.register("@allblessings", admin=True, category="admin_character")
 def all_blessings(player, args):
     """Learn all blessings in the game."""
     count = 0
@@ -64,7 +64,7 @@ def all_blessings(player, args):
     class_engine.check_unlocks(player)
     player.send_line(f"Learned {count} new blessings. You now know all {len(player.known_blessings)} blessings.")
 
-@command_manager.register("@reset", admin=True, category="admin")
+@command_manager.register("@reset", admin=True, category="admin_character")
 def reset_char(player, args):
     """Resets HP, resources, cooldowns, state, and clears deck."""
     # 1. Vitals
@@ -95,7 +95,7 @@ def reset_char(player, args):
     
     player.send_line(f"{Colors.GREEN}Character reset. Deck cleared. Vitals restored.{Colors.RESET}")
 
-@command_manager.register("@applyeffect", admin=True, category="admin")
+@command_manager.register("@applyeffect", admin=True, category="admin_character")
 def apply_effect_cmd(player, args):
     """Apply a status effect to yourself for testing."""
     parts = args.split()
@@ -109,7 +109,7 @@ def apply_effect_cmd(player, args):
     from logic.core import effects
     effects.apply_effect(player, effect_id, duration)
 
-@command_manager.register("@clearvisited", admin=True, category="admin")
+@command_manager.register("@clearvisited", admin=True, category="admin_travel")
 def clear_visited(player, args):
     """Clears your visited rooms history (fixes map ghosts)."""
     player.visited_rooms = []
@@ -117,20 +117,20 @@ def clear_visited(player, args):
         player.mark_room_visited(player.room.id)
     player.send_line("Visited rooms history cleared.")
 
-@command_manager.register("@revealmap", admin=True, category="admin")
+@command_manager.register("@revealmap", admin=True, category="admin_travel")
 def reveal_map(player, args):
     """Reveals all rooms in the world (removes Fog of War)."""
     player.visited_rooms = list(player.game.world.rooms.keys())[-200:]
     player.send_line(f"Map revealed. You have now 'visited' {len(player.visited_rooms)} rooms.")
 
-@command_manager.register("@vision", admin=True, category="admin")
+@command_manager.register("@adminvision", admin=True, category="admin_tools")
 def toggle_vision(player, args):
     """Toggle admin debug vision (Room IDs, Coords)."""
     player.admin_vision = not getattr(player, 'admin_vision', False)
     state = "enabled" if player.admin_vision else "disabled"
     player.send_line(f"Admin vision {state}.")
 
-@command_manager.register("@godmode", admin=True, category="admin")
+@command_manager.register("@godmode", admin=True, category="admin_character")
 def god_mode(player, args):
     """Toggles God Mode (Invulnerability, No Aggro, Infinite Resources)."""
     player.godmode = not getattr(player, 'godmode', False)
@@ -146,7 +146,7 @@ def god_mode(player, args):
         player.attackers = []
         player.state = "normal"
 
-@command_manager.register("@class", "@become", admin=True, category="admin")
+@command_manager.register("@class", "@become", admin=True, category="admin_character")
 def become_class(player, args):
     """
     Instantly become a specific class by auto-learning/equipping necessary blessings.

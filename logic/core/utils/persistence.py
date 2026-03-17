@@ -64,12 +64,24 @@ def to_dict(player: 'Player') -> dict:
         "password": player.password,
         "is_admin": player.is_admin,
         "is_building": player.is_building,
-        "equipped_armor": player.equipped_armor.to_dict() if player.equipped_armor else None,
-        "equipped_weapon": player.equipped_weapon.to_dict() if player.equipped_weapon else None,
-        "equipped_offhand": player.equipped_offhand.to_dict() if player.equipped_offhand else None,
+        "equipped_armor": player.equipped_armor.to_dict() if getattr(player, 'equipped_armor', None) else None,
+        "equipped_weapon": player.equipped_weapon.to_dict() if getattr(player, 'equipped_weapon', None) else None,
+        "equipped_offhand": player.equipped_offhand.to_dict() if getattr(player, 'equipped_offhand', None) else None,
+        "equipped_head": player.equipped_head.to_dict() if getattr(player, 'equipped_head', None) else None,
+        "equipped_neck": player.equipped_neck.to_dict() if getattr(player, 'equipped_neck', None) else None,
+        "equipped_shoulders": player.equipped_shoulders.to_dict() if getattr(player, 'equipped_shoulders', None) else None,
+        "equipped_arms": player.equipped_arms.to_dict() if getattr(player, 'equipped_arms', None) else None,
+        "equipped_hands": player.equipped_hands.to_dict() if getattr(player, 'equipped_hands', None) else None,
+        "equipped_legs": player.equipped_legs.to_dict() if getattr(player, 'equipped_legs', None) else None,
+        "equipped_feet": player.equipped_feet.to_dict() if getattr(player, 'equipped_feet', None) else None,
+        "equipped_finger_l": player.equipped_finger_l.to_dict() if getattr(player, 'equipped_finger_l', None) else None,
+        "equipped_finger_r": player.equipped_finger_r.to_dict() if getattr(player, 'equipped_finger_r', None) else None,
+        "equipped_floating": player.equipped_floating.to_dict() if getattr(player, 'equipped_floating', None) else None,
+        "equipped_mount": player.equipped_mount.to_dict() if getattr(player, 'equipped_mount', None) else None,
         "friendship": player.friendship,
         "visited_rooms": list(player.visited_rooms),
         "reputation": player.reputation,
+        "kingdom": player.kingdom,
         "ext_state": player.ext_state,
         "admin_vision": player.admin_vision,
         "active_kit": player.active_kit,
@@ -119,6 +131,7 @@ def load_data(player, data):
     player.friendship.update(data.get('friendship', {}))
     player.visited_rooms = data.get('visited_rooms', [])
     player.reputation = data.get('reputation', 0)
+    player.kingdom = data.get('kingdom', 'instinct')
     player.ext_state = data.get('ext_state', {})
     player.admin_vision = data.get('admin_vision', False)
     # player.last_hit_tick = data.get('last_hit_tick', 0) # DEPRECATED
@@ -142,11 +155,33 @@ def load_data(player, data):
             player.inventory.append(item)
     
     if data.get('equipped_armor'):
-        player.equipped_armor = Armor.from_dict(data['equipped_armor'])
+        player.equipped_armor = item_from_data(data['equipped_armor'], game=player.game)
     if data.get('equipped_weapon'):
-        player.equipped_weapon = Weapon.from_dict(data['equipped_weapon'])
+        player.equipped_weapon = item_from_data(data['equipped_weapon'], game=player.game)
     if data.get('equipped_offhand'):
-        player.equipped_offhand = Armor.from_dict(data['equipped_offhand'])
+        player.equipped_offhand = item_from_data(data['equipped_offhand'], game=player.game)
+    if data.get('equipped_head'):
+        player.equipped_head = item_from_data(data['equipped_head'], game=player.game)
+    if data.get('equipped_neck'):
+        player.equipped_neck = item_from_data(data['equipped_neck'], game=player.game)
+    if data.get('equipped_shoulders'):
+        player.equipped_shoulders = item_from_data(data['equipped_shoulders'], game=player.game)
+    if data.get('equipped_arms'):
+        player.equipped_arms = item_from_data(data['equipped_arms'], game=player.game)
+    if data.get('equipped_hands'):
+        player.equipped_hands = item_from_data(data['equipped_hands'], game=player.game)
+    if data.get('equipped_legs'):
+        player.equipped_legs = item_from_data(data['equipped_legs'], game=player.game)
+    if data.get('equipped_feet'):
+        player.equipped_feet = item_from_data(data['equipped_feet'], game=player.game)
+    if data.get('equipped_finger_l'):
+        player.equipped_finger_l = item_from_data(data['equipped_finger_l'], game=player.game)
+    if data.get('equipped_finger_r'):
+        player.equipped_finger_r = item_from_data(data['equipped_finger_r'], game=player.game)
+    if data.get('equipped_floating'):
+        player.equipped_floating = item_from_data(data['equipped_floating'], game=player.game)
+    if data.get('equipped_mount'):
+        player.equipped_mount = item_from_data(data['equipped_mount'], game=player.game)
 
     player.reset_resources()
 
@@ -177,6 +212,7 @@ def load_kit(player, kit_name):
                 migrate_kit(player, kit_data)
             
             # Update live kit data in player object
+            kit_data['id'] = kit_name
             player.active_kit = kit_data
             player.kit_version = current_version
             

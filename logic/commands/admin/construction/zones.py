@@ -2,7 +2,7 @@ import logic.handlers.command_manager as command_manager
 from logic.core.world import get_room_id
 from utilities.colors import Colors
 
-@command_manager.register("@vision", admin=True)
+@command_manager.register("@vision", admin=True, category="admin_tools")
 def vision(player, args):
     """
     Shows all rooms at the current X, Y coordinates across different Z-levels.
@@ -27,7 +27,7 @@ def vision(player, args):
         color = Colors.GREEN if r == player.room else Colors.CYAN
         player.send_line(f"{color}Z={r.z:<3} | ID: {r.id:<25} | Zone: {r.zone_id:<15} | Name: {r.name}{marker}{Colors.RESET}")
 
-@command_manager.register("@setlayer", admin=True)
+@command_manager.register("@setlayer", admin=True, category="admin_building")
 def layer_room(player, args):
     """
     Moves the current room to a specific Z-level.
@@ -64,7 +64,7 @@ def layer_room(player, args):
     except:
         pass
 
-@command_manager.register("@audit", admin=True)
+@command_manager.register("@audit", admin=True, category="admin_tools")
 def audit_zone(player, args):
     """
     Scans zone for ID mismatches and broken exits.
@@ -94,7 +94,7 @@ def audit_zone(player, args):
     else:
         player.send_line(f"Found {issues} issues. Use @fixids to correct IDs.")
 
-@command_manager.register("@fixids", admin=True)
+@command_manager.register("@fixids", admin=True, category="admin_building")
 def fix_ids(player, args):
     """
     Renames rooms in the zone to match their coordinates.
@@ -131,7 +131,7 @@ def fix_ids(player, args):
         
     player.send_line(f"Fixed {count} room IDs in '{zone_id}'. Exits preserved.")
 
-@command_manager.register("@dbcheck", admin=True)
+@command_manager.register("@dbcheck", admin=True, category="admin_system")
 def db_check(player, args):
     """
     Checks the status of the Shelve persistence database.

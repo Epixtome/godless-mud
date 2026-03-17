@@ -14,7 +14,14 @@
             ],
             "action": "hex",
             "requirements": {
-                "class": "warlock"
+                "class": "warlock",
+                "concentration": 15,
+                "cooldown": 4
+            },
+            "base_power": 5,
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 1.2
             }
         },
         {
@@ -32,7 +39,9 @@
             ],
             "action": "eldritch_blast",
             "requirements": {
-                "class": "warlock"
+                "class": "warlock",
+                "concentration": 10,
+                "cooldown": 2
             },
             "scaling": {
                 "scaling_tag": "magic",
@@ -53,7 +62,9 @@
             ],
             "action": "netherstep",
             "requirements": {
-                "class": "warlock"
+                "class": "warlock",
+                "stamina": 25,
+                "cooldown": 8
             }
         },
         {
@@ -71,7 +82,9 @@
             ],
             "action": "soul_cleave",
             "requirements": {
-                "class": "warlock"
+                "class": "warlock",
+                "stamina": 20,
+                "cooldown": 2
             },
             "scaling": {
                 "scaling_tag": "martial",
@@ -92,7 +105,9 @@
             ],
             "action": "metamorphosis",
             "requirements": {
-                "class": "warlock"
+                "class": "warlock",
+                "concentration": 100,
+                "cooldown": 300
             }
         },
         {
@@ -119,6 +134,31 @@
                     "target": "self"
                 }
             ]
+        },
+        {
+            "id": "oblivion_strike",
+            "name": "Oblivion Strike",
+            "tier": 4,
+            "cost": 30,
+            "base_power": 20,
+            "description": "Payoff: Detonate all debuffs on the target. Deals base damage + 30% bonus per active curse/debuff. More curses = devastating results.",
+            "identity_tags": [
+                "warlock",
+                "dark",
+                "strike",
+                "finisher",
+                "occult"
+            ],
+            "action": "oblivion_strike",
+            "requirements": {
+                "class": "warlock",
+                "concentration": 20,
+                "cooldown": 4
+            },
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 1.5
+            }
         }
     ]
 }

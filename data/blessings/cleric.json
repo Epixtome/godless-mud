@@ -15,7 +15,10 @@
             "name": "Holy Blast",
             "description": "Apply: A burst of light that dazzles the enemy for 6s.",
             "identity_tags": ["magic", "divine", "strike", "dazzle"],
+            "action": "holy_blast",
             "requirements": { "stamina": 15, "cooldown": 4 },
+            "base_power": 10,
+            "scaling": { "scaling_tag": "divine", "multiplier": 1.0 },
             "on_hit": { "apply_status": "dazzled", "duration": 6 }
         },
         "divine_grace": {
@@ -23,6 +26,7 @@
             "name": "Divine Grace",
             "description": "Deny: A 3s reactive window. Negates the next hit and restores 20 Concentration.",
             "identity_tags": ["magic", "divine", "reaction"],
+            "action": "divine_grace",
             "requirements": { "stamina": 15, "cooldown": 12 },
             "effects": [
                 { "id": "divine_grace_ready", "duration": 3, "target": "self" }
@@ -33,6 +37,7 @@
             "name": "Exorcism",
             "description": "Payoff: Deals massive divine damage to Undead or Dazzled targets.",
             "identity_tags": ["magic", "divine", "strike", "finisher"],
+            "action": "exorcism",
             "requirements": { "stamina": 20, "cooldown": 2 },
             "base_power": 20,
             "scaling": { "scaling_tag": "divine", "multiplier": 1.5 }

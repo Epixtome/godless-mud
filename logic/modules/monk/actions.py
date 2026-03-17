@@ -143,3 +143,30 @@ def handle_centering(player, skill, args, target=None):
     player.send_line(f"{Colors.GREEN}You center your mind, converting kinetic potential into inner peace.{Colors.RESET}")
     _consume_resources(player, skill)
     return None, True
+
+@register("iron_palm")
+def handle_iron_palm(player, skill, args, target=None):
+    """
+    Finisher: Requires target to be Dazed (set by Dragon Strike).
+    Ignores balance and armor for a single devastating strike.
+    """
+    target = get_target(player, args, target)
+    if not target: return None, True
+    # dazed:true requirement is already gated in auditor.check_requirements
+
+    player.send_line(f"{Colors.BOLD}{Colors.RED}IRON PALM!{Colors.RESET} You channel every point of inner force into a single strike!")
+    player.room.broadcast(f"{Colors.RED}{player.name}'s palm shimmers with concentrated chi before striking {target.name}!{Colors.RESET}", exclude_player=player)
+
+    # Flag to bypass armor in the damage pipeline
+    player.iron_palm_active = True
+    try:
+        combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    finally:
+        if hasattr(player, 'iron_palm_active'):
+            del player.iron_palm_active
+
+    # Dazed has served its purpose — Iron Palm is a full combo ender
+    effects.remove_effect(target, "dazed", verbose=False)
+
+    _consume_resources(player, skill)
+    return target, True

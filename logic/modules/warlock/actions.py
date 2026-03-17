@@ -124,3 +124,29 @@ def handle_metamorphosis(player, skill, args, target=None):
     
     _consume_resources(player, skill)
     return None, True
+
+@register("oblivion_strike")
+def handle_oblivion_strike(player, skill, args, target=None):
+    """Payoff: Dark finisher that detonates all debuffs on the target."""
+    from logic import common
+    from logic.core.systems.status.definitions import HARD_DEBUFFS, SOFT_DEBUFFS
+    target = common._get_target(player, args, target, "Oblivion Strike whom?")
+    if not target: return None, True
+
+    # Count active debuffs on target (existing math_bridge logic handles the scaling)
+    t_effects = getattr(target, 'status_effects', {})
+    debuff_count = len([s for s in t_effects if s in HARD_DEBUFFS or s in SOFT_DEBUFFS])
+    
+    if debuff_count == 0:
+        player.send_line(f"{Colors.YELLOW}[!] {target.name} has no active curses to detonate! Apply Hex first.{Colors.RESET}")
+        return None, True
+
+    player.send_line(f"{Colors.BOLD}{Colors.PURPLE}OBLIVION STRIKE! You detonate {debuff_count} curse(s) on {target.name}!{Colors.RESET}")
+    player.room.broadcast(f"{Colors.PURPLE}Dark energy explodes from {target.name} as {player.name}'s Oblivion Strike detonates their curses!{Colors.RESET}", exclude_player=player)
+    
+    # The dark+finisher tag interaction in math_bridge.py automatically calculates
+    # base + 0.3 * base * debuff_count. We just need to fire the attack.
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    
+    _consume_resources(player, skill)
+    return target, True

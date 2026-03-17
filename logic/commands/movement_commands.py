@@ -19,19 +19,19 @@ def _move(player, direction):
     blocked, reason = effects.is_action_blocked(player, "move")
     if blocked:
         player.send_line(f"{Colors.RED}{reason}{Colors.RESET}")
-        return False
+        return True
 
     # 1. Spacing Cap
     if player.move_tokens < 0.99:
         player.send_line("You are moving too fast! Wait for your tokens to refresh.")
-        return False
+        return True
 
     # EVENT: Before Move
     before_ctx = {'player': player, 'direction': direction, 'can_move': True, 'reason': ''}
     event_engine.dispatch("before_move", before_ctx)
     if not before_ctx['can_move']:
         player.send_line(before_ctx['reason'])
-        return False
+        return True
 
     room = player.room
     if direction not in room.exits:
@@ -43,38 +43,38 @@ def _move(player, direction):
             player.send_line(f"Auto-dug {direction} to {new_room.name}.")
         else:
             player.send_line("You cannot go that way.")
-            return False
+            return True
 
     # Door Check
     door = room.doors.get(direction)
     if door and door.state != 'open':
         player.send_line(f"The {door.name} is {door.state}.")
-        return False
+        return True
 
     # EVENT: On Exit
     exit_ctx = {'player': player, 'room': room, 'can_exit': True, 'reason': ''}
     event_engine.dispatch("on_exit_room", exit_ctx)
-    if not exit_ctx['can_exit']: return False
+    if not exit_ctx['can_exit']: return True
 
     target_id = room.exits[direction]
     target_room = player.game.world.rooms.get(target_id)
     if not target_room:
         player.send_line("That exit leads to the void.")
-        return False
+        return True
 
     # Physics Constraints
     if not getattr(player, 'godmode', False):
         if room.terrain == 'bridge' and target_room.terrain in ['water', 'ocean', 'lake_deep']:
             player.send_line("A sturdy railing prevents you from falling.")
-            return False
+            return True
             
         climb_diff = target_room.elevation - room.elevation
         if climb_diff > 2:
             player.send_line("Too steep to scale.")
-            return False
+            return True
         if climb_diff < -3:
             player.send_line("A sheer drop prevents you from jumping.")
-            return False
+            return True
 
     # Resource Calculation
     base_cost = movement_engine.calculate_move_cost(player, room)
@@ -85,9 +85,20 @@ def _move(player, direction):
     final_cost = int(math.ceil((base_cost + elev_penalty) * friction))
 
     if not getattr(player, 'godmode', False):
+        # [V6.0] Terrain Hazards (The Grammar)
+        if room.terrain in ['mud', 'snow'] and effects.has_effect(player, "off_balance"):
+            effects.apply_effect(player, "prone", 4)
+            player.send_line(f"{Colors.RED}You lose your footing on the {room.terrain} and fall!{Colors.RESET}")
+            return True # Movement failed due to fall, but don't disconnect
+
+        if room.terrain == 'swamp' and player.resources.get("stamina", 0) < 10:
+            effects.apply_effect(player, "immobilized", 6)
+            player.send_line(f"{Colors.YELLOW}The thick muck of the swamp entangles your exhausted limbs!{Colors.RESET}")
+            return True
+
         if player.resources.get("stamina", 0) < final_cost:
             player.send_line(f"{Colors.RED}Too exhausted to move!{Colors.RESET}")
-            return False
+            return True
             
         resources.modify_resource(player, "stamina", -final_cost, source="Movement", context=direction)
         player.move_tokens = max(0.0, player.move_tokens - 1.0)
@@ -114,11 +125,9 @@ def _finalize_move(player, direction, target_room, old_room):
         effects.remove_effect(player, "concealed")
         player.send_line(f"{Colors.YELLOW}You break stealth by moving!{Colors.RESET}")
 
-    if player in old_room.players: old_room.players.remove(player)
-    old_room.broadcast(f"{player.name} leaves {direction}.", exclude_player=player)
+    from logic.core.services import world_service
+    world_service.move_entity(player, target_room)
     
-    player.room = target_room
-    target_room.players.append(player)
     target_room.broadcast(f"{player.name} arrives.", exclude_player=player)
     
     # Auto-Paste
@@ -130,7 +139,6 @@ def _finalize_move(player, direction, target_room, old_room):
     # Fog of War
     player.mark_room_visited(target_room.id)
     
-    event_engine.dispatch("on_enter_room", {'player': player, 'room': target_room})
     if player.room != target_room: return True # Trap/Teleport check
     
     event_engine.dispatch("after_move", {'player': player, 'old_room': old_room, 'new_room': target_room, 'direction': direction})

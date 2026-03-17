@@ -6,7 +6,7 @@ from logic.handlers import command_manager
 import logic.commands.admin.construction.utils as construction_utils
 from utilities import mapper
 
-@command_manager.register("@deleteroom", admin=True)
+@command_manager.register("@deleteroom", admin=True, category="admin_building")
 def delete_room(player, args):
     """
     Delete a room, a line of rooms, or a grid of rooms.
@@ -23,6 +23,9 @@ def delete_room(player, args):
         dims = parts[:-1]
         from logic.engines import spatial_engine
         spatial = spatial_engine.get_instance(player.game.world)
+        if not spatial:
+            player.send_line("Spatial index unavailable.")
+            return
         if len(dims) <= 1:
             length = int(dims[0]) if dims else 1
             dx, dy, dz = construction_utils.get_offset_scalars(direction)
@@ -33,7 +36,7 @@ def delete_room(player, args):
         elif len(dims) == 2:
             width, height = int(dims[0]), int(dims[1])
             off_x, off_y = construction_utils.get_directional_offsets(player, width, height, direction)
-            if off_x is None:
+            if off_x is None or off_y is None:
                 off_x, off_y = player.room.x - (width//2), player.room.y - (height//2)
             for y in range(off_y, off_y + height):
                 for x in range(off_x, off_x + width):
@@ -69,7 +72,7 @@ def delete_room(player, args):
     spatial_engine.invalidate()
     player.send_line(f"Deleted {len(targets)} rooms.")
 
-@command_manager.register("@prunemap", admin=True)
+@command_manager.register("@prunemap", admin=True, category="admin_building")
 def prune_map(player, args):
     """Deletes overlapping rooms (same X,Y,Z)."""
     target_zone = args if args else player.room.zone_id
@@ -96,7 +99,7 @@ def prune_map(player, args):
         spatial_engine.invalidate()
     player.send_line(f"Pruned {deleted_count} rooms in '{target_zone}'.")
 
-@command_manager.register("@merge", admin=True)
+@command_manager.register("@merge", admin=True, category="admin_building")
 def merge_rooms(player, args):
     """Combines overlapping rooms into current."""
     candidates = [r for r in player.game.world.rooms.values() if r.zone_id == player.room.zone_id and r.x == player.room.x and r.y == player.room.y and r != player.room]
@@ -118,7 +121,7 @@ def merge_rooms(player, args):
     spatial_engine.invalidate()
     player.send_line("Merge complete.")
 
-@command_manager.register("@flatten", admin=True)
+@command_manager.register("@flatten", admin=True, category="admin_building")
 def flatten(player, args):
     """Forces grid to specific Z-level."""
     parts = args.split()
@@ -128,7 +131,7 @@ def flatten(player, args):
     except: return
     direction = parts[3] if len(parts) > 3 else None
     off_x, off_y = construction_utils.get_directional_offsets(player, w, h, direction)
-    if off_x is None: off_x, off_y = player.room.x - w//2, player.room.y - h//2
+    if off_x is None or off_y is None: off_x, off_y = player.room.x - w//2, player.room.y - h//2
     count = 0
     for r in player.game.world.rooms.values():
         if off_x <= r.x < off_x + w and off_y <= r.y < off_y + h:

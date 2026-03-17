@@ -2,20 +2,29 @@ from logic.handlers import command_manager
 from utilities.colors import Colors
 from logic.core import effects
 
-def _display_help(player, categories, title):
-    output = [f"\n--- {Colors.BOLD}{title}{Colors.RESET} ---"]
+def _display_help(player, categories, title, is_admin=False):
+    output = [f"\n{Colors.BOLD}{Colors.MAGENTA if is_admin else Colors.CYAN}--- {title} ---{Colors.RESET}"]
     
     # Sort categories
     sorted_cats = sorted([c for c in categories.keys() if c])
     
+    # Re-order to put 'General' first or 'Admin System' for admins
+    if "General" in sorted_cats:
+        sorted_cats.remove("General")
+        sorted_cats.insert(0, "General")
+    
     for cat in sorted_cats:
-        display_cat = cat.title()
-        output.append(f"\n{Colors.YELLOW}[{display_cat}]{Colors.RESET}")
-        for cmd_str, desc in categories[cat]:
-            output.append(f"  {Colors.CYAN}{cmd_str:<25}{Colors.RESET} - {desc}")
+        display_cat = cat.replace("admin_", "").title()
+        output.append(f"\n{Colors.YELLOW}[ {display_cat} ]{Colors.RESET}")
+        # Sort commands by name
+        sorted_cmds = sorted(categories[cat], key=lambda x: x[0])
+        for cmd_str, desc in sorted_cmds:
+            # First line of doc only
+            short_desc = desc.split('\n')[0]
+            output.append(f"  {Colors.CYAN}{cmd_str:<20}{Colors.RESET} {short_desc}")
             
-    output.append("\nType 'help <command>' or 'help <blessing>' for more info.")
-    if "Admin" not in title:
+    output.append(f"\n{Colors.WHITE}Type 'help <command>' for detailed usage.{Colors.RESET}")
+    if not is_admin:
         output.append("Type 'blessings' to see your abilities.")
     
     player.send_paginated("\n".join(output))
@@ -213,13 +222,19 @@ def help_command(player, args):
             
     player.send_line(f"{Colors.WHITE}Type 'help <specific name>' to view.{Colors.RESET}")
 
-@command_manager.register("@help", admin=True, category="admin")
+@command_manager.register("@help", admin=True, category="admin_system")
 def admin_help_command(player, args):
-    """List admin commands or search for help topics."""
+    """
+    Godless Architect: Command Index.
+    Usage: @help | @help <command>
+    For world-building tools specifically, use: @builderhelp
+    """
     if not args:
-        # Security check handled by input_handler, but double check doesn't hurt
         cats = command_manager.get_help_categories(show_admin=True, show_regular=False)
-        _display_help(player, cats, "Godless Architect - Admin Commands")
+        # Filter out building categories for the main help if they are too noisy
+        main_cats = {k: v for k, v in cats.items() if not k.startswith("admin_building")}
+        _display_help(player, main_cats, "Godless Architect - Command Index", is_admin=True)
+        player.send_line(f"\n{Colors.YELLOW}Building tools are located in: {Colors.CYAN}@builderhelp{Colors.RESET}")
         return
 
     search_term = args.lower()
@@ -251,3 +266,15 @@ def admin_help_command(player, args):
         player.send_line(f"\n{Colors.YELLOW}Architect Matches for '{args}':{Colors.RESET}")
         for cmd in sorted(matches):
             player.send_line(f"  {cmd}")
+
+@command_manager.register("@builderhelp", "@bh", admin=True, category="admin_building")
+def builder_help_command(player, args):
+    """
+    Godless Architect: Constructor's Guide.
+    Lists all world-building, zoning, and mob-creation tools.
+    """
+    cats = command_manager.get_help_categories(show_admin=True, show_regular=False)
+    # Target all building-related categories
+    building_cats = {k: v for k, v in cats.items() if k.startswith("admin_building") or "building" in k.lower() or "construction" in k.lower()}
+    
+    _display_help(player, building_cats, "Godless Architect - Constructor's Guide", is_admin=True)

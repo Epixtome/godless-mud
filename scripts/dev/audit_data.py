@@ -73,12 +73,14 @@ def audit_json(file_path: str, data_key: str):
                     errors += 1
             
             # 2. Type Checks
-            for field, expected_type in schema.get('types', {}).items():
-                if field in entry:
-                    val = entry[field]
-                    if not isinstance(val, expected_type):
-                         print(f"{Color.RED}[TYPE ERROR]{Color.RESET} {file_path} -> {entry_id}: '{field}' expected {expected_type}, got {type(val)}")
-                         errors += 1
+            types_dict = schema.get('types', {})
+            if isinstance(types_dict, dict):
+                for field, expected_type in types_dict.items():
+                    if field in entry:
+                        val = entry[field]
+                        if not isinstance(val, expected_type):
+                             print(f"{Color.RED}[TYPE ERROR]{Color.RESET} {file_path} -> {entry_id}: '{field}' expected {expected_type}, got {type(val)}")
+                             errors += 1
 
             # 3. GCA BUSINESS LOGIC RULES
             if data_key == "items":
@@ -106,8 +108,15 @@ def audit_json(file_path: str, data_key: str):
             if data_key == "blessings":
                 reqs = entry.get('requirements', {})
                 tags = entry.get('identity_tags', [])
-                if not any(k in reqs for k in ["stamina", "concentration", "chi", "momentum", "fury"]):
-                    if "utility" not in tags and "passive" not in tags:
+                
+                # Identify if skill has *any* resource cost (Agnostic)
+                if isinstance(reqs, dict):
+                    has_cost = any(isinstance(v, (int, float)) and v > 0 for k, v in reqs.items() if k != 'cooldown')
+                else:
+                    has_cost = False
+                
+                if not has_cost:
+                    if "utility" not in tags and "passive" not in tags and "stance" not in tags:
                          print(f"{Color.YELLOW}[LOGIC]{Color.RESET} {file_path} -> {entry_id}: Active skill has no resource cost.")
                          errors += 1
 

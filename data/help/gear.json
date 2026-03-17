@@ -1,0 +1,16 @@
+{
+    "help": {
+        "gear": {
+            "title": "Gear and Equipment",
+            "body": "Gear in Godless is categorized by its Slot, Material, and Weight.\n\nSlots: main_hand, off_hand, two_hand, chest, head, legs, feet, hands, arms, shoulders, neck, finger.\n\nMaterials determine the item's base attributes and how it interacts with the World's Material Grammar (e.g., Metal conducts Lightning, Wood is flammable).\n\nWeight Class (Light, Medium, Heavy) affects Stamina costs and Dodge penalties.\n- Light: < 15 lbs. Minimal penalties.\n- Medium: 15-45 lbs. 1.2x Stamina cost, 15% Dodge penalty.\n- Heavy: > 45 lbs. 1.6x Stamina cost, 40% Dodge penalty.\n\nUse 'equipment' or 'eq' to see your currently equipped gear.",
+            "category": "mechanics",
+            "keywords": ["gear", "equipment", "weight", "materials"]
+        },
+        "weapons": {
+            "title": "Weapon Scaling",
+            "body": "Weapons use Dice Ladders (e.g., 1d4, 2d6) for base damage. Their final potency is determined by your combat attributes (Martial, Arcane, Speed) based on the weapon's Scaling factors.\n\nPrecision and Finesse weapons bypass 50% of an enemy's mitigation rating.",
+            "category": "mechanics",
+            "keywords": ["weapons", "damage", "scaling"]
+        }
+    }
+}

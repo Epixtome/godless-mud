@@ -11,21 +11,57 @@ STATUS_MAP = {
 }
 
 # Status Hierarchy
-CRITICAL_STATES = {"prone", "off_balance", "jarred", "stun", "stunned", "incapacitated", "shattered_mind"}
-HARD_DEBUFFS = {"shocked", "overheated", "webbed", "frozen", "silence", "disarmed"}
-SOFT_DEBUFFS = {"wet", "cold", "muddy", "bleed", "corroded", "blinded", "panting", "poison", "burn"}
+CRITICAL_STATES = {"prone", "off_balance", "jarred", "stun", "stunned", "incapacitated", "shattered_mind", "exposed", "pinned"}
+HARD_DEBUFFS = {"shocked", "overheated", "webbed", "frozen", "silence", "disarmed", "immobilized", "feared"}
+SOFT_DEBUFFS = {"wet", "cold", "muddy", "bleed", "corroded", "blinded", "panting", "poison", "burn", "marked", "staggered"}
 
 CORE_STATUS_DEFINITIONS = {
     "prone": {
         "name": "Prone",
         "blocks": ["movement", "combat", "skills"],
         "description": "Knocked to the ground. You are critically exposed (1.5x damage) and must 'stand' before you can act again.",
+        "metadata": {"is_debuff": True, "damage_taken_mult": 1.5}
+    },
+    "pinned": {
+        "name": "Pinned",
+        "blocks": ["movement", "skills"],
+        "description": "Held firmly in place. You cannot move or use physical skills. Taking damage while pinned may cause [Prone].",
+        "metadata": {"is_debuff": True}
+    },
+    "immobilized": {
+        "name": "Immobilized",
+        "blocks": ["movement"],
+        "description": "Your feet are anchored to the ground. You cannot move, but you can still fight and use skills.",
         "metadata": {"is_debuff": True}
     },
     "off_balance": {
         "name": "Off-Balance",
+        "blocks": ["skills", "reaction"],
+        "description": "Your posture is shattered. You are critically exposed (1.25x damage) and cannot use reactions or complex maneuvers.",
+        "metadata": {"is_debuff": True, "damage_taken_mult": 1.25}
+    },
+    "exposed": {
+        "name": "Exposed",
+        "blocks": [],
+        "description": "Your physical guard has been bypassed. The next hit taken is a guaranteed Critical.",
+        "metadata": {"is_debuff": True, "guaranteed_crit_taken": True}
+    },
+    "staggered": {
+        "name": "Staggered",
         "blocks": ["skills"],
-        "description": "Your posture is shattered. You are critically exposed (1.5x damage) and cannot use complex maneuvers or skills.",
+        "description": "Momentarily reeling from a blow. Current actions are interrupted.",
+        "metadata": {"is_debuff": True}
+    },
+    "marked": {
+        "name": "Marked",
+        "blocks": [],
+        "description": "Tracked and targeted. You are visible through fog/stealth, and ranged attacks deal 20% more damage to you.",
+        "metadata": {"is_debuff": True, "ranged_damage_bonus": 0.2}
+    },
+    "shocked": {
+        "name": "Shocked",
+        "blocks": ["skills"],
+        "description": "Electrical currents course through your body, disrupting your ability to perform complex skills.",
         "metadata": {"is_debuff": True}
     },
     "panting": {
@@ -204,7 +240,7 @@ CORE_STATUS_DEFINITIONS = {
     "blinded": {
         "name": "Blinded",
         "description": "Your vision is obscured by darkness or debris.",
-        "metadata": {"is_debuff": True}
+        "metadata": {"is_debuff": True, "accuracy_penalty": 90}
     },
     "silenced": {
         "name": "Silenced",

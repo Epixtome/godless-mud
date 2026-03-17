@@ -142,9 +142,6 @@ def modify_resource(entity, resource, amount, source="System", context="Adjustme
     if log:
         telemetry.log_resource_delta(entity, resource, amount, source, context=context)
 
-    if log:
-        telemetry.log_resource_delta(entity, resource, amount, source, context=context)
-
 def calculate_balance_regen(entity):
     """Calculates balance (posture) regeneration per tick."""
     max_bal = 100
@@ -157,6 +154,15 @@ def calculate_balance_regen(entity):
     
     regen = 0 if (in_combat or being_attacked) else 10
     
+    # [V6.0] Terrain Grammar: Balance
+    room = getattr(entity, 'room', None)
+    if room:
+        terrain = getattr(room, 'terrain', '').lower()
+        if terrain in ['mountain', 'snow', 'sand', 'mud']:
+            regen = int(regen * 0.5) # Unsteady ground slows balance recovery
+        elif terrain == 'water':
+            regen = int(regen * 0.2) # Extremely hard to find footing in water
+
     # [V5.1] Generic Metadata Hook
     for effect_id in getattr(entity, 'status_effects', {}):
         meta = effects.get_effect_metadata(effect_id, getattr(entity, 'game', None))
@@ -173,14 +179,20 @@ def calculate_balance_regen(entity):
 def calculate_conc_regen(player):
     """Calculates concentration regeneration per tick."""
     max_conc = player.get_max_resource(Tags.CONCENTRATION)
-    
-    # Base Calculation (Friction System)
-    # In-Combat: Passive regeneration. Halve the rate if the player was hit in the last 2 ticks.
     regen = 5
     
-    # Tag Bonus (Small passive bonus from magic tags)
+    # Tag Bonus
     regen += int(player.get_global_tag_count(Tags.MAGIC) * 0.5)
     
+    # [V6.0] Terrain Grammar: Concentration
+    room = getattr(player, 'room', None)
+    if room:
+        terrain = getattr(room, 'terrain', '').lower()
+        if terrain == 'void':
+            regen = int(regen * 0.5) # Void drains focus
+        elif terrain == 'indoors' or terrain == 'library':
+             regen += 2 # Quiet environments help focus
+
     # Modifiers
     if player.is_in_combat():
         # Tension Penalty: Halve regen if hit recently
@@ -199,7 +211,6 @@ def calculate_conc_regen(player):
 
 def calculate_stamina_regen(player):
     """Calculates stamina regeneration per tick."""
-    # Check for Atrophy (Warlock Debuff)
     if effects.has_effect(player, "atrophy") or "atrophy" in getattr(player, 'status_effects', {}):
         return 0, player.get_max_resource("stamina")
 
@@ -209,6 +220,15 @@ def calculate_stamina_regen(player):
     regen = 5
     if not player.is_in_combat():
         regen = 15 # Out-of-combat boost
+    
+    # [V6.0] Terrain Grammar: Stamina
+    room = getattr(player, 'room', None)
+    if room:
+        terrain = getattr(room, 'terrain', '').lower()
+        if terrain in ['swamp', 'water', 'ocean']:
+            regen = int(regen * 0.5) # High resistance environments drain energy
+        elif terrain == 'forest':
+            regen += 2 # Fresh air bonus
     
     # [V5.1] Generic Metadata Hook
     for effect_id in getattr(player, 'status_effects', {}):
@@ -233,7 +253,6 @@ def calculate_stamina_regen(player):
         regen += 10
         
     if "meditating" in getattr(player, 'status_effects', {}):
-        # [V4.5] Meditate: Massive stamina recovery
         regen += 20
         
     return regen, max_stamina
@@ -241,17 +260,21 @@ def calculate_stamina_regen(player):
 def calculate_heat_decay(player):
     """Calculates heat dissipation per tick."""
     max_heat = player.get_max_resource(Tags.HEAT)
-    
-    # Base Dissipation
     decay = 2
     
-    # Sticky Heat Logic
-    # If waiting or resting, decay increases to 10.
-    # Otherwise (combat/moving), it stays at 2.
+    # [V6.0] Terrain Grammar: Heat
+    room = getattr(player, 'room', None)
+    if room:
+        terrain = getattr(room, 'terrain', '').lower()
+        if terrain in ['water', 'snow']:
+            decay += 10 # Rapid cooling
+        elif terrain == 'ocean':
+            decay += 20
+            
     is_waiting = player.last_action in ["wait", "none", ""]
     
     if is_waiting or player.is_resting or not player.is_in_combat():
-        decay = 10
+        decay += 8 # Base decay boost when idle
 
     # Knight Passive: Thermal Mass (20% bonus when stationary)
     kit_name = player.active_kit.get('name', '').lower()

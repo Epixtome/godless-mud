@@ -103,9 +103,11 @@ def handle_lightning_bolt(player, skill, args, target=None):
         effects.remove_effect(player, "dualcast")
         player.send_line(f"{Colors.MAGENTA}Dualcast!{Colors.RESET}")
 
-    for _ in range(casts):
-        player.send_line(f"You hurl a bolt of lightning at {target.name}!")
-        combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    player.send_line(f"You hurl a bolt of lightning at {target.name}!")
+    if effects.has_effect(target, "wet"):
+        player.send_line(f"{Colors.BOLD}{Colors.CYAN}[WET CIRCUIT] The current arcs through soaked flesh — DOUBLE DAMAGE!{Colors.RESET}")
+        player.room.broadcast(f"{Colors.CYAN}Lightning arcs through {target.name}'s soaked form with devastating effect!{Colors.RESET}", exclude_player=player)
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
     
     _consume_resources(player, skill)
     return target, True
@@ -124,3 +126,22 @@ def handle_arcane_surge(player, skill, args, target=None):
     effects.apply_effect(player, "stalled", 3)
     _consume_resources(player, skill)
     return None, True
+
+@register("hydro_bolt")
+def handle_hydro_bolt(player, skill, args, target=None):
+    """Apply: Soak target in water. Wet targets take 2x from lightning."""
+    target = common._get_target(player, args, target, "Soak whom with water?")
+    if not target: return None, True
+
+    player.send_line(f"{Colors.CYAN}You blast {target.name} with a jet of pressurized water!{Colors.RESET}")
+    player.room.broadcast(f"{player.name} drenches {target.name} with a jet of water!", exclude_player=player)
+    
+    # Minimal damage — this is a setup skill
+    power = blessings_engine.MathBridge.calculate_power(skill, player, target)
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    
+    # on_hit in JSON applies [wet], but we also give a combo hint
+    player.send_line(f"{Colors.YELLOW}[TIP] Hit them with Lightning Bolt now for double damage!{Colors.RESET}")
+    
+    _consume_resources(player, skill)
+    return target, True

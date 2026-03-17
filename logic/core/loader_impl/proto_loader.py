@@ -74,3 +74,10 @@ def load_prototypes(world, data, blessing_data, class_data, kit_data, deity_data
                 
     # 5. Help Entries
     world.help = [HelpEntry(**h_data) for h_data in help_data if 'title' in h_data and 'body' in h_data]
+
+    # 6. Deities (V6.0 Fix: Actually populate the world map)
+    if deity_data:
+        from models import Deity
+        # deity_data is a dict { "valeros": { ... } }
+        for d_id, d_info in deity_data.items():
+            world.deities[d_id] = Deity(d_id, d_info['name'], d_info['kingdom'])

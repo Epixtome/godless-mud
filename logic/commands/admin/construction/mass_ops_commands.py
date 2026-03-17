@@ -8,7 +8,7 @@ from logic.commands import movement_commands as movement
 from logic.commands.info_commands import look
 from utilities import mapper
 
-@command_manager.register("@copyroom", admin=True)
+@command_manager.register("@copyroom", admin=True, category="admin_building")
 def copy_room(player, args):
     """Copy room attributes to a neighbor or create a line."""
     if not args:
@@ -44,7 +44,7 @@ def copy_room(player, args):
     player.send_line(f"Copied {count} rooms {direction}.")
     look(player, "")
 
-@command_manager.register("@massedit", admin=True)
+@command_manager.register("@massedit", admin=True, category="admin_building")
 def mass_edit(player, args):
     """Bulk edit rooms by zone, terrain, or name match."""
     parts = args.split()
@@ -71,7 +71,7 @@ def mass_edit(player, args):
             count += 1
     player.send_line(f"Updated {count} rooms.")
 
-@command_manager.register("@replace", admin=True)
+@command_manager.register("@replace", admin=True, category="admin_building")
 def replace_text(player, args):
     """Search and replace text in room descriptions/names in current zone."""
     if " WITH " not in args:

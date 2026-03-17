@@ -74,6 +74,17 @@ def remove_effect(target, effect_id, verbose=True):
         telemetry.log_status_change(target, effect_id, "removed")
         if verbose and hasattr(target, 'send_line') and effect_id != "panting":
             target.send_line(f"{Colors.CYAN}You are no longer {effect_id.replace('_', ' ')}.{Colors.RESET}")
+            
+        if verbose and effect_id in ["prone", "stunned", "stun", "off_balance", "dazed", "shattered_mind"] and hasattr(target, 'room') and target.room:
+             msg = f"{Colors.YELLOW}{target.name} recovers from being {effect_id.replace('_', ' ')}.{Colors.RESET}"
+             if effect_id == "prone":
+                 msg = f"{Colors.CYAN}{target.name} regains their footing and readies themselves.{Colors.RESET}"
+             target.room.broadcast(msg, exclude_player=target)
+             
+             # [V6.1] Posture Recovery: Reset balance to 100 upon recovering from a break
+             if hasattr(target, 'resources'):
+                 target.resources['balance'] = 100
+             
         event_engine.dispatch("on_status_removed", {"player": target, "status_id": effect_id})
         return True
     return False
@@ -100,11 +111,19 @@ def has_effect(target, effect_id):
 def process_effects(game):
     """Called by heartbeat to expire effects."""
     for entity in list(game.players.values()): _process_entity_effects(game, entity)
+    # Optimization: Only iterate rooms that have entities or room-level effects.
+    # Iterating all 87k+ rooms every tick was the primary heartbeat bottleneck.
     for room in game.world.rooms.values():
-        _process_entity_effects(game, room) # Room-wide persistence effects
-        for entity in list(room.monsters):
-            if not getattr(entity, 'pending_death', False):
-                _process_entity_effects(game, entity)
+        has_monsters = bool(room.monsters)
+        has_room_effects = bool(getattr(room, 'status_effects', None))
+        if not has_monsters and not has_room_effects:
+            continue
+        if has_room_effects:
+            _process_entity_effects(game, room) # Room-wide persistence effects
+        if has_monsters:
+            for entity in list(room.monsters):
+                if not getattr(entity, 'pending_death', False):
+                    _process_entity_effects(game, entity)
 
 def _process_entity_effects(game, entity):
     if hasattr(entity, 'pending_skill') and entity.pending_skill:

@@ -18,6 +18,7 @@
             "cost": 45,
             "description": "Deny: A 3s reactive window. The next strike hits an illusion, confusing the attacker.",
             "identity_tags": ["illusionist", "trick", "reaction"],
+            "action": "mirror_image",
             "requirements": { "class": "illusionist", "concentration": 20, "cooldown": 12 },
             "effects": [
                 { "id": "mirror_image_active", "duration": 3, "target": "self" }
@@ -28,11 +29,24 @@
             "name": "Shatter Sanity",
             "tier": 3,
             "cost": 50,
-            "description": "Payoff: Deals massive psychic damage to [Confused] targets and extends the duration.",
+            "description": "Payoff: Requires [Confused] target (apply with Color Spray). Deals massive psychic damage and extends the confusion. Cannot be used on a clear-headed enemy.",
             "identity_tags": ["illusionist", "psychic", "finisher"],
-            "requirements": { "class": "illusionist", "concentration": 30, "cooldown": 2 },
+            "action": "shatter_sanity",
+            "requirements": { "class": "illusionist", "concentration": 30, "confused": true, "fighting": true, "cooldown": 2 },
             "base_power": 25,
             "scaling": { "scaling_tag": "magic", "multiplier": 1.5 }
+        },
+        {
+            "id": "phantasmal_inferno",
+            "name": "Phantasmal Inferno",
+            "tier": 4,
+            "cost": 80,
+            "description": "Payoff: Manifest a scorching sea of illusory flames. Deals fire/psychic damage to all enemies in the room. Effectiveness scales with target confusion.",
+            "identity_tags": ["illusionist", "fire", "psychic", "aoe"],
+            "action": "phantasmal_inferno",
+            "requirements": { "class": "illusionist", "concentration": 50, "fighting": true, "cooldown": 15 },
+            "base_power": 40,
+            "scaling": { "scaling_tag": "magic", "multiplier": 2.0 }
         },
         {
             "id": "haste",

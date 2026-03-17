@@ -94,6 +94,23 @@
                 "stamina": 15,
                 "cooldown": 10
             }
+        },
+        "struggle": {
+            "id": "struggle",
+            "name": "Struggle",
+            "tier": 1,
+            "description": "Attempt to break free from physical restraints (Webs, Nets, Prone).",
+            "identity_tags": [
+                "utility",
+                "stamina",
+                "skill"
+            ],
+            "action": "struggle",
+            "deity_id": "common",
+            "requirements": {
+                "stamina": 5,
+                "cooldown": 1
+            }
         }
     }
-}
+}

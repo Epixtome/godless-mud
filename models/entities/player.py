@@ -54,8 +54,10 @@ class Player:
         self.visited_rooms = [] # List of room IDs (MRU, max 200)
         self.locked_target = None # For ranged combat (Ranger)
         self.reputation = 0 # -100 to 100. < -10 is Criminal.
+        self.kingdom = "instinct" # light, dark, instinct (V6.0 Calibration)
         self.is_mounted = False
         self.admin_vision = False
+        self.is_hydrated = False
         
         # UTS Cache (V4.5 Optimization)
         self._cached_tags = {}
@@ -125,18 +127,9 @@ class Player:
             self.trigger_module_inits()
 
     def flush_class_state(self):
-        """Removes class-specific stances and passives."""
-        
-        # Identify effects to remove
-        to_remove = []
-        if self.status_effects:
-            for eff_id in self.status_effects:
-                eff_def = effects.get_effect_definition(eff_id, self.game)
-                if eff_def and eff_def.get('group') in ['stance', 'class_passive']:
-                    to_remove.append(eff_id)
-        
-        for eff in to_remove:
-            effects.remove_effect(self, eff)
+        """Removes class-specific stances via facade."""
+        from logic.core.utils import player_logic
+        player_logic.flush_class_state(self)
 
     def trigger_module_inits(self):
         """Initializes state for active modules."""
@@ -155,6 +148,7 @@ class Player:
     def load_data(self, data):
         """Hydrates player state."""
         persistence.load_data(self, data)
+        self.is_hydrated = True
 
     def is_in_combat(self):
         """Returns True if fighting."""
@@ -162,13 +156,13 @@ class Player:
 
     def load_kit(self, kit_name):
         """Applies a specific class kit."""
-        success = persistence.load_kit(self, kit_name)
-        if success: self.mark_tags_dirty()
-        return success
+        from logic.core.utils import player_logic
+        return player_logic.load_kit(self, kit_name)
 
     def get_class_bonus(self):
         """Returns bonus from current kit."""
-        return self.active_kit.get('class_bonus', 0)
+        from logic.core.utils import player_logic
+        return player_logic.get_class_bonus(self)
 
     def mark_tags_dirty(self):
         """Invalidates UTS cache."""
@@ -183,7 +177,8 @@ class Player:
 
     def get_heat_efficiency(self):
         """Returns heat cost multiplier."""
-        return self.active_kit.get('heat_efficiency', 1.0)
+        from logic.core.utils import player_logic
+        return player_logic.get_heat_efficiency(self)
 
     @property
     def max_hp(self):
@@ -221,9 +216,17 @@ class Player:
     def concealment(self):
         return self.base_concealment
 
+    @concealment.setter
+    def concealment(self, value):
+        self.base_concealment = value
+
     @property
     def perception(self):
         return self.base_perception
+
+    @perception.setter
+    def perception(self, value):
+        self.base_perception = value
 
     def start_buffering(self):
         """Starts buffering output to send in a single packet."""
@@ -248,18 +251,6 @@ class Player:
         """Standard output entry point."""
         messaging.send_line(self, message, include_prompt=include_prompt)
 
-
-    def get_global_tag_count(self, tag):
-        """
-        Retrieves the total tag count (Voltage) for a specific tag.
-        Uses cached resonance result if available.
-        """
-        if self.tags_are_dirty:
-            from logic.engines.resonance_engine import ResonanceAuditor
-            self.current_tags = ResonanceAuditor.calculate_resonance(self)
-            self.tags_are_dirty = False
-            
-        return self.current_tags.get(tag, 0)
 
     def send_raw(self, message, include_prompt=False):
         """Send raw text to this player's telnet client without prefix/suffix."""

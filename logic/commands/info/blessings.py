@@ -32,10 +32,8 @@ def deck(player, args):
 
             tags = " ".join([f"#{t}" for t in b.identity_tags if t != "hidden"])
             
-            # Formatted Layout: Name and Desc on same line, Tags under
-            player.send_line(f" {tier_color}T{b.tier}{Colors.RESET} | {Colors.BOLD}{b.name:<18}{Colors.RESET} - {Colors.ITALIC}{b.description}{Colors.RESET}")
-            if tags:
-                player.send_line(f"      {Colors.DGREY}{tags}{Colors.RESET}")
+            # Formatted Layout: Name and Desc on same line
+            player.send_line(f" {Colors.BOLD}{b.name:<18}{Colors.RESET} - {Colors.ITALIC}{b.description}{Colors.RESET}")
     
     player.send_line(display_utils.render_line(width))
     

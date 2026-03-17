@@ -60,9 +60,10 @@ def invalidate():
 def move_entity(entity, target_room, silent=False, leave_msg=None, arrive_msg=None):
     """
     Unified facade for moving players or monsters between rooms.
-    Handles cleanup of old rooms and notifications.
+    Handles cleanup of old rooms, notifications, and the Active Room Registry.
     """
     old_room = getattr(entity, 'room', None)
+    world = entity.game.world if getattr(entity, 'game', None) else None
     
     # 1. Removal from source
     if old_room:
@@ -76,6 +77,10 @@ def move_entity(entity, target_room, silent=False, leave_msg=None, arrive_msg=No
         
         if not silent and leave_msg:
             old_room.broadcast(leave_msg, exclude_player=entity)
+
+        # Deregister old room if now empty
+        if world:
+            world.deregister_room(old_room)
             
     # 2. Update reference
     entity.room = target_room
@@ -92,3 +97,7 @@ def move_entity(entity, target_room, silent=False, leave_msg=None, arrive_msg=No
             
         if not silent and arrive_msg:
             target_room.broadcast(arrive_msg, exclude_player=entity)
+
+        # Register target room as active
+        if world:
+            world.register_room(target_room)

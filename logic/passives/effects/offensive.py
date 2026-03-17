@@ -61,8 +61,9 @@ def apply_retribution_damage(ctx):
     attacker = ctx.get('attacker')
     
     if "retribution_aura" in getattr(target, 'status_effects', {}):
-        dmg = 10 # Standardized base damage
-        skill_utils._apply_damage(target, attacker, dmg, "Retribution")
+        if getattr(target, 'hp', 0) > 0: # Ensure they are still alive to retaliate
+            dmg = 10 # Standardized base damage
+            skill_utils._apply_damage(target, attacker, dmg, "Retribution")
 
 def alchemist_flask_mastery(ctx):
     player = ctx.get('player')

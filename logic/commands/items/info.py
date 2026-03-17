@@ -11,11 +11,9 @@ def inventory(player, args):
         player.send_line("You are carrying nothing.")
     else:
         for item in player.inventory:
-            status = ""
-            if hasattr(item, 'inventory'):
-                state = getattr(item, 'state', 'open')
-                status = f" [{state}]"
-            player.send_line(f"- {item.name}{status}")
+            state_info = f" [{getattr(item, 'state', 'open')}]" if hasattr(item, 'inventory') else ""
+            id_info = f" {Colors.DGREY}[{getattr(item, 'prototype_id', 'None')}]{Colors.RESET}" if getattr(player, 'admin_vision', False) else ""
+            player.send_line(f"- {item.name}{state_info}{id_info}")
     player.send_line(f"Gold: {player.gold} | Slots: {len(player.inventory)}/{player.inventory_limit}")
 
 @command_manager.register("equipment", "eq", category="information")
@@ -41,7 +39,8 @@ def equipment(player, args):
     for slot, attr in slot_map.items():
         item = getattr(player, attr, None)
         item_name = item.name if item else "Nothing"
-        player.send_line(f"{slot:<10}: {Colors.YELLOW}{item_name}{Colors.RESET}")
+        attr_info = f" {Colors.DGREY}({attr}){Colors.RESET}" if getattr(player, 'admin_vision', False) else ""
+        player.send_line(f"{slot:<10}: {Colors.YELLOW}{item_name}{Colors.RESET}{attr_info}")
 
 @command_manager.register("compare", "comp", category="information")
 def compare_item(player, args):

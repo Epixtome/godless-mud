@@ -24,6 +24,7 @@ Defined in kingdom-sharded files (e.g., `light.json`).
     - `cost`: integer (Resource cost to acquire or use)
     - `description`: string (User-facing text)
     - `identity_tags`: list[string] (Metadata for scaling and resonance)
+    - `axis`: string (Tactical category: Position, Tempo, Vision, Endurance, Elemental, Utility)
     - `action`: string (Reference to Python function in `blessing_actions.py`)
     - `requirements`: object (Required class, stamina, chi, etc.)
     - `scaling`: object (Single object or list of objects for math)

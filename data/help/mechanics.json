@@ -189,8 +189,8 @@
             "keywords": [
                 "momentum"
             ],
-            "title": "Momentum (Resource)",
-            "body": "Momentum represents forward combat energy. It is gained through successful weapon strikes.\n\n[Mechanics]\n- Generation: +1 per successful hit.\n- Max: 5.\n- Passive: +1 Extra Attack at 3 Momentum, +2 Extra Attacks at 5 Momentum.\n- Decay: Decays quickly if you stop attacking.",
+            "title": "Momentum (Resource) [LEGACY]",
+            "body": "Momentum represents forward combat energy gained through weapon strikes. Note: This resource is deprecated for the Barbarian class in favor of Fury.",
             "category": "resources"
         },
         {
@@ -223,10 +223,42 @@
         {
             "keywords": [
                 "whirlwind",
-                "momentum"
+                "fury"
             ],
             "title": "Skill: Whirlwind",
-            "body": "A devastating area-of-effect finisher for the Barbarian.\n\n[Mechanics]\n- Effect: Deals massive physical damage to all enemies in the room.\n- Scaling: Damage is multiplied by (1.0 + 0.25 per Momentum).\n- Consumption: Consumes ALL Momentum upon use.\n- Requirement: Barbarian class.",
+            "body": "A devastating area-of-effect finisher for the Barbarian.\n\n[Mechanics]\n- Effect: Deals massive physical damage to all enemies in the room.\n- Consumption: Consumes 50 Fury upon use.\n- Scaling: Damage scales with the Barbarian's base power and martial potency.\n- Requirement: Barbarian class.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "weight",
+                "weight class",
+                "encumbrance",
+                "lbs"
+            ],
+            "title": "Weight & Encumbrance (LBS)",
+            "body": "Your movement speed and stamina regeneration are determined by your Weight Class.\n\n- Light (< 30 LBS): 20% Bonus Stamina Regen.\n- Medium (31 - 70 LBS): Standard.\n- Heavy (71 - 120 LBS): -10% Penalty.\n- Massive (> 120 LBS): Severe Penalty.\n\nType 'attributes' to see your LBS.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "gcr",
+                "rating",
+                "combat rating"
+            ],
+            "title": "Godless Combat Rating (GCR)",
+            "body": "GCR is a summary score of your overall combat effectiveness. It factors in your active Blessings, Gear power, and Environmental affinity. Type 'attributes' to see your Rating.",
+            "category": "system"
+        },
+        {
+            "keywords": [
+                "fog of war",
+                "fog",
+                "map",
+                "vision"
+            ],
+            "title": "Fog of War",
+            "body": "The Tactical Map employs a dual-layer Fog of War system:\n\n1. Visited Areas (Full Color): Rooms you have physically entered or stood adjacent to (8-direction reveal) are fully revealed and permanent. These show terrain in its natural color.\n\n2. Knowledge Bubble (White/Dimmed): A 7x7 area surrounding you represents your 'Discovery' zone. This reveals the terrain type of nearby rooms in a desaturated white, but does not show intelligence (like mobs or traps) unless you have direct Line of Sight.\n\nEverything else remains hidden behind the dense fog of the unknown (.).",
             "category": "system"
         }
     ]

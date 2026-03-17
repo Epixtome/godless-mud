@@ -126,8 +126,13 @@ class Auditor:
             if player.get_global_tag_count("juggernaut") == 0:
                 return False, "You are too heavy to perform this maneuver!"
 
+        # These requirement keys are evaluated on the TARGET, not the player.
+        TARGET_STATUS_REQUIREMENTS = {"prone", "blinded", "dazed", "confused", "stunned", "off_balance", "wet", "frozen", "burning"}
+
         for req_key, req_val in blessing.requirements.items():
-            if req_key in ["stamina", "concentration", "chi", "stability", "class", "terrain", "stance", "mount", "shield", "equipped_weapon_type", "max_weight_class", "cooldown"]:
+            if req_key in ["stamina", "concentration", "chi", "stability", "class", "terrain", "stance",
+                           "mount", "shield", "equipped_weapon_type", "max_weight_class", "cooldown",
+                           "weapon", "fighting"] or req_key in TARGET_STATUS_REQUIREMENTS:
                 continue
             
             if req_val is True:
@@ -146,6 +151,36 @@ class Auditor:
                 
                 if curr_val < req_val:
                     return False, f"Not enough {req_key.title()} ({curr_val}/{req_val})"
+
+        req_fighting = blessing.requirements.get('fighting')
+        if req_fighting is True and not getattr(player, 'fighting', None):
+            return False, f"You must be in combat to use {blessing.name}."
+        elif req_fighting is False and getattr(player, 'fighting', None):
+             return False, f"You cannot be in combat to use {blessing.name}."
+
+        # --- TARGET STATUS GATE ---
+        # Check status requirements that apply to the CURRENT TARGET (player.fighting)
+        target = getattr(player, 'fighting', None)
+        for req_key in TARGET_STATUS_REQUIREMENTS:
+            req_val = blessing.requirements.get(req_key)
+            if req_val is None:
+                continue
+            if req_val is True:
+                if not target:
+                    return False, f"You must be in combat to use {blessing.name}."
+                t_effects = getattr(target, 'status_effects', {})
+                if req_key not in t_effects:
+                    status_name = req_key.replace('_', ' ').title()
+                    return False, f"Target must be [{status_name}]. Set it up first."
+            elif req_val is False:
+                if target:
+                    t_effects = getattr(target, 'status_effects', {})
+                    if req_key in t_effects:
+                        return False, f"Cannot use while target is [{req_key.replace('_', ' ').title()}]."
+
+        req_weapon = blessing.requirements.get('weapon')
+        if req_weapon and not player.equipped_weapon:
+            return False, f"You must have a weapon equipped to use {blessing.name}."
 
         req_shield = blessing.requirements.get('shield')
         if req_shield:
@@ -179,10 +214,10 @@ class Auditor:
                     player.cooldowns[blessing.id] = 0
                 elif remaining <= 0.25 and args is not None:
                     player.pending_skill = {'skill': blessing, 'args': args}
-                    player.send_line(f"{Colors.YELLOW}[!] You're off-balance, but preparing to strike...{Colors.RESET}")
+                    player.send_line(f"{Colors.YELLOW}[!] Skill queued. Preparing to strike...{Colors.RESET}")
                     return False, f"BUFFERED|{remaining * 2.0}"
                 else:
-                    return False, f"{Colors.YELLOW}[!] You are still recovering your focus for that maneuver.{Colors.RESET}"
+                    return False, f"{Colors.YELLOW}[!] You are still recovering your focus. ({remaining * 2.0:.1f}s remaining){Colors.RESET}"
 
         if hasattr(player, 'cooldowns') and 'gcd' in player.cooldowns:
             game = getattr(player, 'game', None)
@@ -192,6 +227,7 @@ class Auditor:
                     remaining = player.cooldowns['gcd'] - current_tick
                     if remaining <= 0.25 and args is not None:
                         player.pending_skill = {'skill': blessing, 'args': args}
+                        player.send_line(f"{Colors.YELLOW}[!] Skill queued. Preparing to strike...{Colors.RESET}")
                         return False, f"BUFFERED|{remaining * 2.0}"
                     else:
                         player.send_line(f"{Colors.RED}[!] You over-exert yourself to act! (Double Stamina){Colors.RESET}")

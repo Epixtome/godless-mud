@@ -127,9 +127,6 @@ def _handle_mob_death(game, mob, killer):
     
     # Player specific rewards (Moved back to deferred phase for correct ordering)
     if isinstance(killer, Player):
-        killer.send_line(f"{Colors.BOLD}{Colors.YELLOW}You have defeated {mob.name}!{Colors.RESET}")
-        room.broadcast(f"{Colors.YELLOW}{mob.name} has been defeated by {killer.name}!{Colors.RESET}", exclude_player=killer)
-        
         # Notify quest system
         if hasattr(killer, 'active_quests'):
             from logic.core import quests
@@ -225,6 +222,11 @@ def _on_death_event(ctx):
     killer = ctx.get('killer')
     # Recover game reference from the entity since events are stateless
     game = getattr(victim, 'game', None)
+    if not game and hasattr(victim, 'room') and hasattr(victim.room, 'world'):
+        game = getattr(victim.room.world, 'game', None)
+    if not game and hasattr(killer, 'game'):
+        game = getattr(killer, 'game', None)
+
     handle_death(game, victim, killer)
 
 # Subscribe to the global event bus

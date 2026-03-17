@@ -19,12 +19,12 @@ def transfer_item(item, source, destination):
     if not item or source is None or destination is None:
         return False
 
-    # Resolve lists
-    s_list = source.inventory if hasattr(source, 'inventory') else source
-    d_list = destination.inventory if hasattr(destination, 'inventory') else destination
+    # Resolve lists: Check for 'inventory', then 'items', then assume it's a list itself
+    s_list = getattr(source, 'inventory', getattr(source, 'items', source))
+    d_list = getattr(destination, 'inventory', getattr(destination, 'items', destination))
 
     if not isinstance(s_list, list) or not isinstance(d_list, list):
-        logger.error(f"Transfer failed: Source or Destination has no inventory list. {type(s_list)} -> {type(d_list)}")
+        logger.error(f"Transfer failed: Source or Destination has no list. {type(s_list)} -> {type(d_list)}")
         return False
 
     if item not in s_list:
@@ -34,6 +34,12 @@ def transfer_item(item, source, destination):
     # Perform Move
     s_list.remove(item)
     d_list.append(item)
+    
+    telemetry.log_event(source if hasattr(source, 'name') else destination, "ITEM_TRANSFER", {
+        "item": item.name,
+        "from": source.name if hasattr(source, 'name') else "List",
+        "to": destination.name if hasattr(destination, 'name') else "List"
+    })
 
     # Register Dirty State for Persistence
     if hasattr(source, 'dirty'): source.dirty = True
@@ -121,6 +127,13 @@ def equip_item(player, item, silent=False, only_empty=False):
         if getattr(player, "equipped_finger_l", None) and not getattr(player, "equipped_finger_r", None):
             player_attr = "equipped_finger_r"
 
+    # Special 2H Logic: If equipping to offhand, check if main hand is 2H
+    if player_attr == "equipped_offhand":
+        main_hand = getattr(player, "equipped_weapon", None)
+        if main_hand and getattr(main_hand, "hands", 1) == 2:
+            if not silent: player.send_line(f"You cannot use an off-hand while wielding {main_hand.name} (2H).")
+            return False
+
     # Check for Swap
     current_item = getattr(player, player_attr, None)
     if current_item:
@@ -148,6 +161,12 @@ def equip_item(player, item, silent=False, only_empty=False):
     if item in player.inventory:
         player.inventory.remove(item)
     setattr(player, player_attr, item)
+    
+    telemetry.log_event(player, "ITEM_EQUIP", {
+        "item": item.name,
+        "slot": target_slot,
+        "attr": player_attr
+    })
     
     # Recalculate
     ResonanceAuditor.calculate_resonance(player)
@@ -186,6 +205,11 @@ def unequip_item(player, item, silent=False):
 
     setattr(player, found_attr, None)
     player.inventory.append(item)
+    
+    telemetry.log_event(player, "ITEM_UNEQUIP", {
+        "item": item.name,
+        "slot": found_attr
+    })
     
     ResonanceAuditor.calculate_resonance(player)
     resources.calculate_total_weight(player)

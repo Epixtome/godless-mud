@@ -111,6 +111,8 @@ class Connection:
                 await self.game_loop()
 
         except Exception as e:
+            from utilities import telemetry
+            telemetry.log_bug_report(self.player or self, f"Connection Crash: {str(e)}")
             logger.error(f"Error handling client {self.name}: {e}", exc_info=True)
         finally:
             await self.disconnect()

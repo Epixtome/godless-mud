@@ -15,7 +15,7 @@ handle_class_builder_input = class_editor.handle_class_builder_input
 from logic.commands.admin.editors.item_editor import _handle_set_item, edit_visual
 from logic.commands.admin.editors.mob_editor import _handle_set_mob, edit_mob_visual
 
-@command_manager.register("@set", admin=True)
+@command_manager.register("@set", admin=True, category="admin_tools")
 def set_command(player, args):
     """
     Set various game properties.
@@ -82,7 +82,7 @@ def set_command(player, args):
     else:
         player.send_line(f"Unknown setting '{key}'. Type @set for list.")
 
-@command_manager.register("@roominfo", admin=True)
+@command_manager.register("@roominfo", admin=True, category="admin_tools")
 def room_info(player, args):
     """Show detailed debug info for the room."""
     r = player.room
@@ -97,7 +97,7 @@ def room_info(player, args):
     player.send_line(f"Active Items: {[i.name for i in r.items]}")
     player.send_line(f"Terrain: {r.terrain}")
 
-@command_manager.register("@massedit", admin=True)
+@command_manager.register("@massedit", admin=True, category="admin_building")
 def mass_edit(player, args):
     """
     Bulk edit rooms.
@@ -170,7 +170,7 @@ def mass_edit(player, args):
         
     player.send_line(f"Updated {count} rooms.")
 
-@command_manager.register("@replace", admin=True)
+@command_manager.register("@replace", admin=True, category="admin_building")
 def replace_text(player, args):
     """
     Search and replace text in room descriptions/names in current zone.
@@ -195,7 +195,7 @@ def replace_text(player, args):
                 
     player.send_line(f"Replaced instances in {count} fields in zone '{current_zone}'.")
 
-@command_manager.register("@statecheck", admin=True)
+@command_manager.register("@statecheck", admin=True, category="admin_system")
 def state_check(player, args):
     """
     Checks the status of the JSON Shards and Live State Deltas.

@@ -5,7 +5,7 @@ from logic.common import get_reverse_direction
 from utilities.mapper import TERRAIN_HEIGHTS
 import logic.commands.admin.construction.utils as construction_utils
 
-@command_manager.register("@brush", admin=True)
+@command_manager.register("@brush", admin=True, category="admin_building")
 def brush(player, args):
     """
     Configure the painting brush for digging.
@@ -51,7 +51,7 @@ def brush(player, args):
     else:
         player.send_line("Invalid brush attribute. Use: zone, terrain, name.")
 
-@command_manager.register("@paste", admin=True)
+@command_manager.register("@paste", admin=True, category="admin_building")
 def paste_room(player, args):
     """
     Applies brush settings to the current room or a neighbor.
@@ -94,7 +94,7 @@ def paste_room(player, args):
 
     player.send_line(f"Pasted brush attributes to {r.name} ({r.id}).")
 
-@command_manager.register("@autopaste", admin=True)
+@command_manager.register("@autopaste", admin=True, category="admin_building")
 def autopaste(player, args):
     """
     Toggle auto-paste mode.
@@ -110,7 +110,7 @@ def autopaste(player, args):
     if player.autopaste and (not hasattr(player, 'brush_settings') or not player.brush_settings):
         player.send_line("Warning: Brush is empty. Use '@brush copy' or '@brush <attr> <val>' first.")
 
-@command_manager.register("@auto", admin=True)
+@command_manager.register("@autopaint", admin=True, category="admin_building")
 def auto_toggle(player, args):
     """
     Toggles all construction auto-modes (dig and paste).
@@ -153,7 +153,7 @@ def auto_toggle(player, args):
     from logic.commands.info_commands import look
     look(player, "")
 
-@command_manager.register("@paint", admin=True)
+@command_manager.register("@paint", admin=True, category="admin_building")
 def paint_zone(player, args):
     """
     Creates or updates a grid of rooms.
@@ -212,6 +212,10 @@ def paint_zone(player, args):
         # Default: Center around player
         start_x = player.room.x - (width // 2)
         start_y = player.room.y - (height // 2)
+    
+    if start_x is None or start_y is None: # Safety check for static analysis
+        player.send_line("Error: Could not determine start coordinates.")
+        return
         
     z = player.room.z
     
@@ -223,6 +227,9 @@ def paint_zone(player, args):
     
     from logic.engines import spatial_engine
     spatial = spatial_engine.get_instance(player.game.world)
+    if not spatial:
+        player.send_line("Spatial index unavailable.")
+        return
 
     # Create/Update rooms
     for y in range(start_y, start_y + height):

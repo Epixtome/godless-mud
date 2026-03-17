@@ -2,7 +2,7 @@ from logic.handlers import command_manager
 from logic.core import loader
 from models import Item, Weapon, Armor, Consumable
 
-@command_manager.register("@create", category="builder", admin=True)
+@command_manager.register("@create", category="admin_building", admin=True)
 def create_item(player, args):
     """
     Create a new item prototype from scratch.
@@ -33,9 +33,9 @@ def create_item(player, args):
     new_item = None
     # Instantiate with safe defaults
     if item_type == "weapon":
-        new_item = Weapon(item_name, "A newly created weapon.", "1d6", {}, None, 0, [], prototype_id=item_id, tags=[])
+        new_item = Weapon(name=item_name, description="A newly created weapon.", damage_dice="1d6", scaling={}, value=0, flags=[], prototype_id=item_id, tags=[])
     elif item_type == "armor":
-        new_item = Armor(item_name, "A newly created armor.", 1, None, 0, [], prototype_id=item_id, tags=[])
+        new_item = Armor(name=item_name, description="A newly created armor.", defense=1, stability=None, weight_class="light", value=0, flags=[], prototype_id=item_id, tags=[])
     elif item_type == "consumable":
         new_item = Consumable(item_name, "A newly created consumable.", {}, 0, [], prototype_id=item_id, tags=[])
     else:
@@ -55,7 +55,7 @@ def create_item(player, args):
     instance = new_item.clone()
     player.inventory.append(instance)
 
-@command_manager.register("@saveitems", "@saveitem", category="builder", admin=True)
+@command_manager.register("@saveitems", "@saveitem", category="admin_building", admin=True)
 def save_items_command(player, args):
     """
     Saves all item prototypes to data/items.json.

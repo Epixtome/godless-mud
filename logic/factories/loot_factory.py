@@ -39,9 +39,11 @@ load_loot_tables()
 
 def generate_loot(level=1, quality="standard", material=None, mob_tier=1):
     """
+    [V6.0] Procedural Gear Generation.
     Generates a random item based on level and quality tier.
-    Returns an Item, Weapon, or Armor object.
+    Returns an Item, Weapon, or Armor object with calculated CR.
     """
+    from logic import calibration
     if not TEMPLATES:
         load_loot_tables() # Safety reload
 
@@ -54,9 +56,7 @@ def generate_loot(level=1, quality="standard", material=None, mob_tier=1):
         mat_type = template.get("material_type", "metal")
         
         if quality == "exotic":
-            valid_mats = [m for m, data in MATERIALS.items() if data["type"] == mat_type and data["tier"] >= 3 and data["tier"] <= mob_tier + 1]
-            if not valid_mats:
-                valid_mats = [m for m, data in MATERIALS.items() if data["type"] == mat_type]
+            valid_mats = [m for m, data in MATERIALS.items() if data["type"] == mat_type and data["tier"] >= 2]
         else:
             valid_mats = [m for m, data in MATERIALS.items() if data["type"] == mat_type and data["tier"] <= mob_tier]
             
@@ -65,23 +65,25 @@ def generate_loot(level=1, quality="standard", material=None, mob_tier=1):
             
         material = random.choice(valid_mats) if valid_mats else "iron"
 
-    mat_config = MATERIALS.get(material, next(iter(MATERIALS.values())) if MATERIALS else {})
+    mat_config = MATERIALS.get(material)
+    if not mat_config:
+        mat_config = next(iter(MATERIALS.values())) if MATERIALS else {}
 
     # 3. Resolve Tier
-    tier_config = TIERS.get(quality, TIERS.get("standard", {}))
+    tier_config = TIERS.get(quality) or TIERS.get("standard") or {}
 
-    # 4. Resolve Affixes
+    # 4. Resolve Affixes (Prefixes/Suffixes)
     prefix_data = None
     suffix_data = None
     
-    prefix_chance = 1.0 if quality == "exotic" else 0.5
-    suffix_chance = 1.0 if quality == "exotic" else 0.2
+    prefix_chance = 0.8 if quality == "exotic" else 0.3
+    suffix_chance = 0.6 if quality == "exotic" else 0.1
     
     prefix_name = None
     suffix_name = None
 
     if random.random() < prefix_chance:
-        valid_prefixes = [p for p, data in PREFIXES.items() if data["tier"] <= mob_tier]
+        valid_prefixes = [p for p, data in PREFIXES.items() if data["tier"] <= mob_tier + 1]
         prefix_name = random.choice(valid_prefixes) if valid_prefixes else None
         if prefix_name:
             prefix_data = PREFIXES[prefix_name]
@@ -97,30 +99,27 @@ def generate_loot(level=1, quality="standard", material=None, mob_tier=1):
     
     name = f"{display_prefix} {material.capitalize()} {template['name']} {display_suffix}".strip()
     
-    # 6. Prepare Tags
-    tags = template["tags"].copy()
-    for w in ["light", "medium", "heavy"]:
-        tags.pop(w, None)
+    # 6. Prepare Tags (UTS Protocol)
+    tags = template.get("tags", {}).copy()
     
+    # Apply material tags
     if mat_config:
-        tags[mat_config.get("weight", "medium")] = 1
-        if "tags" in mat_config:
-            for k, v in mat_config["tags"].items():
-                tags[k] = tags.get(k, 0) + v
+        for k, v in mat_config.get("tags", {}).items():
+            tags[k] = tags.get(k, 0) + v
     
-    dice_offset_accum = tier_config.get("dice_offset", 0) + mat_config.get("dice_offset", 0)
-    
+    # Apply prefix/suffix tags
     if prefix_data:
-        dice_offset_accum += prefix_data.get("dice_offset", 0)
         for k, v in prefix_data.get("tags", {}).items():
             tags[k] = tags.get(k, 0) + v
             
     if suffix_data:
         for k, v in suffix_data.get("tags", {}).items():
             tags[k] = tags.get(k, 0) + v
-    
-    # 7. Instantiate
+
+    # 7. Calculate Stats & Instantiate
     item = None
+    dice_offset_accum = tier_config.get("dice_offset", 0) + mat_config.get("dice_offset", 0)
+    if prefix_data: dice_offset_accum += prefix_data.get("dice_offset", 0)
     
     if template["type"] == "weapon":
         idx = template["base_dice_index"] + dice_offset_accum
@@ -135,9 +134,9 @@ def generate_loot(level=1, quality="standard", material=None, mob_tier=1):
             value=0,
             tags=tags
         )
-        
     elif template["type"] == "armor":
         defense = int(template["base_defense"] * tier_config.get("mult", 1.0) * mat_config.get("mult", 1.0))
+        # Scaled defense based on level
         defense = int(defense * (1 + (level * 0.1)))
         
         item = Armor(
@@ -147,18 +146,44 @@ def generate_loot(level=1, quality="standard", material=None, mob_tier=1):
             value=0,
             tags=tags
         )
-        
-    # 8. Finalize Item Properties
+    else:
+        item = Item(name=name, description=template["desc"], value=0, tags=tags)
+
+    # 8. Finalize Item Properties (V6.0 Calibration)
     if item:
-        item.weight_class = mat_config.get("weight", "medium")
-        item.weight = int(template.get("base_weight", 1) * mat_config.get("weight_mult", 1.0))
-        item.slot = template.get("slot", "none")
-        item.material = material
-        item.max_integrity = mat_config.get("max_integrity", 50)
-        item.integrity = item.max_integrity
+        # Calculate Weight
+        final_weight = int(template.get("base_weight", 5) * mat_config.get("weight_mult", 1.0))
+        setattr(item, 'weight', final_weight)
+        setattr(item, 'slot', template.get("slot", "none"))
+        setattr(item, 'material', material)
         
-        tag_density_bonus = sum(tags.values()) * 5
-        base_value = 10 * tier_config.get("mult", 1.0) * level
-        item.value = int(base_value + tag_density_bonus)
+        # Determine Weight Class based on calibration thresholds
+        if final_weight <= calibration.ScalingRules.WEIGHT_LIGHT_MAX:
+            w_class = "light"
+        elif final_weight <= calibration.ScalingRules.WEIGHT_MEDIUM_MAX:
+            w_class = "medium"
+        else:
+            w_class = "heavy"
+        setattr(item, 'weight_class', w_class)
+        
+        # Calculate Combat Rating (CR)
+        # Formula: CR = (QualityMult * MaterialTier) + (TagDensity * 0.5)
+        tag_density = sum(tags.values()) if isinstance(tags, dict) else len(tags)
+        mat_tier = mat_config.get("tier", 1)
+        quality_mult = tier_config.get("mult", 1.0)
+        
+        cr = (quality_mult * mat_tier) + (tag_density * 0.2)
+        if template["type"] == "weapon":
+            # Weapons get a slight bump from dice index
+            cr += (dice_offset_accum * 0.5)
             
+        item.combat_rating = round(max(1.0, cr), 2)
+        item.power = quality_mult # Legacy support
+        
+        # Value calculation
+        base_value = 10 * quality_mult * level
+        item.value = int(base_value + (tag_density * 10))
+        
+        item.prototype_id = f"proc_{item.name.lower().replace(' ', '_')}"
+
     return item

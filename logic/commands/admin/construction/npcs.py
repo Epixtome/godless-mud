@@ -2,7 +2,7 @@ import logic.handlers.command_manager as command_manager
 from utilities.colors import Colors
 from logic.core.utils import persistence
 
-@command_manager.register("@makeshopkeeper", admin=True)
+@command_manager.register("@makeshopkeeper", admin=True, category="admin_building")
 def make_shopkeeper(player, args):
     """
     Turns a spawned NPC into a shopkeeper.
@@ -26,7 +26,7 @@ def make_shopkeeper(player, args):
     player.send_line(f"{Colors.GREEN}{target.name} is now a shopkeeper!{Colors.RESET}")
     player.room.dirty = True
 
-@command_manager.register("@persist_room", admin=True)
+@command_manager.register("@persist_room", admin=True, category="admin_building")
 def persist_room_mobs(player, args):
     """
     Saves all currently active mobs in the room into the room's blueprint.
@@ -47,7 +47,7 @@ def persist_room_mobs(player, args):
     room.dirty = True
     player.send_line(f"{Colors.GREEN}Persisted {len(room.monsters)} NPCs to room blueprint.{Colors.RESET}")
 
-@command_manager.register("@give", admin=True)
+@command_manager.register("@give", admin=True, category="admin_entities")
 def give_npc_item(player, args):
     """
     Gives an item to an NPC.

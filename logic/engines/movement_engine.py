@@ -10,13 +10,22 @@ from utilities import telemetry
 EXHAUSTION_DURATION = 4.0  # 4.0 seconds
 MANDATORY_DELAY_SECONDS = 0.1
 
-# Fallback multipliers if data/terrain.json is missing
+# Standardized Godless Terrain Grammar (V6.0)
 TERRAIN_MULTIPLIERS = {
-    "road": 1.0,
-    "plains": 1.2,
-    "forest": 1.8,
-    "mountain": 5.0,
-    "indoors": 1.0
+    "road": 1.0,         # Optimized path
+    "plains": 1.2,       # Open ground
+    "indoors": 1.0,      # Structured ground
+    "forest": 1.8,       # Obstructed / Soft
+    "mountain": 3.5,     # Vertical / High exertion
+    "swamp": 5.0,        # Entangling (Grammar: SLOW)
+    "mud": 2.5,          # Slippery / Viscous
+    "snow": 2.0,         # Soft / Unsteady
+    "sand": 2.2,         # Loose / High friction
+    "water": 4.0,        # Resistance / Buoyant
+    "ocean": 6.0,        # High Resistance
+    "void": 1.5,         # Reality distortion
+    "bridge": 1.0,       # Narrow but stable
+    "air": 1.0           # Frictionless (Requires Flight)
 }
 
 def check_move_pacing(player, room=None):

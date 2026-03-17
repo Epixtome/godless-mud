@@ -117,6 +117,9 @@ def _set_player_kingdom(player, args):
     kingdom = args.lower()
     if kingdom not in ["light", "dark", "instinct"]:
         return False, "Invalid kingdom. Choose: light, dark, instinct."
+    
+    player.kingdom = kingdom
+    
     if player.identity_tags:
         if player.identity_tags[0] in ["light", "dark", "instinct"]:
             player.identity_tags[0] = kingdom
@@ -124,6 +127,7 @@ def _set_player_kingdom(player, args):
             player.identity_tags.insert(0, kingdom)
     else:
         player.identity_tags = [kingdom]
+    player.save()
     return True, f"Kingdom set to {kingdom.title()}."
 
 # Dispatch Table for @set

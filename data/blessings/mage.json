@@ -15,7 +15,9 @@
             ],
             "action": "lightning_bolt",
             "requirements": {
-                "class": "mage"
+                "class": "mage",
+                "concentration": 20,
+                "cooldown": 2
             },
             "scaling": {
                 "scaling_tag": "magic",
@@ -37,7 +39,9 @@
             ],
             "action": "fireball",
             "requirements": {
-                "class": "mage"
+                "class": "mage",
+                "concentration": 35,
+                "cooldown": 4
             },
             "scaling": {
                 "scaling_tag": "magic",
@@ -82,7 +86,9 @@
             ],
             "action": "arcane_surge",
             "requirements": {
-                "class": "mage"
+                "class": "mage",
+                "stamina": 10,
+                "cooldown": 15
             }
         },
         {
@@ -100,11 +106,42 @@
             ],
             "action": "frost_nova",
             "requirements": {
-                "class": "mage"
+                "class": "mage",
+                "concentration": 45,
+                "cooldown": 6
             },
             "scaling": {
                 "scaling_tag": "magic",
                 "multiplier": 1.2
+            }
+        },
+        {
+            "id": "hydro_bolt",
+            "name": "Hydro Bolt",
+            "tier": 2,
+            "cost": 20,
+            "base_power": 8,
+            "description": "Apply: Saturate the target with pressurized water, applying [Wet] for 8s. Wet targets take DOUBLE damage from Lightning. Weak on its own - it is a setup skill.",
+            "identity_tags": [
+                "magic",
+                "water",
+                "arcane",
+                "utility",
+                "strike"
+            ],
+            "action": "hydro_bolt",
+            "requirements": {
+                "class": "mage",
+                "concentration": 10,
+                "cooldown": 3
+            },
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 0.5
+            },
+            "on_hit": {
+                "apply_status": "wet",
+                "duration": 8
             }
         }
     ]

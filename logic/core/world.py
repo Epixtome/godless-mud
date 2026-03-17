@@ -23,3 +23,20 @@ class World:
         self.landmarks = {}
         self.terrain_config = {}
         self.help = []
+        # === Active Room Registry ===
+        # A live set of rooms containing at least one player or monster.
+        # All heartbeat systems must iterate this instead of world.rooms.values().
+        # Maintained by: world_service.move_entity, spatial_engine.move_entity, mob_manager.spawn_mob
+        self.active_rooms: set = set()
+        self.zone_weather: dict = {} # Map of zone_id -> current_weather_id
+
+
+    def register_room(self, room):
+        """Mark a room as active (has entities). Safe to call multiple times."""
+        if room:
+            self.active_rooms.add(room)
+
+    def deregister_room(self, room):
+        """Remove a room from the active set if it is now empty."""
+        if room and not room.players and not room.monsters:
+            self.active_rooms.discard(room)

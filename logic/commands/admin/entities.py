@@ -1,18 +1,98 @@
-#@spawn, @search, @forcefight, @recruit, @kit, @scan
+#@spawn, @search
 import json
 import os
 import logic.handlers.command_manager as command_manager
 from models import Monster, Item
 from utilities.colors import Colors
 
-@command_manager.register("@spawn", admin=True, category="admin")
+@command_manager.register("@spawn", admin=True, category="admin_entities")
 def spawn(player, args):
-    """Spawn a monster or item."""
+    """
+    Spawn a monster or item (V6.0 Unified Factory).
+    
+    [Standard Spawning]
+      @spawn <proto_id> [count]
+      Examples: @spawn goblin | @spawn iron_sword 3
+    
+    [Dynamic Generation]
+      @spawn new [CR] [tags...] <base_type>
+      
+      CR (Combat Rating): 1-100 (determines stats/potency)
+      
+      Valid Elements: fire, frost, ice, lightning, shock, venom, poison, shadow, void, holy, unholy, arcane, entropy
+      Valid Traits:   brutal, keen, sturdy, agile, thick, exotic, mythic, scrap, rusty, sharp, jagged, serrated, holy, cursed
+      Valid Materials: iron, steel, adamant, mithril, leather, silk, cloth, wood, bone, obsidian
+      
+      Base Types:
+          - Weapons: sword, axe, mace, dagger, staff, hammer, maul, bow, knuckles, wraps, whip, scythe, spear, rapier
+          - Armor: chestplate, helm, boots, leggings, gloves, bracers, shield, robes, tunic, cloak, hat, cap, gauntlets
+          - Mobs: goblin, wolf, rat, warrior, mage, demon, gargoyle, skeleton, zombie, undead, entity, dragon, bandit, guard
+          
+      Examples:
+        @spawn new 10 fire goblin
+        @spawn new 5 mythic steel sword
+        @spawn new level 15 shadow demon
+    """
     if not args:
-        player.send_line("Usage: @spawn <name or id> [count]")
+        player.send_line(spawn.__doc__)
         return
 
     parts = args.split()
+    
+    # --- [V6.0] Dynamic Factory Integration ---
+    if parts[0].lower() == "new":
+        from logic.factories.dynamic_factory import DynamicFactory
+        from logic.core.services import world_service
+        
+        try:
+            # Parse: [new] [level] [CR] [tags...] [type]
+            # Handle both "@spawn new 5 goblin" and "@spawn new level 5 goblin"
+            has_level_word = len(parts) > 1 and parts[1].lower() == "level"
+            cr_index = 2 if has_level_word else 1
+            
+            if len(parts) <= cr_index:
+                raise IndexError("Missing CR/Level value.")
+
+            cr = float(parts[cr_index])
+            
+            # The remaining parts are tags and the base type (last word)
+            remaining = parts[cr_index+1:]
+            if not remaining:
+                base_type = "entity"
+                tags = []
+            else:
+                base_type = remaining[-1]
+                tags = remaining[:-1] if len(remaining) > 1 else []
+            
+            # Determine if it's a Mob or Gear
+            # Gear types list for factory routing
+            gear_types = ["sword", "axe", "mace", "dagger", "hammer", "bow", "staff", "knuckles", "wraps", "whip",
+                          "helmet", "chestplate", "boots", "gloves", "plate", "mail", "shield", "robes", "tunic", "vest", "cloak",
+                          "gauntlets", "bracers", "pauldrons", "greaves", "trousers", "jerkin", "hat", "cap", "ring", "pendant", "amulet", "necklace", "belt", "sash",
+                          "leggings", "bracers"]
+            
+            if base_type.lower() in gear_types:
+                weapon_bases = ["sword", "axe", "mace", "dagger", "hammer", "bow", "staff", "knuckles", "wraps", "whip"]
+                slot = "weapon" if base_type.lower() in weapon_bases else "armor"
+                entity = DynamicFactory.generate_gear(cr, tags, base_type, slot, game=player.game)
+                world_service.register_dynamic_prototype(player.game, entity)
+                world_service.spawn_item(player.game, entity.prototype_id, player)
+                player.send_line(f"{Colors.GREEN}Dynamically generated Level {cr} {base_type}! (ID: {entity.prototype_id}){Colors.RESET}")
+            else:
+                entity = DynamicFactory.generate_mob(cr, tags, base_type, game=player.game)
+                world_service.register_dynamic_prototype(player.game, entity)
+                world_service.spawn_monster(player.game, entity.prototype_id, player.room)
+                player.room.broadcast(f"{player.name} summons a dynamic {entity.name} (CR {cr})!", exclude_player=player)
+                player.send_line(f"{Colors.GREEN}Dynamically generated CR {cr} {entity.name}! (ID: {entity.prototype_id}){Colors.RESET}")
+                
+            return
+        except (ValueError, IndexError):
+            player.send_line(f"{Colors.RED}Factory Syntax Error!{Colors.RESET}")
+            player.send_line("Try: @spawn new [level] <CR> [tags] <type>")
+            player.send_line("Ex: @spawn new 10 fire goblin")
+            return
+
+    # --- Standard Prototype Spawns ---
     count = 1
     if parts[-1].isdigit():
         count = int(parts[-1])
@@ -52,7 +132,7 @@ def spawn(player, args):
         for m_type, m_id, proto in matches[:10]:
             player.send_line(f"  [{m_type}] {m_id} - {proto.name}")
 
-@command_manager.register("@search", admin=True, category="admin")
+@command_manager.register("@search", admin=True, category="admin_tools")
 def search_db(player, args):
     """Search database for ID/Name."""
     if not args:
@@ -77,76 +157,3 @@ def search_db(player, args):
         player.send_paginated("\n".join(sorted(matches)))
     else:
         player.send_line(f"No matches for '{keyword}'.")
-
-@command_manager.register("@scan", admin=True, category="admin")
-def scan_zone(player, args):
-    """List all entities in the current zone."""
-    if not player.room: return
-    zid = player.room.zone_id
-    player.send_line(f"\n--- Scan: {zid} ---")
-    found = []
-    for r in player.game.world.rooms.values():
-        if r.zone_id == zid:
-            for m in r.monsters: found.append(f" {m.name} (Room: {r.name})")
-            for i in r.items: found.append(f" [ITEM] {i.name} (Room: {r.name})")
-    if found: player.send_paginated("\n".join(sorted(found)))
-    else: player.send_line(" Zone is empty.")
-
-@command_manager.register("@forcefight", admin=True, category="admin")
-def force_fight(player, args):
-    """Forces two mobs in the room to fight each other."""
-    if not args: return player.send_line("Usage: @forcefight <mob1> <mob2>")
-    parts = args.split()
-    if len(parts) < 2: return player.send_line("Need two targets.")
-    from logic.core import search
-    m1 = search.search_list(player.room.monsters, parts[0])
-    m2 = search.search_list(player.room.monsters, parts[1])
-    if m1 and m2 and m1 != m2:
-        m1.fighting = m2
-        m2.fighting = m1
-        player.room.broadcast(f"{Colors.RED}{player.name} forces {m1.name} and {m2.name} to fight!{Colors.RESET}")
-    else: player.send_line("Could not find targets or same target.")
-
-@command_manager.register("@recruit", admin=True, category="admin")
-def recruit_mob(player, args):
-    """Force a mob to become your minion."""
-    if not args: return player.send_line("Recruit what?")
-    from logic.core import search
-    target = search.find_living(player.room, args)
-    if target and isinstance(target, Monster):
-        target.leader = player
-        if target not in player.minions: player.minions.append(target)
-        player.send_line(f"{target.name} recruited.")
-
-@command_manager.register("@purge", admin=True, category="admin")
-def purge(player, args):
-    """Clear room of mobs/items."""
-    if not args: return player.send_line("Usage: @purge <mobs|items|all|target>")
-    arg = args.lower()
-    from logic.core import world_service
-    world_service.purge_room(player.room, purge_type=arg)
-    player.send_line("Purge complete.")
-
-@command_manager.register("@inspect", admin=True, category="admin")
-def inspect(player, args):
-    """Inspect entity attributes."""
-    if not args: return player.send_line("Inspect what?")
-    from logic.core import search
-    t = search.search_list(player.room.monsters, args) or search.search_list(player.room.items, args)
-    if t:
-        player.send_line(f"\n{Colors.BOLD}--- {t.name} ---{Colors.RESET}")
-        player.send_line(f" Type: {t.__class__.__name__}")
-        player.send_line(f" Proto: {getattr(t, 'prototype_id', 'N/A')}")
-        player.send_line(f" Desc: {getattr(t, 'description', '')}")
-    else: player.send_line("Target not found.")
-
-@command_manager.register("@check", admin=True, category="admin")
-def check_class_data(player, args):
-    """Raw data dump of a class."""
-    if not args: return player.send_line("Check what class?")
-    from logic.core import search
-    fits = search.find_matches(player.game.world.classes.values(), args)
-    if fits:
-        import pprint
-        player.send_line(pprint.pformat(vars(fits[0])))
-    else: player.send_line("Class not found.")

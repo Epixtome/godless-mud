@@ -5,9 +5,28 @@ from utilities.colors import Colors
 from logic.core import loader
 from datetime import datetime
 
-@command_manager.register("@restart", admin=True)
-def restart(player, args):
-    """Reload server logic and engines (Soft Restart)."""
+@command_manager.register("@reload", admin=True)
+def reload_command(player, args):
+    """
+    V6.0 Surgical Reload System.
+    Usage:
+      @reload logic - Hot-refreshes all Python scripts (Old @restart)
+      @reload world - Hot-swaps JSON data registries (Items, Mobs, Rooms)
+    """
+    if not args:
+        player.send_line("Usage: @reload <logic|world>")
+        return
+
+    sub = args.split()[0].lower()
+    
+    if sub == "logic":
+        _perform_logic_reload(player)
+    elif sub == "world":
+        _perform_world_reload(player)
+    else:
+        player.send_line(f"Unknown reload target '{sub}'. Valid: logic, world")
+
+def _perform_logic_reload(player):
     player.send_line(f"{Colors.YELLOW}Triggering Soft Logic Reload...{Colors.RESET}")
     player.room.broadcast(f"The ground shudders as the laws of physics are rewritten...", exclude_player=player)
     
@@ -51,7 +70,7 @@ def restart(player, args):
             if name in sys.modules:
                 importlib.reload(sys.modules[name])
                 
-        # Also run module_loader to get class modules (important for V4.5)
+        # Also run module_loader to get class modules
         from logic.commands import module_loader
         importlib.reload(module_loader)
         module_loader.register_all_modules()
@@ -64,15 +83,68 @@ def restart(player, args):
         importlib.reload(passive_hooks)
         passive_hooks.register_all()
         
-        player.send_line(f"{Colors.GREEN}Soft Reload Complete.{Colors.RESET}")
-        player.send_line("Note: Dynamic class logic and commands are updated. Core player model changes still require a full restart.")
-
+        player.send_line(f"{Colors.GREEN}Logic Reload Complete.{Colors.RESET}")
     except Exception as e:
         player.send_line(f"{Colors.RED}Reload Failed: {e}{Colors.RESET}")
-        import logging
-        logging.getLogger("GodlessMUD").error(f"Soft Reload Failure: {e}", exc_info=True)
 
-@command_manager.register("@shutdown", admin=True)
+def _perform_world_reload(player):
+    """
+    Phase-Shift Reload: Re-parses JSON and updates registries 
+    without destroying existing room/player instances.
+    """
+    player.send_line(f"{Colors.CYAN}Phase-Shifting World Data... (Data Persistence Required){Colors.RESET}")
+    
+    # 1. Save Active State
+    player.game.save_all()
+    
+    try:
+        # 2. Extract New Registries from fresh load
+        new_world = loader.load_world()
+        
+        # 3. Reference Swap (Update the existing game.world registries)
+        # We don't replace player.game.world (which would orphan players)
+        # We replace the data registries INSIDE world.
+        old_world = player.game.world
+        
+        old_world.items = new_world.items
+        old_world.monsters = new_world.monsters
+        old_world.classes = new_world.classes
+        old_world.blessings = new_world.blessings
+        old_world.synergies = new_world.synergies
+        old_world.deities = new_world.deities
+        old_world.landmarks = new_world.landmarks
+        old_world.help = new_world.help
+        
+        # 4. Room Geometry Update (Optional/Dangerous)
+        # We only update rooms that didn't exist before or shift descriptions.
+        # We DO NOT delete rooms that currently contain players.
+        for room_id, new_room in new_world.rooms.items():
+            if room_id in old_world.rooms:
+                old_room = old_world.rooms[room_id]
+                # Update static properties only
+                old_room.name = new_room.name
+                old_room.description = new_room.description
+                old_room.terrain = new_room.terrain
+                old_room.exits = new_room.exits
+                old_room.tags = new_room.tags
+            else:
+                # New room discovered!
+                new_room.world = old_world
+                old_world.rooms[room_id] = new_room
+        
+        player.send_line(f"{Colors.GREEN}World Data Reloaded.{Colors.RESET} {len(old_world.items)} items, {len(old_world.rooms)} rooms synced.")
+        
+    except Exception as e:
+        player.send_line(f"{Colors.RED}World Reload Failed: {e}{Colors.RESET}")
+        import logging
+        logging.getLogger("GodlessMUD").error(f"World Reload Failure: {e}", exc_info=True)
+
+@command_manager.register("@restart", admin=True, category="admin_system")
+def restart(player, args):
+    """Legacy alias for @reload logic."""
+    _perform_logic_reload(player)
+
+@command_manager.register("@shutdown", admin=True, category="admin_system")
 def shutdown(player, args):
     """Force a graceful server shutdown."""
     player.send_line(f"{Colors.RED}SHUTTING DOWN SERVER...{Colors.RESET}")
@@ -81,7 +153,7 @@ def shutdown(player, args):
     import sys
     sys.exit(0)
 
-@command_manager.register("@save", admin=True)
+@command_manager.register("@save", admin=True, category="admin_system")
 def save_world(player, args):
     """
     Force a global save (Players + World State).
@@ -90,7 +162,7 @@ def save_world(player, args):
     player.game.save_all()
     player.send_line("World state and players saved.")
 
-@command_manager.register("@ban", admin=True)
+@command_manager.register("@ban", admin=True, category="admin_system")
 def ban_player(player, args):
     """Ban an IP address or player."""
     if not args:
@@ -111,14 +183,14 @@ def ban_player(player, args):
     else:
         player.send_line(f"Failed to ban: {target_ip}")
 
-@command_manager.register("@reloadbans", admin=True)
+@command_manager.register("@reloadbans", admin=True, category="admin_system")
 def reload_bans(player, args):
     """Reloads the blacklist via service."""
     from logic.core import network_service
     network_service.reload_blacklist(player.game)
     player.send_line(f"Blacklist reloaded. {len(player.game.blacklist)} IPs blocked.")
 
-@command_manager.register("@whoson", admin=True)
+@command_manager.register("@whoson", admin=True, category="admin_system")
 def whos_on(player, args):
     """List online players and their IP addresses."""
     from logic.core import network_service
@@ -133,7 +205,7 @@ def whos_on(player, args):
         count += 1
     player.send_line(f"\nTotal: {count}")
 
-@command_manager.register("@kick", admin=True)
+@command_manager.register("@kick", admin=True, category="admin_system")
 def kick_player(player, args):
     """Forcibly disconnect a player."""
     if not args:
@@ -164,7 +236,7 @@ def kick_player(player, args):
     except Exception as e:
         player.send_line(f"Error closing socket: {e}")
 
-@command_manager.register("@bug", admin=True)
+@command_manager.register("@bug", admin=True, category="admin_tools")
 def bug_report(player, args):
     """
     Records a developer bug report.
@@ -179,7 +251,7 @@ def bug_report(player, args):
     player.send_line(f"{Colors.GREEN}Bug report captured. Thank you!{Colors.RESET}")
     player.send_line(f"Context: {getattr(player.room, 'name', 'Unknown Room')} ({player.room.id})")
 
-@command_manager.register("@compactdb", admin=True)
+@command_manager.register("@compactdb", admin=True, category="admin_system")
 def compact_db(player, args):
     """
     Re-writes the Shelve database to a new file to remove fragmentation.
@@ -203,7 +275,7 @@ def compact_db(player, args):
     # For now, just inform the user that @save handles the active state.
     player.send_line("To fully compact: Stop server, delete 'data/world.db.*', restart, and run @save immediately.")
 
-@command_manager.register("@audit", admin=True)
+@command_manager.register("@audit", admin=True, category="admin_tools")
 def toggle_audit(player, args):
     """Toggles microsecond message timestamping for the current session."""
     player.is_auditing = not getattr(player, 'is_auditing', False)

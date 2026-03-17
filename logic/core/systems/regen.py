@@ -5,6 +5,7 @@ from utilities.colors import Colors
 def passive_regen(game):
     """Heartbeat task for HP, Stamina, Concentration, and Charge regeneration."""
     for player in list(game.players.values()):
+        if not getattr(player, 'is_hydrated', False): continue
         # Modular Hook for periodic mechanics (Sync, Stances, etc)
         event_engine.dispatch("on_combat_tick", player=player)
         
@@ -21,8 +22,10 @@ def passive_regen(game):
                         if player.blessing_charges[b_id] < max_c:
                             player.blessing_charges[b_id] += 1
 
-    # Mob Regen & Mechanics
+    # Mob Regen & Mechanics — skip empty rooms for performance
     for room in game.world.rooms.values():
+        if not room.monsters:
+            continue
         for mob in room.monsters:
             # Standard Regen
             if mob.hp < mob.max_hp and not mob.fighting:

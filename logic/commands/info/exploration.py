@@ -49,10 +49,26 @@ def look(player, args, with_prompt=True):
                 send(f"{Colors.MAGENTA}{item.description}{Colors.RESET}"); flush(); return
         for mob in room.monsters:
             if target_name in mob.name.lower() and vision_engine.can_see(player, mob):
-                send(f"{Colors.RED}{mob.description}{Colors.RESET}"); flush(); return
+                status_str = ""
+                if hasattr(mob, 'status_effects') and mob.status_effects:
+                    visible = []
+                    for s in mob.status_effects:
+                        from logic.core import effects
+                        eff_def = effects.get_effect_definition(s, player.game)
+                        if eff_def:
+                            name = eff_def.get('name', s.replace('_', ' ').title())
+                            visible.append(name)
+                    if visible:
+                        status_str = f" {Colors.YELLOW}[{', '.join(visible)}]{Colors.RESET}"
+                send(f"{Colors.RED}{mob.description}{Colors.RESET}{status_str}"); flush(); return
         for p in room.players:
             if p != player and target_name in p.name.lower() and vision_engine.can_see(player, p):
                 send(f"{Colors.BLUE}{p.name} is here.{Colors.RESET}"); flush(); return
+
+        # Fallback: Check Inventory
+        for item in player.inventory:
+            if target_name in item.name.lower():
+                send(f"{Colors.YELLOW}[Inventory] {Colors.MAGENTA}{item.description}{Colors.RESET}"); flush(); return
 
         send(f"You look at '{args}', but see nothing special."); flush(); return
 
@@ -84,11 +100,35 @@ def look(player, args, with_prompt=True):
     send(f"{Colors.YELLOW}Exits: {', '.join(exits)}{Colors.RESET}")
     
     for item in room.items:
-        if vision_engine.can_see(player, item): send(f"{Colors.MAGENTA}{item.description}{Colors.RESET}")
+        if vision_engine.can_see(player, item): 
+            id_str = f" {Colors.DGREY}[{getattr(item, 'prototype_id', 'None')}]{Colors.RESET}" if getattr(player, 'admin_vision', False) else ""
+            send(f"{Colors.MAGENTA}{item.description}{Colors.RESET}{id_str}")
     for mob in room.monsters:
-        if vision_engine.can_see(player, mob): send(f"{Colors.RED}{mob.description}{Colors.RESET}")
+        if vision_engine.can_see(player, mob):
+            status_str = ""
+            if hasattr(mob, 'status_effects') and mob.status_effects:
+                visible = []
+                for s in mob.status_effects:
+                    from logic.core import effects
+                    eff_def = effects.get_effect_definition(s, player.game)
+                    if eff_def:
+                        name = eff_def.get('name', s.replace('_', ' ').title())
+                        visible.append(name)
+                if visible:
+                    status_str = f" {Colors.YELLOW}[{', '.join(visible)}]{Colors.RESET}"
+            
+            id_str = f" {Colors.DGREY}[{getattr(mob, 'prototype_id', 'None')}]{Colors.RESET}" if getattr(player, 'admin_vision', False) else ""
+            send(f"{Colors.RED}{mob.description}{Colors.RESET}{status_str}{id_str}")
     for p in [p for p in room.players if p != player]:
         if vision_engine.can_see(player, p): send(f"{Colors.BLUE}{p.name} is here.{Colors.RESET}")
+
+    # [V6.0] Trap Vision for Assassins & Owners
+    if hasattr(room, 'metadata') and 'traps' in room.metadata:
+        for trap in room.metadata['traps']:
+            if trap.get('owner') == player.name or player.active_class == 'assassin':
+                t_type = trap.get('type', 'generic').title()
+                owner_tag = f"Your" if trap.get('owner') == player.name else f"{trap.get('owner')}'s"
+                send(f"{Colors.BLUE}[TRAP] {owner_tag} {t_type} trap lies hidden here.{Colors.RESET}")
 
     flush()
 
@@ -164,7 +204,7 @@ def scan(player, args):
     visible_grid = vision_engine.get_visible_rooms(player.room, radius=1, world=player.game.world, check_los=True, observer=player)
     
     # Directional map
-    dirs = {(0,0): "Here", (0,1): "North", (0,-1): "South", (1,0): "East", (-1,0): "West"}
+    dirs = {(0,0): "Here", (0,-1): "North", (0,1): "South", (1,0): "East", (-1,0): "West"}
     now = time.time()
     expiry = now + 60 # Track for 60 seconds
     
@@ -185,9 +225,9 @@ def scan(player, args):
     else:
         player.send_line(f"{Colors.GREEN}Signals locked on Tactical Map for 60s.{Colors.RESET}")
 
-@command_manager.register("consider", "examine", "con", category="information")
+@command_manager.register("consider", "con", category="information")
 def consider(player, args):
-    """Size up a target to compare their strength to yours."""
+    """Size up a living target to compare their strength to yours."""
     if not args:
         return player.send_line("Consider who?")
         
@@ -222,5 +262,32 @@ def consider(player, args):
     else:
         msg = f"{Colors.MAGENTA}{Colors.BOLD}Flee immediately. {target.name} is a god compared to you.{Colors.RESET}"
         
-    player.send_line(f"\n{Colors.BOLD}Considering {target.name}:{Colors.RESET}")
+    player.send_line(f"\n{Colors.BOLD}Considering {target_name.capitalize()}:{Colors.RESET}")
     player.send_line(f" {msg}")
+    
+    # [V6.0] Deterministic Combat Rating comparison
+    from logic.core.utils import rating_engine
+    p_cr = rating_engine.calculate_entity_rating(player)
+    t_cr = rating_engine.calculate_entity_rating(target)
+    
+    diff = t_cr - p_cr
+    trend = f"{Colors.RED}DANGEROUS" if diff > 5 else (f"{Colors.YELLOW}FAIR" if abs(diff) <= 5 else f"{Colors.GREEN}DOMINANT")
+    
+    player.send_line(f" Power Level: {Colors.BOLD}{Colors.YELLOW}{t_cr}{Colors.RESET} GCR ({trend}{Colors.RESET} vs your {p_cr})")
+
+@command_manager.register("examine", "ex", category="information")
+def examine(player, args):
+    """Examine an object or target in detail."""
+    if not args:
+        return player.send_line("Examine what?")
+        
+    target_name = args.lower()
+    
+    # Priority 1: Items in inventory or room
+    for item in player.room.items + player.inventory:
+        if target_name in item.name.lower():
+            return player.send_line(f"{Colors.MAGENTA}{item.description}{Colors.RESET}")
+            
+    # Priority 2: Living targets (Calls consider logic)
+    return consider(player, args)
+

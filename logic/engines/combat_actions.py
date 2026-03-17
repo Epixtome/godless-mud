@@ -92,7 +92,7 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
             dodge_ctx['dodged'] = False
             
         # [V6.0] Deterministic Accuracy Fail (If accuracy < 100, checking vs entropy)
-        if not dodge_ctx['dodged'] and accuracy < 100:
+        if accuracy < 100:
             if random.randint(1, 100) > accuracy:
                 dodge_ctx['dodged'] = True
                 if hasattr(attacker, 'send_line'): attacker.send_line(f"{Colors.YELLOW}You are too blurred to strike accurately!{Colors.RESET}")
@@ -134,13 +134,34 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
         "target": target.name, "base": raw_damage, "defense": mit_ctx.get('defense', 0), "final": damage, "tags": list(attack_tags)
     })
 
-    # 6. Critical State Modifiers
-    if any(s in getattr(target, 'status_effects', {}) for s in effects.CRITICAL_STATES):
-        damage = int(damage * 1.5)
-        if hasattr(target, 'send_line') and damage > 0:
-            target.send_line(f"{Colors.RED}You are CRITICALLY EXPOSED! (1.5x Damage){Colors.RESET}")
-        if hasattr(attacker, 'send_line') and damage > 0:
-            attacker.send_line(f"{Colors.BOLD}{Colors.RED}*** {target.name.upper()} IS CRITICALLY EXPOSED! (1.5x Damage) ***{Colors.RESET}")
+    # 6. Status-Driven Damage Modifiers (Godless Grammar)
+    max_mult = 1.0
+    active_effects = getattr(target, 'status_effects', {})
+    for eid in active_effects:
+        meta = effects.get_effect_metadata(eid, game)
+        if isinstance(meta, dict):
+            # Explicitly type-check to satisfy Pyrefly and ensure clean math
+            val = meta.get('damage_taken_mult', 1.0)
+            mult = float(val) if isinstance(val, (int, float)) else 1.0
+            
+            if mult > max_mult:
+                max_mult = mult
+            
+            # [V6.0] Exposure Grammar: Guaranteed Crit
+            if meta.get('guaranteed_crit_taken'):
+                damage = int(damage * 1.5) # Minimum critical payoff
+                if hasattr(attacker, 'send_line'):
+                    attacker.send_line(f"{Colors.YELLOW}[CRITICAL] You exploit {target.name}'s exposure!{Colors.RESET}")
+
+    if max_mult > 1.0:
+        damage = int(damage * max_mult)
+
+    # 6b. Gear/Material Modifiers (Gear Grammar)
+    gear_mult = blessings_engine.calculate_gear_damage_mult(target, attack_tags)
+    if gear_mult != 1.0:
+        damage = int(damage * gear_mult)
+        if gear_mult > 1.0 and hasattr(attacker, 'send_line'):
+             attacker.send_line(f"{Colors.YELLOW}[SYNERGY] Your {list(attack_tags)[0] if attack_tags else 'attack'} resonates with {target.name}'s gear!{Colors.RESET}")
 
     # 7. GODMODE & REACTION RESULTS
     is_god = getattr(target, 'godmode', False)

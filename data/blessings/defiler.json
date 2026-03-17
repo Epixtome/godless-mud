@@ -15,6 +15,7 @@
             "name": "Blood Veil",
             "description": "Deny: A 3s reactive window. Converts 50% of the next hit's damage into [Malediction] on the attacker.",
             "identity_tags": ["magic", "dark", "reaction"],
+            "action": "blood_veil",
             "requirements": { "stamina": 20, "cooldown": 10 },
             "effects": [
                 { "id": "blood_veil_active", "duration": 3, "target": "self" }
@@ -25,6 +26,7 @@
             "name": "Rotting Burst",
             "description": "Payoff: Deals massive dark damage. Power increases by 30% for every unique debuff on the target.",
             "identity_tags": ["magic", "dark", "strike", "finisher"],
+            "action": "rotting_burst",
             "requirements": { "stamina": 25, "cooldown": 4 },
             "base_power": 20,
             "scaling": { "scaling_tag": "dark", "multiplier": 1.2 }

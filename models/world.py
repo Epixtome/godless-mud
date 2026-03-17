@@ -50,6 +50,28 @@ class Room:
         self.items.append(item)
         self.dirty = True
 
+    def get_weather(self):
+        """[V6.0] Efficient Weather Lookup. Prefers local overrides, then zone global."""
+        # 1. Check for specific weather status effects in this room
+        # Optimization: Early exit if indoors (most weather doesn't penetrate)
+        if self.terrain == "indoors":
+            return "clear"
+
+        weather_ids = ["clear", "cloudy", "rain", "overcast", "sunny", "blinding_light", "golden_mist", 
+                       "foggy", "dark_mist", "void_storm", "shadow_haze", "thunderstorm", "pollen_drift",
+                       "static_crackle", "reality_blur"]
+        
+        for eff in self.status_effects:
+            if eff in weather_ids:
+                return eff
+        
+        # 2. Fallback to Zone Weather if world reference exists
+        world = getattr(self, 'world', None)
+        if world and hasattr(world, 'zone_weather'):
+            return world.zone_weather.get(self.zone_id, "clear")
+            
+        return "clear"
+
     def to_definition(self):
         """Returns a dict suitable for JSON sharding (Blueprints)."""
         return {
@@ -67,7 +89,9 @@ class Room:
             "opacity": self.opacity,
             "symbol": self.symbol,
             "items": self.blueprint_items,
-            "monsters": self.blueprint_monsters
+            "monsters": self.blueprint_monsters,
+            "doors": {d: {"name": door.name, "state": door.state, "key_id": door.key_id, "transparency": door.transparency} 
+                      for d, door in self.doors.items()}
         }
 
     def to_dict(self):
@@ -161,6 +185,16 @@ class Room:
         if data.get('_generated'):
             room._generated = True
         
+        # Doors hydration
+        doors_data = data.get('doors', {})
+        for direction, d_data in doors_data.items():
+            room.doors[direction] = Door(
+                d_data.get('name', 'door'),
+                d_data.get('state', 'closed'),
+                d_data.get('key_id'),
+                d_data.get('transparency', 0.0)
+            )
+
         room.dirty = False # Loaded from DB, so it's clean
         return room
 
@@ -193,11 +227,13 @@ class Zone:
         self.name = name
         self.security_level = security_level
         self.grid_logic = False
+        self.target_cr = 10 # Default base rating (V6.0 Calibration)
 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "security_level": self.security_level,
-            "grid_logic": self.grid_logic
+            "grid_logic": self.grid_logic,
+            "target_cr": self.target_cr
         }

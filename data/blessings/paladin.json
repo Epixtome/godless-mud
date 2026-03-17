@@ -8,11 +8,108 @@
             "description": "The fundamental identity of a Paladin.",
             "identity_tags": [
                 "class_init",
-                "paladin"
+                "paladin",
+                "passive"
             ],
             "logic_type": "passive",
             "requirements": {
                 "class": "paladin"
+            }
+        },
+        "radiant_flash": {
+            "id": "radiant_flash",
+            "name": "Radiant Flash",
+            "tier": 2,
+            "cost": 25,
+            "base_power": 10,
+            "description": "Apply: Blind the target with searing divine light, applying [Blinded] for 6s. While Blinded, all divine damage deals +150% bonus (via tag interaction). The setup for Holy Smite.",
+            "identity_tags": [
+                "divine",
+                "light",
+                "utility",
+                "skill"
+            ],
+            "action": "radiant_flash",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 20,
+                "cooldown": 5
+            },
+            "on_hit": {
+                "apply_status": "blinded",
+                "duration": 6
+            }
+        },
+        "holy_smite": {
+            "id": "holy_smite",
+            "name": "Holy Smite",
+            "tier": 3,
+            "cost": 35,
+            "base_power": 30,
+            "description": "Payoff: Channel divine wrath into a single strike. Requires target to be [Blinded]. The engine automatically applies +150% bonus damage to [Blinded] targets via the divine tag. Useless on sighted enemies.",
+            "identity_tags": [
+                "divine",
+                "strike",
+                "lethal",
+                "finisher",
+                "skill"
+            ],
+            "action": "holy_smite",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 35,
+                "blinded": true,
+                "fighting": true,
+                "cooldown": 6
+            },
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 2.5
+            }
+        },
+        "divine_grace": {
+            "id": "divine_grace",
+            "name": "Divine Grace",
+            "tier": 2,
+            "cost": 20,
+            "description": "Deny: A 4s reactive window. The next hit is intercepted by divine light. Restores 20 Concentration on proc.",
+            "identity_tags": [
+                "divine",
+                "protection",
+                "reaction",
+                "skill"
+            ],
+            "action": "divine_grace",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 20,
+                "cooldown": 10
+            },
+            "effects": [
+                {
+                    "id": "divine_grace_ready",
+                    "duration": 4,
+                    "target": "self"
+                }
+            ]
+        },
+        "lay_on_hands": {
+            "id": "lay_on_hands",
+            "name": "Lay on Hands",
+            "tier": 1,
+            "cost": 20,
+            "description": "Channel divine energy to heal self or an ally for 40% HP.",
+            "identity_tags": [
+                "divine",
+                "healing",
+                "restoration",
+                "skill"
+            ],
+            "action": "lay_on_hands",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 30,
+                "cooldown": 20
             }
         }
     }
