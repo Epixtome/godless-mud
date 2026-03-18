@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godless | Combat Simulation Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0c;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --glass-bg: rgba(20, 20, 25, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-weight: 600;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            backdrop-filter: blur(12px);
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-dim);
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 0.75rem;
+            color: var(--text-main);
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .btn-simulate {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border: none;
+            border-radius: 1rem;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            margin-top: 1rem;
+        }
+
+        .btn-simulate:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .btn-simulate:active {
+            transform: translateY(0);
+        }
+
+        .log-panel {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 200px);
+        }
+
+        #battle-log {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-y: auto;
+            border: 1px solid var(--glass-border);
+            line-height: 1.6;
+        }
+
+        .log-entry { margin-bottom: 0.5rem; }
+        .log-entry.round { color: var(--accent-purple); font-weight: 600; margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;}
+        .log-entry.attacker { color: #60a5fa; }
+        .log-entry.defender { color: #f472b6; }
+        .log-entry.result { color: var(--success); font-weight: 600; margin-top: 2rem; font-size: 1.1rem; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+
+        .stat-card .val {
+            display: block;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .stat-card .label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Godless Combat Simulation Suite</h1>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar: Configuration -->
+        <aside class="glass-panel">
+            <section>
+                <h2>Configuration</h2>
+
+                <div class="input-group">
+                    <label>Player 1 (Attacker) Configuration</label>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <select id="p1_type" style="width: 100px;">
+                            <option value="player">Player</option>
+                            <option value="mob">Mob</option>
+                        </select>
+                        <select id="p1_id">
+                            <optgroup label="Classes" id="p1_kits">
+                                {% for kit in kits %}
+                                <option value="{{ kit }}">{{ kit|title }}</option>
+                                {% endfor %}
+                            </optgroup>
+                            <optgroup label="Mobs" id="p1_mobs" style="display:none">
+                                {% for mob in mobs %}
+                                <option value="{{ mob }}">{{ mob|title }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div id="p1_gear" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                        <select id="p1_weapon" title="Weapon Override">
+                            <option value="">(Default Kit Weapon)</option>
+                            {% for item in items %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select id="p1_armor" title="Armor Override">
+                            <option value="">(Default Kit Armor)</option>
+                            {% for item in items %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Player 2 (Defender) Configuration</label>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <select id="p2_type" style="width: 100px;">
+                            <option value="player" selected>Player</option>
+                            <option value="mob">Mob</option>
+                        </select>
+                        <select id="p2_id">
+                            <optgroup label="Classes" id="p2_kits">
+                                {% for kit in kits %}
+                                <option value="{{ kit }}">{{ kit|title }}</option>
+                                {% endfor %}
+                            </optgroup>
+                            <optgroup label="Mobs" id="p2_mobs" style="display:none">
+                                {% for mob in mobs %}
+                                <option value="{{ mob }}">{{ mob|title }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div id="p2_gear" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                        <select id="p2_weapon" title="Weapon Override">
+                            <option value="">(Default Kit Weapon)</option>
+                            {% for item in items %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select id="p2_armor" title="Armor Override">
+                            <option value="">(Default Kit Armor)</option>
+                            {% for item in items %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Environment & Series</label>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <select id="terrain" title="Terrain" style="flex: 1;">
+                            {% for t in terrains %}
+                            <option value="{{ t }}">{{ t|title }}</option>
+                            {% endfor %}
+                        </select>
+                        <select id="weather" title="Weather" style="flex: 1;">
+                            {% for w in weathers %}
+                            <option value="{{ w }}">{{ w|title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <label style="margin-bottom: 0; white-space: nowrap;">Iterations:</label>
+                        <input type="number" id="iterations" value="10" min="1" max="100">
+                    </div>
+                </div>
+
+                <button class="btn-simulate" id="sim-btn">Engage Analysis Series</button>
+            </section>
+        </aside>
+
+        <!-- Main Area: Log & Stats -->
+        <main class="glass-panel log-panel">
+            <section id="results-meta" style="display: none;">
+                <h2>Tactical Summary</h2>
+                <div class="stat-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="stat-card">
+                        <span class="val" id="stat-winrate">-</span>
+                        <span class="label">Win Rate (Atk)</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="val" id="stat-ttk">-</span>
+                        <span class="label">Avg TTK (Rnds)</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="val" id="stat-avgdmg">-</span>
+                        <span class="label">Avg Dmg (Atk)</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="val" id="stat-freq">-</span>
+                        <span class="label">Peak Skill</span>
+                    </div>
+                </div>
+            </section>
+
+            <section style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+                <h2>Simulation Telemetry</h2>
+                <div id="battle-log">
+                    <div style="color: var(--text-dim); font-style: italic;">
+                        Select parameters and engage analysis.
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('p1_type').addEventListener('change', (e) => {
+            document.getElementById('p1_kits').style.display = e.target.value === 'player' ? 'block' : 'none';
+            document.getElementById('p1_mobs').style.display = e.target.value === 'mob' ? 'block' : 'none';
+            document.getElementById('p1_gear').style.opacity = e.target.value === 'player' ? '1' : '0.5';
+        });
+
+        document.getElementById('p2_type').addEventListener('change', (e) => {
+            document.getElementById('p2_kits').style.display = e.target.value === 'player' ? 'block' : 'none';
+            document.getElementById('p2_mobs').style.display = e.target.value === 'mob' ? 'block' : 'none';
+            document.getElementById('p2_gear').style.opacity = e.target.value === 'player' ? '1' : '0.5';
+        });
+
+        document.getElementById('sim-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('sim-btn');
+            const logDiv = document.getElementById('battle-log');
+            const metaDiv = document.getElementById('results-meta');
+            
+            btn.innerText = "Analyzing Threads...";
+            btn.disabled = true;
+            logDiv.innerHTML = "<div style='color: var(--accent-blue)'>Computing deterministic outcome trajectories...</div>";
+            metaDiv.style.display = 'none';
+
+            const payload = {
+                p1_type: document.getElementById('p1_type').value,
+                p1_id: document.getElementById('p1_id').value,
+                p1_weapon: document.getElementById('p1_weapon').value || null,
+                p1_armor: document.getElementById('p1_armor').value || null,
+                p2_type: document.getElementById('p2_type').value,
+                p2_id: document.getElementById('p2_id').value,
+                p2_weapon: document.getElementById('p2_weapon').value || null,
+                p2_armor: document.getElementById('p2_armor').value || null,
+                terrain: document.getElementById('terrain').value,
+                weather: document.getElementById('weather').value,
+                iterations: parseInt(document.getElementById('iterations').value)
+            };
+
+            try {
+                const response = await fetch('/simulate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+
+                const s = data.summary;
+                metaDiv.style.display = 'block';
+                document.getElementById('stat-winrate').innerText = (s.win_rate["Attacker"] || 0) + "%";
+                document.getElementById('stat-ttk').innerText = s.avg_ttk;
+                document.getElementById('stat-avgdmg').innerText = Math.round(s.avg_dmg["Attacker"]);
+                
+                const topSkill = Object.entries(s.skill_frequency).sort((a,b) => b[1]-a[1])[0];
+                document.getElementById('stat-freq').innerText = topSkill ? topSkill[0] : "None";
+
+                // Update Log (Last sample)
+                logDiv.innerHTML = data.logs.map(line => {
+                    let cls = "";
+                    if (line.includes("FURY:") || line.includes("STAMINA:")) cls = "attacker";
+                    if (line.includes("HP: -")) cls = "defender";
+                    
+                    return `<div class="log-entry ${cls}">${line}</div>`;
+                }).join('');
+                
+                logDiv.innerHTML += `<div class="log-entry result">ANALYSIS COMPLETE: Report saved as ${data.report}.</div>`;
+                logDiv.scrollTop = logDiv.scrollHeight;
+
+            } catch (err) {
+                logDiv.innerHTML = `<div style="color: var(--danger)">SYSTEM ERROR: ${err.message}</div>`;
+            } finally {
+                btn.innerText = "Engage Analysis Series";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -28,17 +28,8 @@ def get_offset_scalars(direction):
     return 0, 0, 0
 
 def find_room_at_fuzzy_z(spatial, x, y, target_z, tolerance=5):
-    """Finds a room at x,y within +/- tolerance of target_z."""
-    candidates = []
-    for dz in range(-tolerance, tolerance + 1):
-        r = spatial.get_room(x, y, target_z + dz)
-        if r: candidates.append(r)
-    
-    if candidates:
-        # Pick closest to target Z
-        candidates.sort(key=lambda r: abs(r.z - target_z))
-        return candidates[0]
-    return None
+    """[V6.5] Wrapper for spatial.get_room_fuzzy to maintain backward compatibility."""
+    return spatial.get_room_fuzzy(x, y, target_z, tolerance)
 
 def get_directional_offsets(player, width, height, direction):
     """Calculates start coordinates based on direction relative to player."""

@@ -55,7 +55,7 @@ def save_zone_state(world, zone_id):
     if rooms:
         state = {"zone_id": zone_id, "rooms": rooms, "unique_registry": getattr(world, 'unique_registry', {})}
         try:
-            with open(file_path, 'w') as f:
+            with open(file_path, 'w', encoding='utf-8') as f:
                 json.dump(state, f, indent=4)
         except Exception as e:
             logger.error(f"Failed to save state for {zone_id}: {e}")
@@ -76,17 +76,56 @@ def save_shards(world):
         if zid not in z_map: z_map[zid] = []
         z_map[zid].append(room.to_definition())
     
-    for zid, rooms in z_map.items():
+    # [V6.3] Blueprint Sync: Ensure ALL known zones are accounted for.
+    # This prevents "Ghost Shards" where rooms were rezoned but never deleted from their old files.
+    for zid in list(world.zones.keys()) + ["orphaned"]:
+        rooms = z_map.get(zid, [])
         z_obj = world.zones.get(zid)
+        
         data = {
             "metadata": z_obj.to_dict() if z_obj else {"id": zid, "name": zid.title()},
             "rooms": rooms
         }
+        
+        # Don't create empty orphaned files
+        if zid == "orphaned" and not rooms:
+            continue
+
         try:
-            with open(f"data/zones/{zid}.json", 'w') as f:
+            filepath = f"data/zones/{zid}.json"
+            with open(filepath, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=4)
+            # Clear dirty flags for these rooms after successful save
+            for r_def in rooms:
+                r_obj = world.rooms.get(r_def['id'])
+                if r_obj: r_obj.dirty = False
         except Exception as e:
             logger.error(f"Failed to save shard {zid}: {e}")
+
+def save_zone_geography(world, zone_id):
+    """Exports only a single zone's geography to its JSON shard."""
+    rooms = [r for r in world.rooms.values() if r.zone_id == zone_id]
+    if not rooms:
+        # Check if zone object exists without rooms
+        z_obj = world.zones.get(zone_id)
+        if not z_obj: return False
+        data = {"metadata": z_obj.to_dict(), "rooms": []}
+    else:
+        z_obj = world.zones.get(zone_id)
+        data = {
+            "metadata": z_obj.to_dict() if z_obj else {"id": zone_id, "name": zone_id.title()},
+            "rooms": [r.to_definition() for r in rooms]
+        }
+    
+    try:
+        with open(f"data/zones/{zone_id}.json", 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4)
+        for r in rooms:
+            r.dirty = False
+        return True
+    except Exception as e:
+        logger.error(f"Failed to save zone geography {zone_id}: {e}")
+        return False
 
 def save_items(world):
     """Saves all item prototypes to data/items.json."""

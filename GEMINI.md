@@ -1,6 +1,6 @@
 # GEMINI.md: AI Engineering & Development Guide for Godless
 
-> **Status:** ACTIVE PROTOCOL (V5.3 - Updated from Monk Overhaul)  
+> **Status:** ACTIVE PROTOCOL (V6.8 - Updated from Perception Refactor)  
 > **Target Audience:** Gemini, GCA, Antigravity, and any Agentic AI working on this codebase.  
 > **Mandatory Rule:** All structural, logic, and data changes MUST conform to this document. "Quick fixes" or "Scripting-style" code that violates these patterns will be rejected and refactored.
 
@@ -24,7 +24,7 @@ These are absolute constraints. Deviating from these pillars introduces technica
 Godless is an Asynchronous Domain-Driven engine. Logic is strictly sharded.
 
 - **`logic/core/`**: Providers. Universal, class-agnostic engines (Math, Systems).
-    - *Facades*: `combat.py`, `resources.py`, `effects.py`, `quests.py`. All logic must pass through these facades.
+    - *Facades*: `combat.py`, `resources.py`, `effects.py`, `quests.py`, `perception.py`. All logic must pass through these facades.
 - **`logic/handlers/`**: The Interface. Contains `input_handler.py` and `command_manager.py`.
 - **`data/`**: The Source of Truth. Sharded JSON for blessings, classes, items, and zones.
 - **`utilities/`**: Core Helpers. Engine-facing modules (Mapper, Telemetry, Colors) importable by `logic/`.
@@ -85,9 +85,11 @@ To minimize token consumption and maximize speed, AI Agents must adhere to the f
 
 ---
 
-## 6. WORLD LOGIC & MAPPING
-- **3D Coordinates**: (X, Y, Z) plus **Elevation** (-5 to +5).
 - **Gatekeeper Pattern**: All "Can I act?" checks (Dead, Stunned, Casting) live in `input_handler.py`. Logic actions assume they are permitted to run.
+- **The Perception Matrix**: All visibility and map intelligence must use `logic.core.perception.get_perception()`.
+    - **NAVIGATION**: Full reveal for pathfinding (used in `look`).
+    - **TACTICAL**: Reveals building footprints, but strictly hides entities behind structural obstacles (Walls/Doors).
+    - **INTELLIGENCE**: Strict cardinal structural raycast (used in `scan`).
 
 ---
 

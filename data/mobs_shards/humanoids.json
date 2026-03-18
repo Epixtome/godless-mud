@@ -182,6 +182,59 @@
                 "dragon_strike",
                 "crane_stance"
             ]
+        },
+        {
+            "id": "assassin_rival",
+            "name": "Assassin Rival",
+            "description": "A lean figure clad in charcoal leather, eyes darting for an opening.",
+            "hp": 120,
+            "max_hp": 120,
+            "damage": 12,
+            "tags": [
+                "human",
+                "elite",
+                "aggressive",
+                "tactical"
+            ],
+            "skills": [
+                "hide",
+                "garrote",
+                "circle",
+                "smoke_bomb",
+                "trap",
+                "retreat"
+            ],
+            "ai_priority_rules": [
+                {
+                    "skill_id": "hide",
+                    "trigger": "missing_status",
+                    "status": "concealed",
+                    "bonus": 100
+                },
+                {
+                    "skill_id": "smoke_bomb",
+                    "trigger": "hp_pct_below",
+                    "value": 40,
+                    "bonus": 100
+                },
+                {
+                    "skill_id": "retreat",
+                    "trigger": "hp_pct_below_flee",
+                    "value": 20,
+                    "bonus": 200
+                },
+                {
+                    "skill_id": "garrote",
+                    "trigger": "target_is_stunned",
+                    "bonus": 50
+                },
+                {
+                    "skill_id": "trap",
+                    "trigger": "target_missing_status",
+                    "status": "trapped",
+                    "bonus": 30
+                }
+            ]
         }
     ]
 }

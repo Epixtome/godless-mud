@@ -38,13 +38,33 @@ def load_sharded_zones(world):
     logger.info(f"Loaded {len(world.zones)} zones and {count} rooms.")
 
 def apply_grid_logic(world):
-    """Stitches rooms based on spatial coordinates."""
-    g_map = {(r.x, r.y, r.z): r for r in world.rooms.values()}
+    """
+    Stitches rooms based on spatial coordinates.
+    [V6.3] Priority Awareness: If multiple rooms occupy the same coord, 
+    we favor Sanctums > City > Others for coordinate-based links.
+    """
+    from utilities import mapper
+    # Build a priority-based map. We sort rooms so that higher priority ones are processed LAST,
+    # thereby winning the coordinate slot in the dict.
+    def get_sort_prio(r):
+        z_prio = 0 if r.zone_id == 'sanctums' else 1
+        t_prio = 999
+        if r.terrain in mapper.TERRAIN_PRIORITY:
+            t_prio = mapper.TERRAIN_PRIORITY.index(r.terrain)
+        return (z_prio, t_prio)
+    
+    sorted_rooms = sorted(world.rooms.values(), key=get_sort_prio, reverse=True)
+    g_map = {(r.x, r.y, r.z): r for r in sorted_rooms}
+    
     dirs = {"north": (0, -1), "south": (0, 1), "east": (1, 0), "west": (-1, 0)}
 
     for z_id, zone in world.zones.items():
         if not getattr(zone, 'grid_logic', False): continue
+        if getattr(zone, 'manual_exits', False): continue # Zone-wide block
+
         for r in [r for r in world.rooms.values() if r.zone_id == z_id]:
+            if getattr(r, 'manual_exits', False): continue # Skip handcrafted rooms
+            
             for d, (dx, dy) in dirs.items():
                 if d in r.exits: continue
                 for dz in [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5]:

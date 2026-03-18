@@ -1,7 +1,7 @@
 import logic.handlers.command_manager as command_manager
 from utilities.colors import Colors
 from utilities import mapper
-from logic.engines import vision_engine
+from logic.core import perception as vision
 from logic.common import get_reverse_direction, find_by_index
 from logic.core.utils import display_utils
 
@@ -45,10 +45,10 @@ def look(player, args, with_prompt=True):
         
         # Check items, monsters, players
         for item in room.items:
-            if target_name in item.name.lower() and vision_engine.can_see(player, item):
+            if target_name in item.name.lower() and vision.can_see(player, item):
                 send(f"{Colors.MAGENTA}{item.description}{Colors.RESET}"); flush(); return
         for mob in room.monsters:
-            if target_name in mob.name.lower() and vision_engine.can_see(player, mob):
+            if target_name in mob.name.lower() and vision.can_see(player, mob):
                 status_str = ""
                 if hasattr(mob, 'status_effects') and mob.status_effects:
                     visible = []
@@ -62,7 +62,7 @@ def look(player, args, with_prompt=True):
                         status_str = f" {Colors.YELLOW}[{', '.join(visible)}]{Colors.RESET}"
                 send(f"{Colors.RED}{mob.description}{Colors.RESET}{status_str}"); flush(); return
         for p in room.players:
-            if p != player and target_name in p.name.lower() and vision_engine.can_see(player, p):
+            if p != player and target_name in p.name.lower() and vision.can_see(player, p):
                 send(f"{Colors.BLUE}{p.name} is here.{Colors.RESET}"); flush(); return
 
         # Fallback: Check Inventory
@@ -82,8 +82,9 @@ def look(player, args, with_prompt=True):
         if "eagle_eye" in player.status_effects: local_radius += 2
         if "farsight" in player.status_effects: local_radius += 1
 
-    visible_grid = vision_engine.get_visible_rooms(player.room, radius=local_radius, world=player.game.world, check_los=False, observer=player)
-    map_lines = mapper.draw_grid(visible_grid, player.room, radius=local_radius, visited_rooms=None, ignore_fog=True, indent=5, world=player.game.world, observer=None, shading=False)
+    # [V6.8 Refactor] Navigation Mode: Shows full infrastructure without LOS blocks.
+    perception = vision.get_perception(player, radius=local_radius, context=vision.NAVIGATION)
+    map_lines = mapper.draw_grid(perception, visited_rooms=None, ignore_fog=True, indent=5, world=player.game.world, shading=False)
     for line in map_lines: send(line)
 
     if getattr(player, 'admin_vision', False):
@@ -100,11 +101,11 @@ def look(player, args, with_prompt=True):
     send(f"{Colors.YELLOW}Exits: {', '.join(exits)}{Colors.RESET}")
     
     for item in room.items:
-        if vision_engine.can_see(player, item): 
+        if vision.can_see(player, item): 
             id_str = f" {Colors.DGREY}[{getattr(item, 'prototype_id', 'None')}]{Colors.RESET}" if getattr(player, 'admin_vision', False) else ""
             send(f"{Colors.MAGENTA}{item.description}{Colors.RESET}{id_str}")
     for mob in room.monsters:
-        if vision_engine.can_see(player, mob):
+        if vision.can_see(player, mob):
             status_str = ""
             if hasattr(mob, 'status_effects') and mob.status_effects:
                 visible = []
@@ -120,7 +121,7 @@ def look(player, args, with_prompt=True):
             id_str = f" {Colors.DGREY}[{getattr(mob, 'prototype_id', 'None')}]{Colors.RESET}" if getattr(player, 'admin_vision', False) else ""
             send(f"{Colors.RED}{mob.description}{Colors.RESET}{status_str}{id_str}")
     for p in [p for p in room.players if p != player]:
-        if vision_engine.can_see(player, p): send(f"{Colors.BLUE}{p.name} is here.{Colors.RESET}")
+        if vision.can_see(player, p): send(f"{Colors.BLUE}{p.name} is here.{Colors.RESET}")
 
     # [V6.0] Trap Vision for Assassins & Owners
     if hasattr(room, 'metadata') and 'traps' in room.metadata:
@@ -144,22 +145,15 @@ def show_map(player, args):
         now = time.time()
         player.ext_state['tracked_entities'] = {eid: exp for eid, exp in player.ext_state['tracked_entities'].items() if exp > now}
 
-    # 1. Memory Grid (All terrain in radius - used to draw the static map)
-    memory_grid = vision_engine.get_visible_rooms(player.room, radius=radius, world=player.game.world, check_los=False, observer=player)
+    # [V6.8 Refactor] Tactical Mode: Uses structural privacy and highlights building shells.
+    perception = vision.get_perception(player, radius=radius, context=vision.TACTICAL)
     
-    # 2. Sight Grid (Only LOS-cleared rooms - used to draw live entity markers)
-    sight_grid = vision_engine.get_visible_rooms(player.room, radius=radius, world=player.game.world, check_los=True, observer=player)
-
     map_lines = mapper.draw_grid(
-        memory_grid, 
-        player.room, 
-        radius=radius, 
+        perception,
         visited_rooms=player.visited_rooms, 
         ignore_fog=False, 
         indent=5, 
         world=player.game.world, 
-        observer=player,
-        sight_grid=sight_grid,
         shading=True
     )
 
@@ -193,7 +187,7 @@ def where(player, args):
 
 @command_manager.register("scan", category="information")
 def scan(player, args):
-    """Scan for enemies in the immediate area and track them for 60s."""
+    """Scan for enemies in the immediate area (Radius 3) and track them for 60s."""
     import time
     player.send_line(f"\n{Colors.BOLD}Scanning area...{Colors.RESET}")
     
@@ -201,24 +195,33 @@ def scan(player, args):
     if 'tracked_entities' not in player.ext_state:
         player.ext_state['tracked_entities'] = {} # id -> expiry_time
 
-    visible_grid = vision_engine.get_visible_rooms(player.room, radius=1, world=player.game.world, check_los=True, observer=player)
+    radius = 1
+    # [V6.8 Fix] Strict Intelligence query: Radius 1, Cardinal Only.
+    perception = vision.get_perception(player, radius=radius, context=vision.INTELLIGENCE)
     
-    # Directional map
-    dirs = {(0,0): "Here", (0,-1): "North", (0,1): "South", (1,0): "East", (-1,0): "West"}
     now = time.time()
     expiry = now + 60 # Track for 60 seconds
     
+    # Map offsets to direction labels
+    def get_pos_label(rx, ry):
+        d = {(0,-1): "North", (0,1): "South", (1,0): "East", (-1,0): "West"}
+        return d.get((rx, ry), "Nearby")
+
     found_any = False
-    for (rx, ry) in dirs.keys():
-        room = visible_grid.get((rx, ry))
-        if room and room.monsters:
+    # Filter for CARDINAL ONLY (N, S, E, W)
+    coords = [c for c in perception.entities.keys() if abs(c[0]) + abs(c[1]) == 1]
+    coords = sorted(coords, key=lambda c: max(abs(c[0]), abs(c[1])))
+    
+    for (rx, ry) in coords:
+        label = get_pos_label(rx, ry)
+        color = Colors.YELLOW if (rx == 0 and ry == 0) else Colors.CYAN
+        player.send_line(f"{color}{label}:{Colors.RESET}")
+        
+        for m in perception.entities[(rx, ry)]:
+            # Add to persistent tracking (Tactical Map will show 'm' if in_sight)
+            player.ext_state['tracked_entities'][str(id(m))] = expiry
+            player.send_line(f"  {m.name} [Pinged]")
             found_any = True
-            color = Colors.YELLOW if (rx == 0 and ry == 0) else Colors.CYAN
-            player.send_line(f"{color}{dirs[(rx, ry)]}:{Colors.RESET}")
-            for m in room.monsters:
-                # Add to tracking
-                player.ext_state['tracked_entities'][str(id(m))] = expiry
-                player.send_line(f"  {m.name} [Pinged]")
     
     if not found_any:
         player.send_line("No life signatures detected nearby.")

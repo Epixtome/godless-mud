@@ -108,6 +108,22 @@ def _score_skill(mob, target, skill, game):
             # For stances: if we aren't already in this state
             if not mob.ext_state.get(skill.id): score += bonus
 
+        # --- [V6.0] Tactical Triggers ---
+        elif trigger == "hp_pct_below_flee":
+             threshold = rule.get('value', 20) / 100.0
+             if (mob.hp / mob.max_hp) < threshold: score += (bonus * 2) # Fleeing is high priority
+             
+        elif trigger == "target_is_stunned":
+             if any(s in getattr(target, 'status_effects', {}) for s in ["stunned", "prone", "off_balance"]):
+                 score += bonus
+                 
+        elif trigger == "target_is_silenced":
+             if "silenced" in getattr(target, 'status_effects', {}): score += bonus
+
+        elif trigger == "has_resource":
+             res_val = _get_nested_resource(mob, rule.get('resource'))
+             if res_val >= rule.get('value', 0): score += bonus
+
     return score
 
 def _get_nested_resource(mob, path):

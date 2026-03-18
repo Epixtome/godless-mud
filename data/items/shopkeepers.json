@@ -76,6 +76,53 @@
             "damage": 8,
             "tags": ["healer", "human", "good", "priest"],
             "shop_inventory": []
+        },
+        {
+            "id": "sun_smith",
+            "name": "The Sun-Smith",
+            "description": "A radiant figure working a forge of pure light. His hammer falls with the sound of a closing gavel.",
+            "level": 50,
+            "hp": 5000,
+            "damage": 100,
+            "tags": ["shopkeeper", "immortal", "light", "smith"],
+            "shop_inventory": [
+                "iron_sword",
+                "wooden_shield",
+                "iron_maul",
+                "heavy_leather_tunic",
+                "reinforced_mail"
+            ]
+        },
+        {
+            "id": "shadow_trader",
+            "name": "The Shadow-Trader",
+            "description": "A hooded figure whose edges blur into the surrounding purple fog. He offers tools for those who walk the dark paths.",
+            "level": 50,
+            "hp": 5000,
+            "damage": 100,
+            "tags": ["shopkeeper", "immortal", "dark", "trader"],
+            "shop_inventory": [
+                "glass_dagger",
+                "dark_leather_mask",
+                "shadow_cloak",
+                "ichor_blade",
+                "vile_talisman"
+            ]
+        },
+        {
+            "id": "elder_druid",
+            "name": "The Elder Druid",
+            "description": "An ancient figure draped in living vines and moss. His eyes hold the wisdom of a thousand seasons.",
+            "level": 50,
+            "hp": 5000,
+            "damage": 100,
+            "tags": ["shopkeeper", "immortal", "instinct", "druid"],
+            "shop_inventory": [
+                "willow_staff",
+                "heavy_leather_tunic",
+                "silk_wraps",
+                "iron_maul"
+            ]
         }
     ]
 }

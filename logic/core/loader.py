@@ -98,7 +98,7 @@ def _instantiate_monster(data, world):
     
     # Apply saved deltas (Resources, Statuses, Inventory)
     for k, v in data.items():
-        if k in ['resources', 'status_effects', 'ext_state', 'flags', 'metadata']:
+        if k in ['resources', 'status_effects', 'ext_state', 'flags', 'metadata', 'is_shopkeeper', 'tags', 'shouts', 'dialogue', 'shop_inventory']:
             setattr(mob, k, v)
         elif k == 'inventory':
             from logic.core.utils import persistence
@@ -125,6 +125,6 @@ def save_shards(world): state_loader.save_shards(world)
 def save_items(world): return state_loader.save_items(world)
 def save_mobs(world): return state_loader.save_mobs(world)
 def save_zone_shard(world, zone_id):
-    """Specific zone shard save."""
-    # Logic kept here for convenience of local implementation or handled by implementation
+    """Saves both the geography (Blueprint) and live state (Deltas) for a zone."""
+    state_loader.save_zone_geography(world, zone_id)
     return state_loader.save_zone_state(world, zone_id)

@@ -1,9 +1,25 @@
-# Construction Package Router
-from .core import dig, building_help
-from .link_commands import link_room, unlink_room, dig_portal
-from .toggle_commands import autodig, auto_toggle
-from .cleanup_commands import delete_room, prune_map, merge_rooms, flatten
-from .mass_ops_commands import copy_room, mass_edit, replace_text
-from .zones import vision, layer_room, audit_zone, fix_ids
+"""
+logic/commands/admin/construction/__init__.py
+The Construction Suite - Unified Facade.
+All building commands are sharded into specialized logic modules.
+"""
+
+# Import shards to register commands with command_manager
+from . import dig
+from . import paint
+from . import edit
+from . import world
+from . import stamp
+from . import cleanup_commands
+from . import npcs
+
+# Helper tools and state
+from . import utils
 from . import builder_state
-from .npcs import make_shopkeeper, persist_room_mobs, give_npc_item
+from . import dig_logic
+
+# Maintain legacy exports for any internal callers
+from .world import link as link_room, audit_zone
+from .edit import mass_edit, replace_text
+from .stamp import furnish
+from .paint import auto_modes as auto_toggle

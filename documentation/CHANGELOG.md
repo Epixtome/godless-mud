@@ -3,6 +3,21 @@
 > [!IMPORTANT]
 > **V4.5: THE ARCHITECTURAL REALIGNMENT**: As of March 7th, 2026, the project has undergone a massive cleanup to resolve drift, shard God Objects, and unify logic domains.
 
+## [[V6.1] ERA: Unified Construction Suite] - 2026-03-17
+### Added
+- **KIT & STENCIL SYSTEM**: Replaced the legacy "palette" system with a professional "Architect's Drawer." Supported by `kit load` and `kit` (drawer UI).
+- **ARCHITECT MODE**: New prefix-less building state enabled via `@building on`. Allows rapid construction (dig, link, paint) without the `@` symbol.
+- **SHARDED CONSTRUCTION SUITE**: Decomposed the monolithic builder into specialized shards: `dig.py`, `paint.py`, `edit.py`, `world.py`, `stamp.py`, and `cleanup_commands.py`.
+- **STENCIL-AWARE ENGINES**: Updated movement and painting engines to automatically apply attributes (terrain, description, elevation) from the active stencil during construction.
+
+### Changed
+- **HOUSEKEEPING**: Purged deprecated `painting.py`, `bulk.py` (placeholder), and consolidated NPC management into `construction/npcs.py`.
+- **DIRTY-FLAG PERSISTENCE**: All building commands now strictly utilize the `room.dirty` flag, delegating saves to the server heartbeat to prevent data corruption.
+- **WORKFLOW REFINEMENT**: Updated `building_suite_workflow.md` with the new Architect-first construction protocol.
+
+### Fixed
+- **SPATIAL NULL GATING**: Fixed a server-crashing `NoneType` error when `spatial.rebuild()` was called during a paint operation if the spatial engine was in mid-refresh.
+
 ## [[V6.0] ERA: Admin & Stability] - 2026-03-15
 ### Fixed
 - **DEITY VOID RESOLUTION**: Populated `world.deities` in `proto_loader.py` and added guard clauses to `distribute_favor`. Prevents server-crashing `IndexError` on mob death. (V6.0 Milestone).
@@ -16,6 +31,9 @@
 
 ### Added
 - **DEBUG LESSONS LEARNED**: Created `debug_lessons_learned.md` to track recurring architectural pitfalls and improved debugging protocols.
+- **`COMMAND_REFERENCE.md`**: Available admin and player commands.
+- **`building_suite_workflow.md`**: The master guide for handcrafted world-shaping.
+- **`engine_v5_3_refinement.md`**: Summary of V5.3 structural fixes and handover details.
 
 ## [[V5.3] ERA: Housekeeping & Bug Resolutions] - 2026-03-14
 ### Fixed

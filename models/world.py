@@ -18,6 +18,7 @@ class Room:
         self.elevation = 0 # -5 to +5 within the same z-plane
         self.traversal_cost = 1 # Base cost
         self.symbol = None # ASCII override for mapping
+        self.manual_exits = False # If True, grid logic won't auto-stitch
         self.dirty = True
 
         # Status Effects (Dynamic)
@@ -88,6 +89,7 @@ class Room:
             "traversal_cost": self.traversal_cost,
             "opacity": self.opacity,
             "symbol": self.symbol,
+            "manual_exits": self.manual_exits,
             "items": self.blueprint_items,
             "monsters": self.blueprint_monsters,
             "doors": {d: {"name": door.name, "state": door.state, "key_id": door.key_id, "transparency": door.transparency} 
@@ -171,6 +173,7 @@ class Room:
         room.shop_inventory = data.get('shop_inventory', [])
         room.deity_id = data.get('deity_id')
         room.symbol = data.get('symbol')
+        room.manual_exits = data.get('manual_exits', False)
         
         # Blueprint Definitions
         room.blueprint_items = data.get('items', [])
@@ -227,6 +230,7 @@ class Zone:
         self.name = name
         self.security_level = security_level
         self.grid_logic = False
+        self.manual_exits = False # Zone-wide override
         self.target_cr = 10 # Default base rating (V6.0 Calibration)
 
     def to_dict(self):

@@ -6,9 +6,11 @@ from .ai import mob_ai
 from .environmental import monitor_terrain
 from . import engagement
 from . import status
+from . import battle_logger
 
 # Initialize non-heartbeat systems
 engagement.initialize()
+battle_logger.initialize()
 
 def get_heartbeat_subscribers():
     """Returns the list of functions to call every heartbeat."""
@@ -25,5 +27,6 @@ def get_heartbeat_subscribers():
         time_of_day,
         mob_ai,
         monitor_terrain,
-        mob_manager.check_respawns
+        mob_manager.check_respawns,
+        battle_logger.flush_inactive_encounters
     ]

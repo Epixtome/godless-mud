@@ -36,11 +36,27 @@ def _move(player, direction):
     room = player.room
     if direction not in room.exits:
         if getattr(player, 'autodig', False):
-            palette = getattr(player, 'autodig_palette', None)
-            copy_target = player.room if palette == 'copy' else None
-            terrain = palette if palette in TERRAIN_MAP else None
+            # Check for Architect Stencil first
+            copy_target = None
+            terrain = None
+            
+            if hasattr(player, 'builder_state') and player.builder_state["active"]:
+                from logic.commands.admin.construction.builder_state import _load_kit
+                k_data = _load_kit(player.builder_state["kit"])
+                if k_data:
+                    idx = player.builder_state["stencil_index"]
+                    if 0 < idx <= len(k_data["templates"]):
+                        stencil = k_data["templates"][idx-1]
+                        terrain = stencil.get('terrain')
+            
+            # Legacy/Manual override
+            if not terrain:
+                kit_override = getattr(player, 'autodig_kit', None)
+                if kit_override == 'copy': copy_target = player.room
+                elif kit_override in TERRAIN_MAP: terrain = kit_override
+
             new_room = dig_room(player, direction, copy_from=copy_target, terrain=terrain)
-            player.send_line(f"Auto-dug {direction} to {new_room.name}.")
+            player.send_line(f"{Colors.GREEN}Auto-shaping {direction}...{Colors.RESET}")
         else:
             player.send_line("You cannot go that way.")
             return True
@@ -68,7 +84,7 @@ def _move(player, direction):
             player.send_line("A sturdy railing prevents you from falling.")
             return True
             
-        climb_diff = target_room.elevation - room.elevation
+        climb_diff = getattr(target_room, 'elevation', 0) - getattr(room, 'elevation', 0)
         if climb_diff > 2:
             player.send_line("Too steep to scale.")
             return True
@@ -78,7 +94,7 @@ def _move(player, direction):
 
     # Resource Calculation
     base_cost = movement_engine.calculate_move_cost(player, room)
-    elev_diff = target_room.elevation - room.elevation
+    elev_diff = getattr(target_room, 'elevation', 0) - getattr(room, 'elevation', 0)
     elev_penalty = (elev_diff * 20) if elev_diff > 0 else (abs(elev_diff) * 5)
     
     friction = max(1.0, (5.0 - player.move_tokens) * 1.5)

@@ -142,6 +142,13 @@ def distribute_favor(player: 'Player', target: Any, game: Any) -> None:
     elif "dark" in tags: mob_kingdom = "dark"
     elif "instinct" in tags: mob_kingdom = "instinct"
     
+    # [V6.0] Fallback: Detect kingdom from room tags if mob is untagged
+    if not mob_kingdom and hasattr(target, 'room') and target.room:
+        room_tags = getattr(target.room, 'tags', [])
+        if "light" in room_tags: mob_kingdom = "light"
+        elif "dark" in room_tags: mob_kingdom = "dark"
+        elif "instinct" in room_tags: mob_kingdom = "instinct"
+
     if not mob_kingdom: return 
 
     primary_kingdom = None
@@ -165,6 +172,9 @@ def distribute_favor(player: 'Player', target: Any, game: Any) -> None:
         favored = random.choice(primary_candidates)
         player.favor[favored.id] = player.favor.get(favored.id, 0) + base_favor
         player.send_line(f"{Colors.YELLOW}You gain {base_favor} Favor with {favored.name}.{Colors.RESET}")
+        
+        from logic.core import event_engine
+        event_engine.dispatch("on_favor_gain", {'player': player, 'deity': favored, 'amount': base_favor})
         
         splash = max(1, int(base_favor * 0.2))
         for d in primary_candidates:
@@ -294,8 +304,12 @@ def get_stability_rating(entity: Any) -> int:
         if isinstance(effect_data, dict):
             metadata = effect_data.get('metadata', {})
             if isinstance(metadata, dict):
-                total_stability += int(metadata.get('stability_add', 0))
-                total_stability += int(metadata.get('defense_add', 0))
+                s_add = metadata.get('stability_add', 0)
+                d_add = metadata.get('defense_add', 0)
+                if isinstance(s_add, (int, float)):
+                    total_stability += int(s_add)
+                if isinstance(d_add, (int, float)):
+                    total_stability += int(d_add)
     return int(total_stability)
 
 def check_posture_break(target: Any, damage: float, source: Any = None, tags: Optional[Set[str]] = None):

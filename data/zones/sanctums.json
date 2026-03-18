@@ -1,0 +1,378 @@
+{
+    "metadata": {
+        "id": "sanctums",
+        "name": "Handcrafted Sanctums (Stamps)",
+        "security_level": "sacred",
+        "grid_logic": false,
+        "target_cr": 10
+    },
+    "rooms": [
+        {
+            "id": "aetheria.31.29.0",
+            "zone_id": "sanctums",
+            "name": "High Cathedral",
+            "description": "Vaulted ceilings and stained glass depicting the first dawn. Valeros watches over those who walk the path of the warrior.",
+            "exits": {
+                "south": "aetheria.31.30.0"
+            },
+            "x": 31,
+            "y": 29,
+            "z": 0,
+            "terrain": "holy",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "aetheria.30.30.0",
+            "zone_id": "sanctums",
+            "name": "Hall of Valor",
+            "description": "Walls lined with the banners of heroes. A place for training and reflection.",
+            "exits": {
+                "east": "aetheria.31.30.0"
+            },
+            "x": 30,
+            "y": 30,
+            "z": 0,
+            "terrain": "holy",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "aetheria.31.30.0",
+            "zone_id": "sanctums",
+            "name": "The Altar of Veritas",
+            "description": "A shimmering altar of pure marble, bathed in a shaft of eternal sunlight. This is the heart of the Light Kingdom, where truth and honor are tested.",
+            "exits": {
+                "north": "aetheria.31.29.0",
+                "south": "aetheria.31.31.0",
+                "east": "aetheria.32.30.0",
+                "west": "aetheria.30.30.0"
+            },
+            "x": 31,
+            "y": 30,
+            "z": 0,
+            "terrain": "holy",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "aetheria.31.31.0",
+            "zone_id": "sanctums",
+            "name": "Sun-Drenched Market",
+            "description": "A bustling marketplace filled with the scent of incense and hot iron. The sun smith hammers away at celestial steel.",
+            "exits": {
+                "north": "aetheria.31.30.0",
+                "south": "aetheria.31.32.0"
+            },
+            "x": 31,
+            "y": 31,
+            "z": 0,
+            "terrain": "holy",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "aetheria.31.32.0",
+            "zone_id": "sanctums",
+            "name": "The Ivory Gate",
+            "description": "Massive gates of ivory and gold mark the exit of the Light Sanctum. Beyond lies the untamed world of Aetheria.",
+            "exits": {
+                "north": "aetheria.31.31.0",
+                "south": "aetheria.31.33.0"
+            },
+            "x": 31,
+            "y": 32,
+            "z": 0,
+            "terrain": "holy",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "sylvanis.31.92.0",
+            "zone_id": "sanctums",
+            "name": "Wolf Den",
+            "description": "A rocky outcrop smelling of fur and musk. Fenris, the God of Instinct, watches your movement.",
+            "exits": {
+                "south": "sylvanis.31.93.0"
+            },
+            "x": 31,
+            "y": 92,
+            "z": 0,
+            "terrain": "forest",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "sylvanis.31.93.0",
+            "zone_id": "sanctums",
+            "name": "Sacred Spring",
+            "description": "A crystal-clear pool surrounded by ancient redwoods. Sylva, the Heart of the Wilds, breathes life into the world here.",
+            "exits": {
+                "north": "sylvanis.31.92.0",
+                "south": "sylvanis.31.94.0",
+                "east": "sylvanis.32.93.0",
+                "west": "sylvanis.30.93.0"
+            },
+            "x": 31,
+            "y": 93,
+            "z": 0,
+            "terrain": "forest",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "sylvanis.31.94.0",
+            "zone_id": "sanctums",
+            "name": "Natural Market",
+            "description": "The smell of herbs and leather. The Elder Druid provides gear for the journey ahead.",
+            "exits": {
+                "north": "sylvanis.31.93.0",
+                "south": "sylvanis.31.95.0"
+            },
+            "x": 31,
+            "y": 94,
+            "z": 0,
+            "terrain": "forest",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "sylvanis.31.95.0",
+            "zone_id": "sanctums",
+            "name": "The Great Root",
+            "description": "Tangled roots form a natural bridge and gate. The wilds of Sylvanis beckon.",
+            "exits": {
+                "north": "sylvanis.31.94.0",
+                "south": "sylvanis.31.96.0"
+            },
+            "x": 31,
+            "y": 95,
+            "z": 0,
+            "terrain": "forest",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "umbra.93.29.0",
+            "zone_id": "sanctums",
+            "name": "Sanctum of the Night Mother",
+            "description": "A circular chamber at the highest point of the Citadel. Nox, the Goddess of Decay, sits upon a throne of petrified bone, her presence cooling the very air around you.",
+            "exits": {
+                "south": "umbra.93.30.0"
+            },
+            "x": 93,
+            "y": 29,
+            "z": 0,
+            "terrain": "shadow",
+            "elevation": 2,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "umbra.92.30.0",
+            "zone_id": "sanctums",
+            "name": "Pit of Despair",
+            "description": "A deep basin where shadows pool. Excellent for those who seek to lose themselves.",
+            "exits": {
+                "east": "umbra.93.30.0"
+            },
+            "x": 92,
+            "y": 30,
+            "z": 0,
+            "terrain": "shadow",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "umbra.93.30.0",
+            "zone_id": "sanctums",
+            "name": "The Citadel of the Void",
+            "description": "A massive cathedral carved from the living obsidian of Umbra. The air hums with the low vibration of shadow energy, and the flickering purple torches cast long, shifting shadows that seem to have a life of their own.",
+            "exits": {
+                "north": "umbra.93.29.0",
+                "south": "umbra.93.31.0",
+                "east": "umbra.94.30.0",
+                "west": "umbra.92.30.0"
+            },
+            "x": 93,
+            "y": 30,
+            "z": 0,
+            "terrain": "shadow",
+            "elevation": 1,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [
+                {
+                    "name": "Obsidian Altar",
+                    "description": "A massive block of obsidian inscribed with runes of ambition.",
+                    "tags": [
+                        "fixture",
+                        "holy_site"
+                    ]
+                }
+            ],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "umbra.93.31.0",
+            "zone_id": "sanctums",
+            "name": "The Shadow Bazaar",
+            "description": "Draped in heavy midnight silks, this wing of the Citadel acts as a center of commerce for the disenfranchised. The air smells of strange spices and old parchment.",
+            "exits": {
+                "north": "umbra.93.30.0",
+                "south": "umbra.93.32.0"
+            },
+            "x": 93,
+            "y": 31,
+            "z": 0,
+            "terrain": "city",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [
+                {
+                    "name": "The Shadow Trader",
+                    "description": "A figure cloaked in shifting smoke. Only a pair of glowing violet eyes are visible beneath their hood.",
+                    "hp": 1000,
+                    "damage": 25,
+                    "is_shopkeeper": true,
+                    "tags": [
+                        "shopkeeper",
+                        "immortal",
+                        "neutral"
+                    ],
+                    "shop_inventory": [
+                        "health_potion",
+                        "mana_potion",
+                        "shadow_dagger",
+                        "void_cloak"
+                    ],
+                    "shouts": {
+                        "greet": [
+                            "What secrets do you seek to buy?",
+                            "Ambition has a price, traveler."
+                        ],
+                        "farewell": [
+                            "Shadows guide you... for a fee."
+                        ]
+                    }
+                }
+            ],
+            "doors": {}
+        },
+        {
+            "id": "umbra.93.32.0",
+            "zone_id": "sanctums",
+            "name": "Gate of Shards",
+            "description": "Obsidian pillars crackling with dark energy. The way leads out into the Shadow Lands.",
+            "exits": {
+                "north": "umbra.93.31.0",
+                "south": "umbra.93.33.0"
+            },
+            "x": 93,
+            "y": 32,
+            "z": 0,
+            "terrain": "shadow",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "sylvanis.30.93.0",
+            "zone_id": "sanctums",
+            "name": "Tangled Jungle",
+            "description": "Thick vines and low light. A place to hunt or be hunted.",
+            "exits": {
+                "east": "sylvanis.31.93.0"
+            },
+            "x": 30,
+            "y": 93,
+            "z": 0,
+            "terrain": "forest",
+            "elevation": 0,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        }
+    ]
+}

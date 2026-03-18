@@ -1,41 +1,47 @@
+"""
+logic/commands/admin/construction/builder_state.py
+The Professional Building Suite - State & Interface.
+Handles Kit management, Stencil selection, and the Builder HUD.
+"""
 import logic.handlers.state_manager as state_manager
 import logic.handlers.command_manager as command_manager
 from utilities.colors import Colors
+from utilities.mapper import TERRAIN_MAP
 import utilities.telemetry as telemetry
 import json
 import os
 
 # --- Internal Registry ---
-_PALETTE_CACHE = {}
+_KIT_CACHE = {}
 
-def _load_palette(palette_name):
-    """Loads a palette from data/blueprints/palettes/"""
-    if palette_name in _PALETTE_CACHE:
-        return _PALETTE_CACHE[palette_name]
+def _load_kit(kit_name):
+    """Loads a building kit from data/blueprints/kits/"""
+    if kit_name in _KIT_CACHE:
+        return _KIT_CACHE[kit_name]
     
-    path = f"data/blueprints/palettes/{palette_name}.json"
+    path = f"data/blueprints/kits/{kit_name}.json"
     if not os.path.exists(path):
         return None
         
     try:
         with open(path, 'r') as f:
             data = json.load(f)
-            _PALETTE_CACHE[palette_name] = data
+            _KIT_CACHE[kit_name] = data
             return data
     except Exception:
         return None
 
-@command_manager.register("@building", admin=True)
+@command_manager.register("@building", admin=True, category="admin_tools")
 def building_mode(player, args):
     """
-    Toggles the advanced Building State and HUD.
+    Toggles the advanced Building State and Kit Drawer.
     Usage: @building [on|off|hud]
     """
     if not hasattr(player, 'builder_state'):
         player.builder_state = {
             "active": False,
-            "palette": "default",
-            "brush_index": 1,
+            "kit": "default",
+            "stencil_index": 1,
             "auto_link": True,
             "show_hud": True
         }
@@ -57,21 +63,17 @@ def building_mode(player, args):
     # Toggle/On
     player.builder_state["active"] = True
     player.state = "building"
-    player.send_line(f"\n{Colors.BOLD}{Colors.CYAN}=== BUILDER STATE ACTIVATED ==={Colors.RESET}")
-    player.send_line(f"Palette: {Colors.YELLOW}{player.builder_state['palette']}{Colors.RESET}")
-    player.send_line(f"Type '{Colors.BOLD}palette{Colors.RESET}' to see available styles.")
-    player.send_line(f"You can now use construction commands ({Colors.BOLD}dig, link, paint{Colors.RESET}) without the {Colors.BOLD}@{Colors.RESET} prefix.")
-    player.send_line(f"Type '{Colors.BOLD}exit{Colors.RESET}' to return to normal mode.")
+    player.send_line(f"\n{Colors.BOLD}{Colors.CYAN}=== BUILDER ARCHITECT ACTIVATED ==={Colors.RESET}")
+    player.send_line(f"Kit: {Colors.YELLOW}{player.builder_state['kit']}{Colors.RESET}")
+    player.send_line(f"Type '{Colors.BOLD}kit{Colors.RESET}' or '{Colors.BOLD}drawer{Colors.RESET}' to select stencils.")
+    player.send_line(f"Commands ({Colors.BOLD}dig, paint, link{Colors.RESET}) no longer require the '@' prefix.")
+    player.send_line(f"Type '{Colors.BOLD}exit{Colors.RESET}' to return to reality.")
     
-    # Log to telemetry for AI context
     telemetry.log_build_action(player, "ENTER_BUILDING_MODE", "Self")
 
 @state_manager.register("building")
 def handle_building_input(player, command_line):
-    """
-    Handles input when the player is in 'building' state.
-    Allows for prefix-less admin building commands.
-    """
+    """Input handler for the low-friction 'building' state."""
     cmd_line = command_line.strip()
     if not cmd_line: return True
     
@@ -79,92 +81,49 @@ def handle_building_input(player, command_line):
     cmd_name = parts[0].lower()
     args = " ".join(parts[1:]) if len(parts) > 1 else ""
 
-    # 1. Exit Condition
-    if cmd_name in ["exit", "quit", "leave"]:
+    if cmd_name in ["exit", "quit", "leave", "normal"]:
         player.state = "normal"
-        if hasattr(player, "builder_state"):
-            player.builder_state["active"] = False
-        player.send_line(f"{Colors.YELLOW}Exited Building Mode.{Colors.RESET}")
+        player.builder_state["active"] = False
+        player.send_line(f"{Colors.YELLOW}Exited Architect Mode.{Colors.RESET}")
         return True
 
-    # 2. Palette Quick-Select (Numerical)
+    # Kit Selection Shortcut
     if cmd_name.isdigit():
-        palette_cmd(player, cmd_name)
+        kit_command(player, cmd_name)
         return True
 
-    # 3. Check for building-specific commands (without @)
-    # We map common construction commands to their @ versions
+    # Unified architect mapping
     construction_map = {
         "dig": "@dig", "link": "@link", "unlink": "@unlink",
         "paint": "@paint", "paste": "@paste", "brush": "@brush",
-        "palette": "@palette", "mark": "@mark", "hud": "@hud",
-        "autodig": "@autodig", "auto": "@auto", "copyroom": "@copyroom",
-        "deleteroom": "@deleteroom", "stitch": "@stitch", "snapzone": "@snapzone",
-        "shiftzone": "@shiftzone", "vision": "@vision", "setlayer": "@setlayer",
-        "audit": "@audit", "fixids": "@fixids"
+        "kit": "@kit", "drawer": "@kit", "stencil": "@kit",
+        "auto": "@auto", "vision": "@vision", "setlayer": "@setlayer",
+        "audit": "@audit", "fixids": "@fixids", "mark": "@mark",
+        "furnish": "@furnish", "stamp": "@stamp"
     }
 
     if cmd_name in construction_map:
         real_cmd = construction_map[cmd_name]
-        if real_cmd in command_manager.COMMANDS:
-            command_manager.COMMANDS[real_cmd](player, args)
-            return True
+        command_manager.COMMANDS[real_cmd](player, args)
+        return True
 
-    # 4. Fall through to normal command handler if it's an @ command
-    if cmd_line.startswith("@"):
-        return False # Let input_handler handle it
-
-    # 5. Otherwise, assume it's a movement or regular command
     return False
 
-@state_manager.register("palette_menu")
-def handle_palette_menu_input(player, command_line):
+@command_manager.register("@kit", "@stencil", "@drawer", admin=True, category="admin_building")
+def kit_command(player, args):
     """
-    Special input handler for the palette menu.
-    Allows 1-10 selection then immediately exits back to building state.
-    """
-    cmd = command_line.strip().lower()
-    
-    if cmd.isdigit():
-        palette_cmd(player, cmd)
-        player.state = "building"
-        building_hud(player, "") # Refresh HUD after selection
-        return True
-    
-    if cmd in ["exit", "back", "cancel"]:
-        player.state = "building"
-        player.send_line("Exited palette menu.")
-        return True
-        
-    # Re-show menu if invalid
-    palette_cmd(player, "")
-    return True
-
-@command_manager.register("@palette", admin=True)
-def palette_cmd(player, args):
-    """
-    Manage building palettes (collections of room templates).
-    Usage: @palette [list | load <name> | <index>]
+    Open the Kit Drawer and select architectural stencils.
+    Usage: @kit [list | load <name> | <index>]
     """
     if not hasattr(player, 'builder_state'):
         building_mode(player, "")
 
+    k_name = player.builder_state.get("kit", "default")
+    k_data = _load_kit(k_name)
+
     if not args:
-        # Show current palette index
-        p_name = player.builder_state.get("palette", "default")
-        p_data = _load_palette(p_name)
-        
-        if not p_data:
-            player.send_line(f"Palette '{p_name}' not found. Try '{Colors.BOLD}@palette load basic{Colors.RESET}'")
-            return
-            
-        player.send_line(f"\n{Colors.BOLD}--- Palette: {p_name.upper()} ---{Colors.RESET}")
-        for i, item in enumerate(p_data.get("templates", []), 1):
-            marker = f"{Colors.GREEN}>>{Colors.RESET}" if i == player.builder_state["brush_index"] else "  "
-            player.send_line(f"{i}. {marker} {item['name']} ({item['terrain']})")
-        
-        player.send_line(f"\nSelect a number {Colors.BOLD}1-{len(p_data.get('templates', []))}{Colors.RESET} or type {Colors.BOLD}exit{Colors.RESET}.")
-        player.state = "palette_menu"
+        _show_kit_drawer(player, k_name, k_data)
+        player.state = "kit_menu"
         return
 
     parts = args.split()
@@ -173,76 +132,100 @@ def palette_cmd(player, args):
     if sub == "load":
         if len(parts) > 1:
             target = parts[1]
-            data = _load_palette(target)
-            if data:
-                player.builder_state["palette"] = target
-                player.builder_state["brush_index"] = 1
-                player.send_line(f"Loaded palette: {Colors.CYAN}{target}{Colors.RESET}")
-                # Log action
-                telemetry.log_build_action(player, "LOAD_PALETTE", target)
+            if _load_kit(target):
+                player.builder_state["kit"] = target
+                player.builder_state["stencil_index"] = 1
+                player.send_line(f"{Colors.GREEN}Kit Loaded: {Colors.BOLD}{target}{Colors.RESET}")
+                _show_kit_drawer(player, target, _load_kit(target))
             else:
-                player.send_line(f"Palette '{target}' not found on disk.")
+                player.send_line(f"Kit '{target}' not found in data/blueprints/kits/")
         else:
-            # No target specified, show list (same as 'list' sub-command)
-            if not os.path.exists("data/blueprints/palettes/"):
-                player.send_line("No palette directory found.")
-                return
-            files = [f.replace(".json", "") for f in os.listdir("data/blueprints/palettes/") if f.endswith(".json")]
-            player.send_line(f"Available Palettes: {', '.join(files)}")
-            player.send_line(f"Usage: {Colors.BOLD}palette load <name>{Colors.RESET}")
+            files = [f.replace(".json", "") for f in os.listdir("data/blueprints/kits/") if f.endswith(".json")]
+            player.send_line(f"{Colors.BOLD}Available Kits:{Colors.RESET} {', '.join(files)}")
             
     elif sub == "list":
-        if not os.path.exists("data/blueprints/palettes/"):
-            player.send_line("No palette directory found.")
-            return
-        files = [f.replace(".json", "") for f in os.listdir("data/blueprints/palettes/") if f.endswith(".json")]
-        player.send_line(f"Available Palettes: {', '.join(files)}")
-
+        files = [f.replace(".json", "") for f in os.listdir("data/blueprints/kits/") if f.endswith(".json")]
+        player.send_line(f"\n{Colors.BOLD}{Colors.CYAN}[ ARCHITECTURAL KITS ]{Colors.RESET}")
+        for f in files:
+            player.send_line(f" - {f}")
+            
     elif sub.isdigit():
         idx = int(sub)
-        p_data = _load_palette(player.builder_state["palette"])
-        if p_data and 1 <= idx <= len(p_data.get("templates", [])):
-            player.builder_state["brush_index"] = idx
-            template = p_data["templates"][idx-1]
-            player.send_line(f"Brush set to: {Colors.YELLOW}{template['name']}{Colors.RESET}")
-            # Update legacy brush settings if missing
+        if k_data and 1 <= idx <= len(k_data.get("templates", [])):
+            player.builder_state["stencil_index"] = idx
+            stencil = k_data["templates"][idx-1]
+            player.send_line(f"{Colors.YELLOW}Stencil Selected: {Colors.BOLD}{stencil['name']}{Colors.RESET}")
+            
+            # Sync to brush settings for legacy compatibility
             if not hasattr(player, 'brush_settings'): player.brush_settings = {}
-            player.brush_settings.update(template)
+            player.brush_settings.update(stencil)
         else:
-            player.send_line("Invalid index.")
+            player.send_line(f"{Colors.RED}Invalid stencil index.{Colors.RESET}")
 
-@command_manager.register("@mark", admin=True)
-def mark_cmd(player, args):
-    """
-    Drops a strategic marker for AI reference.
-    Usage: @mark <label> [note]
-    Example: @mark frontier_gate "This is where the wall should end."
-    """
-    if not args:
-        player.send_line("Usage: @mark <label> [note]")
+def _show_kit_drawer(player, kit_name, kit_data):
+    """Displays a premium UI drawer for the stencils."""
+    if not kit_data:
+        player.send_line(f"{Colors.RED}No kit data for '{kit_name}'.{Colors.RESET}")
         return
-        
-    parts = args.split(maxsplit=1)
-    label = parts[0]
-    note = parts[1] if len(parts) > 1 else ""
-    
-    telemetry.log_build_marker(player, label, note)
-    player.send_line(f"{Colors.GREEN}Marker Dropped: {Colors.BOLD}{label}{Colors.RESET}")
-    player.send_line(f"AI Context Saved: {player.room.x}, {player.room.y}")
 
-@command_manager.register("@hud", admin=True)
+    output = []
+    output.append(f"\n{Colors.BOLD}{Colors.LIGHT_CYAN}┌──────────────────────────────────────────────────┐{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}│ {Colors.WHITE}KIT DRAWER: {kit_name.upper():<35} {Colors.LIGHT_CYAN}│{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}├────┬───┬────────────────────────┬─────────────────┤{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}│ ID │ S │ NAME                   │ TERRAIN         │{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}├────┼───┼────────────────────────┼─────────────────┤{Colors.RESET}")
+
+    for i, tpl in enumerate(kit_data.get("templates", []), 1):
+        is_active = i == player.builder_state.get("stencil_index", 0)
+        marker = ">>" if is_active else "  "
+        color = Colors.YELLOW if is_active else Colors.WHITE
+        
+        # Get character from map
+        terrain = tpl.get('terrain', 'default')
+        symbol = tpl.get('symbol', TERRAIN_MAP.get(terrain, "."))
+        
+        line = f"{Colors.BOLD}{Colors.LIGHT_CYAN}│ {color}{i:<2}{marker} {Colors.LIGHT_CYAN}│ {symbol} {Colors.LIGHT_CYAN}│ {color}{tpl['name']:<22} {Colors.LIGHT_CYAN}│ {Colors.DARK_GRAY}{terrain:<15} {Colors.LIGHT_CYAN}│{Colors.RESET}"
+        output.append(line)
+
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}└────┴───┴────────────────────────┴─────────────────┘{Colors.RESET}")
+    output.append(f"{Colors.DARK_GRAY}Select a number to switch stencil, or 'kit load <name>' to swap kits.{Colors.RESET}\n")
+    
+    player.send_line("\n".join(output))
+
+@state_manager.register("kit_menu")
+def handle_kit_menu_input(player, command_line):
+    """Menu state for choosing stencils."""
+    cmd = command_line.strip().lower()
+    
+    if cmd.isdigit():
+        kit_command(player, cmd)
+        player.state = "building"
+        return True
+    
+    if cmd in ["exit", "back", "cancel", "q"]:
+        player.state = "building"
+        player.send_line("Drawer closed.")
+        return True
+        
+    return False
+
+@command_manager.register("@hud", admin=True, category="admin_tools")
 def building_hud(player, args):
-    """Refreshes or toggles the builder HUD."""
-    if not hasattr(player, 'builder_state') or not player.builder_state["active"]:
-        player.send_line("Enter @building mode first.")
-        return
-        
-    p_name = player.builder_state["palette"]
-    idx = player.builder_state["brush_index"]
-    p_data = _load_palette(p_name)
+    """Pushes a status bar to the user's terminal."""
+    if not hasattr(player, 'builder_state'): return
+    bs = player.builder_state
+    k_data = _load_kit(bs["kit"])
     
-    template_name = "None"
-    if p_data and 0 <= idx-1 < len(p_data["templates"]):
-        template_name = p_data["templates"][idx-1]["name"]
+    stencil_name = "None"
+    if k_data and 0 < bs["stencil_index"] <= len(k_data["templates"]):
+        stencil_name = k_data["templates"][bs["stencil_index"]-1]["name"]
+        
+    status = f"{Colors.BOLD}{Colors.DARK_GRAY}[ ARCHITECT | Kit: {Colors.CYAN}{bs['kit']}{Colors.DARK_GRAY} | Stencil: {Colors.YELLOW}{stencil_name}{Colors.DARK_GRAY} | Pos: {player.room.x},{player.room.y},{player.room.z} ]{Colors.RESET}"
+    player.send_line(status)
 
-    player.send_line(f"\n{Colors.BOLD}{Colors.DGREY}[ BUILDER HUD ] Zone: {player.room.zone_id} | Coord: ({player.room.x}, {player.room.y}, {player.room.z}) | Palette: {p_name} | Template: {template_name}{Colors.RESET}")
+@command_manager.register("@mark", admin=True, category="admin_tools")
+def mark_cmd(player, args):
+    """Dropped marker for AI reference."""
+    if not args: return
+    telemetry.log_build_marker(player, args, "")
+    player.send_line(f"{Colors.GREEN}Marker Dropped: {Colors.BOLD}{args}{Colors.RESET}")

@@ -10,17 +10,56 @@ class SpatialIndex:
         self.rebuild()
 
     def rebuild(self):
-        """Rebuilds the spatial index from the world room list."""
+        """
+        Rebuilds the spatial index from the world room list.
+        [V6.3] Priority Awareness: If multiple rooms share coords, 
+        we favor Sanctums > City > Others for coordinate-based lookups.
+        """
+        from utilities import mapper
         self.grid.clear()
-        for room in self.world.rooms.values():
+        
+        # Build priority order for collision resolution
+        def get_sort_prio(r):
+            z_prio = 0 if r.zone_id == 'sanctums' else 1
+            t_prio = 999
+            if r.terrain in mapper.TERRAIN_PRIORITY:
+                t_prio = mapper.TERRAIN_PRIORITY.index(r.terrain)
+            return (z_prio, t_prio)
+            
+        # Reverse sort: Higher priority rooms are processed LAST, winning the coordinate slot.
+        sorted_rooms = sorted(self.world.rooms.values(), key=get_sort_prio, reverse=True)
+        
+        for room in sorted_rooms:
             coord = (room.x, room.y, room.z)
-            # If multiple rooms share coords (bad stitching), the last one loaded wins
-            # In a perfect world, this collision shouldn't happen.
             self.grid[coord] = room
 
     def get_room(self, x, y, z):
         """Returns the room at the specific global coordinate."""
         return self.grid.get((x, y, z))
+
+    def get_room_fuzzy(self, x, y, target_z, tolerance=20):
+        """[V6.5] Finds the 'most relevant' room at x,y within Z-tolerance.
+        Prioritizes: Obstacles (elevation/opacity) > Z-Proximity.
+        """
+        candidates = []
+        for dz in range(-tolerance, tolerance + 1):
+            r = self.grid.get((x, y, target_z + dz))
+            if r: candidates.append(r)
+        
+        if candidates:
+            # Sort by "Relevance" for Vision/Map:
+            # 1. Height (Visible obstacles)
+            # 2. Opacity (Sight blocks)
+            # 3. Z-Proximity (Physical location)
+            def sort_relevance(r):
+                elev = getattr(r, 'elevation', 0)
+                opac = getattr(r, 'opacity', 0)
+                z_dist = abs(r.z - target_z)
+                return (-elev, -opac, z_dist)
+            
+            candidates.sort(key=sort_relevance)
+            return candidates[0]
+        return None
 
     def get_neighbors(self, x, y, z, radius=1):
         """Returns all rooms within a cube radius."""

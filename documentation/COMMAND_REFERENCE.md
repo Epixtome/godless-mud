@@ -29,11 +29,26 @@ The Vision Engine dynamically calculates your tactical view based on:
     *   `Farsight`: Increases map radius by +1.
 4.  **Stealth**: `Haven` status effects can hide rooms from external view.
 
-## 3. Administrative & Builder Commands (@)
+## 3. Administrative & Architect Commands
+Building commands are prefixed with `@` in normal mode, or can be used **prefix-less** in **Architect Mode** (`@building on`).
+
+### Architect Core
+*   **kit / drawer**: Opens the visual Kit Drawer to select architectural **Stencils**.
+*   **kit load <name>**: Swaps the active library (e.g., `coastal`, `mountain`).
+*   **dig <dir>**: Creates a new room using the active Stencil's attributes.
+*   **paint <w> <h> [dir]**: Paints a grid of rooms with the active Stencil.
+*   **auto <dig|stitch> <on|off>**: Automated construction while walking or digging.
+
+### World Maintenance
+*   **@link <dir> <id>**: Manually links rooms across zones or distance.
+*   **@audit**: Checks the current zone for integrity issues (disconnected rooms).
+*   **@fixids**: Re-syncs room IDs with their current world coordinates.
+*   **@set room <attr> <val>**: Fine-tuned modification of room properties.
+*   **@tp <x> <y> <z>**: Teleport to absolute world coordinates.
+
+### Server & System
 *   **@worldmap**: Low-fidelity render of the entire Aethelgard continent.
 *   **@zonemap**: Renders the full boundaries of the current zone.
-*   **@tp <x> <y> <z>**: Teleport to absolute world coordinates.
-*   **@set room <attr> <val>**: Modify room properties (name, description, terrain).
 *   **@restart**: Safely shuts down and reboots the MUD server.
 
 ---

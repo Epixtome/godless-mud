@@ -3,6 +3,7 @@ logic/commands/admin/construction/cleanup_commands.py
 Commands for room deletion, merging, and map maintenance.
 """
 from logic.handlers import command_manager
+from collections import defaultdict
 import logic.commands.admin.construction.utils as construction_utils
 from utilities import mapper
 
@@ -97,7 +98,53 @@ def prune_map(player, args):
     if deleted_count > 0:
         from logic.engines import spatial_engine
         spatial_engine.invalidate()
-    player.send_line(f"Pruned {deleted_count} rooms in '{target_zone}'.")
+        from logic.core import loader
+        loader.save_shards(player.game.world)
+    player.send_line(f"Pruned {deleted_count} rooms in '{target_zone}'. Database synchronized.")
+
+@command_manager.register("@purgeoverlaps", admin=True, category="admin_building")
+def purge_overlaps(player, args):
+    """
+    Surgical De-Duplication. 
+    Favors 'sanctums' zone > any other if coordinates overlap.
+    Deletes the 'Ghost Grid' rooms that cause map overlapping issues.
+    """
+    coords = defaultdict(list)
+    for r in player.game.world.rooms.values():
+        coords[(r.x, r.y, r.z)].append(r)
+    
+    deleted = 0
+    priority_order = ['sanctums', 'city', 'holy']
+    
+    for c, rooms in coords.items():
+        if len(rooms) <= 1: continue
+        
+        # Sort by Zone Priority, then by Terrain Priority
+        def get_priority(r):
+            z_prio = 0 if r.zone_id in priority_order else 1
+            t_prio = 999
+            if r.terrain in mapper.TERRAIN_PRIORITY:
+                t_prio = mapper.TERRAIN_PRIORITY.index(r.terrain)
+            return (z_prio, t_prio)
+        
+        rooms.sort(key=get_priority)
+        winner = rooms[0]
+        for victim in rooms[1:]:
+            if victim.id in player.game.world.rooms:
+                if not hasattr(player.game.world, 'deleted_rooms'): player.game.world.deleted_rooms = set()
+                player.game.world.deleted_rooms.add(victim.id)
+                del player.game.world.rooms[victim.id]
+                construction_utils.scrub_room_from_memory(player.game, victim.id)
+                deleted += 1
+
+    if deleted > 0:
+        from logic.engines import spatial_engine
+        spatial_engine.invalidate()
+        from logic.core import loader
+        loader.save_shards(player.game.world)
+        player.send_line(f"Purged {deleted} ghost rooms. World synchronized.")
+    else:
+        player.send_line("No coordinate overlaps detected.")
 
 @command_manager.register("@merge", admin=True, category="admin_building")
 def merge_rooms(player, args):

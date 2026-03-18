@@ -111,6 +111,41 @@
                 "stamina": 5,
                 "cooldown": 1
             }
+        },
+        "retreat": {
+            "id": "retreat",
+            "name": "Retreat",
+            "tier": 1,
+            "description": "Tactical withdrawal: Attempt to escape the current room and break combat.",
+            "identity_tags": [
+                "utility",
+                "escape"
+            ],
+            "action": "flee",
+            "deity_id": "common",
+            "requirements": {
+                "stamina": 10,
+                "cooldown": 5
+            }
+        },
+        "strike": {
+            "id": "strike",
+            "name": "Strike",
+            "tier": 1,
+            "cost": 0,
+            "description": "A deliberate, focused strike with your equipped weapon.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "skill"
+            ],
+            "action": "strike",
+            "deity_id": "common",
+            "requirements": {
+                "stamina": 5,
+                "cooldown": 2
+            },
+            "base_power": 10
         }
     }
 }

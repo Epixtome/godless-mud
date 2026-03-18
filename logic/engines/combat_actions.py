@@ -41,6 +41,27 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
     if hasattr(attacker, 'last_attack_time'):
         attacker.last_attack_time = time.time()
 
+    # [V6.0] Handle Non-Attack Actions (Flee, Buffs)
+    if blessing and getattr(blessing, 'action', '') == 'flee':
+        from logic.commands.combat_commands import flee as flee_cmd
+        if hasattr(attacker, 'is_player') and attacker.is_player:
+            flee_cmd(attacker, "")
+        else:
+            # Simple Mob Flee
+            room = getattr(attacker, 'room', None)
+            if room:
+                import random as py_random
+                exits = list(room.exits.keys())
+                if exits:
+                    direction = py_random.choice(exits)
+                    from logic.commands.movement_commands import _move
+                    if _move(attacker, direction):
+                        combat.stop_combat(attacker)
+                        event_engine.dispatch("on_flee", {'entity': attacker, 'room': room, 'direction': direction})
+                        if hasattr(room, 'broadcast'):
+                            room.broadcast(f"{Colors.YELLOW}{attacker.name} has fled {direction}!{Colors.RESET}")
+        return
+
     # 2. Tag Resolution
     attack_tags = combat.resolve_attack_tags(attacker, blessing)
         
@@ -71,6 +92,7 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
     if reaction_hit:
         if hasattr(target, 'send_line'): target.send_line(f"{Colors.GREEN}{reaction_msg}{Colors.RESET}")
         if hasattr(attacker, 'send_line'): attacker.send_line(f"{Colors.RED}{target.name} parries your strike!{Colors.RESET}")
+        event_engine.dispatch("on_combat_miss", {'attacker': attacker, 'target': target, 'reason': 'parry', 'blessing': blessing})
         # Terminate attack early
         players_to_prompt.add(attacker)
         players_to_prompt.add(target)
@@ -100,6 +122,7 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
     if dodge_ctx['dodged']:
         if hasattr(attacker, 'send_line'): attacker.send_line(f"{target.name} dodges your attack!")
         if hasattr(target, 'send_line'): target.send_line(f"You dodge {attacker.name}'s attack!")
+        event_engine.dispatch("on_combat_miss", {'attacker': attacker, 'target': target, 'reason': 'dodge', 'blessing': blessing})
         players_to_prompt.add(attacker)
         return
 
@@ -119,15 +142,23 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
             
     damage = min(final_cap, damage)
 
-    # Cost Processing (For Monsters or Blessing-driven attacks if not handled by Executor)
-    if not getattr(attacker, 'is_player', False) and blessing:
+    # Cost Processing (Deduct resources like Stamina, Fury, etc.)
+    if blessing:
         from logic.engines.blessings_engine import Auditor
         costs = Auditor.calculate_costs(blessing, attacker)
         for res, cost in costs.items():
-            if cost > 0 and hasattr(attacker, 'resources'):
-                attacker.resources[res] = max(0, attacker.resources.get(res, 0) - cost)
-        if hasattr(attacker, 'room') and attacker.room:
+            if cost > 0:
+                resources.modify_resource(attacker, res, -cost, source="Skill Cost")
+        
+        if not getattr(attacker, 'is_player', False) and hasattr(attacker, 'room') and attacker.room:
             attacker.room.broadcast(f"{Colors.YELLOW}{attacker.name} uses {blessing.name}!{Colors.RESET}")
+        
+        event_engine.dispatch("on_skill_use", {
+            'attacker': attacker,
+            'target': target,
+            'blessing': blessing,
+            'room': room
+        })
 
     # Telemetry
     telemetry.log_event(attacker, "COMBAT_DETAIL", {

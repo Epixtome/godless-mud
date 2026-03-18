@@ -19,3 +19,5 @@
 | 2026-03-15 | Antigravity | V6.0 Deity Void Crash | Populated `world.deities` in loader and added safety checks in `combat_logic.py`. |
 | 2026-03-15 | Antigravity | Admin Cmd Status Block | Bypassed status effect blocks for commands starting with `@` in input handler. |
 | 2026-03-15 | Antigravity | Targeted Purge Syntax | Enhanced `@purge` to handle targeting IDs in room and inventory. |
+| 2026-03-17 | Antigravity | Spatial Rebuild Null Error | Fixed `NoneType` crash in `paint.py` when rebuilding spatial index during rapid construction. |
+| 2026-03-17 | Antigravity | Builder Terminology Drift | Unified "palettes/brushes" into "Kits/Stencils" across all construction modules. |

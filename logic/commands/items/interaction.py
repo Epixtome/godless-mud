@@ -1,5 +1,5 @@
 from logic.handlers import command_manager
-from logic.common import find_by_index
+from logic.common import find_by_index, get_reverse_direction
 from models import Corpse
 
 @command_manager.register("open", category="interaction")
@@ -21,7 +21,16 @@ def open_obj(player, args):
             door.state = 'open'
             player.send_line(f"You open the {door.name}.")
             player.room.broadcast(f"{player.name} opens the {door.name}.", exclude_player=player)
-            # Sync reciprocal (omitted for brevity/lack of context on helper)
+            
+            # Sync reciprocal
+            target_id = player.room.exits.get(direction)
+            if target_id:
+                target_room = player.game.world.rooms.get(target_id)
+                rev = get_reverse_direction(direction)
+                if target_room and rev and rev in target_room.doors:
+                    target_room.doors[rev].state = 'open'
+                player.room.dirty = True
+                if target_room: target_room.dirty = True
         return
 
     # 2. Check Items
@@ -70,6 +79,16 @@ def close_obj(player, args):
             door.state = 'closed'
             player.send_line(f"You close the {door.name}.")
             player.room.broadcast(f"{player.name} closes the {door.name}.", exclude_player=player)
+            
+            # Sync reciprocal
+            target_id = player.room.exits.get(direction)
+            if target_id:
+                target_room = player.game.world.rooms.get(target_id)
+                rev = get_reverse_direction(direction)
+                if target_room and rev and rev in target_room.doors:
+                    target_room.doors[rev].state = 'closed'
+                player.room.dirty = True
+                if target_room: target_room.dirty = True
         return
 
     # 2. Check Items
