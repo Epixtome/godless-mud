@@ -105,44 +105,49 @@ def furnish(player, args):
         return
         
     theme = themes.get(theme_key) if theme_key else None
-    if theme_key and not theme:
-        player.send_line(f"Theme '{theme_key}' not found. Available: {', '.join(themes.keys())}")
-        return
+    
+    # Load from Kits (v7.0 Standard)
+    kit_name = getattr(player, 'builder_state', {}).get("kit", "default")
+    k_data = _load_kit(kit_name)
+    
+    theme_template = None
+    if k_data and theme_key:
+        for tpl in k_data.get("templates", []):
+            if theme_key in tpl['id'].lower() or theme_key in tpl['name'].lower():
+                theme_template = tpl
+                break
+    
+    # Fallback to legacy themes (hardcoded) for common staples
+    if not theme_template:
+        theme = themes.get(theme_key) if theme_key else None
+        if theme: theme_template = theme
 
-    # Fallback to default if no theme found but dimensions provided
-    final_theme = theme or {"name": "Furnished Room", "desc": "A newly furnished area.", "terrain": "indoors", "tags": []}
-
-    # Area calculation
+    # Re-apply theme over a grid
     from logic.engines import spatial_engine
-    from logic.core.world import get_room_id
-    from models import Room
+    spatial = spatial_engine.get_instance(player.game.world)
     
     off_x, off_y = construction_utils.get_directional_offsets(player, width, height, direction)
     start_x = off_x if off_x is not None else player.room.x - (width // 2)
     start_y = off_y if off_y is not None else player.room.y - (height // 2)
     target_z = player.room.z
     
-    spatial = spatial_engine.get_instance(player.game.world)
-    created, updated = 0, 0
-    
-    for y in range(start_y, start_y + height):
-        for x in range(start_x, start_x + width):
-            room = construction_utils.find_room_at_fuzzy_z(spatial, x, y, target_z)
-            if room:
-                room.name = str(final_theme["name"])
-                room.description = str(final_theme["desc"])
-                room.terrain = str(final_theme["terrain"])
-                room.dirty = True
-                updated += 1
-            else:
-                new_id = get_room_id(player.room.zone_id, x, y, target_z)
-                nr = Room(new_id, str(final_theme["name"]), str(final_theme["desc"]))
-                nr.x, nr.y, nr.z, nr.zone_id, nr.terrain = x, y, target_z, player.room.zone_id, str(final_theme["terrain"])
-                player.game.world.rooms[new_id] = nr
-                created += 1
-    
-    if created: 
-        spatial_engine.invalidate()
-        if spatial: spatial.rebuild()
-    
-    player.send_line(f"Furnished {created + updated} rooms with '{theme_key or 'default'}' theme.")
+    count = 0
+    if theme_template:
+        for y in range(start_y, start_y + height):
+            for x in range(start_x, start_x + width):
+                r = construction_utils.find_room_at_fuzzy_z(spatial, x, y, target_z)
+                if r:
+                    construction_utils.update_room(
+                        r, 
+                        terrain=theme_template.get('terrain'),
+                        name=theme_template.get('name'),
+                        desc=theme_template.get('description'),
+                        symbol=theme_template.get('symbol'),
+                        elevation=theme_template.get('elevation'),
+                        items=theme_template.get('items'),
+                        monsters=theme_template.get('monsters')
+                    )
+                    count += 1
+        player.send_line(f"{Colors.GREEN}Furnished {count} rooms with '{theme_template.get('name')}' theme from '{kit_name}'.{Colors.RESET}")
+    else:
+        player.send_line(f"No theme found matching '{theme_key}'. Try: {', '.join(themes.keys())} or kit-stencils.")

@@ -3,6 +3,7 @@ from models import Monster
 from utilities.colors import Colors
 import json
 import collections
+import os
 
 @command_manager.register("@scan", admin=True, category="admin_travel")
 def scan_zone(player, args):
@@ -78,10 +79,11 @@ def admin_vision(player, args):
         player.send_line(header)
         player.send_line("-" * len(header))
         for idx, i in enumerate(room.items, 1):
-            proto = getattr(i, 'prototype_id', 'None')
+            proto = str(getattr(i, 'prototype_id', 'None'))
             itype = i.__class__.__name__
             val = getattr(i, 'value', 0)
-            player.send_line(f"{idx:<6} {i.name[:19]:<20} {proto[:24]:<25} {itype:<12} {val}")
+            name = str(i.name) if i.name else "Unknown"
+            player.send_line(f"{idx:<6} {name[:19]:<20} {proto[:24]:<25} {itype:<12} {val}")
 
     # Inventory
     if player.inventory:
@@ -90,10 +92,11 @@ def admin_vision(player, args):
         player.send_line(header)
         player.send_line("-" * len(header))
         for idx, i in enumerate(player.inventory, 1):
-            proto = getattr(i, 'prototype_id', 'None')
+            proto = str(getattr(i, 'prototype_id', 'None'))
             itype = i.__class__.__name__
             val = getattr(i, 'value', 0)
-            player.send_line(f"{idx:<6} {i.name[:19]:<20} {proto[:24]:<25} {itype:<12} {val}")
+            name = str(i.name) if i.name else "Unknown"
+            player.send_line(f"{idx:<6} {name[:19]:<20} {proto[:24]:<25} {itype:<12} {val}")
 
     if not room.monsters and not room.items and not player.inventory:
         player.send_line(f"\n{Colors.WHITE}No entities found in room or inventory.{Colors.RESET}")

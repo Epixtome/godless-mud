@@ -130,6 +130,27 @@ def get_prompt(player):
             
             status_str = f" ({'/'.join(statuses)})" if statuses else ""
             prompt += f" ({target.name} [{condition}] BAL: {t_bal}/{t_max_bal}{status_str})"
+    
+    # Builder HUD (V7.1)
+    if (player.state in ["building", "kit_menu"] or getattr(player, 'is_building', False)) and hasattr(player, 'builder_state'):
+        bs = player.builder_state
+        from logic.commands.admin.construction.builder_state import _load_kit
+        k_data = _load_kit(bs["kit"])
+        
+        def mode_label(label, value):
+            color = Colors.BOLD + Colors.WHITE if value else Colors.DARK_GRAY
+            return f"{color}{label}{Colors.RESET}"
+
+        modes = [
+            mode_label("Stitch", getattr(player, 'autostitch', False)),
+            mode_label("Brush", getattr(player, 'autobrush', False)),
+            mode_label("Dig", getattr(player, 'autodig', False))
+        ]
+        
+        elev = getattr(player.room, 'elevation', 0)
+        brush_elev = bs.get('brush_elevation', 'Auto')
+        builder_line = f"{Colors.DARK_GRAY}[ARCHITECT | Kit: {Colors.CYAN}{bs['kit']}{Colors.DARK_GRAY} | {' '.join(modes)} | Room: {Colors.WHITE}{elev}{Colors.DARK_GRAY} | Brush: {Colors.YELLOW}{brush_elev}{Colors.DARK_GRAY}]{Colors.RESET}"
+        prompt = f"\r\n{builder_line}\r\n{prompt}"
             
     return prompt + " > "
 

@@ -7,22 +7,31 @@ from logic.commands.admin.editors.class_editor import _set_player_class, _auto_e
 def _set_room_name(player, args):
     if not args: return False, "Usage: @set room name <name>"
     if hasattr(player.room, '_generated'): delattr(player.room, '_generated')
-    player.room.name = args
+    
+    val = args
+    if args.startswith('+'):
+        player.room.name += " " + args[1:].strip()
+    elif args.startswith('-'):
+        player.room.name = player.room.name.replace(args[1:].strip(), "").strip()
+    else:
+        player.room.name = val
+        
     player.room.dirty = True
-    return True, f"Room name set to: {args}"
+    return True, f"Room name set to: {player.room.name}"
 
 def _set_room_desc(player, args):
-    if not args: return False, "Usage: @set room desc <description> (Start with + to append)"
+    if not args: return False, "Usage: @set room desc <description> (Start with + to append, - to remove)"
     if hasattr(player.room, '_generated'): delattr(player.room, '_generated')
     
     if args.startswith('+'):
         player.room.description += " " + args[1:].strip()
-        player.room.dirty = True
-        return True, "Room description appended."
+    elif args.startswith('-'):
+        player.room.description = player.room.description.replace(args[1:].strip(), "").strip()
     else:
         player.room.description = args
-        player.room.dirty = True
-        return True, "Room description updated."
+        
+    player.room.dirty = True
+    return True, "Room description updated."
 
 def _set_room_zone(player, args):
     if not args: return False, "Usage: @set room zone <zone_id>"
@@ -59,14 +68,39 @@ def _set_room_coords(player, args):
 
 def _set_room_z(player, args):
     try:
-        z = int(args)
-        player.room.z = z
+        val = args
+        if args.startswith('+'):
+            player.room.z += int(args[1:].strip())
+        elif args.startswith('-'):
+            player.room.z -= int(args[1:].strip())
+        else:
+            player.room.z = int(args)
+            
         from logic.engines import spatial_engine
         spatial_engine.invalidate()
         player.room.dirty = True
-        return True, f"Room Z-axis set to {z}. (Save zone to persist)"
+        return True, f"Room Z-axis set to {player.room.z}."
     except ValueError:
         return False, "Usage: @set room z <value>"
+
+def _set_room_elevation(player, args):
+    try:
+        val = args
+        if args.startswith('+'):
+            player.room.elevation += int(args[1:].strip())
+        elif args.startswith('-'):
+            player.room.elevation -= int(args[1:].strip())
+        else:
+            player.room.elevation = int(args)
+            
+        # Update Brush State for persistence during walking (V7.0)
+        if hasattr(player, 'builder_state'):
+            player.builder_state['brush_elevation'] = player.room.elevation
+            
+        player.room.dirty = True
+        return True, f"Room Elevation set to {player.room.elevation} (Brush Dipped)."
+    except ValueError:
+        return False, "Usage: @set room elevation <value>"
 
 def _set_room_terrain(player, args):
     if not args: return False, "Usage: @set room terrain <type>"
@@ -139,6 +173,8 @@ SET_CATEGORIES = {
         "deity": _set_room_deity,
         "coords": _set_room_coords,
         "z": _set_room_z,
+        "elevation": _set_room_elevation,
+        "elev": _set_room_elevation,
         "terrain": _set_room_terrain,
         "mob": _set_room_mob,
         "item": _set_room_item

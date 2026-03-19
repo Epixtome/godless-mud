@@ -62,11 +62,17 @@ def _perform_logic_reload(player):
         
         # 6. Reload Command Groupings (This repopulates COMMANDS)
         import logic.commands
+        import utilities
         import pkgutil
         import sys
         
         # Walk all command sub-packages and reload them
         for _loader, name, is_pkg in pkgutil.walk_packages(logic.commands.__path__, "logic.commands."):
+            if name in sys.modules:
+                importlib.reload(sys.modules[name])
+                
+        # Walk all utility sub-packages and reload them (V7.2)
+        for _loader, name, is_pkg in pkgutil.walk_packages(utilities.__path__, "utilities."):
             if name in sys.modules:
                 importlib.reload(sys.modules[name])
                 

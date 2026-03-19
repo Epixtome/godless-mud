@@ -1,0 +1,91 @@
+{
+    "name": "terrains",
+    "description": "Global Terrain Palette - Tactical Textures for World Painting.",
+    "templates": [
+        {
+            "id": "tpl:tex_road",
+            "name": "Cobblestone Road",
+            "terrain": "road",
+            "elevation": 0,
+            "description": "A well-maintained road of weathered gray cobblestones."
+        },
+        {
+            "id": "tpl:tex_plains",
+            "name": "Open Plains",
+            "terrain": "plains",
+            "elevation": 0,
+            "description": "A vast, rolling expanse of hardy green wildgrass."
+        },
+        {
+            "id": "tpl:tex_forest",
+            "name": "Dense Forest",
+            "terrain": "dense_forest",
+            "elevation": 0,
+            "description": "The trees are thick here, their canopy blocking much of the sky."
+        },
+        {
+            "id": "tpl:tex_hills",
+            "name": "Rolling Hills",
+            "terrain": "hills",
+            "elevation": 3,
+            "description": "Grassy mounds that offer a clear view of the surrounding lands."
+        },
+        {
+            "id": "tpl:tex_mountain",
+            "name": "Mountain Side",
+            "terrain": "mountain",
+            "elevation": 5,
+            "description": "The terrain is rocky and steep, scaling up the mountain side."
+        },
+        {
+            "id": "tpl:tex_peak",
+            "name": "Mountain Peak",
+            "terrain": "peak",
+            "elevation": 15,
+            "description": "The absolute summit. The air is thin and cold."
+        },
+        {
+            "id": "tpl:tex_shallow_water",
+            "name": "Shallow Water",
+            "terrain": "shallow_water",
+            "elevation": -1,
+            "description": "Clear, knee-deep water rippling over a sandy bottom."
+        },
+        {
+            "id": "tpl:tex_deep_water",
+            "name": "Deep Water",
+            "terrain": "water",
+            "elevation": -3,
+            "description": "The water is dark and deep here, with a strong undercurrent."
+        },
+        {
+            "id": "tpl:tex_beach",
+            "name": "Sandy Beach",
+            "terrain": "beach",
+            "elevation": 0,
+            "description": "Fine yellow sand dunes meeting the edge of the water."
+        },
+        {
+            "id": "tpl:tex_swamp",
+            "name": "The Mire",
+            "terrain": "swamp",
+            "elevation": -1,
+            "description": "Damp, stinking mud and twisted roots choke the landscape."
+        },
+        {
+            "id": "tpl:tex_bridge_wood",
+            "name": "Wooden Bridge",
+            "terrain": "bridge",
+            "elevation": 1,
+            "description": "A sturdy wooden bridge spanning the gaps below."
+        },
+        {
+            "id": "tpl:tex_bridge_stone",
+            "name": "Arched Stone Bridge",
+            "terrain": "bridge",
+            "symbol": "{Colors.WHITE}={Colors.RESET}",
+            "elevation": 2,
+            "description": "A grand arched bridge of weathered stone."
+        }
+    ]
+}

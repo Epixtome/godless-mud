@@ -1,6 +1,6 @@
 # GEMINI.md: AI Engineering & Development Guide for Godless
 
-> **Status:** ACTIVE PROTOCOL (V6.8 - Updated from Perception Refactor)  
+> **Status:** ACTIVE PROTOCOL (V7.2 - Updated from Topographical Refactor)  
 > **Target Audience:** Gemini, GCA, Antigravity, and any Agentic AI working on this codebase.  
 > **Mandatory Rule:** All structural, logic, and data changes MUST conform to this document. "Quick fixes" or "Scripting-style" code that violates these patterns will be rejected and refactored.
 
@@ -86,10 +86,10 @@ To minimize token consumption and maximize speed, AI Agents must adhere to the f
 ---
 
 - **Gatekeeper Pattern**: All "Can I act?" checks (Dead, Stunned, Casting) live in `input_handler.py`. Logic actions assume they are permitted to run.
-- **The Perception Matrix**: All visibility and map intelligence must use `logic.core.perception.get_perception()`.
-    - **NAVIGATION**: Full reveal for pathfinding (used in `look`).
-    - **TACTICAL**: Reveals building footprints, but strictly hides entities behind structural obstacles (Walls/Doors).
-    - **INTELLIGENCE**: Strict cardinal structural raycast (used in `scan`).
+- **The Perception Matrix (V7.2 Standard)**: All visibility and map intelligence must use `logic.core.perception.get_perception()`.
+    - **NAVIGATION (`look`)**: Radius 3-5 structural view. Optimized for pathfinding. Respects Fog-of-War and utilizes **Elevation Shading** (Bold for heights). Omits dynamic intelligence (?) to prevent HUD clutter.
+    - **TACTICAL (`map`)**: Radius 7-15. Respects Fog-of-War and **Elevation Occlusion (The Ridge Rule)**. Higher terrain physically blocks sight of entities/pings behind it.
+    - **INTELLIGENCE (`scan`)**: Deep raycast. Injects **Persistent Pings (60s)** into the Tactical Map. Respects LoS blocks unless bypassed by future 'Scout' class abilities.
 
 ---
 

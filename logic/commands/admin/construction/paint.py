@@ -180,5 +180,11 @@ def auto_modes(player, args):
     elif mode == "stitch":
         player.autostitch = val if val is not None else not getattr(player, 'autostitch', False)
         player.send_line(f"Auto-stitch: {player.autostitch}")
+    elif mode == "brush":
+        player.autobrush = val if val is not None else not getattr(player, 'autobrush', False)
+        player.send_line(f"Auto-brush: {player.autobrush}")
+    elif mode == "vision" or mode == "fog":
+        player.ignore_fog = val if val is not None else not getattr(player, 'ignore_fog', False)
+        player.send_line(f"Builder Vision (Ignore Fog): {player.ignore_fog}")
     else:
-        player.send_line("Modes: dig, paste, stitch")
+        player.send_line("Modes: dig, brush, stitch, vision")

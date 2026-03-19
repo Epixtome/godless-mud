@@ -247,6 +247,10 @@ def admin_help_command(player, args):
             desc = command_manager.DESCRIPTIONS.get(canonical, "No description.")
             player.send_line(f"\n{Colors.BOLD}{Colors.MAGENTA}Admin Command:{Colors.RESET} {canonical.upper()}")
             player.send_line(f"{desc}")
+            if canonical == "@set":
+                player.send_line(f"\n{Colors.YELLOW}[Additive Syntax (V7.0)]{Colors.RESET}")
+                player.send_line(f"Use '+' to append strings or increment values: '@set elevation +1'")
+                player.send_line(f"Use '-' to remove substrings or decrement values: '@set name - (Draft)'")
             return
 
     # 2. Fuzzy Match Admin Commands

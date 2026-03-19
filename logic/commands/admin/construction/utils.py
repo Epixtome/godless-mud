@@ -1,4 +1,4 @@
-from utilities.mapper import TERRAIN_HEIGHTS
+from utilities.mapper import TERRAIN_PLANES, TERRAIN_ELEVS
 from logic.engines import spatial_engine
 from logic.common import get_reverse_direction
 
@@ -53,20 +53,29 @@ def get_directional_offsets(player, width, height, direction):
     return None, None
 
 def get_terrain_z(terrain, default_z):
-    """Returns the forced Z-level for a terrain, or the default if none exists."""
-    if terrain and terrain in TERRAIN_HEIGHTS:
-        return TERRAIN_HEIGHTS[terrain]
+    """Returns the forced Z-level (PLANE) for a terrain."""
+    from utilities.mapper import TERRAIN_PLANES
+    if terrain and terrain in TERRAIN_PLANES:
+        return TERRAIN_PLANES[terrain]
+    # Surface terrains don't shift the plane
     return default_z
 
-def update_room(room, zone_id=None, terrain=None, name=None, desc=None, symbol=None):
+def get_terrain_elevation(terrain):
+    """Returns the tactical height for a terrain."""
+    from utilities.mapper import TERRAIN_ELEVS
+    return TERRAIN_ELEVS.get(terrain, 0)
+
+def update_room(room, zone_id=None, terrain=None, name=None, desc=None, description=None, symbol=None, elevation=None, items=None, monsters=None):
     """
     Standardized method to update a room's attributes.
-    Handles Z-axis shifting based on terrain automatically.
-    Returns True if changes were made.
+    Handles Z-axis shifting (Planar), Elevation (Tactical), and Content Injection (Furnish).
     """
     changed = False
     
-    if zone_id and room.zone_id != zone_id:
+    # Alias support for JSON stencils
+    if description: desc = description
+    
+    if zone_id and getattr(room, 'zone_id', None) != zone_id:
         room.zone_id = zone_id
         changed = True
         
@@ -82,6 +91,19 @@ def update_room(room, zone_id=None, terrain=None, name=None, desc=None, symbol=N
         if getattr(room, 'symbol', None) != symbol:
             room.symbol = symbol
             changed = True
+    
+    if elevation is not None:
+        if getattr(room, 'elevation', 0) != int(elevation):
+            room.elevation = int(elevation)
+            changed = True
+
+    if items is not None:
+        room.blueprint_items = list(items)
+        changed = True
+    
+    if monsters is not None:
+        room.blueprint_monsters = list(monsters)
+        changed = True
         
     if terrain:
         clean_terrain = terrain.lower().strip()
@@ -89,12 +111,17 @@ def update_room(room, zone_id=None, terrain=None, name=None, desc=None, symbol=N
             room.terrain = clean_terrain
             changed = True
             
-            # If we change terrain manually, clear any custom generation symbol
-            # so it falls back to the new terrain's default legend.
+            # If we change terrain manually, clear any custom symbol
             if not symbol and hasattr(room, 'symbol'):
                 room.symbol = None
             
-            # Auto-adjust Z
+            # 1. Update Tactical Elevation (Auto-scaling from terrain)
+            auto_elev = get_terrain_elevation(clean_terrain)
+            if elevation is None and getattr(room, 'elevation', 0) != auto_elev:
+                room.elevation = auto_elev
+                changed = True
+
+            # 2. Update Structural Plane (Z)
             new_z = get_terrain_z(clean_terrain, room.z)
             if room.z != new_z:
                 room.z = new_z

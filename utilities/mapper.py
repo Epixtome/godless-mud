@@ -33,11 +33,16 @@ TERRAIN_MAP = {
     "default": "."
 }
 
-TERRAIN_HEIGHTS = {
-    "mountain": 5, "high_mountain": 10, "peak": 15, "hills": 3,
-    "bridge": 1, "beach": 0, "water": -1, "shallow_water": -1,
-    "ocean": -5, "deep_water": -5, "underwater": -10,
-    "sky": 50, "cloud": 40, "abyss": -100
+# V7.0 Standard: TERRAIN_ELEVS defines surface height on the Z=0 plane.
+TERRAIN_ELEVS = {
+    "hills": 3, "mountain": 5, "high_mountain": 10, "peak": 15,
+    "bridge": 1, "beach": 0, "water": -1, "shallow_water": -1
+}
+
+# V7.0 Standard: TERRAIN_PLANES defines structural plane shifts (distinct layers).
+TERRAIN_PLANES = {
+    "sky": 50, "cloud": 40, "abyss": -100, 
+    "ocean": 0, "deep_water": 0, "underwater": -1 # Underwater is the first sub-plane.
 }
 
 TERRAIN_PRIORITY = [
@@ -56,9 +61,18 @@ def get_terrain_char(room):
     if isinstance(room, str):
         return TERRAIN_MAP.get(room, TERRAIN_MAP["default"])
     if hasattr(room, 'symbol') and room.symbol:
-        return room.symbol
+        return Colors.translate(room.symbol)
     terrain = getattr(room, 'terrain', 'default')
-    return TERRAIN_MAP.get(terrain, TERRAIN_MAP["default"])
+    char = TERRAIN_MAP.get(terrain, TERRAIN_MAP["default"])
+    
+    # Elevation Overrides (V7.2)
+    elev = getattr(room, 'elevation', 0)
+    if elev >= 10:
+        return f"{Colors.WHITE}#{Colors.RESET}" # Mountain Peak
+    elif elev >= 5 and char in ['.', '+']: # If it's flat ground but has high elevation
+        return f"{Colors.DGREY}^{Colors.RESET}" # Artificial Hill
+        
+    return char
 
 def get_map_header(room, world=None):
     """Returns a formatted header string with Zone and Coordinates."""
@@ -68,9 +82,11 @@ def get_map_header(room, world=None):
             zone_name = world.zones[room.zone_id].name
         else:
             zone_name = room.zone_id.replace('_', ' ').title()
-    return f"{Colors.BOLD}[ {zone_name} ({room.x}, {room.y}, {room.z}) ]{Colors.RESET}"
+            
+    elev = getattr(room, 'elevation', 0)
+    return f"{Colors.BOLD}[ {zone_name} ({room.x}, {room.y}, {room.z}) ]{Colors.RESET}{Colors.CYAN} [Elev: {elev}]{Colors.RESET}"
 
-def draw_grid(perception, visited_rooms=None, ignore_fog=False, indent=0, world=None, shading=True):
+def draw_grid(perception, visited_rooms=None, ignore_fog=False, indent=0, world=None, shading=True, show_dynamic=True):
     """
     [V6.8 Refactor] Dumb Renderer for PerceptionResults.
     Renders terrain and intelligence strictly from the perception pipeline.
@@ -86,14 +102,13 @@ def draw_grid(perception, visited_rooms=None, ignore_fog=False, indent=0, world=
     
     # 1. Header (Static metadata)
     header = get_map_header(player_room, world)
-    elev_text = f" {Colors.CYAN}[Elev: {getattr(player_room, 'elevation', 0)}]{Colors.RESET}"
-    output.append(f"{prefix}{header}{elev_text}")
+    output.append(f"{prefix}{header}")
 
     # 2. Grid Traversal
     for y in range(-radius, radius + 1):
         line = ""
         for x in range(-radius, radius + 1):
-            char = f"{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}"  # Fog/Unknown
+            char = " "  # Fog/Unknown (V7.0 Polish: Clearer than '.' which conflicts with Plains)
 
             if (x, y) in grid:
                 room = grid[(x, y)]
@@ -133,8 +148,8 @@ def draw_grid(perception, visited_rooms=None, ignore_fog=False, indent=0, world=
                                 base_char = f"{Colors.YELLOW}m{Colors.RESET}"
                                 has_entity = True
                             
-                            # C. Dynamic Events (Vibrations)
-                            elif dist <= 5:
+                            # C. Dynamic Events (Vibrations) - Only show if show_dynamic is set
+                            elif show_dynamic and dist <= 5:
                                 if any(m.fighting for m in room.monsters) or any(p.fighting for p in room.players):
                                     base_char = f"{Colors.MAGENTA}?{Colors.RESET}"
                                     has_entity = True
@@ -151,6 +166,7 @@ def draw_grid(perception, visited_rooms=None, ignore_fog=False, indent=0, world=
                                 if r_elev > p_elev:
                                     char = f"{Colors.BOLD}{base_char}{Colors.RESET}"
                                 else:
+                                    # V7.2 Revision: Keep full colors for lower ground to prevent "Missing Water/Terrain"
                                     char = base_char
                             else:
                                 char = base_char

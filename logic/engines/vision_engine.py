@@ -151,6 +151,31 @@ def _is_line_of_sight_clear(spatial, start, target, topology_only=False, reach_o
         if not next_room:
             return False 
             
+        # --- 3D Grid & Topography: Occlusion Guard (V7.1) ---
+        # 1. Vertical Plane Shift (Z-axis)
+        if next_room.z != start.z:
+            if start.z > next_room.z:
+                if "up" not in next_room.exits and getattr(next_room, 'opacity', 0) >= 0.5:
+                    return False
+            elif start.z < next_room.z:
+                if "down" not in next_room.exits and getattr(next_room, 'opacity', 0) >= 0.5:
+                    return False
+
+        # 2. Elevation Occlusion (The Ridge Rule)
+        # If this intermediary room is higher than BOTH the start and the target, 
+        # it blocks the ray between them (Line-of-Sight occlusion).
+        r_elev = getattr(next_room, 'elevation', 0)
+        s_elev = getattr(start, 'elevation', 0)
+        t_elev = getattr(target, 'elevation', 0)
+        
+        # Don't block yourself if you are standing on the high ground, 
+        # and don't block the target room itself (you can always see its 'face').
+        if next_room.id != start.id and next_room.id != target.id:
+            if r_elev > s_elev and r_elev > t_elev:
+                # Ridge blocks LoS unless it has an explicit transparency override (Default Opaque for terrain)
+                if not getattr(next_room, 'transparent_ridge', False):
+                    return False
+
         dx_step = x - prev_x
         dy_step = y - prev_y
         

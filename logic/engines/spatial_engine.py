@@ -52,6 +52,7 @@ class SpatialIndex:
             # 2. Opacity (Sight blocks)
             # 3. Z-Proximity (Physical location)
             def sort_relevance(r):
+                # Prioritize: Elevation (Tactical) > Opacity (Sight blocks) > Z-Proximity (Plane)
                 elev = getattr(r, 'elevation', 0)
                 opac = getattr(r, 'opacity', 0)
                 z_dist = abs(r.z - target_z)

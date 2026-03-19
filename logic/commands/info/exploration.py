@@ -82,9 +82,17 @@ def look(player, args, with_prompt=True):
         if "eagle_eye" in player.status_effects: local_radius += 2
         if "farsight" in player.status_effects: local_radius += 1
 
-    # [V6.8 Refactor] Navigation Mode: Shows full infrastructure without LOS blocks.
+    # [V6.8 Refactor] Navigation Mode: Shows infrastructure while respecting Fog (V7.2).
     perception = vision.get_perception(player, radius=local_radius, context=vision.NAVIGATION)
-    map_lines = mapper.draw_grid(perception, visited_rooms=None, ignore_fog=True, indent=5, world=player.game.world, shading=False)
+    map_lines = mapper.draw_grid(
+        perception, 
+        visited_rooms=player.visited_rooms, 
+        ignore_fog=getattr(player, 'ignore_fog', False), 
+        indent=5, 
+        world=player.game.world, 
+        shading=True,
+        show_dynamic=False
+    )
     for line in map_lines: send(line)
 
     if getattr(player, 'admin_vision', False):
@@ -151,10 +159,11 @@ def show_map(player, args):
     map_lines = mapper.draw_grid(
         perception,
         visited_rooms=player.visited_rooms, 
-        ignore_fog=False, 
+        ignore_fog=getattr(player, 'ignore_fog', False), 
         indent=5, 
         world=player.game.world, 
-        shading=True
+        shading=True,
+        show_dynamic=True
     )
 
     player.send_line(f"--- Map: {mapper.get_map_header(player.room, player.game.world)} [Elev: {player.room.elevation}] ---")

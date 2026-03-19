@@ -1,0 +1,46 @@
+{
+    "name": "farmlands",
+    "description": "The golden fields and peaceful pastures of the Kingdom.",
+    "templates": [
+        {
+            "id": "tpl:wheat_field",
+            "name": "Amber Wheat Field",
+            "terrain": "plains",
+            "elevation": 0,
+            "symbol": "{Colors.YELLOW}\"{Colors.RESET}",
+            "description": "Rows of tall, golden wheat sway gently in the breeze. The air smells of sun-warmed earth.",
+            "monsters": ["field_mouse", "locust_swarm"],
+            "items": ["sheaf_of_wheat"]
+        },
+        {
+            "id": "tpl:windmill",
+            "name": "Great Windmill",
+            "terrain": "road",
+            "elevation": 5,
+            "symbol": "{Colors.WHITE}X{Colors.RESET}",
+            "description": "A massive stone tower capped with slowly rotating wooden sails. The interior vibrates with the sound of grinding stone.",
+            "monsters": ["miller"],
+            "items": ["sack_of_flour"]
+        },
+        {
+            "id": "tpl:irrigation",
+            "name": "Irrigation Canal",
+            "terrain": "shallow_water",
+            "elevation": -1,
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "description": "A narrow stone-lined channel carrying cool water to the thirsty crops.",
+            "monsters": ["water_snake"],
+            "items": []
+        },
+        {
+            "id": "tpl:fenced_pasture",
+            "name": "Fenced Pasture",
+            "terrain": "grass",
+            "elevation": 0,
+            "symbol": "{Colors.DARK_GRAY}#{Colors.RESET}",
+            "description": "A quiet paddock enclosed by a sturdy wooden fence. Life is peaceful here.",
+            "monsters": ["oxen", "sheep"],
+            "items": ["bundle_of_hay"]
+        }
+    ]
+}

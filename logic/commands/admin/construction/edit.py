@@ -12,7 +12,7 @@ def set_property(player, args):
     """
     Set properties of the current room or target.
     Usage: @set <attr> <value>
-    Attrs: name, desc, terrain, zone, symbol, elevation
+    Attrs: name, desc, terrain, zone, symbol, elevation, z
     """
     if not args:
         player.send_line("Usage: @set <attr> <value>. Categories: room, item, mob.")
@@ -20,19 +20,38 @@ def set_property(player, args):
         
     parts = args.split(maxsplit=1)
     attr = parts[0].lower()
-    val = parts[1] if len(parts) > 1 else ""
+    val_raw = parts[1] if len(parts) > 1 else ""
 
-    # Delegate to sharded logic if Category is specified
-    if attr in ["item", "mob", "class"]:
-        # These are handled in the main editor.py dispatcher
-        # But we could potentially shard them here too.
-        # For now, let's just handle 'room' or 'direct attr'
-        return
-    
     # Direct Room attribute setting
     r = player.room
-    if attr == "name": r.name = val
-    elif attr == "desc": r.description = val
+    
+    # Handle +- Operators
+    operator = None
+    val = val_raw
+    if val_raw.startswith("+"): 
+        operator = "+"
+        val = val_raw[1:].strip()
+    elif val_raw.startswith("-"):
+        operator = "-"
+        val = val_raw[1:].strip()
+
+    def apply_op(current, target, op, is_int=False):
+        if is_int:
+            try:
+                t_int = int(target)
+                if op == "+": return current + t_int
+                if op == "-": return current - t_int
+                return t_int
+            except: return current
+        else:
+            if op == "+": return str(current) + " " + str(target)
+            if op == "-": return str(current).replace(str(target), "").strip()
+            return str(target)
+
+    if attr == "name": 
+        r.name = apply_op(r.name, val, operator)
+    elif attr == "desc" or attr == "description": 
+        r.description = apply_op(r.description, val, operator)
     elif attr == "terrain": 
         construction_utils.update_room(r, terrain=val)
     elif attr == "zone":
@@ -40,9 +59,13 @@ def set_property(player, args):
         r.zone_id = val
         if val not in player.game.world.zones:
             player.game.world.zones[val] = Zone(val, f"Zone {val}")
-    elif attr == "elevation":
-        try: r.elevation = int(val)
-        except: pass
+    elif attr == "elevation" or attr == "elev":
+        r.elevation = apply_op(r.elevation, val, operator, is_int=True)
+    elif attr == "z":
+        r.z = apply_op(r.z, val, operator, is_int=True)
+        # Rebuild spatial index if Z changes
+        from logic.engines import spatial_engine
+        spatial_engine.invalidate()
     elif attr == "symbol":
         r.symbol = val
     else:

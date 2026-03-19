@@ -1,0 +1,46 @@
+{
+    "name": "enchanted_forest",
+    "description": "Luminous and magical woods of the Fae.",
+    "templates": [
+        {
+            "id": "tpl:fae_clearing",
+            "name": "Luminous Clearing",
+            "terrain": "grass",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.GREEN}*{Colors.RESET}",
+            "description": "A soft patch of petal-strewn grass. Sunbeams filter through the canopy like golden threads.",
+            "monsters": ["sprite_forest"],
+            "items": ["fae_dust"]
+        },
+        {
+            "id": "tpl:fairy_shrine",
+            "name": "Fairy Shrine",
+            "terrain": "holy",
+            "elevation": 2,
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}*{Colors.RESET}",
+            "description": "A small stone altar covered in glowing moss. Tiny lights dance around the perimeter.",
+            "monsters": ["sprite_elder"],
+            "items": ["crystal_shard"]
+        },
+        {
+            "id": "tpl:rune_circle",
+            "name": "Rune Circle",
+            "terrain": "shadow",
+            "elevation": 0,
+            "symbol": "{Colors.BOLD}{Colors.MAGENTA}o{Colors.RESET}",
+            "description": "Ancient stones arranged in a perfect circle. Faint blue runes pulse with an eery cadence.",
+            "monsters": ["forest_guardian"],
+            "items": ["ancient_relic"]
+        },
+        {
+            "id": "tpl:hollow_tree",
+            "name": "The Great Hollow",
+            "terrain": "forest",
+            "elevation": 0,
+            "symbol": "{Colors.BOLD}{Colors.WHITE}O{Colors.RESET}",
+            "description": "A massive, twisted oak with a hollow core large enough to stand in. It feels like a doorway to elsewhere.",
+            "monsters": [],
+            "items": ["twisted_root"]
+        }
+    ]
+}

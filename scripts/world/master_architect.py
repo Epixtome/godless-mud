@@ -175,8 +175,8 @@ class AethelgardArchitect:
                     "description": f"A vast expanse of {cell.replace('_', ' ')} within {zone_id.title()}.",
                     "terrain": str(cell),
                     "symbol": room_symbol,
-                    "x": int(x), "y": int(y), "z": int(z_level),
-                    "elevation": int(elevation),
+                    "x": int(x), "y": int(y), "z": 0,
+                    "elevation": int(z_level),
                     "items": []
                 }
                 

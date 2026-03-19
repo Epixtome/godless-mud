@@ -29,3 +29,13 @@ class Colors:
         import re
         ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
         return ansi_escape.sub('', text)
+
+    @staticmethod
+    def translate(text):
+        """Translates {Colors.X} tokens in a string."""
+        if not text: return ""
+        import re
+        def repl(match):
+            color_name = match.group(1).upper()
+            return getattr(Colors, color_name, "")
+        return re.sub(r'\{Colors\.([A-Za-z_]+)\}', repl, text)

@@ -6,7 +6,7 @@ Handles Kit management, Stencil selection, and the Builder HUD.
 import logic.handlers.state_manager as state_manager
 import logic.handlers.command_manager as command_manager
 from utilities.colors import Colors
-from utilities.mapper import TERRAIN_MAP
+from utilities.mapper import TERRAIN_PLANES, TERRAIN_ELEVS, TERRAIN_MAP
 import utilities.telemetry as telemetry
 import json
 import os
@@ -50,8 +50,16 @@ def building_mode(player, args):
     
     if sub == "off":
         player.builder_state["active"] = False
+        player.ignore_fog = False # Restore exploration fog for gameplay
         player.state = "normal"
         player.send_line(f"{Colors.YELLOW}Building Mode: DISABLED{Colors.RESET}")
+        return
+        
+    if sub == "on" or not sub:
+        player.builder_state["active"] = True
+        player.ignore_fog = True # Builders should always see the canvas
+        player.state = "building"
+        player.send_line(f"{Colors.GREEN}Building Mode: ENABLED (Vision: ON){Colors.RESET}")
         return
         
     if sub == "hud":
@@ -91,20 +99,56 @@ def handle_building_input(player, command_line):
     if cmd_name.isdigit():
         kit_command(player, cmd_name)
         return True
+        
+    # Hotkey Stencil Cycling
+    if cmd_name in ["[", "]"]:
+        k_name = player.builder_state.get("kit", "default")
+        k_data = _load_kit(k_name)
+        if k_data:
+            templates = k_data.get("templates", [])
+            idx = player.builder_state.get("stencil_index", 1)
+            if cmd_name == "[":
+                idx = idx - 1 if idx > 1 else len(templates)
+            else:
+                idx = idx + 1 if idx < len(templates) else 1
+            kit_command(player, str(idx))
+        return True
 
     # Unified architect mapping
     construction_map = {
-        "dig": "@dig", "link": "@link", "unlink": "@unlink",
-        "paint": "@paint", "paste": "@paste", "brush": "@brush",
+        "dig": "@auto dig", "link": "@link", "unlink": "@unlink",
+        "paint": "@paint", "paste": "@auto paste", "brush": "@auto brush",
+        "stitch": "@auto stitch", "vision": "@auto vision", "fog": "@auto vision", 
         "kit": "@kit", "drawer": "@kit", "stencil": "@kit",
-        "auto": "@auto", "vision": "@vision", "setlayer": "@setlayer",
+        "auto": "@auto", "setlayer": "@setlayer",
         "audit": "@audit", "fixids": "@fixids", "mark": "@mark",
-        "furnish": "@furnish", "stamp": "@stamp"
+        "furnish": "@furnish", "stamp": "@stamp", "set": "@set",
+        "elev": "@set elevation", "elevation": "@set elevation", "z": "@set z",
+        "info": "@roominfo", "roominfo": "@roominfo",
+        "n": "@architect_move", "s": "@architect_move", "e": "@architect_move", "w": "@architect_move",
+        "u": "@architect_move", "d": "@architect_move",
+        "north": "@architect_move", "south": "@architect_move", "east": "@architect_move", "west": "@architect_move",
+        "up": "@architect_move", "down": "@architect_move"
     }
 
     if cmd_name in construction_map:
-        real_cmd = construction_map[cmd_name]
-        command_manager.COMMANDS[real_cmd](player, args)
+        real_cmd_full = construction_map[cmd_name]
+        
+        # Split into command and predefined args (v7.0 Fix)
+        parts = real_cmd_full.split(maxsplit=1)
+        real_cmd = parts[0]
+        predefined_args = parts[1] if len(parts) > 1 else ""
+        
+        # Merge predefined args with user args
+        final_args = f"{predefined_args} {args}".strip()
+        
+        if real_cmd == "@architect_move":
+            command_manager.COMMANDS[real_cmd](player, cmd_name)
+        else:
+            if real_cmd in command_manager.COMMANDS:
+                command_manager.COMMANDS[real_cmd](player, final_args)
+            else:
+                player.send_line(f"{Colors.RED}System Error: Command {real_cmd} not found.{Colors.RESET}")
         return True
 
     return False
@@ -135,7 +179,8 @@ def kit_command(player, args):
             if _load_kit(target):
                 player.builder_state["kit"] = target
                 player.builder_state["stencil_index"] = 1
-                player.send_line(f"{Colors.GREEN}Kit Loaded: {Colors.BOLD}{target}{Colors.RESET}")
+                player.autobrush = True # Auto-enable brush mode
+                player.send_line(f"{Colors.GREEN}Kit Loaded: {target.upper()}. BRUSH DIPPED in first stencil. Auto-Brush: ON.{Colors.RESET}")
                 _show_kit_drawer(player, target, _load_kit(target))
             else:
                 player.send_line(f"Kit '{target}' not found in data/blueprints/kits/")
@@ -154,7 +199,9 @@ def kit_command(player, args):
         if k_data and 1 <= idx <= len(k_data.get("templates", [])):
             player.builder_state["stencil_index"] = idx
             stencil = k_data["templates"][idx-1]
-            player.send_line(f"{Colors.YELLOW}Stencil Selected: {Colors.BOLD}{stencil['name']}{Colors.RESET}")
+            player.autobrush = True # Auto-enable brush mode
+            player.builder_state.pop('brush_elevation', None) # Clear manual overrides
+            player.send_line(f"{Colors.YELLOW}BRUSH DIPPED in {Colors.BOLD}{stencil['name']}{Colors.RESET} (Auto-Brush: ON)")
             
             # Sync to brush settings for legacy compatibility
             if not hasattr(player, 'brush_settings'): player.brush_settings = {}
@@ -169,11 +216,11 @@ def _show_kit_drawer(player, kit_name, kit_data):
         return
 
     output = []
-    output.append(f"\n{Colors.BOLD}{Colors.LIGHT_CYAN}┌──────────────────────────────────────────────────┐{Colors.RESET}")
-    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}│ {Colors.WHITE}KIT DRAWER: {kit_name.upper():<35} {Colors.LIGHT_CYAN}│{Colors.RESET}")
-    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}├────┬───┬────────────────────────┬─────────────────┤{Colors.RESET}")
-    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}│ ID │ S │ NAME                   │ TERRAIN         │{Colors.RESET}")
-    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}├────┼───┼────────────────────────┼─────────────────┤{Colors.RESET}")
+    output.append(f"\n{Colors.BOLD}{Colors.LIGHT_CYAN}+--------------------------------------------------+{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}| {Colors.WHITE}KIT DRAWER: {kit_name.upper():<35} {Colors.LIGHT_CYAN}|{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}+-----+---+------------------------+-----------------+{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}| DIP | S | NAME                   | TERRAIN         |{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}+-----+---+------------------------+-----------------+{Colors.RESET}")
 
     for i, tpl in enumerate(kit_data.get("templates", []), 1):
         is_active = i == player.builder_state.get("stencil_index", 0)
@@ -182,12 +229,13 @@ def _show_kit_drawer(player, kit_name, kit_data):
         
         # Get character from map
         terrain = tpl.get('terrain', 'default')
-        symbol = tpl.get('symbol', TERRAIN_MAP.get(terrain, "."))
+        raw_symbol = tpl.get('symbol', TERRAIN_MAP.get(terrain, "."))
+        symbol = Colors.translate(raw_symbol)
         
-        line = f"{Colors.BOLD}{Colors.LIGHT_CYAN}│ {color}{i:<2}{marker} {Colors.LIGHT_CYAN}│ {symbol} {Colors.LIGHT_CYAN}│ {color}{tpl['name']:<22} {Colors.LIGHT_CYAN}│ {Colors.DARK_GRAY}{terrain:<15} {Colors.LIGHT_CYAN}│{Colors.RESET}"
+        line = f"{Colors.BOLD}{Colors.LIGHT_CYAN}| {color}{i:<3}{marker} {Colors.LIGHT_CYAN}| {symbol} {Colors.LIGHT_CYAN}| {color}{tpl['name']:<22} {Colors.LIGHT_CYAN}| {Colors.DARK_GRAY}{terrain:<15} {Colors.LIGHT_CYAN}|{Colors.RESET}"
         output.append(line)
 
-    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}└────┴───┴────────────────────────┴─────────────────┘{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}+-----+---+------------------------+-----------------+{Colors.RESET}")
     output.append(f"{Colors.DARK_GRAY}Select a number to switch stencil, or 'kit load <name>' to swap kits.{Colors.RESET}\n")
     
     player.send_line("\n".join(output))
@@ -216,12 +264,70 @@ def building_hud(player, args):
     bs = player.builder_state
     k_data = _load_kit(bs["kit"])
     
-    stencil_name = "None"
-    if k_data and 0 < bs["stencil_index"] <= len(k_data["templates"]):
-        stencil_name = k_data["templates"][bs["stencil_index"]-1]["name"]
+    def mode_label(name, active):
+        return f"{Colors.GREEN}{name}" if active else f"{Colors.DARK_GRAY}{name}"
+
+    modes = [
+        mode_label("Stitch", getattr(player, 'autostitch', False)),
+        mode_label("Brush", getattr(player, 'autobrush', False)),
+        mode_label("Dig", getattr(player, 'autodig', False))
+    ]
+    
+    elev = getattr(player.room, 'elevation', 0)
+    brush_elev = bs.get('brush_elevation', 'Auto')
+    builder_line = f"{Colors.DARK_GRAY}[ARCHITECT | Kit: {Colors.CYAN}{bs['kit']}{Colors.DARK_GRAY} | {' '.join(modes)} | Room: {Colors.WHITE}{elev}{Colors.DARK_GRAY} | Brush: {Colors.YELLOW}{brush_elev}{Colors.DARK_GRAY}]{Colors.RESET}"
+    player.send_line(builder_line)
+
+@command_manager.register("@architect_move", admin=True, category="admin_building")
+def architect_move(player, args):
+    """Special movement handler for the 'Go Ham' building experience."""
+    direction = _get_direction_label(args)
+    target_room = None
+    
+    # 1. Check if exit exists
+    if direction in player.room.exits:
+        target_id = player.room.exits[direction]
+        target_room = player.game.world.rooms.get(target_id)
         
-    status = f"{Colors.BOLD}{Colors.DARK_GRAY}[ ARCHITECT | Kit: {Colors.CYAN}{bs['kit']}{Colors.DARK_GRAY} | Stencil: {Colors.YELLOW}{stencil_name}{Colors.DARK_GRAY} | Pos: {player.room.x},{player.room.y},{player.room.z} ]{Colors.RESET}"
-    player.send_line(status)
+        # BRUSH MODE: Update existing room
+        if target_room and getattr(player, 'autobrush', False):
+            k_data = _load_kit(player.builder_state["kit"])
+            if k_data:
+                idx = player.builder_state["stencil_index"]
+                if 0 < idx <= len(k_data["templates"]):
+                    stencil = k_data["templates"][idx-1]
+                    import logic.commands.admin.construction.utils as const_utils
+                    if stencil:
+                        # Pop internal keys to avoid TypeError in update_room
+                        s_copy = dict(stencil)
+                        s_copy.pop('id', None)
+                        s_copy.pop('z_offset', None)
+                        
+                        # Apply Manual Brush Overrides (V7.0 Persistence)
+                        if 'brush_elevation' in player.builder_state:
+                            s_copy['elevation'] = player.builder_state['brush_elevation']
+                            
+                        const_utils.update_room(target_room, **s_copy)
+                        
+                    player.send_line(f"{Colors.YELLOW}[Brushed] {target_room.name}{Colors.RESET} (Elev: {target_room.elevation})")
+    else:
+        # DIG MODE: Create room if autodig is on
+        if getattr(player, 'autodig', False):
+            command_manager.COMMANDS["@dig"](player, direction)
+            # Re-read target since @dig just created it
+            if direction in player.room.exits:
+                 target_id = player.room.exits[direction]
+                 target_room = player.game.world.rooms.get(target_id)
+
+    # 2. Perform Movement
+    if target_room:
+        player.room.players.remove(player)
+        target_room.players.append(player)
+        player.room = target_room
+        command_manager.COMMANDS["look"](player, "")
+    else:
+        # standard move if not digging
+        player.send_line("You cannot go that way. (Use 'auto dig on' to expand)")
 
 @command_manager.register("@mark", admin=True, category="admin_tools")
 def mark_cmd(player, args):
@@ -229,3 +335,7 @@ def mark_cmd(player, args):
     if not args: return
     telemetry.log_build_marker(player, args, "")
     player.send_line(f"{Colors.GREEN}Marker Dropped: {Colors.BOLD}{args}{Colors.RESET}")
+
+def _get_direction_label(cmd_name):
+    d = {"n": "north", "s":"south", "e":"east", "w":"west", "u":"up", "d":"down"}
+    return d.get(cmd_name, cmd_name)

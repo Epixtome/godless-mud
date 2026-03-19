@@ -46,7 +46,8 @@ def dig(player, args):
                 new_room,
                 zone_id=bs.get('zone'),
                 terrain=bs.get('terrain'),
-                name=bs.get('name') if name == "New Room" else name # Override if default
+                name=bs.get('name') if name == "New Room" else name,
+                elevation=bs.get('elevation', 0)
             )
 
         # Autostitch if enabled
