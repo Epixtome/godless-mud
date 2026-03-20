@@ -14,6 +14,7 @@ class Room:
         self.shop_inventory = [] # List of item IDs sold here
         self.deity_id = None # ID of deity present here (for commune)
         self.terrain = "indoors"
+        self.base_terrain = "indoors"
         self.opacity = 0 # 0.0 (Transparent) to 1.0 (Opaque)
         self.elevation = 0 # -5 to +5 within the same z-plane
         self.traversal_cost = 1 # Base cost
@@ -42,6 +43,26 @@ class Room:
         # Blueprint Content (Persistent in Shards)
         self.blueprint_items = [] # List of prototype IDs/dicts for zone generation
         self.blueprint_monsters = [] # List of prototype IDs/dicts for zone generation
+
+    def apply_weather_effect(self, weather_id, config=None):
+        """
+        [V6.3] Advanced Weather Interaction. 
+        Shifts terrain and applies room-wide grammar modifications.
+        """
+        if not config: return
+        
+        # 1. Terrain Shifting (Grammar Drift)
+        shifts = config.get("terrain_shifts", {}).get(weather_id, {})
+        if self.base_terrain in shifts:
+            new_terrain = shifts[self.base_terrain]
+            if self.terrain != new_terrain:
+                self.terrain = new_terrain
+                self.dirty = True
+        else:
+            # Revert to base if weather no longer forces a shift
+            if self.terrain != self.base_terrain:
+                self.terrain = self.base_terrain
+                self.dirty = True
 
     def add_exit(self, direction, room):
         self.exits[direction] = room.id if hasattr(room, 'id') else str(room)
@@ -167,6 +188,7 @@ class Room:
         room.y = data.get('y', 0)
         room.z = data.get('z', 0)
         room.terrain = data.get('terrain', 'indoors')
+        room.base_terrain = room.terrain
         room.elevation = data.get('elevation', 0)
         room.traversal_cost = data.get('traversal_cost', 1)
         room.opacity = data.get('opacity', 0)

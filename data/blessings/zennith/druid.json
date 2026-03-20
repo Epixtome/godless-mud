@@ -1,0 +1,147 @@
+{
+    "blessings": {
+        "nature_strike": {
+            "id": "nature_strike",
+            "name": "Nature's Strike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A fundamental strike that resonates with the natural world. Generates small amounts of focus.",
+            "identity_tags": ["druid", "nature", "builder"],
+            "axis": "utility",
+            "action": "nature_strike",
+            "requirements": {
+                "class": "druid",
+                "stamina": 10,
+                "cooldown": 2
+            },
+            "base_power": 10,
+            "scaling": {
+                "scaling_tag": "nature",
+                "multiplier": 1.0
+            }
+        },
+        "saturate": {
+            "id": "saturate",
+            "name": "Saturate",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Drench the target in pressurized water, applying [Wet] for 10s. The foundation for Elemental and Frost grammar.",
+            "identity_tags": ["druid", "water", "nature", "setup"],
+            "axis": "elemental",
+            "action": "saturate",
+            "requirements": {
+                "class": "druid",
+                "concentration": 15,
+                "cooldown": 3
+            },
+            "on_hit": {
+                "apply_status": "wet",
+                "duration": 10
+            }
+        },
+        "gale_force": {
+            "id": "gale_force",
+            "name": "Gale Force",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: A direct burst of wind that applies [Off-Balance]. Effectively disrupts the target's tempo.",
+            "identity_tags": ["druid", "wind", "nature", "setup"],
+            "axis": "position",
+            "action": "gale_force",
+            "requirements": {
+                "class": "druid",
+                "concentration": 20,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "off_balance",
+                "duration": 3
+            }
+        },
+        "snap_freeze": {
+            "id": "snap_freeze",
+            "name": "Snap Freeze",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff: Flash-freezes the target. If target is [Wet], applies [Frozen]. Deals high damage and locks movement.",
+            "identity_tags": ["druid", "ice", "nature", "payoff"],
+            "axis": "elemental",
+            "action": "snap_freeze",
+            "requirements": {
+                "class": "druid",
+                "concentration": 30,
+                "cooldown": 5
+            },
+            "base_power": 25,
+            "scaling": {
+                "scaling_tag": "nature",
+                "multiplier": 1.5
+            }
+        },
+        "tempest_strike": {
+            "id": "tempest_strike",
+            "name": "Tempest Strike",
+            "tier": 5,
+            "cost": 50,
+            "description": "Finisher: Call down the wrath of the storm. Deals massive AoE damage. Damage is doubled to [Wet] targets in the room.",
+            "identity_tags": ["druid", "storm", "lightning", "nature", "payoff"],
+            "axis": "elemental",
+            "action": "tempest_strike",
+            "requirements": {
+                "class": "druid",
+                "concentration": 50,
+                "cooldown": 12
+            },
+            "base_power": 45,
+            "scaling": {
+                "scaling_tag": "nature",
+                "multiplier": 2.2
+            }
+        },
+        "barkskin": {
+            "id": "barkskin",
+            "name": "Barkskin",
+            "tier": 2,
+            "cost": 15,
+            "description": "Defense: Toughen your skin with magical bark, gaining +20% Mitigation and resistance to [Bleeding] for 15s.",
+            "identity_tags": ["druid", "nature", "defense"],
+            "axis": "endurance",
+            "action": "barkskin",
+            "requirements": {
+                "class": "druid",
+                "concentration": 15,
+                "cooldown": 10
+            }
+        },
+        "nature_stride": {
+            "id": "nature_stride",
+            "name": "Nature's Stride",
+            "tier": 2,
+            "cost": 10,
+            "description": "Mobility: Briefly transition into a nature-phase. Removes [Stalled] and allows for instant escape from engagement.",
+            "identity_tags": ["druid", "nature", "mobility"],
+            "axis": "position",
+            "action": "nature_stride",
+            "requirements": {
+                "class": "druid",
+                "stamina": 10,
+                "cooldown": 6
+            }
+        },
+        "natural_focus": {
+            "id": "natural_focus",
+            "name": "Natural Focus",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Commune with the currents of the world, restoring 40 Concentration and 20 Stamina.",
+            "identity_tags": ["druid", "nature", "utility"],
+            "axis": "endurance",
+            "action": "natural_focus",
+            "requirements": {
+                "class": "druid",
+                "stamina": 5,
+                "cooldown": 15
+            }
+        }
+    }
+}

@@ -1,159 +1,144 @@
 {
-    "deity": "zenith",
-    "archetype": "monk",
-    "description": "A master of internal rhythm and fluid motion.",
     "blessings": {
-        "crane_stance": {
-            "id": "crane_stance",
-            "name": "Crane Stance",
-            "description": "The Wind. Doubled Stamina regeneration and increased Evasion. Reaching Peak Flow (5) grants [Evasive]. Reduces stance-sensitive cooldowns by 30%.",
-            "identity_tags": ["monk", "martial", "speed", "reflex", "stance"],
-            "logic_type": "special",
-            "action": "crane_stance",
-            "requirements": { 
-                "class": "monk",
-                "stamina": 15,
-                "cooldown": 2
-            }
-        },
-        "turtle_stance": {
-            "id": "turtle_stance",
-            "name": "Turtle Stance",
-            "description": "The Mountain. +15% Damage Mitigation and +20 Balance Regen. Grants immunity to [Prone/Knockback]. Increases stance-sensitive cooldowns by 20%.",
-            "identity_tags": ["monk", "martial", "protection", "weight", "stance"],
-            "logic_type": "special",
-            "action": "turtle_stance",
-            "requirements": { 
-                "class": "monk",
-                "stamina": 15,
-                "cooldown": 2
-            }
-        },
-        "triple_kick": {
-            "id": "triple_kick",
-            "name": "Triple Kick",
-            "tier": 3,
-            "cost": 30,
-            "description": "Speed: Three rapid hits. Drains target stamina.",
-            "identity_tags": ["monk", "martial", "speed", "disruption"],
-            "logic_type": "standard",
-            "action": "triple_kick",
+        "quick_strike": {
+            "id": "quick_strike",
+            "name": "Quick Strike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A rapid, low-impact strike. Generates 15 Stamina and +1 Chi. Core builder for Chi payoffs.",
+            "identity_tags": ["martial", "strike", "builder", "setup"],
+            "axis": "tempo",
+            "action": "quick_strike",
             "requirements": {
                 "class": "monk",
-                "stamina": 30,
-                "cooldown": 2
+                "stamina": 10
             },
-            "base_power": 12,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 1.2
+            "base_power": 12
+        },
+        "palm_strike": {
+            "id": "palm_strike",
+            "name": "Palm Strike",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: A direct, internal impact. Applies [Off-Balance] for 3 ticks. Generates +2 Chi.",
+            "identity_tags": ["martial", "strike", "disruption", "setup"],
+            "axis": "tempo",
+            "action": "palm_strike",
+            "requirements": {
+                "class": "monk",
+                "stamina": 15,
+                "cooldown": 4
             },
-            "on_hit": { "stamina_damage": 5 }
-        },
-        "stand": {
-            "id": "stand",
-            "name": "Stand",
-            "identity_tags": ["monk", "martial", "utility"],
-            "logic_type": "recovery",
-            "action": "stand",
-            "requirements": { "stamina": 10 }
-        },
-        "iron_palm": {
-            "id": "iron_palm",
-            "name": "Iron Palm",
-            "description": "Consumes 5 Flow to deal a stunning blow.",
-            "identity_tags": ["monk", "martial", "disruption", "debuff"],
-            "logic_type": "standard",
-            "action": "iron_palm",
-            "requirements": { "stamina": 25, "cooldown": 5 },
+            "on_hit": {
+                "apply_status": "off_balance",
+                "duration": 3
+            },
+            "base_power": 14,
             "scaling": {
                 "scaling_tag": "martial",
-                "multiplier": 1.2
-            }
-        },
-        "dragon_strike": {
-            "id": "dragon_strike",
-            "name": "Dragon Strike",
-            "tier": 4,
-            "cost": 40,
-            "description": "The Breaker. Consumes all Flow to unleash a devastating finishing attack. Deals 8d8 base damage.",
-            "identity_tags": ["monk", "martial", "finisher"],
-            "logic_type": "standard",
-            "action": "dragon_strike",
-            "requirements": { "class": "monk", "stamina": 40, "cooldown": 10 },
-            "damage_dice": "8d8",
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 1.5
-            }
-        },
-        "meditate": {
-            "id": "meditate",
-            "name": "Meditate",
-            "description": "Recover 40 stamina, but become unsettled for 2s.",
-            "identity_tags": ["monk", "utility", "recovery"],
-            "logic_type": "special",
-            "action": "meditate",
-            "requirements": { "stamina": 0, "cooldown": 15 },
-            "scaling": {
-                "scaling_tag": "utility",
                 "multiplier": 1.0
             }
         },
-        "flow_mastery": {
-            "id": "flow_mastery",
-            "name": "Flow Mastery",
-            "description": "Engage a high-rhythm defensive state for 3s. Parries any physical attack that isn't [Weight] or [Sweep]. Success grants [Riposte].",
-            "identity_tags": ["monk", "martial", "reflex", "reaction"],
-            "logic_type": "special",
-            "action": "flow_mastery",
-            "requirements": { "class": "monk", "stamina": 20, "cooldown": 8 },
-            "base_power": 5,
+        "dragon_kick": {
+            "id": "dragon_kick",
+            "name": "Dragon Kick",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Consumes all Chi for devastating force. Deals +20% bonus damage per Chi spent. If target is [Prone], the impact causes [Staggered].",
+            "identity_tags": ["martial", "strike", "lethal", "payoff"],
+            "axis": "tempo",
+            "action": "dragon_kick",
+            "requirements": {
+                "class": "monk",
+                "chi": 1,
+                "cooldown": 6
+            },
+            "base_power": 25,
             "scaling": {
                 "scaling_tag": "martial",
-                "multiplier": 0.5
-            },
-            "effects": [
-                {
-                    "id": "flow_mastery",
-                    "duration": 3,
-                    "target": "self"
-                }
-            ]
+                "multiplier": 2.0
+            }
         },
-        "monk_passives": {
-            "id": "monk_passives",
-            "name": "Monk Passives",
-            "logic_type": "passive",
-            "identity_tags": ["monk", "passive"],
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "status_id": "tiger_stance",
-                    "multiplier": 1.25
-                },
-                {
-                    "type": "mitigation_mod",
-                    "status_id": "turtle_stance",
-                    "multiplier": 0.85
-                },
-                {
-                    "type": "cost_mod",
-                    "status_id": "tiger_stance",
-                    "resource": "stamina",
-                    "multiplier": 2.0
-                },
-                {
-                    "type": "cooldown_mod",
-                    "status_id": "crane_stance",
-                    "multiplier": 0.7
-                },
-                {
-                    "type": "cooldown_mod",
-                    "status_id": "turtle_stance",
-                    "multiplier": 1.2
-                }
-            ]
+        "chi_burst": {
+            "id": "chi_burst",
+            "name": "Chi Burst",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: Release internal energy in a shockwave. Consumes 3 Chi to deal moderate damage and apply [Staggered] to all enemies in the room.",
+            "identity_tags": ["martial", "chi", "aoe", "payoff"],
+            "axis": "position",
+            "action": "chi_burst",
+            "requirements": {
+                "class": "monk",
+                "chi": 3,
+                "cooldown": 10
+            },
+            "base_power": 20
+        },
+        "meditation": {
+            "id": "meditation",
+            "name": "Meditation",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Still your mind to recover. Restores 30% of Maximum Health and 50 Stamina. Causes [Stalled] for 2 ticks.",
+            "identity_tags": ["martial", "focus", "utility"],
+            "axis": "endurance",
+            "action": "meditation",
+            "requirements": {
+                "class": "monk",
+                "stamina": 0,
+                "cooldown": 60
+            }
+        },
+        "iron_fist": {
+            "id": "iron_fist",
+            "name": "Iron Fist",
+            "tier": 5,
+            "cost": 30,
+            "description": "Finisher: A single, armor-shattering blow. Deals 3x damage against [Off-Balance] or [Staggered] targets.",
+            "identity_tags": ["martial", "strike", "lethal", "finisher"],
+            "axis": "tempo",
+            "action": "iron_fist",
+            "requirements": {
+                "class": "monk",
+                "stamina": 30,
+                "cooldown": 15
+            },
+            "base_power": 50,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.0
+            }
+        },
+        "flying_kick": {
+            "id": "flying_kick",
+            "name": "Flying Kick",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Close the distance with an aerial strike. Clears [Slowed] and grants [Haste] for 2 ticks.",
+            "identity_tags": ["martial", "speed", "mobility"],
+            "axis": "position",
+            "action": "flying_kick",
+            "requirements": {
+                "class": "monk",
+                "stamina": 25,
+                "cooldown": 8
+            }
+        },
+        "empty_mind": {
+            "id": "empty_mind",
+            "name": "Empty Mind",
+            "tier": 2,
+            "cost": 20,
+            "description": "Defense: Enter a state of pure reaction. Grants [Evasive] for 4 ticks, giving a 60% chance to negate incoming strikes.",
+            "identity_tags": ["martial", "focus", "defense"],
+            "axis": "endurance",
+            "action": "empty_mind",
+            "requirements": {
+                "class": "monk",
+                "stamina": 20,
+                "cooldown": 12
+            }
         }
     }
 }

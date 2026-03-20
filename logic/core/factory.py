@@ -53,7 +53,7 @@ def get_monster(prototype_id, world):
         # Fallback for weird objects or classes
         data = vars(proto_data)
 
-    from models import Monster
+    from models.entities import Monster
     # Ensure monster inherits all requirements from prototype
     mob = Monster(
         name=data.get('name', "Unknown"),
@@ -73,6 +73,40 @@ def get_monster(prototype_id, world):
                 setattr(mob, k, v)
             
     return mob
+
+def get_structure(prototype_id, world):
+    """
+    [V6.5] Creates a new structure instance from a prototype.
+    Structures share the monster prototype database but use the Structure model.
+    """
+    from models.entities import Structure
+    proto_data = world.monsters.get(prototype_id)
+    if not proto_data:
+        logger.error(f"Factory Error: Structure Prototype '{prototype_id}' not found.")
+        return None
+
+    # Handle standard data merging
+    data = proto_data.to_dict() if hasattr(proto_data, 'to_dict') else proto_data
+    
+    struct = Structure(
+        name=data.get('name', "Unknown Structure"),
+        description=data.get('description', "A fixed mechanical object."),
+        hp=data.get('hp', 100),
+        damage=data.get('damage', 0),
+        tags=data.get('tags', ["structure"]),
+        prototype_id=prototype_id,
+        game=getattr(world, 'game', None)
+    )
+    
+    # Default stationary logic if not in prototype
+    struct.is_stationary = True
+    
+    # Generic attribute back-fill
+    for k, v in data.items():
+        if k not in ['name', 'description', 'hp', 'damage', 'tags', 'id']:
+            setattr(struct, k, v)
+            
+    return struct
 
 def instantiate_from_state(data, world):
     """
@@ -96,9 +130,9 @@ def instantiate_from_state(data, world):
         return create_item_from_dict(merged_data)
         
     elif e_type == 'monster':
-        proto = world.monsters.get(p_id) if p_id else {}
-        if hasattr(proto, 'to_dict'): proto = proto.to_dict()
-        merged_data = {**proto, **data}
         return get_monster(p_id, world) if p_id else None
+        
+    elif e_type == 'structure':
+        return get_structure(p_id, world) if p_id else None
 
     return None

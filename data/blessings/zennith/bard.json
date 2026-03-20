@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "discordant_note": {
+            "id": "discordant_note",
+            "name": "Discordant Note",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A jarring auditory strike. Deals minor sonic damage. Generates 15 Stamina and +5 Rhythm. No cooldown.",
+            "identity_tags": ["magic", "sound", "builder", "setup"],
+            "axis": "tempo",
+            "action": "discordant_note",
+            "requirements": {
+                "class": "bard",
+                "stamina": 10
+            },
+            "base_power": 12
+        },
+        "fascinate": {
+            "id": "fascinate",
+            "name": "Fascinate",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Weave a captivating melody. Applies [Dazed] (4 ticks) and reduces target [Speed] by 20%.",
+            "identity_tags": ["magic", "sound", "mind", "setup"],
+            "axis": "tempo",
+            "action": "fascinate",
+            "requirements": {
+                "class": "bard",
+                "stamina": 20,
+                "cooldown": 5
+            },
+            "on_hit": {
+                "apply_status": "dazed",
+                "duration": 4
+            }
+        },
+        "echoing_verse": {
+            "id": "echoing_verse",
+            "name": "Echoing Verse",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Mark the target with a resonating verse. Applies [Marked] for 8 ticks. Auditory damage against this target is increased by 25%.",
+            "identity_tags": ["magic", "sound", "vision", "setup"],
+            "axis": "vision",
+            "action": "echoing_verse",
+            "requirements": {
+                "class": "bard",
+                "stamina": 15,
+                "cooldown": 8
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 8
+            }
+        },
+        "crescendo": {
+            "id": "crescendo",
+            "name": "Crescendo",
+            "tier": 4,
+            "cost": 35,
+            "description": "Payoff/Finisher: The final, deafening peak of your performance. Consumes [Dazed] to deal 3x damage and apply [Staggered] (2 ticks).",
+            "identity_tags": ["magic", "sound", "lethal", "payoff", "finisher"],
+            "axis": "tempo",
+            "action": "crescendo",
+            "requirements": {
+                "class": "bard",
+                "stamina": 35,
+                "cooldown": 6
+            },
+            "base_power": 35,
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 2.5
+            }
+        },
+        "soul_requiem": {
+            "id": "soul_requiem",
+            "name": "Soul Requiem",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff/AOE: A mournful dirge. Deals moderate sonic damage to all [Marked] enemies in the room and heals all allies for 10% health.",
+            "identity_tags": ["magic", "sound", "aoe", "payoff"],
+            "axis": "endurance",
+            "action": "soul_requiem",
+            "requirements": {
+                "class": "bard",
+                "stamina": 30,
+                "cooldown": 12
+            },
+            "base_power": 25
+        },
+        "serenade_of_safety": {
+            "id": "serenade_of_safety",
+            "name": "Serenade of Safety",
+            "tier": 2,
+            "cost": 20,
+            "description": "Defense: A protective lullaby. Grants [Shielded] and [Braced] for 4 ticks to yourself and all allies in the room.",
+            "identity_tags": ["magic", "sound", "protection", "defense"],
+            "axis": "endurance",
+            "action": "serenade_of_safety",
+            "requirements": {
+                "class": "bard",
+                "stamina": 20,
+                "cooldown": 15
+            }
+        },
+        "allegro_step": {
+            "id": "allegro_step",
+            "name": "Allegro Step",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Teleport behind an enemy or ally. Grants [Haste] for 2 ticks and clears [Slowed].",
+            "identity_tags": ["magic", "speed", "mobility"],
+            "axis": "position",
+            "action": "allegro_step",
+            "requirements": {
+                "class": "bard",
+                "stamina": 25,
+                "cooldown": 8
+            }
+        },
+        "hymn_of_regeneration": {
+            "id": "hymn_of_regeneration",
+            "name": "Hymn of Regeneration",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Committing to a low HoT aura. Heals self and allies for 2% HP per tick for 10 ticks. Consumes all your active Rhythm.",
+            "identity_tags": ["magic", "sound", "healing", "utility"],
+            "axis": "endurance",
+            "action": "hymn_of_regeneration",
+            "requirements": {
+                "class": "bard",
+                "stamina": 0,
+                "cooldown": 30
+            }
+        }
+    }
+}

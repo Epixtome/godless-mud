@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "reckoning": {
+            "id": "reckoning",
+            "name": "Reckoning",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A swift, holy strike. Generates 15 Stamina and +5 Concentration. Deals minor divine damage.",
+            "identity_tags": ["divine", "strike", "builder", "setup"],
+            "axis": "tempo",
+            "action": "reckoning",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 10
+            },
+            "base_power": 12
+        },
+        "radiant_flash": {
+            "id": "radiant_flash",
+            "name": "Radiant Flash",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Release a blinding burst of divine light. Applies [Blinded] for 4 ticks. Core setup for Holy Smite.",
+            "identity_tags": ["divine", "light", "vision", "setup"],
+            "axis": "vision",
+            "action": "radiant_flash",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 20,
+                "cooldown": 5
+            },
+            "on_hit": {
+                "apply_status": "blinded",
+                "duration": 4
+            }
+        },
+        "seal_of_justice": {
+            "id": "seal_of_justice",
+            "name": "Seal of Justice",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Brand the target with a divine seal. Applies [Marked] and [Shackled] for 6 ticks.",
+            "identity_tags": ["divine", "spirit", "vision", "setup"],
+            "axis": "vision",
+            "action": "seal_of_justice",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 15,
+                "cooldown": 8
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 6
+            }
+        },
+        "holy_smite": {
+            "id": "holy_smite",
+            "name": "Holy Smite",
+            "tier": 3,
+            "cost": 35,
+            "description": "Payoff/Finisher: Channel divine wrath into your weapon. Deals 3x damage against [Blinded] or [Marked] targets. If target is [Shackled], it also deals [Dazed] for 2 ticks.",
+            "identity_tags": ["divine", "strike", "lethal", "payoff", "finisher"],
+            "axis": "endurance",
+            "action": "holy_smite",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 35,
+                "cooldown": 6
+            },
+            "base_power": 35,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.0
+            }
+        },
+        "consecration": {
+            "id": "consecration",
+            "name": "Consecration",
+            "tier": 4,
+            "cost": 30,
+            "description": "Payoff/AOE: Hallow the ground beneath you. Deals moderate divine damage to all enemies in the room and heals allies for 5% of their max HP per tick for 5 ticks.",
+            "identity_tags": ["divine", "magic", "aoe", "payoff"],
+            "axis": "endurance",
+            "action": "consecration",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 30,
+                "cooldown": 15
+            },
+            "base_power": 25
+        },
+        "divine_grace": {
+            "id": "divine_grace",
+            "name": "Divine Grace",
+            "tier": 2,
+            "cost": 20,
+            "description": "Defense: Surround yourself with protective favor. Grants [Shielded] for 4 ticks. Each hit you absorb restores 10 Concentration.",
+            "identity_tags": ["divine", "protection", "defense"],
+            "axis": "endurance",
+            "action": "divine_grace",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 20,
+                "cooldown": 10
+            }
+        },
+        "pursuit_of_justice": {
+            "id": "pursuit_of_justice",
+            "name": "Pursuit of Justice",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Burst forward with preternatural speed towards a [Marked] target. Clears [Slowed] and grants [Haste] for 2 ticks.",
+            "identity_tags": ["divine", "speed", "mobility"],
+            "axis": "position",
+            "action": "pursuit_of_justice",
+            "requirements": {
+                "class": "paladin",
+                "stamina": 25,
+                "cooldown": 8
+            }
+        },
+        "lay_on_hands": {
+            "id": "lay_on_hands",
+            "name": "Lay on Hands",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: The divine touch that heals all wounds. Instantly restore 40% of an ally's maximum health. Consumes all your available [Concentration].",
+            "identity_tags": ["divine", "healing", "utility"],
+            "axis": "utility",
+            "action": "lay_on_hands",
+            "requirements": {
+                "class": "paladin",
+                "concentration_percent": 100,
+                "cooldown": 60
+            }
+        }
+    }
+}

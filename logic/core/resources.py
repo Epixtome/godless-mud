@@ -142,6 +142,25 @@ def modify_resource(entity, resource, amount, source="System", context="Adjustme
     if log:
         telemetry.log_resource_delta(entity, resource, amount, source, context=context)
 
+def get_resource(entity, resource):
+    """
+    Returns the current value of a resource, handling storage location (ext_state or resources).
+    """
+    if str(resource).lower() == "hp":
+        return getattr(entity, "hp", 0)
+
+    kit_id = getattr(entity, "active_kit", {}).get("id", "")
+    definition = resource_registry.get_definition(str(kit_id), resource) if kit_id else None
+
+    if definition and hasattr(entity, "ext_state") and entity.active_class:
+        target_dict = entity.ext_state.get(entity.active_class, {})
+        return target_dict.get(resource, 0)
+    
+    if hasattr(entity, "resources"):
+        return entity.resources.get(resource, 0)
+    
+    return 0
+
 def calculate_balance_regen(entity):
     """Calculates balance (posture) regeneration per tick."""
     max_bal = 100

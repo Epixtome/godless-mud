@@ -74,5 +74,5 @@ def die(mob):
 
 def get_combat_rating(mob):
     """[V6.0] Calculates the Godless Combat Rating (GCR) for a monster."""
-    from logic.core.utils import rating_engine
-    return rating_engine.calculate_entity_rating(mob)
+    from logic.core.math import rating
+    return rating.calculate_entity_rating(mob)

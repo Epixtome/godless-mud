@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "double_tap": {
+            "id": "double_tap",
+            "name": "Double Tap",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: Two quick shots to the center mass. Deals physical damage and generates 15 Stamina and +1 Bullet. No cooldown.",
+            "identity_tags": ["martial", "gun", "builder", "setup"],
+            "axis": "tempo",
+            "action": "double_tap",
+            "requirements": {
+                "class": "gunner",
+                "stamina": 10
+            },
+            "base_power": 12
+        },
+        "flashbang": {
+            "id": "flashbang",
+            "name": "Flashbang",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: High-intensity magnesium flare. Applies [Blinded] group-wide (4 ticks). Deals minimal fire damage.",
+            "identity_tags": ["martial", "gun", "disruption", "setup"],
+            "axis": "vision",
+            "action": "flashbang",
+            "requirements": {
+                "class": "gunner",
+                "stamina": 20,
+                "cooldown": 6
+            },
+            "on_hit": {
+                "apply_status": "blinded",
+                "duration": 4
+            }
+        },
+        "hollow_point": {
+            "id": "hollow_point",
+            "name": "Hollow Point",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Specialized rounds focused on tissue damage. Applies [Bleeding] (6 ticks) and [Marked] (8 ticks).",
+            "identity_tags": ["martial", "gun", "endurance", "setup"],
+            "axis": "endurance",
+            "action": "hollow_point",
+            "requirements": {
+                "class": "gunner",
+                "stamina": 15,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "bleeding",
+                "duration": 6
+            }
+        },
+        "gunner_headshot": {
+            "id": "gunner_headshot",
+            "name": "Headshot",
+            "tier": 5,
+            "cost": 40,
+            "description": "Finisher: Calculated execution. Deals 4x damage if target is [Blinded], [Stunned], or [Exposed]. Consumes all Bullets for bonus accuracy.",
+            "identity_tags": ["martial", "gun", "lethal", "payoff", "finisher"],
+            "axis": "lethality",
+            "action": "gunner_headshot",
+            "requirements": {
+                "class": "gunner",
+                "stamina": 40,
+                "cooldown": 15
+            },
+            "base_power": 65,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 4.0
+            }
+        },
+        "buckshot": {
+            "id": "buckshot",
+            "name": "Buckshot",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff/AOE: Spread fire. Deals damage to 3 targets in a cone. 2x damage if target is within melee range.",
+            "identity_tags": ["martial", "gun", "aoe", "payoff"],
+            "axis": "endurance",
+            "action": "buckshot",
+            "requirements": {
+                "class": "gunner",
+                "stamina": 30,
+                "cooldown": 8
+            },
+            "base_power": 30
+        },
+        "covering_fire": {
+            "id": "covering_fire",
+            "name": "Covering Fire",
+            "tier": 2,
+            "cost": 25,
+            "description": "Defense/Reaction: Suppress their movement. For the next 6 ticks, you automatically counter-attack anyone who moves or hits you with a [Staggered] shot.",
+            "identity_tags": ["martial", "gun", "protection", "defense"],
+            "axis": "position",
+            "action": "covering_fire",
+            "requirements": {
+                "class": "gunner",
+                "stamina": 25,
+                "cooldown": 20
+            }
+        },
+        "tactical_slide": {
+            "id": "tactical_slide",
+            "name": "Tactical Slide",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Slide beneath their reach. Move a short distance, reload +2 Bullets and clear all [Pinned] states.",
+            "identity_tags": ["martial", "speed", "mobility"],
+            "axis": "position",
+            "action": "tactical_slide",
+            "requirements": {
+                "class": "gunner",
+                "stamina": 25,
+                "cooldown": 10
+            }
+        },
+        "rapid_fire": {
+            "id": "rapid_fire",
+            "name": "Rapid Fire",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Unleash the lead. Buff: Increases Attack Speed by 100% for 8s. Consumes 10 Stamina per second while active.",
+            "identity_tags": ["martial", "gun", "buff", "utility"],
+            "axis": "utility",
+            "action": "rapid_fire",
+            "requirements": {
+                "class": "gunner",
+                "stamina": 0,
+                "cooldown": 60
+            }
+        }
+    }
+}

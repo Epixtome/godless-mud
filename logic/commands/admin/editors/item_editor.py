@@ -46,6 +46,14 @@ def _handle_set_item(player, args, pre_resolved_item=None):
                 scaling[k.lower()] = float(v)
             item.scaling = scaling
         except: return False, "Format: tag:val (e.g. fire:1.0 martial:0.5)"
+    elif attr in ["tags", "tag"]:
+        try:
+            tags = {}
+            for pair in value.split():
+                k, v = pair.split(':')
+                tags[k] = int(v) if v.isdigit() else v
+            item.tags = tags
+        except: return False, "Format: tag:val (e.g. G_DUR_PRONE:2 fire:1)"
     else:
         return False, f"Unknown item attribute '{attr}'."
 
@@ -64,7 +72,7 @@ def _show_editor_dashboard(player, target):
     player.send_line(f"ID: {getattr(target, 'prototype_id', 'Instance')}")
     fields = [("Name", "name"), ("Desc", "description"), ("Type", "type"), ("Slot", "slot"),
               ("Damage", "damage_dice"), ("Defense", "defense"), ("Value", "value"),
-              ("Scaling", "scaling"), ("Flags", "flags"), ("Effects", "effects")]
+              ("Scaling", "scaling"), ("Tags", "tags"), ("Flags", "flags"), ("Effects", "effects")]
     for label, attr in fields:
         val = getattr(target, attr, "")
         player.send_line(f"{Colors.CYAN}{label:<10}{Colors.RESET}: {val}")

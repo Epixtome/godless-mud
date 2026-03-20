@@ -44,7 +44,8 @@ def handle_iron_stance(player, skill, args, target=None):
 @register("triple_kick")
 def handle_triple_kick(player, skill, args, target=None):
     """
-    Builder: Three rapid hits. Generates 1 Chi each.
+    Setup/Builder: Three hits to generate Chi.
+    Final hit applies [Off-Balance] if the target is high Heat.
     """
     target = get_target(player, args, target)
     if not target: return None, True
@@ -58,34 +59,53 @@ def handle_triple_kick(player, skill, args, target=None):
         resources.modify_resource(player, 'chi', 1, source="Combat")
         hits += 1
     
+    # [V6.0] Grammar Check: Off-Balance synergy
+    if hits == 3 and getattr(target, 'resources', {}).get("heat", 0) > 30:
+         effects.apply_effect(target, "off_balance", 3)
+         player.send_line(f"{Colors.MAGENTA}Your final kick shatters {target.name}'s posture!{Colors.RESET}")
+
     player.send_line(f"{Colors.CYAN}[+] Generated {hits} Chi.{Colors.RESET}")
     _consume_resources(player, skill)
     return target, True
 
-@register("snap_kick")
-def handle_snap_kick(player, skill, args, target=None):
+@register("leg_sweep")
+def handle_leg_sweep(player, skill, args, target=None):
     """
-    Utility: Lightning fast interrupt.
+    Setup: Low kick to knock prone.
     """
     target = get_target(player, args, target)
     if not target: return None, True
     
-    player.send_line(f"{Colors.BOLD}{Colors.WHITE}Snap Kick!{Colors.RESET} You strike with blinding speed.")
+    player.send_line(f"{Colors.YELLOW}You drop low and sweep {target.name}'s legs!{Colors.RESET}")
     combat.handle_attack(player, target, player.room, player.game, blessing=skill)
     
-    if hasattr(target, 'current_action') and target.current_action:
-        target.current_action = None
-        player.send_line(f"{Colors.YELLOW}Success! You interrupted {target.name}'s action!{Colors.RESET}")
-        if hasattr(target, 'send_line'):
-            target.send_line(f"{Colors.RED}Your concentration is SHATTERED! Action interrupted.{Colors.RESET}")
-            
+    # Prone transition: Handled by [on_hit] in JSON, but we can add flavor
     _consume_resources(player, skill)
     return target, True
+
+@register("cloud_step")
+def handle_cloud_step(player, skill, args, target=None):
+    """
+    Mobility: Removes movement-blocking states.
+    """
+    player.send_line(f"{Colors.BOLD}{Colors.CYAN}Cloud Step!{Colors.RESET} You vanish in a blur of motion.")
+    
+    cleared = False
+    for state in ["stalled", "immobilized", "prone"]:
+        if effects.has_effect(player, state):
+            effects.remove_effect(player, state)
+            cleared = True
+            
+    if cleared:
+        player.send_line(f"{Colors.GREEN}You break free from restrictive states!{Colors.RESET}")
+        
+    _consume_resources(player, skill)
+    return None, True
 
 @register("seven_fists")
 def handle_seven_fists(player, skill, args, target=None):
     """
-    Reaction: Parry stance.
+    Defense/Reaction: Parry stance.
     """
     player.send_line(f"{Colors.BOLD}{Colors.YELLOW}You center your gravity, preparing to turn your enemies' momentum against them.{Colors.RESET}")
     effects.apply_effect(player, "seven_fists_active", 3)
@@ -96,7 +116,7 @@ def handle_seven_fists(player, skill, args, target=None):
 @register("dragon_strike")
 def handle_dragon_strike(player, skill, args, target=None):
     """
-    Payoff: Consumes all Chi for massive damage.
+    Payoff: Consumes Chi. Transitions [Prone] to [Staggered].
     """
     monk_state = player.ext_state.get('monk', {})
     chi_count = monk_state.get('chi', 0)
@@ -104,16 +124,17 @@ def handle_dragon_strike(player, skill, args, target=None):
     target = get_target(player, args, target)
     if not target: return None, True
 
-    # Dragon Strike focuses all internal energy
     player.send_line(f"{Colors.BOLD}{Colors.CYAN}DRAGON STRIKE!{Colors.RESET} You unleash a blinding burst of kinetic force!")
     
     # Scaling: +25% damage per point of Chi consumed
     bonus_mult = 1.0 + (chi_count * 0.25)
-    player.send_line(f"{Colors.YELLOW}[CHI] Consuming {chi_count} Chi for {int(chi_count * 25)}% bonus damage!{Colors.RESET}")
     
-    # Apply damage multiplier for this strike
+    # [V6.2] Grammar Transition: Prone -> Staggered
+    if effects.has_effect(target, "prone"):
+        effects.apply_effect(target, "staggered", 5)
+        player.send_line(f"{Colors.RED}The impact of your Dragon Strike leaves {target.name} REELING!{Colors.RESET}")
+
     player.monk_dragon_multiplier = bonus_mult
-    
     try:
         combat.handle_attack(player, target, player.room, player.game, blessing=skill)
     finally:
@@ -127,7 +148,7 @@ def handle_dragon_strike(player, skill, args, target=None):
 @register("centering")
 def handle_centering(player, skill, args, target=None):
     """
-    Utility: Consumes 2 Chi to heal.
+    Utility: Instantly recover from Off-Balance.
     """
     monk_state = player.ext_state.get('monk', {})
     if monk_state.get('chi', 0) < 2:
@@ -138,8 +159,11 @@ def handle_centering(player, skill, args, target=None):
     
     hp_heal = int(player.max_hp * 0.20)
     resources.modify_resource(player, "hp", hp_heal, source="Centering")
-    resources.modify_resource(player, "balance", 50, source="Centering")
     
+    if effects.has_effect(player, "off_balance"):
+        effects.remove_effect(player, "off_balance")
+        player.send_line(f"{Colors.CYAN}You instantly calm your posture.{Colors.RESET}")
+
     player.send_line(f"{Colors.GREEN}You center your mind, converting kinetic potential into inner peace.{Colors.RESET}")
     _consume_resources(player, skill)
     return None, True
@@ -147,26 +171,26 @@ def handle_centering(player, skill, args, target=None):
 @register("iron_palm")
 def handle_iron_palm(player, skill, args, target=None):
     """
-    Finisher: Requires target to be Dazed (set by Dragon Strike).
-    Ignores balance and armor for a single devastating strike.
+    Finisher: Massive damage payoff for States.
     """
     target = get_target(player, args, target)
     if not target: return None, True
-    # dazed:true requirement is already gated in auditor.check_requirements
 
     player.send_line(f"{Colors.BOLD}{Colors.RED}IRON PALM!{Colors.RESET} You channel every point of inner force into a single strike!")
-    player.room.broadcast(f"{Colors.RED}{player.name}'s palm shimmers with concentrated chi before striking {target.name}!{Colors.RESET}", exclude_player=player)
-
-    # Flag to bypass armor in the damage pipeline
-    player.iron_palm_active = True
-    try:
+    
+    # [V6.2] State Payoff Logic: Deals Bonus damage if Off-Balance or Staggered
+    active = getattr(target, 'status_effects', {})
+    if "off_balance" in active or "staggered" in active or "prone" in active:
+        # We use a temporary multiplier for this strike
+        player.iron_palm_active = True
+        try:
+            combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+        finally:
+            if hasattr(player, 'iron_palm_active'):
+                del player.iron_palm_active
+    else:
+        # Standard strike if no state
         combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-    finally:
-        if hasattr(player, 'iron_palm_active'):
-            del player.iron_palm_active
-
-    # Dazed has served its purpose — Iron Palm is a full combo ender
-    effects.remove_effect(target, "dazed", verbose=False)
 
     _consume_resources(player, skill)
     return target, True

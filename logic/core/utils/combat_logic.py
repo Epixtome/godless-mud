@@ -112,7 +112,7 @@ def calculate_damage(attacker: Any, victim: Optional[Any] = None, blessing: Any 
         mitigation *= 0.5
     
     # [V5.0] Modifier Event (Class Scaling: e.g., Monk Flow, Barbarian Berserk)
-    mod_ctx = {'attacker': attacker, 'target': victim, 'multiplier': 1.0, 'bonus_flat': 0, 'blessing': blessing}
+    mod_ctx = {'attacker': attacker, 'target': victim, 'multiplier': 1.0, 'bonus_flat': 0, 'blessing': blessing, 'tags': attack_tags}
     event_engine.dispatch("calculate_damage_modifier", mod_ctx)
     
     final_dmg = (raw * mod_ctx['multiplier']) + mod_ctx['bonus_flat']
@@ -187,6 +187,35 @@ def distribute_favor(player: 'Player', target: Any, game: Any) -> None:
             d_id = getattr(d, 'id', None)
             if d_id:
                 player.favor[d_id] = player.favor.get(d_id, 0) + splash
+
+def get_combat_rating(entity: Any) -> float:
+    """
+    [V6.5] Unified GCR (Godless Combat Rating) Calculator.
+    Standardizes power measurement for gating and difficulty scaling.
+    """
+    if not entity: return 0.0
+    
+    # 1. Base Vitality Rating (250 HP = 5.0 CR)
+    v_rating = getattr(entity, 'max_hp', 100) / 50.0
+    
+    # 2. Lethality Rating (75 DMG = 5.0 CR)
+    l_rating = getattr(entity, 'damage', 1) / 15.0
+    
+    # 3. Equipment/Kit Rating
+    e_rating = 0.0
+    if getattr(entity, 'is_player', False):
+        # Scan slots for CR properties
+        slots = ['equipped_weapon', 'equipped_armor', 'equipped_offhand', 'equipped_head']
+        for slot in slots:
+            item = getattr(entity, slot, None)
+            if item:
+                e_rating += getattr(item, 'combat_rating', 0.5)
+        
+        # Add Kit Bonus
+        if hasattr(entity, 'active_kit') and isinstance(entity.active_kit, dict):
+            e_rating += entity.active_kit.get('cr_bonus', 0.0)
+            
+    return round(v_rating + l_rating + e_rating, 1)
 
 def calculate_difficulty(player: 'Player', target: Any) -> str:
     """Returns a human-readable string describing the threat level of a target."""

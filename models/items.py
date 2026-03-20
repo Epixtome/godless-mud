@@ -210,6 +210,8 @@ class Consumable(BaseItem):
 class Corpse(BaseItem):
     def __init__(self, name, description, inventory=None, flags=None, timer=None, tags=None, properties=None):
         # Corpses have 0 value by default
+        tags = tags or []
+        if 'corpse' not in tags: tags.append('corpse')
         super().__init__(name, description, 0, flags or ['decay'], None, timer, tags, properties)
         self.inventory = inventory or []
 

@@ -1,0 +1,148 @@
+{
+    "blessings": {
+        "iaido_draw": {
+            "id": "iaido_draw",
+            "name": "Iaido Draw",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A preternaturally fast strike from the sheath. Generates 15 Stamina and +1 Spirit Pip. No cooldown.",
+            "identity_tags": ["martial", "strike", "builder", "setup"],
+            "axis": "tempo",
+            "action": "iaido_draw",
+            "requirements": {
+                "class": "samurai",
+                "stamina": 10
+            },
+            "base_power": 15
+        },
+        "meditative_stance": {
+            "id": "meditative_stance",
+            "name": "Meditative Stance",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Center your spirit. Grants [Focused] (2 ticks). The next strike has +100% crit chance.",
+            "identity_tags": ["martial", "focus", "setup"],
+            "axis": "vision",
+            "action": "meditative_stance",
+            "requirements": {
+                "class": "samurai",
+                "stamina": 15,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "focused",
+                "duration": 2,
+                "target": "self"
+            }
+        },
+        "sever_spirit": {
+            "id": "sever_spirit",
+            "name": "Sever Spirit",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: A cut targeting the target's balance. Applies [Off-Balance] and [Marked] for 4 ticks.",
+            "identity_tags": ["martial", "strike", "disruption", "setup"],
+            "axis": "tempo",
+            "action": "sever_spirit",
+            "requirements": {
+                "class": "samurai",
+                "stamina": 20,
+                "cooldown": 6
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 4
+            },
+            "base_power": 20,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.2
+            }
+        },
+        "dragons_breath": {
+            "id": "dragons_breath",
+            "name": "Dragon's Breath",
+            "tier": 4,
+            "cost": 40,
+            "description": "Payoff/Burst: A massive overhead slash. Deals +50% bonus damage if you have [Focused]. Consumes focus on use.",
+            "identity_tags": ["martial", "strike", "lethal", "payoff"],
+            "axis": "lethality",
+            "action": "dragons_breath",
+            "requirements": {
+                "class": "samurai",
+                "stamina": 35,
+                "cooldown": 8
+            },
+            "base_power": 45,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 2.2
+            }
+        },
+        "tsubame_gaeshi": {
+            "id": "tsubame_gaeshi",
+            "name": "Tsubame Gaeshi",
+            "tier": 5,
+            "cost": 0,
+            "description": "Finisher: The mythical swallow-counter. Two strikes in one breath. The second hit deals 3x damage to [Off-Balance] targets. Consumes all spirit pips.",
+            "identity_tags": ["martial", "strike", "lethal", "payoff", "finisher"],
+            "axis": "lethality",
+            "action": "tsubame_gaeshi",
+            "requirements": {
+                "class": "samurai",
+                "stamina": 40,
+                "cooldown": 15
+            },
+            "base_power": 60,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.5
+            }
+        },
+        "hissatsu_chidori": {
+            "id": "hissatsu_chidori",
+            "name": "Hissatsu: Chidori",
+            "tier": 3,
+            "cost": 20,
+            "description": "Defense/Reaction: A lightning-fast counter-stance. Parries next incoming strike and retaliates with 200% weapon damage.",
+            "identity_tags": ["martial", "reaction", "defense"],
+            "axis": "tempo",
+            "action": "hissatsu_chidori",
+            "requirements": {
+                "class": "samurai",
+                "stamina": 20,
+                "cooldown": 12
+            }
+        },
+        "shadow_dash": {
+            "id": "shadow_dash",
+            "name": "Shadow Dash",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Burst forward in a straight line. Applies [Blinded] to enemies passed through and clears [Pinned].",
+            "identity_tags": ["martial", "speed", "mobility"],
+            "axis": "position",
+            "action": "shadow_dash",
+            "requirements": {
+                "class": "samurai",
+                "stamina": 25,
+                "cooldown": 5
+            }
+        },
+        "way_of_the_warrior": {
+            "id": "way_of_the_warrior",
+            "name": "Way of the Warrior",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Commit to the warrior's life. Self-buff: Increases martial scaling by 50% for 20 ticks. Increases [Stamina] regen by 10 per tick.",
+            "identity_tags": ["martial", "focus", "utility"],
+            "axis": "utility",
+            "action": "way_of_the_warrior",
+            "requirements": {
+                "class": "samurai",
+                "stamina": 0,
+                "cooldown": 60
+            }
+        }
+    }
+}

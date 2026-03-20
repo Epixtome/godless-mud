@@ -1,152 +1,139 @@
 """
 logic/modules/warlock/actions.py
-Hexblade Overhaul: Entropy Symbiosis Implementation.
+Warlock Skill Handlers: Master of the Entropy and Chaos Axes.
+Pillar: Corruption, Sacrifice, and Finisher-Chain.
 """
 from logic.actions.registry import register
-from logic.core import resources, effects, combat
-from logic import common
+from logic.core import effects, resources, combat
+from logic.engines import action_manager, magic_engine
 from utilities.colors import Colors
-from logic.engines import blessings_engine, magic_engine
+from logic import common
 
-def _consume_resources(player, skill, entropy_gain=0):
-    """Handles resource consumption and entropy generation."""
+def _consume_resources(player, skill):
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
-    
-    if entropy_gain > 0:
-        w_state = player.ext_state.setdefault('warlock', {})
-        old_entropy = w_state.get('entropy', 0)
-        max_e = w_state.get('max_entropy', 5)
-        
-        # In Metamorphosis, entropy is locked at max
-        if not w_state.get('is_metamorphosed', False):
-            w_state['entropy'] = min(max_e, old_entropy + entropy_gain)
-            if w_state['entropy'] > old_entropy:
-                player.send_line(f"{Colors.MAGENTA}[+] Entropy: {w_state['entropy']}/{max_e}{Colors.RESET}")
-            elif old_entropy >= max_e:
-                player.send_line(f"{Colors.PURPLE}[!] Entropy at maximum capacity!{Colors.RESET}")
-        else:
-            w_state['entropy'] = max_e
-
-@register("hex")
-def handle_hex(player, skill, args, target=None):
-    """Primer: Generates 2 Entropy. Applies Hexed debuff."""
-    target = common._get_target(player, args, target, "Hex whom?")
-    if not target: return None, True
-    
-    player.send_line(f"{Colors.MAGENTA}You weave a web of entropic despair around {target.name}!{Colors.RESET}")
-    effects.apply_effect(target, "hexed", 20) # 20 seconds
-    
-    if hasattr(target, 'send_line'):
-        target.send_line(f"{Colors.RED}You feel a dark mark burning into your soul!{Colors.RESET}")
-        
-    _consume_resources(player, skill, entropy_gain=2)
-    return target, True
+    magic_engine.consume_pacing(player, skill)
 
 @register("eldritch_blast")
 def handle_eldritch_blast(player, skill, args, target=None):
-    """Builder: Generates 1 Entropy. Ranged dark damage."""
+    """Setup/Builder: Force-hit and Concentration generator."""
     target = common._get_target(player, args, target, "Blast whom?")
     if not target: return None, True
     
-    player.send_line(f"{Colors.DARK_GRAY}A beam of crackling force erupts from your hand!{Colors.RESET}")
-    power = blessings_engine.MathBridge.calculate_power(skill, player, target)
-    
+    player.send_line(f"{Colors.PURPLE}A beam of crackling force hits {target.name}!{Colors.RESET}")
     combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    # Generate Concentration and +1 Entropy
+    resources.modify_resource(player, "concentration", 15, source="Eldritch Blast")
+    resources.modify_resource(player, "entropy", 1, source="Eldritch Blast")
     
-    _consume_resources(player, skill, entropy_gain=1)
+    _consume_resources(player, skill)
     return target, True
 
-@register("netherstep")
-def handle_netherstep(player, skill, args, target=None):
-    """Utility: Teleport and Stun. Generates 1 Entropy."""
-    target = common._get_target(player, args, target, "Step towards whom?")
+@register("curse_of_agony")
+def handle_curse_of_agony(player, skill, args, target=None):
+    """Setup: Burn and Entropy surge."""
+    target = common._get_target(player, args, target, "Wrack whom?")
     if not target: return None, True
     
-    player.send_line(f"{Colors.BOLD}{Colors.PURPLE}You step through the void, appearing behind {target.name}!{Colors.RESET}")
-    player.room.broadcast(f"{player.name} vanishes into shadows and reappears behind {target.name}!", exclude_player=player)
+    player.send_line(f"{Colors.BOLD}{Colors.RED}Agony wracks {target.name}'s body.{Colors.RESET}")
+    effects.apply_effect(target, "burning", 6)
+    resources.modify_resource(player, "entropy", 2, source="Curse of Agony")
+    _consume_resources(player, skill)
+    return target, True
+
+@register("hex_of_weakness")
+def handle_hex_of_weakness(player, skill, args, target=None):
+    """Setup: Shackle, Mark, and Entropy surge."""
+    target = common._get_target(player, args, target, "Hex whom?")
+    if not target: return None, True
     
-    effects.apply_effect(target, "stun", 1) # 1s Stun
-    
-    _consume_resources(player, skill, entropy_gain=1)
+    player.send_line(f"You cast a {Colors.RED}Hex of Weakness{Colors.RESET} upon {target.name}!")
+    effects.apply_effect(target, "marked", 8)
+    effects.apply_effect(target, "shackled", 8)
+    resources.modify_resource(player, "entropy", 2, source="Hex of Weakness")
+    _consume_resources(player, skill)
     return target, True
 
 @register("soul_cleave")
 def handle_soul_cleave(player, skill, args, target=None):
-    """Detonator: Consumes ALL Entropy. +25% Dmg and +10% Heal per stack."""
-    target = common._get_target(player, args, target, "Cleave whose soul?")
+    """Payoff/Heal: Consumes Entropy."""
+    target = common._get_target(player, args, target, "Harvest whose soul?")
     if not target: return None, True
     
-    w_state = player.ext_state.setdefault('warlock', {})
-    stacks = w_state.get('entropy', 0)
-    
-    player.send_line(f"{Colors.BOLD}{Colors.RED}SOUL CLEAVE!{Colors.RESET} Your blade wails with chaotic hunger!")
-    
-    # Calculate Multiplier: 1.0 base + 0.25 per stack
-    dmg_mult = 1.0 + (stacks * 0.25)
-    
-    # Calculate Heal
-    heal_pct = stacks * 0.10
-    heal_amt = int(player.max_hp * heal_pct)
-    
-    # Execute Attack
-    power = blessings_engine.MathBridge.calculate_power(skill, player, target)
-    final_dmg = int(power * dmg_mult)
-    
-    # Manual attack trigger with custom damage to ensure scaling is applied before mitigation
-    # Or use calculate_damage_modifier event in events.py (preferred for GCA)
-    # But Soul Cleave is a specific strike, we'll pass the multiplier through context or just calc here
-    combat.handle_attack(player, target, player.room, player.game, blessing=skill, context_prefix=f"[Entropy:{stacks}] ")
-    
-    if heal_amt > 0:
-        resources.modify_resource(player, "hp", heal_amt, source="Soul Cleave", context="Healing")
-        player.send_line(f"{Colors.GREEN}You absorb {heal_amt} HP from the soul essence!{Colors.RESET}")
-        
-    # Discharge Entropy (unless metastasized)
-    if not w_state.get('is_metamorphosed', False):
-        w_state['entropy'] = 0
-        player.send_line(f"{Colors.DARK_GRAY}Entropy discharged.{Colors.RESET}")
-        
+    ent_level = resources.get_resource(player, "entropy")
+    if ent_level > 0:
+        player.send_line(f"{Colors.BOLD}{Colors.PURPLE}SOUL CLEAVE!{Colors.RESET} You harvest {ent_level} stacks of entropic energy!")
+        player.execute_multiplier = 1.0 + (ent_level * 0.2) # Scaling bonus
+        player.soul_cleave_active = True
+        try:
+             combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+        finally:
+             if hasattr(player, 'execute_multiplier'): del player.execute_multiplier
+             if hasattr(player, 'soul_cleave_active'): del player.soul_cleave_active
+        # Clear entropy
+        resources.modify_resource(player, "entropy", -ent_level, source="Soul Cleave")
+        # Heal based on damage (handled in payoff or separately)
+    else:
+        combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+
     _consume_resources(player, skill)
     return target, True
-
-@register("metamorphosis")
-def handle_metamorphosis(player, skill, args, target=None):
-    """Ultimate: Transforms the warlock. Locks Entropy at 5."""
-    player.send_line(f"{Colors.BOLD}{Colors.PURPLE}You erupt in a pillar of violet flame!{Colors.RESET}")
-    player.room.broadcast(f"{player.name} is enveloped in dark fire and transforms into a towering demon!", exclude_player=player)
-    
-    effects.apply_effect(player, "metamorphosis", 30) # 30 seconds
-    
-    w_state = player.ext_state.setdefault('warlock', {})
-    w_state['is_metamorphosed'] = True
-    w_state['entropy'] = w_state.get('max_entropy', 5)
-    
-    _consume_resources(player, skill)
-    return None, True
 
 @register("oblivion_strike")
 def handle_oblivion_strike(player, skill, args, target=None):
-    """Payoff: Dark finisher that detonates all debuffs on the target."""
-    from logic import common
-    from logic.core.systems.status.definitions import HARD_DEBUFFS, SOFT_DEBUFFS
-    target = common._get_target(player, args, target, "Oblivion Strike whom?")
+    """Payoff: Debuff detonator."""
+    target = common._get_target(player, args, target, "Condemn whom?")
     if not target: return None, True
-
-    # Count active debuffs on target (existing math_bridge logic handles the scaling)
+    
     t_effects = getattr(target, 'status_effects', {})
-    debuff_count = len([s for s in t_effects if s in HARD_DEBUFFS or s in SOFT_DEBUFFS])
+    debuff_count = len(t_effects)
     
-    if debuff_count == 0:
-        player.send_line(f"{Colors.YELLOW}[!] {target.name} has no active curses to detonate! Apply Hex first.{Colors.RESET}")
-        return None, True
+    if debuff_count > 0:
+         player.send_line(f"{Colors.BOLD}{Colors.BLACK}OBLIVION STRIKE!{Colors.RESET} Detonating {debuff_count} shadow pips!")
+         player.execute_multiplier = 1.0 + (debuff_count * 0.3)
+         try:
+              combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+         finally:
+              if hasattr(player, 'execute_multiplier'): del player.execute_multiplier
+    else:
+         combat.handle_attack(player, target, player.room, player.game, blessing=skill)
 
-    player.send_line(f"{Colors.BOLD}{Colors.PURPLE}OBLIVION STRIKE! You detonate {debuff_count} curse(s) on {target.name}!{Colors.RESET}")
-    player.room.broadcast(f"{Colors.PURPLE}Dark energy explodes from {target.name} as {player.name}'s Oblivion Strike detonates their curses!{Colors.RESET}", exclude_player=player)
-    
-    # The dark+finisher tag interaction in math_bridge.py automatically calculates
-    # base + 0.3 * base * debuff_count. We just need to fire the attack.
-    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-    
     _consume_resources(player, skill)
     return target, True
+
+@register("void_ward")
+def handle_void_ward(player, skill, args, target=None):
+    """Defense: Force shield and Resource restore."""
+    player.send_line(f"A {Colors.BOLD}{Colors.BLACK}Void Ward{Colors.RESET} shimmers around you.")
+    effects.apply_effect(player, "shielded", 4)
+    _consume_resources(player, skill)
+    return None, True
+
+@register("netherstep")
+def handle_netherstep(player, skill, args, target=None):
+    """Mobility: Void blink."""
+    player.send_line(f"You {Colors.BOLD}{Colors.PURPLE}phase across the void{Colors.RESET} in a blur of shadow!")
+    if effects.has_effect(player, "shackled") or effects.has_effect(player, "immobilized"):
+         effects.remove_effect(player, "shackled")
+         effects.remove_effect(player, "immobilized")
+         player.send_line(f"{Colors.GREEN}Entropy shatters the bonds holding you!{Colors.RESET}")
+         
+    for t in [m for m in player.room.monsters] + [p for p in player.room.players if p != player]:
+         effects.apply_effect(t, "dazed", 1)
+         
+    _consume_resources(player, skill)
+    return None, True
+
+@register("pact_of_sacrifice")
+def handle_pact_of_sacrifice(player, skill, args, target=None):
+    """Utility: Health to Mana/Entropy."""
+    player.send_line(f"{Colors.BOLD}{Colors.RED}You cut your palm and offer blood to the chaos!{Colors.RESET}")
+    # Restore Concentration and Max out Entropy
+    resources.modify_resource(player, "concentration", 100, source="Pact of Sacrifice")
+    resources.modify_resource(player, "entropy", 10, source="Pact of Sacrifice")
+    # Health reduction
+    hp_loss = int(player.max_hp * 0.2)
+    resources.modify_resource(player, "hp", -hp_loss, source="Pact of Sacrifice")
+    
+    _consume_resources(player, skill)
+    return None, True

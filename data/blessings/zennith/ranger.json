@@ -1,0 +1,139 @@
+{
+    "blessings": {
+        "aim": {
+            "id": "aim",
+            "name": "Aim",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: Take a moment to steady your shot. Grants [Ready] for 2 ticks. Generates 15 stamina.",
+            "identity_tags": ["martial", "ranged", "builder", "setup"],
+            "axis": "vision",
+            "action": "aim",
+            "requirements": {
+                "class": "ranger",
+                "stamina": 10,
+                "cooldown": 2
+            },
+            "base_power": 10
+        },
+        "hunters_mark": {
+            "id": "hunters_mark",
+            "name": "Hunter's Mark",
+            "tier": 2,
+            "cost": 10,
+            "description": "Setup: Mark an enemy with a persistent spiritual brand. Applies [Marked] for 12 ticks. Marked targets cannot become [Concealed] while the brand lasts.",
+            "identity_tags": ["martial", "spirit", "vision", "setup"],
+            "axis": "vision",
+            "action": "hunters_mark",
+            "requirements": {
+                "class": "ranger",
+                "stamina": 10,
+                "cooldown": 5
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 12
+            }
+        },
+        "pinning_shot": {
+            "id": "pinning_shot",
+            "name": "Pinning Shot",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Aim for the legs or pin clothing to the ground. Applies [Immobilized] for 3 ticks. If the target is already [Slowed], this applies [Pinned].",
+            "identity_tags": ["martial", "ranged", "disruption", "setup"],
+            "axis": "position",
+            "action": "pinning_shot",
+            "requirements": {
+                "class": "ranger",
+                "stamina": 20,
+                "cooldown": 8
+            },
+            "on_hit": {
+                "apply_status": "immobilized",
+                "duration": 3
+            }
+        },
+        "snipe": {
+            "id": "snipe",
+            "name": "Snipe",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff: A calculated, high-velocity arrow. Deals 2x damage to [Marked] or [Immobilized] targets. If you are [Ready], this is a guaranteed critical hit.",
+            "identity_tags": ["martial", "ranged", "lethal", "payoff"],
+            "axis": "vision",
+            "action": "snipe",
+            "requirements": {
+                "class": "ranger",
+                "stamina": 30,
+                "cooldown": 10
+            },
+            "base_power": 45,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 2.5
+            }
+        },
+        "piercing_arrow": {
+            "id": "piercing_arrow",
+            "name": "Piercing Arrow",
+            "tier": 3,
+            "cost": 25,
+            "description": "Payoff: A broadhead arrow that bypasses standard mitigation. Deals double damage to targets with high physical [Defense].",
+            "identity_tags": ["martial", "ranged", "payoff"],
+            "axis": "endurance",
+            "action": "piercing_arrow",
+            "requirements": {
+                "class": "ranger",
+                "stamina": 25,
+                "cooldown": 6
+            },
+            "base_power": 30
+        },
+        "disengage": {
+            "id": "disengage",
+            "name": "Disengage",
+            "tier": 2,
+            "cost": 15,
+            "description": "Defense: Leap away from an encroaching foe. Breaks [Pinned] or [Grappled]. Moves you to a nearby room if one is available defensively.",
+            "identity_tags": ["martial", "speed", "mobility", "defense"],
+            "axis": "position",
+            "action": "disengage",
+            "requirements": {
+                "class": "ranger",
+                "stamina": 15,
+                "cooldown": 12
+            }
+        },
+        "camouflage": {
+            "id": "camouflage",
+            "name": "Camouflage",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Blend into the current terrain. Grants [Concealed] for 30 ticks, but movement speed is halved. Effect is doubled in Forest/Stone terrain.",
+            "identity_tags": ["martial", "nature", "stealth"],
+            "axis": "vision",
+            "action": "camouflage",
+            "requirements": {
+                "class": "ranger",
+                "stamina": 20,
+                "cooldown": 30
+            }
+        },
+        "recon_flare": {
+            "id": "recon_flare",
+            "name": "Recon Flare",
+            "tier": 4,
+            "cost": 15,
+            "description": "Utility: Launch a bright flare into the sky. Reveals all [Concealed] enemies in the current and adjacent rooms for 5 ticks.",
+            "identity_tags": ["martial", "fire", "vision", "utility"],
+            "axis": "vision",
+            "action": "recon_flare",
+            "requirements": {
+                "class": "ranger",
+                "stamina": 15,
+                "cooldown": 60
+            }
+        }
+    }
+}

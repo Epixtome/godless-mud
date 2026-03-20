@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "volatile_flask": {
+            "id": "volatile_flask",
+            "name": "Volatile Flask",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A glass vial of unstable fire. Deals minor fire damage, generates 15 Concentration and +1 Alchemical Pip. No cooldown.",
+            "identity_tags": ["magic", "fire", "builder", "setup"],
+            "axis": "elemental",
+            "action": "volatile_flask",
+            "requirements": {
+                "class": "alchemist",
+                "concentration": 10
+            },
+            "base_power": 12
+        },
+        "acid_mist": {
+            "id": "acid_mist",
+            "name": "Acid Mist",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Break an acid vial. Applies [Staggered] and reduces enemy [Physical Resist] by 25% for 6 ticks.",
+            "identity_tags": ["magic", "acid", "disruption", "setup"],
+            "axis": "tempo",
+            "action": "acid_mist",
+            "requirements": {
+                "class": "alchemist",
+                "concentration": 15,
+                "cooldown": 5
+            },
+            "on_hit": {
+                "apply_status": "staggered",
+                "duration": 2
+            }
+        },
+        "catalytic_bloom": {
+            "id": "catalytic_bloom",
+            "name": "Catalytic Bloom",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Mark the target with a reactive catalyst. Applies [Marked]. The next elemental hit deals +50% damage and triggers mini-explosions.",
+            "identity_tags": ["magic", "alchemy", "vision", "setup"],
+            "axis": "vision",
+            "action": "catalytic_bloom",
+            "requirements": {
+                "class": "alchemist",
+                "concentration": 20,
+                "cooldown": 8
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 8
+            }
+        },
+        "final_flash": {
+            "id": "final_flash",
+            "name": "Final Flash",
+            "tier": 4,
+            "cost": 35,
+            "description": "Payoff/Finisher: The ultimate reagent ignition. Deals 4x damage if the target is [Wet], [Burning], or [Frozen]. Consumes all status effects on target.",
+            "identity_tags": ["magic", "energy", "lethal", "payoff", "finisher"],
+            "axis": "lethality",
+            "action": "final_flash",
+            "requirements": {
+                "class": "alchemist",
+                "concentration": 35,
+                "cooldown": 12
+            },
+            "base_power": 40,
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 3.0
+            }
+        },
+        "transmute_flesh": {
+            "id": "transmute_flesh",
+            "name": "Transmute Flesh",
+            "tier": 3,
+            "cost": 25,
+            "description": "Payoff/Burst: Forcibly change the target's molecular structure. Deals massive poison damage and applies [Off-Balance].",
+            "identity_tags": ["magic", "poison", "payoff"],
+            "axis": "endurance",
+            "action": "transmute_flesh",
+            "requirements": {
+                "class": "alchemist",
+                "concentration": 25,
+                "cooldown": 6
+            },
+            "base_power": 30
+        },
+        "elixir_of_stone": {
+            "id": "elixir_of_stone",
+            "name": "Elixir of Stone",
+            "tier": 2,
+            "cost": 20,
+            "description": "Defense/Reaction: Harden your skin. Grants [Braced] and +25% Physical Resist for 10 ticks.",
+            "identity_tags": ["magic", "alchemy", "protection", "defense"],
+            "axis": "endurance",
+            "action": "elixir_of_stone",
+            "requirements": {
+                "class": "alchemist",
+                "concentration": 20,
+                "cooldown": 15
+            }
+        },
+        "smokebomb_jump": {
+            "id": "smokebomb_jump",
+            "name": "Smokebomb Jump",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: A cloud of blinding ash. Teleport a short distance and apply [Blinded] (group-wide) for 4 ticks.",
+            "identity_tags": ["magic", "ash", "speed", "mobility"],
+            "axis": "vision",
+            "action": "smokebomb_jump",
+            "requirements": {
+                "class": "alchemist",
+                "concentration": 25,
+                "cooldown": 8
+            }
+        },
+        "create_philter": {
+            "id": "create_philter",
+            "name": "Create Philter",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Brew a helpful infusion. Consumes 5 Alchemy Pips. Heals you or an ally for 15% HP and restores 20 Stamina.",
+            "identity_tags": ["magic", "alchemy", "healing", "utility"],
+            "axis": "utility",
+            "action": "create_philter",
+            "requirements": {
+                "class": "alchemist",
+                "alchemical_pips": 5,
+                "cooldown": 30
+            }
+        }
+    }
+}

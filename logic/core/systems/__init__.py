@@ -1,7 +1,7 @@
 from .combat import auto_attack, process_death, reset_round_counters
 from .regen import passive_regen, process_rest
 from .decay import register_decay, initialize_decay, decay
-from .weather import weather, time_of_day
+from .weather import weather_pulse, time_of_day
 from .ai import mob_ai
 from .environmental import monitor_terrain
 from . import engagement
@@ -23,7 +23,7 @@ def get_heartbeat_subscribers():
         process_rest,
         passive_regen,
         decay,
-        weather,
+        weather_pulse,
         time_of_day,
         mob_ai,
         monitor_terrain,

@@ -105,7 +105,15 @@ class Auditor:
         if req_terrain:
             if isinstance(req_terrain, str): req_terrain = [req_terrain]
             if player.room.terrain not in req_terrain:
-                return False, f"Requires terrain: {', '.join(req_terrain)}"
+                return False, f"Requires terrain: {', '.join(req_terrain).replace('_', ' ').title()}"
+
+        # [V6.3] Environmental Gate: Weather Requirements
+        req_weather = blessing.requirements.get('weather')
+        if req_weather:
+            if isinstance(req_weather, str): req_weather = [req_weather]
+            current_weather = player.room.get_weather()
+            if current_weather not in req_weather:
+                 return False, f"The environmental conditions ({current_weather.replace('_', ' ')}) are unsuitable for {blessing.name}."
 
         req_stance = blessing.requirements.get('stance')
         if req_stance:

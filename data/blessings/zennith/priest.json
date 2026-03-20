@@ -1,0 +1,142 @@
+{
+    "blessings": {
+        "holy_strike": {
+            "id": "holy_strike",
+            "name": "Holy Strike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A radiant strike that dazzles the foe. Applies [Dazzled] for 2 ticks. Restores 10 mana.",
+            "identity_tags": ["divine", "strike", "builder", "setup"],
+            "axis": "vision",
+            "action": "holy_strike",
+            "requirements": {
+                "class": "priest",
+                "mana": 10,
+                "cooldown": 2
+            },
+            "base_power": 12,
+            "on_hit": {
+                "apply_status": "dazzled",
+                "duration": 2
+            }
+        },
+        "divine_mark": {
+            "id": "divine_mark",
+            "name": "Divine Mark",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Brand the target with your deity's sigil. Applies [Marked] for 8 ticks. Holy damage against marked targets deals extra damage and ignores some mitigation.",
+            "identity_tags": ["divine", "vision", "setup"],
+            "axis": "vision",
+            "action": "divine_mark",
+            "requirements": {
+                "class": "priest",
+                "mana": 15,
+                "cooldown": 5
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 8
+            }
+        },
+        "penitence": {
+            "id": "penitence",
+            "name": "Penitence",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Force the enemy to reflect on their sins. Applies [Shackled], reducing their physical damage output by 20% for 4 ticks.",
+            "identity_tags": ["divine", "curse", "setup"],
+            "axis": "endurance",
+            "action": "penitence",
+            "requirements": {
+                "class": "priest",
+                "mana": 20,
+                "cooldown": 8
+            },
+            "on_hit": {
+                "apply_status": "shackled",
+                "duration": 4
+            }
+        },
+        "judgment": {
+            "id": "judgment",
+            "name": "Judgment",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff: A pillar of holy light strikes from above. Deals 2x damage against [Marked] or [Dazzled] targets. If the target is [Shackled], it becomes [Stunned].",
+            "identity_tags": ["divine", "magic", "lethal", "payoff"],
+            "axis": "vision",
+            "action": "judgment",
+            "requirements": {
+                "class": "priest",
+                "mana": 30,
+                "cooldown": 10
+            },
+            "base_power": 40,
+            "scaling": {
+                "scaling_tag": "divine",
+                "multiplier": 2.0
+            }
+        },
+        "purification": {
+            "id": "purification",
+            "name": "Purification",
+            "tier": 3,
+            "cost": 25,
+            "description": "Payoff: Cleanses the spirit of an ally. Removes all [Bleeding], [Burning], and [Poisoned] states and heals for 10% of their missing health.",
+            "identity_tags": ["divine", "nature", "healing", "payoff"],
+            "axis": "endurance",
+            "action": "purification",
+            "requirements": {
+                "class": "priest",
+                "mana": 25,
+                "cooldown": 12
+            }
+        },
+        "aegis": {
+            "id": "aegis",
+            "name": "Aegis",
+            "tier": 3,
+            "cost": 20,
+            "description": "Defense: Surround yourself or an ally with a barrier of light. Grants [Shielded] for 6 ticks, absorbing up to 50 flat damage.",
+            "identity_tags": ["divine", "protection", "defense"],
+            "axis": "endurance",
+            "action": "aegis",
+            "requirements": {
+                "class": "priest",
+                "mana": 20,
+                "cooldown": 20
+            }
+        },
+        "beacon_of_light": {
+            "id": "beacon_of_light",
+            "name": "Beacon of Light",
+            "tier": 4,
+            "cost": 25,
+            "description": "Mobility: Warp instantly to a [Marked] ally or a sacred site within the current zone. Also grants a brief [Speed] boost.",
+            "identity_tags": ["divine", "magic", "mobility"],
+            "axis": "position",
+            "action": "beacon_of_light",
+            "requirements": {
+                "class": "priest",
+                "mana": 25,
+                "cooldown": 15
+            }
+        },
+        "resurrection": {
+            "id": "resurrection",
+            "name": "Resurrection",
+            "tier": 5,
+            "cost": 100,
+            "description": "Utility: The ultimate triumph over death. Restore a fallen ally at the cost of your own maximum mana for 10 minutes.",
+            "identity_tags": ["divine", "spirit", "utility"],
+            "axis": "utility",
+            "action": "resurrection",
+            "requirements": {
+                "class": "priest",
+                "mana": 100,
+                "cooldown": 300
+            }
+        }
+    }
+}

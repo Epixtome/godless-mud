@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "wrench_strike": {
+            "id": "wrench_strike",
+            "name": "Wrench Strike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A heavy blow designed to loosen joints. Deals physical damage, generates 15 Stamina and +5 Tech Scrap. No cooldown.",
+            "identity_tags": ["martial", "tech", "builder", "setup"],
+            "axis": "tempo",
+            "action": "wrench_strike",
+            "requirements": {
+                "class": "engineer",
+                "stamina": 10
+            },
+            "base_power": 12
+        },
+        "shock_grenade": {
+            "id": "shock_grenade",
+            "name": "Shock Grenade",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Toss a high-voltage grenade. Applies [Shocked] and [Staggered] group-wide for 2 ticks.",
+            "identity_tags": ["martial", "tech", "disruption", "setup"],
+            "axis": "tempo",
+            "action": "shock_grenade",
+            "requirements": {
+                "class": "engineer",
+                "stamina": 20,
+                "cooldown": 8
+            },
+            "on_hit": {
+                "apply_status": "shocked",
+                "duration": 4
+            }
+        },
+        "targeted_pheromone": {
+            "id": "targeted_pheromone",
+            "name": "Targeted Pheromone",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Tag the enemy for extraction. Turrets will prioritize this unit. Applies [Marked] (10 ticks).",
+            "identity_tags": ["martial", "tech", "vision", "setup"],
+            "axis": "vision",
+            "action": "targeted_pheromone",
+            "requirements": {
+                "class": "engineer",
+                "stamina": 15,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 10
+            }
+        },
+        "autoturret": {
+            "id": "autoturret",
+            "name": "Autoturret",
+            "tier": 3,
+            "cost": 25,
+            "description": "Payoff/Summon: Deploy a mechanical sentinel. Consumes 20 Tech Scrap. Turret deals physical damage every tick and 2x damage to [Marked] targets.",
+            "identity_tags": ["martial", "tech", "summon", "payoff"],
+            "axis": "endurance",
+            "action": "autoturret",
+            "requirements": {
+                "class": "engineer",
+                "stamina": 25,
+                "cooldown": 12
+            },
+            "base_power": 20
+        },
+        "overdrive": {
+            "id": "overdrive",
+            "name": "Overdrive",
+            "tier": 4,
+            "cost": 30,
+            "description": "Payoff/Burst: Forced system overload. Existing turret enters a blood-frenzy for 3 ticks, then explodes (AOE Fire damage). Deals 3x damage to [Staggered] targets.",
+            "identity_tags": ["martial", "tech", "lethal", "payoff"],
+            "axis": "lethality",
+            "action": "overdrive",
+            "requirements": {
+                "class": "engineer",
+                "stamina": 30,
+                "cooldown": 15
+            },
+            "base_power": 50,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.0
+            }
+        },
+        "portable_barrier": {
+            "id": "portable_barrier",
+            "name": "Portable Barrier",
+            "tier": 2,
+            "cost": 25,
+            "description": "Defense/Reaction: Deploy a hard-light barricade. Blocks Line-of-Sight from that direction and grants [Shielded] (4 ticks).",
+            "identity_tags": ["martial", "tech", "protection", "defense"],
+            "axis": "vision",
+            "action": "portable_barrier",
+            "requirements": {
+                "class": "engineer",
+                "stamina": 25,
+                "cooldown": 20
+            }
+        },
+        "jetpack_boost": {
+            "id": "jetpack_boost",
+            "name": "Jetpack Boost",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Rocket into the air. Leap to a targeted spot, clearing [Pinned] and [Prone] and applying [Burning] to units at the start point.",
+            "identity_tags": ["martial", "speed", "mobility"],
+            "axis": "position",
+            "action": "jetpack_boost",
+            "requirements": {
+                "class": "engineer",
+                "stamina": 25,
+                "cooldown": 10
+            }
+        },
+        "repair_protocol": {
+            "id": "repair_protocol",
+            "name": "Repair Protocol",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Maintenance mode. Restoration buff: Heals turret or self for 20% HP and restores 30 Tech Scrap.",
+            "identity_tags": ["martial", "tech", "healing", "utility"],
+            "axis": "utility",
+            "action": "repair_protocol",
+            "requirements": {
+                "class": "engineer",
+                "stamina": 0,
+                "cooldown": 60
+            }
+        }
+    }
+}

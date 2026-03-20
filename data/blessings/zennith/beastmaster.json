@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "wild_strike": {
+            "id": "wild_strike",
+            "name": "Wild Strike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A raw, feral blow. Deals physical damage, generates 15 Stamina and +5 Bond. No cooldown.",
+            "identity_tags": ["martial", "strike", "builder", "setup"],
+            "axis": "tempo",
+            "action": "wild_strike",
+            "requirements": {
+                "class": "beastmaster",
+                "stamina": 10
+            },
+            "base_power": 12
+        },
+        "tame_beast": {
+            "id": "tame_beast",
+            "name": "Tame Beast",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Bond with your companion or a targets' creature. Increases pet's performance by 25% and applies [Marked] to the target for 10 ticks.",
+            "identity_tags": ["martial", "beast", "bond", "setup"],
+            "axis": "vision",
+            "action": "tame_beast",
+            "requirements": {
+                "class": "beastmaster",
+                "stamina": 15,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 10
+            }
+        },
+        "intimidating_roar": {
+            "id": "intimidating_roar",
+            "name": "Intimidating Roar",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Command your pet to bellow. Applies [Dazed] (4 ticks) group-wide. Generates +10 Bond.",
+            "identity_tags": ["martial", "beast", "voice", "setup"],
+            "axis": "tempo",
+            "action": "intimidating_roar",
+            "requirements": {
+                "class": "beastmaster",
+                "stamina": 20,
+                "cooldown": 8
+            },
+            "on_hit": {
+                "apply_status": "dazed",
+                "duration": 4
+            }
+        },
+        "bestial_wrath": {
+            "id": "bestial_wrath",
+            "name": "Bestial Wrath",
+            "tier": 4,
+            "cost": 35,
+            "description": "Payoff/Burst: Infuse your pet with pure rage. Pet deals 300% damage for 10 ticks. Consumes all active Bond to multiply duration.",
+            "identity_tags": ["martial", "beast", "lethal", "payoff"],
+            "axis": "lethality",
+            "action": "bestial_wrath",
+            "requirements": {
+                "class": "beastmaster",
+                "stamina": 35,
+                "cooldown": 6
+            },
+            "base_power": 35
+        },
+        "coordinated_kill": {
+            "id": "coordinated_kill",
+            "name": "Coordinated Kill",
+            "tier": 5,
+            "cost": 40,
+            "description": "Finisher: You and your pet strike in perfect synchronization. Deals 4x weapon damage if the target is [Marked]. If target dies, you and your pet heal 30% health.",
+            "identity_tags": ["martial", "beast", "lethal", "payoff", "finisher"],
+            "axis": "lethality",
+            "action": "coordinated_kill",
+            "requirements": {
+                "class": "beastmaster",
+                "stamina": 40,
+                "cooldown": 15
+            },
+            "base_power": 55,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.0
+            }
+        },
+        "pack_bond": {
+            "id": "pack_bond",
+            "name": "Pack Bond",
+            "tier": 2,
+            "cost": 20,
+            "description": "Defense/Reaction: Divide yourself. 50% of all incoming damage is transferred to your pet. If pet is dead, grants 25% Mitigation instead.",
+            "identity_tags": ["martial", "beast", "protection", "defense"],
+            "axis": "endurance",
+            "action": "pack_bond",
+            "requirements": {
+                "class": "beastmaster",
+                "stamina": 20,
+                "cooldown": 12
+            }
+        },
+        "feral_leap": {
+            "id": "feral_leap",
+            "name": "Feral Leap",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Burst forward with your companion. You and your pet leap to a target, dealing minor damage and applying [Staggered].",
+            "identity_tags": ["martial", "beast", "speed", "mobility"],
+            "axis": "position",
+            "action": "feral_leap",
+            "requirements": {
+                "class": "beastmaster",
+                "stamina": 25,
+                "cooldown": 10
+            }
+        },
+        "call_companion": {
+            "id": "call_companion",
+            "name": "Call Companion",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Summon your faithful companion. Revives a fallen pet or summons an active pet from your stable. The companion's health scales with your Stamina.",
+            "identity_tags": ["martial", "beast", "summon", "utility"],
+            "axis": "utility",
+            "action": "call_companion",
+            "requirements": {
+                "class": "beastmaster",
+                "stamina": 0,
+                "cooldown": 60
+            }
+        }
+    }
+}

@@ -1,0 +1,142 @@
+{
+    "blessings": {
+        "raging_strike": {
+            "id": "raging_strike",
+            "name": "Raging Strike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A raw, reckless blow. Deals physical damage, generates 15 Stamina and +10 Fury. No cooldown.",
+            "identity_tags": ["martial", "fury", "builder", "setup"],
+            "axis": "tempo",
+            "action": "raging_strike",
+            "requirements": {
+                "class": "berserker",
+                "stamina": 10
+            },
+            "base_power": 12
+        },
+        "headbutt": {
+            "id": "headbutt",
+            "name": "Headbutt",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Slam your skull into theirs. Both you and target are [Staggered] (1 tick). Target becomes [Off-Balance]. Generates +15 Fury.",
+            "identity_tags": ["martial", "fury", "disruption", "setup"],
+            "axis": "tempo",
+            "action": "headbutt",
+            "requirements": {
+                "class": "berserker",
+                "stamina": 20,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "off_balance",
+                "duration": 4
+            }
+        },
+        "blood_thirst": {
+            "id": "blood_thirst",
+            "name": "Blood Thirst",
+            "tier": 2,
+            "cost": 25,
+            "description": "Setup: A cut following your weapon's edge. Applies [Bleeding] (6 ticks). For the duration, your attacks against this target heal you for 5% damage dealt.",
+            "identity_tags": ["martial", "fury", "endurance", "setup"],
+            "axis": "endurance",
+            "action": "blood_thirst",
+            "requirements": {
+                "class": "berserker",
+                "stamina": 25,
+                "cooldown": 8
+            },
+            "on_hit": {
+                "apply_status": "bleeding",
+                "duration": 6
+            }
+        },
+        "reckless_abandon": {
+            "id": "reckless_abandon",
+            "name": "Reckless Abandon",
+            "tier": 4,
+            "cost": 35,
+            "description": "Payoff/Burst: The ultimate suicidal strike. Deals 2x damage if you are under 50% HP. If you are under 25% HP, also applies [Stunned] (2 ticks).",
+            "identity_tags": ["martial", "fury", "lethal", "payoff"],
+            "axis": "lethality",
+            "action": "reckless_abandon",
+            "requirements": {
+                "class": "berserker",
+                "stamina": 35,
+                "cooldown": 10
+            },
+            "base_power": 45,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 2.5
+            }
+        },
+        "gorespatter": {
+            "id": "gorespatter",
+            "name": "Gorespatter",
+            "tier": 5,
+            "cost": 40,
+            "description": "Finisher: A massive, cleaving strike. If the target is [Bleeding], its blood explodes, dealing 50% damage to all other enemies in the room. Consumes all active Fury.",
+            "identity_tags": ["martial", "fury", "lethal", "payoff", "finisher"],
+            "axis": "lethality",
+            "action": "gorespatter",
+            "requirements": {
+                "class": "berserker",
+                "stamina": 40,
+                "cooldown": 15
+            },
+            "base_power": 60,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.8
+            }
+        },
+        "pain_suppressor": {
+            "id": "pain_suppressor",
+            "name": "Pain Suppressor",
+            "tier": 2,
+            "cost": 25,
+            "description": "Defense/Reaction: The rage of the gods. 50% of all incoming damage for 10 ticks is converted to a slow bleed instead of a burst.",
+            "identity_tags": ["martial", "fury", "protection", "defense"],
+            "axis": "endurance",
+            "action": "pain_suppressor",
+            "requirements": {
+                "class": "berserker",
+                "stamina": 25,
+                "cooldown": 20
+            }
+        },
+        "brute_charge": {
+            "id": "brute_charge",
+            "name": "Brute Charge",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Burst forward like a charging bull. Knocks aside anyone in your path, applying [Prone] and [Staggered]. Clears [Pinned].",
+            "identity_tags": ["martial", "speed", "mobility"],
+            "axis": "position",
+            "action": "brute_charge",
+            "requirements": {
+                "class": "berserker",
+                "stamina": 25,
+                "cooldown": 12
+            }
+        },
+        "berserker_rage": {
+            "id": "berserker_rage",
+            "name": "Berserker Rage",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Commit to the rage. Self-buff: Massive Attack Speed and Damage (+30%) for 15s. You become immune to [Stunned] and [Pinned].",
+            "identity_tags": ["martial", "fury", "buff", "utility"],
+            "axis": "utility",
+            "action": "berserker_rage",
+            "requirements": {
+                "class": "berserker",
+                "stamina": 0,
+                "cooldown": 60
+            }
+        }
+    }
+}

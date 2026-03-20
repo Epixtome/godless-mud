@@ -1,273 +1,151 @@
+"""
+logic/modules/beastmaster/actions.py
+Beastmaster Skill Handlers: Master of the Wild and Bonded Kill.
+Pillar: Utility, Pet Control, and Pack Mitigation.
+"""
 from logic.actions.registry import register
+from logic.core import effects, resources, combat
+from logic.engines import action_manager, magic_engine
 from utilities.colors import Colors
-from logic.modules.beastmaster.utils import get_bm_state, load_pet_archetypes, consume_resources
+from logic import common
+from logic.core.services import follower_service, world_service
 
-# --- SKILL HANDLERS ---
+def _consume_resources(player, skill):
+    magic_engine.consume_resources(player, skill)
+    magic_engine.set_cooldown(player, skill)
+    magic_engine.consume_pacing(player, skill)
 
-@register("tame")
-def handle_tame(player, skill, args, target=None):
-    """
-    @tame: If target.hp < 5%, add target tags/name to tamed_library.
-    """
-    if getattr(player, 'active_class', None) != 'beastmaster':
-        return False, "Only Beastmasters can tame creatures."
-
-    from logic.common import _get_target
-    target = _get_target(player, args, target, "Tame what?")
+@register("wild_strike")
+def handle_wild_strike(player, skill, args, target=None):
+    """Setup/Builder: High-physical damage and Bond generation."""
+    target = common._get_target(player, args, target, "Maul whom?")
     if not target: return None, True
     
-    # Generic beast check? Or any mob? The prompt says "If target.hp < 5%, add target tags/name to tamed_library"
-    if not hasattr(target, 'hp') or not hasattr(target, 'max_hp'):
-        player.send_line(f"{Colors.RED}That creature cannot be tamed.{Colors.RESET}")
-        return None, True
-        
-    hp_percent = (target.hp / target.max_hp) * 100
-    if hp_percent > 5.0:
-        player.send_line(f"{Colors.YELLOW}{target.name} is too strong to be tamed! Weaken it more! (Current: {int(hp_percent)}%){Colors.RESET}")
-        return None, True
-
-    # Success!
-    bm_state = get_bm_state(player)
-    if not bm_state: return False, "Beastmaster state not initialized."
-
-    # Determine archetype based on tags (simple mapping)
-    archetype = "sentinel" # Default
-    tags = getattr(target, 'tags', [])
-    if any(t in tags for t in ['tough', 'armored', 'large', 'tank']):
-        archetype = "bulwark"
-    elif any(t in tags for t in ['fierce', 'fast', 'sharp', 'predator']):
-        archetype = "predator"
-        
-    pet_entry = {
-        "name": target.name,
-        "archetype": archetype,
-        "tags": list(tags)
-    }
+    player.send_line(f"{Colors.YELLOW}You strike with feral fury, drawing blood and building bond!{Colors.RESET}")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    resources.modify_resource(player, "bond", 5, source="Wild Strike")
     
-    bm_state['tamed_library'].append(pet_entry)
-    player.send_line(f"{Colors.GREEN}You successfully tame {target.name}! It has been added to your library as a {archetype}.{Colors.RESET}")
-    player.room.broadcast(f"{player.name} performs a ritual of taming on {target.name}!", exclude_player=player)
-    
-    # [V5.1] Use Spatial Facade for removal
-    from logic.engines import spatial_engine
-    spatial_engine.move_entity(target, None, silent=True)
-    
-    consume_resources(player, skill)
+    _consume_resources(player, skill)
     return target, True
 
-@register("call")
-def handle_call(player, skill, args, target=None):
-    """
-    @call <name>: Spawns pet from library. Set sync = 0.
-    """
-    if getattr(player, 'active_class', None) != 'beastmaster':
-        return False, "Only Beastmasters can call pets."
-
-    if not args:
-        return False, "Usage: @call <pet_name>"
-
-    bm_state = get_bm_state(player)
-    if not bm_state: return False, "Beastmaster state not initialized."
-
-    # Find the pet in the library
-    pet_name = args.strip().lower()
-    pet_data = None
-    for entry in bm_state['tamed_library']:
-        if entry['name'].lower() == pet_name:
-            pet_data = entry
-            break
-            
-    if not pet_data:
-        player.send_line(f"{Colors.RED}You don't have a tamed pet named '{args}'.{Colors.RESET}")
-        return None, True
-
-    # 1. Late Import as per instructions
-    from logic.modules.beastmaster.pet import Pet
+@register("tame_beast")
+def handle_tame_beast(player, skill, args, target=None):
+    """Deep Taming: Recruit a wild beast into your pack."""
+    # [V6.5] World Selection: Identify the wild beast
+    target = common._get_target(player, args, target, "Tame which creature?")
+    if not target: return None, True
     
-    # 2. Dismiss existing pet if any
-    if bm_state['active_pet_uuid']:
-        pet_dismissed = False
-        # Optimization: Check local room first
-        for mob in list(player.room.monsters):
-            if getattr(mob, 'owner_id', None) == player.id:
-                player.room.monsters.remove(mob)
-                player.room.broadcast(f"{mob.name} retreats to the shadows.")
-                pet_dismissed = True
-                break
-        
-        if not pet_dismissed:
-            for room in player.game.world.rooms.values():
-                for mob in list(room.monsters):
-                    if getattr(mob, 'owner_id', None) == player.id:
-                        room.monsters.remove(mob)
-                        room.broadcast(f"{mob.name} retreats to the shadows.")
-                    
-    # 3. Instantiate and spawn
-    archetypes = load_pet_archetypes()
-    arch_meta = archetypes.get(pet_data['archetype']) or archetypes.get('sentinel')
-    if not arch_meta: player.send_line("Archetype fail."); return None, True
-    arch_meta = arch_meta.copy() # Don't mutate original
-    arch_meta['key'] = pet_data['archetype']
-    
-    new_pet = Pet(player, pet_data['name'], arch_meta)
-    
-    # [V5.1] Use Spatial Facade for arriving
-    from logic.engines import spatial_engine
-    spatial_engine.move_entity(new_pet, player.room, silent=True)
-    
-    bm_state['active_pet_uuid'] = new_pet.id
-    bm_state['sync'] = 0 # Fresh call
-    
-    player.room.broadcast(f"{player.name} whistles, and a {new_pet.name} arrives from the shadows.", exclude_player=player)
-    
-    consume_resources(player, skill)
-    return new_pet, True
-
-@register("order")
-def handle_order(player, skill, args, target=None):
-    """
-    @order <action>: Commands the active pet.
-    """
-    if getattr(player, 'active_class', None) != 'beastmaster':
-        return False, "Only Beastmasters can order pets."
-
-    if not args:
-        return False, "Usage: @order <attack|special|unleash|guard>"
-
-    bm_state = get_bm_state(player)
-    if not bm_state: return False, "Beastmaster state not initialized."
-    
-    active_pet = None
-    for mob in player.room.monsters:
-        if getattr(mob, 'owner_id', None) == player.id:
-            active_pet = mob
-            break
-            
-    if not active_pet:
-        player.send_line(f"{Colors.RED}You don't have an active pet in this room!{Colors.RESET}")
-        return None, True
-
-    subcmd = args.split()[0].lower()
-    
-    if subcmd == "attack":
-        # Order pet to attack player's target
-        if player.fighting:
-            from logic.core.utils import combat_logic
-            combat_logic.start_combat(active_pet, player.fighting)
-            player.send_line(f"You point at {player.fighting.name}, and {active_pet.name} lunges forward!")
-        else:
-            player.send_line("Attack what?")
-            
-    elif subcmd == "special":
-        if bm_state['sync'] < 25:
-            player.send_line(f"{Colors.RED}Not enough Sync! (Requires 25, have {bm_state['sync']}){Colors.RESET}")
-            return None, True
-        
-        bm_state['sync'] -= 25
-        player.send_line(f"You gesture sharply. {active_pet.name} executes a specialized maneuver!")
-        # Logic Hook for Archetype Status (implementation depends on effects engine)
-        from logic.core import effects
-        archetypes = load_pet_archetypes()
-        arch_data = archetypes.get(active_pet.archetype_key, {})
-        status_id = arch_data.get('special', 'stun')
-        
-        if active_pet.fighting:
-            effects.apply_effect(active_pet.fighting, status_id, 2)
-            player.send_line(f"{active_pet.fighting.name} is now {status_id.upper()}!")
-            
-    elif subcmd == "unleash":
-        if bm_state['sync'] < 100:
-            player.send_line(f"{Colors.RED}Sync not ready! (Requires 100, have {bm_state['sync']}){Colors.RESET}")
-            return None, True
-            
-        bm_state['sync'] = 0
-        player.send_line(f"{Colors.BOLD}{Colors.YELLOW}UNLEASH THE BEAST!{Colors.RESET}")
-        # Final damage logic...
-        if active_pet.fighting:
-            from logic.core import resources
-            resources.modify_resource(active_pet.fighting, "hp", -50, source=active_pet.name, context="Unleash")
-            player.send_line(f"{active_pet.name} tears into {active_pet.fighting.name} with primal fury!")
-
-    elif subcmd == "guard":
-        bm_state['order_guard'] = not bm_state['order_guard']
-        status = "now guarding" if bm_state['order_guard'] else "no longer guarding"
-        player.send_line(f"{active_pet.name} is {status} you.")
-    
-    else:
-        player.send_line(f"{Colors.YELLOW}Unknown order: {subcmd}. Use: attack, special, unleash, or guard.{Colors.RESET}")
+    # [V6.5] Faction Check: Must be a beast
+    if "beast" not in getattr(target, 'tags', []):
+        player.send_line(f"{target.name} resists your spiritual call. It is no mere beast.")
         return None, True
         
-    consume_resources(player, skill)
-    return active_pet, True
-
-@register("whistle")
-def handle_whistle(player, skill, args, target=None):
-    """
-    @whistle: Teleport pet to player XYZ.
-    """
-    if getattr(player, 'active_class', None) != 'beastmaster':
-        return False, "Only Beastmasters can whistle for pets."
-
-    bm_state = get_bm_state(player)
-    if not bm_state: return False, "Beastmaster state not initialized."
-
-    # Find the pet anywhere in the world
-    pet_obj = None
-    for room in player.game.world.rooms.values():
-        for mob in room.monsters:
-            if getattr(mob, 'owner_id', None) == player.id:
-                pet_obj = mob
-                break
-        if pet_obj: break
-        
-    if not pet_obj:
-        player.send_line(f"{Colors.RED}You have no active pet to whistle for.{Colors.RESET}")
+    # [V6.5] The GCR Gate (Audit Restriction)
+    player_cr = combat.get_combat_rating(player)
+    target_cr = combat.get_combat_rating(target)
+    
+    if player_cr < target_cr:
+        player.send_line(f"Your presence (GCR: {player_cr}) fails to intimidate {target.name} (GCR: {target_cr}).")
+        player.send_line(f"{Colors.YELLOW}Gear up and increase your Combat Rating to tame this dangerous creature.{Colors.RESET}")
         return None, True
         
-    # Teleport via Facade
-    from logic.engines import spatial_engine
-    spatial_engine.move_entity(pet_obj, player.room, silent=False, 
-                               leave_msg=f"{pet_obj.name} hears a whistle and vanishes.",
-                               arrive_msg=f"{pet_obj.name} leaps from the shadows to {player.name}'s side.")
+    # [V6.5] Pack Limit: Only one beast at a time
+    if any(m for m in player.room.monsters if getattr(m, 'owner_id', None) == player.id and "beast" in getattr(m, 'tags', [])):
+         player.send_line("Your soul is already bonded to a beast. You cannot handle another.")
+         return None, True
+
+    player.send_line(f"{Colors.BOLD}{Colors.CYAN}You focus your will on {target.name}, weaving a primal bond between your souls!{Colors.RESET}")
     
-    player.send_line(f"You whistle sharply, and {pet_obj.name} appears!")
+    # [V6.5] Global Binding
+    follower_service.bind_follower(player, target)
     
-    consume_resources(player, skill)
-    return pet_obj, True
+    # Tag as pet for Beastmaster logic
+    target.is_pet = True
+    target.tamed_name = target.name
+    
+    # Live Tracking (Transient - not saved to JSON)
+    player.active_pet = target
+    if target not in player.minions:
+        player.minions.append(target)
+    
+    _consume_resources(player, skill)
+    return target, True
 
-@register("pets")
-def handle_pets(player, skill, args, target=None):
-    """
-    @pets: Lists the player's tamed library.
-    """
-    if getattr(player, 'active_class', None) != 'beastmaster':
-        return False, "Only Beastmasters can view their pet library."
+@register("intimidating_roar")
+def handle_intimidating_roar(player, skill, args, target=None):
+    """Setup: [Dazed] for crowd control."""
+    player.send_line(f"{Colors.BOLD}{Colors.WHITE}Your companion unleashes a primal roar that echoes through the room!{Colors.RESET}")
+    for m in player.room.monsters:
+        effects.apply_effect(m, "dazed", 4)
+        
+    resources.modify_resource(player, "bond", 10, source="Roar")
+    _consume_resources(player, skill)
+    return None, True
 
-    bm_state = get_bm_state(player)
-    if not bm_state: return False, "Beastmaster state not initialized."
+@register("bestial_wrath")
+def handle_bestial_wrath(player, skill, args, target=None):
+    """Payoff/Burst: massive damage from pet."""
+    player.send_line(f"{Colors.BOLD}{Colors.RED}BESTIAL WRATH! Your companion enters a blood-frenzy!{Colors.RESET}")
+    bond = player.ext_state.get('beastmaster', {}).get('bond', 0)
+    # Multiply pet damage or duration?
+    effects.apply_effect(player, "beast_wrath", 10 + (bond // 10))
+    resources.modify_resource(player, "bond", -bond)
+    
+    _consume_resources(player, skill)
+    return None, True
 
-    if not bm_state['tamed_library']:
-        player.send_line("Your pet library is empty. Go out and tame some creatures!")
+@register("coordinated_kill")
+def handle_coordinated_kill(player, skill, args, target=None):
+    """Finisher: You and pet strike vs marked."""
+    target = common._get_target(player, args, target, "Execute the coordinated strike on whom?")
+    if not target: return None, True
+    
+    player.send_line(f"{Colors.BOLD}{Colors.WHITE}COORDINATED KILL! You and your beast strike in perfect harmony!{Colors.RESET}")
+    if effects.has_effect(target, "marked"):
+        player.coord_multiplier = 4.0
+        try:
+             combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+        finally:
+             if hasattr(player, 'coord_multiplier'): del player.coord_multiplier
+             
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill) # Standard strike
+    _consume_resources(player, skill)
+    return target, True
+
+@register("pack_bond")
+def handle_pack_bond(player, skill, args, target=None):
+    """Defense: Shared mitigation."""
+    player.send_line(f"{Colors.YELLOW}You enter a symbiotic defense with your companion.{Colors.RESET}")
+    effects.apply_effect(player, "pack_bonded", 8) # Logic in combat engine for redirection
+    _consume_resources(player, skill)
+    return None, True
+
+@register("feral_leap")
+def handle_feral_leap(player, skill, args, target=None):
+    """Mobility: linear jump and stagger."""
+    player.send_line(f"{Colors.WHITE}You and your beast leap through the air!{Colors.RESET}")
+    effects.apply_effect(player, "haste", 2)
+    _consume_resources(player, skill)
+    return None, True
+
+@register("call_companion")
+def handle_call_companion(player, skill, args, target=None):
+    """Utility/Summon: Call your pet to your side."""
+    state = player.ext_state.get('beastmaster', {})
+    pet = state.get('active_pet')
+    
+    if not pet or getattr(pet, 'hp', 0) <= 0:
+        player.send_line(f"{Colors.RED}You have no active companion to call.{Colors.RESET}")
+        return None, True
+        
+    if pet.room == player.room:
+        player.send_line(f"{getattr(pet, 'tamed_name', pet.name)} is already here.")
         return None, True
 
-    # Header
-    player.send_line(f"\n{Colors.BOLD}{Colors.YELLOW}=== Your Tamed Creatures ==={Colors.RESET}")
+    player.send_line(f"{Colors.CYAN}You let out a sharp whistle, calling {getattr(pet, 'tamed_name', pet.name)} to your side!{Colors.RESET}")
+    player.room.broadcast(f"{player.name} whistles loudly, and a beast appears!", exclude_player=player)
     
-    # Attempt to find active pet name in the current room for the [ACTIVE] tag
-    active_pet_name = None
-    if bm_state.get('active_pet_uuid'):
-        for mob in player.room.monsters:
-            if getattr(mob, 'owner_id', None) == player.id:
-                active_pet_name = mob.name
-                break
+    world_service.move_entity(pet, player.room)
     
-    for i, pet in enumerate(bm_state['tamed_library'], 1):
-        is_active = (pet['name'] == active_pet_name)
-        status = f" {Colors.GREEN}[ACTIVE]{Colors.RESET}" if is_active else ""
-        tags_str = f" {Colors.dGREY}[{', '.join(pet.get('tags', []))}]{Colors.RESET}" if pet.get('tags') else ""
-        player.send_line(f"{i}. {Colors.CYAN}{pet['name']}{Colors.RESET} ({pet['archetype'].title()}){tags_str}{status}")
-    
-    player.send_line(f"\n{Colors.YELLOW}Total: {len(bm_state['tamed_library'])} / 10{Colors.RESET}")
-    player.send_line(f"Use '{Colors.BOLD}call <name>{Colors.RESET}' to summon a pet.")
-    
+    _consume_resources(player, skill)
     return None, True

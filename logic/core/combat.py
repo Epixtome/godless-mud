@@ -50,6 +50,10 @@ def kill_entity(victim: Any, killer: Optional[Any] = None) -> None:
     from logic.core import event_engine
     event_engine.dispatch("on_death", {'victim': victim, 'killer': killer})
 
+def get_combat_rating(entity: Any) -> float:
+    """Returns the total power measurement (GCR) of an entity."""
+    return combat_logic.get_combat_rating(entity)
+
 def estimate_player_damage(player: 'Player') -> int:
     """Estimates average damage for the consider command."""
     return combat_logic.estimate_player_damage(player)

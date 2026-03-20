@@ -278,9 +278,9 @@ def consider(player, args):
     player.send_line(f" {msg}")
     
     # [V6.0] Deterministic Combat Rating comparison
-    from logic.core.utils import rating_engine
-    p_cr = rating_engine.calculate_entity_rating(player)
-    t_cr = rating_engine.calculate_entity_rating(target)
+    from logic.core.math import rating
+    p_cr = rating.calculate_entity_rating(player)
+    t_cr = rating.calculate_entity_rating(target)
     
     diff = t_cr - p_cr
     trend = f"{Colors.RED}DANGEROUS" if diff > 5 else (f"{Colors.YELLOW}FAIR" if abs(diff) <= 5 else f"{Colors.GREEN}DOMINANT")

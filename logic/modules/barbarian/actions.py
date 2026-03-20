@@ -1,164 +1,119 @@
-import random
-from logic.core import effects, combat
-from utilities.colors import Colors
+"""
+logic/modules/barbarian/actions.py
+Barbarian Skill Handlers: Master of the Tempo and Endurance Axes.
+Pillar: Fury, Bleeding, and Bone-crushing impact.
+"""
 from logic.actions.registry import register
-from logic.actions.skill_utils import _apply_damage
-from logic.engines import magic_engine, blessings_engine
+from logic.core import effects, resources, combat
+from logic.engines import action_manager, magic_engine
+from utilities.colors import Colors
+from logic import common
 
 def _consume_resources(player, skill):
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
     magic_engine.consume_pacing(player, skill)
 
-@register("bash")
-def bash(attacker, skill, args, target=None):
-    """Opener: Stuns the target."""
-    from logic.common import _get_target
-    target = _get_target(attacker, args, target, "Bash whom?")
+@register("savage_strike")
+def handle_savage_strike(player, skill, args, target=None):
+    """Setup/Builder: Basic hit, generates fury."""
+    target = common._get_target(player, args, target, "Savage whom?")
     if not target: return None, True
     
-    # Flavor line removed to prevent double-messaging with combat_processor
+    player.send_line(f"{Colors.RED}You hit {target.name} with brute force!{Colors.RESET}")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    # Generate Stamina and +5 Fury
+    resources.modify_resource(player, "stamina", 15, source="Savage Strike")
+    resources.modify_resource(player, "fury", 5, source="Savage Strike")
     
-    # Delegate to processor for damage and on_hit (stun/balance)
-    from logic.engines import combat_processor
-    prompts = set()
-    combat_processor.execute_attack(attacker, target, attacker.room, attacker.game, prompts, blessing=skill)
-    
-    _consume_resources(attacker, skill)
+    _consume_resources(player, skill)
     return target, True
 
-@register("dirt_kick")
-def dirt_kick(attacker, skill, args, target=None):
-    """Debuff: Blinds the target."""
-    from logic.common import _get_target
-    target = _get_target(attacker, args, target, "Kick dirt at whom?")
+@register("headbutt")
+def handle_headbutt(player, skill, args, target=None):
+    """Setup: [Off-Balance] applier."""
+    target = common._get_target(player, args, target, "Headbutt whom?")
     if not target: return None, True
     
-    attacker.send_line(f"{Colors.YELLOW}You kick a cloud of grit into {target.name}'s eyes!{Colors.RESET}")
-    
-    # Apply on_hit effects (blinded)
-    blessings_engine.apply_on_hit(attacker, target, skill)
-    
-    _consume_resources(attacker, skill)
+    player.send_line(f"{Colors.BOLD}{Colors.WHITE}KRONK!{Colors.RESET} You slam your forehead into {target.name}'s skull!")
+    effects.apply_effect(target, "off_balance", 3)
+    resources.modify_resource(player, "fury", 10, source="Headbutt")
+    _consume_resources(player, skill)
     return target, True
 
-@register("drag")
-def drag(attacker, skill, args, target=None):
-    """Utility: Moves attacker and target to a connected room."""
-    # Parse target and direction (e.g., "drag rat west")
-    target_query = args
-    direction = None
-    if args and " " in args:
-        parts = args.split()
-        if len(parts) > 1 and parts[-1].lower() in attacker.room.exits:
-            direction = parts[-1].lower()
-            target_query = " ".join(parts[:-1])
-
-    from logic.core import search
-    target = search.find_living(attacker.room, target_query) if target_query else target
-    if not target:
-        attacker.send_line("Drag whom?")
-        return None, True
+@register("lacerate")
+def handle_lacerate(player, skill, args, target=None):
+    """Setup: [Bleeding] applier."""
+    target = common._get_target(player, args, target, "Lacerate whom?")
+    if not target: return None, True
     
-    if not attacker.room: return None, True
-    
-    exits = attacker.room.exits
-    if not exits:
-        attacker.send_line("There's nowhere to drag them!")
-        return None, True
-        
-    # Use specified direction or pick a random one
-    if not direction or direction not in exits:
-        direction = random.choice(list(exits.keys()))
-    destination_id = exits[direction]
-    
-    attacker.send_line(f"{Colors.BOLD}{Colors.YELLOW}You grab {target.name} and drag them {direction}!{Colors.RESET}")
-    target.send_line(f"{Colors.BOLD}{Colors.RED}{attacker.name} grabs you and drags you {direction}!{Colors.RESET}")
-    
-    # Broadcast to old room
-    attacker.room.broadcast(f"{attacker.name} drags {target.name} out to the {direction}!", exclude_ids=[attacker.name, target.name])
-    
-    # Move them
-    from logic.core.services import world_service
-    target_room = attacker.game.world.rooms.get(destination_id)
-    if target_room:
-        world_service.move_entity(attacker, target_room)
-        world_service.move_entity(target, target_room)
-        
-        # Broadcast to new room
-        target_room.broadcast(f"{attacker.name} drags {target.name} into the room from the opposite side!", exclude_ids=[attacker.name, target.name])
-        attacker.send_line(target_room.description) # Trigger a look
-    else:
-        attacker.send_line("The trail goes cold. You couldn't drag them there.")
-    
-    _consume_resources(attacker, skill)
+    player.send_line(f"{Colors.RED}You sweep your blade through {target.name}'s side!{Colors.RESET}")
+    effects.apply_effect(target, "bleeding", 6)
+    resources.modify_resource(player, "fury", 10, source="Lacerate")
+    _consume_resources(player, skill)
     return target, True
 
 @register("whirlwind")
-def whirlwind(attacker, skill, args, target=None):
-    """AOE: Consumes 50 Fury for massive damage."""
-    attacker.send_line(f"{Colors.BOLD}{Colors.RED}You enter a cyclone of steel!{Colors.RESET}")
-    attacker.room.broadcast(f"{Colors.RED}{attacker.name} spins in a devastating whirlwind!{Colors.RESET}", exclude_player=attacker)
+def handle_whirlwind(player, skill, args, target=None):
+    """Payoff/AOE: Consumes 50 Fury."""
+    player.send_line(f"{Colors.BOLD}{Colors.RED}WHIRLWIND!{Colors.RESET} You spin in a lethal blur of steel!")
     
-    # Calculate power once
-    power = blessings_engine.calculate_power(skill, attacker, None)
+    targets = [m for m in player.room.monsters] + [p for p in player.room.players if p != player]
     
-    # Get all targets in room (Monsters AND hostile players for PvP)
-    targets = [m for m in attacker.room.monsters if m != attacker and m.hp > 0]
-    targets += [p for p in attacker.room.players if p != attacker and p.hp > 0]
-    
-    if not targets:
-        attacker.send_line("There is no one here to strike.")
-        return None, True
-        
     for t in targets:
-        # Initiate combat so they retaliate
-        combat.start_combat(attacker, t)
-        _apply_damage(attacker, t, power, "Whirlwind")
-        blessings_engine.apply_on_hit(attacker, t, skill)
-
-    _consume_resources(attacker, skill)
+         # Bonus vs bleeding handled in calculation if possible, else manually here.
+         combat.handle_attack(player, t, player.room, player.game, blessing=skill)
+         
+    _consume_resources(player, skill)
     return None, True
 
-@register("struggle")
-def struggle(attacker, skill, args, target=None):
-    """Utility: Instantly break free from nets or similar CC."""
-    if not effects.has_effect(attacker, "net"):
-        attacker.send_line("You are not entangled in anything.")
-        return None, True
+@register("decapitate")
+def handle_decapitate(player, skill, args, target=None):
+    """Payoff/Finisher: massive damage vs Prone/Bleeding."""
+    target = common._get_target(player, args, target, "Decapitate whom?")
+    if not target: return None, True
 
-    attacker.send_line(f"{Colors.BOLD}{Colors.YELLOW}With a primal roar, you tear the net apart!{Colors.RESET}")
-    attacker.room.broadcast(f"{attacker.name} rips through the netting with brute strength!", exclude_player=attacker)
-    
-    effects.remove_effect(attacker, "net")
-    
-    _consume_resources(attacker, skill)
+    if effects.has_effect(target, "prone") or effects.has_effect(target, "bleeding"):
+        player.send_line(f"{Colors.BOLD}{Colors.RED}TRY TO SURVIVE THIS!{Colors.RESET} You bring your weapon down on {target.name}'s neck!")
+        player.execute_multiplier = 3.0
+        try:
+            combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+        finally:
+             if hasattr(player, 'execute_multiplier'): del player.execute_multiplier
+    else:
+        player.send_line(f"You deliver a heavy blow, but {target.name} keeps their head.")
+        combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+
+    _consume_resources(player, skill)
+    return target, True
+
+@register("savage_brace")
+def handle_savage_brace(player, skill, args, target=None):
+    """Defense: Mitigation."""
+    player.send_line(f"{Colors.BOLD}{Colors.RED}You tense for impact, welcoming the fury of pain.{Colors.RESET}")
+    effects.apply_effect(player, "savage_brace", 4)
+    _consume_resources(player, skill)
+    return None, True
+
+@register("leap")
+def handle_leap(player, skill, args, target=None):
+    """Mobility: Leap and slam arrival."""
+    player.send_line(f"{Colors.CYAN}You leap into the air, falling onto your foes with catastrophic force!{Colors.RESET}")
+    if effects.has_effect(player, "pinned") or effects.has_effect(player, "grappled"):
+        effects.remove_effect(player, "pinned")
+        effects.remove_effect(player, "grappled")
+        player.send_line(f"{Colors.GREEN}You snap free of their hold!{Colors.RESET}")
+        
+    for t in [m for m in player.room.monsters] + [p for p in player.room.players if p != player]:
+         effects.apply_effect(t, "staggered", 1)
+         
+    _consume_resources(player, skill)
     return None, True
 
 @register("bloodrage")
-def bloodrage(attacker, skill, args, target=None):
-    """Ultimate: Consumes 100 Fury to enter Rage Mode."""
-    attacker.send_line(f"{Colors.BOLD}{Colors.RED}YOUR BLOOD BOILS! YOU ARE UNSTOPPABLE!{Colors.RESET}")
-    attacker.room.broadcast(f"{Colors.BOLD}{Colors.RED}{attacker.name} screams in primal fury as their muscles swell!{Colors.RESET}", exclude_player=attacker)
-    
-    # [BUG FIX] Directly apply the effect from JSON instead of delegating to base_executor.
-    # base_executor.execute() also calls consume_resources() internally, causing double-Fury drain.
-    from logic.core import effects
-    effects.apply_effect(attacker, "bloodrage", 10)
-    
-    # Consume Fury cost (100) and set cooldown
-    _consume_resources(attacker, skill)
-    return None, True
-
-@register("counter")
-def counter(attacker, skill, args, target=None):
-    """Deny: Ready a savage brace — take 50% damage from next hit and instantly counter."""
-    attacker.send_line(f"{Colors.BOLD}{Colors.YELLOW}You plant your feet and BRACE for impact!{Colors.RESET}")
-    attacker.send_line(f"{Colors.YELLOW}Next hit deals half damage and triggers an instant counter-strike.{Colors.RESET}")
-    attacker.room.broadcast(f"{Colors.YELLOW}{attacker.name} assumes a savage brace, daring an attack!{Colors.RESET}", exclude_player=attacker)
-    
-    from logic.core import effects
-    effects.apply_effect(attacker, "blood_counter_ready", 4)
-    
-    _consume_resources(attacker, skill)
+def handle_bloodrage(player, skill, args, target=None):
+    """Utility/Ultimate: CC immunity."""
+    player.send_line(f"{Colors.BOLD}{Colors.RED}BLOODRAGE!{Colors.RESET} The logic of mortality no longer applies to you.")
+    effects.apply_effect(player, "bloodrage", 10)
+    _consume_resources(player, skill)
     return None, True

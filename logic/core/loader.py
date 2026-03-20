@@ -57,7 +57,8 @@ def _load_all_metadata(world):
 def _load_fragmented_json(directory, key_fragment, legacy_file=None):
     results = []
     if os.path.isdir(directory):
-        for f_path in glob.glob(os.path.join(directory, "**", "*.json"), recursive=True):
+        search_pattern = f"{directory}/**/*.json"
+        for f_path in glob.glob(search_pattern, recursive=True):
             try:
                 with open(f_path, 'r') as f:
                     data = json.load(f)

@@ -172,8 +172,8 @@ def attributes(player, args):
     player.send_line(f" Crit:     {crit_chance:>3.1f}%")
 
     # [V6.0] Combat Rating Integration
-    from logic.core.utils import rating_engine
-    cr = rating_engine.calculate_entity_rating(player)
+    from logic.core.math import rating
+    cr = rating.calculate_entity_rating(player)
     player.send_line(f" Rating:   {Colors.BOLD}{Colors.YELLOW}{cr}{Colors.RESET} GCR")
     
     player.send_line(display_utils.render_line(width, "-"))

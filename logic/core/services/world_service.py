@@ -135,6 +135,10 @@ def move_entity(entity, target_room):
     # Register the destination as active
     if world:
         world.register_room(target_room)
+        
+    # [V6.3] Environmental Synchronization: Update room grammar on entry
+    import logic.core.systems.weather as weather_system
+    weather_system.update_room_environmental_state(target_room, entity.game)
     
     event_engine.dispatch("on_enter_room", {'entity': entity, 'room': target_room})
     return True

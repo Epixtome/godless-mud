@@ -1,10 +1,11 @@
 """
 logic/modules/paladin/actions.py
-Paladin Class Skills: Divine combo chain (Radiant Flash -> Holy Smite).
+Paladin Skill Handlers: Master of the Endurance and Lethality Axes.
+Pillar: Mitigation, Healing, and Divine Smite chains.
 """
 from logic.actions.registry import register
 from logic.core import effects, resources, combat
-from logic.engines import magic_engine, blessings_engine
+from logic.engines import action_manager, magic_engine
 from utilities.colors import Colors
 from logic import common
 
@@ -13,71 +14,117 @@ def _consume_resources(player, skill):
     magic_engine.set_cooldown(player, skill)
     magic_engine.consume_pacing(player, skill)
 
+@register("reckoning")
+def handle_reckoning(player, skill, args, target=None):
+    """Setup/Builder: Basic hit, generates focus."""
+    target = common._get_target(player, args, target, "Pass reckoning on whom?")
+    if not target: return None, True
+    
+    player.send_line(f"{Colors.YELLOW}You pass judgment on {target.name}!{Colors.RESET}")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    # Generate Stamina and +5 Concentration
+    resources.modify_resource(player, "stamina", 15, source="Reckoning")
+    resources.modify_resource(player, "concentration", 5, source="Reckoning")
+    
+    _consume_resources(player, skill)
+    return target, True
+
 @register("radiant_flash")
 def handle_radiant_flash(player, skill, args, target=None):
-    """Apply: Blind target with searing light. Sets up Holy Smite."""
-    target = common._get_target(player, args, target, "Flash whom with divine light?")
+    """Setup: [Blinded] applier."""
+    target = common._get_target(player, args, target, "Blaze whom?")
     if not target: return None, True
+    
+    player.send_line(f"{Colors.BOLD}{Colors.WHITE}A burst of divine light blazes from your palms!{Colors.RESET}")
+    effects.apply_effect(target, "blinded", 4)
+    _consume_resources(player, skill)
+    return target, True
 
-    player.send_line(f"{Colors.BOLD}{Colors.YELLOW}RADIANT FLASH! You call down a blinding burst of divine light!{Colors.RESET}")
-    player.room.broadcast(f"{Colors.YELLOW}A blinding flash of divine light erupts from {player.name}!{Colors.RESET}", exclude_player=player)
-
-    # Minimal damage — this is the setup. on_hit in JSON applies [blinded].
-    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-
-    player.send_line(f"{Colors.YELLOW}[TIP] {target.name} is blinded! Use Holy Smite now for +150% bonus!{Colors.RESET}")
-
+@register("seal_of_justice")
+def handle_seal_of_justice(player, skill, args, target=None):
+    """Setup: Mark and Shackle."""
+    target = common._get_target(player, args, target, "Seal whom?")
+    if not target: return None, True
+    
+    player.send_line(f"You {Colors.CYAN}seal the fate{Colors.RESET} of {target.name} with divine power!")
+    effects.apply_effect(target, "marked", 6)
+    effects.apply_effect(target, "shackled", 6)
     _consume_resources(player, skill)
     return target, True
 
 @register("holy_smite")
 def handle_holy_smite(player, skill, args, target=None):
-    """Payoff: Divine finisher on a Blinded target. Math bridge adds 1.5x divine bonus."""
+    """Payoff/Finisher: massive damage vs Blinded/Marked."""
     target = common._get_target(player, args, target, "Smite whom?")
     if not target: return None, True
-    # blinded:true requirement is already gated in auditor.check_requirements
 
-    player.send_line(f"{Colors.BOLD}{Colors.YELLOW}HOLY SMITE! Divine wrath incarnate!{Colors.RESET}")
-    player.room.broadcast(f"{Colors.YELLOW}A column of blinding divine energy crashes down on {target.name}!{Colors.RESET}", exclude_player=player)
-
-    # The divine + blinded tag synergy in math_bridge.py fires automatically (+150%)
-    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-
-    # Blinded is consumed on smite
-    effects.remove_effect(target, "blinded", verbose=False)
+    if effects.has_effect(target, "blinded") or effects.has_effect(target, "marked"):
+        player.send_line(f"{Colors.BOLD}{Colors.YELLOW}HOLY SMITE!{Colors.RESET} Your deity's wrath descends upon {target.name}!")
+        player.execute_multiplier = 3.0
+        try:
+            combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+        finally:
+             if hasattr(player, 'execute_multiplier'): del player.execute_multiplier
+             
+        if effects.has_effect(target, "shackled"):
+             effects.apply_effect(target, "dazed", 2)
+             player.send_line(f"{Colors.RED}{target.name} is dazed by the divine force!{Colors.RESET}")
+    else:
+        player.send_line(f"You strike with holy power, but the target is well-guarded.")
+        combat.handle_attack(player, target, player.room, player.game, blessing=skill)
 
     _consume_resources(player, skill)
     return target, True
 
+@register("consecration")
+def handle_consecration(player, skill, args, target=None):
+    """Payoff/AOE: Damage and Healing ground."""
+    player.send_line(f"{Colors.BOLD}{Colors.YELLOW}CONSECRATION!{Colors.RESET} You hallow the ground beneath your feet.")
+    
+    # In a full engine, we'd apply a room status "consecrated" for 5 ticks.
+    # For now, we do an immediate burst.
+    targets = [m for m in player.room.monsters] + [p for p in player.room.players if p != player]
+    allies = [p for p in player.room.players]
+    
+    for t in targets:
+         combat.handle_attack(player, t, player.room, player.game, blessing=skill)
+         
+    for a in allies:
+         resources.modify_resource(a, "hp", int(a.max_hp * 0.05), source=player.name)
+         player.send_line(f"{Colors.GREEN}Successfully healed {a.name} for 5% health!{Colors.RESET}")
+         
+    _consume_resources(player, skill)
+    return None, True
+
 @register("divine_grace")
 def handle_divine_grace(player, skill, args, target=None):
-    """Deny: Open a 4s window to absorb the next incoming hit."""
-    player.send_line(f"{Colors.BOLD}{Colors.WHITE}You open your arms, trusting divine grace to shield you.{Colors.RESET}")
-    player.room.broadcast(f"{Colors.WHITE}{player.name} assumes a position of divine trust, prepared to intercept.{Colors.RESET}", exclude_player=player)
-    effects.apply_effect(player, "divine_grace_ready", 4)
+    """Defense: Shield and focus restore."""
+    player.send_line(f"An {Colors.BOLD}{Colors.CYAN}aura of divine grace{Colors.RESET} protects you.")
+    effects.apply_effect(player, "shielded", 4)
+    _consume_resources(player, skill)
+    return None, True
+
+@register("pursuit_of_justice")
+def handle_pursuit_of_justice(player, skill, args, target=None):
+    """Mobility: Clear CC and Haste towards target."""
+    player.send_line(f"{Colors.BOLD}{Colors.WHITE}Justice pursues!{Colors.RESET} You zip across the battlefield.")
+    if effects.has_effect(player, "slowed"):
+        effects.remove_effect(player, "slowed")
+    effects.apply_effect(player, "haste", 2)
     _consume_resources(player, skill)
     return None, True
 
 @register("lay_on_hands")
 def handle_lay_on_hands(player, skill, args, target=None):
-    """Heal self or an ally for 40% max HP."""
-    heal_target = player
-    if args:
-        ally = player.room.find_player(args) if hasattr(player.room, 'find_player') else None
-        if ally:
-            heal_target = ally
-
-    heal_amount = int(heal_target.max_hp * 0.40)
-    resources.modify_resource(heal_target, "hp", heal_amount, source="Lay on Hands")
-
-    if heal_target == player:
-        player.send_line(f"{Colors.GREEN}You channel divine warmth into your own wounds, restoring {heal_amount} HP!{Colors.RESET}")
-    else:
-        player.send_line(f"{Colors.GREEN}You lay hands on {heal_target.name}, restoring {heal_amount} HP!{Colors.RESET}")
-        if hasattr(heal_target, 'send_line'):
-            heal_target.send_line(f"{Colors.GREEN}{player.name} channels divine light into you, restoring {heal_amount} HP!{Colors.RESET}")
-
-    player.room.broadcast(f"{Colors.WHITE}{player.name} channels healing divine energy!{Colors.RESET}", exclude_player=player)
-
+    """Utility/Ultimate: Healing."""
+    target_player = None
+    if args: target_player = player.room.find_player(args)
+    if not target_player: target_player = player
+    
+    player.send_line(f"{Colors.BOLD}{Colors.WHITE}LAY ON HANDS!{Colors.RESET} Your deity's power flows through you into {target_player.name}!")
+    resources.modify_resource(target_player, "hp", int(target_player.max_hp * 0.4), source=player.name)
+    # Concentration drain handled by Auditor/Requirements if specified there, or manually.
+    resources.modify_resource(player, "concentration", -resources.get_resource(player, "concentration"), source="Lay on Hands")
+    
     _consume_resources(player, skill)
-    return heal_target, True
+    return target_player, True

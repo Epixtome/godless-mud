@@ -1,5 +1,5 @@
 """
-logic/core/utils/rating_engine.py
+logic/core/math/rating.py
 [V6.0] Godless Combat Rating (GCR) System.
 Scores entities based on Axis focus, State application, Gear, and Environment.
 """

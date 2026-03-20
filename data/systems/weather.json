@@ -1,0 +1,58 @@
+{
+    "weather_zones": {
+        "default": ["clear", "cloudy", "rain", "overcast"],
+        "aetheria": ["clear", "sunny", "blinding_light", "golden_mist"],
+        "umbra": ["foggy", "dark_mist", "void_storm", "shadow_haze"],
+        "sylvanis": ["overcast", "rain", "thunderstorm", "pollen_drift"],
+        "null_void": ["void_storm", "static_crackle", "reality_blur", "clear"]
+    },
+    "weather_to_status": {
+        "storm": ["wet", 60],
+        "thunderstorm": ["wet", 40],
+        "rain": ["wet", 30],
+        "blizzard": ["cold", 30],
+        "sandstorm": ["blinded", 10],
+        "heatwave": ["exhausted", 10],
+        "blinding_light": ["blinded", 5],
+        "void_storm": ["confused", 10],
+        "static_crackle": ["shocked", 5],
+        "pollen_drift": ["staggered", 5],
+        "dark_mist": ["blinded", 5]
+    },
+    "terrain_shifts": {
+        "rain": {
+            "dirt": "mud",
+            "sand": "wet_sand",
+            "forest": "wet_forest"
+        },
+        "storm": {
+            "dirt": "mud",
+            "sand": "wet_sand"
+        },
+        "blizzard": {
+            "stone": "ice_stone",
+            "grass": "snow_field",
+            "mountain": "frozen_summit"
+        },
+        "clear": {
+            "mud": "dirt",
+            "wet_sand": "sand",
+            "ice_stone": "stone"
+        }
+    },
+    "transitions": {
+        "clear": {"clear": 0.7, "cloudy": 0.2, "sunny": 0.1},
+        "cloudy": {"clear": 0.3, "cloudy": 0.4, "rain": 0.3},
+        "rain": {"cloudy": 0.4, "rain": 0.5, "storm": 0.1},
+        "storm": {"rain": 0.6, "storm": 0.4}
+    },
+    "payoffs": {
+        "rain": {"lightning": 1.25, "fire": 0.75},
+        "storm": {"lightning": 1.5, "fire": 0.5},
+        "thunderstorm": {"lightning": 1.5, "fire": 0.5},
+        "blizzard": {"ice": 1.5, "fire": 0.5},
+        "heatwave": {"fire": 1.25, "ice": 0.75},
+        "blinding_light": {"holy": 1.25, "shadow": 0.75},
+        "dark_mist": {"shadow": 1.25, "holy": 0.75}
+    }
+}

@@ -114,7 +114,30 @@ def calculate_grammar_bonus(blessing, player, target, base_power):
         if "arcane" in identity and "red_mage" in identity and effects.has_effect(player, "dualcast"):
              bonus += base_power # Guaranteed 2x for Dualcast
 
-    # 2. Environmental Payoffs (Terrain/Weather)
+        # --- [V6.2] Class-Specific Payoff Flags ---
+        if hasattr(player, 'execute_multiplier'):
+             bonus += int(base_power * (player.execute_multiplier - 1))
+             
+        if getattr(player, 'pyroclasm_active', False) and effects.has_effect(target, "burn"):
+             bonus += (base_power * 2) # Total 3x vs Burning
+             
+        if getattr(player, 'retribution_active', False):
+             bonus += base_power # Total 2x for Retribution
+
+    # 2. [V6.2] Gear Grammar Bridge (G_ tags)
+    # These bonuses scale with Gear 'Voltage' from current_tags.
+    grammar_mods = getattr(player, 'current_tags', {})
+    
+    if "lightning" in identity and grammar_mods.get("G_POW_LIGHTNING", 0) > 0:
+        bonus += int(base_power * (grammar_mods["G_POW_LIGHTNING"] / 100.0))
+        
+    if ("holy" in identity or "divine" in identity) and grammar_mods.get("G_POW_DIVINE", 0) > 0:
+        bonus += int(base_power * (grammar_mods["G_POW_DIVINE"] / 100.0))
+        
+    if "fire" in identity and grammar_mods.get("G_POW_FIRE", 0) > 0:
+        bonus += int(base_power * (grammar_mods["G_POW_FIRE"] / 100.0))
+
+    # 3. Environmental Payoffs (Terrain/Weather)
     bonus += calculate_environmental_bonus(blessing, player, target, base_power)
          
     return bonus

@@ -227,16 +227,10 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
         
         # [REMOVED] Reciprocal Engagement now handled by systems/engagement.py
 
-    # 11. Attrition (Resource Drains)
+    # 11. Attrition (Resource Drains & Grammar Transitions)
     if damage > 0 and hasattr(target, 'resources'):
-        # Removed redundant check_posture_break
-
-        if Tags.DISRUPTION in attack_tags:
-            target.resources[Tags.CONCENTRATION] = max(0, target.resources.get(Tags.CONCENTRATION, 0) - 15)
-        if Tags.CONCUSSIVE in attack_tags:
-            resources.modify_resource(target, Tags.HEAT, 15, source=attacker.name)
-        if "weight" in attack_tags and "off_balance" in getattr(target, 'status_effects', {}):
-            effects.apply_effect(target, "prone", 3, log_event=True)
+        from logic.core.math import grammar
+        grammar.resolve_state_transitions(attacker, target, attack_tags)
 
     # 12. Final HP Modification & Death
     resources.modify_resource(target, "hp", -damage, source=attacker, context=f"{context_prefix or ''}Combat Hit".strip())

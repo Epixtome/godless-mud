@@ -1,0 +1,143 @@
+{
+    "blessings": {
+        "elemental_strike": {
+            "id": "elemental_strike",
+            "name": "Elemental Strike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A strike infused with shifting energy. Cycles through Fire, Ice, and Lightning. Generates 15 Concentration and +1 Attunement Pip. No cooldown.",
+            "identity_tags": ["magic", "elemental", "builder", "setup"],
+            "axis": "elemental",
+            "action": "elemental_strike",
+            "requirements": {
+                "class": "elementalist",
+                "concentration": 10
+            },
+            "base_power": 12
+        },
+        "flash_freeze": {
+            "id": "flash_freeze",
+            "name": "Flash Freeze",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: A burst of frigid air. Applies [Frozen] (2 ticks) if the target is [Wet]. Otherwise applies [Slowed].",
+            "identity_tags": ["magic", "ice", "disruption", "setup"],
+            "axis": "elemental",
+            "action": "flash_freeze",
+            "requirements": {
+                "class": "elementalist",
+                "concentration": 15,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "slowed",
+                "duration": 4
+            }
+        },
+        "cinder_shower": {
+            "id": "cinder_shower",
+            "name": "Cinder Shower",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Blanket the room in burning cinders. Applies [Burning] (4 ticks) group-wide.",
+            "identity_tags": ["magic", "fire", "aoe", "setup"],
+            "axis": "elemental",
+            "action": "cinder_shower",
+            "requirements": {
+                "class": "elementalist",
+                "concentration": 20,
+                "cooldown": 6
+            },
+            "on_hit": {
+                "apply_status": "burning",
+                "duration": 4
+            },
+            "base_power": 12,
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 1.2
+            }
+        },
+        "elemental_cataclysm": {
+            "id": "elemental_cataclysm",
+            "name": "Cataclysm",
+            "tier": 4,
+            "cost": 40,
+            "description": "Payoff/Finisher: Unleash the combined power of elements. Periodic elemental bursts across the room. Elements cycle 3x per use. High-impact damage vs [Vulnerable] targets.",
+            "identity_tags": ["magic", "elemental", "aoe", "payoff", "finisher"],
+            "axis": "elemental",
+            "action": "elemental_cataclysm",
+            "requirements": {
+                "class": "elementalist",
+                "concentration": 40,
+                "cooldown": 15
+            },
+            "base_power": 55,
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 3.5
+            }
+        },
+        "shock_cannon": {
+            "id": "shock_cannon",
+            "name": "Shock Cannon",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff/Burst: A focused bolt of lightning. Deals 3x damage to [Burning] targets (Electrolysis). Consumes shock stacks.",
+            "identity_tags": ["magic", "lightning", "payoff"],
+            "axis": "lethality",
+            "action": "shock_cannon",
+            "requirements": {
+                "class": "elementalist",
+                "concentration": 30,
+                "cooldown": 8
+            },
+            "base_power": 35
+        },
+        "barrier_of_elements": {
+            "id": "barrier_of_elements",
+            "name": "Elemental Barrier",
+            "tier": 2,
+            "cost": 25,
+            "description": "Defense/Reaction: Shroud yourself in shifting mana. Shield redirects 20% of elemental damage back to source and applies a status matching the element.",
+            "identity_tags": ["magic", "elemental", "protection", "defense"],
+            "axis": "endurance",
+            "action": "barrier_of_elements",
+            "requirements": {
+                "class": "elementalist",
+                "concentration": 25,
+                "cooldown": 12
+            }
+        },
+        "aether_dash": {
+            "id": "aether_dash",
+            "name": "Aether Dash",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Disintegrate and reform. Teleport through a line of enemies, applying the current cycle element status. Grants [Haste].",
+            "identity_tags": ["magic", "speed", "mobility"],
+            "axis": "position",
+            "action": "aether_dash",
+            "requirements": {
+                "class": "elementalist",
+                "concentration": 25,
+                "cooldown": 5
+            }
+        },
+        "attunement": {
+            "id": "attunement",
+            "name": "Attunement",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Perfectly sync with an element. Instant cycle to targeted element and +20% damage for that element for 10 ticks.",
+            "identity_tags": ["magic", "focus", "utility"],
+            "axis": "utility",
+            "action": "attunement",
+            "requirements": {
+                "class": "elementalist",
+                "concentration": 0,
+                "cooldown": 60
+            }
+        }
+    }
+}

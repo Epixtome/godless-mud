@@ -1,0 +1,142 @@
+{
+    "blessings": {
+        "mug": {
+            "id": "mug",
+            "name": "Mug",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A quick grab and strike. Deals physical damage and steals 5-10 Gold. Generates 15 Stamina and +5 Greed. No cooldown.",
+            "identity_tags": ["martial", "greed", "builder", "setup"],
+            "axis": "tempo",
+            "action": "mug",
+            "requirements": {
+                "class": "thief",
+                "stamina": 10
+            },
+            "base_power": 12
+        },
+        "sand_in_eyes": {
+            "id": "sand_in_eyes",
+            "name": "Sand in Eyes",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Throw a handful of grit. Applies [Blinded] (6 ticks). Generates +10 Greed.",
+            "identity_tags": ["martial", "thief", "vision", "setup"],
+            "axis": "vision",
+            "action": "sand_in_eyes",
+            "requirements": {
+                "class": "thief",
+                "stamina": 15,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "blinded",
+                "duration": 6
+            }
+        },
+        "cheap_shot": {
+            "id": "cheap_shot",
+            "name": "Cheap Shot",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Strike below the belt. Applies [Off-Balance] and [Staggered] (2 ticks). Targets already [Blinded] are also [Pinned].",
+            "identity_tags": ["martial", "thief", "disruption", "setup"],
+            "axis": "tempo",
+            "action": "cheap_shot",
+            "requirements": {
+                "class": "thief",
+                "stamina": 20,
+                "cooldown": 6
+            },
+            "on_hit": {
+                "apply_status": "off_balance",
+                "duration": 4
+            }
+        },
+        "kidney_shot": {
+            "id": "kidney_shot",
+            "name": "Kidney Shot",
+            "tier": 4,
+            "cost": 35,
+            "description": "Payoff/Burst: A disabling blow to the vitals. Deals 3x damage to [Blinded] or [Stunned] targets. Applies [Exposed] for 2 ticks.",
+            "identity_tags": ["martial", "thief", "lethal", "payoff"],
+            "axis": "lethality",
+            "action": "kidney_shot",
+            "requirements": {
+                "class": "thief",
+                "stamina": 35,
+                "cooldown": 8
+            },
+            "base_power": 45,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 2.5
+            }
+        },
+        "final_heist": {
+            "id": "final_heist",
+            "name": "Final Heist",
+            "tier": 5,
+            "cost": 40,
+            "description": "Finisher: The ultimate score. Massive physical strike. Steals a random item from the target or deals 4x damage if target is below 25% HP. Consumes all active Greed.",
+            "identity_tags": ["martial", "thief", "lethal", "payoff", "finisher"],
+            "axis": "lethality",
+            "action": "final_heist",
+            "requirements": {
+                "class": "thief",
+                "stamina": 40,
+                "cooldown": 15
+            },
+            "base_power": 60,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.5
+            }
+        },
+        "nimble_reflexes": {
+            "id": "nimble_reflexes",
+            "name": "Nimble Reflexes",
+            "tier": 2,
+            "cost": 25,
+            "description": "Defense/Reaction: A quick evasion. Gains +25% Evasion for 6 ticks and instantly clears all [Pinned] and [Grappled] states.",
+            "identity_tags": ["martial", "thief", "speed", "defense"],
+            "axis": "position",
+            "action": "nimble_reflexes",
+            "requirements": {
+                "class": "thief",
+                "stamina": 25,
+                "cooldown": 12
+            }
+        },
+        "pickpocket_dash": {
+            "id": "pickpocket_dash",
+            "name": "Pickpocket Dash",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Burst move past your foe. Dash behind the target and steal 10-20 Gold. Grants [Haste] (2 ticks).",
+            "identity_tags": ["martial", "speed", "mobility"],
+            "axis": "position",
+            "action": "pickpocket_dash",
+            "requirements": {
+                "class": "thief",
+                "stamina": 25,
+                "cooldown": 5
+            }
+        },
+        "stealth": {
+            "id": "stealth",
+            "name": "Stealth",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: The bread and butter. Self-buff: Grants [Concealed] permanently until you take action or receive damage. Reduces your [Vision] by 50% while active.",
+            "identity_tags": ["martial", "stealth", "vision", "utility"],
+            "axis": "vision",
+            "action": "stealth",
+            "requirements": {
+                "class": "thief",
+                "stamina": 0,
+                "cooldown": 60
+            }
+        }
+    }
+}

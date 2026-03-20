@@ -128,28 +128,27 @@ def save_zone_geography(world, zone_id):
         return False
 
 def save_items(world):
-    """Saves all item prototypes to data/items.json."""
+    """Saves all item prototypes to data/items.json using their full serialization."""
     items = []
+    # Sort by ID for deterministic diffs
     for mid, it in sorted(world.items.items()):
-        itype = "item"
-        if isinstance(it, Weapon): itype = "weapon"
-        elif isinstance(it, Armor): itype = "armor"
-        elif isinstance(it, Consumable): itype = "consumable"
-        elif isinstance(it, Corpse): itype = "corpse"
-        
-        d = {"id": getattr(it, 'prototype_id', mid), "type": itype, "name": it.name, "description": it.description, "value": getattr(it, 'value', 0)}
-        if hasattr(it, 'flags') and it.flags: d['flags'] = it.flags
-        if hasattr(it, 'tags') and it.tags: d['tags'] = it.tags
-        if itype == "weapon":
-            d['damage_dice'] = getattr(it, 'damage_dice', "1d4")
-            d['scaling'] = getattr(it, 'scaling', {})
-        elif itype == "armor": d['defense'] = getattr(it, 'defense', 0)
-        elif itype == "consumable": d['effects'] = getattr(it, 'effects', {})
-        items.append(d)
+        if hasattr(it, 'to_dict'):
+            d = it.to_dict()
+            # Ensure the ID from the registry is used as the 'id' field in the JSON
+            d['id'] = getattr(it, 'prototype_id', mid)
+            items.append(d)
+        else:
+            # Fallback for raw dict prototypes
+            items.append(it)
+            
     try:
-        with open('data/items.json', 'w') as f: json.dump({"items": items}, f, indent=4)
-        return True, "Saved items."
-    except Exception as e: return False, str(e)
+        # Save to the new fragmented items directory structure if it exists, 
+        # but for now we maintain the legacy composite items.json for safety.
+        with open('data/items.json', 'w') as f:
+            json.dump({"items": items}, f, indent=4)
+        return True, "Saved items (Full V6.0 Schema)."
+    except Exception as e:
+        return False, str(e)
 
 def save_mobs(world):
     """Saves monster prototypes to data/mobs.json."""

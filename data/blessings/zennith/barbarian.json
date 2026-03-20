@@ -1,0 +1,149 @@
+{
+    "blessings": {
+        "savage_strike": {
+            "id": "savage_strike",
+            "name": "Savage Strike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A brutal, unsophisticated strike. Generates 15 Stamina and +5 Fury. No cooldown.",
+            "identity_tags": ["martial", "strike", "builder", "setup"],
+            "axis": "tempo",
+            "action": "savage_strike",
+            "requirements": {
+                "class": "barbarian",
+                "stamina": 10
+            },
+            "base_power": 15
+        },
+        "headbutt": {
+            "id": "headbutt",
+            "name": "Headbutt",
+            "tier": 1,
+            "cost": 15,
+            "description": "Setup: Slam your forehead into the enemy. Applies [Off-Balance] for 3 ticks. Generates +10 Fury.",
+            "identity_tags": ["martial", "strike", "disruption", "setup"],
+            "axis": "tempo",
+            "action": "headbutt",
+            "requirements": {
+                "class": "barbarian",
+                "stamina": 15,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "off_balance",
+                "duration": 3
+            },
+            "base_power": 12,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.0
+            }
+        },
+        "lacerate": {
+            "id": "lacerate",
+            "name": "Lacerate",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: A sweeping tear across the target's flesh. Applies [Bleeding] for 6 ticks. Generates +10 Fury.",
+            "identity_tags": ["martial", "strike", "blood", "setup"],
+            "axis": "endurance",
+            "action": "lacerate",
+            "requirements": {
+                "class": "barbarian",
+                "stamina": 20,
+                "cooldown": 6
+            },
+            "on_hit": {
+                "apply_status": "bleeding",
+                "duration": 6
+            },
+            "base_power": 18,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 1.2
+            }
+        },
+        "whirlwind": {
+            "id": "whirlwind",
+            "name": "Whirlwind",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: Spin in a lethal circle. Consumes 50 Fury to deal moderate damage to all enemies in the room. Damage is increased by 20% per target that is [Bleeding].",
+            "identity_tags": ["martial", "strike", "aoe", "payoff"],
+            "axis": "endurance",
+            "action": "whirlwind",
+            "requirements": {
+                "class": "barbarian",
+                "fury": 50,
+                "cooldown": 2
+            },
+            "base_power": 25
+        },
+        "decapitate": {
+            "id": "decapitate",
+            "name": "Decapitate",
+            "tier": 5,
+            "cost": 0,
+            "description": "Finisher: A final, thunderous blow aimed at the neck. Consumes 100 Fury to deal 3x damage to [Prone] or [Bleeding] targets. If the target dies, you instantly restore 50 Stamina.",
+            "identity_tags": ["martial", "strike", "lethal", "payoff", "finisher"],
+            "axis": "tempo",
+            "action": "decapitate",
+            "requirements": {
+                "class": "barbarian",
+                "fury": 100,
+                "cooldown": 20
+            },
+            "base_power": 50,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.0
+            }
+        },
+        "savage_brace": {
+            "id": "savage_brace",
+            "name": "Savage Brace",
+            "tier": 2,
+            "cost": 15,
+            "description": "Defense: Tense your muscles for impact. Grants [Savage Brace] for 4 ticks, reducing all incoming damage by 50%. Each hit you take while active generates +10 Fury.",
+            "identity_tags": ["martial", "protection", "defense"],
+            "axis": "endurance",
+            "action": "savage_brace",
+            "requirements": {
+                "class": "barbarian",
+                "stamina": 15,
+                "cooldown": 12
+            }
+        },
+        "leap": {
+            "id": "leap",
+            "name": "Leap",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Burst into the air to close the gap. Breaks [Pinned] or [Grappled]. Deals minor damage and applies [Staggered] in a small area upon arrival.",
+            "identity_tags": ["martial", "speed", "mobility"],
+            "axis": "position",
+            "action": "leap",
+            "requirements": {
+                "class": "barbarian",
+                "stamina": 25,
+                "cooldown": 8
+            },
+            "base_power": 10
+        },
+        "bloodrage": {
+            "id": "bloodrage",
+            "name": "Bloodrage",
+            "tier": 4,
+            "cost": 0,
+            "description": "Utility/Ultimate: Spend 50 Fury to become immune to all crowd control for 10 ticks. While active, every successful strike heals you for 5% of your max HP.",
+            "identity_tags": ["martial", "focus", "utility", "ultimate"],
+            "axis": "utility",
+            "action": "bloodrage",
+            "requirements": {
+                "class": "barbarian",
+                "fury": 50,
+                "cooldown": 60
+            }
+        }
+    }
+}

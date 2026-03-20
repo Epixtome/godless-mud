@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "bone_spike": {
+            "id": "bone_spike",
+            "name": "Bone Spike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A jagged bone shard that pierces flesh. Deals necrotic damage, applies [Bleeding] for 3 ticks, and generates +1 Entropy. No cooldown.",
+            "identity_tags": ["occult", "dark", "builder", "setup"],
+            "axis": "tempo",
+            "action": "bone_spike",
+            "requirements": {
+                "class": "necromancer",
+                "concentration": 10
+            },
+            "base_power": 12
+        },
+        "soul_shackles": {
+            "id": "soul_shackles",
+            "name": "Soul Shackles",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Bind the target's spirit. Applies [Shackled] (4 ticks) and [Marked] (8 ticks). Reducing [Speed] by 30%.",
+            "identity_tags": ["occult", "dark", "shackle", "setup"],
+            "axis": "vision",
+            "action": "soul_shackles",
+            "requirements": {
+                "class": "necromancer",
+                "concentration": 20,
+                "cooldown": 6
+            },
+            "on_hit": {
+                "apply_status": "shackled",
+                "duration": 4
+            }
+        },
+        "rotting_touch": {
+            "id": "rotting_touch",
+            "name": "Rotting Touch",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Infuse the target with decay. Applies [Poisoned] and [Off-Balance] for 4 ticks.",
+            "identity_tags": ["occult", "dark", "pestilence", "setup"],
+            "axis": "endurance",
+            "action": "rotting_touch",
+            "requirements": {
+                "class": "necromancer",
+                "concentration": 15,
+                "cooldown": 8
+            },
+            "on_hit": {
+                "apply_status": "poisoned",
+                "duration": 4
+            }
+        },
+        "deaths_embrace": {
+            "id": "deaths_embrace",
+            "name": "Death's Embrace",
+            "tier": 4,
+            "cost": 35,
+            "description": "Payoff/Finisher: The embrace of the grave. Deals 3x damage to [Shackled] or [Bleeding] targets. If the target dies, you instantly recover 50 Concentration.",
+            "identity_tags": ["occult", "dark", "lethal", "payoff", "finisher"],
+            "axis": "lethality",
+            "action": "deaths_embrace",
+            "requirements": {
+                "class": "necromancer",
+                "concentration": 35,
+                "cooldown": 5
+            },
+            "base_power": 35,
+            "scaling": {
+                "scaling_tag": "magic",
+                "multiplier": 2.5
+            }
+        },
+        "corpse_explosion": {
+            "id": "corpse_explosion",
+            "name": "Corpse Explosion",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: Detonate a fallen body. Consumes a corpse in the room to deal massive necrotic damage and apply [Staggered] group-wide.",
+            "identity_tags": ["occult", "dark", "aoe", "payoff"],
+            "axis": "endurance",
+            "action": "corpse_explosion",
+            "requirements": {
+                "class": "necromancer",
+                "concentration": 10,
+                "cooldown": 2
+            },
+            "base_power": 50
+        },
+        "bone_shield": {
+            "id": "bone_shield",
+            "name": "Bone Shield",
+            "tier": 2,
+            "cost": 25,
+            "description": "Defense: A swirling wall of bones. Grants 10 [Bone Plate] stacks. Each incoming strike consumes 1 stack and reduces damage taken by 40%.",
+            "identity_tags": ["occult", "dark", "protection", "defense"],
+            "axis": "endurance",
+            "action": "bone_shield",
+            "requirements": {
+                "class": "necromancer",
+                "concentration": 20,
+                "cooldown": 15
+            }
+        },
+        "nether_grip": {
+            "id": "nether_grip",
+            "name": "Nether Grip",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility/Pull: A spectral hand pulls an enemy to you or pull yourself to an ally. Applies [Pinned] for 2 ticks.",
+            "identity_tags": ["occult", "dark", "speed", "mobility"],
+            "axis": "position",
+            "action": "nether_grip",
+            "requirements": {
+                "class": "necromancer",
+                "concentration": 25,
+                "cooldown": 10
+            }
+        },
+        "raise_dead": {
+            "id": "raise_dead",
+            "name": "Raise Dead",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Command the dead. Consumes 5 Entropy to summon a [Skeleton Follower] from a corpse in the room. The skeleton mirrors your attacks for 15% damage.",
+            "identity_tags": ["occult", "dark", "summon", "utility"],
+            "axis": "utility",
+            "action": "raise_dead",
+            "requirements": {
+                "class": "necromancer",
+                "entropy": 5,
+                "cooldown": 60
+            }
+        }
+    }
+}

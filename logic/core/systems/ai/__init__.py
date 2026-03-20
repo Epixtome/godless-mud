@@ -30,7 +30,13 @@ def on_room_combat_tick(ctx):
         
         # 2. Behavior: Aggressive (Sight Based)
         elif "aggressive" in mob.tags:
-            targets = [p for p in room.players if not getattr(p, 'godmode', False) and vision_engine.can_see(mob, p)]
+            # [V6.5] Unified Scanning: Aggressive entities target anyone (Player or Mob) 
+            # while respecting Owner/Faction protection.
+            candidates = room.players + room.monsters
+            targets = [e for e in candidates if e != mob and not getattr(e, 'godmode', False) and \
+                       vision_engine.can_see(mob, e) and \
+                       getattr(mob, 'owner_id', None) != getattr(e, 'id', None) and \
+                       getattr(mob, 'owner_id', None) != getattr(e, 'owner_id', None)]
             if targets:
                 target = random.choice(targets)
                 shout_key = "aggro"

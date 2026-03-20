@@ -12,8 +12,8 @@ from logic.core import event_engine
 
 logger = logging.getLogger("GodlessMUD")
 
-# In-memory storage for active encounters
-# Key: room_id, Value: List of event dictionaries
+# V6.4: Safety Gates
+SAVE_TO_DISK = False
 _ACTIVE_ENCOUNTERS = {}
 _LAST_ACTIVITY = {} # Tracks the last tick an encounter was active
 
@@ -28,12 +28,25 @@ def _strip_ansi(text):
 def on_combat_event(ctx, event_type):
     """Unified listener for all combat hooks."""
     room = ctx.get('room')
-    if not room:
-        # Try to resolve room from entity
-        entity = ctx.get('attacker') or ctx.get('target') or ctx.get('entity') or ctx.get('victim')
-        room = getattr(entity, 'room', None)
+    attacker = ctx.get('attacker')
+    target = ctx.get('target')
+    victim = ctx.get('victim')
+    entity = ctx.get('entity')
     
     if not room:
+        # Try to resolve room from entity
+        room_entity = attacker or target or entity or victim
+        room = getattr(room_entity, 'room', None)
+    
+    if not room:
+        return
+
+    # [V6.4] Integrity Filter: Only log encounters involving Players
+    # Prevents 100s of 'Mob vs Mob' or 'Weather vs Mob' reports
+    active_entities = [attacker, target, victim, entity]
+    has_player = any(getattr(e, 'is_player', False) for e in active_entities if e)
+    
+    if not has_player:
         return
 
     room_id = getattr(room, 'id', 'unknown')
@@ -117,7 +130,8 @@ def flush_inactive_encounters(game):
             to_flush.append(rid)
             
     for rid in to_flush:
-        _save_report(rid)
+        if SAVE_TO_DISK:
+            _save_report(rid)
         del _ACTIVE_ENCOUNTERS[rid]
         del _LAST_ACTIVITY[rid]
 

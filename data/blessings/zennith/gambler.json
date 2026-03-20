@@ -1,0 +1,142 @@
+{
+    "blessings": {
+        "loaded_dice": {
+            "id": "loaded_dice",
+            "name": "Loaded Dice",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A strike where the outcome is already known. Deals physical damage, generates 15 Stamina and +1 Luck Pip. No cooldown.",
+            "identity_tags": ["martial", "luck", "builder", "setup"],
+            "axis": "tempo",
+            "action": "loaded_dice",
+            "requirements": {
+                "class": "gambler",
+                "stamina": 10
+            },
+            "base_power": 12
+        },
+        "bad_beat": {
+            "id": "bad_beat",
+            "name": "Bad Beat",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: A series of unfortunate card flips. Applies [Off-Balance] and [Confused] for 4 ticks.",
+            "identity_tags": ["martial", "luck", "disruption", "setup"],
+            "axis": "tempo",
+            "action": "bad_beat",
+            "requirements": {
+                "class": "gambler",
+                "stamina": 20,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "off_balance",
+                "duration": 4
+            }
+        },
+        "ante_up": {
+            "id": "ante_up",
+            "name": "Ante Up",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Raise the stakes. Applies [Marked] (12 ticks). If the target dies, you gain double gold.",
+            "identity_tags": ["martial", "luck", "vision", "setup"],
+            "axis": "vision",
+            "action": "ante_up",
+            "requirements": {
+                "class": "gambler",
+                "stamina": 15,
+                "cooldown": 6
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 12
+            }
+        },
+        "jackpot": {
+            "id": "jackpot",
+            "name": "Jackpot",
+            "tier": 4,
+            "cost": 40,
+            "description": "Payoff/Burst: The big win. Deals damage based on Luck Pips. 5% chance for 10x damage, otherwise 2x damage. Consumes 3 Luck Pips.",
+            "identity_tags": ["martial", "luck", "lethal", "payoff"],
+            "axis": "lethality",
+            "action": "jackpot",
+            "requirements": {
+                "class": "gambler",
+                "stamina": 40,
+                "cooldown": 12
+            },
+            "base_power": 40,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.5
+            }
+        },
+        "all_in": {
+            "id": "all_in",
+            "name": "All In",
+            "tier": 5,
+            "cost": 45,
+            "description": "Finisher: Commit everything to the fold. Deals massive damage. 50% chance to reset all Gambler cooldowns. Consumes all active Luck.",
+            "identity_tags": ["martial", "luck", "lethal", "payoff", "finisher"],
+            "axis": "lethality",
+            "action": "all_in",
+            "requirements": {
+                "class": "gambler",
+                "stamina": 45,
+                "cooldown": 20
+            },
+            "base_power": 70,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 4.5
+            }
+        },
+        "lucky_break": {
+            "id": "lucky_break",
+            "name": "Lucky Break",
+            "tier": 2,
+            "cost": 25,
+            "description": "Defense/Reaction: The fates favor the bold. 30% chance to negate any incoming damage for the next 4 ticks.",
+            "identity_tags": ["martial", "luck", "protection", "defense"],
+            "axis": "endurance",
+            "action": "lucky_break",
+            "requirements": {
+                "class": "gambler",
+                "stamina": 25,
+                "cooldown": 25
+            }
+        },
+        "shuffle": {
+            "id": "shuffle",
+            "name": "Shuffle",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Swap positions with a random unit in the room (Linear Blink). Grants [Haste] to you and [Confused] to them.",
+            "identity_tags": ["martial", "speed", "mobility"],
+            "axis": "position",
+            "action": "shuffle",
+            "requirements": {
+                "class": "gambler",
+                 "stamina": 25,
+                "cooldown": 8
+            }
+        },
+        "high_stakes": {
+            "id": "high_stakes",
+            "name": "High Stakes",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Guarantee the outcome. Buff: Your next hit is a guaranteed Critical, but if it misses, you take self-damage equal to your HP/2.",
+            "identity_tags": ["martial", "luck", "buff", "utility"],
+            "axis": "utility",
+            "action": "high_stakes",
+            "requirements": {
+                "class": "gambler",
+                "stamina": 0,
+                "cooldown": 60
+            }
+        }
+    }
+}

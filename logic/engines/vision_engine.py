@@ -31,6 +31,17 @@ def can_detect(observer, target):
     """Facade for logic/core/utils/vision_logic.py"""
     return vision_logic.can_detect(observer, target)
 
+def _get_weather_radius_penalty(start_room):
+    """[V6.4] Calculates vision reduction based on room-wide weather."""
+    weather_id = start_room.get_weather()
+    # 50% Reduction (Thick Fog/Mist)
+    if weather_id in ["foggy", "dark_mist", "golden_mist", "shadow_haze", "reality_blur"]:
+        return 0.5
+    # 25% Reduction (Heavy Precipitation/Storms)
+    if weather_id in ["storm", "blizzard", "thunderstorm", "void_storm"]:
+        return 0.75
+    return 1.0
+
 def get_perception(observer, radius=7, context=TACTICAL_CONTEXT):
     """
     [V6.8 Refactor] Architecture-Agnostic Perception Pipeline.
@@ -40,11 +51,16 @@ def get_perception(observer, radius=7, context=TACTICAL_CONTEXT):
     world = getattr(start_room, 'world', None)
     if not world: return PerceptionResult(start_room, radius)
 
+    # [V6.4] Environmental Occlusion: Scaling radius by weather density
+    penalty = _get_weather_radius_penalty(start_room)
+    final_radius = max(1, int(radius * penalty))
+
     from logic.engines import spatial_engine
     spatial = spatial_engine.get_instance(world)
-    if not spatial: return PerceptionResult(start_room, radius)
+    if not spatial: return PerceptionResult(start_room, final_radius)
 
-    result = PerceptionResult(start_room, radius)
+    result = PerceptionResult(start_room, final_radius)
+    radius = final_radius # Update for dependency sub-calls
     
     # 1. Gather Rooms based on LOS rules
     if not context.check_los:

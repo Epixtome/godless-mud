@@ -163,6 +163,39 @@
             "skills": [
                 "spectral_wail"
             ]
+        },
+        {
+            "id": "engineer_autoturret",
+            "name": "Automated Sentinel",
+            "description": "A tripod-mounted cannon. Its lens glows with cold, mechanical hunger.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 12,
+            "tags": [
+                "construct",
+                "structure",
+                "mechanical",
+                "temporary",
+                "aggressive"
+            ],
+            "shouts": {
+                "aggro": ["TARGET ACQUIRED.", "COMMENCING SUPPRESSION."],
+                "victory": ["THREAT ELIMINATED."]
+            }
+        },
+        {
+            "id": "engineer_barrier",
+            "name": "Hard-Light Barrier",
+            "description": "A translucent wall of blue energy that hums with static. It's built for defensive anchoring.",
+            "hp": 300,
+            "max_hp": 300,
+            "damage": 0,
+            "tags": [
+                "construct",
+                "structure",
+                "defense",
+                "temporary"
+            ]
         }
     ]
 }

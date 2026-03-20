@@ -1,10 +1,8 @@
 """
 logic/modules/mage/__init__.py
-Mage class initialization.
 """
-from .actions import *
-from .events import register_events
+from . import actions, events, state
 
-def initialize(player):
-    from .state import initialize_mage
-    initialize_mage(player)
+def initialize_mage(player):
+    """Initializes the Mage state."""
+    state.initialize_mage(player)

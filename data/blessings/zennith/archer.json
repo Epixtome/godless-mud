@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "quick_shot": {
+            "id": "quick_shot",
+            "name": "Quick Shot",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A fast arrow targeting a weak spot. Generates 15 Stamina and +5 Focus. No cooldown.",
+            "identity_tags": ["martial", "bow", "builder", "setup"],
+            "axis": "tempo",
+            "action": "quick_shot",
+            "requirements": {
+                "class": "archer",
+                "stamina": 10
+            },
+            "base_power": 12
+        },
+        "pinning_shot": {
+            "id": "pinning_shot",
+            "name": "Pinning Shot",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Aim for the legs. Applies [Pinned] (2 ticks) and [Off-Balance]. Dealing damage when target is already moving.",
+            "identity_tags": ["martial", "bow", "disruption", "setup"],
+            "axis": "position",
+            "action": "pinning_shot",
+            "requirements": {
+                "class": "archer",
+                "stamina": 15,
+                "cooldown": 4
+            },
+            "on_hit": {
+                "apply_status": "pinned",
+                "duration": 2
+            }
+        },
+        "tracer_arrow": {
+            "id": "tracer_arrow",
+            "name": "Tracer Arrow",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: A glowing beacon arrow. Applies [Marked] (12 ticks). Ignores [Concealed] for this target.",
+            "identity_tags": ["martial", "bow", "vision", "setup"],
+            "axis": "vision",
+            "action": "tracer_arrow",
+            "requirements": {
+                "class": "archer",
+                "stamina": 20,
+                "cooldown": 6
+            },
+            "on_hit": {
+                "apply_status": "marked",
+                "duration": 12
+            }
+        },
+        "rain_of_arrows": {
+            "id": "rain_of_arrows",
+            "name": "Rain of Arrows",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff/AOE: Blanket the room with fire. Deals physical damage to all in the room. Deals 2x damage if target is [Pinned].",
+            "identity_tags": ["martial", "bow", "aoe", "payoff"],
+            "axis": "endurance",
+            "action": "rain_of_arrows",
+            "requirements": {
+                "class": "archer",
+                "stamina": 30,
+                "cooldown": 10
+            },
+            "base_power": 25
+        },
+        "heartseeker_shot": {
+            "id": "heartseeker_shot",
+            "name": "Heartseeker Shot",
+            "tier": 5,
+            "cost": 40,
+            "description": "Finisher: The ultimate precision shot. Deals 4x damage if target is [Marked]. Ignores [Guard] and [Braced] states.",
+            "identity_tags": ["martial", "bow", "lethal", "payoff", "finisher"],
+            "axis": "lethality",
+            "action": "heartseeker_shot",
+            "requirements": {
+                "class": "archer",
+                "stamina": 40,
+                "cooldown": 15
+            },
+            "base_power": 60,
+            "scaling": {
+                "scaling_tag": "martial",
+                "multiplier": 3.5
+            }
+        },
+        "dodge_roll": {
+            "id": "dodge_roll",
+            "name": "Dodge Roll",
+            "tier": 2,
+            "cost": 20,
+            "description": "Defense/Reaction: A split-second maneuver. Grants +50% Evasion for 1 tick after being hit. Clears [Slowed].",
+            "identity_tags": ["martial", "speed", "defense"],
+            "axis": "position",
+            "action": "dodge_roll",
+            "requirements": {
+                "class": "archer",
+                "stamina": 20,
+                "cooldown": 12
+            }
+        },
+        "backstep_shot": {
+            "id": "backstep_shot",
+            "name": "Backstep Shot",
+            "tier": 3,
+            "cost": 25,
+            "description": "Mobility: Create distance. Dash backwards and fire an arrow that applies [Slowed] (4 ticks).",
+            "identity_tags": ["martial", "bow", "speed", "mobility"],
+            "axis": "position",
+            "action": "backstep_shot",
+            "requirements": {
+                "class": "archer",
+                "stamina": 25,
+                "cooldown": 8
+            }
+        },
+        "eagle_eye": {
+            "id": "eagle_eye",
+            "name": "Eagle Eye",
+            "tier": 2,
+            "cost": 0,
+            "description": "Utility: Master-level concentration. Self-buff: Increases Accuracy by 50% for 20 ticks. Increases visibility range in the tactical map.",
+            "identity_tags": ["martial", "focus", "vision", "utility"],
+            "axis": "vision",
+            "action": "eagle_eye",
+            "requirements": {
+                "class": "archer",
+                "stamina": 0,
+                "cooldown": 60
+            }
+        }
+    }
+}
