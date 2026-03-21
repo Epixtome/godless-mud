@@ -43,6 +43,7 @@ def _handle_commune(player, command, data):
         player.send_line("  list classes    - List classes available from this deity.")
         player.send_line("  buy <id>        - Purchase a blessing.")
         player.send_line("  become <id>     - Adopt a class archetype (Costs 250 Favor).")
+        player.send_line("  sacrifice <n>   - Sacrifice Favor to boost this Shrine's Potency.")
         player.send_line("  deck            - View currently active blessings.")
         player.send_line("  exit            - Leave the trance.")
         
@@ -226,6 +227,36 @@ def _handle_commune(player, command, data):
             player.interaction_data = {}
         else:
             player.send_line(f"Failed to adopt archetype: {msg}")
+
+    elif cmd == 'sacrifice':
+        if not args or not args[0].isdigit():
+            player.send_line("Sacrifice how much favor? (sacrifice <amount>)")
+            return
+            
+        amount = int(args[0])
+        # Find the shrine in this room
+        from logic.core.systems.influence_service import InfluenceService
+        service = InfluenceService.get_instance()
+        
+        shrine = None
+        for s in service.shrines.values():
+            if s.coords[0] == player.room.x and s.coords[1] == player.room.y and s.coords[2] == player.room.z:
+                shrine = s
+                break
+                
+        if not shrine:
+            player.send_line("There is no physical Shrine here to receive your sacrifice.")
+            return
+            
+        if shrine.deity_id != deity_id:
+            player.send_line(f"This Shrine belongs to {shrine.deity_id.title()}, not {deity_name}. You must find a Shrine of your deity.")
+            return
+            
+        from logic.core.services import favor_service
+        if favor_service.sacrifice_favor(player, deity_id, amount, shrine):
+            player.send_line(f"{Colors.BOLD}{Colors.CYAN}The Influence of {deity_name} swells around you.{Colors.RESET}")
+            # Clear influence cache since potency changed
+            service.clear_cache()
 
     elif cmd == 'memorize' or cmd == 'equip':
         if not args:

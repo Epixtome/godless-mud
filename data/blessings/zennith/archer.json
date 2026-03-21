@@ -1,83 +1,51 @@
 {
     "blessings": {
-        "quick_shot": {
-            "id": "quick_shot",
-            "name": "Quick Shot",
+        "tracker_scan": {
+            "id": "tracker_scan",
+            "name": "Tracker Scan",
             "tier": 1,
             "cost": 10,
-            "description": "Setup/Builder: A fast arrow targeting a weak spot. Generates 15 Stamina and +5 Focus. No cooldown.",
-            "identity_tags": ["martial", "bow", "builder", "setup"],
-            "axis": "tempo",
-            "action": "quick_shot",
+            "description": "Setup/Builder: Sweep the horizon for movement. Light up targets on the tactical map within Radius 5. Applies [Revealed] for 10 ticks.",
+            "identity_tags": ["martial", "vision", "builder", "setup", "scan"],
+            "axis": "vision",
+            "action": "tracker_scan",
             "requirements": {
                 "class": "archer",
                 "stamina": 10
             },
-            "base_power": 12
+            "on_hit": {
+                "apply_status": "revealed",
+                "duration": 10
+            }
         },
-        "pinning_shot": {
-            "id": "pinning_shot",
-            "name": "Pinning Shot",
+        "target_lock": {
+            "id": "target_lock",
+            "name": "Target Lock",
             "tier": 2,
             "cost": 15,
-            "description": "Setup: Aim for the legs. Applies [Pinned] (2 ticks) and [Off-Balance]. Dealing damage when target is already moving.",
-            "identity_tags": ["martial", "bow", "disruption", "setup"],
-            "axis": "position",
-            "action": "pinning_shot",
+            "description": "Setup: Focus your intent on a single foe. Applies [Marked] for 12 ticks and locks your focus, ignoring evasion from [Concealed] targets.",
+            "identity_tags": ["martial", "focus", "setup", "lock_on"],
+            "axis": "vision",
+            "action": "target_lock",
             "requirements": {
                 "class": "archer",
                 "stamina": 15,
                 "cooldown": 4
             },
             "on_hit": {
-                "apply_status": "pinned",
-                "duration": 2
-            }
-        },
-        "tracer_arrow": {
-            "id": "tracer_arrow",
-            "name": "Tracer Arrow",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: A glowing beacon arrow. Applies [Marked] (12 ticks). Ignores [Concealed] for this target.",
-            "identity_tags": ["martial", "bow", "vision", "setup"],
-            "axis": "vision",
-            "action": "tracer_arrow",
-            "requirements": {
-                "class": "archer",
-                "stamina": 20,
-                "cooldown": 6
-            },
-            "on_hit": {
                 "apply_status": "marked",
                 "duration": 12
             }
         },
-        "rain_of_arrows": {
-            "id": "rain_of_arrows",
-            "name": "Rain of Arrows",
-            "tier": 3,
-            "cost": 30,
-            "description": "Payoff/AOE: Blanket the room with fire. Deals physical damage to all in the room. Deals 2x damage if target is [Pinned].",
-            "identity_tags": ["martial", "bow", "aoe", "payoff"],
-            "axis": "endurance",
-            "action": "rain_of_arrows",
-            "requirements": {
-                "class": "archer",
-                "stamina": 30,
-                "cooldown": 10
-            },
-            "base_power": 25
-        },
-        "heartseeker_shot": {
-            "id": "heartseeker_shot",
-            "name": "Heartseeker Shot",
+        "heartseeker_snipe": {
+            "id": "heartseeker_snipe",
+            "name": "Heartseeker Snipe",
             "tier": 5,
             "cost": 40,
-            "description": "Finisher: The ultimate precision shot. Deals 4x damage if target is [Marked]. Ignores [Guard] and [Braced] states.",
+            "description": "Payoff/Finisher: A single, catastrophic bolt. Deals 4x damage against [Marked] targets. Ignores physical mitigation.",
             "identity_tags": ["martial", "bow", "lethal", "payoff", "finisher"],
             "axis": "lethality",
-            "action": "heartseeker_shot",
+            "action": "heartseeker_snipe",
             "requirements": {
                 "class": "archer",
                 "stamina": 40,
@@ -89,49 +57,80 @@
                 "multiplier": 3.5
             }
         },
-        "dodge_roll": {
-            "id": "dodge_roll",
-            "name": "Dodge Roll",
-            "tier": 2,
-            "cost": 20,
-            "description": "Defense/Reaction: A split-second maneuver. Grants +50% Evasion for 1 tick after being hit. Clears [Slowed].",
-            "identity_tags": ["martial", "speed", "defense"],
+        "volley_rain": {
+            "id": "volley_rain",
+            "name": "Volley Rain",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff/AOE: Launch a cluster of arrows high into the air. Hits a 2x2 area. [Grammar]: Arcs OVER mountains and Z-axis obstructions to hit hidden targets.",
+            "identity_tags": ["martial", "bow", "aoe", "payoff", "volley"],
             "axis": "position",
-            "action": "dodge_roll",
+            "action": "volley_rain",
+            "requirements": {
+                "class": "archer",
+                "stamina": 30,
+                "cooldown": 10
+            },
+            "base_power": 25
+        },
+        "catch_arrows": {
+            "id": "catch_arrows",
+            "name": "Catch Arrows",
+            "tier": 3,
+            "cost": 20,
+            "description": "Defense/Reaction: Use preternatural speed to snatch projectiles from the air. Negates the next incoming [Projection] or [Strike] damage.",
+            "identity_tags": ["martial", "speed", "defense", "reaction"],
+            "axis": "tempo",
+            "action": "catch_arrows",
             "requirements": {
                 "class": "archer",
                 "stamina": 20,
-                "cooldown": 12
+                "cooldown": 15
             }
         },
-        "backstep_shot": {
-            "id": "backstep_shot",
-            "name": "Backstep Shot",
-            "tier": 3,
+        "camouflage": {
+            "id": "camouflage",
+            "name": "Camouflage",
+            "tier": 2,
+            "cost": 15,
+            "description": "Defense: Blend into the local environment. Grants [Concealed] for 8 ticks. Moving at high speed or attacking breaks the effect.",
+            "identity_tags": ["martial", "nature", "defense"],
+            "axis": "vision",
+            "action": "camouflage",
+            "requirements": {
+                "class": "archer",
+                "stamina": 15,
+                "cooldown": 20
+            }
+        },
+        "archers_sprint": {
+            "id": "archers_sprint",
+            "name": "Archer's Sprint",
+            "tier": 2,
             "cost": 25,
-            "description": "Mobility: Create distance. Dash backwards and fire an arrow that applies [Slowed] (4 ticks).",
-            "identity_tags": ["martial", "bow", "speed", "mobility"],
+            "description": "Mobility: A tactical burst of speed. Clears [Slowed] and [Pinned]. Allows you to move 2 rooms in a single tick.",
+            "identity_tags": ["martial", "speed", "mobility"],
             "axis": "position",
-            "action": "backstep_shot",
+            "action": "archers_sprint",
             "requirements": {
                 "class": "archer",
                 "stamina": 25,
                 "cooldown": 8
             }
         },
-        "eagle_eye": {
-            "id": "eagle_eye",
-            "name": "Eagle Eye",
-            "tier": 2,
+        "pinnacle_of_arrows": {
+            "id": "pinnacle_of_arrows",
+            "name": "Pinnacle of Arrows",
+            "tier": 5,
             "cost": 0,
-            "description": "Utility: Master-level concentration. Self-buff: Increases Accuracy by 50% for 20 ticks. Increases visibility range in the tactical map.",
-            "identity_tags": ["martial", "focus", "vision", "utility"],
-            "axis": "vision",
-            "action": "eagle_eye",
+            "description": "Utility/Ultimate: Enter a state of pure archery flow. Your next three [Volley] or [Snipe] actions cost 0 stamina and have 0 cooldown.",
+            "identity_tags": ["martial", "focus", "utility", "ultimate"],
+            "axis": "utility",
+            "action": "pinnacle_of_arrows",
             "requirements": {
                 "class": "archer",
                 "stamina": 0,
-                "cooldown": 60
+                "cooldown": 120
             }
         }
     }

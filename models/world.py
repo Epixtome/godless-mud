@@ -105,7 +105,7 @@ class Room:
             "x": self.x,
             "y": self.y,
             "z": self.z,
-            "terrain": self.terrain,
+            "terrain": getattr(self, 'base_terrain', self.terrain),
             "elevation": self.elevation,
             "traversal_cost": self.traversal_cost,
             "opacity": self.opacity,

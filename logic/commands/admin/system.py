@@ -60,7 +60,11 @@ def _perform_logic_reload(player):
         import logic.core.systems as core_systems
         importlib.reload(core_systems)
         
-        # 6. Reload Command Groupings (This repopulates COMMANDS)
+        # 6. Reload Services
+        from logic.core.services import bug_service
+        importlib.reload(bug_service)
+        
+        # 7. Reload Command Groupings (This repopulates COMMANDS)
         import logic.commands
         import utilities
         import pkgutil
@@ -243,19 +247,103 @@ def kick_player(player, args):
         player.send_line(f"Error closing socket: {e}")
 
 @command_manager.register("@bug", admin=True, category="admin_tools")
-def bug_report(player, args):
+def bug_command(player, args):
     """
-    Records a developer bug report.
-    Usage: @bug <description>
+    Ticket-based Bug Reporting System.
+    Usage:
+      @bug <description> - Start a new ticket.
+      @bug list          - List open tickets.
+      @bug <id>          - Details of a specific ticket.
+      @bug <id> <text>   - Append text to a ticket.
+      @bug resolve <id>  - Close a ticket.
+      @bug delete <id>   - Remove a ticket forever.
     """
+    from logic.core.services.bug_service import BugService
+    service = BugService.get_instance()
+
     if not args:
-        player.send_line("Usage: @bug <description>")
+        player.send_line("Usage: @bug <description|list|id [text]|resolve|delete>")
         return
+
+    parts = args.split()
+    cmd = parts[0].lower()
+
+    if cmd == "list":
+        tickets = service.list_tickets()
+        if not tickets:
+            player.send_line("No active bug tickets found.")
+            return
         
+        player.send_line(f"\n{Colors.BOLD}--- Active Bug Tickets ---{Colors.RESET}")
+        player.send_line(f"{'ID':<4} {'State':<8} {'Reporter':<12} {'Description'}")
+        player.send_line("-" * 60)
+        for t in tickets:
+            state_col = Colors.GREEN if t['state'] == 'open' else Colors.WHITE
+            desc_preview = t['description'][:40] + ("..." if len(t['description']) > 40 else "")
+            player.send_line(f"{t['id']:<4} {state_col}{t['state'].upper():<8}{Colors.RESET} {t['player']:<12} {desc_preview}")
+        player.send_line("")
+        return
+
+    if cmd == "resolve":
+        if len(parts) < 2 or not parts[1].isdigit():
+            player.send_line("Usage: @bug resolve <id>")
+            return
+        tid = int(parts[1])
+        if service.close_ticket(tid):
+            player.send_line(f"{Colors.GREEN}Ticket #{tid} resolved and closed.{Colors.RESET}")
+        else:
+            player.send_line(f"{Colors.RED}Ticket #{tid} not found.{Colors.RESET}")
+        return
+
+    if cmd == "delete":
+        if len(parts) < 2 or not parts[1].isdigit():
+            player.send_line("Usage: @bug delete <id>")
+            return
+        tid = int(parts[1])
+        if service.delete_ticket(tid):
+            player.send_line(f"{Colors.RED}Ticket #{tid} permanently deleted.{Colors.RESET}")
+        else:
+            player.send_line(f"{Colors.RED}Ticket #{tid} not found.{Colors.RESET}")
+        return
+
+    # Check if first arg is an ID
+    if cmd.isdigit():
+        tid = int(cmd)
+        ticket = service.get_ticket(tid)
+        if not ticket:
+            player.send_line(f"Ticket #{tid} not found.")
+            return
+
+        if len(parts) > 1:
+            # Append text
+            text = " ".join(parts[1:])
+            success, msg = service.append_to_ticket(tid, text)
+            if success:
+                player.send_line(f"{Colors.GREEN}{msg}{Colors.RESET} to Ticket #{tid}")
+            else:
+                player.send_line(f"{Colors.RED}{msg}{Colors.RESET}")
+        else:
+            # View details
+            player.send_line(f"\n{Colors.BOLD}--- Ticket #{tid} Details ---{Colors.RESET}")
+            player.send_line(f"{Colors.CYAN}Reporter:{Colors.RESET} {ticket['player']}")
+            player.send_line(f"{Colors.CYAN}Created :{Colors.RESET} {ticket['created_at']}")
+            player.send_line(f"{Colors.CYAN}Context :{Colors.RESET} {ticket['context']}")
+            player.send_line(f"{Colors.CYAN}State   :{Colors.RESET} {ticket['state'].upper()}")
+            player.send_line(f"{Colors.CYAN}Description:{Colors.RESET}\n{ticket['description']}")
+            
+            if ticket['updates']:
+                player.send_line(f"\n{Colors.YELLOW}--- Updates ---{Colors.RESET}")
+                for u in ticket['updates']:
+                    player.send_line(f"[{u['timestamp']}] {u['text']}")
+            player.send_line("")
+        return
+
+    # Default: Create new ticket
+    tid = service.create_ticket(player, args)
+    player.send_line(f"{Colors.GREEN}Ticket #{tid} captured. Thank you!{Colors.RESET}")
+    # Also log to telemetry for audit trail (V7.2)
     import utilities.telemetry as telemetry
-    telemetry.log_bug_report(player, args)
-    player.send_line(f"{Colors.GREEN}Bug report captured. Thank you!{Colors.RESET}")
-    player.send_line(f"Context: {getattr(player.room, 'name', 'Unknown Room')} ({player.room.id})")
+    telemetry.log_bug_report(player, f"TICKET #{tid}: {args}")
 
 @command_manager.register("@compactdb", admin=True, category="admin_system")
 def compact_db(player, args):

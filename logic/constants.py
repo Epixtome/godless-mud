@@ -27,6 +27,9 @@ class Tags:
     LETHAL = "lethal"
     WEIGHT = "weight"
     SPEED = "speed"
+    VOLLEY = "volley"
+    SCAN = "scan"
+    LOCK_ON = "lock_on"
 
     # --- RESOURCES ---
     CONCENTRATION = "concentration"
@@ -56,5 +59,6 @@ class Tags:
     VALID_UTS_TAGS = {
         MARTIAL, MAGIC, INSTINCT, HOLY, DARK,
         STRIKE, AOE, PROJECTION, RESTORATION, PROTECTION, DISRUPTION, UTILITY,
-        FIRE, ICE, LIGHTNING, TOXIC, SLASHING, BLUNT, PIERCING, LETHAL, WEIGHT, SPEED
+        FIRE, ICE, LIGHTNING, TOXIC, SLASHING, BLUNT, PIERCING, LETHAL, WEIGHT, SPEED,
+        VOLLEY, SCAN, LOCK_ON
     }

@@ -161,6 +161,100 @@ def _finalize_move(player, direction, target_room, old_room):
     look(player, "", with_prompt=True)
     return True
 
+@command_manager.register("climb", category="movement")
+def climb(player, args):
+    """
+    Scale steep terrain that is otherwise impassable.
+    Usage: climb <direction>
+    Example: climb north
+    Rules: 1 tick delay (2s), 4x elevation stamina penalty.
+    """
+    if not args:
+        player.send_line("Climb which direction?")
+        return True
+    
+    direction_input = args.split()[0].lower()
+    
+    # Map common directional aliases
+    dir_map = {
+        "n": "north", "s": "south", "e": "east", "w": "west", 
+        "u": "up", "d": "down", "ne": "northeast", "nw": "northwest",
+        "se": "southeast", "sw": "southwest"
+    }
+    direction = dir_map.get(direction_input, direction_input)
+    
+    room = player.room
+    if direction not in room.exits:
+        player.send_line(f"You cannot climb to the {direction}.")
+        return True
+
+    # 1. Status & Token Check
+    blocked, reason = effects.is_action_blocked(player, "move")
+    if blocked:
+        player.send_line(f"{Colors.RED}{reason}{Colors.RESET}")
+        return True
+
+    if player.move_tokens < 0.99:
+        player.send_line("You are moving too fast! Wait for your tokens to refresh.")
+        return True
+
+    target_id = room.exits[direction]
+    target_room = player.game.world.rooms.get(target_id)
+    if not target_room:
+        player.send_line("The cliffside leads into a void of nothingness.")
+        return True
+
+    # 2. Physics Check
+    elev_diff = getattr(target_room, 'elevation', 0) - getattr(room, 'elevation', 0)
+    
+    # Define climbing limits: (3-6 for up, -4--6 for down)
+    can_climb = False
+    msg = ""
+    if 0 < elev_diff <= 6:
+        can_climb = True
+        msg = f"You begin to pull yourself up the steep incline to the {direction}..."
+    elif -6 <= elev_diff < 0:
+        can_climb = True
+        msg = f"You begin to carefully descend the sheer drop to the {direction}..."
+    
+    if not can_climb:
+        if elev_diff > 6:
+            player.send_line("That is far too steep for even a skilled climber.")
+        elif elev_diff < -6:
+            player.send_line("That drop is too sheer to climb without professional gear.")
+        else:
+            player.send_line("You don't need to 'climb' to go that way. Just walk.")
+        return True
+
+    # 3. Resource Calculation
+    # We use a base cost but avoid double-penalizing weight if modify_resource handles it.
+    # However, calculate_move_cost is the standard for terrain-based exertion.
+    base_cost = movement_engine.calculate_move_cost(player, room)
+    # Hefty but balanced penalty (24 per elevation units)
+    climb_penalty = abs(elev_diff) * 24 
+    final_cost = int(math.ceil(base_cost + climb_penalty))
+
+    if player.resources.get("stamina", 0) < final_cost:
+        player.send_line(f"{Colors.RED}Too exhausted to attempt the climb!{Colors.RESET}")
+        return True
+
+    # 4. Start Delayed Action (1 Tick / 2.0s as requested)
+    player.send_line(f"{Colors.CYAN}{msg}{Colors.RESET}")
+    player.room.broadcast(f"{player.name} begins to carefully climb toward the {direction}.", exclude_player=player)
+    
+    def on_complete():
+        # Final validation
+        if player.room != room: return 
+        
+        resources.modify_resource(player, "stamina", -final_cost, source="Climbing", context=direction)
+        player.move_tokens = max(0.0, player.move_tokens - 1.0)
+        
+        player.send_line(f"{Colors.GREEN}With a final heave, you pull yourself into the new area.{Colors.RESET}")
+        _finalize_move(player, direction, target_room, room)
+
+    action_manager.start_action(player, 2.0, on_complete, tag="climbing", fail_msg="The climb was interrupted!")
+    return True
+
 @command_manager.register("north", "n", category="movement")
 def move_north(player, _): return _move(player, "north")
 @command_manager.register("south", "s", category="movement")

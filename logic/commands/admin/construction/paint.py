@@ -128,6 +128,7 @@ def paint(player, args):
                 new_id = get_room_id(final_zone, x, y, player.room.z)
                 nr = Room(new_id, final_name, final_desc)
                 nr.x, nr.y, nr.z, nr.zone_id, nr.terrain = x, y, target_z, final_zone, final_terrain
+                nr.base_terrain = final_terrain
                 player.game.world.rooms[new_id] = nr
                 created += 1
     

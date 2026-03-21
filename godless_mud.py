@@ -64,8 +64,20 @@ class GodlessGame:
         systems.initialize_decay(self)
         passive_hooks.register_all()
         
+        # 0. Initialize Kingdom Service (V1.1 Plan)
+        from logic.core.services import kingdom_service
+        kingdom_service.register_events()
+        
         # Register Class Modules
         commands.skill_commands.register_modules()
+
+        # 7. Initialize Core Services (V1.1 Influence Plan)
+        from logic.core.systems.influence_service import InfluenceService
+        InfluenceService.get_instance().initialize(self.world)
+        
+        # 8. Initialize Warfare & Security (V1.1 Plan)
+        from logic.core.services import warfare_service
+        warfare_service.init_warfare(self)
 
         # World Stats
         self.log_world_stats()
@@ -166,6 +178,10 @@ class GodlessGame:
                 if is_world_tick:
                     for subscriber in self.subscribers:
                         subscriber(self)
+                        
+                    # 3. Update Influence Grids (Warm Cache)
+                    from logic.core.systems.influence_service import InfluenceService
+                    InfluenceService.get_instance().pulse(self)
                 
                 # 2. Process Sync Frame (Render/Flush) every 200ms
                 # Includes the Reaper cleanup to ensure snappiness

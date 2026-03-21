@@ -33,8 +33,8 @@ def black_mage_cost(ctx):
     player = ctx.get('player')
     if getattr(player, 'active_class', None) == 'black_mage':
         if 'costs' in ctx:
-            if ctx['costs']['stamina'] > 0: ctx['costs']['stamina'] = int(ctx['costs']['stamina'] * 1.20)
-            if ctx['costs']['concentration_percent'] > 0: ctx['costs']['concentration_percent'] = int(ctx['costs']['concentration_percent'] * 1.20)
+            if ctx['costs'].get('stamina', 0) > 0: ctx['costs']['stamina'] = int(ctx['costs']['stamina'] * 1.20)
+            if ctx['costs'].get('concentration', 0) > 0: ctx['costs']['concentration'] = int(ctx['costs']['concentration'] * 1.20)
 
 def red_mage_momentum(ctx):
     player = ctx.get('player')

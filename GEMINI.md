@@ -55,6 +55,11 @@ For classes with pets (Beastmaster) or summons (Necromancer).
 - **Entity Isolation**: Companions must inherit from `Monster` to leverage room logic naturally.
 - **Persistence**: Follower state (Health/Hunger/Sync) lives in the Player's `ext_state`.
 
+### D. The 8-Ability Deck Standard
+Every class kit MUST adhere to the [8-Ability Deck Composition](file:///c:/Users/Chris/antigravity/Godless/documentation/KIT_COMPOSITION.md).
+- **Structure**: 2 Setup, 2 Payoff, 2 Defense, 1 Mobility, 1 Utility.
+- **Protocol**: Deviating from this structure requires explicit architectural approval to prevent ability bloat.
+
 ---
 
 ## 4. DATA & SCHEMA STANDARDS

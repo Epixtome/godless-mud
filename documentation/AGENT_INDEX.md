@@ -10,7 +10,8 @@ This index serves as the primary entry point for AI Agents working on Godless. I
 | `logic/modules/` | Class-specific logic | `[class]/events.py`, `[class]/state.py` |
 | `logic/handlers/` | Input & External Interfaces | `input_handler.py`, `command_manager.py` |
 | `data/` | Configuration & Persistence | `classes/`, `blessings/`, `zones/` |
-| `documentation/` | Living Artifacts & Guides | `SCHEMA.md`, `class_registry.md` |
+| `documentation/` | Living Artifacts & Guides | `SCHEMA.md`, `class_registry.md`, `KIT_COMPOSITION.md` |
+
 | `scripts/dev/` | Developer Tooling | `map_renderer.py`, `combat_sim.py` |
 
 ---
@@ -24,10 +25,13 @@ I start every session by reviewing `GEMINI.md`. It defines the "Architecture of 
 
 ### 2. The Registry Layer (`documentation/`)
 I use specific files to track the "Live State" of the project's systems:
+-   **`GODLESS_SYSTEM_REGISTRY.md`**: The definitive compilation of versions, acronyms, and protocols. I check this to resolve terminology confusion.
 -   **`class_registry.md`**: Which class hooks are active. I check this before adding new event listeners.
 -   **`SCHEMA.md`**: Structural requirements for data files. I use this to validate and create new JSON content.
 -   **`COMMAND_REFERENCE.md`**: Available admin and player commands.
+-   **`KIT_COMPOSITION.md`**: The 8-ability tactical kit standard (Setup, Payoff, Defense, etc.). I use this to balance new classes.
 -   **`building_suite_workflow.md`**: The master guide for handcrafted world-shaping.
+
 -   **`engine_v5_3_refinement.md`**: Summary of V5.3 structural fixes and handover details.
 
 ### 3. The Structural Layer (Facades)

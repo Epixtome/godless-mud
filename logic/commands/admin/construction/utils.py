@@ -109,6 +109,9 @@ def update_room(room, zone_id=None, terrain=None, name=None, desc=None, descript
         clean_terrain = terrain.lower().strip()
         if room.terrain != clean_terrain:
             room.terrain = clean_terrain
+            # Maintain base_terrain for weather logic (V7.2 Bugfix)
+            if hasattr(room, 'base_terrain'):
+                room.base_terrain = clean_terrain
             changed = True
             
             # If we change terrain manually, clear any custom symbol

@@ -218,3 +218,8 @@ def broadcast_room(room, message, exclude_player=None):
     for player in room.players:
         if player != exclude_player:
             send_line(player, message)
+
+def broadcast_global(game, message):
+    """Broadcasts a message to all connected players."""
+    for player in game.players.values():
+        send_line(player, message)

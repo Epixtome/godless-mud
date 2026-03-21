@@ -32,12 +32,13 @@ def dig_room(player, direction, name="New Room", copy_from=None, terrain=None):
     spatial = spatial_engine.get_instance(player.game.world)
     candidates = []
     
-    # Scan +/- 5 Z-levels for neighbors (slopes/hills)
-    scan_range = range(z - 5, z + 6)
-    for check_z in scan_range:
-        r = spatial.get_room(x, y, check_z)
-        if r and r != player.room:
-            candidates.append(r)
+    if spatial:
+        # Scan +/- 5 Z-levels for neighbors (slopes/hills)
+        scan_range = range(z - 5, z + 6)
+        for check_z in scan_range:
+            r = spatial.get_room(x, y, check_z)
+            if r and r != player.room:
+                candidates.append(r)
             
     candidates.sort(key=lambda r: abs(r.z - z))
     
@@ -57,7 +58,7 @@ def dig_room(player, direction, name="New Room", copy_from=None, terrain=None):
         player.send_line(f"Auto-linking to existing room in zone '{cross_zone_room.zone_id}': {cross_zone_room.name} ({cross_zone_room.id})")
         new_room = cross_zone_room
     else:
-        exact_match = spatial.get_room(x, y, z)
+        exact_match = spatial.get_room(x, y, z) if spatial else None
         if exact_match:
              new_room = exact_match
         else:
@@ -70,8 +71,11 @@ def dig_room(player, direction, name="New Room", copy_from=None, terrain=None):
                 new_room.description = copy_from.description
                 new_room.zone_id = copy_from.zone_id
                 new_room.terrain = copy_from.terrain
+                if hasattr(copy_from, 'base_terrain'):
+                    new_room.base_terrain = copy_from.base_terrain
             if terrain:
                 new_room.terrain = terrain
+                new_room.base_terrain = terrain
             
             player.game.world.rooms[new_id] = new_room
             spatial_engine.invalidate()

@@ -166,7 +166,13 @@ def show_map(player, args):
         show_dynamic=True
     )
 
-    player.send_line(f"--- Map: {mapper.get_map_header(player.room, player.game.world)} [Elev: {player.room.elevation}] ---")
+    header = mapper.get_map_header(player.room, player.game.world)
+    weather_info = ""
+    weather_id = player.room.get_weather()
+    if weather_id != "clear":
+        weather_info = f" {Colors.CYAN}[Env: {weather_id.replace('_', ' ').title()}]{Colors.RESET}"
+    
+    player.send_line(f"--- Map: {header} [Elev: {player.room.elevation}]{weather_info} ---")
     for line in map_lines: player.send_line(line)
 
 @command_manager.register("where", category="information")

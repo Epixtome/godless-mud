@@ -1,0 +1,30 @@
+{
+    "1": {
+        "id": 1,
+        "player": "kip",
+        "description": "can we add a move-like feature where you can CLIMB [direction] for the terrain thats too high. I get \"Too steep to scale.\" but i want the option to CLIMB. There should be a higher stamina penalty and a 1 tick delay",
+        "context": "Grass (null_void.64.68.0)",
+        "state": "closed",
+        "created_at": "2026-03-20 21:10:12",
+        "updates": [
+            {
+                "timestamp": "2026-03-20 21:11:33",
+                "text": "Feature implemented: Added 'climb' command with 2s delay and high stamina cost."
+            }
+        ]
+    },
+    "2": {
+        "id": 2,
+        "player": "kip",
+        "description": "Stamina check. Can you check stamina to make sure the resource is properly being used/regenerated. I thought abilities had a stamina cost, which in some cases doesn't seem to be getting calculated. The CLIMB command says \"Too exhausted to attempt the climb!\" when I'm at 100 stamina which is wrong as well. This should let me climb, with a 1 tick delay, but the stamina cost should be pretty hefty",
+        "context": "Grass (null_void.64.68.0)",
+        "state": "closed",
+        "created_at": "2026-03-20 21:14:01",
+        "updates": [
+             {
+                "timestamp": "2026-03-20 21:21:00",
+                "text": "Fixed: Reduced climb cost (24 per unit) and fixed weight penalty double-dipping. Patched potential KeyError in resource listeners."
+            }
+        ]
+    }
+}

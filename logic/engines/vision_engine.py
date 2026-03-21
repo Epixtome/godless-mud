@@ -52,7 +52,13 @@ def get_perception(observer, radius=7, context=TACTICAL_CONTEXT):
     if not world: return PerceptionResult(start_room, radius)
 
     # [V6.4] Environmental Occlusion: Scaling radius by weather density
-    penalty = _get_weather_radius_penalty(start_room)
+    # Builders, Admins, and Navigation-only queries (Minimap) ignore these penalties (V7.2)
+    ignore_penalty = getattr(observer, 'ignore_fog', False) or getattr(observer, 'admin_vision', False)
+    if ignore_penalty or (context and not context.include_entities and not context.check_los):
+        penalty = 1.0
+    else:
+        penalty = _get_weather_radius_penalty(start_room)
+        
     final_radius = max(1, int(radius * penalty))
 
     from logic.engines import spatial_engine

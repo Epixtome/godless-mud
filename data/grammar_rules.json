@@ -1,0 +1,56 @@
+{
+    "transitions": [
+        {
+            "id": "weight_prone",
+            "trigger_tag": "weight",
+            "required_state": "off_balance",
+            "result_state": "prone",
+            "duration": 3,
+            "message": "The weight of the blow sends you to the ground!",
+            "attacker_message": "You exploit their lack of balance and knock them prone!"
+        },
+        {
+            "id": "concussive_heat",
+            "trigger_tag": "concussive",
+            "resource_target": "heat",
+            "modifier": 15,
+            "message": "The heavy impact sends a jolt of heat through your system!"
+        },
+        {
+            "id": "disruption_concentration",
+            "trigger_tag": "disruption",
+            "resource_target": "concentration",
+            "modifier": -15,
+            "message": "Your concentration is shattered!"
+        },
+        {
+            "id": "volley_mountain",
+            "trigger_tag": "volley",
+            "terrain_interaction": "mountain",
+            "effect": "ignore_los_blocks",
+            "message": "Your arrows climb high, arcing over the peaks to find their mark!"
+        },
+        {
+            "id": "scan_reveal",
+            "trigger_tag": "scan",
+            "radius_effect": true,
+            "result_state": "revealed",
+            "duration": 10,
+            "message": "You are exposed by a sweeping scout scan!",
+            "attacker_message": "Your scan illuminates the battlefield."
+        },
+        {
+            "id": "target_mark",
+            "trigger_tag": "lock_on",
+            "result_state": "marked",
+            "duration": 12,
+            "message": "You feel a cold gaze lock onto you...",
+            "attacker_message": "Target locked. Lethality imminent."
+        }
+    ],
+    "scaling": {
+        "marked_damage_mult": 1.5,
+        "prone_damage_mult": 1.25,
+        "exposed_crit_chance": 1.0
+    }
+}

@@ -129,6 +129,7 @@ def get_crit_chance(player: 'Player') -> float:
 
 def distribute_favor(player: 'Player', target: Any, game: Any) -> None:
     """Awards favor to the player based on the kill."""
+    from logic.core.services import favor_service
     tags = getattr(target, 'tags', [])
     if not tags and hasattr(target, 'identity_tags'):
         tags = target.identity_tags
@@ -170,8 +171,7 @@ def distribute_favor(player: 'Player', target: Any, game: Any) -> None:
 
     if primary_candidates:
         favored = random.choice(primary_candidates)
-        player.favor[favored.id] = player.favor.get(favored.id, 0) + base_favor
-        player.send_line(f"{Colors.YELLOW}You gain {base_favor} Favor with {favored.name}.{Colors.RESET}")
+        favor_service.award_favor(player, favored.id, base_favor)
         
         from logic.core import event_engine
         event_engine.dispatch("on_favor_gain", {'player': player, 'deity': favored, 'amount': base_favor})
@@ -179,14 +179,14 @@ def distribute_favor(player: 'Player', target: Any, game: Any) -> None:
         splash = max(1, int(base_favor * 0.2))
         for d in primary_candidates:
             if hasattr(d, 'id') and d.id != favored.id:
-                player.favor[d.id] = player.favor.get(d.id, 0) + splash
+                favor_service.award_favor(player, d.id, splash)
 
     if secondary_candidates:
         splash = max(1, int(base_favor * 0.1))
         for d in secondary_candidates:
             d_id = getattr(d, 'id', None)
             if d_id:
-                player.favor[d_id] = player.favor.get(d_id, 0) + splash
+                favor_service.award_favor(player, d_id, splash)
 
 def get_combat_rating(entity: Any) -> float:
     """
