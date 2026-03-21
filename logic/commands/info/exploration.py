@@ -4,6 +4,57 @@ from utilities import mapper
 from logic.core import perception as vision
 from logic.common import get_reverse_direction, find_by_index
 from logic.core.utils import display_utils
+from logic.core import effects
+
+def _get_status_signals(entity, game):
+    """[V7.2] Generates shorthand status symbols for entities."""
+    if not hasattr(entity, 'status_effects') or not entity.status_effects:
+        return ""
+    
+    signals = []
+    # Key Status Mappings to Shorthand
+    MAPPING = {
+        "wet": (f"{Colors.CYAN}(W){Colors.RESET}", 1),
+        "off_balance": (f"{Colors.MAGENTA}(O){Colors.RESET}", 2),
+        "stun": (f"{Colors.YELLOW}(S){Colors.RESET}", 3),
+        "dazed": (f"{Colors.YELLOW}(D){Colors.RESET}", 4),
+        "prone": (f"{Colors.RED}(P){Colors.RESET}", 5),
+        "staggered": (f"{Colors.YELLOW}(St){Colors.RESET}", 6),
+        "blinded": (f"{Colors.DGREY}(B){Colors.RESET}", 7),
+        "burning": (f"{Colors.RED}(F){Colors.RESET}", 8),
+        "frozen": (f"{Colors.BOLD}{Colors.CYAN}(Z){Colors.RESET}", 9)
+    }
+    
+    found = []
+    for eff_id in entity.status_effects:
+        if eff_id in MAPPING:
+            found.append(MAPPING[eff_id])
+        else:
+            # Fallback for important but unmapped effects
+            eff_def = effects.get_effect_definition(eff_id, game)
+            if eff_def:
+                # [V7.2] Robust metadata extraction
+                meta = eff_def.get('metadata', {})
+                if isinstance(meta, dict) and meta.get('display_in_prompt'):
+                    name = eff_def.get('short_name') or eff_def.get('name', eff_id)
+                    found.append((f"({name[:1].upper()})", 99))
+
+    # Sort by priority
+    found.sort(key=lambda x: x[1])
+    return "".join([x[0] for x in found])
+
+def _get_exit_display(direction, door):
+    """[V7.2] Generates shorthand exit markers based on door state."""
+    if not door:
+        return f"{Colors.GREEN}{direction}{Colors.RESET}"
+    
+    # [] = Closed, () = Open, {} = Locked
+    if door.state == "locked":
+        return f"{Colors.RED}{{{direction}}}{Colors.RESET}"
+    elif door.state == "closed":
+        return f"{Colors.YELLOW}[{direction}]{Colors.RESET}"
+    else: # open
+        return f"{Colors.GREEN}({direction}){Colors.RESET}"
 
 @command_manager.register("look", "l", category="information")
 def look(player, args, with_prompt=True):
@@ -16,7 +67,6 @@ def look(player, args, with_prompt=True):
     def flush():
         if not output:
             return
-        # Filter None and strip trailing empty lines but preserve internal breaks
         cleaned = [str(line) for line in output]
         full_text = "\r\n".join(cleaned).strip()
         
@@ -43,29 +93,20 @@ def look(player, args, with_prompt=True):
         target_name = args.lower()
         if target_name.startswith("at "): target_name = target_name[3:].strip()
         
-        # Check items, monsters, players
         for item in room.items:
             if target_name in item.name.lower() and vision.can_see(player, item):
                 send(f"{Colors.MAGENTA}{item.description}{Colors.RESET}"); flush(); return
         for mob in room.monsters:
             if target_name in mob.name.lower() and vision.can_see(player, mob):
-                status_str = ""
-                if hasattr(mob, 'status_effects') and mob.status_effects:
-                    visible = []
-                    for s in mob.status_effects:
-                        from logic.core import effects
-                        eff_def = effects.get_effect_definition(s, player.game)
-                        if eff_def:
-                            name = eff_def.get('name', s.replace('_', ' ').title())
-                            visible.append(name)
-                    if visible:
-                        status_str = f" {Colors.YELLOW}[{', '.join(visible)}]{Colors.RESET}"
+                signals = _get_status_signals(mob, player.game)
+                status_str = f" {signals}" if signals else ""
                 send(f"{Colors.RED}{mob.description}{Colors.RESET}{status_str}"); flush(); return
         for p in room.players:
             if p != player and target_name in p.name.lower() and vision.can_see(player, p):
-                send(f"{Colors.BLUE}{p.name} is here.{Colors.RESET}"); flush(); return
+                signals = _get_status_signals(p, player.game)
+                status_str = f" {signals}" if signals else ""
+                send(f"{Colors.BLUE}{p.name} is here.{Colors.RESET}{status_str}"); flush(); return
 
-        # Fallback: Check Inventory
         for item in player.inventory:
             if target_name in item.name.lower():
                 send(f"{Colors.YELLOW}[Inventory] {Colors.MAGENTA}{item.description}{Colors.RESET}"); flush(); return
@@ -82,11 +123,11 @@ def look(player, args, with_prompt=True):
         if "eagle_eye" in player.status_effects: local_radius += 2
         if "farsight" in player.status_effects: local_radius += 1
 
-    # [V6.8 Refactor] Navigation Mode: Shows infrastructure while respecting Fog (V7.2).
     perception = vision.get_perception(player, radius=local_radius, context=vision.NAVIGATION)
     map_lines = mapper.draw_grid(
         perception, 
         visited_rooms=player.visited_rooms, 
+        discovered_rooms=getattr(player, 'discovered_rooms', []),
         ignore_fog=getattr(player, 'ignore_fog', False), 
         indent=5, 
         world=player.game.world, 
@@ -102,36 +143,33 @@ def look(player, args, with_prompt=True):
     send(f"{Colors.WHITE}{desc}{Colors.RESET}")
     
     exits = []
+    # [V7.2] Shorthand Exit Symbols
     for direction, target_id in room.exits.items():
         door = room.doors.get(direction)
-        door_info = f" ({door.name} [{door.state}])" if door else ""
-        exits.append(f"{Colors.GREEN}{direction}{door_info}{Colors.RESET}")
+        exits.append(_get_exit_display(direction, door))
     send(f"{Colors.YELLOW}Exits: {', '.join(exits)}{Colors.RESET}")
     
     for item in room.items:
         if vision.can_see(player, item): 
             id_str = f" {Colors.DGREY}[{getattr(item, 'prototype_id', 'None')}]{Colors.RESET}" if getattr(player, 'admin_vision', False) else ""
             send(f"{Colors.MAGENTA}{item.description}{Colors.RESET}{id_str}")
+            
     for mob in room.monsters:
         if vision.can_see(player, mob):
-            status_str = ""
-            if hasattr(mob, 'status_effects') and mob.status_effects:
-                visible = []
-                for s in mob.status_effects:
-                    from logic.core import effects
-                    eff_def = effects.get_effect_definition(s, player.game)
-                    if eff_def:
-                        name = eff_def.get('name', s.replace('_', ' ').title())
-                        visible.append(name)
-                if visible:
-                    status_str = f" {Colors.YELLOW}[{', '.join(visible)}]{Colors.RESET}"
-            
+            signals = _get_status_signals(mob, player.game)
+            status_str = f" {signals}" if signals else ""
             id_str = f" {Colors.DGREY}[{getattr(mob, 'prototype_id', 'None')}]{Colors.RESET}" if getattr(player, 'admin_vision', False) else ""
-            send(f"{Colors.RED}{mob.description}{Colors.RESET}{status_str}{id_str}")
+            desc = display_utils.highlight_status_keywords(mob.description)
+            send(f"{Colors.RED}{desc}{Colors.RESET}{status_str}{id_str}")
+            
     for p in [p for p in room.players if p != player]:
-        if vision.can_see(player, p): send(f"{Colors.BLUE}{p.name} is here.{Colors.RESET}")
+        if vision.can_see(player, p):
+            signals = _get_status_signals(p, player.game)
+            status_str = f" {signals}" if signals else ""
+            # Highlight any state keywords in the player notice if they exist
+            player_line = display_utils.highlight_status_keywords(f"{p.name} is here.")
+            send(f"{Colors.BLUE}{player_line}{Colors.RESET}{status_str}")
 
-    # [V6.0] Trap Vision for Assassins & Owners
     if hasattr(room, 'metadata') and 'traps' in room.metadata:
         for trap in room.metadata['traps']:
             if trap.get('owner') == player.name or player.active_class == 'assassin':
@@ -148,17 +186,16 @@ def show_map(player, args):
     radius = 7 + getattr(player.room, 'elevation', 0)
     radius = max(2, min(15, radius))
     
-    # Prune expired tracked entities
     if 'tracked_entities' in player.ext_state:
         now = time.time()
         player.ext_state['tracked_entities'] = {eid: exp for eid, exp in player.ext_state['tracked_entities'].items() if exp > now}
 
-    # [V6.8 Refactor] Tactical Mode: Uses structural privacy and highlights building shells.
     perception = vision.get_perception(player, radius=radius, context=vision.TACTICAL)
     
     map_lines = mapper.draw_grid(
         perception,
         visited_rooms=player.visited_rooms, 
+        discovered_rooms=getattr(player, 'discovered_rooms', []),
         ignore_fog=getattr(player, 'ignore_fog', False), 
         indent=5, 
         world=player.game.world, 
@@ -168,7 +205,7 @@ def show_map(player, args):
 
     header = mapper.get_map_header(player.room, player.game.world)
     weather_info = ""
-    weather_id = player.room.get_weather()
+    weather_id = player.room.get_weather() if hasattr(player.room, 'get_weather') else "clear"
     if weather_id != "clear":
         weather_info = f" {Colors.CYAN}[Env: {weather_id.replace('_', ' ').title()}]{Colors.RESET}"
     
@@ -202,28 +239,24 @@ def where(player, args):
 
 @command_manager.register("scan", category="information")
 def scan(player, args):
-    """Scan for enemies in the immediate area (Radius 3) and track them for 60s."""
+    """Scan for enemies in the immediate area (Radius 1) and track them for 60s."""
     import time
     player.send_line(f"\n{Colors.BOLD}Scanning area...{Colors.RESET}")
     
-    # Initialize tracking if missing
     if 'tracked_entities' not in player.ext_state:
-        player.ext_state['tracked_entities'] = {} # id -> expiry_time
+        player.ext_state['tracked_entities'] = {}
 
     radius = 1
-    # [V6.8 Fix] Strict Intelligence query: Radius 1, Cardinal Only.
     perception = vision.get_perception(player, radius=radius, context=vision.INTELLIGENCE)
     
     now = time.time()
-    expiry = now + 60 # Track for 60 seconds
+    expiry = now + 60
     
-    # Map offsets to direction labels
     def get_pos_label(rx, ry):
         d = {(0,-1): "North", (0,1): "South", (1,0): "East", (-1,0): "West"}
         return d.get((rx, ry), "Nearby")
 
     found_any = False
-    # Filter for CARDINAL ONLY (N, S, E, W)
     coords = [c for c in perception.entities.keys() if abs(c[0]) + abs(c[1]) == 1]
     coords = sorted(coords, key=lambda c: max(abs(c[0]), abs(c[1])))
     
@@ -233,7 +266,6 @@ def scan(player, args):
         player.send_line(f"{color}{label}:{Colors.RESET}")
         
         for m in perception.entities[(rx, ry)]:
-            # Add to persistent tracking (Tactical Map will show 'm' if in_sight)
             player.ext_state['tracked_entities'][str(id(m))] = expiry
             player.send_line(f"  {m.name} [Pinged]")
             found_any = True
@@ -283,7 +315,6 @@ def consider(player, args):
     player.send_line(f"\n{Colors.BOLD}Considering {target_name.capitalize()}:{Colors.RESET}")
     player.send_line(f" {msg}")
     
-    # [V6.0] Deterministic Combat Rating comparison
     from logic.core.math import rating
     p_cr = rating.calculate_entity_rating(player)
     t_cr = rating.calculate_entity_rating(target)
@@ -301,11 +332,8 @@ def examine(player, args):
         
     target_name = args.lower()
     
-    # Priority 1: Items in inventory or room
     for item in player.room.items + player.inventory:
         if target_name in item.name.lower():
             return player.send_line(f"{Colors.MAGENTA}{item.description}{Colors.RESET}")
             
-    # Priority 2: Living targets (Calls consider logic)
     return consider(player, args)
-

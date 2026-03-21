@@ -4,7 +4,7 @@ Service layer for world entity management (Spawning, Purging, Searching).
 Enforces Pillar 6 (Anemic Model delegation).
 """
 import logging
-from models import Monster, Item
+from models import Monster, Item, BaseItem
 from logic.core import event_engine
 
 logger = logging.getLogger("GodlessMUD")
@@ -24,7 +24,7 @@ def register_dynamic_prototype(game, entity):
 
     if isinstance(entity, Monster):
         game.world.monsters[p_id] = entity
-    elif isinstance(entity, Item):
+    elif isinstance(entity, BaseItem):
         game.world.items[p_id] = entity
     else:
         return None
@@ -97,8 +97,8 @@ def spawn_item(game, proto_id, target, count=1):
             
         # Handle Decay registration if system available
         if hasattr(item, 'flags') and "decay" in item.flags:
-            from logic import systems
-            systems.register_decay(game, item, getattr(target, 'room', target))
+            from logic.core.systems.decay import register_decay
+            register_decay(game, item, getattr(target, 'room', target))
 
         spawned.append(item)
     

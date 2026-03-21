@@ -17,6 +17,9 @@ These are absolute constraints. Deviating from these pillars introduces technica
 5.  **The "No-Band-Aid" Policy**: Fix the root cause (logic, path, or schema). Never use `try...except` to mask an `AttributeError` or data mismatch.
 6.  **The "Anemic Model" Delegation**: Domain models (`Player`, `Monster`) must not contain active business logic. They are passive data containers that delegate to core facades (e.g., `combat.apply_damage`) or services within `logic/core/`.
 7.  **The "Naming Ghost" Protocol**: Maintain absolute naming consistency. Do not use variations like `DGREY` vs `dGREY`. Standardize on **UPPER_CASE** for constants and utilities.
+8.  **The "Color Constraint" Standard**: Only use standard ANSI colors from `utilities.colors`.
+    -   **ALLOWED**: `RED`, `GREEN`, `YELLOW`, `BLUE`, `MAGENTA`, `CYAN`, `WHITE`, `DARK_GRAY`.
+    -   **FORBIDDEN**: Never assume colors like `PALE_BLUE`, `GOLD`, or `ORANGE` exist as direct attributes. Use `CYAN` or `YELLOW` instead. (V7.2 includes a `ColorMeta` safety fallback, but code should adhere to the primary palette for UI consistency).
 
 ---
 
@@ -84,7 +87,7 @@ Every class kit MUST adhere to the [8-Ability Deck Composition](file:///c:/Users
 To minimize token consumption and maximize speed, AI Agents must adhere to the following:
 
 1.  **Skills First**: Use the `.agents/skills/` toolsets for navigation and scaffolding. Avoid `grep` if the Skill already defines the directory map.
-2.  **Artifact Memory**: Maintain a "Living Artifact" (e.g., `class_registry.md`) to track system hooks. Do not search the codebase for information already recorded in an artifact.
+2.  **Artifact Memory**: Maintain a "Living Artifact" (e.g., `class_registry.md`, `ENGINE_MAP.md`) to track system hooks. Do not search the codebase for information already recorded in an artifact.
 3.  **Surgical Validation**: Use targeted scripts (like `scripts/dev/combat_sim.py`) to verify logic. Avoid full-system boots for unit-level changes.
 4.  **Spatial Shard Restraint**: Never read large world JSON shards (e.g., `data/zones/aetheria.json`) directly. Use the **Map Renderer Skill** (`scripts/dev/map_renderer.py`) or targeted coordinate scripts. If a task requires a full-shard read, you MUST confirm with the USER first.
 

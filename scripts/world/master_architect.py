@@ -17,10 +17,13 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from utilities.colors import Colors
 
 class AethelgardArchitect:
-    def __init__(self, width=250, height=250):
+    def __init__(self, width=250, height=250, offset_x=0, offset_y=0, zone_prefix=""):
         self.config = load_config()
         size = self.config.get("grid_size", [width, height])
         self.width, self.height = size[0], size[1]
+        self.offset_x = offset_x
+        self.offset_y = offset_y
+        self.zone_prefix = zone_prefix
         self.grid = [["ocean" for _ in range(self.width)] for _ in range(self.height)]
         self.current_phase = 0
         
@@ -102,24 +105,48 @@ class AethelgardArchitect:
     def run_phase_6(self):
         """Phase 6: Sharded Export (The Godless Standard)."""
         print("\n--- Running Phase 6: Sharded Export ---")
-        from utilities.mapper import TERRAIN_HEIGHTS
+        from utilities.mapper import TERRAIN_ELEVS
 
         # Define Region Boundaries for Sharding
         half_w, half_h = self.width // 2, self.height // 2
         
         zone_definitions = {
-            "aetheria": {"x_range": [0, half_w], "y_range": [0, half_h], "name": "Kingdom of Aetheria"},
-            "umbra": {"x_range": [half_w, self.width], "y_range": [0, half_h], "name": "Shadow Lands of Umbra"},
-            "sylvanis": {"x_range": [0, half_w], "y_range": [half_h, self.height], "name": "Sylvanis Wilds"},
-            "null_void": {"x_range": [half_w, self.width], "y_range": [half_h, self.height], "name": "The Null Wastes"}
+            f"{self.zone_prefix}aetheria": {"x_range": [0, half_w], "y_range": [0, half_h], "name": f"{self.zone_prefix.title()}Kingdom of Aetheria"},
+            f"{self.zone_prefix}umbra": {"x_range": [half_w, self.width], "y_range": [0, half_h], "name": f"{self.zone_prefix.title()}Shadow Lands of Umbra"},
+            f"{self.zone_prefix}sylvanis": {"x_range": [0, half_w], "y_range": [half_h, self.height], "name": f"{self.zone_prefix.title()}Sylvanis Wilds"},
+            f"{self.zone_prefix}null_void": {"x_range": [half_w, self.width], "y_range": [half_h, self.height], "name": f"{self.zone_prefix.title()}The Null Wastes"}
         }
 
-        shards = {z_id: {"metadata": {"id": z_id, "name": data["name"], "grid_logic": True}, "rooms": []} 
+        shards = {z_id: {"metadata": {"id": z_id, "name": data["name"], "grid_logic": True, "security_level": "wilderness", "target_cr": 10}, "rooms": []} 
                   for z_id, data in zone_definitions.items()}
+
+        # Metadata Constants for V7.2
+        TERRAIN_DATA = {
+            "mountain": {"opacity": 0.8, "cost": 10},
+            "high_mountain": {"opacity": 1.0, "cost": 25},
+            "peak": {"opacity": 1.0, "cost": 50},
+            "forest": {"opacity": 0.3, "cost": 3},
+            "dense_forest": {"opacity": 0.6, "cost": 5},
+            "water": {"opacity": 0.1, "cost": 10},
+            "ocean": {"opacity": 0.1, "cost": 20},
+            "city": {"opacity": 0.0, "cost": 1},
+            "road": {"opacity": 0.0, "cost": 1},
+            "cobblestone": {"opacity": 0.0, "cost": 1},
+            "swamp": {"opacity": 0.4, "cost": 6},
+            "plains": {"opacity": 0.0, "cost": 2},
+            "grass": {"opacity": 0.1, "cost": 2},
+            "hills": {"opacity": 0.4, "cost": 4},
+            "beach": {"opacity": 0.0, "cost": 2},
+            "wasteland": {"opacity": 0.2, "cost": 3}
+        }
 
         for y in range(self.height):
             for x in range(self.width):
                 cell = self.grid[y][x]
+                
+                # Apply Offsets
+                real_x = x + self.offset_x
+                real_y = y + self.offset_y
                 
                 # Find Zone
                 zone_id = "null_void"
@@ -130,7 +157,7 @@ class AethelgardArchitect:
                         break
                 
                 # Elevation logic (introducing variance for natural look)
-                base_z = TERRAIN_HEIGHTS.get(cell, 0)
+                base_z = TERRAIN_ELEVS.get(cell, 0)
                 variance = 0
                 if cell == "mountain":
                     variance = random.randint(-1, 2)
@@ -141,11 +168,25 @@ class AethelgardArchitect:
                 elif cell == "peak":
                     variance = random.randint(0, 5)
                 
-                z_level = base_z + variance
-                elevation = z_level # Store the varied elevation
+                elevation = base_z + variance
                 
-                room_id = f"{zone_id}.{x}.{y}.{z_level}"
+                # Grid Logic: V7.2 Coordinate Standards
+                room_id = f"{zone_id}.{real_x}.{real_y}.0"
                 
+                # Generate Exits (Standard 4-way Grid)
+                exits = {
+                    "north": f"{zone_id}.{real_x}.{real_y - 1}.0",
+                    "south": f"{zone_id}.{real_x}.{real_y + 1}.0",
+                    "east": f"{zone_id}.{real_x + 1}.{real_y}.0",
+                    "west": f"{zone_id}.{real_x - 1}.{real_y}.0"
+                }
+
+                # Boundary Check for Exits (Optional: remove if borders should loop or be 'void')
+                if y == 0: exits.pop("north")
+                if y == self.height - 1: exits.pop("south")
+                if x == 0: exits.pop("west")
+                if x == self.width - 1: exits.pop("east")
+
                 # Deterministic POI Naming
                 center = self.width // 2
                 if x == center and y == center:
@@ -153,31 +194,41 @@ class AethelgardArchitect:
                 else:
                     room_name = f"{cell.replace('_', ' ').title()}"
 
-                # Symbol variety for natural mapping
-                from utilities.colors import Colors
+                # Symbol variety for natural mapping (V7.2 Standard)
+                # Use {Colors.X} tokens instead of direct injection to prevent ANSI corruption in JSON.
                 symbol_palettes = {
-                    "forest": [f"{Colors.GREEN}^{Colors.RESET}", f"{Colors.GREEN}f{Colors.RESET}", f"{Colors.GREEN}t{Colors.RESET}"],
-                    "dense_forest": [f"{Colors.BOLD}{Colors.GREEN}^{Colors.RESET}", f"{Colors.BOLD}{Colors.GREEN}T{Colors.RESET}"],
-                    "mountain": [f"{Colors.WHITE}^{Colors.RESET}", f"{Colors.WHITE}m{Colors.RESET}", f"{Colors.WHITE}M{Colors.RESET}"],
-                    "plains": [f"{Colors.GREEN}.{Colors.RESET}", f"{Colors.GREEN},{Colors.RESET}", f"{Colors.GREEN}·{Colors.RESET}"],
-                    "grass": [f"{Colors.GREEN}\"{Colors.RESET}", f"{Colors.GREEN}'{Colors.RESET}"],
-                    "city": [f"{Colors.BOLD}{Colors.YELLOW}#{Colors.RESET}", f"{Colors.BOLD}{Colors.YELLOW}H{Colors.RESET}"]
+                    "forest": ["{Colors.GREEN}^{Colors.RESET}", "{Colors.GREEN}f{Colors.RESET}", "{Colors.GREEN}t{Colors.RESET}"],
+                    "dense_forest": ["{Colors.BOLD}{Colors.GREEN}^{Colors.RESET}", "{Colors.BOLD}{Colors.GREEN}T{Colors.RESET}"],
+                    "mountain": ["{Colors.WHITE}^{Colors.RESET}"], 
+                    "high_mountain": ["{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}"],
+                    "peak": ["{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}"],
+                    "plains": ["{Colors.GREEN}.{Colors.RESET}", "{Colors.GREEN},{Colors.RESET}", "{Colors.GREEN}·{Colors.RESET}"],
+                    "grass": ["{Colors.GREEN}\"{Colors.RESET}", "{Colors.GREEN}'{Colors.RESET}"],
+                    "city": ["{Colors.BOLD}{Colors.YELLOW}#{Colors.RESET}", "{Colors.BOLD}{Colors.YELLOW}H{Colors.RESET}"]
                 }
                 
                 room_symbol = None
                 if cell in symbol_palettes:
                     room_symbol = random.choice(symbol_palettes[cell])
 
+                t_data = TERRAIN_DATA.get(cell, {"opacity": 0.0, "cost": 2})
+
                 room_data = {
                     "id": room_id,
                     "zone_id": zone_id,
                     "name": room_name,
-                    "description": f"A vast expanse of {cell.replace('_', ' ')} within {zone_id.title()}.",
+                    "description": f"A vast expanse of {cell.replace('_', ' ')} within {zone_id.title()} [V7.2 Verified].",
                     "terrain": str(cell),
                     "symbol": room_symbol,
-                    "x": int(x), "y": int(y), "z": 0,
-                    "elevation": int(z_level),
-                    "items": []
+                    "x": int(real_x), "y": int(real_y), "z": 0,
+                    "elevation": int(elevation),
+                    "opacity": t_data["opacity"],
+                    "traversal_cost": t_data["cost"],
+                    "exits": exits,
+                    "manual_exits": False,
+                    "items": [],
+                    "monsters": [],
+                    "doors": {}
                 }
                 
                 # SPECIAL: A tree in Sylvanis

@@ -1,8 +1,34 @@
-class Colors:
+class ColorMeta(type):
     """
-    Godless ANSI Color Standards (V5.3).
-    Use UPPER_CASE constants only. Aliases are provided for backward compatibility
-    but are marked for removal in V6.0.
+    [V7.2] Safety Metaclass for Godless Colors.
+    Prevents AttributeError crashes when AI agents hallucinate non-standard colors.
+    """
+    def __getattr__(cls, name):
+        # Normalize and filter out magic methods
+        if name.startswith("__"):
+            return super().__getattribute__(name)
+            
+        FALLBACKS = {
+            "PALE_BLUE": cls.CYAN,
+            "LIGHT_BLUE": cls.CYAN,
+            "ICE_BLUE": cls.CYAN,
+            "DEEP_RED": cls.RED,
+            "GOLD": cls.YELLOW,
+            "ORANGE": cls.YELLOW,
+            "VIOLET": cls.MAGENTA,
+            "PINK": cls.MAGENTA,
+            "GRAY": cls.DARK_GRAY,
+            "GREY": cls.DARK_GRAY,
+            "BLACK": "\033[30m"
+        }
+        
+        # Return fallback or DEFAULT (White) to prevent game-breaking exceptions
+        return FALLBACKS.get(name.upper(), cls.WHITE)
+
+class Colors(metaclass=ColorMeta):
+    """
+    Godless ANSI Color Standards (V7.2 - Immortality Refactor).
+    Use UPPER_CASE constants and standard 8-color palette.
     """
     RESET = "\033[0m"
     RED = "\033[31m"
@@ -15,7 +41,6 @@ class Colors:
     LIGHT_CYAN = "\033[96m"
     WHITE = "\033[37m"
     
-    # Standardize on DARK_GRAY
     DARK_GRAY = "\033[90m"
     DGREY = "\033[90m" # Legacy Alias
     

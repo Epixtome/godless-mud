@@ -38,6 +38,12 @@ def get_prompt(player):
     bal = player.resources.get('balance', 100)
     max_bal = player.get_max_resource('balance')
     parts.append(f"{Colors.MAGENTA}BAL: {bal}/{max_bal}{Colors.RESET}")
+    
+    # [V7.2] HEAT (Accrued from spells/move)
+    heat = player.resources.get(Tags.HEAT, 0)
+    if heat > 0:
+        h_color = Colors.YELLOW if heat < 50 else Colors.RED
+        parts.append(f"{h_color}HEAT: {heat}{Colors.RESET}")
 
     # Class-Specific Resources (Decoupled: Automated via Registry)
     from logic.core import resource_registry
@@ -89,14 +95,12 @@ def get_prompt(player):
 
                 name = eff_def.get('short_name') or eff_def.get('name', eff_id)
                 name = str(name).title()
-                # Determine color based on type
-                color = Colors.YELLOW
-                if eff_id in effects.HARD_DEBUFFS or eff_id in effects.CRITICAL_STATES:
-                    color = Colors.RED
-                elif eff_id in effects.SOFT_DEBUFFS:
-                    color = Colors.YELLOW # Default to yellow if orange is missing
                 
-                player.active_statuses_display.append(f"{color}{name}{Colors.RESET}")
+                # Use display_utils.highlight_status_keywords for consistent coloring
+                from logic.core.utils import display_utils
+                formatted_name = display_utils.highlight_status_keywords(name)
+                
+                player.active_statuses_display.append(formatted_name)
 
     # Ensure all extensions are strings to avoid join errors
     status_str_list = [str(p) for p in player.active_statuses_display]
@@ -118,18 +122,31 @@ def get_prompt(player):
             elif pct < 75: condition = "Hurt"
             elif pct < 100: condition = "Scratched"
             
+            # [V7.2] Dynamic Target Status Display
             statuses = []
             t_effects = getattr(target, 'status_effects', {})
-            if "off_balance" in t_effects: statuses.append(f"{Colors.MAGENTA}Off-Balance{Colors.RESET}")
-            if "stun" in t_effects: statuses.append(f"{Colors.YELLOW}Stunned{Colors.RESET}")
-            if "dazed" in t_effects: statuses.append(f"{Colors.YELLOW}Dazed{Colors.RESET}")
+            from logic.core import effects
+            for eff_id in t_effects:
+                eff_def = effects.get_effect_definition(eff_id, player.game)
+                if isinstance(eff_def, dict):
+                    meta = eff_def.get('metadata', {})
+                    if isinstance(meta, dict) and (meta.get('display_in_prompt') is False or meta.get('hidden') is True):
+                        continue
+                    if eff_def.get('group') in ['stance', 'class_passive', 'resource']:
+                        continue
+                        
+                    name = eff_def.get('short_name') or eff_def.get('name', eff_id)
+                    # Use centralized highlight to determine base color
+                    from logic.core.utils import display_utils
+                    formatted_name = display_utils.highlight_status_keywords(str(name).upper())
+                    statuses.append(formatted_name)
 
             # Target Balance (Posture)
             t_bal = target.resources.get('balance', 100) if hasattr(target, 'resources') else 100
             t_max_bal = getattr(target, 'get_max_resource', lambda x: 100)('balance')
             
-            status_str = f" ({'/'.join(statuses)})" if statuses else ""
-            prompt += f" ({target.name} [{condition}] BAL: {t_bal}/{t_max_bal}{status_str})"
+            status_str = f" | {' '.join(statuses)}" if statuses else ""
+            prompt += f" ({target.name} [{condition}{status_str}] BAL: {t_bal}/{t_max_bal})"
     
     # Builder HUD (V7.1)
     if (player.state in ["building", "kit_menu"] or getattr(player, 'is_building', False)) and hasattr(player, 'builder_state'):

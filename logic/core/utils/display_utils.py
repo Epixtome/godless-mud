@@ -1,4 +1,5 @@
 from utilities.colors import Colors
+import re
 
 def render_header(title, width=60, char="="):
     """Renders a centered header within a line of the specified character."""
@@ -36,3 +37,37 @@ def render_table_row(data, widths, colors=None):
 def render_labeled_value(label, value, label_width=20, label_color=Colors.CYAN, value_color=Colors.WHITE):
     """Renders a 'Label: Value' line with consistent spacing."""
     return f" {label_color}{label:<{label_width}}{Colors.RESET} {value_color}{value}{Colors.RESET}"
+
+def highlight_status_keywords(text):
+    """[V7.2] Unifies status effect highlighting across all UI elements (Deck, Look, Messages)."""
+    if not text: return ""
+    
+    # Priority Mapping (Order matters for overlapping regex)
+    # We use explicit groups for semantic clarity in our V7.2 palette.
+    ELEMENTAL = [
+        (r'\b(?:WET|DRENCHED|CHILLED|FROZEN|SHIVERING|COLD|SHOCK|SHOCKED|STATIS|SOAKED)\b', Colors.CYAN),
+        (r'\b(?:BURNING|ON FIRE|IGNITED|BLAZING|SCORCHED|FLAMING)\b', Colors.YELLOW),
+        (r'\b(?:SHOCKED|ELECTRIFIED|VOLTAIC|STATIC)\b', Colors.BOLD + Colors.YELLOW),
+    ]
+    DISRUPTION = [
+        (r'\b(?:STUNNED|STUN|PRONE|STAGGERED|OFF[- ]BALANCE|DAZED|BLINDED|CONFUSED|SILENCED|PETRIFIED|SHATTERED|KNOCKDOWN|KNOCKED DOWN)\b', Colors.RED),
+    ]
+    AFFLICTIONS = [
+        (r'\b(?:POISONED|BLIGHTED|VENOMOUS|ENVENOMED|PLAGUED)\b', Colors.GREEN),
+        (r'\b(?:BLEEDING|HEMORRHAGED|EXPOSED|VULNERABLE|CURSED|CORRUPTED|HEAT|OVERHEATED|OVERHEAT)\b', Colors.MAGENTA),
+    ]
+    BUFFS = [
+        (r'\b(?:HASTE|EMPOWERED|PROTECTED|BLESSED|REGENERATE|SHIELDED|UNSTOPPABLE|WARDED|SANCTIFIED)\b', Colors.BOLD + Colors.GREEN),
+    ]
+
+    res: str = text
+    # Sequence through all groups
+    for group in [ELEMENTAL, DISRUPTION, AFFLICTIONS, BUFFS]:
+        for pattern, color in group:
+            def repl(match):
+                word = match.group(0)
+                # Nest color then restore the expected reset
+                return f"{color}{word}{Colors.RESET}"
+            res = re.sub(pattern, repl, res, flags=re.IGNORECASE)
+            
+    return res

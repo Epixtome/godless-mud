@@ -26,6 +26,10 @@ def get_item(prototype_id, world=None):
         logger.error(f"Factory Error: Item Prototype '{prototype_id}' not found.")
         return None
 
+    # [V7.2] Robust Object Handling: If proto_data is already an item object, clone it.
+    if hasattr(proto_data, 'clone'):
+        return proto_data.clone()
+
     # Create from dict handles the class selection (Weapon, Armor, etc)
     item = create_item_from_dict(proto_data)
     item.prototype_id = prototype_id

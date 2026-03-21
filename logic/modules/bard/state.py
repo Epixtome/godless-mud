@@ -21,7 +21,7 @@ for res in BARD_RESOURCES:
     register_resource('bard', res)
 
 def initialize_bard(player):
-    """Initializes the Bard state bucket."""
+    """[V7.2] Initializes the Bard state and resources."""
     if getattr(player, 'active_class', '') != 'bard':
         return
         
@@ -30,9 +30,13 @@ def initialize_bard(player):
         
     if 'bard' not in player.ext_state:
         player.ext_state['bard'] = {
-            'active_hymn': None,
-            'rhythm': 0
+            'active_song': None,
+            'performance_ticks': 0,
+            'encore_ready': False
         }
     
+    # 2. URM Synchronization
+    if 'rhythm' not in player.resources:
+        player.resources['rhythm'] = 0
     if 'stamina' not in player.resources:
         player.resources['stamina'] = 100

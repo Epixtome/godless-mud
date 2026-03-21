@@ -102,38 +102,46 @@ def mark_room_visited(player, room_id):
     if isinstance(player.visited_rooms, set):
         player.visited_rooms = list(player.visited_rooms)
     
-    # 1. Discover target + immediate exits
-    to_add = [room_id]
+    # [V7.2] Persistence Expansion
+    # 1. Full Color Visit (Radius 1 / 3x3)
+    to_visit = [room_id]
+    # 2. Geography Discovery (Radius 3 / 7x7)
+    to_discover = [room_id]
+
     if hasattr(player, 'game') and room_id in player.game.world.rooms:
         curr = player.game.world.rooms[room_id]
-        
-        # Add explicit exits (handles Z-plane shifts or distant links)
-        if hasattr(curr, 'exits'):
-            for neighbor_id in curr.exits.values():
-                if neighbor_id not in to_add:
-                    to_add.append(neighbor_id)
-        
-        # [V6.1] 8-Direction Spatial Reveal (Fog of War)
-        # Reveals diagonal neighbors on the same Z-plane even if no explicit exit exists
         from logic.engines import spatial_engine
         spatial = spatial_engine.get_instance(player.game.world)
+        
         if spatial:
+            # Full Visit (Radius 1)
             for dx in range(-1, 2):
                 for dy in range(-1, 2):
-                    if dx == 0 and dy == 0: continue
                     neighbor = spatial.get_room(curr.x + dx, curr.y + dy, curr.z)
-                    if neighbor and neighbor.id not in to_add:
-                        to_add.append(neighbor.id)
+                    if neighbor and neighbor.id not in to_visit:
+                        to_visit.append(neighbor.id)
+            
+            # Discovery (Radius 3)
+            for dx in range(-3, 4):
+                for dy in range(-3, 4):
+                    neighbor = spatial.get_room(curr.x + dx, curr.y + dy, curr.z)
+                    if neighbor and neighbor.id not in to_discover:
+                        to_discover.append(neighbor.id)
 
-    # 2. Update MRU (Most Recently Used)
-    for rid in to_add:
-        if rid in player.visited_rooms:
-            player.visited_rooms.remove(rid)
+    # Update Visited (Colored)
+    for rid in to_visit:
+        if rid in player.visited_rooms: player.visited_rooms.remove(rid)
         player.visited_rooms.append(rid)
-    
-    # 3. Enforce 200-room cap (Rule 4.C - Data Optimization)
     if len(player.visited_rooms) > 200:
         player.visited_rooms = player.visited_rooms[-200:]
+
+    # Update Discovered (Persistent Uncolored)
+    if not hasattr(player, 'discovered_rooms'): player.discovered_rooms = []
+    for rid in to_discover:
+        if rid in player.discovered_rooms: player.discovered_rooms.remove(rid)
+        player.discovered_rooms.append(rid)
+    if len(player.discovered_rooms) > 1000:
+        player.discovered_rooms = player.discovered_rooms[-1000:]
 
 def calculate_total_weight(player, only_equipped=False):
     """Calculates the total weight (LBS) of all equipment and inventory."""

@@ -21,7 +21,7 @@ for res in ALCHEMIST_RESOURCES:
     register_resource('alchemist', res)
 
 def initialize_alchemist(player):
-    """Initializes the Alchemist state bucket."""
+    """[V7.2] Initializes the Alchemist state and resources."""
     if getattr(player, 'active_class', '') != 'alchemist':
         return
         
@@ -30,9 +30,13 @@ def initialize_alchemist(player):
         
     if 'alchemist' not in player.ext_state:
         player.ext_state['alchemist'] = {
-            'alchemical_pips': 0,
-            'active_catalyst': None
+            'active_bottles': [],
+            'distillation_stacks': 0,
+            'infused_element': None
         }
     
+    # 2. URM Synchronization
+    if 'alchemical_pips' not in player.resources:
+        player.resources['alchemical_pips'] = 0
     if 'concentration' not in player.resources:
         player.resources['concentration'] = 100

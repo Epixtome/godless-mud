@@ -103,15 +103,22 @@ def calculate_gear_multipliers(player):
     mult = 1.0
     slots = ["equipped_weapon", "equipped_offhand", "equipped_armor", "equipped_head", 
              "equipped_neck", "equipped_shoulders", "equipped_arms", "equipped_hands", 
-             "equipped_legs", "equipped_feet"]
+             "equipped_legs", "equipped_feet", "equipped_finger_l", "equipped_finger_r",
+             "equipped_floating", "equipped_mount"]
              
     for slot in slots:
         item = getattr(player, slot, None)
         if item:
-            # Rarity/Power scaling (Assuming 'level' or 'power' attribute)
-            power = getattr(item, 'power', 1.0)
-            if power > 1.0:
-                mult += (power - 1.0) * 0.1
+            # [V6.0] Combat Rating Scaling (Primary)
+            cr = getattr(item, 'combat_rating', 0)
+            if cr > 0:
+                # Every 10 GCR on an item adds 10% to the total character multiplier
+                mult += (cr / 10.0) * 0.1
+            else:
+                # Legacy Rarity/Power scaling
+                power = getattr(item, 'power', 1.0)
+                if power > 1.0:
+                    mult += (power - 1.0) * 0.1
             
             # Specific axis modifiers (e.g., Bracers of Stability)
             item_tags = getattr(item, 'tags', [])

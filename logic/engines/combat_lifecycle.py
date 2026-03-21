@@ -108,8 +108,8 @@ def _handle_mob_death(game, mob, killer):
     
     # Register Decay
     try:
-        from logic import systems
-        systems.register_decay(game, corpse, room)
+        from logic.core.systems.decay import register_decay
+        register_decay(game, corpse, room)
     except Exception as e:
         logger.error(f"Failed to register decay for {mob.name}: {e}")
     
@@ -180,8 +180,8 @@ def _handle_player_death(game, player, killer):
     room.broadcast(f"{player.name} falls dead, dropping to the ground.", exclude_player=player)
     
     # Register Decay
-    from logic import systems
-    systems.register_decay(game, p_corpse, room)
+    from logic.core.systems.decay import register_decay
+    register_decay(game, p_corpse, room)
     
     # 2. Resurrect at start room
     from logic.core import resources, effects, combat

@@ -21,7 +21,7 @@ for res in ILLUSIONIST_RESOURCES:
     register_resource('illusionist', res)
 
 def initialize_illusionist(player):
-    """Initializes the Illusionist state bucket."""
+    """[V7.2] Initializes the Illusionist state and resources."""
     if getattr(player, 'active_class', '') != 'illusionist':
         return
         
@@ -30,9 +30,13 @@ def initialize_illusionist(player):
         
     if 'illusionist' not in player.ext_state:
         player.ext_state['illusionist'] = {
-            'mirage': 0,
-            'mirrored': 0
+            'mirrored': 0,
+            'shadow_clones': [],
+            'blur_stacks': 0
         }
     
+    # 2. URM Synchronization
+    if 'mirage' not in player.resources:
+        player.resources['mirage'] = 0
     if 'concentration' not in player.resources:
         player.resources['concentration'] = 100

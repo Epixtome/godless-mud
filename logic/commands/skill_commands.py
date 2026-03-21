@@ -62,6 +62,13 @@ def try_execute_skill(player, command_line):
         b = player.game.world.blessings.get(b_id)
         if not b: continue
 
+        # [V7.2] Kit Sovereignty: Allow if in kit, otherwise enforce class requirement
+        kit_blessings = player.active_kit.get('blessings', [])
+        req_class = b.requirements.get('class')
+        if req_class and getattr(player, 'active_class', None) != req_class:
+            if b.id not in kit_blessings:
+                continue
+
         # Global Command Registration: Allow ANY equipped blessing to be triggered
         # (Removed 'is_skill' check)
 

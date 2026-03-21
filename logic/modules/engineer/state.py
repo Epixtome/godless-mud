@@ -21,7 +21,7 @@ for res in ENGINEER_RESOURCES:
     register_resource('engineer', res)
 
 def initialize_engineer(player):
-    """Initializes the Engineer state bucket."""
+    """[V7.2] Initializes the Engineer state and resources."""
     if getattr(player, 'active_class', '') != 'engineer':
         return
         
@@ -30,10 +30,13 @@ def initialize_engineer(player):
         
     if 'engineer' not in player.ext_state:
         player.ext_state['engineer'] = {
-            'tech_scrap': 0,
-            'active_turret': None,
-            'active_barrier': None
+            'active_constructs': [], # List of spawned entities
+            'current_build_multiplier': 1.0,
+            'barrier_hp_max': 50
         }
     
+    # 2. URM Synchronization
+    if 'tech_scrap' not in player.resources:
+        player.resources['tech_scrap'] = 0
     if 'stamina' not in player.resources:
         player.resources['stamina'] = 100

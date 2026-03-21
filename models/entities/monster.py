@@ -12,6 +12,7 @@ class Monster:
         self.description = description
         self.hp = hp
         self.max_hp = max_hp if max_hp is not None else hp
+        self.id = str(id(self)) # [V7.2] Global transient identifier
         self.damage = damage
         self.base_mitigation = base_mitigation
         self.combat_rating = 1.0 # [V6.0] Godless Combat Rating
@@ -28,6 +29,8 @@ class Monster:
         self.leader = None # Entity this mob follows
         self.owner_id = None # ID of the player who created this mob
         self.can_be_companion = False # If True, can be recruited via friendship
+        self.is_pet = False # [V7.2] Follower Standard
+        self.tamed_name = None # [V7.2] Permanent name for pets
         self.is_shopkeeper = False
         self.room = None # Reference to the Room object containing this mob
         self.status_effects = {} # effect_id -> expiry_tick

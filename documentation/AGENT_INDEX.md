@@ -26,6 +26,7 @@ I start every session by reviewing `GEMINI.md`. It defines the "Architecture of 
 ### 2. The Registry Layer (`documentation/`)
 I use specific files to track the "Live State" of the project's systems:
 -   **`GODLESS_SYSTEM_REGISTRY.md`**: The definitive compilation of versions, acronyms, and protocols. I check this to resolve terminology confusion.
+-   **`BAKING_BRANCH_HANDOVER.md`**: The active roadmap for the `standard-synchronization-v7` branch. Highlights all lagging debt and priority targets for the current session.
 -   **`class_registry.md`**: Which class hooks are active. I check this before adding new event listeners.
 -   **`SCHEMA.md`**: Structural requirements for data files. I use this to validate and create new JSON content.
 -   **`COMMAND_REFERENCE.md`**: Available admin and player commands.

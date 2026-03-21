@@ -67,7 +67,15 @@
                 "stamina": 35,
                 "cooldown": 6
             },
-            "base_power": 35
+            "base_power": 35,
+            "potency_rules": [
+                {
+                    "type": "resource_mod",
+                    "resource": "bond",
+                    "scale": 0.1,
+                    "target": "duration"
+                }
+            ]
         },
         "coordinated_kill": {
             "id": "coordinated_kill",
@@ -84,10 +92,14 @@
                 "cooldown": 15
             },
             "base_power": 55,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.0
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "marked",
+                    "multiplier": 4.0
+                }
+            ]
         },
         "pack_bond": {
             "id": "pack_bond",
@@ -133,6 +145,26 @@
                 "stamina": 0,
                 "cooldown": 60
             }
+        },
+        "beastmaster_physiology": {
+            "id": "beastmaster_physiology",
+            "name": "Beastmaster Physiology",
+            "tier": 1,
+            "description": "Passive: You share a primal link with the wild. Bond generation is increased by 20%, and your companion benefits from your elevation advantages.",
+            "logic_type": "passive",
+            "identity_tags": ["martial", "passive"],
+            "potency_rules": [
+                {
+                    "type": "resource_gain_mod",
+                    "resource": "bond",
+                    "multiplier": 1.2
+                },
+                {
+                    "type": "elevation_mod",
+                    "mult_per": 0.05,
+                    "penalty_per": 0.05
+                }
+            ]
         }
     }
 }

@@ -21,7 +21,7 @@ for res in GAMBLER_RESOURCES:
     register_resource('gambler', res)
 
 def initialize_gambler(player):
-    """Initializes the Gambler state bucket."""
+    """[V7.2] Initializes the Gambler state and resources."""
     if getattr(player, 'active_class', '') != 'gambler':
         return
         
@@ -30,9 +30,13 @@ def initialize_gambler(player):
         
     if 'gambler' not in player.ext_state:
         player.ext_state['gambler'] = {
-            'luck': 0,
-            'high_stakes_active': False
+            'high_stakes_active': False,
+            'current_card': None,
+            'jackpot_chance': 0.05
         }
     
+    # 2. URM Synchronization
+    if 'luck' not in player.resources:
+        player.resources['luck'] = 0
     if 'stamina' not in player.resources:
         player.resources['stamina'] = 100

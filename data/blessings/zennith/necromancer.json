@@ -68,10 +68,14 @@
                 "cooldown": 5
             },
             "base_power": 35,
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 2.5
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "target_tags": ["shackled", "bleeding"],
+                    "multiplier": 3.0
+                }
+            ]
         },
         "corpse_explosion": {
             "id": "corpse_explosion",
@@ -133,6 +137,25 @@
                 "entropy": 5,
                 "cooldown": 60
             }
+        },
+        "necromancer_physiology": {
+            "id": "necromancer_physiology",
+            "name": "Necromancer Physiology",
+            "tier": 1,
+            "description": "Passive: You are attuned to the energies of decay. Entropy generation is increased by 20%, and your minions deal 15% more damage.",
+            "logic_type": "passive",
+            "identity_tags": ["occult", "passive"],
+            "potency_rules": [
+                {
+                    "type": "resource_gain_mod",
+                    "resource": "entropy",
+                    "multiplier": 1.2
+                },
+                {
+                    "type": "minion_damage_mod",
+                    "multiplier": 1.15
+                }
+            ]
         }
     }
 }

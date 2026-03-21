@@ -21,7 +21,7 @@ for res in NINJA_RESOURCES:
     register_resource('ninja', res)
 
 def initialize_ninja(player):
-    """Initializes the Ninja state bucket."""
+    """[V7.2] Initializes the Ninja state and resources."""
     if getattr(player, 'active_class', '') != 'ninja':
         return
         
@@ -30,9 +30,12 @@ def initialize_ninja(player):
         
     if 'ninja' not in player.ext_state:
         player.ext_state['ninja'] = {
-            'mudra': 0,
-            'is_concealed': False
+            'is_concealed': False,
+            'shadow_cloak_active': False
         }
     
+    # 2. URM Synchronization
+    if 'mudra' not in player.resources:
+        player.resources['mudra'] = 0
     if 'stamina' not in player.resources:
         player.resources['stamina'] = 100

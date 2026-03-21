@@ -26,6 +26,10 @@ def calculate_damage(attacker: Any, victim: Optional[Any] = None, blessing: Any 
     """Calculates final damage for an attack, respecting modifiers and armor."""
     return combat_logic.calculate_damage(attacker, victim, blessing)
 
+def calculate_hit_result(attacker: Any, target: Any, accuracy: int, tags: Set[str]) -> bool:
+    """Calculates whether a combat action hits its target."""
+    return combat_logic.calculate_hit_result(attacker, target, accuracy, tags)
+
 def handle_attack(attacker: Any, victim: Any, room: Any, game: Any, blessing: Optional[Any] = None, context_prefix: Optional[str] = None) -> List[Any]:
     """Executes a single combat exchange and processes results."""
     from logic.engines import combat_actions
@@ -89,6 +93,11 @@ def stop_combat(entity: Any) -> None:
 def calculate_difficulty(player: 'Player', target: Any) -> str:
     """Returns a human-readable string describing the threat level of a target."""
     return combat_logic.calculate_difficulty(player, target)
+
+def flee(entity: Any) -> bool:
+    """Executes a flee attempt for a player or monster."""
+    from .systems import flee as flee_sys
+    return flee_sys.handle_flee(entity)
 
 # --- LEGACY ALIASES ---
 calculate_player_damage = calculate_base_damage

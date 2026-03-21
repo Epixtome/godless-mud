@@ -21,10 +21,154 @@
         "state": "closed",
         "created_at": "2026-03-20 21:14:01",
         "updates": [
-             {
+            {
                 "timestamp": "2026-03-20 21:21:00",
                 "text": "Fixed: Reduced climb cost (24 per unit) and fixed weight penalty double-dipping. Patched potential KeyError in resource listeners."
             }
         ]
+    },
+    "3": {
+        "id": 3,
+        "player": "kip",
+        "description": "i would like to redesign the DECK formatting. the ability list is just hard to read. we need some better coloring and headers. maybe a new way to sort or see the abilities. you are free to experiment their display",
+        "context": "Cobblestone (null_void.75.62.0)",
+        "state": "closed",
+        "created_at": "2026-03-20 23:06:10",
+        "updates": [
+            {
+                "timestamp": "2026-03-21 08:45:00",
+                "text": "Redesigned DECK command with bold headers, Cyan ability names, and better text wrapping."
+            }
+        ]
+    },
+    "4": {
+        "id": 4,
+        "player": "kip",
+        "description": "we need to make sure that as a class, when im typing something like STRIKE and im a druid, the command doesn't make it to thinking that im trying to complete another class ability with the word STRIKE in it. As a druid I should never get the message \"you need to be a rogue to use that ability\". This example isn't the exact case, but it keeps happening that the command somehow passes to other abilities outside of my class. I believe the example that happened was a monk strike that got confused as a rogue strike.",
+        "context": "Cobblestone (null_void.75.62.0)",
+        "state": "closed",
+        "created_at": "2026-03-20 23:08:34",
+        "updates": [
+            {
+                "timestamp": "2026-03-21 08:45:00",
+                "text": "Fixed by renaming monk's primary strike to 'Snap Strike' and rogue's to 'Rogue Quick Strike' IDs to prevent registry collisions."
+            }
+        ]
+    },
+    "5": {
+        "id": 5,
+        "player": "kip",
+        "description": "when a mob is affected by something like WET, it should show in the battle prompt. there is no point making a mob WET if i cannot see it. Also, i think that staggered, off-balance and prone should have icons or something as well. maybe we can get a standard for displaying states/effects on the battle prompt on the mob end of things, for the player who's targetting them. we could also display those signals on the mob name on the LOOK command.",
+        "context": "Cobblestone (null_void.74.62.0)",
+        "state": "closed",
+        "created_at": "2026-03-20 23:11:15",
+        "updates": [
+            {
+                "timestamp": "2026-03-21 08:45:00",
+                "text": "Battle prompt and LOOK command updated to show prominent status effect tags on targets."
+            }
+        ]
+    },
+    "6": {
+        "id": 6,
+        "player": "kip",
+        "description": "right now a door is displayed as \"Exits: north, south, east, west (door [closed])\" but i think it would be better that the carinal direction is simply in brackets. you can use something like {}[]() to symbolize open, closed and locked. [west] {west} (west) . Or do you can do something entirely different. What I dislike is how much test there is after the exit, because it'll be hard to read and more than 1 door would bleed to the next line.",
+        "context": "Cobblestone (null_void.74.62.0)",
+        "state": "closed",
+        "created_at": "2026-03-20 23:15:23",
+        "updates": [
+            {
+                "timestamp": "2026-03-21 08:45:00",
+                "text": "Updated exit display to use symbols: () for open, [] for closed, {} for locked."
+            }
+        ]
+    },
+    "7": {
+        "id": 7,
+        "player": "kip",
+        "description": "the druid has TWO abilities with the word strike in them. this needs to be changed as the command function will obviously favor one or the other under odd cicumstances. lets just change the word STRIKE to something else, or change the ability name slightly.",
+        "context": "Cobblestone (null_void.74.62.0)",
+        "state": "closed",
+        "created_at": "2026-03-20 23:17:10",
+        "updates": [
+            {
+                "timestamp": "2026-03-21 08:45:00",
+                "text": "Renamed Druid strikes to 'Nature Lash' and 'Tempest Wrath'."
+            }
+        ]
+    },
+    "8": {
+        "id": 8,
+        "player": "kip",
+        "description": "remove the tier from the DECK command. we dont need that info for the player",
+        "context": "Grass (umbra.73.47.0)",
+        "state": "closed",
+        "created_at": "2026-03-21 08:26:27",
+        "updates": [
+            {
+                "timestamp": "2026-03-21 08:45:00",
+                "text": "Tier information removed from DECK output."
+            }
+        ]
+    },
+    "9": {
+        "id": 9,
+        "player": "kip",
+        "description": "what is HEAT and how does it affect me? I don't see it on the battle prompt but i seem to be accumulating it during spell casting",
+        "context": "Grass (umbra.73.47.0)",
+        "state": "closed",
+        "created_at": "2026-03-21 08:28:07",
+        "updates": [
+            {
+                "timestamp": "2026-03-21 08:45:00",
+                "text": "Added HEAT to battle prompt and clarified its role in the documentation/score."
+            }
+        ]
+    },
+    "10": {
+        "id": 10,
+        "player": "kip",
+        "description": "i fled the fire goblin fight but it attempted to go south. I couldn't go south because the hill was too steep but combat ended even though im still on the same tile as the fire goblin. the fight should continue if the flee isn't successful",
+        "context": "Grass (umbra.73.47.0)",
+        "state": "closed",
+        "created_at": "2026-03-21 08:29:28",
+        "updates": [
+            {
+                "timestamp": "2026-03-21 08:45:00",
+                "text": "Refactored movement logic so combat only ends upon successful room transition. Fleeing into a wall/steep hill no longer ends combat."
+            }
+        ]
+    },
+    "11": {
+        "id": 11,
+        "player": "kip",
+        "description": "does nature's stride give me the ability to flee without the flee command? if so, it's not working because i cast nature's stride and couldn't walk out of combat",
+        "context": "Grass (umbra.73.47.0)",
+        "state": "closed",
+        "created_at": "2026-03-21 08:30:08",
+        "updates": [
+            {
+                "timestamp": "2026-03-21 08:45:00",
+                "text": "Nature's Stride now properly disengages combat, allowing the Druid to move freely."
+            }
+        ]
+    },
+    "12": {
+        "id": 12,
+        "player": "kip",
+        "description": "when use @factory to create gear and i wear that gear, my GCR doesn't go up in SCORE command. is the gear not adding to my GCR or is SCORE not calculating the gear? ",
+        "context": "agile leather bootsite_forest",
+        "state": "closed",
+        "created_at": "2026-03-21 11:22:13",
+        "updates": []
+    },
+    "13": {
+        "id": 13,
+        "player": "kip",
+        "description": "on the druid prompt i only see hp stamina and balance",
+        "context": "Plains (umbra.72.47.0)",
+        "state": "closed",
+        "created_at": "2026-03-21 11:26:26",
+        "updates": []
     }
 }

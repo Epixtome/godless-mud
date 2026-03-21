@@ -255,6 +255,30 @@ def calculate_accuracy(entity: Any) -> int:
     
     return max(0, accuracy)
 
+def calculate_hit_result(attacker: Any, target: Any, accuracy: int, tags: Set[str]) -> bool:
+    """[V7.2] Centralized Accuracy vs Evasion logic. Returns True if HIT."""
+    # AOE skills ignore evasion
+    if "aoe" in tags:
+        return True
+        
+    # Prone/Off-Balance targets can't dodge
+    if any(s in getattr(target, 'status_effects', {}) for s in ["prone", "off_balance"]):
+        return True
+
+    # [V6.0] Evasion Check
+    dodge_ctx = {'attacker': attacker, 'target': target, 'dodged': False, 'accuracy': accuracy}
+    from logic.core import event_engine
+    event_engine.dispatch("combat_check_dodge", dodge_ctx)
+    if dodge_ctx['dodged']:
+        return False
+
+    # [V6.0] Deterministic Accuracy Fail
+    if accuracy < 100:
+        if random.randint(1, 100) > accuracy:
+            return False
+            
+    return True
+
 def stop_combat(entity: Any) -> None:
     """Safely ends combat for an entity and its observers."""
     entity.fighting = None

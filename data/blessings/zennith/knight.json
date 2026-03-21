@@ -59,7 +59,15 @@
             "scaling": {
                 "scaling_tag": "martial",
                 "multiplier": 3.0
-            }
+            },
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "prone",
+                    "multiplier": 3.0
+                }
+            ]
         },
         "retribution": {
             "id": "retribution",
@@ -75,7 +83,19 @@
                 "stamina": 25,
                 "cooldown": 6
             },
-            "base_power": 25
+            "base_power": 25,
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "status_id": "guarding",
+                    "multiplier": 2.0
+                },
+                {
+                    "type": "status_mod",
+                    "status_id": "blocked_recently",
+                    "multiplier": 2.0
+                }
+            ]
         },
         "brace": {
             "id": "brace",
@@ -138,6 +158,21 @@
                 "stamina": 10,
                 "cooldown": 20
             }
+        },
+        "knight_physiology": {
+            "id": "knight_physiology",
+            "name": "Knight Physiology",
+            "tier": 1,
+            "description": "Passive: Your training emphasizes the tactical value of the high ground.",
+            "logic_type": "passive",
+            "identity_tags": ["martial", "passive"],
+            "potency_rules": [
+                {
+                    "type": "elevation_mod",
+                    "mult_per": 0.15,
+                    "penalty_per": 0.03
+                }
+            ]
         }
     }
 }

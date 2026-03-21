@@ -84,14 +84,18 @@
             "action": "gorespatter",
             "requirements": {
                 "class": "berserker",
-                "stamina": 40,
-                "cooldown": 15
+                "fury": 50,
+                "cooldown": 12
             },
-            "base_power": 60,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.8
-            }
+            "base_power": 65,
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "bleeding",
+                    "multiplier": 4.0
+                }
+            ]
         },
         "pain_suppressor": {
             "id": "pain_suppressor",
@@ -134,9 +138,28 @@
             "action": "berserker_rage",
             "requirements": {
                 "class": "berserker",
-                "stamina": 0,
-                "cooldown": 60
+                "stamina": 5,
+                "cooldown": 25
             }
+        },
+        "berserker_physiology": {
+            "id": "berserker_physiology",
+            "name": "Berserker Physiology",
+            "tier": 1,
+            "description": "Passive: Your blood is a fuel for the engine of destruction. All Physical damage you deal is increased by 25% while under 50% HP, but your Mitigation is reduced by 15%.",
+            "logic_type": "passive",
+            "identity_tags": ["berserker", "passive"],
+            "potency_rules": [
+                {
+                    "type": "hp_mod",
+                    "player_hp_below": 0.5,
+                    "multiplier": 1.25
+                },
+                {
+                    "type": "mitigation_mod",
+                    "multiplier": 0.85
+                }
+            ]
         }
     }
 }

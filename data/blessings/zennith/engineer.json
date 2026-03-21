@@ -64,10 +64,17 @@
             "action": "autoturret",
             "requirements": {
                 "class": "engineer",
-                "stamina": 25,
-                "cooldown": 12
+                "tech_scrap": 15,
+                "cooldown": 8
             },
-            "base_power": 20
+            "base_power": 25,
+            "potency_rules": [
+                {
+                    "type": "aoe_mod",
+                    "id": "grenade_spray",
+                    "multiplier": 0.8
+                }
+            ]
         },
         "overdrive": {
             "id": "overdrive",
@@ -84,10 +91,13 @@
                 "cooldown": 15
             },
             "base_power": 50,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.0
-            }
+            "potency_rules": [
+                {
+                    "type": "scaling_mod",
+                    "scaling_tag": "martial",
+                    "multiplier": 3.0
+                }
+            ]
         },
         "portable_barrier": {
             "id": "portable_barrier",
@@ -130,9 +140,28 @@
             "action": "repair_protocol",
             "requirements": {
                 "class": "engineer",
-                "stamina": 0,
-                "cooldown": 60
+                "stamina": 5,
+                "cooldown": 25
             }
+        },
+        "engineer_physiology": {
+            "id": "engineer_physiology",
+            "name": "Engineer Physiology",
+            "tier": 1,
+            "description": "Passive: You are a master of industrial machinery. Your constructs (Turrets, Barriers) have 25% increased Health and your Technical damage is increased by 15%.",
+            "logic_type": "passive",
+            "identity_tags": ["tech", "passive"],
+            "potency_rules": [
+                {
+                    "type": "tag_power_mod",
+                    "tag": "tech",
+                    "multiplier": 1.15
+                },
+                {
+                    "type": "follower_hp_mod",
+                    "multiplier": 1.25
+                }
+            ]
         }
     }
 }

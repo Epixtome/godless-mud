@@ -56,6 +56,15 @@ def process_potency_modifiers(blessing, player, target=None):
 
             if rule.get('consume'):
                 _set_resource_value(player, resource_key, 0)
+
+        elif r_type == 'elevation_mod' and player:
+            att_elev = getattr(player.room, 'elevation', 0)
+            tgt_elev = getattr(target.room, 'elevation', 0) if target else att_elev
+            diff = att_elev - tgt_elev
+            if diff > 0:
+                mult *= (1.0 + (diff * rule.get('mult_per', 0.1)))
+            elif diff < 0:
+                mult *= (1.0 - (abs(diff) * rule.get('penalty_per', 0.05)))
             
         elif r_type == 'hp_inverse' and player:
             hp_percent = player.hp / max(1, player.max_hp)
@@ -64,12 +73,14 @@ def process_potency_modifiers(blessing, player, target=None):
 
         elif r_type == 'status_mod' and player:
             status_id = rule.get('status_id')
-            if status_id and (effects.has_effect(player, status_id) or effects.has_effect(player, f"{status_id}_echo")):
+            subject = target if rule.get('check_target') else player
+            if status_id and subject and (effects.has_effect(subject, status_id) or effects.has_effect(subject, f"{status_id}_echo")):
                 mult *= rule.get('multiplier', 1.0)
             
         elif r_type == 'mitigation_mod' and player:
             status_id = rule.get('status_id')
-            if status_id and effects.has_effect(player, status_id):
+            subject = target if rule.get('check_target') else player
+            if status_id and subject and effects.has_effect(subject, status_id):
                 mult *= rule.get('multiplier', 1.0)
             
     return mult, flat

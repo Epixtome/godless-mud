@@ -52,10 +52,14 @@
                 "cooldown": 15
             },
             "base_power": 60,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.5
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "marked",
+                    "multiplier": 4.0
+                }
+            ]
         },
         "volley_rain": {
             "id": "volley_rain",
@@ -132,6 +136,21 @@
                 "stamina": 0,
                 "cooldown": 120
             }
+        },
+        "archer_physiology": {
+            "id": "archer_physiology",
+            "name": "Archer Physiology",
+            "tier": 1,
+            "description": "Passive: Your eyes are trained for distance. Ranged attacks are 20% more accurate and ignore many environmental sight blocks.",
+            "logic_type": "passive",
+            "identity_tags": ["martial", "passive"],
+            "potency_rules": [
+                {
+                    "type": "elevation_mod",
+                    "mult_per": 0.12,
+                    "penalty_per": 0.02
+                }
+            ]
         }
     }
 }

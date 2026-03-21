@@ -169,8 +169,8 @@ def save_world(player, args):
     Force a global save (Players + World State).
     Use this to persist dynamic changes (dropped items, etc) before restart.
     """
-    player.game.save_all()
-    player.send_line("World state and players saved.")
+    player.game.save_all(save_blueprints=True)
+    player.send_line(f"{Colors.GREEN}World state, geography, and players saved.{Colors.RESET}")
 
 @command_manager.register("@ban", admin=True, category="admin_system")
 def ban_player(player, args):

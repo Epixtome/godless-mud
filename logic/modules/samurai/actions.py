@@ -1,13 +1,16 @@
 """
 logic/modules/samurai/actions.py
 Samurai Skill Handlers: Master of Precision and Lethality.
-Pillar: One-Hit Lethality, Positioning, and Counters.
+V7.2 Standard Refactor (Baking Branch).
 """
+import logging
 from logic.actions.registry import register
-from logic.core import effects, resources, combat
+from logic.core import effects, resources, combat, perception
 from logic.engines import action_manager, magic_engine
 from utilities.colors import Colors
 from logic import common
+
+logger = logging.getLogger("GodlessMUD")
 
 def _consume_resources(player, skill):
     magic_engine.consume_resources(player, skill)
@@ -16,12 +19,19 @@ def _consume_resources(player, skill):
 
 @register("iaido_draw")
 def handle_iaido_draw(player, skill, args, target=None):
-    """Setup/Builder: Fast strike and Spirit generation."""
+    """[V7.2] Setup/Builder: Fast strike and Spirit pips generation."""
     target = common._get_target(player, args, target, "Draw against whom?")
     if not target: return None, True
     
+    # [V7.2] Physics Gate (Ridge Rule)
+    if not perception.can_see(player, target):
+        player.send_line("Terrain blocks your iaido draw path.")
+        return None, True
+
     player.send_line(f"{Colors.YELLOW}You draw your blade with unreal speed!{Colors.RESET}")
     combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    
+    # [V7.2] Pips mod via URM
     resources.modify_resource(player, "spirit", 1, source="Iaido Draw")
     
     _consume_resources(player, skill)
@@ -31,16 +41,21 @@ def handle_iaido_draw(player, skill, args, target=None):
 def handle_meditative_stance(player, skill, args, target=None):
     """Setup: [Focused] buff."""
     player.send_line(f"{Colors.BLUE}You breathe deeply, focusing your spirit on the next strike.{Colors.RESET}")
-    effects.apply_effect(player, "focused", 2)
+    effects.apply_effect(player, "focused", 3) # Increased duration
+    
     _consume_resources(player, skill)
     return None, True
 
 @register("sever_spirit")
 def handle_sever_spirit(player, skill, args, target=None):
-    """Setup: [Off-Balance] and [Marked]."""
+    """[V7.2] Setup: [Off-Balance] and [Marked] with Ridge Rule."""
     target = common._get_target(player, args, target, "Sever whose spirit?")
     if not target: return None, True
-    
+
+    if not perception.can_see(player, target):
+        player.send_line("The spiritual cut find no path to the target.")
+        return None, True
+
     player.send_line(f"{Colors.RED}You cut through {target.name}'s balance.{Colors.RESET}")
     effects.apply_effect(target, "off_balance", 4)
     effects.apply_effect(target, "marked", 4)
@@ -49,44 +64,49 @@ def handle_sever_spirit(player, skill, args, target=None):
 
 @register("dragons_breath")
 def handle_dragons_breath(player, skill, args, target=None):
-    """Payoff/Burst: bonus damage from focus."""
+    """[V7.2] Payoff/Burst: Logic-Data Wall sync for [Focused] interaction."""
     target = common._get_target(player, args, target, "Exhale upon whom?")
     if not target: return None, True
-    
-    is_focused = effects.has_effect(player, "focused")
-    if is_focused:
+
+    if not perception.can_see(player, target):
+         player.send_line("Target is obscured from your dragon's breath.")
+         return None, True
+
+    # [V7.2] Multipliers moved to potency_rules in JSON.
+    if effects.has_effect(player, "focused"):
         player.send_line(f"{Colors.BOLD}{Colors.YELLOW}[BURST] Dragon's Breath! Your focused strike ignites!{Colors.RESET}")
-        player.focus_multiplier = 1.5
         effects.remove_effect(player, "focused")
-        
-    try:
-        combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-    finally:
-         if hasattr(player, 'focus_multiplier'): del player.focus_multiplier
          
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    
     _consume_resources(player, skill)
     return target, True
 
 @register("tsubame_gaeshi")
 def handle_tsubame_gaeshi(player, skill, args, target=None):
-    """Finisher: Two hits, massive vs off-balance."""
+    """[V7.2] Finisher: Two hits, massive vs off-balance. Logic-Data Wall sync."""
     target = common._get_target(player, args, target, "Execute the mythical counter on whom?")
     if not target: return None, True
-    
+
+    if not perception.can_see(player, target):
+        player.send_line("The mythical strikes cannot connect through the terrain.")
+        return None, True
+
     player.send_line(f"{Colors.BOLD}{Colors.WHITE}TSUBAME GAESHI! Two strikes in a single breath!{Colors.RESET}")
-    # First hit
+    # First hit (standard)
     combat.handle_attack(player, target, player.room, player.game, blessing=skill)
     
-    # Second hit with multiplier if off-balance
+    # [V7.2] Multiplier and synergy handled in JSON potency_rules.
+    # Second hit (powered)
     if effects.has_effect(target, "off_balance"):
-        player.tsubame_multiplier = 3.0
         player.send_line(f"{Colors.YELLOW}The mythical second strike connects perfectly!{Colors.RESET}")
-        try:
-             combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-        finally:
-             if hasattr(player, 'tsubame_multiplier'): del player.tsubame_multiplier
+    
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
              
-    resources.modify_resource(player, "spirit", -99) # Consumes all
+    # [V7.2] Pip Consumption via URM
+    all_spirit = resources.get_resource(player, "spirit")
+    resources.modify_resource(player, "spirit", -all_spirit, source="Tsubame Consumption")
+    
     _consume_resources(player, skill)
     return target, True
 
@@ -100,19 +120,17 @@ def handle_hissatsu_chidori(player, skill, args, target=None):
 
 @register("shadow_dash")
 def handle_shadow_dash(player, skill, args, target=None):
-    """Mobility: linear blink and blind."""
+    """Mobility: linear blink."""
     player.send_line(f"{Colors.BLACK}You flicker into the shadows, passing through foes!{Colors.RESET}")
-    # Logic in combat engine for linear blinding?
-    # For now, just a position/mobility buff
     effects.apply_effect(player, "haste", 2)
     _consume_resources(player, skill)
     return None, True
 
 @register("way_of_the_warrior")
 def handle_way_of_the_warrior(player, skill, args, target=None):
-    """Utility/Ultimate: Long-term martial buff."""
+    """[V7.2] Utility/Ultimate: Massive martial buff."""
     player.send_line(f"{Colors.BOLD}{Colors.WHITE}You commit to the old ways. Your blade feels like an extension of your soul.{Colors.RESET}")
     effects.apply_effect(player, "warrior_focus", 20)
-    resources.modify_resource(player, "stamina", 50)
+    resources.modify_resource(player, "stamina", 50, source="Zen Mastery")
     _consume_resources(player, skill)
     return None, True

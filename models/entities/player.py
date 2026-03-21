@@ -52,6 +52,7 @@ class Player:
         self.minions = [] # List of mobs following this player
         self.friendship = {} # npc_id -> level (0-100)
         self.visited_rooms = [] # List of room IDs (MRU, max 200)
+        self.discovered_rooms = [] # List of room IDs (MRU, max 1000) Uncolored Persistent
         self.locked_target = None # For ranged combat (Ranger)
         self.reputation = 0 # -100 to 100. < -10 is Criminal.
         self.kingdom = "instinct" # light, dark, instinct (V6.0 Calibration)

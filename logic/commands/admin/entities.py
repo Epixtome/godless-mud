@@ -77,13 +77,14 @@ def spawn(player, args):
                 entity = DynamicFactory.generate_gear(cr, tags, base_type, slot, game=player.game)
                 world_service.register_dynamic_prototype(player.game, entity)
                 world_service.spawn_item(player.game, entity.prototype_id, player)
-                player.send_line(f"{Colors.GREEN}Dynamically generated Level {cr} {base_type}! (ID: {entity.prototype_id}){Colors.RESET}")
+                player.send_line(f"{Colors.CYAN}[FACTORY] {entity.name} (Lvl {cr}) shimmers into existence in your inventory.{Colors.RESET}")
+                player.send_line(f"{Colors.DGREY}[PROTOTYPE: {entity.prototype_id}]{Colors.RESET}")
             else:
                 entity = DynamicFactory.generate_mob(cr, tags, base_type, game=player.game)
                 world_service.register_dynamic_prototype(player.game, entity)
                 world_service.spawn_monster(player.game, entity.prototype_id, player.room)
-                player.room.broadcast(f"{player.name} summons a dynamic {entity.name} (CR {cr})!", exclude_player=player)
-                player.send_line(f"{Colors.GREEN}Dynamically generated CR {cr} {entity.name}! (ID: {entity.prototype_id}){Colors.RESET}")
+                player.room.broadcast(f"{Colors.YELLOW}{player.name} summons a dynamic {entity.name} (CR {cr}) into existence!{Colors.RESET}", exclude_player=player)
+                player.send_line(f"{Colors.GREEN}[FACTORY] Dynamically generated CR {cr} {entity.name}! (ID: {entity.prototype_id}){Colors.RESET}")
                 
             return
         except (ValueError, IndexError):

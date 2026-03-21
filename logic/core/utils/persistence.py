@@ -80,6 +80,7 @@ def to_dict(player: 'Player') -> dict:
         "equipped_mount": player.equipped_mount.to_dict() if getattr(player, 'equipped_mount', None) else None,
         "friendship": player.friendship,
         "visited_rooms": list(player.visited_rooms),
+        "discovered_rooms": list(player.discovered_rooms),
         "reputation": player.reputation,
         "kingdom": player.kingdom,
         "ext_state": player.ext_state,
@@ -130,6 +131,7 @@ def load_data(player, data):
     player.is_building = data.get('is_building', False)
     player.friendship.update(data.get('friendship', {}))
     player.visited_rooms = data.get('visited_rooms', [])
+    player.discovered_rooms = data.get('discovered_rooms', [])
     player.reputation = data.get('reputation', 0)
     player.kingdom = data.get('kingdom', 'instinct')
     player.ext_state = data.get('ext_state', {})

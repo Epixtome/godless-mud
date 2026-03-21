@@ -3,7 +3,7 @@
         "name": "Barbarian",
         "description": "The Juggernaut of the North. Uses Fury to fuel brutal, state-based chain reactions.",
         "gear": ["heavy_leather_tunic", "iron_maul"],
-        "blessings": ["savage_strike", "headbutt", "lacerate", "whirlwind", "decapitate", "savage_brace", "leap", "bloodrage"],
+        "blessings": ["savage_strike", "headbutt", "lacerate", "whirlwind", "decapitate", "savage_brace", "leap", "bloodrage", "barbarian_physiology"],
         "identity_tags": ["martial", "fury"],
         "resources": ["stamina", "fury"],
         "axes": ["tempo", "endurance"],
@@ -13,7 +13,7 @@
         "name": "Knight",
         "description": "A stalwart defender and the anchor of the battlefield.",
         "gear": ["iron_sword", "wooden_shield", "heavy_plate"],
-        "blessings": ["crippling_strike", "shield_bash", "execute", "retribution", "brace", "shield_wall", "charge", "war_cry"],
+        "blessings": ["crippling_strike", "shield_bash", "execute", "retribution", "brace", "shield_wall", "charge", "war_cry", "knight_physiology"],
         "identity_tags": ["martial", "endurance"],
         "resources": ["stamina"],
         "axes": ["endurance", "position"],
@@ -23,7 +23,7 @@
         "name": "Monk",
         "description": "The master of Momentum. Controls the flow of battle through precise strikes and stances.",
         "gear": ["silk_wraps", "monk_robes", "wooden_sandals", "spiked_knuckles"],
-        "blessings": ["quick_strike", "palm_strike", "dragon_kick", "chi_burst", "meditation", "iron_fist", "flying_kick", "empty_mind"],
+        "blessings": ["monk_snap_strike", "palm_strike", "dragon_kick", "chi_burst", "meditation", "iron_fist", "flying_kick", "empty_mind", "monk_physiology"],
         "identity_tags": ["martial", "chi"],
         "resources": ["stamina", "chi"],
         "axes": ["tempo", "position"],
@@ -33,37 +33,37 @@
         "name": "Mage",
         "description": "The Black Weaver. Exploits elemental grammar for catastrophic damage.",
         "gear": ["wizard_robes", "willow_staff", "focus_crystal"],
-        "blessings": ["triple_bolt", "ignite", "frost_bolt", "lightning_bolt", "pyroclasm", "phase_shift", "blink", "arcane_surge"],
+        "blessings": ["triple_bolt", "ignite", "frost_bolt", "lightning_bolt", "pyroclasm", "phase_shift", "blink", "arcane_surge", "mage_physiology"],
         "identity_tags": ["magic", "elemental"],
         "resources": ["concentration"],
         "axes": ["elemental", "vision"],
-        "version": "6.2"
+        "version": "7.2"
     },
     "rogue": {
         "name": "Rogue",
         "description": "The Shadow Blade. A precision specialist who controls the Vision axis.",
         "gear": ["dark_leather_mask", "shadow_cloak", "glass_dagger"],
-        "blessings": ["quick_strike", "vanish", "mark_target", "backstab", "visceral_strike", "evasion", "shadowstep", "smoke_bomb"],
+        "blessings": ["rogue_quick_strike", "vanish", "mark_target", "backstab", "visceral_strike", "evasion", "shadowstep", "smoke_bomb", "rogue_physiology"],
         "identity_tags": ["martial", "vision"],
         "resources": ["stamina"],
         "axes": ["vision", "tempo"],
-        "version": "6.2"
+        "version": "7.2"
     },
     "priest": {
         "name": "Priest",
         "description": "The Divine Shield. A master of Endurance and utility buffs.",
         "gear": ["holy_mace", "reinforced_mail", "blessed_pendant"],
-        "blessings": ["holy_strike", "divine_mark", "penitence", "judgment", "purification", "aegis", "beacon_of_light", "resurrection"],
+        "blessings": ["holy_strike", "divine_mark", "penitence", "judgment", "purification", "aegis", "beacon_of_light", "resurrection", "priest_physiology"],
         "identity_tags": ["divine", "endurance"],
         "resources": ["mana"],
         "axes": ["endurance", "utility"],
-        "version": "6.2"
+        "version": "7.2"
     },
     "druid": {
         "name": "Druid",
         "description": "The Warden of the Wild. Controls the environmental grammar through weather and elements.",
         "gear": ["willow_staff", "nature_cloak"],
-        "blessings": ["nature_strike", "saturate", "gale_force", "snap_freeze", "tempest_strike", "barkskin", "nature_stride", "natural_focus"],
+        "blessings": ["nature_lash", "saturate", "gale_force", "snap_freeze", "tempest_wrath", "barkskin", "nature_stride", "natural_focus"],
         "identity_tags": ["nature", "environment"],
         "resources": ["stamina", "concentration"],
         "axes": ["elemental", "utility"],
@@ -163,11 +163,11 @@
         "name": "Archer",
         "description": "The Deadeye. Master of reach and Fog-of-War control.",
         "gear": ["willow_bow", "quiver_of_arrows", "scout_cloak"],
-        "blessings": ["tracker_scan", "target_lock", "heartseeker_snipe", "volley_rain", "catch_arrows", "camouflage", "archers_sprint", "pinnacle_of_arrows"],
+        "blessings": ["tracker_scan", "target_lock", "heartseeker_snipe", "volley_rain", "catch_arrows", "camouflage", "archers_sprint", "pinnacle_of_arrows", "archer_physiology"],
         "identity_tags": ["martial", "bow"],
         "resources": ["stamina", "focus"],
         "axes": ["vision", "position"],
-        "version": "7.0"
+        "version": "7.2"
     },
     "berserker": {
         "name": "Berserker",
@@ -252,8 +252,10 @@
     "wanderer": {
         "name": "Wanderer",
         "description": "A free spirit who moves without mental strain.",
-        "blessings": ["struggle", "strike", "kick"],
-        "resource_conversion": "free_focus",
-        "passive_attributes": {"max_hp_bonus": 50}
+        "blessings": ["struggle", "strike", "kick", "untethered_step", "vagabond_resolve", "inner_compass", "free_spirit", "wanderer_init"],
+        "identity_tags": ["martial", "wanderer"],
+        "resources": ["stamina"],
+        "axes": ["tempo", "position"],
+        "version": "7.2"
     }
 }

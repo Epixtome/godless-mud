@@ -68,10 +68,14 @@
                 "cooldown": 8
             },
             "base_power": 45,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 2.5
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "blinded",
+                    "multiplier": 3.0
+                }
+            ]
         },
         "final_heist": {
             "id": "final_heist",
@@ -84,14 +88,17 @@
             "action": "final_heist",
             "requirements": {
                 "class": "thief",
-                "stamina": 40,
-                "cooldown": 15
+                "greed": 50,
+                "cooldown": 20
             },
             "base_power": 60,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.5
-            }
+            "potency_rules": [
+                {
+                    "type": "resource_mod",
+                    "resource": "greed",
+                    "multiplier": 3.5
+                }
+            ]
         },
         "nimble_reflexes": {
             "id": "nimble_reflexes",
@@ -134,9 +141,28 @@
             "action": "stealth",
             "requirements": {
                 "class": "thief",
-                "stamina": 0,
-                "cooldown": 60
+                "stamina": 5,
+                "cooldown": 25
             }
+        },
+        "thief_physiology": {
+            "id": "thief_physiology",
+            "name": "Thief Physiology",
+            "tier": 1,
+            "description": "Passive: Your path is the shadow. All Gold gain is increased by 20%, and your Critical damage is increased by 10% while [Concealed].",
+            "logic_type": "passive",
+            "identity_tags": ["thief", "passive"],
+            "potency_rules": [
+                {
+                    "type": "gold_mod",
+                    "multiplier": 1.2
+                },
+                {
+                    "type": "crit_mod",
+                    "status_id": "concealed",
+                    "multiplier": 1.1
+                }
+            ]
         }
     }
 }

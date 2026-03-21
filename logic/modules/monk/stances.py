@@ -41,9 +41,14 @@ def stance_cmd(player, args):
     old = ms.get('stance')
     ms['stance'] = new_stance
     
-    # Switch Bonus: "Stance Dance"
+    # 1. Update Persistence Status Effects (V7.2 Standard)
+    effects.remove_effect(player, "stance_flow")
+    effects.remove_effect(player, "stance_iron")
+    effects.apply_effect(player, f"stance_{new_stance}", 9999) # Placeholder for semi-permanent
+    
+    # 2. Switch Bonus: "Stance Dance"
     if old:
-        effects.apply_effect(player, "stance_swapped", 5) # 5s bonus (Handle logic in events.py)
+        effects.apply_effect(player, "stance_swapped", 5) # 5s bonus (Handle logic in JSON)
         player.send_line(f"{Colors.MAGENTA}[DANCE] Stance switched! You gain a temporary performance boost.{Colors.RESET}")
 
     s_info = STANCE_MAP[new_stance]

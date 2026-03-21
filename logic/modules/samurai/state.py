@@ -21,7 +21,7 @@ for res in SAMURAI_RESOURCES:
     register_resource('samurai', res)
 
 def initialize_samurai(player):
-    """Initializes the Samurai state bucket."""
+    """[V7.2] Initializes the Samurai state and resources."""
     if getattr(player, 'active_class', '') != 'samurai':
         return
         
@@ -30,9 +30,12 @@ def initialize_samurai(player):
         
     if 'samurai' not in player.ext_state:
         player.ext_state['samurai'] = {
-            'spirit': 0,
-            'is_focused': False
+            'is_focused': False,
+            'warrior_focus_active': False
         }
     
+    # 2. URM Synchronization
+    if 'spirit' not in player.resources:
+        player.resources['spirit'] = 0
     if 'stamina' not in player.resources:
         player.resources['stamina'] = 100

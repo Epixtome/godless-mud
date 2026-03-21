@@ -21,7 +21,7 @@ for res in THIEF_RESOURCES:
     register_resource('thief', res)
 
 def initialize_thief(player):
-    """Initializes the Thief state bucket."""
+    """[V7.2] Initializes the Thief state and resources."""
     if getattr(player, 'active_class', '') != 'thief':
         return
         
@@ -30,9 +30,13 @@ def initialize_thief(player):
         
     if 'thief' not in player.ext_state:
         player.ext_state['thief'] = {
-            'greed': 0,
-            'is_stealthed': False
+            'is_hidden': False,
+            'theft_stacks': 0,
+            'last_pickpocket_tick': 0
         }
     
+    # 2. URM Synchronization
+    if 'greed' not in player.resources:
+        player.resources['greed'] = 0
     if 'stamina' not in player.resources:
         player.resources['stamina'] = 100

@@ -71,13 +71,17 @@
             "requirements": {
                 "class": "samurai",
                 "stamina": 35,
-                "cooldown": 8
+                "cooldown": 6
             },
-            "base_power": 45,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 2.2
-            }
+            "base_power": 35,
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_attacker": true,
+                    "status_id": "focused",
+                    "multiplier": 1.5
+                }
+            ]
         },
         "tsubame_gaeshi": {
             "id": "tsubame_gaeshi",
@@ -93,11 +97,15 @@
                 "stamina": 40,
                 "cooldown": 15
             },
-            "base_power": 60,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.5
-            }
+            "base_power": 55,
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "off_balance",
+                    "multiplier": 3.0
+                }
+            ]
         },
         "hissatsu_chidori": {
             "id": "hissatsu_chidori",
@@ -140,9 +148,27 @@
             "action": "way_of_the_warrior",
             "requirements": {
                 "class": "samurai",
-                "stamina": 0,
-                "cooldown": 60
+                "stamina": 5,
+                "cooldown": 15
             }
+        },
+        "samurai_physiology": {
+            "id": "samurai_physiology",
+            "name": "Samurai Physiology",
+            "tier": 1,
+            "description": "Passive: Your blade is an extension of your spirit. You gain 10% base Lethality (Crit Chance) and your counter-attacks deal 50% increased damage.",
+            "logic_type": "passive",
+            "identity_tags": ["martial", "passive"],
+            "potency_rules": [
+                {
+                    "type": "lethality_mod",
+                    "value": 10
+                },
+                {
+                    "type": "counter_damage_mod",
+                    "multiplier": 1.5
+                }
+            ]
         }
     }
 }

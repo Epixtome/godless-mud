@@ -1,14 +1,14 @@
 {
     "blessings": {
-        "quick_strike": {
-            "id": "quick_strike",
-            "name": "Quick Strike",
+        "monk_snap_strike": {
+            "id": "monk_snap_strike",
+            "name": "Snap Strike",
             "tier": 1,
             "cost": 10,
             "description": "Setup/Builder: A rapid, low-impact strike. Generates 15 Stamina and +1 Chi. Core builder for Chi payoffs.",
             "identity_tags": ["martial", "strike", "builder", "setup"],
             "axis": "tempo",
-            "action": "quick_strike",
+            "action": "monk_snap_strike",
             "requirements": {
                 "class": "monk",
                 "stamina": 10
@@ -57,7 +57,17 @@
             "scaling": {
                 "scaling_tag": "martial",
                 "multiplier": 2.0
-            }
+            },
+            "potency_rules": [
+                {
+                    "type": "pip_scaling",
+                    "resource": "monk.chi",
+                    "tiers": [
+                        { "max": 999, "mult_per": 0.25, "base": 1.0 }
+                    ],
+                    "consume": true
+                }
+            ]
         },
         "chi_burst": {
             "id": "chi_burst",
@@ -139,6 +149,31 @@
                 "stamina": 20,
                 "cooldown": 12
             }
+        },
+        "monk_physiology": {
+            "id": "monk_physiology",
+            "name": "Monk Physiology",
+            "tier": 1,
+            "description": "Passive: Your training allows you to channel kinetic energy through stances.",
+            "logic_type": "passive",
+            "identity_tags": ["martial", "passive"],
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "status_id": "stance_iron",
+                    "multiplier": 1.15
+                },
+                {
+                     "type": "mitigation_mod",
+                     "status_id": "stance_iron",
+                     "multiplier": 0.9
+                },
+                {
+                    "type": "status_mod",
+                    "status_id": "stance_swapped",
+                    "multiplier": 1.15
+                }
+            ]
         }
     }
 }

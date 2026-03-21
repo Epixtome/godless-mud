@@ -86,7 +86,7 @@ def get_map_header(room, world=None):
     elev = getattr(room, 'elevation', 0)
     return f"{Colors.BOLD}[ {zone_name} ({room.x}, {room.y}, {room.z}) ]{Colors.RESET}{Colors.CYAN} [Elev: {elev}]{Colors.RESET}"
 
-def draw_grid(perception, visited_rooms=None, ignore_fog=False, indent=0, world=None, shading=True, show_dynamic=True):
+def draw_grid(perception, visited_rooms=None, discovered_rooms=None, ignore_fog=False, indent=0, world=None, shading=True, show_dynamic=True):
     """
     [V6.8 Refactor] Dumb Renderer for PerceptionResults.
     Renders terrain and intelligence strictly from the perception pipeline.
@@ -114,10 +114,13 @@ def draw_grid(perception, visited_rooms=None, ignore_fog=False, indent=0, world=
                 room = grid[(x, y)]
                 is_visited = visited_rooms is None or room.id in visited_rooms
                 
+                # [V7.2] Persistence Expansion: Checked discovered geography
+                is_discovered = (discovered_rooms is not None) and (room.id in discovered_rooms)
+
                 # Fog of War / Knowledge: 
-                # radius 3 is always "Discoverable" even if not visited.
+                # radius 3 is always "Visible" while present.
                 dist = max(abs(x), abs(y))
-                is_knowledge = ignore_fog or dist <= 3
+                is_knowledge = ignore_fog or dist <= 3 or is_discovered
 
                 if is_visited or is_knowledge:
                     if room == player_room:

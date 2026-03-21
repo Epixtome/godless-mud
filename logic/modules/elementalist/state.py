@@ -21,7 +21,7 @@ for res in ELEMENTALIST_RESOURCES:
     register_resource('elementalist', res)
 
 def initialize_elementalist(player):
-    """Initializes the Elementalist state bucket."""
+    """[V7.2] Initializes the Elementalist state and resources."""
     if getattr(player, 'active_class', '') != 'elementalist':
         return
         
@@ -30,10 +30,12 @@ def initialize_elementalist(player):
         
     if 'elementalist' not in player.ext_state:
         player.ext_state['elementalist'] = {
-            'attunement': 0,
-            'current_element_index': 0, # [Fire, Ice, Lightning]
-            'last_cycle_tick': 0
+            'current_element': 'fire', # [fire, ice, lightning]
+            'active_auras': []
         }
     
+    # 2. URM Synchronization
+    if 'attunement' not in player.resources:
+        player.resources['attunement'] = 0
     if 'concentration' not in player.resources:
         player.resources['concentration'] = 100

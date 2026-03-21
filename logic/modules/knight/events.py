@@ -1,6 +1,7 @@
 """
 logic/modules/knight/events.py
 Knight Event Listeners: Prompt and Resource UI.
+V7.2 Standard Refactor (Baking Branch).
 """
 from logic.core import event_engine, effects
 from utilities.colors import Colors
@@ -10,19 +11,21 @@ def register_events():
     event_engine.subscribe("calculate_damage_modifier", on_calculate_damage_modifier)
 
 def on_calculate_damage_modifier(ctx):
-    attacker = ctx.get('attacker')
-    if getattr(attacker, 'active_class', None) != 'knight': return
-    # Execute: 3x multiplier for finishing blows on prone targets
-    if hasattr(attacker, 'execute_multiplier'):
-        ctx['multiplier'] = ctx.get('multiplier', 1.0) * attacker.execute_multiplier
+    """
+    [V7.2] Logic-Data Wall: Execute math moved to JSON potency_rules.
+    This listener now only handles unique side-channel modifiers.
+    """
+    pass
 
 def on_build_prompt(ctx):
     player, prompts = ctx.get('player'), ctx.get('prompts')
     if getattr(player, 'active_class', None) == 'knight':
         kd = player.ext_state.get('knight', {})
-        if kd.get('is_guarded') and kd.get('guarded_target'):
-            prompts.append(f"{Colors.GREEN}[GARD:{kd['guarded_target'].name}]{Colors.RESET}")
         
+        # [V7.2] Status-based prompts
+        if effects.has_effect(player, "guarding"):
+            prompts.append(f"{Colors.GREEN}[GUARD]{Colors.RESET}")
+            
         if player.is_mounted:
             prompts.append(f"{Colors.YELLOW}[MTD]{Colors.RESET}")
         

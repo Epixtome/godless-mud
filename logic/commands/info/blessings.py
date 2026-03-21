@@ -4,8 +4,8 @@ from logic.core.utils import display_utils
 
 @command_manager.register("deck", category="information")
 def deck(player, args):
-    """View your currently equipped blessings (Deck)."""
-    width = 60
+    """View your currently equipped blessings (Deck). Optimized for V7.2."""
+    width = 66
     cls_id = player.active_class or "wanderer"
     cls_obj = player.game.world.classes.get(cls_id)
     cls_name = cls_obj.name if cls_obj else cls_id.capitalize()
@@ -15,28 +15,73 @@ def deck(player, args):
     if not player.equipped_blessings:
         player.send_line(f"  {Colors.WHITE}No blessings equipped. Use 'memorize <id>' to fill your soul.{Colors.RESET}")
     else:
+        # Sort and Group Blessings
         blessings = []
         for b_id in player.equipped_blessings:
             b = player.game.world.blessings.get(b_id)
             if b: blessings.append(b)
-        blessings.sort(key=lambda x: x.tier)
+        
+        # Defining logical categories for the deck display
+        CATEGORIES = [
+            ("BUILDERS", ["builder", "generator"]),
+            ("SETUPS", ["setup", "opener"]),
+            ("PAYOFFS", ["payoff", "finisher", "detonator"]),
+            ("DEFENSE", ["defense", "guard"]),
+            ("UTILITY", ["utility", "mobility", "buff"])
+        ]
+        
+        displayed_ids = set()
+        
+        for title, tags in CATEGORIES:
+            cat_list = []
+            for b in blessings:
+                if b.id in displayed_ids: continue
+                if any(t in b.identity_tags for t in tags):
+                    cat_list.append(b)
+                    
+            if cat_list:
+                player.send_line(f"\n {Colors.BOLD}{Colors.YELLOW}{title.upper()}{Colors.RESET}")
+                cat_list.sort(key=lambda x: x.name)
+                for b in cat_list:
+                    displayed_ids.add(b.id)
+                    cost_str = ""
+                    reqs = b.requirements
+                    # Show primary cost
+                    for res in ["stamina", "concentration", "fury", "chi", "bullets", "luck"]:
+                         if res in reqs:
+                              cost_str = f" {Colors.WHITE}({reqs[res]} {res[:3].upper()}){Colors.RESET}"
+                              break
+                    
+                    import textwrap
+                    
+                    # [V7.2] Centralized Highlight Architecture
+                    desc = display_utils.highlight_status_keywords(b.description)
+                    
+                    # Wrap to avoid horizontal sprawl
+                    wrapped_desc = textwrap.wrap(desc, width=50)
+                    desc_line = wrapped_desc[0] if wrapped_desc else ""
+                    
+                    player.send_line(f"  {Colors.CYAN}{b.name:<24}{Colors.RESET} {Colors.ITALIC}{Colors.WHITE}{desc_line}{Colors.RESET}{cost_str}")
+                    # Handle subsequent wrapped lines
+                    for extra in wrapped_desc[1:]:
+                         player.send_line(f"                           {Colors.ITALIC}{Colors.WHITE}{extra}{Colors.RESET}")
+        
+        # Remaining (Misc)
+        misc = [b for b in blessings if b.id not in displayed_ids]
+        if misc:
+            player.send_line(f"\n {Colors.BOLD}{Colors.YELLOW}MISC{Colors.RESET}")
+            for b in misc:
+                import textwrap
+                desc = display_utils.highlight_status_keywords(b.description)
+                wrapped = textwrap.wrap(desc, width=50)
+                desc_line = wrapped[0] if wrapped else ""
+                player.send_line(f"  {Colors.CYAN}{b.name:<24}{Colors.RESET} {Colors.ITALIC}{Colors.WHITE}{desc_line}{Colors.RESET}")
+                for extra in wrapped[1:]:
+                    player.send_line(f"                           {Colors.ITALIC}{Colors.WHITE}{extra}{Colors.RESET}")
 
-        for b in blessings:
-            if "hidden" in getattr(b, 'identity_tags', []): continue
-
-            tier_color = Colors.WHITE
-            if b.tier == 2: tier_color = Colors.GREEN
-            elif b.tier == 3: tier_color = Colors.CYAN
-            elif b.tier == 4: tier_color = Colors.MAGENTA
-            elif b.tier == 5: tier_color = Colors.YELLOW
-
-            tags = " ".join([f"#{t}" for t in b.identity_tags if t != "hidden"])
-            
-            # Formatted Layout: Name and Desc on same line
-            player.send_line(f" {Colors.BOLD}{b.name:<18}{Colors.RESET} - {Colors.ITALIC}{b.description}{Colors.RESET}")
+    player.send_line("\n" + display_utils.render_line(width))
     
-    player.send_line(display_utils.render_line(width))
-    
+    # Breakthroughs / Resonance
     from logic.engines.resonance_engine import ResonanceAuditor
     ResonanceAuditor.calculate_resonance(player)
     breakthroughs = [t.title() for t, v in player.current_tags.items() if v >= 10]
@@ -45,7 +90,7 @@ def deck(player, args):
         player.send_line(f" {Colors.CYAN}{Colors.BOLD}BREAKTHROUGHS:{Colors.RESET} {', '.join(breakthroughs)}")
         player.send_line(display_utils.render_line(width))
     
-    # Show Deck Utilization
+    # Capacity
     from logic.calibration import MaxValues
     usage = len(player.equipped_blessings)
     bar = display_utils.render_progress_bar(usage, MaxValues.DECK_SIZE, 20)
@@ -105,6 +150,7 @@ def list_passives(player, args):
             rem = (expiry - player.game.tick_count) * 2
             player.send_line(f" {Colors.CYAN}{eff_id:<20}{Colors.RESET} ({rem}s): {desc}")
     else: player.send_line(" No active effects.")
+
 @command_manager.register("memorize", "equip", category="information")
 def memorize(player, args):
     """Equip a known blessing to your active deck."""
@@ -128,6 +174,7 @@ def memorize(player, args):
 
     player.equipped_blessings.append(b_id)
     player.send_line(f"{Colors.GREEN}You have memorized {b_id}.{Colors.RESET}")
+    # Recalculate identity to update active kit
     from logic.engines import class_engine
     class_engine.calculate_identity(player)
 

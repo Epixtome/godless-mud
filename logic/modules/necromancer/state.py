@@ -21,7 +21,7 @@ for res in NECROMANCER_RESOURCES:
     register_resource('necromancer', res)
 
 def initialize_necromancer(player):
-    """Initializes the Necromancer state bucket."""
+    """[V7.2] Initializes the Necromancer state and resources."""
     if getattr(player, 'active_class', '') != 'necromancer':
         return
         
@@ -30,10 +30,12 @@ def initialize_necromancer(player):
         
     if 'necromancer' not in player.ext_state:
         player.ext_state['necromancer'] = {
-            'entropy': 0,
-            'skeletons': [],
+            'minion_data': [], # List of persisted minion state
             'bone_plate_stacks': 0
         }
     
+    # 2. URM Synchronization
+    if 'entropy' not in player.resources:
+        player.resources['entropy'] = 0
     if 'concentration' not in player.resources:
         player.resources['concentration'] = 100

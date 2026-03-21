@@ -21,7 +21,7 @@ for res in BEASTMASTER_RESOURCES:
     register_resource('beastmaster', res)
 
 def initialize_beastmaster(player):
-    """Initializes the Beastmaster state bucket."""
+    """[V7.2] Initializes the Beastmaster state and resources."""
     if getattr(player, 'active_class', '') != 'beastmaster':
         return
         
@@ -30,10 +30,12 @@ def initialize_beastmaster(player):
         
     if 'beastmaster' not in player.ext_state:
         player.ext_state['beastmaster'] = {
-            'bond': 0,
-            'active_pet': None,
-            'stable': []
+            'pet_data': None, # Persisted data: {id, proto_id, name, hp, max_hp, age}
+            'stable_ids': []  # Future proofing
         }
     
+    # 2. URM Synchronization
+    if 'bond' not in player.resources:
+        player.resources['bond'] = 0
     if 'stamina' not in player.resources:
         player.resources['stamina'] = 100

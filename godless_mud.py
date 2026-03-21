@@ -7,7 +7,8 @@ import socket
 from logic.core import loader as world_loader
 from logic.core.network_engine import Connection
 from logic.handlers import input_handler
-from logic import systems, mob_manager, spawner, commands
+from logic import mob_manager, spawner, commands
+from logic.core.systems.decay import initialize_decay
 from logic.core import effects
 from logic.passives import hooks as passive_hooks
 from utilities import integrity, telemetry
@@ -61,7 +62,7 @@ class GodlessGame:
         # Populate world
         mob_manager.initialize_spawns(self)
         spawner.populate_world(self)
-        systems.initialize_decay(self)
+        initialize_decay(self)
         passive_hooks.register_all()
         
         # 0. Initialize Kingdom Service (V1.1 Plan)
@@ -123,7 +124,7 @@ class GodlessGame:
             if p.room:
                 p.room.players.append(p)            
         self.decaying_items = set()
-        systems.initialize_decay(self)
+        initialize_decay(self)
 
     def process_command(self, player, command_line):
         """
@@ -206,7 +207,7 @@ class GodlessGame:
     async def autosave(self):
         while True:
             await asyncio.sleep(300)
-            self.save_all()
+            self.save_all(save_blueprints=False)
 
     async def handle_client(self, reader, writer):
         sock = writer.get_extra_info('socket')
@@ -215,10 +216,10 @@ class GodlessGame:
         connection = Connection(self, reader, writer)
         await connection.run()
 
-    def save_all(self):
-        logger.info("Autosaving...")
+    def save_all(self, save_blueprints=False):
+        logger.info(f"Autosaving... (Geography Save: {save_blueprints})")
         for player in self.players.values(): player.save()
-        world_loader.save_world_state(self.world)
+        world_loader.save_world_state(self.world, save_blueprints)
 
 async def main():
     if not integrity.check_file_structure():
@@ -240,7 +241,7 @@ async def main():
         logger.info("Server shutting down...")
         for task in tasks: task.cancel()
         await asyncio.gather(*tasks, return_exceptions=True)
-        game.save_all()
+        game.save_all(save_blueprints=True)
 
 if __name__ == "__main__":
     try: asyncio.run(main())

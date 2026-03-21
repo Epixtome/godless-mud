@@ -75,10 +75,14 @@
                 "cooldown": 5
             },
             "base_power": 30,
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 1.8
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "wet",
+                    "multiplier": 2.0
+                }
+            ]
         },
         "pyroclasm": {
             "id": "pyroclasm",
@@ -95,10 +99,14 @@
                 "cooldown": 15
             },
             "base_power": 60,
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 2.5
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "burn",
+                    "multiplier": 3.0
+                }
+            ]
         },
         "phase_shift": {
             "id": "phase_shift",
@@ -144,6 +152,35 @@
                 "stamina": 15,
                 "cooldown": 20
             }
+        },
+        "artifice_view": {
+            "id": "artifice_view",
+            "name": "Artifice View",
+            "tier": 1,
+            "cost": 5,
+            "description": "Utility: Analyze the magical and physical structural data of an object. Reveals tags, combat rating, and technical stats.",
+            "identity_tags": ["magic", "arcane", "utility", "scholar"],
+            "axis": "utility",
+            "action": "artifice_view",
+            "requirements": {
+                "concentration": 5,
+                "cooldown": 1
+            }
+        },
+        "mage_physiology": {
+            "id": "mage_physiology",
+            "name": "Mage Physiology",
+            "tier": 1,
+            "description": "Passive: Your essence is anchored in the arcane. Magic damage is increased by 10% and Concentration regenerates faster.",
+            "logic_type": "passive",
+            "identity_tags": ["magic", "passive"],
+            "potency_rules": [
+                {
+                    "type": "elevation_mod",
+                    "mult_per": 0.05,
+                    "penalty_per": 0.01
+                }
+            ]
         }
     }
 }

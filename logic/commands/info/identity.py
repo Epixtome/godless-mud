@@ -114,7 +114,12 @@ def score(player, args):
     if breakthroughs:
         player.send_line(f"\n {Colors.BOLD}BREAKTHROUGHS:{Colors.RESET} {', '.join(breakthroughs)}")
         
-        player.send_line(f"\n {Colors.ITALIC}Resonance (Voltage) combines Soul power with Gear tags.{Colors.RESET}")
+    # [V6.0] Combat Rating Display
+    from logic.core.math import rating
+    cr = rating.calculate_entity_rating(player)
+    player.send_line(f"\n {Colors.BOLD}Combat Rating: {Colors.YELLOW}{cr}{Colors.RESET} GCR")
+        
+    player.send_line(f"\n {Colors.ITALIC}Resonance (Voltage) combines Soul power with Gear tags.{Colors.RESET}")
     player.send_line(f"{display_utils.render_line(width, '=')}")
 
 @command_manager.register("attributes", "attr", "sheet", category="information")

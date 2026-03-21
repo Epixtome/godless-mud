@@ -64,14 +64,18 @@
             "action": "gunner_headshot",
             "requirements": {
                 "class": "gunner",
-                "stamina": 40,
-                "cooldown": 15
+                "bullets": 1,
+                "cooldown": 12
             },
-            "base_power": 65,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 4.0
-            }
+            "base_power": 80,
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "target_tags": ["blinded", "stunned", "exposed"],
+                    "multiplier": 4.0
+                }
+            ]
         },
         "buckshot": {
             "id": "buckshot",
@@ -87,7 +91,14 @@
                 "stamina": 30,
                 "cooldown": 8
             },
-            "base_power": 30
+            "base_power": 30,
+            "potency_rules": [
+                {
+                    "type": "scaling_mod",
+                    "scaling_tag": "martial",
+                    "multiplier": 1.2
+                }
+            ]
         },
         "covering_fire": {
             "id": "covering_fire",
@@ -130,9 +141,32 @@
             "action": "rapid_fire",
             "requirements": {
                 "class": "gunner",
-                "stamina": 0,
-                "cooldown": 60
+                "stamina": 5,
+                "cooldown": 25
             }
+        },
+        "gunner_physiology": {
+            "id": "gunner_physiology",
+            "name": "Gunner Physiology",
+            "tier": 1,
+            "description": "Passive: Your reflexes are tuned for the draw. Your Multi-hit damage is increased by 25%, and your Range is extended by 15%. All ammunition costs are reduced by 10%.",
+            "logic_type": "passive",
+            "identity_tags": ["ballistic", "passive"],
+            "potency_rules": [
+                {
+                    "type": "multi_hit_mod",
+                    "multiplier": 1.25
+                },
+                {
+                    "type": "range_mod",
+                    "multiplier": 1.15
+                },
+                {
+                    "type": "cost_mod",
+                    "tag": "ammo",
+                    "multiplier": 0.9
+                }
+            ]
         }
     }
 }

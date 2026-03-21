@@ -20,33 +20,22 @@ for res in BARB_RESOURCES:
     register_resource('barbarian', res)
 
 def initialize_barbarian(player):
-    """Initializes the Barbarian state bucket."""
-    is_barb_kit = player.active_kit.get('id') == 'barbarian'
-    is_barb_class = getattr(player, 'active_class', '') == 'barbarian'
-    
-    if not (is_barb_kit or is_barb_class):
+    """[V7.2] Initializes the Barbarian state and resources."""
+    if getattr(player, 'active_class', '') != 'barbarian':
         return
-
+        
     if not hasattr(player, 'ext_state'):
         player.ext_state = {}
-
+        
     if 'barbarian' not in player.ext_state:
         player.ext_state['barbarian'] = {
-            'fury': 0,
             'is_raging': False,
-            'rage_ticks': 0,
-            'last_attack_tick': 0
+            'rage_consumed': 0,
+            'berserk_stacks': 0
         }
-
-    # Ensure resources dict has keys for prompt display
+    
+    # 2. URM Synchronization
     if 'fury' not in player.resources:
         player.resources['fury'] = 0
-
-def sanitize_barbarian_data(player):
-    """Fixer for Barbarian state data."""
-    if 'barbarian' in player.ext_state:
-        state = player.ext_state['barbarian']
-        state.setdefault('fury', 0)
-        state.setdefault('is_raging', False)
-        state.setdefault('rage_ticks', 0)
-        state.setdefault('last_attack_tick', 0)
+    if 'stamina' not in player.resources:
+        player.resources['stamina'] = 100

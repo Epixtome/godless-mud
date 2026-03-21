@@ -73,10 +73,20 @@
                 "cooldown": 10
             },
             "base_power": 40,
-            "scaling": {
-                "scaling_tag": "divine",
-                "multiplier": 2.0
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "marked",
+                    "multiplier": 2.0
+                },
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "dazzled",
+                    "multiplier": 2.0
+                }
+            ]
         },
         "purification": {
             "id": "purification",
@@ -137,6 +147,21 @@
                 "mana": 100,
                 "cooldown": 300
             }
+        },
+        "priest_physiology": {
+            "id": "priest_physiology",
+            "name": "Priest Physiology",
+            "tier": 1,
+            "description": "Passive: Your soul is anchored in the divine. Healing effects are 15% more potent and you have improved vision on consecrated ground.",
+            "logic_type": "passive",
+            "identity_tags": ["divine", "passive"],
+            "potency_rules": [
+                {
+                    "type": "elevation_mod",
+                    "mult_per": 0.05,
+                    "penalty_per": 0.05
+                }
+            ]
         }
     }
 }

@@ -120,8 +120,8 @@ def _link_exits(world):
                 logger.warning(f"Room {r_id} has dangling exit {direction} -> {target_id}")
 
 # Persistence Facades
-def save_world_db(world): state_loader.save_world_db(world)
-def save_world_state(world): state_loader.save_world_db(world) # Alias
+def save_world_db(world, save_blueprints=False): state_loader.save_world_db(world, save_blueprints)
+def save_world_state(world, save_blueprints=False): state_loader.save_world_db(world, save_blueprints) # Alias
 def save_shards(world): state_loader.save_shards(world)
 def save_items(world): return state_loader.save_items(world)
 def save_mobs(world): return state_loader.save_mobs(world)

@@ -69,10 +69,18 @@
             "action": "elemental_cataclysm",
             "requirements": {
                 "class": "elementalist",
-                "concentration": 40,
-                "cooldown": 15
+                "concentration": 20,
+                "cooldown": 6
             },
-            "base_power": 55,
+            "base_power": 30,
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "wet",
+                    "multiplier": 2.0
+                }
+            ],
             "scaling": {
                 "scaling_tag": "magic",
                 "multiplier": 3.5
@@ -90,9 +98,17 @@
             "requirements": {
                 "class": "elementalist",
                 "concentration": 30,
-                "cooldown": 8
+                "cooldown": 10
             },
-            "base_power": 35
+            "base_power": 45,
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "burning",
+                    "multiplier": 3.0
+                }
+            ]
         },
         "barrier_of_elements": {
             "id": "barrier_of_elements",
@@ -135,9 +151,29 @@
             "action": "attunement",
             "requirements": {
                 "class": "elementalist",
-                "concentration": 0,
-                "cooldown": 60
+                "stamina": 5,
+                "cooldown": 25
             }
+        },
+        "elementalist_physiology": {
+            "id": "elementalist_physiology",
+            "name": "Elementalist Physiology",
+            "tier": 1,
+            "description": "Passive: You are a conduit for the primal forces. All Elemental damage (Fire, Ice, Lightning, Water, Wind) is increased by 20%, and your Concentration costs are reduced by 10%.",
+            "logic_type": "passive",
+            "identity_tags": ["elemental", "passive"],
+            "potency_rules": [
+                {
+                    "type": "tag_power_mod",
+                    "tags": ["fire", "ice", "lightning", "water", "wind"],
+                    "multiplier": 1.2
+                },
+                {
+                    "type": "cost_mod",
+                    "resource": "concentration",
+                    "multiplier": 0.9
+                }
+            ]
         }
     }
 }

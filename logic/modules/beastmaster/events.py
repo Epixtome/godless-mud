@@ -1,15 +1,17 @@
 """
 logic/modules/beastmaster/events.py
-Event subscriptions for the Beastmaster class (V6.5 Update).
+Event subscriptions for the Beastmaster class (V7.2 Sync).
 Decoupled logic that hooks into core engine events.
 """
+import logging
 from logic.core import event_engine, effects, resources, follower_service
 from logic.core.services import world_service
 from utilities.colors import Colors
 
+logger = logging.getLogger("GodlessMUD")
+
 def _get_active_pet(player):
     """Safely retrieves the active pet in the same room as the player."""
-    # Check for the pet in the room's monsters list that belongs to the player
     if not player.room: return None
     for mob in player.room.monsters:
         if getattr(mob, 'owner_id', None) == player.id and getattr(mob, 'is_pet', False):
@@ -18,7 +20,7 @@ def _get_active_pet(player):
 
 def on_take_damage(ctx):
     """
-    Event Handler: Damage Redirection (Pack Mitigation).
+    [V7.2] Event Handler: Damage Redirection (Pack Mitigation).
     If bond > 50 and pack_bonded effect is active, redirect 70% damage to active_pet.
     """
     target = ctx.get('target')
@@ -27,11 +29,9 @@ def on_take_damage(ctx):
     if getattr(target, 'active_class', None) != 'beastmaster':
         return
 
-    bm_state = target.ext_state.get('beastmaster', {})
-    if not effects.has_effect(target, 'pack_bonded'):
-        return
-        
-    if bm_state.get('bond', 0) < 50:
+    # [V7.2] URM resource check
+    bond = resources.get_resource(target, 'bond')
+    if not effects.has_effect(target, 'pack_bonded') or bond < 50:
         return
         
     pet = _get_active_pet(target)
@@ -52,29 +52,27 @@ def on_take_damage(ctx):
 
 def on_combat_tick(ctx):
     """
-    Event Handler: Bond management.
-    If Player/Pet in same room: bond += 5 (Up to 100).
-    If Player/Pet in different rooms: bond -= 10.
+    [V7.2] Event Handler: Bond management.
+    Handles proximity bond gain/loss and data persistence updates.
     """
     player = ctx.get('player')
     if not player or getattr(player, 'active_class', None) != 'beastmaster':
         return
         
-    bm_state = player.ext_state.get('beastmaster', {})
-    
-    # Find active pet object by room search or transient reference
-    pet = getattr(player, 'active_pet', None)
-    if not pet or getattr(pet, 'hp', 0) <= 0:
-        # Fallback search if pet object is transient
-        pet = _get_active_pet(player)
-        if pet: player.active_pet = pet # Re-establish link
-        
+    # 1. Proximity Check
+    pet = _get_active_pet(player)
     if not pet:
-        # Gradually lose bond if no pet is active
         resources.modify_resource(player, 'bond', -5, source="Neglect")
         return
         
-    # Same room check
+    # 2. Persistence Update (V7.2 State-Data Wall)
+    # Ensure current pet HP is written to the player snapshot
+    bm_state = player.ext_state.setdefault('beastmaster', {})
+    if 'pet_data' in bm_state and bm_state['pet_data']:
+        bm_state['pet_data']['hp'] = pet.hp
+        bm_state['pet_data']['max_hp'] = pet.max_hp
+
+    # 3. Same room check
     if hasattr(pet, 'room') and pet.room == player.room:
         resources.modify_resource(player, 'bond', 5, source="Proximity")
     else:
@@ -82,8 +80,8 @@ def on_combat_tick(ctx):
 
 def on_death_cleanup(ctx):
     """
-    Event Handler: Handle pet death.
-    Apply [Heartbroken] status to player (STM regen -50% for 60s).
+    [V7.2] Event Handler: Handle pet death.
+    Clears pet_data and applies Heartbroken debuff.
     """
     victim = ctx.get('victim')
     if not victim or not getattr(victim, 'is_pet', False):
@@ -97,16 +95,18 @@ def on_death_cleanup(ctx):
     
     if owner:
         owner.send_line(f"{Colors.BOLD}{Colors.RED}Your heart shatters as {getattr(victim, 'tamed_name', victim.name)} falls!{Colors.RESET}")
-        effects.apply_effect(owner, "heartbroken", 60) # High duration debuff
+        effects.apply_effect(owner, "heartbroken", 60)
         
-        if hasattr(owner, 'active_pet'):
-            owner.active_pet = None # Clear active ref
+        # [V7.2] Persistence update
+        bm_state = owner.ext_state.setdefault('beastmaster', {})
+        bm_state['pet_data'] = None 
+        
         resources.modify_resource(owner, 'bond', -50, source="Heartbroken")
 
 def on_build_prompt(ctx):
     """
-    Event Handler: Injects Beastmaster UI into the prompt.
-    [HP/STM | PET: Rex (50/100) | BOND: 80/100]
+    [V7.2] Event Handler: Custom Beastmaster HUD.
+    Injects pet health status alongside the standard URM prompts.
     """
     player = ctx.get('player')
     prompts = ctx.get('prompts')
@@ -114,23 +114,16 @@ def on_build_prompt(ctx):
     if getattr(player, 'active_class', None) != 'beastmaster':
         return
         
-    bm_state = player.ext_state.get('beastmaster', {})
-    bond = bm_state.get('bond', 0)
     pet = _get_active_pet(player)
-    
     if pet:
         name = getattr(pet, 'tamed_name', pet.name)
         pet_info = f"{Colors.YELLOW}PET: {name} ({int(pet.hp)}/{int(pet.max_hp)}){Colors.RESET}"
-    else:
-        pet_info = f"{Colors.RED}PET: None{Colors.RESET}"
-        
-    bond_color = Colors.GREEN if bond >= 80 else Colors.YELLOW if bond >= 40 else Colors.RED
-    prompts.append(f"{pet_info} | {bond_color}BOND: {bond}%{Colors.RESET}")
+        prompts.append(pet_info)
 
 def on_after_move(ctx):
     """
-    Event Handler: Pet Follow logic.
-    When a Beastmaster moves, their pet stays by their side.
+    [V7.2] Event Handler: Pet Follow logic.
+    Pet stays by their side when the player moves between rooms.
     """
     player = ctx.get('player')
     new_room = ctx.get('new_room')
@@ -139,22 +132,15 @@ def on_after_move(ctx):
     if not player or getattr(player, 'active_class', None) != 'beastmaster':
         return
 
-    # Find pet in old room
-    pet = None
-    for mob in old_room.monsters:
-        if getattr(mob, 'owner_id', None) == player.id and getattr(mob, 'is_pet', False):
-            pet = mob
-            break
-            
-    if pet:
-        # Service-based movement ensures registry consistency
+    pet = _get_active_pet(player)
+    if pet and pet.room == old_room:
         world_service.move_entity(pet, new_room)
         new_room.broadcast(f"{getattr(pet, 'tamed_name', pet.name)} follows {player.name}.")
 
 def on_combat_hit_assist(ctx):
     """
-    Event Handler: Pet Assist logic.
-    When a Beastmaster strikes a target, their pet engages as well.
+    [V7.2] Event Handler: Pet Assist logic.
+    Pet engages the same target as the master.
     """
     attacker = ctx.get('attacker')
     target = ctx.get('target')

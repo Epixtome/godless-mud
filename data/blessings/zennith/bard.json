@@ -64,10 +64,18 @@
             "action": "crescendo",
             "requirements": {
                 "class": "bard",
-                "stamina": 35,
-                "cooldown": 6
+                "rhythm": 40,
+                "cooldown": 10
             },
-            "base_power": 35,
+            "base_power": 60,
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "dazed",
+                    "multiplier": 3.0
+                }
+            ],
             "scaling": {
                 "scaling_tag": "magic",
                 "multiplier": 2.5
@@ -87,7 +95,13 @@
                 "stamina": 30,
                 "cooldown": 12
             },
-            "base_power": 25
+            "base_power": 25,
+            "potency_rules": [
+                {
+                    "type": "aoe_mod",
+                    "multiplier": 1.2
+                }
+            ]
         },
         "serenade_of_safety": {
             "id": "serenade_of_safety",
@@ -130,9 +144,28 @@
             "action": "hymn_of_regeneration",
             "requirements": {
                 "class": "bard",
-                "stamina": 0,
-                "cooldown": 30
+                "stamina": 5,
+                "cooldown": 25
             }
+        },
+        "bard_physiology": {
+            "id": "bard_physiology",
+            "name": "Bard Physiology",
+            "tier": 1,
+            "description": "Passive: Your soul is an instrument of cosmic vibration. All Buff effectiveness is increased by 20%, and your Rhythm generation is increased by 10%.",
+            "logic_type": "passive",
+            "identity_tags": ["sonic", "passive"],
+            "potency_rules": [
+                {
+                    "type": "buff_potency_mod",
+                    "multiplier": 1.2
+                },
+                {
+                    "type": "resource_gain_mod",
+                    "resource": "rhythm",
+                    "multiplier": 1.1
+                }
+            ]
         }
     }
 }

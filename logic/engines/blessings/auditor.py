@@ -82,8 +82,11 @@ class Auditor:
             
         req_class = blessing.requirements.get('class')
         if req_class:
-            if not hasattr(player, 'active_class') or player.active_class != req_class:
-                return False, f"You must be a {req_class.title()} to use this."
+            # [V7.2] Kit Sovereignty: Override class requirement if in kit
+            in_kit = blessing.id in player.active_kit.get('blessings', [])
+            if not in_kit:
+                if not hasattr(player, 'active_class') or player.active_class != req_class:
+                    return False, f"You must be a {req_class.title()} to use this."
 
         ctx = {'player': player, 'blessing': blessing, 'command': command}
         costs = Auditor.calculate_costs(blessing, player, ctx=ctx)

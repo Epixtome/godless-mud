@@ -39,9 +39,11 @@ def load_live_state(world, inst_item, inst_monster):
         except Exception as e:
             logger.error(f"Failed to load live state for {zone_id}: {e}")
 
-def save_world_db(world):
-    """Saves all blueprints and live state deltas."""
-    save_shards(world)
+def save_world_db(world, save_blueprints=False):
+    """Saves live state deltas and optionally geography blueprints."""
+    if save_blueprints:
+        save_shards(world) 
+    
     for zone_id in world.zones.keys(): save_zone_state(world, zone_id)
 
 def save_zone_state(world, zone_id):

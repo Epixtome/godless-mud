@@ -11,7 +11,8 @@ from logic.actions.skill_utils import _apply_damage, handle_dispel_magic
 from logic.common import find_by_index, find_player_online, _get_target
 from utilities.colors import Colors
 from models import Item
-from logic import systems, mob_manager
+from logic import mob_manager
+from logic.core.systems.decay import register_decay
 
 def _consume_resources(player, skill):
     magic_engine.consume_resources(player, skill)
@@ -80,7 +81,7 @@ def handle_nexus(player, skill, args, target=None):
         portal.timer = 10
         
         player.room.items.append(portal)
-        systems.register_decay(player.game, portal, player.room)
+        register_decay(player.game, portal, player.room)
         
         player.room.broadcast(f"A {Colors.CYAN}Shimmering Nexus{Colors.RESET} rips open!")
 
@@ -167,7 +168,7 @@ def handle_haven(player, skill, args, target=None):
     haven.timer = 30
     
     player.room.items.append(haven)
-    systems.register_decay(player.game, haven, player.room)
+    register_decay(player.game, haven, player.room)
     
     player.send_line(f"You erect a {Colors.YELLOW}Haven{Colors.RESET} to block prying eyes.")
     _consume_resources(player, skill)
@@ -226,7 +227,7 @@ def handle_walls(player, skill, args, target=None):
     wall.timer = 10 if skill.id == "wall_of_fire" else 20
     
     player.room.items.append(wall)
-    systems.register_decay(player.game, wall, player.room)
+    register_decay(player.game, wall, player.room)
     
     player.send_line(f"You conjure a {color}{wall_type}{Colors.RESET}!")
     player.room.broadcast(f"{player.name} conjures a {wall_type}!", exclude_player=player)

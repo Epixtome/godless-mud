@@ -61,6 +61,15 @@ def set_cooldown(player, blessing, game=None):
         gcd_target = game_ref.tick_count + 1
         player.cooldowns['gcd'] = max(player.cooldowns.get('gcd', 0), gcd_target)
 
+def clear_all_cooldowns(player):
+    """[V7.2] Resets all skill-specific cooldowns. Preserves GCD."""
+    if not hasattr(player, 'cooldowns'):
+        return
+        
+    gcd = player.cooldowns.get('gcd', 0)
+    player.cooldowns = {'gcd': gcd}
+    player.send_line(f"{Colors.BOLD}{Colors.GREEN}FEEL THE RUSH! All your skill cooldowns have been reset!{Colors.RESET}")
+
 def check_resources(player, blessing):
     """
     Checks if player has resources. 

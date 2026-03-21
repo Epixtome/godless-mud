@@ -1,33 +1,26 @@
 """
 logic/modules/warlock/events.py
 Hexblade Warlock: Symbiosis Events and Entropy Logic.
+V7.2 Standard Refactor (Baking Branch).
 """
+import logging
 from logic.core import event_engine, resources, effects
 from utilities.colors import Colors
 
-def register_events():
-    """Subscribes Warlock listeners to the global event engine."""
-    event_engine.subscribe("on_build_prompt", on_build_prompt)
-    event_engine.subscribe("calculate_damage_modifier", on_calculate_damage_modifier)
-    event_engine.subscribe("on_status_applied", on_status_applied)
-    event_engine.subscribe("on_status_removed", on_status_removed)
-    event_engine.subscribe("calculate_extra_attacks", calculate_extra_attacks)
+logger = logging.getLogger("GodlessMUD")
 
 def _is_warlock(entity):
-    if getattr(entity, 'active_class', None) == 'warlock':
-        return True
-    if hasattr(entity, 'active_kit'):
-        return entity.active_kit.get('id') == 'warlock'
-    return False
+    return getattr(entity, 'active_class', None) == 'warlock'
 
 def on_build_prompt(ctx):
+    """[V7.2] Warlock HUD: Displays Entropy bar using URM."""
     player = ctx.get('player')
     prompts = ctx.get('prompts')
 
     if _is_warlock(player):
-        w_state = player.ext_state.get('warlock', {})
-        entropy = w_state.get('entropy', 0)
-        max_e = w_state.get('max_entropy', 5)
+        # [V7.2] Standard URM resource access
+        entropy = resources.get_resource(player, 'entropy')
+        max_e = resources.get_max_resource(player, 'entropy')
         
         # Determine color based on entropy
         color = Colors.MAGENTA
@@ -38,44 +31,52 @@ def on_build_prompt(ctx):
         prompts.append(f"{color}ENTROPY [{bar}]{Colors.RESET}")
 
 def on_calculate_damage_modifier(ctx):
+    """[V7.2] Warlock Damage Modifiers: Hex and Metamorphosis."""
     attacker = ctx.get('attacker')
     target = ctx.get('target')
     if not attacker or not target: return
 
-    # 1. Hexed Target (+20% damage from the Warlock)
+    # 1. Hexed Target Synergy
     if _is_warlock(attacker):
-        if effects.has_effect(target, "hexed"):
+        if effects.has_effect(target, "hexed") or effects.has_effect(target, "marked"):
             ctx['multiplier'] = ctx.get('multiplier', 1.0) * 1.20
             
     # 2. Metamorphosis Buff (+25% Dark Damage)
     if _is_warlock(attacker) and effects.has_effect(attacker, "metamorphosis"):
-        tags = ctx.get('tags', [])
-        if "dark" in tags or "occult" in tags:
+        tags = ctx.get('tags', set())
+        if "dark" in tags or "occult" in tags or "chaos" in tags:
             ctx['multiplier'] = ctx.get('multiplier', 1.0) * 1.25
 
 def on_status_applied(ctx):
-    entity = ctx.get('entity') or ctx.get('player')
-    effect_id = ctx.get('effect_id') or ctx.get('status_id')
+    """[V7.2] Event Handler: Metamorphosis activation."""
+    entity = ctx.get('entity')
+    effect_id = ctx.get('effect_id')
     
     if effect_id == "metamorphosis" and _is_warlock(entity):
         w_state = entity.ext_state.setdefault('warlock', {})
         w_state['is_metamorphosed'] = True
-        # Use URM for maximum entropy gain
-        resources.modify_resource(entity, 'entropy', w_state.get('max_entropy', 5), source="Metamorphosis")
+        
+        # [V7.2] URM: Grant Max Entropy
+        max_e = resources.get_max_resource(entity, 'entropy')
+        resources.modify_resource(entity, 'entropy', max_e, source="Metamorphosis")
         entity.send_line(f"{Colors.BOLD}{Colors.MAGENTA}[DEMONIC ASCENSION] You are a vessel of pure entropy!{Colors.RESET}")
 
 def on_status_removed(ctx):
-    entity = ctx.get('entity') or ctx.get('player')
-    effect_id = ctx.get('effect_id') or ctx.get('status_id')
+    """[V7.2] Event Handler: Metamorphosis deactivation."""
+    entity = ctx.get('entity')
+    effect_id = ctx.get('effect_id')
     
     if effect_id == "metamorphosis" and _is_warlock(entity):
         w_state = entity.ext_state.setdefault('warlock', {})
         w_state['is_metamorphosed'] = False
         entity.send_line(f"{Colors.MAGENTA}The demonic power recedes, leaving you drained.{Colors.RESET}")
-        # Use URM to drain entropy
-        resources.modify_resource(entity, 'entropy', -100, source="Enervation")
+        
+        # [V7.2] URM: Drain all entropy
+        all_e = resources.get_resource(entity, 'entropy')
+        resources.modify_resource(entity, 'entropy', -all_e, source="Enervation")
 
 def calculate_extra_attacks(ctx):
+    """[V7.2] Event Handler: Metamorphosis Multi-strikes."""
     attacker = ctx.get('attacker')
     if not attacker: return
 
@@ -83,7 +84,13 @@ def calculate_extra_attacks(ctx):
     if _is_warlock(attacker) and effects.has_effect(attacker, "metamorphosis"):
         ctx['extra_attacks'] = ctx.get('extra_attacks', 0) + 1
         if hasattr(attacker, 'send_line'):
-            attacker.send_line(f"{Colors.BOLD}{Colors.MAGENTA}Your demonic claws rend the air with incredible speed!{Colors.RESET}")
+            # Micro-animation feedback
+            attacker.send_line(f"{Colors.BOLD}{Colors.MAGENTA}Your demonic claws rend the air!{Colors.RESET}")
 
-# Auto-register
-register_events()
+def register_events():
+    """Subscribes Warlock listeners to the global event engine."""
+    event_engine.subscribe("on_build_prompt", on_build_prompt)
+    event_engine.subscribe("calculate_damage_modifier", on_calculate_damage_modifier)
+    event_engine.subscribe("on_status_applied", on_status_applied)
+    event_engine.subscribe("on_status_removed", on_status_removed)
+    event_engine.subscribe("calculate_extra_attacks", calculate_extra_attacks)

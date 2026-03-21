@@ -51,7 +51,6 @@ def flee(player, args):
     if _move(player, direction):
         from logic.core import effects
         effects.apply_effect(player, "panting", 3)
-        combat.stop_combat(player)
 
 @command_manager.register("consider", "con", category="combat")
 def consider(player, args):

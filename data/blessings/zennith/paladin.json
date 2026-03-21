@@ -104,6 +104,25 @@
                 "cooldown": 10
             }
         },
+        "paladin_physiology": {
+            "id": "paladin_physiology",
+            "name": "Paladin Physiology",
+            "tier": 1,
+            "description": "Passive: You are an anchor of faith. You gain 10% flat Physical Mitigation and receive 15% increased healing from all sources.",
+            "logic_type": "passive",
+            "identity_tags": ["divine", "passive"],
+            "potency_rules": [
+                {
+                    "type": "mitigation_mod",
+                    "id": "physical",
+                    "multiplier": 1.1
+                },
+                {
+                    "type": "healing_received_mod",
+                    "multiplier": 1.15
+                }
+            ]
+        },
         "pursuit_of_justice": {
             "id": "pursuit_of_justice",
             "name": "Pursuit of Justice",

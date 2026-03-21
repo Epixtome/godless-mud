@@ -21,7 +21,7 @@ for res in DRAGOON_RESOURCES:
     register_resource('dragoon', res)
 
 def initialize_dragoon(player):
-    """Initializes the Dragoon state bucket."""
+    """[V7.2] Initializes the Dragoon state and resources."""
     if getattr(player, 'active_class', '') != 'dragoon':
         return
         
@@ -30,9 +30,13 @@ def initialize_dragoon(player):
         
     if 'dragoon' not in player.ext_state:
         player.ext_state['dragoon'] = {
-            'jump_pips': 0,
-            'is_airborne': False
+            'is_airborne': False,
+            'jump_tick': 0,
+            'lance_mastery': 1.0
         }
     
+    # 2. URM Synchronization
+    if 'jump_pips' not in player.resources:
+        player.resources['jump_pips'] = 0
     if 'stamina' not in player.resources:
         player.resources['stamina'] = 100

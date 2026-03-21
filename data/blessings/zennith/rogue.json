@@ -1,14 +1,14 @@
 {
     "blessings": {
-        "quick_strike": {
-            "id": "quick_strike",
+        "rogue_quick_strike": {
+            "id": "rogue_quick_strike",
             "name": "Quick Strike",
             "tier": 1,
             "cost": 10,
             "description": "Setup/Builder: A rapid, low-impact strike. Generates 15 stamina. Increases your [Speed] by 5% for the next tick.",
             "identity_tags": ["martial", "strike", "builder", "setup"],
             "axis": "tempo",
-            "action": "quick_strike",
+            "action": "rogue_quick_strike",
             "requirements": {
                 "class": "rogue",
                 "stamina": 10,
@@ -70,10 +70,14 @@
                 "cooldown": 4
             },
             "base_power": 35,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 2.5
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": false,
+                    "status_id": "concealed",
+                    "multiplier": 3.0
+                }
+            ]
         },
         "visceral_strike": {
             "id": "visceral_strike",
@@ -90,10 +94,14 @@
                 "cooldown": 15
             },
             "base_power": 55,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.0
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "marked",
+                    "multiplier": 2.0
+                }
+            ]
         },
         "evasion": {
             "id": "evasion",
@@ -139,6 +147,21 @@
                 "stamina": 15,
                 "cooldown": 20
             }
+        },
+        "rogue_physiology": {
+            "id": "rogue_physiology",
+            "name": "Rogue Physiology",
+            "tier": 1,
+            "description": "Passive: Your body is a shadow. Movement is 20% quieter and precision damage is increased on high ground.",
+            "logic_type": "passive",
+            "identity_tags": ["martial", "passive"],
+            "potency_rules": [
+                {
+                    "type": "elevation_mod",
+                    "mult_per": 0.15,
+                    "penalty_per": 0.05
+                }
+            ]
         }
     }
 }

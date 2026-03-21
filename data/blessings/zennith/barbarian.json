@@ -97,7 +97,21 @@
             "scaling": {
                 "scaling_tag": "martial",
                 "multiplier": 3.0
-            }
+            },
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "prone",
+                    "multiplier": 3.0
+                },
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "bleeding",
+                    "multiplier": 3.0
+                }
+            ]
         },
         "savage_brace": {
             "id": "savage_brace",
@@ -144,6 +158,21 @@
                 "fury": 50,
                 "cooldown": 60
             }
+        },
+        "barbarian_physiology": {
+            "id": "barbarian_physiology",
+            "name": "Barbarian Physiology",
+            "tier": 1,
+            "description": "Passive: Your fury fuels your strength and resilience.",
+            "logic_type": "passive",
+            "identity_tags": ["martial", "passive"],
+            "potency_rules": [
+                {
+                    "type": "mitigation_mod",
+                    "status_id": "bloodrage",
+                    "multiplier": 0.8
+                }
+            ]
         }
     }
 }

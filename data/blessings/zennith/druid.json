@@ -1,24 +1,28 @@
 {
     "blessings": {
-        "nature_strike": {
-            "id": "nature_strike",
-            "name": "Nature's Strike",
+        "nature_lash": {
+            "id": "nature_lash",
+            "name": "Nature Lash",
             "tier": 1,
             "cost": 10,
-            "description": "Setup/Builder: A fundamental strike that resonates with the natural world. Generates small amounts of focus.",
+            "description": "Setup/Builder: A fundamental lash that resonates with the natural world. Generates small amounts of focus.",
             "identity_tags": ["druid", "nature", "builder"],
             "axis": "utility",
-            "action": "nature_strike",
+            "action": "nature_lash",
             "requirements": {
                 "class": "druid",
                 "stamina": 10,
                 "cooldown": 2
             },
             "base_power": 10,
-            "scaling": {
-                "scaling_tag": "nature",
-                "multiplier": 1.0
-            }
+            "potency_rules": [
+                {
+                    "type": "resource_gain_mod",
+                    "resource": "concentration",
+                    "base": 1.0,
+                    "scale": 0.1
+                }
+            ]
         },
         "saturate": {
             "id": "saturate",
@@ -73,30 +77,38 @@
                 "cooldown": 5
             },
             "base_power": 25,
-            "scaling": {
-                "scaling_tag": "nature",
-                "multiplier": 1.5
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "wet",
+                    "multiplier": 1.5
+                }
+            ]
         },
-        "tempest_strike": {
-            "id": "tempest_strike",
-            "name": "Tempest Strike",
+        "tempest_wrath": {
+            "id": "tempest_wrath",
+            "name": "Tempest Wrath",
             "tier": 5,
             "cost": 50,
             "description": "Finisher: Call down the wrath of the storm. Deals massive AoE damage. Damage is doubled to [Wet] targets in the room.",
             "identity_tags": ["druid", "storm", "lightning", "nature", "payoff"],
             "axis": "elemental",
-            "action": "tempest_strike",
+            "action": "tempest_wrath",
             "requirements": {
                 "class": "druid",
                 "concentration": 50,
                 "cooldown": 12
             },
             "base_power": 45,
-            "scaling": {
-                "scaling_tag": "nature",
-                "multiplier": 2.2
-            }
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "status_id": "wet",
+                    "multiplier": 2.0
+                }
+            ]
         },
         "barkskin": {
             "id": "barkskin",
@@ -142,6 +154,21 @@
                 "stamina": 5,
                 "cooldown": 15
             }
+        },
+        "druid_physiology": {
+            "id": "druid_physiology",
+            "name": "Druid Physiology",
+            "tier": 1,
+            "description": "Passive: You are one with the world. Your nature skills are enhanced by 25% during active weather, and you are immune to the negative effects of the environment.",
+            "logic_type": "passive",
+            "identity_tags": ["nature", "passive"],
+            "potency_rules": [
+                {
+                    "type": "weather_mod",
+                    "active_weathers": ["rain", "storm", "thunderstorm", "blizzard", "heatwave"],
+                    "multiplier": 1.25
+                }
+            ]
         }
     }
 }
