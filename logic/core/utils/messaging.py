@@ -37,7 +37,11 @@ def get_prompt(player):
     # Universal Balance (V5.0 Posture)
     bal = player.resources.get('balance', 100)
     max_bal = player.get_max_resource('balance')
-    parts.append(f"{Colors.MAGENTA}BAL: {bal}/{max_bal}{Colors.RESET}")
+    bal_pct = (bal / max_bal) * 100 if max_bal > 0 else 100
+    bal_color = Colors.MAGENTA
+    if bal_pct < 20: bal_color = Colors.BOLD + Colors.RED # Broken
+    elif bal_pct < 50: bal_color = Colors.RED # Unsteady
+    parts.append(f"{bal_color}BAL: {bal}/{max_bal}{Colors.RESET}")
     
     # [V7.2] HEAT (Accrued from spells/move)
     heat = player.resources.get(Tags.HEAT, 0)
@@ -115,12 +119,20 @@ def get_prompt(player):
             t_max = getattr(target, 'max_hp', target.hp) or 1
             pct = (target.hp / t_max) * 100
             
+            # Condition Scaling
             condition = "Excellent"
             if pct < 15: condition = "Critical"
             elif pct < 30: condition = "Bad"
             elif pct < 50: condition = "Wounded"
             elif pct < 75: condition = "Hurt"
             elif pct < 100: condition = "Scratched"
+
+            # Condition Coloring
+            cond_color = Colors.GREEN
+            if pct < 15: cond_color = Colors.BOLD + Colors.RED
+            elif pct < 30: cond_color = Colors.RED
+            elif pct < 50: cond_color = Colors.YELLOW
+            elif pct < 75: cond_color = Colors.CYAN
             
             # [V7.2] Dynamic Target Status Display
             statuses = []
@@ -144,15 +156,19 @@ def get_prompt(player):
             # Target Balance (Posture)
             t_bal = target.resources.get('balance', 100) if hasattr(target, 'resources') else 100
             t_max_bal = getattr(target, 'get_max_resource', lambda x: 100)('balance')
+            bal_pct = (t_bal / t_max_bal) * 100 if t_max_bal > 0 else 100
+            bal_color = Colors.MAGENTA
+            if bal_pct < 20: bal_color = Colors.BOLD + Colors.RED # Broken
+            elif bal_pct < 50: bal_color = Colors.RED # Unsteady
             
             status_str = f" | {' '.join(statuses)}" if statuses else ""
-            prompt += f" ({target.name} [{condition}{status_str}] BAL: {t_bal}/{t_max_bal})"
+            prompt += f" {Colors.DARK_GRAY}>>{Colors.RESET} {Colors.BOLD}{target.name}{Colors.RESET} [{cond_color}{condition}{Colors.RESET}{status_str}] {bal_color}B:{t_bal}/{t_max_bal}{Colors.RESET}"
     
     # Builder HUD (V7.1)
     if (player.state in ["building", "kit_menu"] or getattr(player, 'is_building', False)) and hasattr(player, 'builder_state'):
         bs = player.builder_state
         from logic.commands.admin.construction.builder_state import _load_kit
-        k_data = _load_kit(bs["kit"])
+        k_data = _load_kit(bs["stencil_set"])
         
         def mode_label(label, value):
             color = Colors.BOLD + Colors.WHITE if value else Colors.DARK_GRAY
@@ -166,7 +182,7 @@ def get_prompt(player):
         
         elev = getattr(player.room, 'elevation', 0)
         brush_elev = bs.get('brush_elevation', 'Auto')
-        builder_line = f"{Colors.DARK_GRAY}[ARCHITECT | Kit: {Colors.CYAN}{bs['kit']}{Colors.DARK_GRAY} | {' '.join(modes)} | Room: {Colors.WHITE}{elev}{Colors.DARK_GRAY} | Brush: {Colors.YELLOW}{brush_elev}{Colors.DARK_GRAY}]{Colors.RESET}"
+        builder_line = f"{Colors.DARK_GRAY}[ARCHITECT | Stencil: {Colors.CYAN}{bs['stencil_set']}{Colors.DARK_GRAY} | {' '.join(modes)} | Room: {Colors.WHITE}{elev}{Colors.DARK_GRAY} | Brush: {Colors.YELLOW}{brush_elev}{Colors.DARK_GRAY}]{Colors.RESET}"
         prompt = f"\r\n{builder_line}\r\n{prompt}"
             
     return prompt + " > "

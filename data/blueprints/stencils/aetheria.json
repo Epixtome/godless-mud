@@ -1,0 +1,91 @@
+{
+    "name": "aetheria",
+    "description": "Order, Healing, and Light. The architecture of the Pearl Throne.",
+    "templates": [
+        {
+            "id": "tpl:aether_gate",
+            "name": "The Pearl Gateway",
+            "terrain": "road",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.WHITE}H{Colors.RESET}",
+            "description": "A massive archway of polished white stone, inlaid with golden filigree. It hums with protective energy.",
+            "tags": ["light", "order", "fortified"]
+        },
+        {
+            "id": "tpl:aether_plaza",
+            "name": "Golden Sun-Plaza",
+            "terrain": "cobblestone",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}+{Colors.RESET}",
+            "description": "A wide plaza paved with reflective stones that glow in the sunlight. A central fountain of clear water provides a sense of peace.",
+            "tags": ["light", "social", "holy"]
+        },
+        {
+            "id": "tpl:aether_sanctum",
+            "name": "Altar of Perpetual Light",
+            "terrain": "holy",
+            "elevation": 2,
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}*{Colors.RESET}",
+            "description": "A raised platform holding a pillar of pure, solid light. The air here is warm and smells of incense and ozone.",
+            "tags": ["light", "divine", "power"],
+            "items": ["sun_crystal"]
+        },
+        {
+            "id": "tpl:aether_spire",
+            "name": "Ivory Lookout",
+            "terrain": "hills",
+            "elevation": 5,
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "description": "A tall, slender tower made of ivory-colored brick. From here, the entire kingdom is visible under the watchful eye of Valeros.",
+            "tags": ["light", "vision", "military"]
+        },
+        {
+            "id": "tpl:aether_archives",
+            "name": "The Pearl Archives",
+            "terrain": "indoors",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.WHITE}L{Colors.RESET}",
+            "description": "Floor-to-ceiling shelves of white oak are filled with leather-bound volumes and pristine scrolls. The scent of old parchment and beeswax hangs in the air.",
+            "tags": ["light", "knowledge"],
+            "items": ["ancient_tome", "reading_desk"]
+        },
+        {
+            "id": "tpl:aether_bazaar",
+            "name": "The Gilded Bazaar",
+            "terrain": "cobblestone",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}${Colors.RESET}",
+            "description": "A bustling market square where merchants under silk awnings hawk fine silks, rare spices, and blessed artifacts. Every transaction follows the Golden Code.",
+            "tags": ["light", "trade", "social"],
+            "shop_inventory": ["golden_trinket", "blessed_bread", "ivory_dagger"]
+        },
+        {
+            "id": "tpl:aether_hospice",
+            "name": "Sanctuary of Mercy",
+            "terrain": "holy",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.WHITE}+{Colors.RESET}",
+            "description": "A gentle, sunlit hall where the wounded are tended to by acolytes of Valeros. The walls are adorned with tapestries of healing saints.",
+            "tags": ["light", "healing", "safe_zone"]
+        },
+        {
+            "id": "tpl:aether_mews",
+            "name": "The Pearl Mews",
+            "terrain": "cobblestone",
+            "elevation": 0,
+            "symbol": "{Colors.BOLD}{Colors.WHITE}={Colors.RESET}",
+            "description": "Uniform facades of white stone line this quiet residential street. Each doorway is marked with a sun-emblem of the family residing within.",
+            "tags": ["light", "residential"]
+        },
+        {
+            "id": "tpl:aether_bastion",
+            "name": "Order's Bastion",
+            "terrain": "stone",
+            "elevation": 3,
+            "symbol": "{Colors.BOLD}{Colors.WHITE}# {Colors.RESET}",
+            "description": "Heavy stone battlements overlook the Aetherian boundaries. Knights in polished steel armor stand watch with absolute focus.",
+            "tags": ["light", "military", "fortified"],
+            "monsters": ["aetherian_guard"]
+        }
+    ]
+}

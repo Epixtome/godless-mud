@@ -220,6 +220,10 @@ class GodlessGame:
         logger.info(f"Autosaving... (Geography Save: {save_blueprints})")
         for player in self.players.values(): player.save()
         world_loader.save_world_state(self.world, save_blueprints)
+        
+        # [V7.2] Persist Shrines & Sovereignty
+        from logic.core.systems.influence_service import InfluenceService
+        InfluenceService.get_instance().save_shrines()
 
 async def main():
     if not integrity.check_file_structure():

@@ -170,5 +170,218 @@
         "state": "closed",
         "created_at": "2026-03-21 11:26:26",
         "updates": []
+    },
+    "14": {
+        "id": 14,
+        "player": "kip",
+        "description": "there are icons in the master architect that are not rendering at this location",
+        "context": "Plains (test_aetheria.558.521.0)",
+        "state": "closed",
+        "created_at": "2026-03-21 21:44:06",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 11:15:00",
+                "text": "Fixed: Added 'symbol' field to room export to ensure icons render correctly in both the Architect and the Engine."
+            }
+        ]
+    },
+    "15": {
+        "id": 15,
+        "player": "kip",
+        "description": "this location exiting east says \"That exit leads to the void.\" What does this mean? I SEE water east.",
+        "context": "Ocean (test_aetheria.561.509.0)",
+        "state": "closed",
+        "created_at": "2026-03-21 21:45:20",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 11:15:00",
+                "text": "Fixed: Enabled 'grid_logic' in metadata to ensure clean stitching across biological shards."
+            }
+        ]
+    },
+    "16": {
+        "id": 16,
+        "player": "kip",
+        "description": "i cannot see my icon on this room",
+        "context": "Desert (test_arid_70_97.570.597.1)",
+        "state": "closed",
+        "created_at": "2026-03-23 11:01:15",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 11:15:00",
+                "text": "Fixed: Corrected plane offset (z:0) to prevent visibility gaps from the Ridge Rule."
+            }
+        ]
+    },
+    "17": {
+        "id": 17,
+        "player": "kip",
+        "description": "i CAN see my icon here.",
+        "context": "Cobblestone (test_infrastructure_27_32.565.594.1)",
+        "state": "closed",
+        "created_at": "2026-03-23 11:01:27",
+        "updates": []
+    },
+    "18": {
+        "id": 18,
+        "player": "kip",
+        "description": "i cannot see it here. i think its elevation based?",
+        "context": "Forest (test_woodlands_84_63.566.594.1)",
+        "state": "closed",
+        "created_at": "2026-03-23 11:01:37",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 11:15:00",
+                "text": "Fixed: Plane alignment and elevation occlusion recalibrated."
+            }
+        ]
+    },
+    "19": {
+        "id": 19,
+        "player": "kip",
+        "description": "there is an exit up from here and i dont know why.",
+        "context": "Mountain (test_peaks_0_0.534.537.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 14:26:13",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 14:35:00",
+                "text": "Fixed: Purged legacy z:1 shards that were causing vertical overlap conflicts."
+            }
+        ]
+    },
+    "20": {
+        "id": 20,
+        "player": "kip",
+        "description": "i went UP from this location and now the elevation is -2 but its z:1. the map looks the same up here but why is this here?",
+        "context": "Ocean (test_coastal_0_0.534.537.1)",
+        "state": "closed",
+        "created_at": "2026-03-23 14:26:44",
+        "updates": []
+    },
+    "21": {
+        "id": 21,
+        "player": "kip",
+        "description": "from the UP map i cannot see my player icon",
+        "context": "Ocean (test_coastal_31_50.538.544.1)",
+        "state": "closed",
+        "created_at": "2026-03-23 14:27:20",
+        "updates": []
+    },
+    "22": {
+        "id": 22,
+        "player": "kip",
+        "description": "from the DOWN zone i CAN see my player icon",
+        "context": "Grass (test_woodlands_41_32.538.544.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 14:27:34",
+        "updates": []
+    },
+    "23": {
+        "id": 23,
+        "player": "kip",
+        "description": "the grass has no color here",
+        "context": "Grass (test_woodlands_41_32.538.544.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 14:27:40",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 14:35:00",
+                "text": "Note: Color removal (grayscale) is a feature of the 'Fog of War' for unvisited rooms."
+            }
+        ]
+    },
+    "24": {
+        "id": 24,
+        "player": "kip",
+        "description": "this whole northwest area is one giant square mountain. why is it generating so blocky and hard square in this area?",
+        "context": "Mountain (test_peaks_0_0.520.521.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 14:28:16",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 14:35:00",
+                "text": "Fixed: Modified blueprint_state.json to remove geometric rectangle/circle constraints in favor of organic noise scatter."
+            }
+        ]
+    },
+    "25": {
+        "id": 25,
+        "player": "kip",
+        "description": "the water here has no color",
+        "context": "Ocean (test_coastal_40_0.520.548.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 14:28:28",
+        "updates": []
+    },
+    "26": {
+        "id": 26,
+        "player": "kip",
+        "description": "the water here generates in this area as a big circle every time. can we check why some parts of the generator are constant where the main body mass is well sectioned?",
+        "context": "Ocean (test_coastal_40_0.520.548.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 14:29:02",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 14:35:00",
+                "text": "Fixed: Removed hardcoded subtraction shapes from the map blueprint."
+            }
+        ]
+    },
+    "27": {
+        "id": 27,
+        "player": "kip",
+        "description": "the fields area is way too large and untouched. shouldn't there be more features here?",
+        "context": "Plains (test_fields_0_8.518.508.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 15:03:30",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 15:08:00",
+                "text": "Fixed: Added Wilderness Scatter pass (Ruins, Barrows, Towers) to large plains regions."
+            }
+        ]
+    },
+    "28": {
+        "id": 28,
+        "player": "kip",
+        "description": "this peak is great but i think its just a dot on the map. it should be more like a small ridge/range or spine no?",
+        "context": "Peak (test_fields_0_8.536.510.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 15:04:19",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 15:08:00",
+                "text": "Fixed: Modified mountain logic to generate 'Peak Ridges' rather than isolated dots."
+            }
+        ]
+    },
+    "29": {
+        "id": 29,
+        "player": "kip",
+        "description": "this ridge and mountain spine is alright but i think there should be more natural curvature. its very vertically long",
+        "context": "Hills (test_fields_0_8.536.528.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 15:05:03",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 15:08:00",
+                "text": "Fixed: Implemented sinusoidal wave curvature and high-frequency 'wobble' to spines."
+            }
+        ]
+    },
+    "30": {
+        "id": 30,
+        "player": "kip",
+        "description": "these docks leads to water that is less than 10 tiles. seems odd to have docks that dont lead to a larger body of water",
+        "context": "Docks (test_infrastructure_34_43.538.541.0)",
+        "state": "closed",
+        "created_at": "2026-03-23 15:05:52",
+        "updates": [
+            {
+                "timestamp": "2026-03-23 15:08:00",
+                "text": "Fixed: Added 'Deep Water' requirement (>10 tiles) for dock placement."
+            }
+        ]
     }
 }

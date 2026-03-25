@@ -1,0 +1,932 @@
+{
+    "metadata": {
+        "id": "v444_woodlands_120_77",
+        "name": "Woodlands Zone",
+        "security_level": "low_sec",
+        "grid_logic": true,
+        "target_cr": 50
+    },
+    "rooms": [
+        {
+            "id": "v444_woodlands_120_77.9073.9120.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WOODLANDS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9073,
+            "y": 9120,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v444_infrastructure_112_64.9073.9119.0",
+                "south": "v444_woodlands_120_77.9073.9121.0",
+                "east": "v444_woodlands_120_77.9074.9120.0",
+                "west": "v444_wetlands_116_68.9072.9120.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9074.9120.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WOODLANDS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9074,
+            "y": 9120,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v444_infrastructure_112_64.9074.9119.0",
+                "south": "v444_woodlands_120_77.9074.9121.0",
+                "east": "v444_infrastructure_112_64.9075.9120.0",
+                "west": "v444_woodlands_120_77.9073.9120.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9076.9120.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WOODLANDS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9076,
+            "y": 9120,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v444_infrastructure_112_64.9076.9119.0",
+                "south": "v444_woodlands_120_77.9076.9121.0",
+                "east": "v444_woodlands_120_77.9077.9120.0",
+                "west": "v444_infrastructure_112_64.9075.9120.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9077.9120.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9077,
+            "y": 9120,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_infrastructure_112_64.9077.9119.0",
+                "south": "v444_woodlands_120_77.9077.9121.0",
+                "east": "v444_woodlands_120_77.9078.9120.0",
+                "west": "v444_woodlands_120_77.9076.9120.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9078.9120.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9078,
+            "y": 9120,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_infrastructure_112_64.9078.9119.0",
+                "south": "v444_woodlands_120_77.9078.9121.0",
+                "east": "v444_peaks_102_79.9079.9120.0",
+                "west": "v444_woodlands_120_77.9077.9120.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9073.9121.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Dense Forest",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WOODLANDS area.",
+            "terrain": "dense_forest",
+            "symbol": "{Colors.BOLD}{Colors.GREEN}^{Colors.RESET}",
+            "x": 9073,
+            "y": 9121,
+            "z": 0,
+            "elevation": 2,
+            "exits": {
+                "north": "v444_woodlands_120_77.9073.9120.0",
+                "south": "v444_woodlands_120_77.9073.9122.0",
+                "east": "v444_woodlands_120_77.9074.9121.0",
+                "west": "v444_wetlands_116_68.9072.9121.0"
+            },
+            "tags": [
+                "dense_forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9074.9121.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9074,
+            "y": 9121,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9074.9120.0",
+                "south": "v444_woodlands_120_77.9074.9122.0",
+                "east": "v444_infrastructure_112_64.9075.9121.0",
+                "west": "v444_woodlands_120_77.9073.9121.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9076.9121.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9076,
+            "y": 9121,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9076.9120.0",
+                "south": "v444_woodlands_120_77.9076.9122.0",
+                "east": "v444_woodlands_120_77.9077.9121.0",
+                "west": "v444_infrastructure_112_64.9075.9121.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9077.9121.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9077,
+            "y": 9121,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9077.9120.0",
+                "south": "v444_woodlands_120_77.9077.9122.0",
+                "east": "v444_woodlands_120_77.9078.9121.0",
+                "west": "v444_woodlands_120_77.9076.9121.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9078.9121.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9078,
+            "y": 9121,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9078.9120.0",
+                "south": "v444_woodlands_120_77.9078.9122.0",
+                "east": "v444_woodlands_120_77.9079.9121.0",
+                "west": "v444_woodlands_120_77.9077.9121.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9079.9121.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9079,
+            "y": 9121,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_peaks_102_79.9079.9120.0",
+                "south": "v444_woodlands_120_77.9079.9122.0",
+                "east": "v444_peaks_102_79.9080.9121.0",
+                "west": "v444_woodlands_120_77.9078.9121.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9073.9122.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9073,
+            "y": 9122,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9073.9121.0",
+                "south": "v444_woodlands_120_77.9073.9123.0",
+                "east": "v444_woodlands_120_77.9074.9122.0",
+                "west": "v444_wetlands_116_68.9072.9122.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9074.9122.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9074,
+            "y": 9122,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9074.9121.0",
+                "south": "v444_woodlands_120_77.9074.9123.0",
+                "east": "v444_woodlands_120_77.9075.9122.0",
+                "west": "v444_woodlands_120_77.9073.9122.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9075.9122.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9075,
+            "y": 9122,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_infrastructure_112_64.9075.9121.0",
+                "south": "v444_woodlands_120_77.9075.9123.0",
+                "east": "v444_woodlands_120_77.9076.9122.0",
+                "west": "v444_woodlands_120_77.9074.9122.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9076.9122.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9076,
+            "y": 9122,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9076.9121.0",
+                "south": "v444_woodlands_120_77.9076.9123.0",
+                "east": "v444_woodlands_120_77.9077.9122.0",
+                "west": "v444_woodlands_120_77.9075.9122.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9077.9122.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9077,
+            "y": 9122,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9077.9121.0",
+                "south": "v444_woodlands_120_77.9077.9123.0",
+                "east": "v444_woodlands_120_77.9078.9122.0",
+                "west": "v444_woodlands_120_77.9076.9122.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9078.9122.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9078,
+            "y": 9122,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9078.9121.0",
+                "south": "v444_woodlands_120_77.9078.9123.0",
+                "east": "v444_woodlands_120_77.9079.9122.0",
+                "west": "v444_woodlands_120_77.9077.9122.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9079.9122.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9079,
+            "y": 9122,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9079.9121.0",
+                "south": "v444_woodlands_120_77.9079.9123.0",
+                "east": "v444_peaks_102_79.9080.9122.0",
+                "west": "v444_woodlands_120_77.9078.9122.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9073.9123.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9073,
+            "y": 9123,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9073.9122.0",
+                "south": "v444_wetlands_116_68.9073.9124.0",
+                "east": "v444_woodlands_120_77.9074.9123.0",
+                "west": "v444_wetlands_116_68.9072.9123.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9074.9123.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9074,
+            "y": 9123,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9074.9122.0",
+                "south": "v444_woodlands_120_77.9074.9124.0",
+                "east": "v444_woodlands_120_77.9075.9123.0",
+                "west": "v444_woodlands_120_77.9073.9123.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9075.9123.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9075,
+            "y": 9123,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9075.9122.0",
+                "south": "v444_woodlands_120_77.9075.9124.0",
+                "east": "v444_woodlands_120_77.9076.9123.0",
+                "west": "v444_woodlands_120_77.9074.9123.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9076.9123.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9076,
+            "y": 9123,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9076.9122.0",
+                "south": "v444_woodlands_120_77.9076.9124.0",
+                "east": "v444_woodlands_120_77.9077.9123.0",
+                "west": "v444_woodlands_120_77.9075.9123.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9077.9123.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9077,
+            "y": 9123,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9077.9122.0",
+                "south": "v444_woodlands_120_77.9077.9124.0",
+                "east": "v444_woodlands_120_77.9078.9123.0",
+                "west": "v444_woodlands_120_77.9076.9123.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9078.9123.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9078,
+            "y": 9123,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9078.9122.0",
+                "south": "v444_woodlands_120_77.9078.9124.0",
+                "east": "v444_woodlands_120_77.9079.9123.0",
+                "west": "v444_woodlands_120_77.9077.9123.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9079.9123.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9079,
+            "y": 9123,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9079.9122.0",
+                "south": "v444_woodlands_120_77.9079.9124.0",
+                "east": "v444_peaks_102_79.9080.9123.0",
+                "west": "v444_woodlands_120_77.9078.9123.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9074.9124.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9074,
+            "y": 9124,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9074.9123.0",
+                "east": "v444_woodlands_120_77.9075.9124.0",
+                "west": "v444_wetlands_116_68.9073.9124.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9075.9124.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9075,
+            "y": 9124,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9075.9123.0",
+                "east": "v444_woodlands_120_77.9076.9124.0",
+                "west": "v444_woodlands_120_77.9074.9124.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9076.9124.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9076,
+            "y": 9124,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9076.9123.0",
+                "east": "v444_woodlands_120_77.9077.9124.0",
+                "west": "v444_woodlands_120_77.9075.9124.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9077.9124.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9077,
+            "y": 9124,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9077.9123.0",
+                "east": "v444_woodlands_120_77.9078.9124.0",
+                "west": "v444_woodlands_120_77.9076.9124.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9078.9124.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9078,
+            "y": 9124,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9078.9123.0",
+                "east": "v444_woodlands_120_77.9079.9124.0",
+                "west": "v444_woodlands_120_77.9077.9124.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9079.9124.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9079,
+            "y": 9124,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_woodlands_120_77.9079.9123.0",
+                "east": "v444_woodlands_120_77.9080.9124.0",
+                "west": "v444_woodlands_120_77.9078.9124.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v444_woodlands_120_77.9080.9124.0",
+            "zone_id": "v444_woodlands_120_77",
+            "name": "Forest",
+            "description": "The air is heavy with the scent of pine and damp earth.\nAtmosphere: WOODLANDS area.",
+            "terrain": "forest",
+            "symbol": "{Colors.GREEN}^{Colors.RESET}",
+            "x": 9080,
+            "y": 9124,
+            "z": 0,
+            "elevation": 1,
+            "exits": {
+                "north": "v444_peaks_102_79.9080.9123.0",
+                "east": "v444_peaks_102_79.9081.9124.0",
+                "west": "v444_woodlands_120_77.9079.9124.0"
+            },
+            "tags": [
+                "forest",
+                "v444_woodlands_120_77",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        }
+    ]
+}

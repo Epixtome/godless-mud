@@ -29,6 +29,7 @@ class Room:
         # Environmental Metadata (Dynamic Persistence)
         self.flags = [] # List of strings: ["dark", "peaceful", "unmapped"]
         self.metadata = {} # Generic K/V: {"sign": "Beware the Grue", "blood_level": 5}
+        self.tags = [] # [V7.2] Identity and scaling identifiers
         
         # Loader internals (Linter Satisfied)
         self._active_items_data = []
@@ -111,6 +112,7 @@ class Room:
             "opacity": self.opacity,
             "symbol": self.symbol,
             "manual_exits": self.manual_exits,
+            "tags": self.tags,
             "items": self.blueprint_items,
             "monsters": self.blueprint_monsters,
             "doors": {d: {"name": door.name, "state": door.state, "key_id": door.key_id, "transparency": door.transparency} 
@@ -196,6 +198,7 @@ class Room:
         room.deity_id = data.get('deity_id')
         room.symbol = data.get('symbol')
         room.manual_exits = data.get('manual_exits', False)
+        room.tags = data.get('tags', [])
         
         # Blueprint Definitions
         room.blueprint_items = data.get('items', [])
@@ -231,7 +234,8 @@ class Room:
             "status_effects": self.status_effects,
             "status_effect_starts": self.status_effect_starts,
             "flags": self.flags,
-            "metadata": self.metadata
+            "metadata": self.metadata,
+            "tags": self.tags
         }
 
     def broadcast(self, message, exclude_player=None):

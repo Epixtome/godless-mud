@@ -1,0 +1,151 @@
+{
+    "blessings": {
+        "life_tap": {
+            "id": "life_tap",
+            "name": "Life Tap",
+            "tier": 1,
+            "cost": 15,
+            "description": "Setup/Builder: Drain life from a target to heal yourself (50% Scaling). Generates blood for the Blood Well.",
+            "identity_tags": ["magic", "dark", "setup"],
+            "axis": "endurance",
+            "action": "life_tap",
+            "requirements": { "class": "defiler", "stamina": 15 },
+            "base_power": 15
+        },
+        "corpse_consumption": {
+            "id": "corpse_consumption",
+            "name": "Corpse Consumption",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup/Utility: Brutally consume a corpse to restore 40 HP and gorge your Blood Well for 50.",
+            "identity_tags": ["martial", "dark", "setup"],
+            "axis": "utility",
+            "action": "corpse_consumption",
+            "requirements": { "class": "defiler", "stamina": 10 }
+        },
+        "fear": {
+            "id": "fear",
+            "name": "Dread Aura",
+            "tier": 2,
+            "cost": 10,
+            "description": "Disruption: Emit a chilling aura. Applies [Fear] for 10 ticks, reducing enemy damage.",
+            "identity_tags": ["magic", "occult", "disruption"],
+            "axis": "tempo",
+            "action": "fear",
+            "requirements": { "class": "defiler", "stamina": 10 }
+        },
+        "hex": {
+            "id": "hex",
+            "name": "Cursed Hex",
+            "tier": 3,
+            "cost": 20,
+            "description": "Disruption: A shimmering purple hex. Applies [Cursed] for 20 ticks, reducing magic defense.",
+            "identity_tags": ["magic", "occult", "disruption"],
+            "axis": "utility",
+            "action": "hex",
+            "requirements": { "class": "defiler", "stamina": 20 }
+        },
+        "hunger": {
+            "id": "hunger",
+            "name": "Void Hunger",
+            "tier": 3,
+            "cost": 20,
+            "description": "Payoff: A gnawing void of hunger. Deals damage over time based on target's current resources.",
+            "identity_tags": ["magic", "dark", "payoff"],
+            "axis": "endurance",
+            "action": "hunger",
+            "requirements": { "class": "defiler", "stamina": 20 },
+            "base_power": 25
+        },
+        "malediction": {
+            "id": "malediction",
+            "name": "Malediction",
+            "tier": 4,
+            "cost": 25,
+            "description": "Payoff: A crawling shadow of doom. Deals massive dark damage over 20 ticks.",
+            "identity_tags": ["magic", "dark", "payoff"],
+            "axis": "lethality",
+            "action": "malediction",
+            "requirements": { "class": "defiler", "stamina": 25 },
+            "base_power": 40
+        },
+        "shadow_bind": {
+            "id": "shadow_bind",
+            "name": "Shadow Bind",
+            "tier": 2,
+            "cost": 15,
+            "description": "Defense/Control: Writhing shadow-chains bind a target. Applies [Pinned] for 10 ticks.",
+            "identity_tags": ["magic", "dark", "defense"],
+            "axis": "position",
+            "action": "shadow_bind",
+            "requirements": { "class": "defiler", "stamina": 15 }
+        },
+        "blood_veil": {
+            "id": "blood_veil",
+            "name": "Blood Veil",
+            "tier": 3,
+            "cost": 20,
+            "description": "Defense/Deny: A 3s reactive window. Converts 50% of the next hit's damage into [Malediction] on the attacker.",
+            "identity_tags": ["magic", "dark", "reaction", "defense"],
+            "axis": "endurance",
+            "action": "blood_veil",
+            "requirements": { "class": "defiler", "stamina": 20, "cooldown": 10 },
+            "effects": [
+                { "id": "blood_veil_active", "duration": 3, "target": "self" }
+            ]
+        },
+        "plague": {
+            "id": "plague",
+            "name": "Plague",
+            "tier": 5,
+            "cost": 40,
+            "description": "Finisher/AOE: Infect a target and all nearby with a sickly green vapor. Drains HP and Balance. Scales with Blood Well.",
+            "identity_tags": ["magic", "dark", "finisher"],
+            "axis": "elemental",
+            "action": "plague",
+            "requirements": { "class": "defiler", "stamina": 40, "cooldown": 15 },
+            "base_power": 60
+        },
+        "bone_spear": {
+            "id": "bone_spear",
+            "name": "Bone Spear",
+            "tier": 2,
+            "cost": 25,
+            "description": "Payoff: Hurl a spear of bone at your foe. High physical/necrotic damage scaling.",
+            "identity_tags": ["magic", "dark", "strike", "payoff"],
+            "axis": "lethality",
+            "action": "bone_spear",
+            "requirements": { "class": "defiler", "stamina": 25 },
+            "base_power": 20,
+            "scaling": { "scaling_tag": "dark", "multiplier": 2.0 }
+        },
+        "rotting_burst": {
+            "id": "rotting_burst",
+            "name": "Rotting Burst",
+            "tier": 4,
+            "cost": 25,
+            "description": "Payoff: Deals massive dark damage. Power increases by 30% for every unique debuff on the target.",
+            "identity_tags": ["magic", "dark", "strike", "payoff"],
+            "axis": "lethality",
+            "action": "rotting_burst",
+            "requirements": { "class": "defiler", "stamina": 25, "cooldown": 4 },
+            "base_power": 20,
+            "scaling": { "scaling_tag": "dark", "multiplier": 1.2 }
+        },
+        "defiler_physiology": {
+            "id": "defiler_physiology",
+            "name": "Defiler Physiology",
+            "tier": 1,
+            "description": "Passive: You are fueled by suffering. Your debuffs (Cursed, Plagued) last 20% longer and you recover 2 HP every tick.",
+            "logic_type": "passive",
+            "identity_tags": ["dark", "passive"],
+            "potency_rules": [
+                {
+                    "type": "stat_mod",
+                    "stat": "regen_hp",
+                    "add": 2
+                }
+            ]
+        }
+    }
+}

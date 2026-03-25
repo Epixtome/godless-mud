@@ -1,0 +1,179 @@
+{
+    "items": [
+        {
+            "id": "void_dagger",
+            "type": "weapon",
+            "name": "Void Dagger",
+            "description": "A razor-sharp blade of solidified shadow that hums with killing intent. Ideal for assassinations.",
+            "value": 120,
+            "weight": 1,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d6",
+                "scaling_tag": "precision",
+                "scaling_mult": 1.3
+            },
+            "weight_class": "light",
+            "tags": ["dark", "martial", "lethal", "precision", "dagger"]
+        },
+        {
+            "id": "obsidian_staff",
+            "type": "weapon",
+            "name": "Obsidian Staff",
+            "description": "A staff made of pure volcanic glass. It glows with a faint internal heat, ideal for channeling catastrophic magic.",
+            "value": 150,
+            "weight": 5,
+            "slot": "main_hand",
+            "hands": 2,
+            "stats": {
+                "damage_dice": "1d8",
+                "scaling_tag": "insight",
+                "scaling_mult": 1.4
+            },
+            "weight_class": "medium",
+            "tags": ["magic", "elemental", "dark", "blunt"]
+        },
+        {
+            "id": "curse_stick",
+            "type": "weapon",
+            "name": "Curse Stick",
+            "description": "A gnarled branch etched with weeping runes. It pulses with a malevolent entropy.",
+            "value": 110,
+            "weight": 3,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d6",
+                "scaling_tag": "occult",
+                "scaling_mult": 1.2
+            },
+            "weight_class": "light",
+            "tags": ["occult", "disruption", "dark", "blunt"]
+        },
+        {
+            "id": "silk_thread",
+            "type": "weapon",
+            "name": "Soul Silk",
+            "description": "A spool of nearly invisible thread. In the hands of a Soul Weaver, it becomes a tool of fate and restoration.",
+            "value": 90,
+            "weight": 1,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d4",
+                "scaling_tag": "insight",
+                "scaling_mult": 1.1
+            },
+            "weight_class": "light",
+            "tags": ["magic", "restoration", "dark"]
+        },
+        {
+            "id": "dagger_fan",
+            "type": "weapon",
+            "name": "Dagger Fan",
+            "description": "A collection of small blades that can be fanned out for lethal, speed-based flourishes.",
+            "value": 130,
+            "weight": 2,
+            "slot": "main_hand",
+            "hands": 1,
+            "stats": {
+                "damage_dice": "1d8",
+                "scaling_tag": "speed",
+                "scaling_mult": 1.3
+            },
+            "weight_class": "light",
+            "tags": ["martial", "speed", "lethal", "precision"]
+        },
+        {
+            "id": "shadow_cowl",
+            "type": "armor",
+            "name": "Shadow Cowl",
+            "description": "A hood that obscures the wearer's face in literal darkness, aiding in concealment.",
+            "value": 85,
+            "weight": 2,
+            "slot": "head",
+            "stats": {
+                "defense": 5,
+                "evasion": 15
+            },
+            "weight_class": "light",
+            "tags": ["vision", "dark", "light_gear"]
+        },
+        {
+            "id": "shadow_robes",
+            "type": "armor",
+            "name": "Shadow Robes",
+            "description": "Robes that flow like liquid ink, absorbing ambient light and dampening sound.",
+            "value": 120,
+            "weight": 5,
+            "slot": "body",
+            "stats": {
+                "defense": 10,
+                "evasion": 10
+            },
+            "weight_class": "light",
+            "tags": ["magic", "dark", "light_gear"]
+        },
+        {
+            "id": "witch_hat",
+            "type": "armor",
+            "name": "Witch Hat",
+            "description": "A tall, pointed hat that hums with the whispers of broken fates.",
+            "value": 95,
+            "weight": 1,
+            "slot": "head",
+            "stats": {
+                "defense": 2,
+                "protection": 10
+            },
+            "weight_class": "light",
+            "tags": ["occult", "dark", "light_gear"]
+        },
+        {
+            "id": "spirit_mask",
+            "type": "armor",
+            "name": "Spirit Mask",
+            "description": "A hollow mask that allows the wearer to see the shimmering threads of life and death.",
+            "value": 110,
+            "weight": 2,
+            "slot": "head",
+            "stats": {
+                "defense": 3,
+                "perception": 15
+            },
+            "weight_class": "light",
+            "tags": ["magic", "restoration", "dark"]
+        },
+        {
+            "id": "twilight_slippers",
+            "type": "armor",
+            "name": "Twilight Slippers",
+            "description": "Exquisite footwear that makes no sound on any surface, even when running.",
+            "value": 70,
+            "weight": 1,
+            "slot": "feet",
+            "stats": {
+                "evasion": 20,
+                "speed": 10
+            },
+            "weight_class": "light",
+            "tags": ["speed", "dark", "light_gear"]
+        },
+        {
+            "id": "dark_leather_mask",
+            "type": "armor",
+            "name": "Dark Leather Mask",
+            "description": "A minimal mask for the silent hunter. Protects the identity and focuses the intent.",
+            "value": 45,
+            "weight": 1,
+            "slot": "head",
+            "stats": {
+                "defense": 2,
+                "lethality": 5
+            },
+            "weight_class": "light",
+            "tags": ["martial", "vision", "light_gear"]
+        }
+    ]
+}

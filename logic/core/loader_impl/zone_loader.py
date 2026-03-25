@@ -11,10 +11,13 @@ from models import Room, Zone
 logger = logging.getLogger("GodlessMUD")
 
 def load_sharded_zones(world):
-    """Loads all .json files in data/zones/ as world geography."""
-    shards_dir = 'data/zones'
+    # Use Absolute Paths for Discovery
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    shards_dir = os.path.join(base_dir, 'data', 'zones')
     count = 0
-    if not os.path.exists(shards_dir): return
+    if not os.path.exists(shards_dir): 
+        logger.warning(f"Zones directory not found: {shards_dir}")
+        return
     
     for shard_file in glob.glob(os.path.join(shards_dir, "*.json")):
         try:

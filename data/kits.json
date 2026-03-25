@@ -257,5 +257,95 @@
         "resources": ["stamina"],
         "axes": ["tempo", "position"],
         "version": "7.2"
+    },
+    "assassin": {
+        "name": "Assassin",
+        "description": "The lethal shadow. Specialized in precision strikes, poisons, and room control via traps.",
+        "gear": ["glass_dagger", "dark_leather_mask", "shadow_cloak"],
+        "blessings": ["hide", "backstab", "circle", "venom", "trap", "smoke_bomb", "dirt_kick", "garrote", "assassin_physiology"],
+        "identity_tags": ["martial", "vision", "lethality"],
+        "resources": ["stamina"],
+        "axes": ["vision", "lethality"],
+        "version": "7.2"
+    },
+    "defiler": {
+        "name": "Defiler",
+        "description": "A master of curses and afflictions. Fuels power through a Blood Well and withering attrition.",
+        "gear": ["bone_staff", "skull_mask", "rotting_robes"],
+        "blessings": ["life_tap", "corpse_consumption", "fear", "hex", "hunger", "malediction", "shadow_bind", "plague", "defiler_physiology"],
+        "identity_tags": ["occult", "dark", "endurance"],
+        "resources": ["stamina"],
+        "axes": ["endurance", "lethality"],
+        "version": "7.2"
+    },
+    "soul_reaver": {
+        "name": "Soul Reaver",
+        "description": "The blood-fueled juggernaut. Sacrifices vitality for relentless aggression and heavy Dark strikes.",
+        "gear": ["blood_claymore", "jagged_plate_armour", "crimson_cloak"],
+        "blessings": ["blood_slash", "rend_soul", "reaving_strike", "crimson_nova", "blood_armor", "vampiric_pact", "blood_dash", "blood_boil", "soul_reaver_physiology"],
+        "identity_tags": ["martial", "dark", "lethality"],
+        "resources": ["stamina", "blood_well"],
+        "axes": ["endurance", "lethality"],
+        "version": "7.2"
+    },
+    "death_knight": {
+        "name": "Death Knight",
+        "description": "The unholy fortress. Combines Frost and Necrotic magic to anchor and dominate the field.",
+        "gear": ["doom_greataxe", "runed_plate", "frost_pendant"],
+        "blessings": ["frost_strike", "death_grip", "obliterate", "unholy_blight", "icebound_fortitude", "anti_magic_shell", "shambling_charge", "raise_ghoul", "death_knight_physiology"],
+        "identity_tags": ["martial", "necrosis", "protection"],
+        "resources": ["stamina", "runic_pips"],
+        "axes": ["endurance", "protection"],
+        "version": "7.2"
+    },
+    "shadow_blade": {
+        "name": "Shadow Blade",
+        "description": "The precise void. A master of invisibility, marking targets, and lethal assassinations.",
+        "gear": ["void_dagger", "shadow_cowl", "dark_leather_mask"],
+        "blessings": ["void_strike", "shadow_meld", "assassinate", "twilight_dance", "void_parry", "ghost_form", "night_step", "dark_vision", "shadow_blade_physiology"],
+        "identity_tags": ["martial", "vision", "lethality"],
+        "resources": ["stamina"],
+        "axes": ["vision", "lethality"],
+        "version": "7.2"
+    },
+    "black_mage": {
+        "name": "Black Mage",
+        "description": "The dark weaver. Specializes in catastrophic elemental AOE and soul-igniting bursts.",
+        "gear": ["obsidian_staff", "shadow_robes", "focus_crystal"],
+        "blessings": ["hellfire_cast", "abyssal_chill", "cataclysmic_burst", "soul_ignite", "obsidian_barrier", "mana_parry", "rift_dash", "dark_ascendancy", "black_mage_physiology"],
+        "identity_tags": ["magic", "elemental", "lethality"],
+        "resources": ["concentration"],
+        "axes": ["elemental", "lethality"],
+        "version": "7.2"
+    },
+    "witch": {
+        "name": "Witch",
+        "description": "The fate weaver. Binds enemies with curses and hexes, winning through attrition.",
+        "gear": ["witch_hat", "curse_stick", "bone_amulet"],
+        "blessings": ["hex_flare", "curse_of_binding", "vile_curse", "soul_siphon", "fate_mirror", "mist_form", "night_shade", "dark_ritual", "witch_physiology"],
+        "identity_tags": ["occult", "disruption", "dark"],
+        "resources": ["stamina", "entropy"],
+        "axes": ["dark", "disruption"],
+        "version": "7.2"
+    },
+    "soul_weaver": {
+        "name": "Soul Weaver",
+        "description": "The life-threader. Manipulates the boundary between restoration and dark protection.",
+        "gear": ["silk_thread", "spirit_mask", "soul_crystal"],
+        "blessings": ["weave_life", "sever_thread", "soul_mending", "reaping_blast", "spiritual_barrier", "soul_bind", "spirit_walk", "thread_of_fate", "soul_weaver_physiology"],
+        "identity_tags": ["magic", "restoration", "dark"],
+        "resources": ["concentration", "spirits"],
+        "axes": ["dark", "restoration"],
+        "version": "7.2"
+    },
+    "shadow_dancer": {
+        "name": "Shadow Dancer",
+        "description": "The lethal performer. Weaves dark magic into speed-based martial arts.",
+        "gear": ["twilight_slippers", "shadow_ribbons", "dagger_fan"],
+        "blessings": ["twilight_strike", "shadow_step", "danse_macabre", "sever_soul", "evasive_waltz", "shadow_echo", "flicker", "eclipse_curse", "shadow_dancer_physiology"],
+        "identity_tags": ["martial", "speed", "lethality"],
+        "resources": ["stamina", "rhythm"],
+        "axes": ["speed", "lethality"],
+        "version": "7.2"
     }
 }

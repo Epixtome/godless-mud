@@ -1,0 +1,119 @@
+{
+    "blessings": {
+        "blood_slash": {
+            "id": "blood_slash",
+            "name": "Blood Slash",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup/Builder: A brutal radial slash. Deals martial damage and generates 15 Blood Well. No cooldown.",
+            "identity_tags": ["martial", "dark", "builder", "setup"],
+            "axis": "tempo",
+            "action": "blood_slash",
+            "requirements": { "class": "soul_reaver", "stamina": 10 },
+            "base_power": 15
+        },
+        "rend_soul": {
+            "id": "rend_soul",
+            "name": "Rend Soul",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Tear at the target's life force. Applies [Bleeding] for 6 ticks and [Reduced Defense] for 4 ticks.",
+            "identity_tags": ["martial", "dark", "disruption", "setup"],
+            "axis": "endurance",
+            "action": "rend_soul",
+            "requirements": { "class": "soul_reaver", "stamina": 20, "cooldown": 5 },
+            "on_hit": { "apply_status": "bleeding", "duration": 6 }
+        },
+        "reaving_strike": {
+            "id": "reaving_strike",
+            "name": "Reaving Strike",
+            "tier": 4,
+            "cost": 30,
+            "description": "Payoff: Strike with absolute malice. Deals 3x damage to [Bleeding] targets. If it kills, you instantly restore 25% of your max HP.",
+            "identity_tags": ["martial", "dark", "lethal", "payoff"],
+            "axis": "lethality",
+            "action": "reaving_strike",
+            "requirements": { "class": "soul_reaver", "stamina": 30, "cooldown": 8 },
+            "base_power": 40,
+            "potency_rules": [
+                {
+                    "type": "status_mod",
+                    "check_target": true,
+                    "target_tags": ["bleeding"],
+                    "multiplier": 3.0
+                }
+            ]
+        },
+        "crimson_nova": {
+            "id": "crimson_nova",
+            "name": "Crimson Nova",
+            "tier": 5,
+            "cost": 50,
+            "description": "Payoff/AOE: Detonate your own vitality. Consumes all Blood Well to deal massive Dark damage in a radius. Damage scales 5% per point of Blood Well consumed.",
+            "identity_tags": ["magic", "dark", "aoe", "payoff"],
+            "axis": "elemental",
+            "action": "crimson_nova",
+            "requirements": { "class": "soul_reaver", "blood_well": 40, "cooldown": 15 },
+            "base_power": 55
+        },
+        "blood_armor": {
+            "id": "blood_armor",
+            "name": "Blood Armor",
+            "tier": 3,
+            "cost": 0,
+            "description": "Defense/Shield: Harden your blood into a jagged cage. Consumes 50 Blood Well to grant an Absorption Shield equal to 150% of your Strength.",
+            "identity_tags": ["martial", "dark", "protection", "defense"],
+            "axis": "endurance",
+            "action": "blood_armor",
+            "requirements": { "class": "soul_reaver", "blood_well": 50, "cooldown": 12 }
+        },
+        "vampiric_pact": {
+            "id": "vampiric_pact",
+            "name": "Vampiric Pact",
+            "tier": 2,
+            "cost": 15,
+            "description": "Defense/Restoration: Infuse your weapon with hunger. For 5 ticks, your physical strikes restore HP equal to 20% of the damage dealt.",
+            "identity_tags": ["magic", "dark", "restoration", "defense"],
+            "axis": "endurance",
+            "action": "vampiric_pact",
+            "requirements": { "class": "soul_reaver", "stamina": 15, "cooldown": 10 }
+        },
+        "blood_dash": {
+            "id": "blood_dash",
+            "name": "Blood Dash",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Burst forward in a spray of blood. Instantly travel up to 2 rooms. Deals minor damage to all in departure room.",
+            "identity_tags": ["martial", "speed", "mobility"],
+            "axis": "position",
+            "action": "blood_dash",
+            "requirements": { "class": "soul_reaver", "stamina": 15, "cooldown": 6 }
+        },
+        "blood_boil": {
+            "id": "blood_boil",
+            "name": "Blood Boil",
+            "tier": 3,
+            "cost": 25,
+            "description": "Utility/Buff: Agitate your blood to its limit. Increases Attack Speed by 25% and Dark Scaling by 15% for 8 ticks, but you take minor damage each tick.",
+            "identity_tags": ["magic", "dark", "utility"],
+            "axis": "tempo",
+            "action": "blood_boil",
+            "requirements": { "class": "soul_reaver", "stamina": 25, "cooldown": 20 }
+        },
+        "soul_reaver_physiology": {
+            "id": "soul_reaver_physiology",
+            "name": "Soul Reaver Physiology",
+            "tier": 1,
+            "description": "Passive: You are a predator of blood. Dealing damage with [martial] tags has a 15% chance to double your Blood Well generation on that strike.",
+            "logic_type": "passive",
+            "identity_tags": ["dark", "passive"],
+            "potency_rules": [
+                {
+                    "type": "resource_gain_mod",
+                    "resource": "blood_well",
+                    "multiplier": 1.15
+                }
+            ]
+        }
+    }
+}

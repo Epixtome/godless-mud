@@ -9,12 +9,14 @@ class Shrine(GameEntity):
         super().__init__(name, description, prototype_id=id)
         self.id = id
         self.deity_id = deity_id
-        self.kingdom = kingdom # light, dark, instinct
+        self.kingdom = kingdom # Default/Home kingdom (if any)
+        self.captured_by = kingdom # The current controlling kingdom
         self.coords = coords # (x, y, z)
         self.potency = potency
         self.decay = decay
         self.is_capital = is_capital
         self.favor_reservoir = 0 # Favor sacrificed to boost potency
+        self.favor_cost_mult = 1.0 # Multiplier for class swap ritual cost
         
     def to_dict(self):
         return {
@@ -23,11 +25,13 @@ class Shrine(GameEntity):
             "description": self.description,
             "deity_id": self.deity_id,
             "kingdom": self.kingdom,
+            "captured_by": self.captured_by,
             "coords": self.coords,
             "potency": self.potency,
             "decay": self.decay,
             "is_capital": self.is_capital,
-            "favor_reservoir": self.favor_reservoir
+            "favor_reservoir": self.favor_reservoir,
+            "favor_cost_mult": self.favor_cost_mult
         }
 
     @classmethod
@@ -43,5 +47,7 @@ class Shrine(GameEntity):
             data.get('decay', 5),
             data.get('is_capital', False)
         )
+        shrine.captured_by = data.get('captured_by', data['kingdom'])
         shrine.favor_reservoir = data.get('favor_reservoir', 0)
+        shrine.favor_cost_mult = data.get('favor_cost_mult', 1.0)
         return shrine

@@ -1,0 +1,138 @@
+{
+    "blessings": {
+        "hide": {
+            "id": "hide",
+            "name": "Hide",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup: Attempt to vanish into the shadows, gaining [Concealed] for 300 ticks. Cannot be used in combat.",
+            "identity_tags": ["martial", "vision", "setup"],
+            "axis": "vision",
+            "action": "hide",
+            "requirements": {
+                "class": "assassin",
+                "stamina": 10
+            }
+        },
+        "backstab": {
+            "id": "backstab",
+            "name": "Backstab",
+            "tier": 2,
+            "cost": 25,
+            "description": "Payoff: Strike from concealment for 3x Damage (4x with Daggers). Only usable while [Concealed]. Reveals you and stuns for 2 ticks.",
+            "identity_tags": ["martial", "lethality", "payoff"],
+            "axis": "lethality",
+            "action": "backstab",
+            "requirements": {
+                "class": "assassin",
+                "stamina": 25,
+                "status": "concealed"
+            },
+            "base_power": 45
+        },
+        "circle": {
+            "id": "circle",
+            "name": "Circle",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Dance around your target to strike from behind. Deals 1.5x damage and heavy Posture damage. Enables Garrote.",
+            "identity_tags": ["martial", "tempo", "setup"],
+            "axis": "tempo",
+            "action": "circle",
+            "requirements": {
+                "class": "assassin",
+                "stamina": 15,
+                "combat": true
+            },
+            "base_power": 20
+        },
+        "venom": {
+            "id": "venom",
+            "name": "Venom",
+            "tier": 3,
+            "cost": 20,
+            "description": "Setup: Coat your weapon in lethal toxins. Your next several attacks will apply [Poisoned] status.",
+            "identity_tags": ["occult", "utility", "setup"],
+            "axis": "utility",
+            "action": "venom",
+            "requirements": {
+                "class": "assassin",
+                "stamina": 20
+            }
+        },
+        "trap": {
+            "id": "trap",
+            "name": "Set Trap",
+            "tier": 3,
+            "cost": 30,
+            "description": "Defense/Utility: Place a hidden trigger in the room. Types: trip, blind, web, sleep, fire.",
+            "identity_tags": ["martial", "utility", "defense"],
+            "axis": "vision",
+            "action": "trap",
+            "requirements": {
+                "class": "assassin",
+                "stamina": 30
+            }
+        },
+        "smoke_bomb": {
+            "id": "smoke_bomb",
+            "name": "Smoke Bomb",
+            "tier": 4,
+            "cost": 35,
+            "description": "Defense: Disrupt all enemies in the room, granting yourself an escape and applying [Confused] to foes.",
+            "identity_tags": ["martial", "vision", "defense"],
+            "axis": "vision",
+            "action": "smoke_bomb",
+            "requirements": {
+                "class": "assassin",
+                "stamina": 35,
+                "cooldown": 20
+            }
+        },
+        "dirt_kick": {
+            "id": "dirt_kick",
+            "name": "Dirt Kick",
+            "tier": 1,
+            "cost": 10,
+            "description": "Defense/Disruption: A quick strike to the eyes. Applies [Blinded] for 10 ticks.",
+            "identity_tags": ["martial", "disruption", "defense"],
+            "axis": "tempo",
+            "action": "dirt_kick",
+            "requirements": {
+                "class": "assassin",
+                "stamina": 10
+            }
+        },
+        "garrote": {
+            "id": "garrote",
+            "name": "Garrote",
+            "tier": 5,
+            "cost": 40,
+            "description": "Payoff: Cinch a wire around the target's throat. Requires Circular positioning. Applies [Silenced] (8t) and [Stunned] (2t).",
+            "identity_tags": ["martial", "lethality", "payoff"],
+            "axis": "lethality",
+            "action": "garrote",
+            "requirements": {
+                "class": "assassin",
+                "stamina": 40,
+                "positioning": "circle"
+            },
+            "base_power": 55
+        },
+        "assassin_physiology": {
+            "id": "assassin_physiology",
+            "name": "Assassin Physiology",
+            "tier": 1,
+            "description": "Passive: Your footsteps are silent. You gain 10% Evasion and your Backstabs while daggers are equipped deal an additional 15% damage.",
+            "logic_type": "passive",
+            "identity_tags": ["lethality", "passive"],
+            "potency_rules": [
+                {
+                    "type": "stat_mod",
+                    "stat": "evasion",
+                    "multiplier": 1.1
+                }
+            ]
+        }
+    }
+}

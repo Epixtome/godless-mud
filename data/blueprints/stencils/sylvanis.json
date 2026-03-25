@@ -1,0 +1,90 @@
+{
+    "name": "sylvanis",
+    "description": "Nature, Rage, and Survival. The architecture of the Ironbark Root.",
+    "templates": [
+        {
+            "id": "tpl:sylvan_gate",
+            "name": "Ironbark Overgrowth",
+            "terrain": "whispering_mangroves",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.GREEN}#{Colors.RESET}",
+            "description": "A dense tangle of petrified tree-roots forming a massive gate. The vines here are as strong as iron chains.",
+            "tags": ["nature", "instinct", "fortified"]
+        },
+        {
+            "id": "tpl:sylvan_hollow",
+            "name": "Living Root-Chamber",
+            "terrain": "swamp",
+            "elevation": 0,
+            "symbol": "{Colors.BOLD}{Colors.GREEN}@{Colors.RESET}",
+            "description": "A massive hollow within an ancient tree-trunk. The walls are lined with pulsing bioluminescent fungi that provide a soft green light.",
+            "tags": ["nature", "social", "indoors"]
+        },
+        {
+            "id": "tpl:sylvan_grove",
+            "name": "Primal Ancestor Grove",
+            "terrain": "forest",
+            "elevation": 2,
+            "symbol": "{Colors.BOLD}{Colors.GREEN}F{Colors.RESET}",
+            "description": "A secluded grove where the spirits of the wild are strongest. A single ancient oak stands at the center, its roots drinking from a clear spring.",
+            "tags": ["nature", "divine", "power"],
+            "items": ["heartwood_sap"]
+        },
+        {
+            "id": "tpl:sylvan_bone_pit",
+            "name": "The Arena of Survival",
+            "terrain": "wasteland",
+            "elevation": -1,
+            "symbol": "{Colors.BOLD}{Colors.RED}v{Colors.RESET}",
+            "description": "A deep, circular pit lined with the massive rib-bones of long-dead predators. Here, the strongest prove their worth in bloody combat.",
+            "tags": ["nature", "martial", "lethality"]
+        },
+        {
+            "id": "tpl:sylvan_market",
+            "name": "The Fang & Pelt",
+            "terrain": "swamp",
+            "elevation": 0,
+            "symbol": "{Colors.BOLD}{Colors.GREEN}${Colors.RESET}",
+            "description": "A trading post built from massive rib-bones and leather. Skinned pelts hang from the beams, and the air smells of blood and smoke.",
+            "tags": ["nature", "trade", "survival"],
+            "shop_inventory": ["animal_pelt", "bone_dagger", "survival_kit"]
+        },
+        {
+            "id": "tpl:sylvan_trials",
+            "name": "Ritual of Strength",
+            "terrain": "wasteland",
+            "elevation": 0,
+            "symbol": "{Colors.BOLD}{Colors.RED}!{Colors.RESET}",
+            "description": "A cleared patch of earth where the soil is packed hard by generations of fighters. To belong here is to survive the trials.",
+            "tags": ["nature", "combat", "training"],
+            "monsters": ["primal_warrior"]
+        },
+        {
+            "id": "tpl:sylvan_spring",
+            "name": "Healing Ancestor-Spring",
+            "terrain": "water",
+            "elevation": -1,
+            "symbol": "{Colors.BOLD}{Colors.CYAN}~{Colors.RESET}",
+            "description": "Clear water bubbles up through ancient roots into a basin of smooth river stones. Drinking here feels as if the spirits are washing away your fatigue.",
+            "tags": ["nature", "healing", "spirit"]
+        },
+        {
+            "id": "tpl:sylvan_nest",
+            "name": "Ironbark Hollows",
+            "terrain": "whispering_mangroves",
+            "elevation": 2,
+            "symbol": "{Colors.BOLD}{Colors.GREEN}={Colors.RESET}",
+            "description": "Small, cozy dwellings woven directly into the upper branches of the ironbark trees. They sway gently in the wind, secure and high above the jungle floor.",
+            "tags": ["nature", "residential"]
+        },
+        {
+            "id": "tpl:sylvan_totem",
+            "name": "Primal Pillar",
+            "terrain": "mountain",
+            "elevation": 4,
+            "symbol": "{Colors.BOLD}{Colors.RED}I{Colors.RESET}",
+            "description": "A massive pillar of carved wood and bone, depicting the ancient beast-spirits. It stands as a warning to intruders and a source of strength to the pack.",
+            "tags": ["nature", "monument", "power"]
+        }
+    ]
+}

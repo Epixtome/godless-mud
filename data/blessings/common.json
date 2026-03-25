@@ -146,6 +146,138 @@
                 "cooldown": 2
             },
             "base_power": 10
+        },
+        "push": {
+            "id": "push",
+            "name": "Push",
+            "tier": 1,
+            "cost": 50,
+            "description": "Utility/Displacement: Forcefully shove an enemy into an adjacent room or a random exit.",
+            "identity_tags": [
+                "martial",
+                "utility",
+                "position"
+            ],
+            "action": "push",
+            "deity_id": "common",
+            "requirements": {
+                "stamina": 15,
+                "cooldown": 6
+            }
+        },
+        "charge": {
+            "id": "charge",
+            "name": "Charge",
+            "tier": 1,
+            "cost": 100,
+            "description": "Mobility/Damage: Slam into an enemy with incredible momentum. Deals minor damage and initiates combat.",
+            "identity_tags": [
+                "martial",
+                "mobility",
+                "strike"
+            ],
+            "action": "charge",
+            "deity_id": "common",
+            "requirements": {
+                "stamina": 25,
+                "cooldown": 12
+            },
+            "base_power": 15
+        },
+        "drag": {
+            "id": "drag",
+            "name": "Drag",
+            "tier": 1,
+            "cost": 100,
+            "description": "Mobility/Pull: Pull a struggling enemy into an adjacent room with you.",
+            "identity_tags": [
+                "martial",
+                "mobility",
+                "position"
+            ],
+            "action": "drag",
+            "deity_id": "common",
+            "requirements": {
+                "stamina": 20,
+                "cooldown": 10
+            }
+        },
+        "sunder": {
+            "id": "sunder",
+            "name": "Sunder",
+            "tier": 2,
+            "cost": 100,
+            "description": "Utility/Destruction: Attempt to destroy a target's off-hand item (shield/secondary weapon).",
+            "identity_tags": ["martial", "utility"],
+            "action": "sunder",
+            "deity_id": "common",
+            "requirements": { "stamina": 20, "cooldown": 8 }
+        },
+        "pommel_strike": {
+            "id": "pommel_strike",
+            "name": "Pommel Strike",
+            "tier": 1,
+            "cost": 50,
+            "description": "Disruption/Stun: Strike with the hilt to interrupt channeled abilities.",
+            "identity_tags": ["martial", "strike", "disruption"],
+            "action": "pommel_strike",
+            "deity_id": "common",
+            "requirements": { "stamina": 10, "cooldown": 4 }
+        },
+        "trip": {
+            "id": "trip",
+            "name": "Trip",
+            "tier": 2,
+            "cost": 80,
+            "description": "Control/Stun: A sweeping leg strike that knocks a target down (Stun 2s).",
+            "identity_tags": ["martial", "control"],
+            "action": "trip",
+            "deity_id": "common",
+            "requirements": { "stamina": 20, "cooldown": 10 }
+        },
+        "disarm": {
+            "id": "disarm",
+            "name": "Disarm",
+            "tier": 3,
+            "cost": 120,
+            "description": "Control: Attempt to knock a target's main-hand weapon to the floor.",
+            "identity_tags": ["martial", "control"],
+            "action": "disarm",
+            "deity_id": "common",
+            "requirements": { "stamina": 25, "cooldown": 15 }
+        },
+        "shield_bash": {
+            "id": "shield_bash",
+            "name": "Shield Bash",
+            "tier": 1,
+            "cost": 60,
+            "description": "Setup/Stun: Slam your shield into the enemy (Stun 4s). Requires a shield.",
+            "identity_tags": ["martial", "strike", "disruption", "setup"],
+            "action": "shield_bash",
+            "deity_id": "common",
+            "requirements": { "stamina": 15, "shield": true, "cooldown": 5 }
+        },
+        "rescue": {
+            "id": "rescue",
+            "name": "Rescue",
+            "tier": 1,
+            "cost": 50,
+            "description": "Defense/Taunt: Intervene to take all threat from a target ally.",
+            "identity_tags": ["martial", "utility", "defense"],
+            "action": "rescue",
+            "deity_id": "common",
+            "requirements": { "stamina": 15, "cooldown": 2 }
+        },
+        "intervene": {
+            "id": "intervene",
+            "name": "Intervene",
+            "tier": 2,
+            "cost": 100,
+            "description": "Defense: Dash to an ally and grant them high mitigation for 10s.",
+            "identity_tags": ["martial", "utility", "defense"],
+            "action": "intervene",
+            "deity_id": "common",
+            "requirements": { "stamina": 25, "cooldown": 10 }
         }
     }
 }

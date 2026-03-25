@@ -36,10 +36,12 @@ class Class:
             setattr(self, key, value)
 
 class Deity:
-    def __init__(self, d_id, name, kingdom):
+    def __init__(self, d_id, name, kingdom, domains=None, description=""):
         self.id = d_id
         self.name = name
         self.kingdom = kingdom
+        self.domains = domains or []
+        self.description = description
 
 class Synergy:
     def __init__(self, s_id, name, requirements, bonuses):

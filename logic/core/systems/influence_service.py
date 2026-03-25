@@ -58,6 +58,17 @@ class InfluenceService:
 
         self.clear_cache()
 
+    def save_shrines(self):
+        """Persists the live state of all shrines back to JSON."""
+        path = "data/shrines.json"
+        try:
+            shrine_data = {s_id: s.to_dict() for s_id, s in self.shrines.items()}
+            with open(path, "w", encoding='utf-8') as f:
+                json.dump({"shrines": shrine_data}, f, indent=4)
+            logger.info(f"InfluenceService persisted {len(self.shrines)} shrines to {path}.")
+        except Exception as e:
+            logger.error(f"Failed to save shrines: {e}")
+
     def register_shrine(self, shrine):
         self.shrines[shrine.id] = shrine
         self.clear_cache()
@@ -83,8 +94,8 @@ class InfluenceService:
             dist = math.sqrt((shrine.coords[0] - x)**2 + (shrine.coords[1] - y)**2)
             power = max(0, shrine.potency - (dist * shrine.decay))
             
-            if shrine.kingdom in influence_sums:
-                influence_sums[shrine.kingdom] += power
+            if shrine.captured_by in influence_sums:
+                influence_sums[shrine.captured_by] += power
 
         # Determine dominant kingdom
         dominant = "neutral"

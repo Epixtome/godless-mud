@@ -12,7 +12,6 @@ from . import system
 from . import editor
 from . import builder
 from . import mob_builder
-from . import sovereignty_admin
 from . import diagnostic_commands
 from . import kit_commands
 from . import factory_commands

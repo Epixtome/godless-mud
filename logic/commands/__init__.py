@@ -22,5 +22,6 @@ from . import interaction_commands
 from . import spell_commands
 from . import utility_commands
 from . import warfare_commands
+from . import shrines
 
 # Note: handlers package is imported by skill_commands.py

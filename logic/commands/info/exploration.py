@@ -100,7 +100,36 @@ def look(player, args, with_prompt=True):
             if target_name in mob.name.lower() and vision.can_see(player, mob):
                 signals = _get_status_signals(mob, player.game)
                 status_str = f" {signals}" if signals else ""
-                send(f"{Colors.RED}{mob.description}{Colors.RESET}{status_str}"); flush(); return
+                
+                # [V7.2] Premium Tactical Scan
+                send(f"{Colors.RED}{mob.description}{Colors.RESET}{status_str}")
+                
+                # Health Bar
+                hp_pct = (mob.hp / mob.max_hp) * 100 if mob.max_hp > 0 else 0
+                hp_bar = display_utils.render_progress_bar(mob.hp, mob.max_hp, 20, color=Colors.RED)
+                
+                # GCR Power Level
+                from logic.core.math import rating
+                m_cr = rating.calculate_entity_rating(mob)
+                p_cr = rating.calculate_entity_rating(player)
+                diff = m_cr - p_cr
+                threat = f"{Colors.RED}DANGEROUS" if diff > 5 else (f"{Colors.YELLOW}FAIR" if abs(diff) <= 5 else f"{Colors.GREEN}DOMINANT")
+                
+                # Status Effects
+                effects_line = ""
+                if hasattr(mob, 'status_effects') and mob.status_effects:
+                     eff_list = [display_utils.highlight_status_keywords(str(e).upper()) for e in mob.status_effects]
+                     effects_line = f"\n {Colors.CYAN}{Colors.BOLD}EFFECTS:{Colors.RESET} {', '.join(eff_list)}"
+                
+                # Posture / Shields
+                bal = mob.resources.get('balance', 100)
+                max_bal = mob.resources.get('balance_max', 100) # Check for max balance else fallback
+                if max_bal == 100 and hasattr(mob, 'level'): max_bal = 20 + (mob.level * 5)
+                
+                send(f" {hp_bar} {Colors.WHITE}{int(hp_pct)}%{Colors.RESET} | {Colors.YELLOW}Power: {m_cr} GCR{Colors.RESET} ({threat}{Colors.RESET})")
+                send(f" {Colors.MAGENTA}POSTURE: {bal}/{max_bal}{Colors.RESET}{effects_line}")
+                
+                flush(); return
         for p in room.players:
             if p != player and target_name in p.name.lower() and vision.can_see(player, p):
                 signals = _get_status_signals(p, player.game)
@@ -169,6 +198,16 @@ def look(player, args, with_prompt=True):
             # Highlight any state keywords in the player notice if they exist
             player_line = display_utils.highlight_status_keywords(f"{p.name} is here.")
             send(f"{Colors.BLUE}{player_line}{Colors.RESET}{status_str}")
+
+    # [V7.2] Sovereign Shrines
+    from logic.core.systems.influence_service import InfluenceService
+    inf_service = InfluenceService.get_instance()
+    # Find shrines at these specific coordinates
+    for s in inf_service.shrines.values():
+        if s.coords[0] == room.x and s.coords[1] == room.y and s.coords[2] == room.z:
+            k_color = Colors.CYAN if s.captured_by == "light" else (Colors.MAGENTA if s.captured_by == "dark" else Colors.GREEN)
+            send(f"{Colors.BOLD}{k_color}[SHRINE] {s.name}{Colors.RESET}")
+            send(f"  {Colors.DARK_GRAY}{s.description}{Colors.RESET} {Colors.YELLOW}(Potency: {int(s.potency)}){Colors.RESET}")
 
     if hasattr(room, 'metadata') and 'traps' in room.metadata:
         for trap in room.metadata['traps']:

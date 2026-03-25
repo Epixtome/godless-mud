@@ -1,0 +1,91 @@
+{
+    "name": "umbra",
+    "description": "Ambition, Shadows, and Decay. The architecture of the Obsidian Throne.",
+    "templates": [
+        {
+            "id": "tpl:umbra_gate",
+            "name": "Obsidian Archway",
+            "terrain": "volcanic_sand",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.MAGENTA}X{Colors.RESET}",
+            "description": "A jagged arch of solid obsidian. Dark banners of tattered silk flutter in a cold, phantom wind.",
+            "tags": ["dark", "chaos", "fortified"]
+        },
+        {
+            "id": "tpl:umbra_alley",
+            "name": "Shadow-Cloaked Alley",
+            "terrain": "ashen_coast",
+            "elevation": 0,
+            "symbol": "{Colors.BOLD}{Colors.DARK_GRAY}::{Colors.RESET}",
+            "description": "A narrow passageway between dark buildings. The shadows here seem to have a weight and a voice of their own.",
+            "tags": ["dark", "social", "hidden"]
+        },
+        {
+            "id": "tpl:umbra_altar",
+            "name": "Altar of Whispering Souls",
+            "terrain": "shadow",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.MAGENTA}o{Colors.RESET}",
+            "description": "A dark platform surrounded by floating, flickering soul-lanterns. Those who kneel here hear the ambitious whispers of the void.",
+            "tags": ["dark", "occult", "power"],
+            "items": ["void_shard"]
+        },
+        {
+            "id": "tpl:umbra_citadel",
+            "name": "Dread Spire of Nox",
+            "terrain": "mountain",
+            "elevation": 8,
+            "symbol": "{Colors.BOLD}{Colors.DARK_GRAY}V{Colors.RESET}",
+            "description": "A massive, spiraling tower that seems to drink the very light from the sky. It is the seat of the Obsidian Throne.",
+            "tags": ["dark", "vision", "military"]
+        },
+        {
+            "id": "tpl:umbra_grift",
+            "name": "The Velvet Grift",
+            "terrain": "ashen_coast",
+            "elevation": -1,
+            "symbol": "{Colors.BOLD}{Colors.MAGENTA}${Colors.RESET}",
+            "description": "A dimly lit shop where the air is thick with purple smoke. Exotic toxins, shadow-cloaks, and stolen secrets are the primary currency here.",
+            "tags": ["dark", "trade", "unlawful"],
+            "shop_inventory": ["shade_cloak", "vile_brew", "stolen_key"]
+        },
+        {
+            "id": "tpl:umbra_arena",
+            "name": "The Pit of Ambition",
+            "terrain": "wasteland",
+            "elevation": -2,
+            "symbol": "{Colors.BOLD}{Colors.RED}X{Colors.RESET}",
+            "description": "A sunken pit surrounded by jagged obsidian teeth. The sand is stained dark by those whose ambition exceeded their reach.",
+            "tags": ["dark", "combat", "lawless"],
+            "monsters": ["pit_fighter"]
+        },
+        {
+            "id": "tpl:umbra_spire",
+            "name": "The Noxian Repository",
+            "terrain": "shadow",
+            "elevation": 2,
+            "symbol": "{Colors.BOLD}{Colors.MAGENTA}L{Colors.RESET}",
+            "description": "Shelves of black glass contain glowing soul-jars and scrolls written in shadow-ink. It feels as if the knowledge here is watching you back.",
+            "tags": ["dark", "knowledge", "forbidden"],
+            "items": ["obsidian_shard", "void_ritual_scroll"]
+        },
+        {
+            "id": "tpl:umbra_tenements",
+            "name": "Shadow Tenements",
+            "terrain": "ashen_coast",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.DARK_GRAY}#{Colors.RESET}",
+            "description": "Cramped stone dwellings built into the walls of the ravine. Each window is a single, glowing purple eye in the darkness.",
+            "tags": ["dark", "residential"]
+        },
+        {
+            "id": "tpl:umbra_temple",
+            "name": "Noxian Cathedral",
+            "terrain": "shadow",
+            "elevation": 1,
+            "symbol": "{Colors.BOLD}{Colors.MAGENTA}*{Colors.RESET}",
+            "description": "A magnificent cathedral of dark glass and pulsing void-crystals. Here, the ambitious pray to Nox for the power to seize their destiny.",
+            "tags": ["dark", "divine", "power"]
+        }
+    ]
+}

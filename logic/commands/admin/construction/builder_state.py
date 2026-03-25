@@ -15,11 +15,11 @@ import os
 _KIT_CACHE = {}
 
 def _load_kit(kit_name):
-    """Loads a building kit from data/blueprints/kits/"""
+    """Loads a building stencil from data/blueprints/stencils/"""
     if kit_name in _KIT_CACHE:
         return _KIT_CACHE[kit_name]
     
-    path = f"data/blueprints/kits/{kit_name}.json"
+    path = f"data/blueprints/stencils/{kit_name}.json"
     if not os.path.exists(path):
         return None
         
@@ -40,7 +40,7 @@ def building_mode(player, args):
     if not hasattr(player, 'builder_state'):
         player.builder_state = {
             "active": False,
-            "kit": "default",
+            "stencil_set": "default",
             "stencil_index": 1,
             "auto_link": True,
             "show_hud": True
@@ -72,7 +72,7 @@ def building_mode(player, args):
     player.builder_state["active"] = True
     player.state = "building"
     player.send_line(f"\n{Colors.BOLD}{Colors.CYAN}=== BUILDER ARCHITECT ACTIVATED ==={Colors.RESET}")
-    player.send_line(f"Kit: {Colors.YELLOW}{player.builder_state['kit']}{Colors.RESET}")
+    player.send_line(f"Stencil Set: {Colors.YELLOW}{player.builder_state['stencil_set']}{Colors.RESET}")
     player.send_line(f"Type '{Colors.BOLD}kit{Colors.RESET}' or '{Colors.BOLD}drawer{Colors.RESET}' to select stencils.")
     player.send_line(f"Commands ({Colors.BOLD}dig, paint, link{Colors.RESET}) no longer require the '@' prefix.")
     player.send_line(f"Type '{Colors.BOLD}exit{Colors.RESET}' to return to reality.")
@@ -102,7 +102,7 @@ def handle_building_input(player, command_line):
         
     # Hotkey Stencil Cycling
     if cmd_name in ["[", "]"]:
-        k_name = player.builder_state.get("kit", "default")
+        k_name = player.builder_state.get("stencil_set", "default")
         k_data = _load_kit(k_name)
         if k_data:
             templates = k_data.get("templates", [])
@@ -156,13 +156,14 @@ def handle_building_input(player, command_line):
 @command_manager.register("@kit", "@stencil", "@drawer", admin=True, category="admin_building")
 def kit_command(player, args):
     """
-    Open the Kit Drawer and select architectural stencils.
+    Open the Stencil Drawer and select architectural patterns.
     Usage: @kit [list | load <name> | <index>]
+    (Renamed from 'kits' to 'stencils' to avoid class-kit confusion.)
     """
     if not hasattr(player, 'builder_state'):
         building_mode(player, "")
 
-    k_name = player.builder_state.get("kit", "default")
+    k_name = player.builder_state.get("stencil_set", "default")
     k_data = _load_kit(k_name)
 
     if not args:
@@ -177,19 +178,19 @@ def kit_command(player, args):
         if len(parts) > 1:
             target = parts[1]
             if _load_kit(target):
-                player.builder_state["kit"] = target
+                player.builder_state["stencil_set"] = target
                 player.builder_state["stencil_index"] = 1
                 player.autobrush = True # Auto-enable brush mode
                 player.send_line(f"{Colors.GREEN}Kit Loaded: {target.upper()}. BRUSH DIPPED in first stencil. Auto-Brush: ON.{Colors.RESET}")
                 _show_kit_drawer(player, target, _load_kit(target))
             else:
-                player.send_line(f"Kit '{target}' not found in data/blueprints/kits/")
+                player.send_line(f"Kit '{target}' not found in data/blueprints/stencils/")
         else:
-            files = [f.replace(".json", "") for f in os.listdir("data/blueprints/kits/") if f.endswith(".json")]
+            files = [f.replace(".json", "") for f in os.listdir("data/blueprints/stencils/") if f.endswith(".json")]
             player.send_line(f"{Colors.BOLD}Available Kits:{Colors.RESET} {', '.join(files)}")
             
     elif sub == "list":
-        files = [f.replace(".json", "") for f in os.listdir("data/blueprints/kits/") if f.endswith(".json")]
+        files = [f.replace(".json", "") for f in os.listdir("data/blueprints/stencils/") if f.endswith(".json")]
         player.send_line(f"\n{Colors.BOLD}{Colors.CYAN}[ ARCHITECTURAL KITS ]{Colors.RESET}")
         for f in files:
             player.send_line(f" - {f}")
@@ -217,7 +218,7 @@ def _show_kit_drawer(player, kit_name, kit_data):
 
     output = []
     output.append(f"\n{Colors.BOLD}{Colors.LIGHT_CYAN}+--------------------------------------------------+{Colors.RESET}")
-    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}| {Colors.WHITE}KIT DRAWER: {kit_name.upper():<35} {Colors.LIGHT_CYAN}|{Colors.RESET}")
+    output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}| {Colors.WHITE}STENCIL DRAWER: {kit_name.upper():<35} {Colors.LIGHT_CYAN}|{Colors.RESET}")
     output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}+-----+---+------------------------+-----------------+{Colors.RESET}")
     output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}| DIP | S | NAME                   | TERRAIN         |{Colors.RESET}")
     output.append(f"{Colors.BOLD}{Colors.LIGHT_CYAN}+-----+---+------------------------+-----------------+{Colors.RESET}")
@@ -262,7 +263,7 @@ def building_hud(player, args):
     """Pushes a status bar to the user's terminal."""
     if not hasattr(player, 'builder_state'): return
     bs = player.builder_state
-    k_data = _load_kit(bs["kit"])
+    k_data = _load_kit(bs["stencil_set"])
     
     def mode_label(name, active):
         return f"{Colors.GREEN}{name}" if active else f"{Colors.DARK_GRAY}{name}"
@@ -275,7 +276,7 @@ def building_hud(player, args):
     
     elev = getattr(player.room, 'elevation', 0)
     brush_elev = bs.get('brush_elevation', 'Auto')
-    builder_line = f"{Colors.DARK_GRAY}[ARCHITECT | Kit: {Colors.CYAN}{bs['kit']}{Colors.DARK_GRAY} | {' '.join(modes)} | Room: {Colors.WHITE}{elev}{Colors.DARK_GRAY} | Brush: {Colors.YELLOW}{brush_elev}{Colors.DARK_GRAY}]{Colors.RESET}"
+    builder_line = f"{Colors.DARK_GRAY}[ARCHITECT | Stencil: {Colors.CYAN}{bs['stencil_set']}{Colors.DARK_GRAY} | {' '.join(modes)} | Room: {Colors.WHITE}{elev}{Colors.DARK_GRAY} | Brush: {Colors.YELLOW}{brush_elev}{Colors.DARK_GRAY}]{Colors.RESET}"
     player.send_line(builder_line)
 
 @command_manager.register("@architect_move", admin=True, category="admin_building")
@@ -291,7 +292,7 @@ def architect_move(player, args):
         
         # BRUSH MODE: Update existing room
         if target_room and getattr(player, 'autobrush', False):
-            k_data = _load_kit(player.builder_state["kit"])
+            k_data = _load_kit(player.builder_state["stencil_set"])
             if k_data:
                 idx = player.builder_state["stencil_index"]
                 if 0 < idx <= len(k_data["templates"]):

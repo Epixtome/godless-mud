@@ -1,0 +1,143 @@
+{
+    "blessings": {
+        "hex_flare": {
+            "id": "hex_flare",
+            "name": "Hex Flare",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup: Pulse of dark energy. Applies [Hexed] (12t) to all enemies in the room. Generates 15 Entropy.",
+            "identity_tags": ["occult", "dark", "setup"],
+            "axis": "dark",
+            "action": "hex_flare",
+            "requirements": {
+                "class": "witch",
+                "stamina": 10,
+                "cooldown": 4
+            },
+            "base_power": 10
+        },
+        "curse_of_binding": {
+            "id": "curse_of_binding",
+            "name": "Curse of Binding",
+            "tier": 2,
+            "cost": 20,
+            "description": "Setup: Bind foe's movements. Applies [Cursed] (10t) and [Slowed] (5t). Resets if they move room.",
+            "identity_tags": ["occult", "disruption", "setup"],
+            "axis": "disruption",
+            "action": "curse_of_binding",
+            "requirements": {
+                "class": "witch",
+                "stamina": 20,
+                "cooldown": 8
+            }
+        },
+        "vile_curse": {
+            "id": "vile_curse",
+            "name": "Vile Curse",
+            "tier": 3,
+            "cost": 40,
+            "description": "Payoff: Consume all [Hexed] and [Cursed] states to deal massive Entropy damage. 3x damage per state.",
+            "identity_tags": ["occult", "lethality", "payoff"],
+            "axis": "lethality",
+            "action": "vile_curse",
+            "requirements": {
+                "class": "witch",
+                "stamina": 40,
+                "status": "hexed"
+            },
+            "base_power": 50
+        },
+        "soul_siphon": {
+            "id": "soul_siphon",
+            "name": "Soul Siphon",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff: Drain 20% of your target's health if they are [Hexed]. Restores your own health by that amount.",
+            "identity_tags": ["occult", "lethality", "payoff"],
+            "axis": "lethality",
+            "action": "soul_siphon",
+            "requirements": {
+                "class": "witch",
+                "stamina": 30,
+                "status": "hexed",
+                "cooldown": 12
+            },
+            "base_power": 30
+        },
+        "fate_mirror": {
+            "id": "fate_mirror",
+            "name": "Fate Mirror",
+            "tier": 2,
+            "cost": 25,
+            "description": "Defense: Refract 50% of the next attack damage back to the attacker. Applies [Mirror Ward] for 10s.",
+            "identity_tags": ["occult", "protection", "defense"],
+            "axis": "protection",
+            "action": "fate_mirror",
+            "requirements": {
+                "class": "witch",
+                "stamina": 25,
+                "cooldown": 15
+            }
+        },
+        "mist_form": {
+            "id": "mist_form",
+            "name": "Mist Form",
+            "tier": 4,
+            "cost": 40,
+            "description": "Defense: Turn into dark mist. You become untargetable for 4 seconds, but cannot attack.",
+            "identity_tags": ["magic", "protection", "defense"],
+            "axis": "protection",
+            "action": "mist_form",
+            "requirements": {
+                "class": "witch",
+                "stamina": 40,
+                "cooldown": 45
+            }
+        },
+        "night_shade": {
+            "id": "night_shade",
+            "name": "Night Shade",
+            "tier": 1,
+            "cost": 15,
+            "description": "Mobility: Glide forward through enemies, applying [Blinded] (3t) to anyone you pass through.",
+            "identity_tags": ["occult", "vision", "mobility"],
+            "axis": "vision",
+            "action": "night_shade",
+            "requirements": {
+                "class": "witch",
+                "stamina": 15,
+                "cooldown": 6
+            }
+        },
+        "dark_ritual": {
+            "id": "dark_ritual",
+            "name": "Dark Ritual",
+            "tier": 5,
+            "cost": 60,
+            "description": "Utility: Ultimate: For 20s, all [Cursed] targets take 2x damage from all sources.",
+            "identity_tags": ["occult", "utility", "ultimate"],
+            "axis": "utility",
+            "action": "dark_ritual",
+            "requirements": {
+                "class": "witch",
+                "stamina": 60,
+                "cooldown": 180
+            }
+        },
+        "witch_physiology": {
+            "id": "witch_physiology",
+            "name": "Witch Physiology",
+            "tier": 1,
+            "description": "Passive: Your [Hexed] targets deal 10% less damage to you. You gain 1 Entropy per room movement.",
+            "logic_type": "passive",
+            "identity_tags": ["dark", "passive"],
+            "potency_rules": [
+                {
+                    "type": "stat_mod",
+                    "stat": "dark_resistance",
+                    "multiplier": 1.1
+                }
+            ]
+        }
+    }
+}

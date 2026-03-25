@@ -19,7 +19,10 @@ def _display_deities(player):
         if kingdoms[k]:
             output.append(f"\n{Colors.CYAN}{k.title()} Kingdom{Colors.RESET}")
             for d in sorted(kingdoms[k], key=lambda x: x.name):
-                output.append(f"  {Colors.BOLD}{d.name:<15}{Colors.RESET} ({d.stat.upper()})")
+                domains = ", ".join(d.domains).title()
+                output.append(f"  {Colors.BOLD}{d.name:<12}{Colors.RESET} [{domains}]")
+                if d.description:
+                    output.append(f"    {Colors.DARK_GRAY}{d.description}{Colors.RESET}")
                 
     player.send_paginated("\n".join(output))
 

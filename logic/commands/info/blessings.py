@@ -5,7 +5,7 @@ from logic.core.utils import display_utils
 @command_manager.register("deck", category="information")
 def deck(player, args):
     """View your currently equipped blessings (Deck). Optimized for V7.2."""
-    width = 66
+    width = 100
     cls_id = player.active_class or "wanderer"
     cls_obj = player.game.world.classes.get(cls_id)
     cls_name = cls_obj.name if cls_obj else cls_id.capitalize()
@@ -21,7 +21,7 @@ def deck(player, args):
             b = player.game.world.blessings.get(b_id)
             if b: blessings.append(b)
         
-        # Defining logical categories for the deck display
+        # Defining logical categories
         CATEGORIES = [
             ("BUILDERS", ["builder", "generator"]),
             ("SETUPS", ["setup", "opener"]),
@@ -31,6 +31,7 @@ def deck(player, args):
         ]
         
         displayed_ids = set()
+        import re
         
         for title, tags in CATEGORIES:
             cat_list = []
@@ -40,45 +41,54 @@ def deck(player, args):
                     cat_list.append(b)
                     
             if cat_list:
-                player.send_line(f"\n {Colors.BOLD}{Colors.YELLOW}{title.upper()}{Colors.RESET}")
+                # [V7.2] Removed category header to reduce vertical redundant space
                 cat_list.sort(key=lambda x: x.name)
                 for b in cat_list:
                     displayed_ids.add(b.id)
                     cost_str = ""
                     reqs = b.requirements
-                    # Show primary cost
                     for res in ["stamina", "concentration", "fury", "chi", "bullets", "luck"]:
                          if res in reqs:
-                              cost_str = f" {Colors.WHITE}({reqs[res]} {res[:3].upper()}){Colors.RESET}"
+                              cost_str = f"{Colors.WHITE}({reqs[res]} {res[:3].upper()}){Colors.RESET}"
                               break
                     
+                    # Identify specific sub-type from tags
+                    b_type = "Ability"
+                    for t in ["builder", "setup", "payoff", "finisher", "defense", "utility", "mobility"]:
+                        if t in b.identity_tags:
+                            b_type = t.upper()
+                            break
+
+                    # Strip redundant "Type: " from raw description before highlighting
+                    raw_desc = b.description
+                    clean_raw = re.sub(r'^[A-Za-z/]+:\s*', '', raw_desc)
+                    desc = display_utils.highlight_status_keywords(clean_raw)
+                    
+                    # Line 1: [TYPE] Name (Cost)
+                    player.send_line(f"  {Colors.DGREY}[{b_type}]{Colors.RESET} {Colors.CYAN}{b.name}{Colors.RESET} {cost_str}")
+                    # Line 2: The Description (Full, but restricted to width to look clean)
                     import textwrap
+                    wrapped_desc = textwrap.wrap(desc, width=96)
+                    for line in wrapped_desc:
+                        player.send_line(f"    {Colors.ITALIC}{Colors.WHITE}{line}{Colors.RESET}")
                     
-                    # [V7.2] Centralized Highlight Architecture
-                    desc = display_utils.highlight_status_keywords(b.description)
-                    
-                    # Wrap to avoid horizontal sprawl
-                    wrapped_desc = textwrap.wrap(desc, width=50)
-                    desc_line = wrapped_desc[0] if wrapped_desc else ""
-                    
-                    player.send_line(f"  {Colors.CYAN}{b.name:<24}{Colors.RESET} {Colors.ITALIC}{Colors.WHITE}{desc_line}{Colors.RESET}{cost_str}")
-                    # Handle subsequent wrapped lines
-                    for extra in wrapped_desc[1:]:
-                         player.send_line(f"                           {Colors.ITALIC}{Colors.WHITE}{extra}{Colors.RESET}")
+                    # [V7.2] Add a spacer between abilities
+                    player.send_line("")
         
         # Remaining (Misc)
         misc = [b for b in blessings if b.id not in displayed_ids]
         if misc:
-            player.send_line(f"\n {Colors.BOLD}{Colors.YELLOW}MISC{Colors.RESET}")
             for b in misc:
+                # Strip redundant "Type: " from raw description
+                clean_raw = re.sub(r'^[A-Za-z/]+:\s*', '', b.description)
+                desc = display_utils.highlight_status_keywords(clean_raw)
+                player.send_line(f"  {Colors.CYAN}{b.name}{Colors.RESET}")
                 import textwrap
-                desc = display_utils.highlight_status_keywords(b.description)
-                wrapped = textwrap.wrap(desc, width=50)
-                desc_line = wrapped[0] if wrapped else ""
-                player.send_line(f"  {Colors.CYAN}{b.name:<24}{Colors.RESET} {Colors.ITALIC}{Colors.WHITE}{desc_line}{Colors.RESET}")
-                for extra in wrapped[1:]:
-                    player.send_line(f"                           {Colors.ITALIC}{Colors.WHITE}{extra}{Colors.RESET}")
-
+                wrapped = textwrap.wrap(desc, width=96)
+                for line in wrapped:
+                    player.send_line(f"    {Colors.ITALIC}{Colors.WHITE}{line}{Colors.RESET}")
+                player.send_line("")
+        
     player.send_line("\n" + display_utils.render_line(width))
     
     # Breakthroughs / Resonance
@@ -123,7 +133,7 @@ def list_blessings(player, args):
         elif "song" in tags: cat["Songs"].append(info)
         else: cat["Passives"].append(info)
 
-    player.send_line(f"\n{display_utils.render_header('Known Blessings', 60)}")
+    player.send_line(f"\n{display_utils.render_header('Known Blessings', 100)}")
     for title, list_ in cat.items():
         if list_:
             player.send_line(f"\n {Colors.BOLD}{title}{Colors.RESET}")
@@ -132,7 +142,7 @@ def list_blessings(player, args):
 @command_manager.register("passives", "bonuses", "effects", "afflictions", category="information")
 def list_passives(player, args):
     """List active passive blessings and status effects."""
-    player.send_line(f"\n{display_utils.render_header('Active Passives', 60)}")
+    player.send_line(f"\n{display_utils.render_header('Active Passives', 100)}")
     
     found = False
     for b_id in player.known_blessings:
@@ -142,7 +152,7 @@ def list_passives(player, args):
             found = True
     if not found: player.send_line(" No passive blessings.")
         
-    player.send_line(f"\n{display_utils.render_header('Active Effects', 60, '-')}")
+    player.send_line(f"\n{display_utils.render_header('Active Effects', 100, '-')}")
     if player.status_effects:
         for eff_id, expiry in player.status_effects.items():
             eff_data = player.game.world.status_effects.get(eff_id, {})

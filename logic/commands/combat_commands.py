@@ -12,7 +12,12 @@ def kill(player, args):
         player.send_line("Kill whom?")
         return
         
-    target = find_by_index(player.room.monsters + player.room.players, args)
+    # [V7.2] Include Shrines in targeting
+    from logic.core.systems.influence_service import InfluenceService
+    shrine_service = InfluenceService.get_instance()
+    shrines_here = [s for s in shrine_service.shrines.values() if s.coords == [player.room.x, player.room.y, player.room.z]]
+    
+    target = find_by_index(player.room.monsters + player.room.players + shrines_here, args)
     
     if not target:
         player.send_line("You don't see them here.")
@@ -26,9 +31,16 @@ def kill(player, args):
         player.send_line("You are already engaged in combat! Finish your opponent or flee first.")
         return
         
-    combat.start_combat(player, target)
+    # Check for shrine special combat
+    if hasattr(target, 'potency'):
+        # Shrines are fixed and don't "Fight Back" but they do tether the player
+        player.fighting = target
+        player.state = "combat"
+        player.send_line(f"{Colors.RED}You begin to batter the divine resonance of {target.name}!{Colors.RESET}")
+    else:
+        combat.start_combat(player, target)
+        player.send_line(f"{Colors.RED}You attack {target.name}!{Colors.RESET}")
     
-    player.send_line(f"{Colors.RED}You attack {target.name}!{Colors.RESET}")
     player.room.broadcast(f"{Colors.RED}{player.name} attacks {target.name}!{Colors.RESET}", exclude_player=player)
 
 @command_manager.register("flee", category="movement")
@@ -51,6 +63,10 @@ def flee(player, args):
     if _move(player, direction):
         from logic.core import effects
         effects.apply_effect(player, "panting", 3)
+        # Clear combat state manually for things that don't follow (shrines)
+        if hasattr(player.fighting, 'potency'):
+            player.fighting = None
+            player.state = "normal"
 
 @command_manager.register("consider", "con", category="combat")
 def consider(player, args):
@@ -61,7 +77,11 @@ def consider(player, args):
         player.send_line("Consider whom?")
         return
     else:
-        target = search.find_living(player.room, args)
+        # Include shrines in consider
+        from logic.core.systems.influence_service import InfluenceService
+        shrine_service = InfluenceService.get_instance()
+        shrines_here = [s for s in shrine_service.shrines.values() if s.coords == [player.room.x, player.room.y, player.room.z]]
+        target = find_by_index(player.room.monsters + player.room.players + shrines_here, args)
 
     if not target:
         player.send_line("You don't see them here.")
@@ -71,47 +91,19 @@ def consider(player, args):
         player.send_line("You check your own pulse. You seem alive.")
         return
 
+    if hasattr(target, 'potency'):
+        player.send_line(f"You consider {target.name}...\nIt is a divine anchor with {target.potency} Potency. It cannot be destroyed easily.")
+        return
+
     diff_msg = combat.calculate_difficulty(player, target)
     player.send_line(f"You consider {target.name}...\n{diff_msg}")
 
 @command_manager.register("sacrifice", "sac", category="combat")
 def sacrifice(player, args):
-    """Sacrifice a corpse to your deities for Favor."""
-    if not args:
-        player.send_line("Sacrifice what?")
-        return
-        
-    if args.lower() == "all":
-        corpses = [i for i in player.room.items if i.name.startswith("corpse of")]
-        if not corpses:
-            player.send_line("There are no corpses here to sacrifice.")
-            return
-            
-        count = 0
-        total_favor = 0
-        for corpse in corpses:
-            player.room.items.remove(corpse)
-            count += 1
-            # Batch favor gain logic could go here, for now just remove
-        player.send_line(f"{Colors.YELLOW}You sacrifice {count} corpses to the gods.{Colors.RESET}")
-        player.room.broadcast(f"{player.name} sacrifices several corpses.", exclude_player=player)
-        return
-        
-    # Find corpse in room
-    target = find_by_index(player.room.items, args)
-    
-    if not target or not target.name.startswith("corpse of"):
-        player.send_line("You don't see that corpse here.")
-        return
-        
-    # Calculate favor via the distribution engine
-    from logic.core import combat
-    # We pass the corpse as the 'target' as it now carries the mob's tags
-    combat.distribute_favor(player, target, player.game)
-    
-    player.room.items.remove(target)
-    player.send_line(f"{Colors.YELLOW}You sacrifice {target.name} to the gods.{Colors.RESET}")
-    player.room.broadcast(f"{player.name} sacrifices {target.name}.", exclude_player=player)
+    """Sacrifice loot or corpses to your deities for Favor."""
+    # [V7.2 Redirect to Shrines Logic if at a shrine]
+    from logic.commands.shrines import sacrifice_command
+    sacrifice_command(player, args)
 
 @command_manager.register("aim", "lock", category="combat")
 def aim(player, args):

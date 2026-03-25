@@ -1,0 +1,142 @@
+{
+    "blessings": {
+        "void_strike": {
+            "id": "void_strike",
+            "name": "Void Strike",
+            "tier": 1,
+            "cost": 10,
+            "description": "Setup: Strike with a shadowed blade. Deals damage and applies [Marked] (15t). Generates 10 Stamina.",
+            "identity_tags": ["martial", "vision", "setup"],
+            "axis": "vision",
+            "action": "void_strike",
+            "requirements": {
+                "class": "shadow_blade",
+                "stamina": 10,
+                "cooldown": 2
+            },
+            "base_power": 15
+        },
+        "shadow_meld": {
+            "id": "shadow_meld",
+            "name": "Shadow Meld",
+            "tier": 2,
+            "cost": 15,
+            "description": "Setup: Fade into the void. Grants [Concealed] for 200 ticks. Usable in combat.",
+            "identity_tags": ["martial", "vision", "setup"],
+            "axis": "vision",
+            "action": "shadow_meld",
+            "requirements": {
+                "class": "shadow_blade",
+                "stamina": 15,
+                "cooldown": 10
+            }
+        },
+        "assassinate": {
+            "id": "assassinate",
+            "name": "Assassinate",
+            "tier": 3,
+            "cost": 40,
+            "description": "Payoff: Deliver a lethal blow to a [Marked] target. Deals 4x damage from [Concealed]. Reveals you.",
+            "identity_tags": ["martial", "lethality", "payoff"],
+            "axis": "lethality",
+            "action": "assassinate",
+            "requirements": {
+                "class": "shadow_blade",
+                "stamina": 40,
+                "status": "concealed"
+            },
+            "base_power": 60
+        },
+        "twilight_dance": {
+            "id": "twilight_dance",
+            "name": "Twilight Dance",
+            "tier": 3,
+            "cost": 30,
+            "description": "Payoff: Whirling blades of shadow. Deals Area damage to all enemies in the room. Consumes [Marked] to deal double damage.",
+            "identity_tags": ["martial", "lethality", "payoff"],
+            "axis": "lethality",
+            "action": "twilight_dance",
+            "requirements": {
+                "class": "shadow_blade",
+                "stamina": 30,
+                "cooldown": 5
+            },
+            "base_power": 25
+        },
+        "void_parry": {
+            "id": "void_parry",
+            "name": "Void Parry",
+            "tier": 2,
+            "cost": 20,
+            "description": "Defense: Parry the next incoming attack, absorbing 50% damage and dealing it back as Necrotic.",
+            "identity_tags": ["martial", "protection", "defense"],
+            "axis": "protection",
+            "action": "void_parry",
+            "requirements": {
+                "class": "shadow_blade",
+                "stamina": 20,
+                "cooldown": 8
+            }
+        },
+        "ghost_form": {
+            "id": "ghost_form",
+            "name": "Ghost Form",
+            "tier": 4,
+            "cost": 35,
+            "description": "Defense: Turn ethereal for 5s, granting 50% Evasion and immunity to [Bleeding].",
+            "identity_tags": ["magic", "protection", "defense"],
+            "axis": "protection",
+            "action": "ghost_form",
+            "requirements": {
+                "class": "shadow_blade",
+                "stamina": 35,
+                "cooldown": 30
+            }
+        },
+        "night_step": {
+            "id": "night_step",
+            "name": "Night Step",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Blink to an adjacent room instantly, breaking all movement locks.",
+            "identity_tags": ["magic", "vision", "mobility"],
+            "axis": "vision",
+            "action": "night_step",
+            "requirements": {
+                "class": "shadow_blade",
+                "stamina": 15,
+                "cooldown": 5
+            }
+        },
+        "dark_vision": {
+            "id": "dark_vision",
+            "name": "Dark Vision",
+            "tier": 5,
+            "cost": 50,
+            "description": "Utility: Pierce through all illusions and reveal all hidden entities in the room for 20s.",
+            "identity_tags": ["magic", "vision", "utility"],
+            "axis": "vision",
+            "action": "dark_vision",
+            "requirements": {
+                "class": "shadow_blade",
+                "stamina": 50,
+                "cooldown": 60
+            }
+        },
+        "shadow_blade_physiology": {
+            "id": "shadow_blade_physiology",
+            "name": "Shadow Blade Physiology",
+            "tier": 1,
+            "description": "Passive: Your strikes from [Concealed] deal 20% more damage. You gain 5% Evasion per Vision Potency.",
+            "logic_type": "passive",
+            "identity_tags": ["vision", "passive"],
+            "potency_rules": [
+                {
+                    "type": "stat_mod",
+                    "stat": "evasion",
+                    "multiplier": 1.05
+                }
+            ]
+        }
+    }
+}

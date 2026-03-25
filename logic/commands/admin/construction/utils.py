@@ -65,7 +65,7 @@ def get_terrain_elevation(terrain):
     from utilities.mapper import TERRAIN_ELEVS
     return TERRAIN_ELEVS.get(terrain, 0)
 
-def update_room(room, zone_id=None, terrain=None, name=None, desc=None, description=None, symbol=None, elevation=None, items=None, monsters=None):
+def update_room(room, zone_id=None, terrain=None, name=None, desc=None, description=None, symbol=None, elevation=None, items=None, monsters=None, tags=None, shop_inventory=None):
     """
     Standardized method to update a room's attributes.
     Handles Z-axis shifting (Planar), Elevation (Tactical), and Content Injection (Furnish).
@@ -103,6 +103,14 @@ def update_room(room, zone_id=None, terrain=None, name=None, desc=None, descript
     
     if monsters is not None:
         room.blueprint_monsters = list(monsters)
+        changed = True
+        
+    if tags is not None:
+        room.tags = list(tags)
+        changed = True
+
+    if shop_inventory is not None:
+        room.shop_inventory = list(shop_inventory)
         changed = True
         
     if terrain:

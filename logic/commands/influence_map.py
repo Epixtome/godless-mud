@@ -23,7 +23,7 @@ def influence(player, args):
     output.append(f"Location: {Colors.CYAN}({start_x}, {start_y}, {start_z}){Colors.RESET}")
     
     # Header for legend
-    output.append(f"{Colors.GREEN}● High-Sec {Colors.YELLOW}○ Mid-Sec {Colors.RED}· Low-Sec {Colors.DGREY}  Null-Sec{Colors.RESET}")
+    output.append(f"{Colors.GREEN}* High-Sec {Colors.YELLOW}o Mid-Sec {Colors.RED}. Low-Sec {Colors.DGREY}  Null-Sec{Colors.RESET}")
 
     for dy in range(-radius, radius + 1):
         line = "  "
@@ -46,16 +46,16 @@ def influence(player, args):
             elif dominant == "dark": color = Colors.MAGENTA
             elif dominant == "instinct": color = Colors.GREEN
             
-            char = "·"
+            char = "."
             if found_shrine:
                 char = "S" if not found_shrine.is_capital else "C"
                 color = Colors.BOLD + color
             elif rating >= 0.9:
-                char = "●"
+                char = "*"
             elif rating >= 0.5:
-                char = "○"
+                char = "o"
             elif rating >= 0.1:
-                char = "·"
+                char = "."
             else:
                 char = " "
                 color = Colors.DGREY

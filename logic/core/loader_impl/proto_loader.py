@@ -80,4 +80,10 @@ def load_prototypes(world, data, blessing_data, class_data, kit_data, deity_data
         from models import Deity
         # deity_data is a dict { "valeros": { ... } }
         for d_id, d_info in deity_data.items():
-            world.deities[d_id] = Deity(d_id, d_info['name'], d_info['kingdom'])
+            world.deities[d_id] = Deity(
+                d_id, 
+                d_info['name'], 
+                d_info['kingdom'], 
+                domains=d_info.get('domains', []),
+                description=d_info.get('description', "")
+            )

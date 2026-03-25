@@ -67,6 +67,6 @@ def populate_mob_loot(mob):
 def on_mob_spawned(ctx):
     """Event listener for mob_spawned."""
     mob = ctx.get('mob')
-    game = ctx.get('game')
-    if mob:
-        populate_mob_loot(mob)
+    if not mob:
+        return
+    populate_mob_loot(mob)

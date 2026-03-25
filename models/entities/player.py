@@ -33,6 +33,9 @@ class Player:
         self.blessing_charges = {} # ID -> current charges
         self.blessing_xp = {} # ID -> xp amount
         self.favor = {} # Deity ID -> Amount
+        self.daily_favor_gain = 0
+        self.last_favor_gain_tick = 0
+        self.total_favor_gain = 0 # Lifetime tracking (milestones)
         self.gold = 0
         self.aliases = {}
         self.cooldowns = {} # ID -> tick when ready

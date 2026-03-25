@@ -1,116 +1,292 @@
 {
-  "shrines": {
-    "light_cap": {
-      "id": "light_cap",
-      "name": "The Golden Altar of Sanctum",
-      "description": "A massive, glowing altar of pure sunlight. The air here thrums with divine power.",
-      "deity_id": "valeros",
-      "kingdom": "light",
-      "coords": [
-        0,
-        -220,
-        0
-      ],
-      "potency": 2000,
-      "decay": 5,
-      "is_capital": true,
-      "favor_reservoir": 0
-    },
-    "shadow_cap": {
-      "id": "shadow_cap",
-      "name": "The Obsidian Throne of Noxus",
-      "description": "A dark, Jagged throne that seems to swallow all light. Shadows dance around its base.",
-      "deity_id": "nox",
-      "kingdom": "dark",
-      "coords": [
-        190,
-        110,
-        0
-      ],
-      "potency": 2000,
-      "decay": 5,
-      "is_capital": true,
-      "favor_reservoir": 0
-    },
-    "instinct_cap": {
-      "id": "instinct_cap",
-      "name": "The Ironbark Root of Grog",
-      "description": "An ancient, petrified tree root that pulses with the heartbeat of the wilds.",
-      "deity_id": "fenris",
-      "kingdom": "instinct",
-      "coords": [
-        -190,
-        110,
-        0
-      ],
-      "potency": 2000,
-      "decay": 5,
-      "is_capital": true,
-      "favor_reservoir": 0
-    },
-    "border_north": {
-      "id": "border_north",
-      "name": "The Sentinel Pillar",
-      "description": "A tall stone pillar marking the northern border. It pulses with a steady light.",
-      "deity_id": "valeros",
-      "kingdom": "light",
-      "coords": [
-        0,
-        -60,
-        0
-      ],
-      "potency": 800,
-      "decay": 10,
-      "is_capital": false,
-      "favor_reservoir": 0
-    },
-    "border_southeast": {
-      "id": "border_southeast",
-      "name": "The Shadow Obelisk",
-      "description": "A dark obelisk draped in tattered banners. It exudes a sense of dread.",
-      "deity_id": "nox",
-      "kingdom": "dark",
-      "coords": [
-        51,
-        29,
-        0
-      ],
-      "potency": 800,
-      "decay": 10,
-      "is_capital": false,
-      "favor_reservoir": 0
-    },
-    "border_southwest": {
-      "id": "border_southwest",
-      "name": "The Wild Cairn",
-      "description": "A simple pile of large stones covered in moss. Spirits seem to whisper nearby.",
-      "deity_id": "fenris",
-      "kingdom": "instinct",
-      "coords": [
-        -51,
-        29,
-        0
-      ],
-      "potency": 800,
-      "decay": 10,
-      "is_capital": false,
-      "favor_reservoir": 0
-    },
-    "steven_4_3": {
-      "id": "steven_4_3",
-      "name": "Shrine of Steven",
-      "description": "A sacred place dedicated to Steven.",
-      "deity_id": "steven",
-      "kingdom": "light",
-      "coords": [
-        4,
-        3,
-        0
-      ],
-      "potency": 800,
-      "decay": 5,
-      "is_capital": false,
-      "favor_reservoir": 0
+    "shrines": {
+        "light_cap": {
+            "id": "light_cap",
+            "name": "The Golden Altar of Sanctum",
+            "description": "A massive, glowing altar of pure sunlight. The air here thrums with divine power.",
+            "deity_id": "valeros",
+            "kingdom": "light",
+            "captured_by": "light",
+            "coords": [
+                0,
+                -220,
+                0
+            ],
+            "potency": 2000,
+            "decay": 5,
+            "is_capital": true,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "shadow_cap": {
+            "id": "shadow_cap",
+            "name": "The Obsidian Throne of Noxus",
+            "description": "A dark, Jagged throne that seems to swallow all light. Shadows dance around its base.",
+            "deity_id": "nox",
+            "kingdom": "dark",
+            "captured_by": "dark",
+            "coords": [
+                190,
+                110,
+                0
+            ],
+            "potency": 2000,
+            "decay": 5,
+            "is_capital": true,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "instinct_cap": {
+            "id": "instinct_cap",
+            "name": "The Ironbark Root of Grog",
+            "description": "An ancient, petrified tree root that pulses with the heartbeat of the wilds.",
+            "deity_id": "fenris",
+            "kingdom": "instinct",
+            "captured_by": "instinct",
+            "coords": [
+                -190,
+                110,
+                0
+            ],
+            "potency": 2000,
+            "decay": 5,
+            "is_capital": true,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "border_north": {
+            "id": "border_north",
+            "name": "The Sentinel Pillar",
+            "description": "A tall stone pillar marking the northern border. It pulses with a steady light.",
+            "deity_id": "valeros",
+            "kingdom": "light",
+            "captured_by": "light",
+            "coords": [
+                0,
+                -60,
+                0
+            ],
+            "potency": 800,
+            "decay": 10,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "border_southeast": {
+            "id": "border_southeast",
+            "name": "The Shadow Obelisk",
+            "description": "A dark obelisk draped in tattered banners. It exudes a sense of dread.",
+            "deity_id": "nox",
+            "kingdom": "dark",
+            "captured_by": "dark",
+            "coords": [
+                51,
+                29,
+                0
+            ],
+            "potency": 800,
+            "decay": 10,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "border_southwest": {
+            "id": "border_southwest",
+            "name": "The Wild Cairn",
+            "description": "A simple pile of large stones covered in moss. Spirits seem to whisper nearby.",
+            "deity_id": "fenris",
+            "kingdom": "instinct",
+            "captured_by": "instinct",
+            "coords": [
+                -51,
+                29,
+                0
+            ],
+            "potency": 800,
+            "decay": 10,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "steven_4_3": {
+            "id": "steven_4_3",
+            "name": "Shrine of Steven",
+            "description": "A sacred place dedicated to Steven.",
+            "deity_id": "steven",
+            "kingdom": "light",
+            "captured_by": "light",
+            "coords": [
+                4,
+                3,
+                0
+            ],
+            "potency": 800,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "legolas_56_108": {
+            "id": "legolas_56_108",
+            "name": "Shrine of Legolas",
+            "description": "A sacred place dedicated to Legolas.",
+            "deity_id": "legolas",
+            "kingdom": "dark",
+            "captured_by": "dark",
+            "coords": [
+                56,
+                108,
+                0
+            ],
+            "potency": 800,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "fortuna_umbra_88_44_0": {
+            "id": "fortuna_umbra_88_44_0",
+            "name": "Shrine of Fortuna",
+            "description": "A sacred site dedicated to Fortuna, The Weaver of Destiny.",
+            "deity_id": "fortuna",
+            "kingdom": "light",
+            "captured_by": "light",
+            "coords": [
+                88,
+                44,
+                0
+            ],
+            "potency": 200,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "fortuna_umbra_88_43_0": {
+            "id": "fortuna_umbra_88_43_0",
+            "name": "Shrine of Fortuna",
+            "description": "A sacred site dedicated to Fortuna, The Weaver of Destiny.",
+            "deity_id": "fortuna",
+            "kingdom": "light",
+            "captured_by": "light",
+            "coords": [
+                88,
+                43,
+                0
+            ],
+            "potency": 200,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "fortuna_umbra_88_42_0": {
+            "id": "fortuna_umbra_88_42_0",
+            "name": "Shrine of Fortuna",
+            "description": "A sacred site dedicated to Fortuna, The Weaver of Destiny.",
+            "deity_id": "fortuna",
+            "kingdom": "light",
+            "captured_by": "light",
+            "coords": [
+                88,
+                42,
+                0
+            ],
+            "potency": 500,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "fortuna_umbra_89_42_0": {
+            "id": "fortuna_umbra_89_42_0",
+            "name": "Shrine of Fortuna",
+            "description": "A sacred site dedicated to Fortuna, The Weaver of Destiny.",
+            "deity_id": "fortuna",
+            "kingdom": "light",
+            "captured_by": "light",
+            "coords": [
+                89,
+                42,
+                0
+            ],
+            "potency": 850,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "fortuna_umbra_96_42_0": {
+            "id": "fortuna_umbra_96_42_0",
+            "name": "Shrine of Fortuna",
+            "description": "A sacred site dedicated to Fortuna, The Weaver of Destiny.",
+            "deity_id": "fortuna",
+            "kingdom": "dark",
+            "captured_by": "dark",
+            "coords": [
+                96,
+                42,
+                0
+            ],
+            "potency": 850,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "fortuna_umbra_88_38_0": {
+            "id": "fortuna_umbra_88_38_0",
+            "name": "Shrine of Fortuna",
+            "description": "A sacred site dedicated to Fortuna, The Weaver of Destiny.",
+            "deity_id": "fortuna",
+            "kingdom": "dark",
+            "captured_by": "dark",
+            "coords": [
+                88,
+                38,
+                0
+            ],
+            "potency": 850,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "fortuna_umbra_95_32_0": {
+            "id": "fortuna_umbra_95_32_0",
+            "name": "Shrine of Fortuna",
+            "description": "A sacred site dedicated to Fortuna, The Weaver of Destiny.",
+            "deity_id": "fortuna",
+            "kingdom": "light",
+            "captured_by": "light",
+            "coords": [
+                95,
+                32,
+                0
+            ],
+            "potency": 850,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        },
+        "fortuna_umbra_101_32_0": {
+            "id": "fortuna_umbra_101_32_0",
+            "name": "Shrine of Fortuna",
+            "description": "A sacred site dedicated to Fortuna, The Weaver of Destiny.",
+            "deity_id": "fortuna",
+            "kingdom": "light",
+            "captured_by": "light",
+            "coords": [
+                101,
+                32,
+                0
+            ],
+            "potency": 850,
+            "decay": 5,
+            "is_capital": false,
+            "favor_reservoir": 0,
+            "favor_cost_mult": 1.0
+        }
     }
-  }
 }

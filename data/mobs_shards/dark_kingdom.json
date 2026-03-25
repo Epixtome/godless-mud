@@ -1,0 +1,54 @@
+{
+    "monsters": [
+        {
+            "id": "void_stalker",
+            "name": "Void Stalker",
+            "description": "A predator from the outer darkness. It moves with a terrifying, unnatural speed, its claws dripping with void ichor.",
+            "hp": 120,
+            "max_hp": 120,
+            "damage": 12,
+            "tags": ["dark", "beast", "vision", "speed"],
+            "skills": ["shadow_meld", "void_strike"]
+        },
+        {
+            "id": "abyssal_cultist",
+            "name": "Abyssal Cultist",
+            "description": "A figure in dark robes, chanting in an ancient, forbidden tongue. Their eyes are empty pits of darkness.",
+            "hp": 85,
+            "max_hp": 85,
+            "damage": 10,
+            "tags": ["occult", "dark", "disruption"],
+            "skills": ["hex_flare", "curse_of_binding"]
+        },
+        {
+            "id": "shadow_beast",
+            "name": "Shadow Beast",
+            "description": "A mass of obsidian fur and glowing magenta eyes. It seems to phase in and out of existence.",
+            "hp": 210,
+            "max_hp": 210,
+            "damage": 15,
+            "tags": ["dark", "beast", "endurance", "lethality"],
+            "skills": ["twilight_dance", "ghost_form"]
+        },
+        {
+            "id": "soul_reaper",
+            "name": "Soul Reaper",
+            "description": "A skeletal guardian clad in tattered black rags, holding a scythe of pure entropy. It hungers for the living.",
+            "hp": 350,
+            "max_hp": 350,
+            "damage": 25,
+            "tags": ["undead", "dark", "lethality", "boss"],
+            "skills": ["assassinate", "reaping_blast"]
+        },
+        {
+            "id": "dark_knight_minion",
+            "name": "Dark Knight",
+            "description": "A suit of charred, hollowed-out armor fueled by dark magic and a grim sense of duty.",
+            "hp": 150,
+            "max_hp": 150,
+            "damage": 14,
+            "tags": ["martial", "protection", "dark"],
+            "skills": ["void_parry", "spiritual_barrier"]
+        }
+    ]
+}

@@ -27,7 +27,7 @@ def create_item(item_id, game=None):
     if not proto:
         # Try searching by matching case-insensitive name if ID fails
         for p_id, p_obj in game.world.items.items():
-            if p_id.lower() == item_id.lower():
+            if p_id and item_id and p_id.lower() == item_id.lower():
                 proto = p_obj
                 break
         

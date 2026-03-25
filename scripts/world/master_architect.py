@@ -1,307 +1,336 @@
+import tkinter as tk
+from tkinter import font
 import json
-import os
-import sys
-import time
 import math
 import random
-import tkinter as tk
-from tkinter import messagebox, scrolledtext, ttk
-from collections import deque
-
-# --- Godless Shard Imports ---
-from architect_data import SYM_MAP, PREVIEW_TXT, load_config
+import os
+import time
 import architect_logic as core
-
-# --- Path Injection ---
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from utilities.colors import Colors
+from architect_data import SYM_MAP, COLOR_MAP
 
 class AethelgardArchitect:
-    def __init__(self, width=250, height=250, offset_x=0, offset_y=0, zone_prefix=""):
-        self.config = load_config()
-        size = self.config.get("grid_size", [width, height])
-        self.width, self.height = size[0], size[1]
-        self.offset_x = offset_x
-        self.offset_y = offset_y
-        self.zone_prefix = zone_prefix
+    def __init__(self):
+        self.width = 125
+        self.height = 125
         self.grid = [["ocean" for _ in range(self.width)] for _ in range(self.height)]
-        self.current_phase = 0
         
-    def generate_txt_preview(self):
-        """Saves a plain text version for record keeping."""
-        output = [
-            f"=== AETHELGARD TOPOLOGICAL PREVIEW (Phase {self.current_phase}) ===",
-            "-" * self.width
-        ]
-        for y in range(self.height):
-            line = "".join(SYM_MAP.get(self.grid[y][x], ".") for x in range(self.width))
-            output.append(line)
-        output.append("-" * self.width)
+        # [V13.1 SYNC PASS] - Fresh sharding space
+        self.offset_x = 9000
+        self.offset_y = 9000
+        self.offset_z = 0
+        self.zone_prefix = "v13_"
         
-        os.makedirs(os.path.dirname(PREVIEW_TXT), exist_ok=True)
-        with open(PREVIEW_TXT, "w", encoding="utf-8") as f:
-            f.write("\n".join(output))
+        # [THE STENCIL OVERLAY - Persistent Layers]
+        self.bias_elev = [[0.0 for _ in range(self.width)] for _ in range(self.height)]
+        self.bias_moist = [[0.0 for _ in range(self.width)] for _ in range(self.height)]
+        self.bias_roads = [[0 for _ in range(self.width)] for _ in range(self.height)] 
+        self.bias_biomes = [[None for _ in range(self.width)] for _ in range(self.height)] # Type: list[list[str|None]]
+        self.brush_mode = "none" 
+        self.brush_radius = 4
+        self.show_stencil = None # Initialized in run_gui
+        self.biome_categories = {
+            "Water": ["ocean", "water", "lake", "swamp"],
+            "Land": ["plains", "grass", "meadow", "desert", "wasteland"],
+            "Cold": ["snow", "tundra", "glacier"],
+            "Peak": ["mountain", "high_mountain", "peak"],
+            "Life": ["forest", "dense_forest", "hills"],
+            "Meta": ["road", "none"]
+        }
+        
+        # [THE CONTROL DECK - V13Weights]
+        self.weights = {
+            "seed": "", 
+            "sea_level": 0.5, "aridity": 0.5, "mtn_clusters": 0.5, "mtn_scale": 0.5, "peak_intensity": 0.5,
+            "volcano_size": 0.5, "ridge_weight": 0.3, "moisture_level": 0.5,
+            "inlet_depth": 0.5, "city_hubs": 0.5, "shrine_scatter": 0.5, "road_vines": 0.5, "drift_jaggedness": 0.5
+        }
+        
+        self.cell_size = 6.0
+        self.zoom_factor = 1.0
+        self.select_start = None
+        self.config = self.load_config()
+        self.root = None
+        self.canvas = None
+        self.seed_entry = None
+        self.lbl_probe = None
 
-    def run_phase_0(self):
-        return core.run_phase_0_logic(self.grid, self.width, self.height, self.config)
+        # Run initial generation
+        self.full_generation_pass()
 
-    def run_phase_1(self):
-        return core.run_phase_1_logic(self.grid, self.width, self.height, self.config)
+    def load_config(self):
+        p = os.path.join(os.path.dirname(__file__), "map_config.json")
+        if os.path.exists(p):
+            with open(p, "r") as f: return json.load(f)
+        return {}
 
-    def run_phase_2(self):
-        return core.run_phase_2_logic(self.grid, self.width, self.height)
+    def save_stencil(self, path="v13_blueprint.stencil"):
+        data = {
+            "elev": self.bias_elev, 
+            "moist": self.bias_moist, 
+            "roads": self.bias_roads,
+            "biomes": self.bias_biomes
+        }
+        with open(path, "w") as f: json.dump(data, f)
+        self.update_status(f"Stencil saved: {path}")
 
-    def run_phase_3(self):
-        print("\n--- Running Phase 3: POI Placement & Road Pathfinding ---")
-        hubs = self.config.get("kingdoms", {})
-        hub_coords = {}
-        for k_id, data in hubs.items():
-            cx, cy = int(data["center"][0]), int(data["center"][1])
-            hub_coords[k_id] = (cx, cy)
-            # Cities are now hubs of cobblestone and dirt
-            for dy in range(-6, 7):
-                for dx in range(-6, 7):
-                    dist_sq = dx*dx + dy*dy
-                    if dist_sq < 16:
-                        if 0 <= cx+dx < self.width and 0 <= cy+dy < self.height:
-                            self.grid[cy+dy][cx+dx] = "city"
-                    elif dist_sq < 36:
-                        if 0 <= cx+dx < self.width and 0 <= cy+dy < self.height:
-                            if self.grid[cy+dy][cx+dx] not in ["water", "ocean"]:
-                                self.grid[cy+dy][cx+dx] = "cobblestone"
+    def load_stencil(self, path="v13_blueprint.stencil"):
+        if os.path.exists(path):
+            with open(path, "r") as f:
+                data = json.load(f)
+                self.bias_elev = data.get("elev", self.bias_elev)
+                self.bias_moist = data.get("moist", self.bias_moist)
+                self.bias_roads = data.get("roads", self.bias_roads)
+                self.bias_biomes = data.get("biomes", self.bias_biomes)
+            self.update_status(f"Stencil loaded: {path}")
+            self.draw_map()
 
-        target = (self.width // 2, self.height // 2)
-        self.grid[target[1]][target[0]] = "city" # Crossroads
-        for k_id, start_coord in hub_coords.items():
-            path = core.run_road_pathfinding(self.grid, self.width, self.height, start_coord, target)
-            if path:
-                for idx, (px, py) in enumerate(path):
-                    if self.grid[py][px] not in ["city", "water"]:
-                        # Winding paths transition from cobblestone near cities to dirt roads
-                        if idx < 15 or len(path) - idx < 15:
-                            self.grid[py][px] = "cobblestone"
+    def full_generation_pass(self):
+        """[V13.1] The Transparent Architect - Synchronized Pipeline."""
+        print(f"--- Running v13.1 Architect Pipeline: (Offset {self.offset_x}, {self.offset_y}) ---")
+        
+        s_val = self.weights.get("seed", "")
+        if not s_val: s_val = int(time.time() * 1000) % 1000000
+        else:
+            try: s_val = int(s_val); 
+            except: s_val = hash(str(s_val)) % 1000000
+            
+        random.seed(s_val); self.config["seed"] = s_val
+        self.config.update(self.weights)
+        self.config["bias_elev"] = self.bias_elev
+        self.config["bias_moist"] = self.bias_moist
+        self.config["bias_roads"] = self.bias_roads
+        self.config["bias_biomes"] = self.bias_biomes
+        
+        # Clean shards
+        import glob
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        zone_dir = os.path.join(base_dir, "data", "zones")
+        stale_shards = glob.glob(os.path.join(zone_dir, f"{self.zone_prefix}*.json"))
+        if stale_shards:
+            for f in stale_shards:
+                try: os.remove(f)
+                except: pass
+                
+        # KINGDOM PLACEMENT
+        center_x, center_y = self.width // 2, self.height // 2; radius = self.width // 3.5
+        kh_centers = []
+        for i in range(3):
+            angle = math.radians((i * 120 + random.randint(-15, 15)))
+            tx = int(center_x + radius * math.cos(angle)); ty = int(center_y + radius * math.sin(angle)); kh_centers.append([tx, ty])
+        k_ids = list(self.config.get("kingdoms", {}).keys())
+        for i, k_id in enumerate(k_ids[:3]): self.config["kingdoms"][k_id]["center"] = kh_centers[i]
+
+        # V13.1 FUSION PIPELINE
+        grid_meta = core.run_climate_pass(self.grid, self.width, self.height, self.config)
+        core.run_phase_0_logic(self.grid, self.width, self.height, self.config) 
+        core.run_phase_1_logic(self.grid, self.width, self.height, self.config) 
+        core.run_phase_1_5_logic(self.grid, self.width, self.height, self.config) 
+        core.run_phase_2_logic(self.grid, self.width, self.height, self.config, grid_meta) 
+        core.run_phase_3_logic(self.grid, self.width, self.height, self.config) 
+        core.run_phase_4_logic(self.grid, self.width, self.height)              
+        core.run_phase_5_logic(self.grid, self.width, self.height, self.config) 
+        
+        core.run_phase_6_export(
+            self.grid, self.width, self.height, self.offset_x, self.offset_y, self.offset_z, 
+            self.zone_prefix, self.config
+        )
+        print(f"--- Generation Complete: V13.1 ---")
+
+    def toggle_stencil(self):
+        self.draw_map() 
+
+    def update_status(self, msg):
+        if hasattr(self, 'lbl_status') and self.lbl_status: self.lbl_status.config(text=msg.upper())
+
+    def on_canvas_paint(self, event):
+        if not self.canvas or self.brush_mode == "none": return
+        cx, cy = self.canvas.canvasx(event.x), self.canvas.canvasy(event.y)
+        scale = (self.cell_size * self.zoom_factor)
+        grid_x, grid_y = int(cx / scale), int(cy / scale)
+        R = self.brush_radius
+        for dy in range(-R, R+1):
+            for dx in range(-R, R+1):
+                nx, ny = grid_x + dx, grid_y + dy
+                if 0 <= nx < self.width and 0 <= ny < self.height:
+                    dist = math.sqrt(dx*dx + dy*dy)
+                    if dist < R:
+                        # FALLOFF: Smooth blending for climate
+                        power = (1.0 - (dist / R)) * 0.4
+                        
+                        if self.brush_mode == "road": self.bias_roads[ny][nx] = 1 
+                        elif self.brush_mode in ["peak", "mountain", "high_mountain"]:
+                            self.bias_elev[ny][nx] = min(1.0, self.bias_elev[ny][nx] + power)
+                            self.bias_biomes[ny][nx] = self.brush_mode
+                        elif self.brush_mode in ["water", "ocean", "lake"]:
+                            self.bias_elev[ny][nx] = max(-1.0, self.bias_elev[ny][nx] - power)
+                            self.bias_biomes[ny][nx] = self.brush_mode
+                        elif self.brush_mode == "desert":
+                            self.bias_moist[ny][nx] = max(-1.0, self.bias_moist[ny][nx] - power)
+                            self.bias_biomes[ny][nx] = self.brush_mode
+                        elif self.brush_mode in ["forest", "dense_forest", "swamp"]:
+                            self.bias_moist[ny][nx] = min(1.0, self.bias_moist[ny][nx] + power)
+                            self.bias_biomes[ny][nx] = self.brush_mode
                         else:
-                            self.grid[py][px] = "road"
-        return True
-
-    def run_phase_4(self):
-        """Bridge detection and path refinement."""
-        for y in range(self.height):
-            for x in range(self.width):
-                if self.grid[y][x] in ["road", "cobblestone"]:
-                    is_bridge = False
-                    for dy, dx in [(0,1), (0,-1), (1,0), (-1,0)]:
-                        if 0 <= x+dx < self.width and 0 <= y+dy < self.height:
-                            if self.grid[y+dy][x+dx] in ["water", "ocean"]:
-                                is_bridge = True
-                                break
-                    if is_bridge:
-                        self.grid[y][x] = "bridge"
-        return True
-
-    def run_phase_5(self):
-        return core.run_phase_5_logic(self.grid, self.width, self.height, self.config)
-
-    def run_phase_6(self):
-        """Phase 6: Sharded Export (The Godless Standard)."""
-        print("\n--- Running Phase 6: Sharded Export ---")
-        from utilities.mapper import TERRAIN_ELEVS
-
-        # Define Region Boundaries for Sharding
-        half_w, half_h = self.width // 2, self.height // 2
+                            # Direct Biome Suggestion (Heavy Weight)
+                            self.bias_biomes[ny][nx] = self.brush_mode
         
-        zone_definitions = {
-            f"{self.zone_prefix}aetheria": {"x_range": [0, half_w], "y_range": [0, half_h], "name": f"{self.zone_prefix.title()}Kingdom of Aetheria"},
-            f"{self.zone_prefix}umbra": {"x_range": [half_w, self.width], "y_range": [0, half_h], "name": f"{self.zone_prefix.title()}Shadow Lands of Umbra"},
-            f"{self.zone_prefix}sylvanis": {"x_range": [0, half_w], "y_range": [half_h, self.height], "name": f"{self.zone_prefix.title()}Sylvanis Wilds"},
-            f"{self.zone_prefix}null_void": {"x_range": [half_w, self.width], "y_range": [half_h, self.height], "name": f"{self.zone_prefix.title()}The Null Wastes"}
-        }
+        color = "#00bcd4" if self.brush_mode == "road" else "white"
+        self.canvas.create_oval(cx-R*scale, cy-R*scale, cx+R*scale, cy+R*scale, outline=color, width=2, tags="brush_preview")
+        if self.root: self.root.after(150, lambda: self.canvas.delete("brush_preview") if self.canvas else None)
 
-        shards = {z_id: {"metadata": {"id": z_id, "name": data["name"], "grid_logic": True, "security_level": "wilderness", "target_cr": 10}, "rooms": []} 
-                  for z_id, data in zone_definitions.items()}
+    def on_canvas_move(self, event):
+        if not self.canvas: return
+        cx, cy = self.canvas.canvasx(event.x), self.canvas.canvasy(event.y)
+        scale = (self.cell_size * self.zoom_factor)
+        gx, gy = int(cx / scale), int(cy / scale)
+        if 0 <= gx < self.width and 0 <= gy < self.height:
+            terr = self.grid[gy][gx]
+            abs_x, abs_y = gx + self.offset_x, gy + self.offset_y
+            msg = f"COORD: ({abs_x}, {abs_y}) | TERR: {terr.upper()}"
+            if hasattr(self, 'lbl_probe') and self.lbl_probe:
+                self.lbl_probe.config(text=msg)
 
-        # Metadata Constants for V7.2
-        TERRAIN_DATA = {
-            "mountain": {"opacity": 0.8, "cost": 10},
-            "high_mountain": {"opacity": 1.0, "cost": 25},
-            "peak": {"opacity": 1.0, "cost": 50},
-            "forest": {"opacity": 0.3, "cost": 3},
-            "dense_forest": {"opacity": 0.6, "cost": 5},
-            "water": {"opacity": 0.1, "cost": 10},
-            "ocean": {"opacity": 0.1, "cost": 20},
-            "city": {"opacity": 0.0, "cost": 1},
-            "road": {"opacity": 0.0, "cost": 1},
-            "cobblestone": {"opacity": 0.0, "cost": 1},
-            "swamp": {"opacity": 0.4, "cost": 6},
-            "plains": {"opacity": 0.0, "cost": 2},
-            "grass": {"opacity": 0.1, "cost": 2},
-            "hills": {"opacity": 0.4, "cost": 4},
-            "beach": {"opacity": 0.0, "cost": 2},
-            "wasteland": {"opacity": 0.2, "cost": 3}
-        }
+    def rerun_generation(self):
+        if self.seed_entry: self.weights["seed"] = self.seed_entry.get()
+        self.grid = [["ocean" for _ in range(self.width)] for _ in range(self.height)]
+        self.full_generation_pass()
+        self.draw_map()
 
+    def update_weight(self, key, val): self.weights[key] = float(val)
+
+    def on_zoom(self, event):
+        factor = 1.1 if event.delta > 0 else 0.9
+        self.zoom_factor *= factor
+        if self.zoom_factor < 0.5 or self.zoom_factor > 8.0: self.zoom_factor /= factor; return
+        self.canvas.scale("all", 0, 0, factor, factor); self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
+    def draw_map(self):
+        if not self.canvas: return
+        self.canvas.delete("all")
+        self.zoom_factor = 1.0
+        scale = self.cell_size
         for y in range(self.height):
             for x in range(self.width):
-                cell = self.grid[y][x]
+                terrain = self.grid[y][x]; fill_color = COLOR_MAP.get(terrain, "#000033")
+                self.canvas.create_rectangle(x*scale, y*scale, (x+1)*scale, (y+1)*scale, fill=fill_color, outline="", tags="cell")
                 
-                # Apply Offsets
-                real_x = x + self.offset_x
-                real_y = y + self.offset_y
-                
-                # Find Zone
-                zone_id = "null_void"
-                for z_id, bounds in zone_definitions.items():
-                    if bounds["x_range"][0] <= x < bounds["x_range"][1] and \
-                       bounds["y_range"][0] <= y < bounds["y_range"][1]:
-                        zone_id = z_id
-                        break
-                
-                # Elevation logic (introducing variance for natural look)
-                base_z = TERRAIN_ELEVS.get(cell, 0)
-                variance = 0
-                if cell == "mountain":
-                    variance = random.randint(-1, 2)
-                elif cell == "high_mountain":
-                    variance = random.randint(-1, 3)
-                elif cell == "hills":
-                    variance = random.randint(-1, 1)
-                elif cell == "peak":
-                    variance = random.randint(0, 5)
-                
-                elevation = base_z + variance
-                
-                # Grid Logic: V7.2 Coordinate Standards
-                room_id = f"{zone_id}.{real_x}.{real_y}.0"
-                
-                # Generate Exits (Standard 4-way Grid)
-                exits = {
-                    "north": f"{zone_id}.{real_x}.{real_y - 1}.0",
-                    "south": f"{zone_id}.{real_x}.{real_y + 1}.0",
-                    "east": f"{zone_id}.{real_x + 1}.{real_y}.0",
-                    "west": f"{zone_id}.{real_x - 1}.{real_y}.0"
-                }
+                # STENCIL GHOSTING (V13.1 SAFE CHECK)
+                if self.show_stencil and self.show_stencil.get():
+                    if self.bias_roads[y][x]:
+                        self.canvas.create_rectangle(x*scale+2, y*scale+2, (x+1)*scale-2, (y+1)*scale-2, outline="#00bcd4", width=1, tags="stencil")
+                    elif self.bias_biomes[y][x]:
+                        # Draw a small indicator of the preferred biome
+                        clr = COLOR_MAP.get(self.bias_biomes[y][x], "#fff")
+                        self.canvas.create_rectangle(x*scale+2, y*scale+2, (x+1)*scale-2, (y+1)*scale-2, outline=clr, width=1, dash=(2,2), tags="stencil")
+                    elif self.bias_elev[y][x] > 0.3:
+                        self.canvas.create_line(x*scale, y*scale, (x+1)*scale, (y+1)*scale, fill="#ffffff", width=1, tags="stencil")
+                    elif self.bias_moist[y][x] < -0.3: 
+                        self.canvas.create_line(x*scale+scale, y*scale, x*scale, y*scale+scale, fill="#ffff00", width=1, tags="stencil")
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
-                # Boundary Check for Exits (Optional: remove if borders should loop or be 'void')
-                if y == 0: exits.pop("north")
-                if y == self.height - 1: exits.pop("south")
-                if x == 0: exits.pop("west")
-                if x == self.width - 1: exits.pop("east")
+    def on_canvas_press(self, event):
+        if self.brush_mode != "none": self.on_canvas_paint(event)
+        else: self.select_start = (self.canvas.canvasx(event.x), self.canvas.canvasy(event.y))
 
-                # Deterministic POI Naming
-                center = self.width // 2
-                if x == center and y == center:
-                    room_name = "The Great Aethelgard Crossroads"
-                else:
-                    room_name = f"{cell.replace('_', ' ').title()}"
+    def on_canvas_drag(self, event):
+        if self.brush_mode != "none": self.on_canvas_paint(event)
+        elif self.select_start:
+            self.canvas.delete("select_box")
+            x2, y2 = self.canvas.canvasx(event.x), self.canvas.canvasy(event.y)
+            self.canvas.create_rectangle(self.select_start[0], self.select_start[1], x2, y2, outline="#00bcd4", dash=(4,4), tags="select_box")
 
-                # Symbol variety for natural mapping (V7.2 Standard)
-                # Use {Colors.X} tokens instead of direct injection to prevent ANSI corruption in JSON.
-                symbol_palettes = {
-                    "forest": ["{Colors.GREEN}^{Colors.RESET}", "{Colors.GREEN}f{Colors.RESET}", "{Colors.GREEN}t{Colors.RESET}"],
-                    "dense_forest": ["{Colors.BOLD}{Colors.GREEN}^{Colors.RESET}", "{Colors.BOLD}{Colors.GREEN}T{Colors.RESET}"],
-                    "mountain": ["{Colors.WHITE}^{Colors.RESET}"], 
-                    "high_mountain": ["{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}"],
-                    "peak": ["{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}"],
-                    "plains": ["{Colors.GREEN}.{Colors.RESET}", "{Colors.GREEN},{Colors.RESET}", "{Colors.GREEN}·{Colors.RESET}"],
-                    "grass": ["{Colors.GREEN}\"{Colors.RESET}", "{Colors.GREEN}'{Colors.RESET}"],
-                    "city": ["{Colors.BOLD}{Colors.YELLOW}#{Colors.RESET}", "{Colors.BOLD}{Colors.YELLOW}H{Colors.RESET}"]
-                }
-                
-                room_symbol = None
-                if cell in symbol_palettes:
-                    room_symbol = random.choice(symbol_palettes[cell])
-
-                t_data = TERRAIN_DATA.get(cell, {"opacity": 0.0, "cost": 2})
-
-                room_data = {
-                    "id": room_id,
-                    "zone_id": zone_id,
-                    "name": room_name,
-                    "description": f"A vast expanse of {cell.replace('_', ' ')} within {zone_id.title()} [V7.2 Verified].",
-                    "terrain": str(cell),
-                    "symbol": room_symbol,
-                    "x": int(real_x), "y": int(real_y), "z": 0,
-                    "elevation": int(elevation),
-                    "opacity": t_data["opacity"],
-                    "traversal_cost": t_data["cost"],
-                    "exits": exits,
-                    "manual_exits": False,
-                    "items": [],
-                    "monsters": [],
-                    "doors": {}
-                }
-                
-                # SPECIAL: A tree in Sylvanis
-                if x == 58 and y == 109 and zone_id == "sylvanis":
-                     room_data["items"].append({
-                         "name": "ancient gnarled oak",
-                         "description": "An ancient oak tree with thick, twisting branches.",
-                         "type": "object"
-                     })
-                     
-                shards[zone_id]["rooms"].append(room_data)
-
-        # Write Shards
-        for z_id, data in shards.items():
-            path = f"data/zones/{z_id}.json"
-            os.makedirs(os.path.dirname(path), exist_ok=True)
-            with open(path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=4)
-                
-        print(f"Exported {len(shards)} sharded zone files.")
-        return True
+    def on_canvas_release(self, event):
+        if self.brush_mode != "none": return
+        if not self.select_start: return
+        
+        # Copy to clipboard
+        cx, cy = self.canvas.canvasx(event.x), self.canvas.canvasy(event.y)
+        scale = (self.cell_size * self.zoom_factor)
+        x2, y2 = int(cx / scale), int(cy / scale)
+        x1, y1 = int(self.select_start[0] / scale), int(self.select_start[1] / scale)
+        
+        # Sort coords
+        x1, x2 = sorted([x1, x2]); y1, y2 = sorted([y1, y2])
+        coord_msg = f"({x1+self.offset_x}, {y1+self.offset_y}) to ({x2+self.offset_x}, {y2+self.offset_y})"
+        
+        if self.root:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(coord_msg)
+            self.update_status(f"Copied: {coord_msg}")
+            
+        self.canvas.delete("select_box"); self.select_start = None
 
     def run_gui(self):
-        root = tk.Tk()
-        root.title("Aethelgard Architect: Premium Edition")
-        root.geometry("1400x900")
-        root.configure(bg="#0a0a0a")
+        self.root = tk.Tk()
+        self.root.title("Aethelgard Architect: V13.1 SYNC PASS")
+        self.root.configure(bg="#111")
         
-        TAG_COLORS = {
-            "ocean": "#000080", "plains": "#2e7d32", "mountain": "#757575",
-            "high_mountain": "#bdbdbd", "peak": "#eeeeee", "water": "#0288d1",
-            "city": "#ffd600", "bridge": "#ff6f00", "desert": "#ffecb3",
-            "forest": "#1b5e20", "dense_forest": "#003300", "grass": "#4caf50",
-            "road": "#5d4037", "cobblestone": "#455a64", "dirt_road": "#8d6e63",
-            "beach": "#fff9c4", "hills": "#9e9d24", "swamp": "#4e342e",
-            "wasteland": "#37474f"
-        }
-
-        # Simplified GUI for this demo
-        main_frame = tk.Frame(root, bg="#0a0a0a")
-        main_frame.pack(fill=tk.BOTH, expand=True)
-        sidebar = tk.Frame(main_frame, bg="#111", width=250)
-        sidebar.pack(side=tk.LEFT, fill=tk.Y)
-        text_area = scrolledtext.ScrolledText(main_frame, bg="#000", fg="#eee", font=("Courier", 7), wrap=tk.NONE)
-        text_area.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-
-        for name, color in TAG_COLORS.items():
-            text_area.tag_configure(name, foreground=color)
-
-        def update_display():
-            text_area.delete('1.0', tk.END)
-            for y in range(self.height):
-                line_data = []
-                for x in range(self.width):
-                    cell = self.grid[y][x]
-                    sym = SYM_MAP.get(cell, ".")
-                    text_area.insert(tk.END, sym, cell)
-                text_area.insert(tk.END, "\n")
-
-        def on_next_phase():
-            phases = [self.run_phase_0, self.run_phase_1, self.run_phase_2, 
-                      self.run_phase_3, self.run_phase_4, self.run_phase_5, self.run_phase_6]
-            if self.current_phase < len(phases):
-                if phases[self.current_phase]():
-                    self.current_phase += 1
-                    update_display()
-                else: messagebox.showerror("Error", "Phase failed")
-
-        tk.Button(sidebar, text="NEXT PHASE", command=on_next_phase, bg="#222", fg="#fff", pady=10).pack(fill=tk.X, padx=10, pady=10)
-        tk.Button(sidebar, text="AUTO-GEN", command=lambda: [on_next_phase() for _ in range(7-self.current_phase)], bg="#333", fg="#fff").pack(fill=tk.X, padx=10, pady=10)
+        # [V13.1] LATE INITIALIZATION OF UI VARS
+        self.show_stencil = tk.BooleanVar(value=True)
         
-        update_display()
-        root.mainloop()
+        toolbar = tk.Frame(self.root, bg="#222"); toolbar.pack(side="top", fill="x")
+        tk.Button(toolbar, text="REGENERATE", command=self.rerun_generation, bg="#00bcd4", fg="white", font=("Arial", 10, "bold"), padx=10).pack(side="left", padx=5, pady=5)
+        tk.Label(toolbar, text="Seed:", bg="#222", fg="#aaa", font=("Arial", 9)).pack(side="left", padx=5)
+        self.seed_entry = tk.Entry(toolbar, bg="#333", fg="#fff", width=8); self.seed_entry.pack(side="left", padx=5)
+        
+        tk.Button(toolbar, text="S-SAVE", command=self.save_stencil, bg="#4caf50", fg="white", font=("Arial", 7)).pack(side="left", padx=2)
+        tk.Button(toolbar, text="S-LOAD", command=self.load_stencil, bg="#2196f3", fg="white", font=("Arial", 7)).pack(side="left", padx=2)
+        tk.Checkbutton(toolbar, text="GHOST SHOW", variable=self.show_stencil, command=self.toggle_stencil, bg="#222", fg="#00bcd4", selectcolor="#222").pack(side="left", padx=5)
+        
+        self.lbl_probe = tk.Label(toolbar, text="MOUSE OFF-MAP", bg="#222", fg="#fff", font=("Arial", 8, "bold"), width=30, anchor="w")
+        self.lbl_probe.pack(side="left", padx=10)
+
+        b_frame = tk.Frame(toolbar, bg="#222"); b_frame.pack(side="left", padx=20)
+        for cat, modes in self.biome_categories.items():
+            menubutton = tk.Menubutton(b_frame, text=cat.upper(), bg="#333", fg="#00bcd4", font=("Arial", 8, "bold"), relief="flat")
+            menu = tk.Menu(menubutton, tearoff=0, bg="#222", fg="#ccc", activebackground="#00bcd4")
+            menubutton.config(menu=menu)
+            for m in modes:
+                # Use a closure to capture m correctly
+                def make_cmd(mode_str): return lambda: setattr(self, 'brush_mode', mode_str)
+                menu.add_command(label=m.upper(), command=make_cmd(m))
+            menubutton.pack(side="left", padx=2)
+        
+        tk.Label(toolbar, text="Size:", bg="#222", fg="#888", font=("Arial", 8)).pack(side="left", padx=(10, 2))
+        bsize = tk.Scale(toolbar, from_=1, to=15, orient="horizontal", bg="#222", fg="#fff", troughcolor="#333", length=100, showvalue=False, command=lambda v: setattr(self, 'brush_radius', int(v)))
+        bsize.set(self.brush_radius); bsize.pack(side="left", padx=5)
+        
+        main_frame = tk.Frame(self.root, bg="#111"); main_frame.pack(fill="both", expand=True)
+        cp_container = tk.Frame(main_frame, bg="#181818", padx=5); cp_container.pack(side="left", fill="y", padx=5, pady=10)
+        cp_canvas = tk.Canvas(cp_container, bg="#181818", width=180, highlightthickness=0); cp_vscroll = tk.Scrollbar(cp_container, orient="vertical", command=cp_canvas.yview)
+        cp = tk.Frame(cp_canvas, bg="#181818", padx=10); cp_canvas.create_window((0,0), window=cp, anchor="nw")
+        cp_canvas.configure(yscrollcommand=cp_vscroll.set); cp_canvas.pack(side="left", fill="both", expand=True); cp_vscroll.pack(side="right", fill="y")
+        
+        sliders = [("Sea Level", "sea_level"), ("Aridity", "aridity"), ("Peak Intensity", "peak_intensity"), ("Mtn Cluster Count", "mtn_clusters"), ("Mtn Cluster Size", "mtn_scale"), ("Rain Level", "moisture_level"), ("Inlet Depth", "inlet_depth"), ("Hub Growth", "city_hubs"), ("Road Vines", "road_vines")]
+        for label, key in sliders:
+            tk.Label(cp, text=label, bg="#181818", fg="#888", font=("Arial", 8)).pack(anchor="w")
+            scl = tk.Scale(cp, from_=0.0, to=1.0, resolution=0.1, orient="horizontal", bg="#181818", fg="#ccc", troughcolor="#333", activebackground="#00bcd4", command=lambda v, k=key: self.update_weight(k, v)); scl.set(self.weights[key]); scl.pack(fill="x", pady=(0, 10))
+        
+        # LEGEND SECTION
+        tk.Label(cp, text="--- TERRAIN LEGEND ---", bg="#181818", fg="#00bcd4", font=("Arial", 8, "bold")).pack(pady=(20, 5))
+        legend_items = [("OCEAN", "ocean"), ("WATR", "water"), ("FORST", "forest"), ("DESRT", "desert"), ("PLNS", "plains"), ("MOUN", "mountain"), ("PEAK", "peak"), ("ROAD", "road")]
+        for name, key in legend_items:
+            f = tk.Frame(cp, bg="#181818")
+            f.pack(fill="x")
+            tk.Label(f, text=" ", bg=COLOR_MAP.get(key, "#000"), width=2).pack(side="left", padx=2)
+            tk.Label(f, text=name, bg="#181818", fg="#aaa", font=("Arial", 7)).pack(side="left")
+
+        cp_canvas.configure(scrollregion=cp_canvas.bbox("all"))
+
+        canvas_frame = tk.Frame(main_frame, bg="black"); canvas_frame.pack(side="left", padx=5, pady=10, fill="both", expand=True)
+        h_s = tk.Scrollbar(canvas_frame, orient="horizontal"); v_s = tk.Scrollbar(canvas_frame, orient="vertical")
+        self.canvas = tk.Canvas(canvas_frame, bg="black", highlightthickness=0, xscrollcommand=h_s.set, yscrollcommand=v_s.set)
+        h_s.config(command=self.canvas.xview); v_s.config(command=self.canvas.yview)
+        h_s.pack(side="bottom", fill="x"); v_s.pack(side="right", fill="y")
+        self.canvas.pack(side="left", fill="both", expand=True)
+        
+        self.canvas.bind("<Button-1>", self.on_canvas_press); self.canvas.bind("<B1-Motion>", self.on_canvas_drag); self.canvas.bind("<ButtonRelease-1>", self.on_canvas_release); self.canvas.bind("<MouseWheel>", self.on_zoom)
+        self.canvas.bind("<Motion>", self.on_canvas_move)
+        
+        self.lbl_status = tk.Label(self.root, text="V14.0 ARCHITECT READY", bg="#222", fg="#00bcd4", font=("Arial", 9, "bold"), anchor="w", padx=10)
+        self.lbl_status.pack(side="bottom", fill="x")
+        
+        self.draw_map(); self.root.mainloop()
 
 if __name__ == "__main__":
     architect = AethelgardArchitect()

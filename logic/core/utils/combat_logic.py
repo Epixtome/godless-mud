@@ -389,14 +389,25 @@ def check_posture_break(target: Any, damage: float, source: Any = None, tags: Op
 
 def is_target_valid(attacker: Any, target: Any) -> bool:
     """Checks if combat between two entities is possible."""
-    if not target or getattr(target, 'hp', 0) <= 0: return False
-    required_attrs = ['hp', 'name', 'room']
+    if not target: return False
+    
+    # [V7.2] Support Potency-based targets (Shrines)
+    if hasattr(target, 'potency'):
+        if target.potency <= 0: return False
+    elif getattr(target, 'hp', 0) <= 0:
+        return False
+        
+    required_attrs = ['name', 'room'] # Mobs/Players have HP, Shrines have Potency
     if not all(hasattr(target, attr) for attr in required_attrs): return False
     if hasattr(attacker, 'room') and hasattr(target, 'room') and attacker.room != target.room: return False
     return True
 
 def can_act(entity: Any) -> bool:
     """Checks if an entity is capable of taking a combat action."""
+    # Shrines don't "act" in the traditional sense, but they must be "up"
+    if hasattr(entity, 'potency'):
+        return entity.potency > 0
+        
     if getattr(entity, 'hp', 0) <= 0 or getattr(entity, 'pending_death', False): return False
     game = getattr(entity, 'game', None)
     active_effects = getattr(entity, 'status_effects', {})
@@ -430,6 +441,8 @@ def apply_damage(target: Any, amount: int, source: Any = None, context: str = "C
     ctx = {'target': target, 'damage': amount, 'source': source, 'context': context, 'tags': tags or set()}
     event_engine.dispatch("on_take_damage", ctx)
     actual_damage = ctx['damage']
+    
+    # 1. Handle Standard HP Entities (Mobs/Players)
     if hasattr(target, 'hp'):
         target.hp = max(0, target.hp - actual_damage)
         if target.hp <= 0:
@@ -441,6 +454,26 @@ def apply_damage(target: Any, amount: int, source: Any = None, context: str = "C
             event_engine.dispatch("on_death", {'victim': target, 'killer': source})
             return actual_damage
         check_posture_break(target, actual_damage, source=source, tags=ctx['tags'])
+    
+    # 2. Handle Sovereign Shrines (Potency-based)
+    elif hasattr(target, 'potency'):
+        target.potency = max(0, target.potency - actual_damage)
+        if hasattr(source, 'send_line'):
+            source.send_line(f"{Colors.RED}Your attack shatters the divine resonance of {target.name}!{Colors.RESET}")
+        
+        if target.potency <= 0:
+            target.captured_by = "neutral"
+            if hasattr(source, 'send_line'):
+                source.send_line(f"{Colors.BOLD}{Colors.WHITE}*** THE SANCTUARY HAS BEEN BREACHED! ***{Colors.RESET}")
+            
+            if hasattr(target, 'room'):
+                target.room.broadcast(f"{Colors.BOLD}{Colors.RED}The {target.name} has been drained of all power! It is now NEUTRAL.{Colors.RESET}")
+            
+            # Update cache and notify
+            from logic.core.systems.influence_service import InfluenceService
+            InfluenceService.get_instance().clear_cache()
+            event_engine.dispatch("on_shrine_breached", {'shrine': target, 'attacker': source})
+            
     return actual_damage
 
 def get_total_defense(player: 'Player') -> int:

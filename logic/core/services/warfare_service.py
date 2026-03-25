@@ -70,7 +70,8 @@ def pulse(game):
         
         # Periodic Alerts (Every minute / 30 ticks)
         if ritual['timer'] % 30 == 0 and ritual['timer'] > 0:
-            shrine = game.world.shrines.get(s_id)
+            from logic.core.systems.influence_service import InfluenceService
+            shrine = InfluenceService.get_instance().shrines.get(s_id)
             if shrine:
                 from logic.core import event_engine
                 event_engine.dispatch("kingdom_alert", {
@@ -87,7 +88,8 @@ def pulse(game):
 
 def _finish_ritual(game, shrine_id):
     ritual = _ACTIVE_RITUALS.pop(shrine_id)
-    shrine = game.world.shrines.get(shrine_id)
+    from logic.core.systems.influence_service import InfluenceService
+    shrine = InfluenceService.get_instance().shrines.get(shrine_id)
     if not shrine: return
     
     old_kingdom = shrine.kingdom

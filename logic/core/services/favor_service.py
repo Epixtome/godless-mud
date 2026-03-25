@@ -8,16 +8,40 @@ from utilities.colors import Colors
 logger = logging.getLogger("GodlessMUD")
 
 def award_favor(player, deity_id, amount):
-    """Awards favor to a player with a specific deity."""
+    """
+    [V7.2] Awards favor to a player with Diminishing Returns logic.
+    Formula: gain = raw / (1 + (daily_gain / threshold))
+    """
     if not hasattr(player, 'favor'):
         player.favor = {}
     
-    player.favor[deity_id] = player.favor.get(deity_id, 0) + amount
-    player.send_line(f"{Colors.YELLOW}You have gained {amount} favor with {deity_id.title()}.{Colors.RESET}")
+    # 1. Daily Reset Logic (Every 86400s / 24h)
+    import time
+    if time.time() - getattr(player, 'last_favor_gain_time', 0) > 86400:
+        player.daily_favor_gain = 0
+        player.last_favor_gain_time = time.time()
+
+    # 2. Scaling (Threshold: 2000 favor/day)
+    threshold = 2000
+    daily = getattr(player, 'daily_favor_gain', 0)
+    
+    # Soft cap scaling: The more you gain, the harder it is to get more.
+    multiplier = 1.0 / (1.0 + (daily / threshold))
+    actual_amount = int(amount * multiplier)
+    
+    if actual_amount <= 0 and amount > 0:
+        actual_amount = 1 # Minimum floor for engagement
+
+    player.favor[deity_id] = player.favor.get(deity_id, 0) + actual_amount
+    player.daily_favor_gain += actual_amount
+    player.total_favor_gain += actual_amount
+    player.last_favor_gain_time = time.time()
+
+    player.send_line(f"{Colors.YELLOW}You have gained {actual_amount} favor with {deity_id.title()}.{Colors.RESET}")
     
     # Fire event for class ability unlocks or other favor-dependent logic
     from logic.core.engines import event_engine
-    event_engine.dispatch("on_favor_gain", player=player, deity_id=deity_id, amount=amount)
+    event_engine.dispatch("on_favor_gain", player=player, deity_id=deity_id, amount=actual_amount)
 
 def sacrifice_favor(player, deity_id, amount, shrine):
     """Sacrifices favor at a shrine to boost its potency."""

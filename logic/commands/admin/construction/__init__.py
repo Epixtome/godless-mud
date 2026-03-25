@@ -12,6 +12,7 @@ from . import world
 from . import stamp
 from . import cleanup_commands
 from . import npcs
+from . import shrine_admin
 
 # Helper tools and state
 from . import utils
