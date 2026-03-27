@@ -15,4 +15,5 @@ from . import mob_builder
 from . import diagnostic_commands
 from . import kit_commands
 from . import factory_commands
+from . import maintenance_commands
 print(" [DEBUG] Admin Package Loaded.")

@@ -116,8 +116,11 @@ class Connection:
                 return
 
             self.state = "GET_NAME"
-            await self.send("Welcome to GODLESS.")
-            self.wrapper.write("Enter your name: ")
+            if self.is_web:
+                await self.send_event("auth:require_name")
+            else:
+                await self.send("Welcome to GODLESS.")
+                self.wrapper.write("Enter your name: ")
 
             # Timeout: 60 seconds to provide a name
             raw_name = await self.read_line(timeout=60.0)
@@ -140,6 +143,10 @@ class Connection:
             await auth_handler.handle_login(self)
 
             if self.player:
+                # [V9.5] Signal Auth Success to Web Client
+                if self.is_web:
+                    await self.send_event("auth:success", {"name": self.name})
+                
                 self.state = "PLAYING"
                 # [V7.2] Initial UI Synchronization for WebSockets
                 if hasattr(self.player, 'send_ui_update'):

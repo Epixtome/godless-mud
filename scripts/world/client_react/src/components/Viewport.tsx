@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useStore } from '../store/useStore';
 import { clsx } from 'clsx';
 import { Map, Users, AlertCircle, Layers } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface ViewportProps {
    radius: number;
@@ -10,7 +11,7 @@ interface ViewportProps {
 }
 
 export function Viewport({ radius, context, scale = 1 }: ViewportProps) {
-  const { isConnected, tacticalMapData, showInfluence, setShowInfluence } = useStore();
+  const { isConnected, tacticalMapData, showInfluence, setShowInfluence, combatNotifications } = useStore();
   
   const mapData = tacticalMapData;
   const isTactical = context === 'tactical';
@@ -176,6 +177,46 @@ export function Viewport({ radius, context, scale = 1 }: ViewportProps) {
                </button>
             </div>
          )}
+
+         {/* 5. Floating Combat Text (V9.3) */}
+         <AnimatePresence>
+            {combatNotifications.map((notif: any) => {
+                const center = mapData?.center || { x: 0, y: 0 };
+                const gridX = notif.x ?? center.x;
+                const gridY = notif.y ?? center.y;
+                
+                return (
+                    <motion.div
+                        key={notif.id}
+                        initial={{ opacity: 0, scale: 0.1, y: 20 }}
+                        animate={{ 
+                            opacity: [0, 1, 1, 0.8], 
+                            scale: [0.5, 1.4, 1, 1],
+                            y: -100 
+                        }}
+                        exit={{ opacity: 0, y: -150, transition: { duration: 0.8 } }}
+                        transition={{ duration: 1.2, ease: "easeOut" }}
+                        className={clsx(
+                            "absolute z-[100] font-black text-sm pointer-events-none whitespace-nowrap tracking-tighter",
+                            notif.is_critical ? "text-yellow-400 text-lg scale-125" : 
+                            notif.type === 'damage' ? "text-red-500" : "text-blue-400"
+                        )}
+                        style={{
+                            left: '50%',
+                            top: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            marginLeft: ((gridX - center.x) * (tileSize + 2)) + (notif.offsetX || 0),
+                            marginTop: ((gridY - center.y) * (tileSize + 2)) + (notif.offsetY || 0),
+                            filter: 'drop-shadow(0 0 4px rgba(0,0,0,0.9))'
+                        }}
+                    >
+                        {notif.is_critical && "💥 "}
+                        {notif.type === 'damage' ? `-${notif.value}` : notif.type.toUpperCase()}
+                        {notif.is_critical && "!"}
+                    </motion.div>
+                );
+            })}
+         </AnimatePresence>
     </div>
   );
 }

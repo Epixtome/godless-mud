@@ -20,9 +20,10 @@ import ScorePanel from './components/ScorePanel';
 import AttributesPanel from './components/AttributesPanel';
 import InventoryPanel from './components/InventoryPanel';
 import WeatherPanel from './components/WeatherPanel';
+import LoginOverlay from './components/LoginOverlay';
 
 export function App() {
-  const { isConnected, status } = useStore();
+  const { isConnected, isLoggedByServer, status } = useStore();
   const [inputCmd, setInputCmd] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -56,14 +57,7 @@ export function App() {
 
   return (
     <div className="flex h-screen w-screen bg-slate-950 text-slate-200 font-sans overflow-hidden">
-      {/* 1. Global HUD Connection Status */}
-      {!isConnected && (
-         <div className="absolute inset-0 z-[99999] bg-slate-950/90 backdrop-blur-xl flex flex-col items-center justify-center">
-            <div className="w-24 h-24 border-t-2 border-blue-500 rounded-full animate-spin mb-8 shadow-[0_0_30px_rgba(59,130,246,0.3)]" />
-            <h1 className="text-2xl font-black uppercase tracking-[0.5em] text-white animate-pulse">Establishing Divine Link</h1>
-            <p className="mt-4 text-slate-500 font-mono text-sm tracking-widest uppercase">Negotiating Soul-Bound Protocol...</p>
-         </div>
-      )}
+      <LoginOverlay />
 
       {/* 2. Unified Workspace Layer */}
       <div className="relative flex-1 w-full h-full overflow-hidden pt-10 p-6 perspective-1000">

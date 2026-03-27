@@ -37,10 +37,17 @@ async def handle_login(conn):
             
             stored_pass = loaded_data.get('password')
             if stored_pass:
-                conn.wrapper.write("Password: ")
-                pwd = await conn.read_line()
+                if getattr(conn, 'is_web', False):
+                    await conn.send_event("auth:require_password", {"name": name})
+                else:
+                    conn.wrapper.write("Password: ")
                 
-                if not pwd: return
+                pwd = await conn.read_line()
+                logger.info(f"Password attempt received for {name} via web={getattr(conn, 'is_web', False)}")
+                
+                if not pwd: 
+                    logger.warning(f"Empty password received for {name}")
+                    return
                 hashed_input = conn._hash_password(pwd)
 
                 # Check Hash (Secure) OR Plaintext (Legacy)
@@ -89,7 +96,11 @@ async def handle_login(conn):
     else:
         # New Character
         conn.state = "CREATE_PASSWORD"
-        conn.wrapper.write("Create a password: ")
+        if getattr(conn, 'is_web', False):
+            await conn.send_event("auth:require_password", {"name": name, "is_new": True})
+        else:
+            conn.wrapper.write("Create a password: ")
+            
         raw_pwd = await conn.read_line()
         if not raw_pwd: return
         conn.player.password = conn._hash_password(raw_pwd)

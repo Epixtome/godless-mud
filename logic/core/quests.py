@@ -101,9 +101,10 @@ def complete_quest(player, quest):
 
 def update_visit_progress(player, room):
     """Checks if entering a room satisfies a 'visit' objective."""
-    if not player.active_quests: return
+    active_quests = getattr(player, 'active_quests', {})
+    if not active_quests: return
     
-    for quest_id, progress in player.active_quests.items():
+    for quest_id, progress in active_quests.items():
         quest = player.game.world.quests.get(quest_id)
         if not quest: continue
         for obj in quest.objectives:
@@ -116,10 +117,11 @@ def update_visit_progress(player, room):
 
 def update_kill_progress(player, killed_mob_id):
     """Updates kill objectives for active quests."""
-    if not player.active_quests or not killed_mob_id:
+    active_quests = getattr(player, 'active_quests', {})
+    if not active_quests or not killed_mob_id:
         return
 
-    for quest_id, progress in player.active_quests.items():
+    for quest_id, progress in active_quests.items():
         quest = player.game.world.quests.get(quest_id)
         if not quest: continue
         for obj in quest.objectives:

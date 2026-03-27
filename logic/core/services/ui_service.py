@@ -45,6 +45,29 @@ def save_ui_prefs(player, prefs):
     player.ext_state['ui_prefs'] = prefs
     logger.debug(f"UI Prefs saved for {player.name}")
 
+def send_audio_event(player, sound_id, x, y, z, intensity=1.0):
+    """[V9.3 SPATIAL] Dispatches a 3D audio pulse to the web client."""
+    if not player or not getattr(player.connection, 'is_web', False):
+        return
+    
+    # Calculate relative coordinates (Player is 0,0)
+    rel_x = x - player.room.x if player.room else 0
+    rel_y = y - player.room.y if player.room else 0
+    
+    # Pruning: Only send if within tactical audio range (Radius 7)
+    if abs(rel_x) > 7 or abs(rel_y) > 7:
+        return
+
+    player.send_json({
+        "type": "audio:event",
+        "data": {
+            "id": sound_id,
+            "rel_x": rel_x,
+            "rel_y": rel_y,
+            "intensity": intensity
+        }
+    })
+
 def send_status_update(player):
     """Serializes current vitals and environment context as JSON."""
     try:
@@ -136,12 +159,28 @@ def send_status_update(player):
                 })
             
             # Monsters
+            from logic.core import perception
             for m in getattr(player.room, 'monsters', []):
-                entities.append({
-                    "id": str(id(m)), "name": m.name, 
-                    "symbol": Colors.strip(getattr(m, 'symbol', 'm'))[0],
-                    "is_hostile": getattr(m, 'is_aggressive', False)
-                })
+                # [V9.5 Bug 2] Intelligence-Based Awareness
+                # Mobs only show if: Fighting, Aggressive, or you can actually see them (Perception)
+                can_see = perception.can_see(player, m)
+                in_combat = (m.fighting is not None)
+                is_aggressive = getattr(m, 'is_aggressive', False)
+                
+                # We show unidentified but "detectable" entities as '?' or 'Something'
+                if can_see or in_combat or is_aggressive:
+                    symbol = Colors.strip(getattr(m, 'symbol', 'm'))[0]
+                    name = m.name if can_see else "Something"
+                    
+                    if not can_see and in_combat:
+                        symbol = "?" # Fighting but hidden (e.g. in shadows)
+                        
+                    entities.append({
+                        "id": str(id(m)), "name": name, 
+                        "symbol": symbol,
+                        "is_hostile": is_aggressive,
+                        "in_combat": in_combat
+                    })
 
             # Interactive Items & Objects
             for itm in getattr(player.room, 'items', []):

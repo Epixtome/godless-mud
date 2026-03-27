@@ -464,12 +464,21 @@ def apply_damage(target: Any, amount: int, source: Any = None, context: str = "C
                 "target_name": target.name,
                 "value": actual_damage,
                 "is_critical": "crit" in (tags or set()),
-                "source_name": getattr(source, 'name', 'Unknown')
+                "source_name": getattr(source, 'name', 'Unknown'),
+                "x": target.room.x if hasattr(target, 'room') and target.room else 0,
+                "y": target.room.y if hasattr(target, 'room') and target.room else 0
             }
         }
         for p in getattr(target.room, 'players', []):
-            if getattr(p, 'is_web', False):
+            if getattr(p.connection, 'is_web', False):
                 p.send_json(event_packet)
+        
+        # [V9.4 SPATIAL: Hit Dynamic Scaling]
+        if not getattr(target, 'pending_death', False):
+            from logic.core.services.audio_service import trigger_combat_sound
+            pct = actual_damage / max(1, getattr(target, 'max_hp', 100))
+            sound_intensity = min(1.2, max(0.4, pct * 3.0)) # Scaled to damage punch
+            trigger_combat_sound(target, sound_id='clash', intensity=sound_intensity)
     
     # 1. Handle Standard HP Entities (Mobs/Players)
     if hasattr(target, 'hp'):

@@ -108,7 +108,11 @@ def get_perception(observer, radius=7, context=TACTICAL_CONTEXT):
             if can_see_room:
                 visible = []
                 for m in room.monsters:
-                    if vision_logic.can_see(observer, m):
+                    # [V9.5 Bug 2] Map Intelligence Filtering
+                    # Mobs only show as icons if: Fighting or Aggressive.
+                    # We removed Admin bypass here so Admins can see the map as players do.
+                    is_active = (m.fighting is not None) or getattr(m, 'is_aggressive', False)
+                    if is_active and vision_logic.can_see(observer, m):
                         visible.append(m)
                 for p in room.players:
                     if vision_logic.can_see(observer, p):

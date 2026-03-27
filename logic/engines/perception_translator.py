@@ -86,11 +86,22 @@ def translate_to_dict(perception_result):
                             tags = getattr(ent, 'identity_tags', []) + getattr(ent, 'tags', [])
                             if any(t in tags for t in ["aggressive", "elite", "boss"]): ent_color = "#ff5555"
                             
+                            from logic.core.utils import vision_logic
+                            can_see_final = vision_logic.can_see(perception_result.observer, ent)
+                            
                             ent_sym = getattr(ent, 'symbol', '@')
+                            symbol = Colors.strip(ent_sym)[0] if Colors.strip(ent_sym) else "@"
+                            name = getattr(ent, 'name', 'Unknown')
+                            
+                            # [V9.5 BUG 2] Digital Ghosting (?) for hidden combatants
+                            if not can_see_final:
+                                name = "Something"
+                                symbol = "?"
+                                
                             tile["top_entities"].append({
                                 "id": str(id(ent)),
-                                "name": getattr(ent, 'name', 'Unknown'),
-                                "symbol": Colors.strip(ent_sym)[0] if Colors.strip(ent_sym) else "@",
+                                "name": name,
+                                "symbol": symbol,
                                 "color": ent_color,
                                 "is_player": getattr(ent, 'is_player', False),
                                 "is_self": ent == perception_result.observer

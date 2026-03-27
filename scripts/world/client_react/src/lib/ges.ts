@@ -1,5 +1,6 @@
 import { sendEvent } from './socket';
 import { useStore } from '../store/useStore';
+import { audioService } from './audio';
 
 let reconnectTimeout: any = null;
 
@@ -34,8 +35,26 @@ export const connectToGES = (url?: string) => {
                         store.setTacticalMapData(data.perception);
                     }
                     break;
+                case 'combat_event':
+                    // Trigger visual floating text
+                    store.addCombatNotification(data);
+                    break;
+                case 'audio:event':
+                    audioService.playSpatial(data.id, data.rel_x, data.rel_y, data.intensity);
+                    break;
                 case 'log:message':
                     store.addLog(data.text);
+                    break;
+                case 'auth:require_name':
+                    store.setLoggedByServer(false);
+                    break;
+                case 'auth:require_password':
+                    // Server is ready for password
+                    window.dispatchEvent(new CustomEvent('godless:auth_step', { detail: 'password' }));
+                    break;
+                case 'auth:success':
+                    store.setLoggedByServer(true);
+                    if (data.name) store.saveCharacter(data.name);
                     break;
                 case 'error':
                     console.error("GES Error:", data.message);

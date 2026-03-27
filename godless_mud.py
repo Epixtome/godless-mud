@@ -84,6 +84,10 @@ class GodlessGame:
         from logic.core.services import warfare_service
         warfare_service.init_warfare(self)
 
+        # 9. Initialize GSAS (Godless Spatial Audio System - V9.3)
+        from logic.core.services.audio_service import initialize_audio_hooks
+        initialize_audio_hooks()
+
         # World Stats
         self.log_world_stats()
 

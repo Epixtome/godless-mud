@@ -49,6 +49,13 @@ interface AppState {
   isConnected: boolean;
   windows: Record<string, UIWindow>;
   showInfluence: boolean;
+  combatNotifications: any[];
+  isLoggedByServer: boolean;
+  savedCharacters: { name: string, lastUsed: number }[];
+  addCombatNotification: (notif: any) => void;
+  setLoggedByServer: (status: boolean) => void;
+  saveCharacter: (name: string) => void;
+  removeCharacter: (name: string) => void;
   
   setStatus: (status: GameStatus) => void;
   setTacticalMapData: (data: MapData) => void;
@@ -86,8 +93,37 @@ export const useStore = create<AppState>()(
       isConnected: false,
       windows: DEFAULT_WINDOWS,
       showInfluence: false,
+      combatNotifications: [],
+      isLoggedByServer: false,
+      savedCharacters: [],
+
+      addCombatNotification: (notif) => set((state) => {
+          const id = Math.random().toString(36).substring(7);
+          const offsetX = Math.random() * 40 - 20;
+          const offsetY = Math.random() * 20 - 10;
+          const newNotif = { ...notif, id, offsetX, offsetY };
+          // Auto-remove after 2s
+          setTimeout(() => {
+              const currentStore = useStore.getState();
+              set({ 
+                  combatNotifications: currentStore.combatNotifications.filter(n => n.id !== id) 
+              });
+          }, 2000);
+          return { combatNotifications: [...state.combatNotifications, newNotif] };
+      }),
 
       // --- HYDRATION ENGINE (V9.2) ---
+      setLoggedByServer: (isLoggedByServer) => set({ isLoggedByServer }),
+      
+      saveCharacter: (name) => set((state) => {
+          const others = state.savedCharacters.filter(c => c.name.toLowerCase() !== name.toLowerCase());
+          return { savedCharacters: [{ name, lastUsed: Date.now() }, ...others].slice(0, 5) };
+      }),
+
+      removeCharacter: (name) => set((state) => ({
+          savedCharacters: state.savedCharacters.filter(c => c.name !== name)
+      })),
+
       setStatus: (status) => {
           set({ status });
           
@@ -111,7 +147,10 @@ export const useStore = create<AppState>()(
         logs: [...state.logs.slice(-200), { text, timestamp: new Date().toLocaleTimeString() }] 
       })),
       setSelectedTargetId: (selectedTargetId) => set({ selectedTargetId }),
-      setConnected: (isConnected) => set({ isConnected }),
+      setConnected: (isConnected) => {
+          set({ isConnected });
+          if (!isConnected) set({ isLoggedByServer: false });
+      },
       
       updateWindow: (id, updates) => set((state) => ({
           windows: { ...state.windows, [id]: { ...state.windows[id], ...updates } }
@@ -137,7 +176,7 @@ export const useStore = create<AppState>()(
     {
       name: 'godless_ui_prefs_v2',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ windows: state.windows }), // Only persist windows
+      partialize: (state) => ({ windows: state.windows, savedCharacters: state.savedCharacters }), // Persist UI and Characters
     }
   )
 );

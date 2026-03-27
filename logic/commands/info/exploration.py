@@ -154,13 +154,6 @@ def look(player, args, with_prompt=True):
 
     perception = vision.get_perception(player, radius=local_radius, context=vision.NAVIGATION)
     
-    # [V7.2] Send JSON Map Data for the Web Client
-    if hasattr(player, 'send_json'):
-        player.send_json({
-            "type": "map_data",
-            "data": { "context": "look", "perception": perception.to_dict() }
-        })
-
     map_lines = mapper.draw_grid(
         perception, 
         visited_rooms=player.visited_rooms, 
@@ -238,14 +231,6 @@ def show_map(player, args):
         player.ext_state['tracked_entities'] = {eid: exp for eid, exp in player.ext_state['tracked_entities'].items() if exp > now}
 
     perception = vision.get_perception(player, radius=radius, context=vision.TACTICAL)
-    
-    # [V7.2] Send JSON Map Data for the Web Client (Standardized Radius 5 for Stability)
-    if hasattr(player, 'send_json'):
-        tactical_perception = vision.get_perception(player, radius=5, context=vision.TACTICAL)
-        player.send_json({
-            "type": "map_data",
-            "data": { "context": "map", "perception": tactical_perception.to_dict() }
-        })
     
     map_lines = mapper.draw_grid(
         perception,
