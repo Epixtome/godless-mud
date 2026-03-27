@@ -3,11 +3,13 @@ import re
 
 def render_header(title, width=100, char="="):
     """Renders a centered header within a line of the specified character."""
-    # Use ASCII characters for maximum compatibility
+    # [V7.2] Allow extremely wide headers for Web clients to prevent artifacts
+    if width > 1000: return f"{Colors.BOLD}{char * 10} {title} {char * 10}{Colors.RESET}"
     return f"{Colors.BOLD}{f' {title} ':=^{width}}{Colors.RESET}".replace("=", char)
 
 def render_line(width=100, char="-"):
     """Renders a horizontal separator line."""
+    if width > 1000: return f"{Colors.WHITE}{char * 40}{Colors.RESET}"
     return f"{Colors.WHITE}{char * width}{Colors.RESET}"
 
 def render_progress_bar(value, max_val=20, width=20, fill_char="#", empty_char="-", color=Colors.CYAN):

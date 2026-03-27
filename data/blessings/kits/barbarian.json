@@ -158,21 +158,6 @@
                 "fury": 50,
                 "cooldown": 60
             }
-        },
-        "barbarian_physiology": {
-            "id": "barbarian_physiology",
-            "name": "Barbarian Physiology",
-            "tier": 1,
-            "description": "Passive: Your fury fuels your strength and resilience.",
-            "logic_type": "passive",
-            "identity_tags": ["martial", "passive"],
-            "potency_rules": [
-                {
-                    "type": "mitigation_mod",
-                    "status_id": "bloodrage",
-                    "multiplier": 0.8
-                }
-            ]
         }
     }
 }

@@ -327,7 +327,8 @@
             "exits": {
                 "south": "umbra.75.1.0",
                 "east": "umbra.76.0.0",
-                "west": "umbra.74.0.0"
+                "west": "umbra.74.0.0",
+                "north": "umbra.75.-1.0"
             },
             "x": 75,
             "y": 0,
@@ -97338,6 +97339,28 @@
             "z": 0,
             "terrain": "bridge",
             "elevation": 1,
+            "traversal_cost": 1,
+            "opacity": 0,
+            "symbol": null,
+            "manual_exits": false,
+            "tags": [],
+            "items": [],
+            "monsters": [],
+            "doors": {}
+        },
+        {
+            "id": "umbra.75.-1.0",
+            "zone_id": "umbra",
+            "name": "New Room",
+            "description": "An empty room created by magic.",
+            "exits": {
+                "south": "umbra.75.0.0"
+            },
+            "x": 75,
+            "y": -1,
+            "z": 0,
+            "terrain": "indoors",
+            "elevation": 0,
             "traversal_cost": 1,
             "opacity": 0,
             "symbol": null,

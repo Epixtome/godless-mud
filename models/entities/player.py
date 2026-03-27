@@ -2,6 +2,8 @@ import logging
 import time
 import json
 import os
+import asyncio
+from datetime import datetime
 from models.items import Armor, Weapon, Consumable, Item
 from utilities.colors import Colors
 from logic.constants import Tags
@@ -9,6 +11,7 @@ from logic import calibration
 from logic.core import event_engine, effects
 from logic.core.utils import persistence, messaging, combat_logic
 from logic.engines.resonance_engine import ResonanceAuditor
+# No Gender import needed (Legacy)
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -62,6 +65,7 @@ class Player:
         self.is_mounted = False
         self.admin_vision = False
         self.is_hydrated = False
+        self.is_web = getattr(connection, 'is_web', False) # [V7.2] UI Tuning Flag
         
         # UTS Cache (V4.5 Optimization)
         self._cached_tags = {}
@@ -260,13 +264,42 @@ class Player:
         """Send raw text to this player's telnet client without prefix/suffix."""
         messaging.send_raw(self, message, include_prompt=include_prompt)
 
+    def send_json(self, data):
+        """[V8.0] Dispatches a structured event via the GES standard."""
+        if self.connection and hasattr(self.connection, 'send_event'):
+            # If we're already passing a GES-style dict, unwrap the data
+            e_type = data.get('type', 'generic_event')
+            e_data = data.get('data', {})
+            asyncio.create_task(self.connection.send_event(e_type, e_data))
+        elif self.connection and hasattr(self.connection, 'write'):
+            # Legacy fallback
+            msg = json.dumps(data)
+            self.connection.write(msg)
+
+    def send_ui_update(self):
+        """[V8.9] Delegates UI synchronization to the UI service."""
+        from logic.core.services import ui_service
+        ui_service.send_ui_update(self)
+
+    def send_status_update(self):
+        """[V8.9] Delegates status synchronization to the UI service."""
+        from logic.core.services import ui_service
+        ui_service.send_status_update(self)
+
+
     def is_buffering_content(self):
         """Returns True if there is text in the output buffer."""
         return len(self.output_buffer) > 0
 
     def send_prompt(self):
         """Sends the prompt immediately and flushes the buffer."""
-        self.send_raw(self.get_prompt())
+        if self.is_web:
+            # [V7.2] Web clients receive prompts as structured data.
+            # This allows the React client to strip it from the log or update a HUD.
+            self.send_json({"type": "prompt", "data": self.get_prompt()})
+        else:
+            self.send_raw(self.get_prompt())
+            
         self.prompt_requested = False
         
         # Force flush if not in a complex command buffer
@@ -278,10 +311,10 @@ class Player:
                 pass
 
     async def drain(self):
-        """Flushes the connection's writer. (Telnet Protocol)"""
-        if hasattr(self, 'connection') and hasattr(self.connection, 'writer'):
+        """Flushes the connection's writer."""
+        if hasattr(self, 'connection'):
             try:
-                await self.connection.writer.drain()
+                await self.connection.drain()
             except Exception:
                 pass
 

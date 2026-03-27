@@ -1,6 +1,6 @@
 # GEMINI.md: AI Engineering & Development Guide for Godless
 
-> **Status:** ACTIVE PROTOCOL (V7.2 - Updated from Topographical Refactor)  
+> **Status:** ACTIVE PROTOCOL (V7.3 - The Web Horizon Update)  
 > **Target Audience:** Gemini, GCA, Antigravity, and any Agentic AI working on this codebase.  
 > **Mandatory Rule:** All structural, logic, and data changes MUST conform to this document. "Quick fixes" or "Scripting-style" code that violates these patterns will be rejected and refactored.
 
@@ -9,17 +9,18 @@
 ## 1. THE FIVE PILLARS OF GODLESS ENGINEERING
 These are absolute constraints. Deviating from these pillars introduces technical debt and circular dependencies.
 
-1.  **The "Clean Border" Protocol**: No self-healing logic or `isinstance()` checks inside logic modules. Assume data is 100% valid once it reaches the game logic. Validation happens at the entry point (Persistence or Input Handlers).
+1.  **The "Clean Border" Protocol**: No self-healing logic or `isinstance()` checks inside logic modules. Assume data is 100% valid once it reaches the game logic. Validation happens at the entry point (**Persistence, Input Handlers, or WebSocket Message Parsers**).
 2.  **The "Modular Initialization" Protocol**: Core engine MUST only initialize modules relevant to the player's `active_class` plus `common`. Never permit "Omni-init" (loading all 50+ classes per player).
 3.  **The "Facade" Import Standard**: Never reach deep into sub-directories. Use `from logic.core import event_engine` instead of the full path. All core systems are exported via `logic/core/__init__.py`. Use Relative Imports (`from . import ...`) for files within the same module.
-3.  **The "Event-Driven" Decoupling**: Core engines MUST be class-agnostic. Use the `event_engine` to hook class-specific behaviors. **Never** use `if player.class == 'monk'` inside a core engine. Core display systems (Messaging/Prompts) follow this same pattern.
-4.  **The "Surgical" Edit Rule**: Do not rewrite files over 150 lines. Use windowed editing and granular function overrides. Perform a "Pre-and-Post Integrity Audit" (list functions before/after) to ensure no silent deletions.
-5.  **The "No-Band-Aid" Policy**: Fix the root cause (logic, path, or schema). Never use `try...except` to mask an `AttributeError` or data mismatch.
-6.  **The "Anemic Model" Delegation**: Domain models (`Player`, `Monster`) must not contain active business logic. They are passive data containers that delegate to core facades (e.g., `combat.apply_damage`) or services within `logic/core/`.
-7.  **The "Naming Ghost" Protocol**: Maintain absolute naming consistency. Do not use variations like `DGREY` vs `dGREY`. Standardize on **UPPER_CASE** for constants and utilities.
-8.  **The "Color Constraint" Standard**: Only use standard ANSI colors from `utilities.colors`.
+4.  **The "Event-Driven" Decoupling**: Core engines MUST be class-agnostic. Use the `event_engine` to hook class-specific behaviors. **Never** use if `player.class == 'monk'` inside a core engine. Core display systems (Messaging/Prompts) follow this same pattern for both Telnet and WebSocket streams.
+5.  **The "Surgical" Edit Rule**: Do not rewrite files over 150 lines. Use windowed editing and granular function overrides. Perform a "Pre-and-Post Integrity Audit" (list functions before/after) to ensure no silent deletions.
+6.  **The "No-Band-Aid" Policy**: Fix the root cause (logic, path, or schema). Never use `try...except` to mask an `AttributeError` or data mismatch.
+7.  **The "Anemic Model" Delegation**: Domain models (`Player`, `Monster`) must not contain active business logic. They are passive data containers that delegate to core facades (e.g., `combat.apply_damage`) or services within `logic/core/`.
+8.  **The "Naming Ghost" Protocol**: Maintain absolute naming consistency. Do not use variations like `DGREY` vs `dGREY`. Standardize on **UPPER_CASE** for constants and utilities.
+9.  **The "Color Constraint" Standard**: Only use standard ANSI colors from `utilities.colors`.
     -   **ALLOWED**: `RED`, `GREEN`, `YELLOW`, `BLUE`, `MAGENTA`, `CYAN`, `WHITE`, `DARK_GRAY`.
-    -   **FORBIDDEN**: Never assume colors like `PALE_BLUE`, `GOLD`, or `ORANGE` exist as direct attributes. Use `CYAN` or `YELLOW` instead. (V7.2 includes a `ColorMeta` safety fallback, but code should adhere to the primary palette for UI consistency).
+    -   **FORBIDDEN**: Never assume colors like `PALE_BLUE`, `GOLD`, or `ORANGE` exist as direct attributes. Use `CYAN` or `YELLOW` instead.
+    -   **WEB MAPPING**: The React/WebSocket client translates these ANSI tokens into specific CSS/Hex themes. Consistent server tokens ensure a "Premium" UI feel.
 
 ---
 

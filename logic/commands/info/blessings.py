@@ -5,7 +5,8 @@ from logic.core.utils import display_utils
 @command_manager.register("deck", category="information")
 def deck(player, args):
     """View your currently equipped blessings (Deck). Optimized for V7.2."""
-    width = 100
+    is_web = getattr(player, 'is_web', False)
+    width = 9999 if is_web else 100
     cls_id = player.active_class or "wanderer"
     cls_obj = player.game.world.classes.get(cls_id)
     cls_name = cls_obj.name if cls_obj else cls_id.capitalize()
@@ -67,10 +68,13 @@ def deck(player, args):
                     # Line 1: [TYPE] Name (Cost)
                     player.send_line(f"  {Colors.DGREY}[{b_type}]{Colors.RESET} {Colors.CYAN}{b.name}{Colors.RESET} {cost_str}")
                     # Line 2: The Description (Full, but restricted to width to look clean)
-                    import textwrap
-                    wrapped_desc = textwrap.wrap(desc, width=96)
-                    for line in wrapped_desc:
-                        player.send_line(f"    {Colors.ITALIC}{Colors.WHITE}{line}{Colors.RESET}")
+                    if getattr(player, 'is_web', False):
+                        player.send_line(f"    {Colors.ITALIC}{Colors.WHITE}{desc}{Colors.RESET}")
+                    else:
+                        import textwrap
+                        wrapped_desc = textwrap.wrap(desc, width=96)
+                        for line in wrapped_desc:
+                            player.send_line(f"    {Colors.ITALIC}{Colors.WHITE}{line}{Colors.RESET}")
                     
                     # [V7.2] Add a spacer between abilities
                     player.send_line("")
@@ -133,7 +137,9 @@ def list_blessings(player, args):
         elif "song" in tags: cat["Songs"].append(info)
         else: cat["Passives"].append(info)
 
-    player.send_line(f"\n{display_utils.render_header('Known Blessings', 100)}")
+    is_web = getattr(player, 'is_web', False)
+    width = 9999 if is_web else 100
+    player.send_line(f"\n{display_utils.render_header('Known Blessings', width)}")
     for title, list_ in cat.items():
         if list_:
             player.send_line(f"\n {Colors.BOLD}{title}{Colors.RESET}")

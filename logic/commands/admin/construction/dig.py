@@ -54,6 +54,10 @@ def dig(player, args):
         if getattr(player, 'autostitch', False):
             construction_utils.stitch_room(new_room, player.game.world)
 
+        # 3. Update Spatial Index (Bug 01)
+        from logic.engines import spatial_engine
+        spatial_engine.invalidate()
+
         player.send_line(f"Dug {direction} to {new_room.name} ({new_room.id}).")
         player.room.broadcast(f"{player.name} reshapes reality, creating a path {direction}.")
 
@@ -95,5 +99,8 @@ def tunnel(player, args):
         # So we move the player.
         player.room = new_room
         count += 1
+    # Update Spatial Index (Bug 01)
+    from logic.engines import spatial_engine
+    spatial_engine.invalidate()
         
     player.send_line(f"Tunneled {count} rooms {direction}.")

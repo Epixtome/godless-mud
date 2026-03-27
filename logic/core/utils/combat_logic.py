@@ -270,6 +270,19 @@ def calculate_hit_result(attacker: Any, target: Any, accuracy: int, tags: Set[st
     from logic.core import event_engine
     event_engine.dispatch("combat_check_dodge", dodge_ctx)
     if dodge_ctx['dodged']:
+        # [V8.0] GES Feedback
+        if hasattr(target, 'room') and target.room:
+            event_packet = {
+                "type": "combat_event",
+                "data": {
+                    "type": "dodge",
+                    "target_name": target.name,
+                    "source_name": getattr(attacker, 'name', 'Unknown')
+                }
+            }
+            for p in getattr(target.room, 'players', []):
+                if getattr(p, 'is_web', False):
+                    p.send_json(event_packet)
         return False
 
     # [V6.0] Deterministic Accuracy Fail
@@ -441,6 +454,22 @@ def apply_damage(target: Any, amount: int, source: Any = None, context: str = "C
     ctx = {'target': target, 'damage': amount, 'source': source, 'context': context, 'tags': tags or set()}
     event_engine.dispatch("on_take_damage", ctx)
     actual_damage = ctx['damage']
+    
+    # [V7.2] Biological Shard Essence Leak (High-Fidelity Combat Feedback)
+    if actual_damage > 0 and hasattr(target, 'room') and target.room:
+        event_packet = {
+            "type": "combat_event",
+            "data": {
+                "type": "damage",
+                "target_name": target.name,
+                "value": actual_damage,
+                "is_critical": "crit" in (tags or set()),
+                "source_name": getattr(source, 'name', 'Unknown')
+            }
+        }
+        for p in getattr(target.room, 'players', []):
+            if getattr(p, 'is_web', False):
+                p.send_json(event_packet)
     
     # 1. Handle Standard HP Entities (Mobs/Players)
     if hasattr(target, 'hp'):

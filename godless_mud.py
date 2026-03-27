@@ -4,8 +4,10 @@ import json
 import os
 import time
 import socket
+import websockets
 from logic.core import loader as world_loader
 from logic.core.network_engine import Connection
+from logic.core.utils.connection import TelnetConnectionWrapper, WebSocketConnectionWrapper
 from logic.handlers import input_handler
 from logic import mob_manager, spawner, commands
 from logic.core.systems.decay import initialize_decay
@@ -16,6 +18,8 @@ from utilities import integrity, telemetry
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("GodlessMUD")
+logging.getLogger("websockets.server").setLevel(logging.WARNING)
+logging.getLogger("websockets.protocol").setLevel(logging.WARNING)
 
 global_game = None
 
@@ -128,16 +132,28 @@ class GodlessGame:
 
     def process_command(self, player, command_line):
         """
-        Central entry point for commands.
+        Central entry point for commands and web-events.
         Decouples network engine from specific handlers.
         """
         from logic.handlers import input_handler
-        from logic.engines import combat_lifecycle
+        from logic.core.services import ui_service
         
         if not player or not command_line:
             return True
 
-        # Handle Commands with atomic buffering.
+        # [V9.2] Detect Structured UI Events (JSON bypass)
+        if command_line.startswith('{') and command_line.endswith('}'):
+            try:
+                data = json.loads(command_line)
+                e_type = data.get("type", "")
+                if e_type == "ui:save_layout":
+                    ui_service.save_ui_prefs(player, data.get("data", {}))
+                    return True
+                # Add other out-of-band events here (ui:ping, ui:settings, etc)
+            except json.JSONDecodeError:
+                pass # Not valid JSON, treat as regular text
+
+        # Handle Standard Commands with atomic buffering.
         # We start buffering here, but we DO NOT stop/flush here.
         # The 200ms Heartbeat Pulse handles the final atomic flush.
         player.start_buffering()
@@ -147,7 +163,7 @@ class GodlessGame:
             if not player.suppress_engine_prompt:
                 player.prompt_requested = True
         finally:
-            # Drop the buffering flag so the message system knows we're ready for the pulse to send.
+            # Drop the buffering flag
             player.is_buffering = False
         
         return result
@@ -190,6 +206,10 @@ class GodlessGame:
                 combat_lifecycle.process_dead_queue(self)
 
                 for player in self.players.values():
+                    # [V7.2] Real-time UI Synchronization
+                    if hasattr(player, 'send_ui_update'):
+                        player.send_ui_update()
+                        
                     needs_prompt = player.prompt_requested
                     if player.is_buffering_content():
                         player.stop_buffering()
@@ -213,7 +233,17 @@ class GodlessGame:
         sock = writer.get_extra_info('socket')
         if sock:
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        connection = Connection(self, reader, writer)
+        
+        wrapper = TelnetConnectionWrapper(reader, writer, game=self)
+        addr = writer.get_extra_info('peername')
+        connection = Connection(self, wrapper, addr)
+        await connection.run()
+
+    async def handle_ws_client(self, websocket, path=None):
+        addr = websocket.remote_address # (host, port)
+        wrapper = WebSocketConnectionWrapper(websocket)
+        connection = Connection(self, wrapper, addr)
+        connection.is_web = True # [V7.2] Flag for UI formatting
         await connection.run()
 
     def save_all(self, save_blueprints=False):
@@ -232,20 +262,43 @@ async def main():
     global global_game
     game = GodlessGame()
     global_game = game
-    server = await asyncio.start_server(game.handle_client, '0.0.0.0', 8888)
+    
+    # Start Telnet Server (8888)
+    tcp_server = await asyncio.start_server(game.handle_client, '0.0.0.0', 8888)
+    
+    # Start WebSocket Server (8889) [Legacy Support]
+    ws_server = await websockets.serve(game.handle_ws_client, '0.0.0.0', 8889)
 
-    logger.info(f'Serving on {", ".join(str(s.getsockname()) for s in server.sockets)}')
+    # [V7.3] Start Unified API & Web Controller (8000)
+    from logic.core.api.server import start_api
+    api_svr = start_api(game, port=8000)
+    api_task = asyncio.create_task(api_svr.serve())
 
-    tasks = [asyncio.create_task(game.heartbeat()), asyncio.create_task(game.autosave())]
+    logger.info(f'Godless Online.')
+    logger.info(f'  Unified API/Web: 0.0.0.0:8000')
+    logger.info(f'  Telnet         : 0.0.0.0:8888')
+    logger.info(f'  Web (Legacy)   : 0.0.0.0:8889')
+
+    tasks = [
+        asyncio.create_task(game.heartbeat()),
+        asyncio.create_task(game.autosave()),
+        api_task
+    ]
 
     try:
-        async with server: await server.serve_forever()
+        await asyncio.Event().wait() # Run forever
     except (KeyboardInterrupt, asyncio.CancelledError): pass
     finally:
         logger.info("Server shutting down...")
         for task in tasks: task.cancel()
         await asyncio.gather(*tasks, return_exceptions=True)
         game.save_all(save_blueprints=True)
+        
+        # Shutdown API
+        api_svr.should_exit = True
+        
+        ws_server.close()
+        await ws_server.wait_closed()
 
 if __name__ == "__main__":
     try: asyncio.run(main())

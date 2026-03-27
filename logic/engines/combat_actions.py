@@ -25,6 +25,10 @@ def execute_attack(attacker, target, room, game, players_to_prompt, blessing=Non
     Coordination point for sharded combat sub-systems.
     """
     if target == attacker: return
+    
+    # [V7.2] Auto-Engage Protocol (Bug 54/55)
+    # Ensure attacker and target are officially 'fighting' to trigger auto-attack loop
+    combat.start_combat(attacker, target)
 
     # 1. Physics & Pacing Gates
     tags = getattr(attacker, 'tags', [])

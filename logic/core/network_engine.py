@@ -11,22 +11,50 @@ class Connection:
     Manages the lifecycle of a client connection.
     Handles the handshake (Login/Auth) and the main game loop.
     """
-    def __init__(self, game, reader, writer):
+    def __init__(self, game, wrapper, addr):
         self.game = game
-        self.reader = reader
-        self.writer = writer
+        self.wrapper = wrapper
         self.state = "CONNECTED"
         self.name = "Unknown"
         self.player = None
-        self.addr = writer.get_extra_info('peername')
+        self.addr = addr
+        self.is_web = False # [V7.2] UI Formatting Flag
+
+    def write(self, message):
+        """[V7.2] Synchronous write. [V8.0] Routes through GES if is_web."""
+        if self.is_web:
+            # Note: We use asyncio.create_task because write() is a sync call
+            # But GES delivery is async.
+            asyncio.create_task(self.send(message))
+            return
+
+        if self.wrapper:
+            self.wrapper.write(message)
 
     def _hash_password(self, password):
         if not password: return ""
         return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
     async def send(self, message):
+        """Standard text delivery. [V8.0] Wraps in log:message if is_web."""
         try:
             if not message: return
+            
+            if self.is_web:
+                # If we're accidentally sending a string to a web client, 
+                # wrap it in the proper GES format.
+                import time
+                import json
+                event = {
+                    "type": "log:message",
+                    "timestamp": time.time(),
+                    "data": {
+                        "text": str(message)
+                    }
+                }
+                self.wrapper.write(json.dumps(event))
+                return
+
             text = str(message)
             # Smart strip: Keep trailing space for prompts and input requests
             if not (text.endswith(" > ") or text.endswith(": ")):
@@ -40,35 +68,42 @@ class Connection:
             else:
                 suffix = "\r\n"
             
-            self.writer.write(f"{text}{suffix}".encode('utf-8'))
-            await self.writer.drain()
+            self.wrapper.write(f"{text}{suffix}")
         except Exception:
             pass
 
-    async def read_line(self, timeout=None):
+    async def send_event(self, event_type, data=None):
+        """[V8.0] Direct GES event delivery for Web Clients."""
+        if not self.is_web:
+            return
+            
         try:
-            if timeout:
-                data = await asyncio.wait_for(self.reader.readuntil(b'\n'), timeout=timeout)
-            else:
-                data = await self.reader.readuntil(b'\n')
-            return self.game._clean_input(data.decode('utf-8', errors='ignore')).strip()
-        except (asyncio.TimeoutError, asyncio.IncompleteReadError, ConnectionResetError):
-            return None
+            import time
+            import json
+            event = {
+                "type": event_type,
+                "timestamp": time.time(),
+                "data": data or {}
+            }
+            self.wrapper.write(json.dumps(event))
+        except Exception as e:
+            logger.error(f"Failed to send GES event {event_type}: {e}")
+
+    async def read_line(self, timeout=None):
+        return await self.wrapper.recv(timeout=timeout)
 
     async def run(self):
         ip = self.addr[0]
         
         # --- Layer 1: The Firewall (IP Checks) ---
         if ip in self.game.blacklist:
-            self.writer.close()
-            await self.writer.wait_closed()
+            await self.wrapper.close()
             return
             
         if self.game.is_rate_limited(ip):
             logger.warning(f"Rate limit exceeded for {ip}")
             await self.send("Too many connections. Please wait.")
-            self.writer.close()
-            await self.writer.wait_closed()
+            await self.wrapper.close()
             return
 
         logger.info(f"New connection from {self.addr}")
@@ -77,14 +112,12 @@ class Connection:
             # --- Layer 2: The Bouncer (Handshake) ---
             if len(self.game.players) >= 100:
                 await self.send("Server is full.")
-                self.writer.close()
-                await self.writer.wait_closed()
+                await self.wrapper.close()
                 return
 
             self.state = "GET_NAME"
             await self.send("Welcome to GODLESS.")
-            self.writer.write(b"Enter your name: ")
-            await self.writer.drain()
+            self.wrapper.write("Enter your name: ")
 
             # Timeout: 60 seconds to provide a name
             raw_name = await self.read_line(timeout=60.0)
@@ -108,6 +141,10 @@ class Connection:
 
             if self.player:
                 self.state = "PLAYING"
+                # [V7.2] Initial UI Synchronization for WebSockets
+                if hasattr(self.player, 'send_ui_update'):
+                    self.player.send_ui_update()
+                    
                 await self.game_loop()
 
         except Exception as e:
@@ -156,7 +193,6 @@ class Connection:
             self.game.handle_disconnect(self.player)
         
         try:
-            self.writer.close()
-            await self.writer.wait_closed()
+            await self.wrapper.close()
         except Exception:
             pass

@@ -191,7 +191,29 @@ def send_raw(player, message, include_prompt=False):
     """
     The fundamental output pipe. 
     Handles buffering and the critical Telnet Go Ahead (IAC GA) signal.
+    [V8.0] Structured JSON delivery for Web Client.
     """
+    if getattr(player, 'is_web', False):
+        # Structured JSON delivery for Web Client
+        try:
+            # We don't include prompts in log messages for the web client; 
+            # they are sent separately as 'prompt' events.
+            data = {
+                "type": "log:message",
+                "data": {
+                    "text": message
+                },
+                "timestamp": time.time()
+            }
+            player.send_json(data)
+            
+            if include_prompt:
+                player.send_prompt()
+            return
+        except Exception as e:
+            logger.error(f"GES Web Dispatch Error: {e}")
+
+    # Standard Telnet Path
     if include_prompt:
         # Ensure message ends with a newline before the prompt, without double-padding
         if message and not message.endswith("\n"):
@@ -213,6 +235,19 @@ def flush(player):
     """Flushes the output buffer and stops buffering."""
     if player.output_buffer:
         full_msg = "".join(player.output_buffer)
+        
+        if getattr(player, 'is_web', False):
+            # Send the entire buffered block as a single event
+            player.send_json({
+                "type": "log:message", 
+                "data": {
+                    "text": full_msg
+                },
+                "timestamp": time.time()
+            })
+            player.output_buffer = []
+            return True
+
         try:
             player.connection.write(full_msg)
             player.connection.flush()
@@ -235,7 +270,11 @@ def show_next_page(player):
         player.send_line(line)
         
     if player.pagination_buffer:
-        player.connection.write("\r\n[Press Enter for more, 'q' to quit] ")
+        if getattr(player, 'is_web', False):
+            # Send a pagination signal for the UI to show a 'More' button
+            player.send_json({"type": "pagination:more"})
+        else:
+            player.connection.write("\r\n[Press Enter for more, 'q' to quit] ")
 
 def send_line(player, message, include_prompt=False):
     """Sends a message followed by a newline."""
@@ -244,7 +283,9 @@ def send_line(player, message, include_prompt=False):
         if message and str(message).strip():
             ts = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             message = f"{Colors.DGREY}[{ts}]{Colors.RESET} {message}"
-    send_raw(player, f"{message}\r\n", include_prompt=include_prompt)
+    
+    line_end = "\r\n" if not getattr(player, 'is_web', False) else "\n"
+    send_raw(player, f"{message}{line_end}", include_prompt=include_prompt)
 
 def broadcast_room(room, message, exclude_player=None):
     """Broadcasts a message to all players in a room."""

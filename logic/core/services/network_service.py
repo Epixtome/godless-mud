@@ -4,6 +4,7 @@ Service layer for network-level management (Banning, IP tracking).
 """
 import logging
 import os
+import asyncio
 
 logger = logging.getLogger("GodlessMUD")
 BLACKLIST_PATH = "data/blacklist.txt"
@@ -31,11 +32,11 @@ def ban_ip(game, ip, reason="No reason specified"):
     # 3. Disconnect any active sessions from this IP
     for name, player in list(game.players.items()):
         try:
-            addr = player.connection.writer.get_extra_info('peername')
+            addr = player.connection.get_peername()
             if addr and addr[0] == ip:
                 player.send_line("\n\r[SYSTEM] Your IP has been banned.")
                 game.handle_disconnect(player)
-                player.connection.writer.close()
+                asyncio.create_task(player.connection.close())
         except:
             continue
             
@@ -44,7 +45,7 @@ def ban_ip(game, ip, reason="No reason specified"):
 def get_client_ip(player):
     """Safely retrieves the IP address of a player."""
     try:
-        addr = player.connection.writer.get_extra_info('peername')
+        addr = player.connection.get_peername()
         return addr[0] if addr else "Unknown"
     except:
         return "Unknown"

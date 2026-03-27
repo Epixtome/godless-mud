@@ -6,20 +6,20 @@ logger = logging.getLogger("GodlessMUD")
 
 # --- Configuration ---
 SPAWN_TABLES = {
-    "forest": [("wolf", 10), ("bear", 5), ("bandit", 5), ("spider", 3)],
-    "cave":   [("bat", 10), ("slime", 5), ("troll", 2)],
-    "crypt":  [("skeleton", 10), ("zombie", 8), ("ghost", 2)],
-    "city":   [("citizen", 10), ("guard", 5), ("rat", 5)],
-    "dungeon": [("goblin", 10), ("orc", 5), ("shaman", 2)],
-    "default": [("rat", 10), ("wild_dog", 5)]
+    "forest": [("wolf", 8), ("bear", 4), ("bandit", 3), ("feral_hog", 5), ("dryad", 1), ("sprite", 2)],
+    "cave":   [("bat", 8), ("slime", 4), ("troll", 1), ("earth_elemental", 2), ("giant_beetle", 4)],
+    "crypt":  [("skeleton", 8), ("zombie", 6), ("ghost", 2), ("lich", 0.5), ("wraith", 3)],
+    "city":   [("citizen", 8), ("guard", 4), ("thief", 5), ("beggar", 3), ("merchant", 2)],
+    "dungeon": [("goblin", 8), ("orc", 4), ("shaman", 2), ("minotaur", 1), ("mimic", 1)],
+    "default": [("rat", 5), ("stray_cat", 2), ("moth", 3)]
 }
 
 TERRAIN_TABLES = {
-    "forest": [("wolf", 8), ("deer", 5)],
-    "mountain": [("goat", 5), ("eagle", 3)],
-    "swamp": [("snake", 8), ("crocodile", 3)],
-    "water": [("fish", 10), ("shark", 1)],
-    "road": [("traveler", 5), ("bandit", 2)]
+    "forest": [("wolf", 6), ("deer", 8), ("owl", 3)],
+    "mountain": [("goat", 6), ("eagle", 4), ("griffin", 0.5)],
+    "swamp": [("snake", 6), ("toad", 8), ("will_o_wisp", 2)],
+    "water": [("fish", 12), ("shark", 1), ("octopus", 2)],
+    "road": [("traveler", 3), ("bandit", 2), ("merchant_caravan", 1), ("messenger", 2), ("broken_wagon", 0.5)]
 }
 
 def get_mob_pool(zone_id, terrain):
@@ -82,7 +82,7 @@ def populate_world(game):
         if len(room.monsters) >= 2:
             continue
             
-        if random.random() > 0.15:
+        if random.random() > 0.08:
             continue
             
         pool = get_mob_pool(room.zone_id, room.terrain)

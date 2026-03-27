@@ -105,28 +105,27 @@ def mark_room_visited(player, room_id):
     # [V7.2] Persistence Expansion
     # 1. Full Color Visit (Radius 1 / 3x3)
     to_visit = [room_id]
-    # 2. Geography Discovery (Radius 3 / 7x7)
+    # 2. Geography Discovery (Radius 3 / 7x7) - NOW LOS AWARE (Task 04 Fix)
     to_discover = [room_id]
 
     if hasattr(player, 'game') and room_id in player.game.world.rooms:
-        curr = player.game.world.rooms[room_id]
-        from logic.engines import spatial_engine
-        spatial = spatial_engine.get_instance(player.game.world)
+        from logic.core import perception as vision
         
-        if spatial:
-            # Full Visit (Radius 1)
-            for dx in range(-1, 2):
-                for dy in range(-1, 2):
-                    neighbor = spatial.get_room(curr.x + dx, curr.y + dy, curr.z)
-                    if neighbor and neighbor.id not in to_visit:
-                        to_visit.append(neighbor.id)
-            
-            # Discovery (Radius 3)
-            for dx in range(-3, 4):
-                for dy in range(-3, 4):
-                    neighbor = spatial.get_room(curr.x + dx, curr.y + dy, curr.z)
-                    if neighbor and neighbor.id not in to_discover:
-                        to_discover.append(neighbor.id)
+        # We use a TACTICAL scan to see what can actually be perceived from this vantage point.
+        # Discovery should not penetrate solid walls.
+        p_result = vision.get_perception(player, radius=3, context=vision.TACTICAL)
+        
+        for coord, room in p_result.rooms.items():
+            # If it's in LOS, we "discover" the terrain
+            if coord in p_result.los_mask:
+                if room.id not in to_discover:
+                    to_discover.append(room.id)
+                
+                # If it's close (Radius 1), we mark it as "Visited" (Permanent Color Memory)
+                dist = max(abs(coord[0]), abs(coord[1]))
+                if dist <= 1:
+                    if room.id not in to_visit:
+                        to_visit.append(room.id)
 
     # Update Visited (Colored)
     for rid in to_visit:

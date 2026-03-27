@@ -1,5 +1,6 @@
 
 from logic.core.utils import vision_logic
+from utilities.colors import Colors
 
 class VisionContext:
     """Defines the 'Design Intent' for a perception query."""
@@ -9,18 +10,32 @@ class VisionContext:
         self.topology_only = topology_only
         self.include_entities = include_entities
 
+# UI terrain mapping has been moved to perception_translator.py
+
 class PerceptionResult:
     """Centralized result of a vision query including terrain and filtered intelligence."""
-    def __init__(self, observer_room, radius):
+    def __init__(self, observer_room, radius, observer=None):
         self.observer_room = observer_room
+        self.observer = observer
         self.radius = radius
         self.rooms = {} # (x, y) -> Room
         self.entities = {} # (x, y) -> list of visible monsters/players
         self.pings = {} # (x, y) -> list of 'tracked' entity IDs
+        self.los_mask = set() # (x, y) coordinates currently in direct Line-of-Sight
+        
+        # Persistence Context for Fog of War
+        self.visited = getattr(observer, 'visited_rooms', []) if observer else []
+        self.discovered = getattr(observer, 'discovered_rooms', []) if observer else []
+        self.is_admin = getattr(observer, 'is_admin', False) or getattr(observer, 'admin_vision', False)
+
+    def to_dict(self):
+        """[V8.9] Serializes the result for JSON transit (WebSockets) via translator."""
+        from logic.engines import perception_translator
+        return perception_translator.translate_to_dict(self)
 
 # Static Context Presets
 NAVIGATION_CONTEXT = VisionContext(check_los=False, include_entities=False)
-TACTICAL_CONTEXT = VisionContext(check_los=False, reach_only=True, include_entities=True) # Full reveal terrain
+TACTICAL_CONTEXT = VisionContext(check_los=True, reach_only=True, include_entities=True) # Respects LoS/Occlusion
 INTELLIGENCE_CONTEXT = VisionContext(check_los=True, reach_only=False, include_entities=True) # Raycast everything
 
 def can_see(observer, target):
@@ -49,7 +64,7 @@ def get_perception(observer, radius=7, context=TACTICAL_CONTEXT):
     """
     start_room = getattr(observer, 'room', observer)
     world = getattr(start_room, 'world', None)
-    if not world: return PerceptionResult(start_room, radius)
+    if not world: return PerceptionResult(start_room, radius, observer=observer)
 
     # [V6.4] Environmental Occlusion: Scaling radius by weather density
     # Builders, Admins, and Navigation-only queries (Minimap) ignore these penalties (V7.2)
@@ -63,16 +78,23 @@ def get_perception(observer, radius=7, context=TACTICAL_CONTEXT):
 
     from logic.engines import spatial_engine
     spatial = spatial_engine.get_instance(world)
-    if not spatial: return PerceptionResult(start_room, final_radius)
+    if not spatial: return PerceptionResult(start_room, final_radius, observer=observer)
 
-    result = PerceptionResult(start_room, final_radius)
+    result = PerceptionResult(start_room, final_radius, observer=observer)
     radius = final_radius # Update for dependency sub-calls
     
-    # 1. Gather Rooms based on LOS rules
+    # 1. Gather Rooms based on Knowledge & LOS
+    # We always fetch the full grid so to_dict can render "Memory" (previously seen) rooms.
+    result.rooms = _get_all_rooms_in_radius(spatial, start_room, radius)
+    
     if not context.check_los:
-        result.rooms = _get_all_rooms_in_radius(spatial, start_room, radius)
+        # For Navigation (Minimap), everything in the grid is considered 'visible' (in LOS for rendering purposes)
+        result.los_mask = set(result.rooms.keys())
     else:
-        result.rooms = _compute_grid_raycast(spatial, start_room, radius, context)
+        # For Tactical/Intelligence, we compute explicit raycasts
+        for (x, y), room in result.rooms.items():
+            if _is_line_of_sight_clear(spatial, start_room, room, reach_only=context.reach_only, topology_only=context.topology_only):
+                result.los_mask.add((x, y))
 
     # 2. Filter Intelligence (if requested)
     if context.include_entities and hasattr(observer, 'game'):
@@ -89,7 +111,7 @@ def get_perception(observer, radius=7, context=TACTICAL_CONTEXT):
                     if vision_logic.can_see(observer, m):
                         visible.append(m)
                 for p in room.players:
-                    if p != observer and vision_logic.can_see(observer, p):
+                    if vision_logic.can_see(observer, p):
                         visible.append(p)
                 
                 if visible:

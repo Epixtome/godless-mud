@@ -37,8 +37,7 @@ async def handle_login(conn):
             
             stored_pass = loaded_data.get('password')
             if stored_pass:
-                conn.writer.write(b"Password: ")
-                await conn.writer.drain()
+                conn.wrapper.write("Password: ")
                 pwd = await conn.read_line()
                 
                 if not pwd: return
@@ -53,8 +52,7 @@ async def handle_login(conn):
                 # Force a reset flow if it's a legacy or corrupted file.
                 await conn.send(f"{Colors.YELLOW}[SECURITY] No password found for this account. Please set a new one now.{Colors.RESET}")
                 conn.state = "CREATE_PASSWORD"
-                conn.writer.write(b"New Password: ")
-                await conn.writer.drain()
+                conn.wrapper.write("New Password: ")
                 raw_pwd = await conn.read_line()
                 if not raw_pwd: return
                 hashed_input = conn._hash_password(raw_pwd)
@@ -65,8 +63,7 @@ async def handle_login(conn):
             logger.error(f"Error loading save for {name}: {e}")
             return
 
-    conn_wrapper = TelnetConnectionWrapper(conn.writer)
-    conn.player = Player(game, conn_wrapper, name, start_room)
+    conn.player = Player(game, conn, name, start_room)
     
     if loaded_data:
         try:
@@ -92,8 +89,7 @@ async def handle_login(conn):
     else:
         # New Character
         conn.state = "CREATE_PASSWORD"
-        conn.writer.write(b"Create a password: ")
-        await conn.writer.drain()
+        conn.wrapper.write("Create a password: ")
         raw_pwd = await conn.read_line()
         if not raw_pwd: return
         conn.player.password = conn._hash_password(raw_pwd)
@@ -128,12 +124,11 @@ async def handle_kingdom_selection(conn):
     """Handles the initial kingdom selection for new characters."""
     conn.state = "SELECT_KINGDOM"
     while True:
-        conn.writer.write(b"\nChoose your Kingdom:\r\n")
-        conn.writer.write(b"1. Light (Order, Healing, Protection)\r\n")
-        conn.writer.write(b"2. Dark (Ambition, Shadows, Decay)\r\n")
-        conn.writer.write(b"3. Instinct (Nature, Rage, Survival)\r\n")
-        conn.writer.write(b"Choice: ")
-        await conn.writer.drain()
+        conn.wrapper.write("\nChoose your Kingdom:\r\n")
+        conn.wrapper.write("1. Light (Order, Healing, Protection)\r\n")
+        conn.wrapper.write("2. Dark (Ambition, Shadows, Decay)\r\n")
+        conn.wrapper.write("3. Instinct (Nature, Rage, Survival)\r\n")
+        conn.wrapper.write("Choice: ")
         
         choice = await conn.read_line()
         if choice is None: return

@@ -7,8 +7,15 @@ Ensures that all objects (Mobs, Items) inherit required properties from their pr
 import logging
 from models.items import create_item_from_dict
 from logic.core.world import World
+from models import Room
 
 logger = logging.getLogger("GodlessMUD")
+
+def create_room(room_id, name, description):
+    """
+    Creates a new Room instance with sensible defaults.
+    """
+    return Room(room_id, name, description)
 
 def get_item(prototype_id, world=None):
     """

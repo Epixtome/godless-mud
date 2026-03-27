@@ -42,7 +42,8 @@
             "requirements": {
                 "class": "assassin",
                 "stamina": 15,
-                "combat": true
+                "fighting": true,
+                "cooldown": 5
             },
             "base_power": 20
         },
@@ -100,7 +101,8 @@
             "action": "dirt_kick",
             "requirements": {
                 "class": "assassin",
-                "stamina": 10
+                "stamina": 10,
+                "cooldown": 15
             }
         },
         "garrote": {
