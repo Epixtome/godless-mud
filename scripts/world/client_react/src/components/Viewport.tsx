@@ -1,26 +1,121 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { useStore } from '../store/useStore';
 import { clsx } from 'clsx';
-import { Map, Users, AlertCircle, Layers } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Layers, ZoomIn, ZoomOut, Maximize2, MoveHorizontal } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { CombatTextOverlay } from './CombatTextOverlay';
 
 interface ViewportProps {
    radius: number;
    context: 'mini' | 'tactical' | 'map';
-   scale?: number;
+   scale: number;
 }
 
-export function Viewport({ radius, context, scale = 1 }: ViewportProps) {
+/**
+ * [V10.4] Graduated Visibility & Projection Lock
+ */
+const Tile = React.memo(({ tile, tileSize, isTactical }: any) => {
+    const elev = tile.elevation || 0;
+    const lift = isTactical ? -elev * 3 : 0;
+    const isDiscovered = tile.visible;
+    const isInLos = tile.in_los;
+    const isHazy = tile.is_hazy;
+
+    const monsters = tile.top_entities?.filter((e: any) => !e.is_player && !e.is_self && !e.is_ping) || [];
+    const otherPlayers = tile.top_entities?.filter((e: any) => e.is_player && !e.is_self) || [];
+    const isSelf = tile.top_entities?.some((e: any) => e.is_self);
+
+    const tileStyle = useMemo(() => ({
+       width: tileSize,
+       height: tileSize,
+       // [V10.2] Aggressive Contrast: LoS has a subtle Cyan highlight, Knowledge is deep Obsidian.
+       backgroundColor: isDiscovered 
+         ? (isInLos ? 'rgba(34, 211, 238, 0.15)' : 'rgba(2, 6, 23, 0.95)') 
+         : 'transparent',
+       transform: `translateY(${lift}px)`,
+       boxShadow: isTactical && elev > 0 && isDiscovered 
+         ? `0 ${elev * 2}px 10px rgba(0,0,0,0.5)` 
+         : 'none',
+    }), [tileSize, isDiscovered, isInLos, lift, isTactical, elev]);
+
+    return (
+       <div className={clsx("relative flex items-center justify-center transition-all duration-100", isDiscovered ? "border-slate-800/10" : "opacity-0")} style={tileStyle}>
+          {/* 1. Terrain Glyph */}
+          <span className="text-base font-black transition-colors duration-100 shadow-sm" style={{ color: isDiscovered ? tile.color : 'transparent', filter: isHazy ? 'blur(0.5px) grayscale(0.5)' : 'none' }}>
+             {isDiscovered ? (tile.char || '.') : '?'}
+          </span>
+
+          {/* 2. Entity Overlays */}
+          {isDiscovered && (
+              <div className="absolute inset-0 pointer-events-none z-30">
+                 {monsters.length > 0 && (
+                     <div className="absolute top-0.5 right-0.5">
+                         <div className={clsx("w-2 h-2 rounded-full shadow-sm flex items-center justify-center border border-white/10", monsters[0].is_hostile ? "bg-red-500" : "bg-yellow-500")}>
+                            <span className="text-[6px] font-black text-white">{monsters[0].symbol}</span>
+                         </div>
+                     </div>
+                 )}
+                 {otherPlayers.length > 0 && (
+                     <div className="absolute top-0.5 left-0.5">
+                         <div className="w-2 h-2 rounded-full bg-blue-500 border border-white/10 flex items-center justify-center">
+                            <span className="text-[6px] font-black text-white">{otherPlayers[0].symbol}</span>
+                         </div>
+                     </div>
+                 )}
+                 {isSelf && (
+                     <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-2.5 h-2.5 rounded-full border border-blue-400 bg-blue-400/40 animate-pulse" />
+                     </div>
+                 )}
+                 {tile.has_pings && (tile.top_entities?.length || 0) === 0 && (
+                     <div className="absolute bottom-0.5 right-0.5"><div className="w-1.5 h-1.5 rounded-full bg-yellow-500/40 animate-ping" /></div>
+                 )}
+              </div>
+          )}
+
+          {/* 3. Deep-Height Shading */}
+          {isTactical && elev > 0 && isDiscovered && (
+             <>
+                <div className="absolute left-0 right-0 -bottom-[1px] bg-black/40 z-0 rounded-b-sm pointer-events-none" style={{ height: `${elev * 4}px` }} />
+                <div className={clsx("absolute inset-x-0 top-0 h-[2px] z-40 pointer-events-none", elev > 5 ? "bg-white/40" : "bg-white/20")} />
+             </>
+          )}
+
+          {/* [V10.4] Environmental Haze / Fog of Shadow */}
+          {isHazy && isDiscovered && (
+             <motion.div 
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               className="absolute inset-0 bg-slate-900/60 backdrop-blur-[1px] z-20 pointer-events-none flex items-center justify-center"
+             >
+                {/* Subtle boggy pulse */}
+                <div className="w-full h-full bg-emerald-900/5 animate-pulse" style={{ animationDuration: '6s' }} />
+             </motion.div>
+          )}
+       </div>
+    );
+});
+
+export function Viewport({ radius, context, scale: propScale = 1 }: ViewportProps) {
   const { isConnected, tacticalMapData, showInfluence, setShowInfluence, combatNotifications } = useStore();
+  const [userZoom, setUserZoom] = useState(1);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
   
   const mapData = tacticalMapData;
   const isTactical = context === 'tactical';
-  const tileSize = 60 * scale;
+  const tileSize = 54 * propScale * userZoom;
 
-  const tiles = useMemo(() => {
+  const displayedGrid = useMemo(() => {
      if (!mapData || !mapData.grid) return [];
-     return mapData.grid.flat();
-  }, [mapData]);
+     const sr = mapData.radius;
+     return mapData.grid
+       .filter((row, yIdx) => Math.abs(yIdx - sr) <= radius)
+       .map(row => row.filter((tile, xIdx) => Math.abs(xIdx - sr) <= radius));
+  }, [mapData, radius]);
+
+  const tiles = displayedGrid.flat();
+  const columnCount = displayedGrid.length > 0 ? displayedGrid[0].length : 0;
+  const gridPixelSize = columnCount * (tileSize + 2);
 
    if (!isConnected) {
       return (
@@ -31,194 +126,61 @@ export function Viewport({ radius, context, scale = 1 }: ViewportProps) {
       );
    }
 
-   // [BUG 16 FIX] Robust tile persistence. Use coordinate keys only.
    return (
-     <div className="w-full h-full overflow-hidden flex items-center justify-center p-8 bg-slate-950/20 perspective-1000">
+     <div className="w-full h-full overflow-hidden relative bg-slate-950/20 perspective-1000 flex items-center justify-center">
+         
+         {/* DIVINE MAP PROJECTION (Restored & Locked) */}
          <div 
-           className="grid gap-[2px]" 
+           className="w-full h-full flex items-center justify-center pointer-events-none" 
            style={{ 
-              gridTemplateColumns: `repeat(${mapData?.grid?.length || 0}, ${tileSize}px)`,
-              transform: isTactical ? 'rotateX(20deg) rotateZ(-5deg)' : 'none'
+             transform: isTactical ? 'rotateX(25deg) rotateZ(-5deg)' : 'none',
+             transformStyle: 'preserve-3d',
+             perspectiveOrigin: 'center center'
            }}
          >
-            {tiles.map((tile: any) => {
-               const elev = tile.elevation || 0;
-               const lift = isTactical ? -elev * 3 : 0; // Refined Height (Bug 01 Fix)
-               const isDiscovered = tile.visible;
-               const isInLos = tile.in_los;
-
-               const monsters = tile.top_entities?.filter((e: any) => !e.is_player && !e.is_self && !e.is_ping) || [];
-               const otherPlayers = tile.top_entities?.filter((e: any) => e.is_player && !e.is_self) || [];
-               const pings = tile.top_entities?.filter((e: any) => e.is_ping) || [];
-               const isSelf = tile.top_entities?.some((e: any) => e.is_self);
-
-               return (
-                  <div 
-                     key={`${tile.x}-${tile.y}`}
-                     className={clsx(
-                        "relative flex items-center justify-center transition-all duration-100", // Bug 04: Snappy movement
-                        isDiscovered ? "border-slate-800/10" : "opacity-0",
-                        isTactical ? "rounded-sm" : ""
-                     )}
-                    style={{
-                       width: tileSize,
-                       height: tileSize,
-                       backgroundColor: isDiscovered 
-                         ? (isInLos ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.3)') 
-                         : 'transparent',
-                       transform: `translateY(${lift}px)`,
-                       boxShadow: isTactical && elev > 0 && isDiscovered 
-                         ? `0 ${elev * 2}px 10px rgba(0,0,0,0.5)` 
-                         : 'none',
-                       filter: !isInLos && isDiscovered ? 'grayscale(0.8) brightness(0.4)' : 'none'
-                    }}
-                 >
-                    {/* 0. Influence Layer (Bug 04) */}
-                    {showInfluence && tile.influence && (
-                       <div 
-                          className={clsx(
-                             "absolute inset-0 z-10 mix-blend-screen transition-opacity pointer-events-none",
-                             tile.influence.kingdom === 'light' ? 'bg-cyan-500/40' :
-                             tile.influence.kingdom === 'dark' ? 'bg-purple-900/50' :
-                             tile.influence.kingdom === 'instinct' ? 'bg-emerald-600/40' : 'bg-transparent'
-                          )}
-                          style={{ opacity: Math.min(0.9, tile.influence.strength / 30) }}
-                       />
-                    )}
-
-                    {/* 1. Terrain Character */}
-                    <span 
-                      className={clsx(
-                        "text-base font-black transition-colors duration-100",
-                        !isInLos && "opacity-40"
-                      )}
-                      style={{ color: isDiscovered ? (isInLos ? tile.color : '#64748b') : 'transparent' }}
-                    >
-                       {isDiscovered ? tile.char : '?'}
-                    </span>
-
-                    {/* 2. Entity HUD Overlays */}
-                    {isDiscovered && (
-                        <div className="absolute inset-0 pointer-events-none z-30">
-                           <div className="absolute inset-0 pointer-events-none">
-                                {/* TOP-RIGHT: Monsters */}
-                                {monsters.length > 0 && (
-                                    <div className="absolute top-0.5 right-0.5 flex flex-col items-end">
-                                        <div className={clsx(
-                                            "w-2 h-2 rounded-full shadow-sm flex items-center justify-center border border-white/10",
-                                            monsters[0].is_hostile ? "bg-red-500" : "bg-yellow-500"
-                                        )}>
-                                           <span className="text-[6px] font-black text-white">{monsters[0].symbol}</span>
-                                        </div>
-                                        {monsters.length > 1 && (
-                                            <span className="text-[6px] font-bold text-white/40 leading-none">+{monsters.length - 1}</span>
-                                        )}
-                                    </div>
-                                )}
-
-                                {/* TOP-LEFT: Other Players */}
-                                {otherPlayers.length > 0 && (
-                                    <div className="absolute top-0.5 left-0.5">
-                                        <div className="w-2 h-2 rounded-full bg-blue-500 border border-white/10 flex items-center justify-center">
-                                           <span className="text-[6px] font-black text-white">{otherPlayers[0].symbol}</span>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* CENTER: Self */}
-                                {isSelf && (
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                       <div className="w-2.5 h-2.5 rounded-full border border-blue-400 bg-blue-400/40 animate-pulse" />
-                                    </div>
-                                )}
-
-                                {/* BOTTOM-RIGHT: Pings */}
-                                {tile.has_pings && (tile.top_entities?.length || 0) === 0 && (
-                                    <div className="absolute bottom-0.5 right-0.5">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/40 animate-ping" />
-                                    </div>
-                                )}
-                           </div>
-                        </div>
-                    )}
-
-                    {/* 3. Height Shading & Peak Highlights (Bug 03: Granular Height) */}
-                    {isTactical && elev > 0 && isDiscovered && (
-                       <>
-                          <div 
-                             className="absolute left-0 right-0 -bottom-[1px] bg-black/30 z-0 rounded-b-sm pointer-events-none"
-                             style={{ height: `${elev * 3}px` }}
-                          />
-                          <div className={clsx(
-                             "absolute inset-x-0 top-0 h-[2px] z-40 pointer-events-none",
-                             elev > 5 ? "bg-white/40" : "bg-white/20"
-                          )} />
-                       </>
-                    )}
-                 </div>
-              );
-           })}
-        </div>
-
-         {/* 4. Layer Controls (Floating) */}
-         {isTactical && (
-            <div className="absolute top-2 left-2 z-[60] flex gap-2">
-               <button 
-                  onClick={() => setShowInfluence(!showInfluence)}
-                  className={clsx(
-                      "p-1.5 rounded-md border backdrop-blur-sm transition-all shadow-xl",
-                      showInfluence 
-                        ? "bg-cyan-500/30 border-cyan-500/50 text-cyan-400" 
-                        : "bg-black/60 border-white/10 text-slate-500 hover:border-white/20 hover:text-slate-300"
-                  )}
-                  title="Toggle Sovereignty Influence"
-               >
-                  <Layers size={14} />
-               </button>
-            </div>
-         )}
-
-         {/* 5. Floating Combat Text (V9.3) */}
-         <AnimatePresence>
-            {combatNotifications.map((notif: any) => {
-                const center = mapData?.center || { x: 0, y: 0 };
-                const gridX = notif.x ?? center.x;
-                const gridY = notif.y ?? center.y;
+             {/* DRAGGABLE CANVAS HOOK (Pans INSIDE the tilted projection) */}
+             <motion.div 
+               drag
+               dragElastic={0}
+               dragMomentum={true}
+               initial={false}
+               className="relative cursor-grab active:cursor-grabbing pointer-events-auto" 
+               style={{ 
+                  display: 'grid',
+                  gap: '2px',
+                  gridTemplateColumns: `repeat(${columnCount}, ${tileSize}px)`,
+                  width: `${gridPixelSize}px`,
+                  height: `${gridPixelSize}px`,
+                  transformStyle: 'preserve-3d'
+               }}
+             >
+                {tiles.map((tile: any) => (
+                    <Tile key={`${tile.x}-${tile.y}`} tile={tile} tileSize={tileSize} isTactical={isTactical} />
+                ))}
                 
-                return (
-                    <motion.div
-                        key={notif.id}
-                        initial={{ opacity: 0, scale: 0.1, y: 20 }}
-                        animate={{ 
-                            opacity: [0, 1, 1, 0.8], 
-                            scale: [0.5, 1.4, 1, 1],
-                            y: -100 
-                        }}
-                        exit={{ opacity: 0, y: -150, transition: { duration: 0.8 } }}
-                        transition={{ duration: 1.2, ease: "easeOut" }}
-                        className={clsx(
-                            "absolute z-[100] font-black text-sm pointer-events-none whitespace-nowrap tracking-tighter",
-                            notif.is_critical ? "text-yellow-400 text-lg scale-125" : 
-                            notif.type === 'damage' ? "text-red-500" : "text-blue-400"
-                        )}
-                        style={{
-                            left: '50%',
-                            top: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            marginLeft: ((gridX - center.x) * (tileSize + 2)) + (notif.offsetX || 0),
-                            marginTop: ((gridY - center.y) * (tileSize + 2)) + (notif.offsetY || 0),
-                            filter: 'drop-shadow(0 0 4px rgba(0,0,0,0.9))'
-                        }}
-                    >
-                        {notif.is_critical && "💥 "}
-                        {notif.type === 'damage' ? `-${notif.value}` : notif.type.toUpperCase()}
-                        {notif.is_critical && "!"}
-                    </motion.div>
-                );
-            })}
-         </AnimatePresence>
+                {/* COMBAT TEXT OVERLAY */}
+                <div className="absolute inset-0 z-50 pointer-events-none">
+                    <CombatTextOverlay combatNotifications={combatNotifications} mapData={mapData} tileSize={tileSize} />
+                </div>
+             </motion.div>
+         </div>
+
+         {/* MAP CONTROLS */}
+         <div className="absolute top-2 right-12 z-50 opacity-20 hover:opacity-100 transition-opacity pointer-events-none">
+            <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                <MoveHorizontal size={10} />
+                Click + Drag to Pan Map
+            </span>
+         </div>
+
+         <div className="absolute bottom-2 right-2 z-[60] flex gap-2">
+            <button onClick={() => setUserZoom(prev => Math.max(0.2, prev - 0.1))} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Zoom Out"><ZoomOut size={12} /></button>
+            <button onClick={() => setUserZoom(prev => Math.min(3, prev + 0.1))} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Zoom In"><ZoomIn size={12} /></button>
+            <button onClick={() => { setUserZoom(1); setOffset({x:0, y:0}); }} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Reset"><Maximize2 size={12} /></button>
+            <button onClick={() => setShowInfluence(!showInfluence)} className={clsx("p-1.5 rounded-md border backdrop-blur-sm transition-all", showInfluence ? "bg-cyan-500/30 border-cyan-500/50 text-cyan-400" : "bg-black/60 border-white/10 text-slate-500")} title="Influence Map"><Layers size={12} /></button>
+         </div>
     </div>
-  );
+   );
 }
 
 export default Viewport;
