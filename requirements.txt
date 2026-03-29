@@ -1,5 +1,17 @@
 # Godless MUD Requirements
 # Core engine uses Python 3.10+ Standard Library.
 
-# Recommended for colored console logs in some environments
+# Networking & API
+websockets>=11.0.3
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+
+# Security & Config
+python-dotenv>=1.0.0
+
+# Visualization & Image Generation
+Pillow>=10.0.0
+
+# Optional / Recommendations
 # colorama==0.4.6

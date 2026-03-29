@@ -61,7 +61,7 @@ interface AppState {
   };
   savedCharacters: { name: string, lastUsed: number }[];
   lastWindowChange: number;
-  activeWorkspace: 'game' | 'studio' | 'editor';
+  activeWorkspace: 'game' | 'studio' | 'editor' | 'nexus';
   terrainRegistry: any;
   addCombatNotification: (notif: any) => void;
 
@@ -83,7 +83,7 @@ interface AppState {
   toggleWindow: (id: string) => void;
   resetLayout: () => void;
   saveLayoutToServer: () => void;
-  setWorkspace: (workspace: 'game' | 'studio' | 'editor') => void;
+  setWorkspace: (workspace: 'game' | 'studio' | 'editor' | 'nexus') => void;
   toggleWorkspace: () => void;
 }
 
@@ -116,7 +116,7 @@ export const useStore = create<AppState>()(
       isAdmin: true,
       adminCatalog: { mobs: [], items: [], classes: [] },
       savedCharacters: [],
-      activeWorkspace: 'game',
+      activeWorkspace: 'nexus',
       terrainRegistry: null,
 
       lastWindowChange: 0,

@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { useStore } from '../store/useStore';
+import { sendCommand } from '../lib/ges';
 import { clsx } from 'clsx';
-import { Layers, ZoomIn, ZoomOut, Maximize2, MoveHorizontal } from 'lucide-react';
+import { Layers, Info, Sun, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { CombatTextOverlay } from './CombatTextOverlay';
 
@@ -15,6 +16,7 @@ interface ViewportProps {
  * [V10.4] Graduated Visibility & Projection Lock
  */
 const Tile = React.memo(({ tile, tileSize, isTactical }: any) => {
+    const { setSelectedTargetId } = useStore();
     const elev = tile.elevation || 0;
     const lift = isTactical ? -elev * 3 : 0;
     const isDiscovered = tile.visible;
@@ -28,9 +30,9 @@ const Tile = React.memo(({ tile, tileSize, isTactical }: any) => {
     const tileStyle = useMemo(() => ({
        width: tileSize,
        height: tileSize,
-       // [V10.2] Aggressive Contrast: LoS has a subtle Cyan highlight, Knowledge is deep Obsidian.
+       // [V11.7] High Contrast: LoS is Clear, Knowledge (FoW) is Solid Slate.
        backgroundColor: isDiscovered 
-         ? (isInLos ? 'rgba(34, 211, 238, 0.15)' : 'rgba(2, 6, 23, 0.95)') 
+         ? (isInLos ? 'transparent' : 'rgba(15, 23, 42, 0.95)') 
          : 'transparent',
        transform: `translateY(${lift}px)`,
        boxShadow: isTactical && elev > 0 && isDiscovered 
@@ -38,8 +40,28 @@ const Tile = React.memo(({ tile, tileSize, isTactical }: any) => {
          : 'none',
     }), [tileSize, isDiscovered, isInLos, lift, isTactical, elev]);
 
+    const handleTileActions = (e: React.MouseEvent) => {
+        if (!isDiscovered || monsters.length === 0) return;
+        
+        if (e.type === 'click') {
+           setSelectedTargetId(monsters[0].id);
+        } else if (e.type === 'dblclick') {
+           e.stopPropagation();
+           sendCommand(`kill ${monsters[0].name}`);
+        }
+    };
+
     return (
-       <div className={clsx("relative flex items-center justify-center transition-all duration-100", isDiscovered ? "border-slate-800/10" : "opacity-0")} style={tileStyle}>
+       <div 
+         onClick={handleTileActions}
+         onDoubleClick={handleTileActions}
+         className={clsx(
+           "relative flex items-center justify-center transition-all duration-100", 
+           isDiscovered ? "border-slate-800/10" : "opacity-0",
+           isDiscovered && monsters.length > 0 ? "cursor-crosshair hover:bg-red-500/10" : ""
+         )} 
+         style={tileStyle}
+       >
           {/* 1. Terrain Glyph */}
           <span className="text-base font-black transition-colors duration-100 shadow-sm" style={{ color: isDiscovered ? tile.color : 'transparent', filter: isHazy ? 'blur(0.5px) grayscale(0.5)' : 'none' }}>
              {isDiscovered ? (tile.char || '.') : '?'}
@@ -84,11 +106,10 @@ const Tile = React.memo(({ tile, tileSize, isTactical }: any) => {
           {/* [V10.4] Environmental Haze / Fog of Shadow */}
           {isHazy && isDiscovered && (
              <motion.div 
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1 }}
-               className="absolute inset-0 bg-slate-900/60 backdrop-blur-[1px] z-20 pointer-events-none flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="absolute inset-0 bg-slate-900/60 backdrop-blur-[1px] z-20 pointer-events-none flex items-center justify-center"
              >
-                {/* Subtle boggy pulse */}
                 <div className="w-full h-full bg-emerald-900/5 animate-pulse" style={{ animationDuration: '6s' }} />
              </motion.div>
           )}
@@ -165,18 +186,11 @@ export function Viewport({ radius, context, scale: propScale = 1 }: ViewportProp
              </motion.div>
          </div>
 
-         {/* MAP CONTROLS */}
-         <div className="absolute top-2 right-12 z-50 opacity-20 hover:opacity-100 transition-opacity pointer-events-none">
-            <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                <MoveHorizontal size={10} />
-                Click + Drag to Pan Map
-            </span>
-         </div>
-
+         {/* [V10.9 CLARITY] MAP CONTROLS */}
          <div className="absolute bottom-2 right-2 z-[60] flex gap-2">
-            <button onClick={() => setUserZoom(prev => Math.max(0.2, prev - 0.1))} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Zoom Out"><ZoomOut size={12} /></button>
-            <button onClick={() => setUserZoom(prev => Math.min(3, prev + 0.1))} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Zoom In"><ZoomIn size={12} /></button>
-            <button onClick={() => { setUserZoom(1); setOffset({x:0, y:0}); }} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Reset"><Maximize2 size={12} /></button>
+            <button onClick={() => setUserZoom(prev => Math.max(0.2, prev - 0.1))} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Zoom Out"><Layers size={12} /></button>
+            <button onClick={() => setUserZoom(prev => Math.min(3, prev + 0.1))} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Zoom In"><Layers size={12} /></button>
+            <button onClick={() => { setUserZoom(1); setOffset({x:0, y:0}); }} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Reset"><Settings size={12} /></button>
             <button onClick={() => setShowInfluence(!showInfluence)} className={clsx("p-1.5 rounded-md border backdrop-blur-sm transition-all", showInfluence ? "bg-cyan-500/30 border-cyan-500/50 text-cyan-400" : "bg-black/60 border-white/10 text-slate-500")} title="Influence Map"><Layers size={12} /></button>
          </div>
     </div>

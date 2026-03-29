@@ -16,7 +16,8 @@ from logic.passives import hooks as passive_hooks
 from utilities import integrity, telemetry
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+log_level = os.getenv("LOG_LEVEL", "DEBUG").upper()
+logging.basicConfig(level=getattr(logging, log_level), format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("GodlessMUD")
 logging.getLogger("websockets.server").setLevel(logging.WARNING)
 logging.getLogger("websockets.protocol").setLevel(logging.WARNING)
@@ -272,14 +273,17 @@ async def main():
     global_game = game
     
     # Start Telnet Server (8888)
-    tcp_server = await asyncio.start_server(game.handle_client, '0.0.0.0', 8888)
+    tcp_port = int(os.getenv("PORT_TELNET", 8888))
+    tcp_server = await asyncio.start_server(game.handle_client, '0.0.0.0', tcp_port)
     
     # Start WebSocket Server (8889) [Legacy Support]
-    ws_server = await websockets.serve(game.handle_ws_client, '0.0.0.0', 8889)
+    ws_port = int(os.getenv("PORT_WS", 8889))
+    ws_server = await websockets.serve(game.handle_ws_client, '0.0.0.0', ws_port)
 
     # [V7.3] Start Unified API & Web Controller (8000)
     from logic.core.api.server import start_api
-    api_svr = start_api(game, port=8000)
+    api_port = int(os.getenv("PORT_API", 8000))
+    api_svr = start_api(game, port=api_port)
     api_task = asyncio.create_task(api_svr.serve())
 
     logger.info(f'Godless Online.')

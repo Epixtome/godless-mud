@@ -16,7 +16,9 @@ import {
     ChevronRight,
     X,
     Search,
-    Compass
+    Compass,
+    Activity,
+    Box
 } from "lucide-react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
@@ -42,19 +44,19 @@ interface MasterStudioProps {
     initialMode?: 'sculpt' | 'observe';
 }
 
+/**
+ * [V11.8] Godless Master Studio: The Unified Monolith
+ * A singular viewport for Sculpting (Genesis) & Observation (Mirror).
+ */
 export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioProps) {
-    const { setWorkspace, terrainRegistry, fetchTerrainRegistry } = useStore();
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    // --- SHARED STATE ---
-    const [mode, setMode] = useState<'sculpt' | 'observe'>(initialMode);
+    const { isAdmin, setWorkspace, terrainRegistry, fetchTerrainRegistry } = useStore();
+    const [activeTab, setActiveTab] = useState<'mirror' | 'genesis'>(initialMode === 'observe' ? 'mirror' : 'genesis');
     const [viewMode, setViewMode] = useState<"terrain" | "elev" | "moist" | "tide" | "sec">("terrain");
-    const [zoom, setZoom] = useState(mode === 'sculpt' ? 10 : 25);
-    const [status, setStatus] = useState("V11.0 UNIFIED");
-    const [telemetry, setTelemetry] = useState("[ NO DATA ]");
+    const [zoom, setZoom] = useState(25);
+    const [telemetry, setTelemetry] = useState("[ LINK ESTABLISHED ]");
     const [currentZ, setCurrentZ] = useState(0);
 
-    // --- SCULPT STATE ---
+    // --- Genesis (Sculpt) State ---
     const [grid, setGrid] = useState<string[][]>(Array(HEIGHT).fill(null).map(() => Array(WIDTH).fill("ocean")));
     const [biasElev, setBiasElev] = useState<number[][]>(Array(HEIGHT).fill(null).map(() => Array(WIDTH).fill(0.1)));
     const [biasMoist, setBiasMoist] = useState<number[][]>(Array(HEIGHT).fill(null).map(() => Array(WIDTH).fill(0.1)));
@@ -74,39 +76,30 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
     });
     const [elevMap, setElevMap] = useState<number[][] | undefined>();
     const [moistMap, setMoistMap] = useState<number[][] | undefined>();
-    const [targetPrefix, setTargetPrefix] = useState("");
-    const [anchorX, setAnchorX] = useState<number | "">("");
-    const [anchorY, setAnchorY] = useState<number | "">("");
-    const [anchorZ, setAnchorZ] = useState<number | "">("");
+    const [anchorX, setAnchorX] = useState<number>(0);
+    const [anchorY, setAnchorY] = useState<number>(0);
     const [isGenerating, setIsGenerating] = useState(false);
 
-    // --- OBSERVE STATE ---
+    // --- Mirror (Observe) State ---
     const [zones, setZones] = useState<string[]>([]);
     const [activeZone, setActiveZone] = useState<string | null>(null);
     const [rooms, setRooms] = useState<any[]>([]);
     const [players, setPlayers] = useState<any[]>([]);
     const [showPlayerList, setShowPlayerList] = useState(false);
-    const [selectedRoom, setSelectedRoom] = useState<any | null>(null);
     const [centerRequest, setCenterRequest] = useState<{ x: number, y: number } | null>(null);
 
-    // --- INFLUENCE STATE ---
-    const [tideMap, setTideMap] = useState<{ kingdom: string, power: number }[][] | undefined>();
-    const [secMap, setSecMap] = useState<number[][] | undefined>();
-
-    // --- INITIALIZATION ---
+    // --- Effect: Load Initial State ---
     useEffect(() => {
         fetchTerrainRegistry();
-        if (mode === 'observe') {
-            loadZoneList();
-            refreshLiveWorld();
-        }
-    }, [mode, fetchTerrainRegistry]);
+        loadZoneList();
+        refreshLiveWorld();
+    }, [fetchTerrainRegistry]);
 
     const loadZoneList = async () => {
         try {
             const resp = await axios.get('/api/zones');
-            setZones(resp.data.zones);
-        } catch (e) { console.error("Zones failed", e); }
+            setZones(resp.data.zones || []);
+        } catch (e) { console.error("Mirror sync failed", e); }
     };
 
     const refreshLiveWorld = async () => {
@@ -115,49 +108,10 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
             setRooms(mapResp.data.rooms || []);
             const pResp = await axios.get('/api/players');
             setPlayers(pResp.data.players || []);
-        } catch (e) { console.error("Live sync failed", e); }
+        } catch (e) { console.error("Mirror sync failed", e); }
     };
 
-    const calculateInfluence = useCallback(() => {
-        const newTide = Array(HEIGHT).fill(null).map(() => Array(WIDTH).fill({ kingdom: "neutral", power: 0 }));
-        const newSec = Array(HEIGHT).fill(null).map(() => Array(WIDTH).fill(0));
-        const activeShrines: any[] = [];
-
-        // Contextual: Use grid landmarks or live rooms depending on mode
-        if (mode === 'sculpt') {
-            for (let y = 0; y < HEIGHT; y++) {
-                for (let x = 0; x < WIDTH; x++) {
-                    const lm = biasLandmarks[y][x];
-                    if (lm === "shrine" || lm === "city") {
-                        activeShrines.push({ x, y, type: lm, kingdom: (x + y) % 2 === 0 ? "light" : "dark", potency: lm === "city" ? 40 : 25, decay: lm === "city" ? 0.35 : 0.55 });
-                    }
-                }
-            }
-        }
-
-        for (let y = 0; y < HEIGHT; y++) {
-            for (let x = 0; x < WIDTH; x++) {
-                let maxP = 0; let dom = "neutral"; let maxS = 0;
-                activeShrines.forEach(s => {
-                    const d = Math.sqrt((s.x - x) ** 2 + (s.y - y) ** 2);
-                    const p = Math.max(0, s.potency - (d * s.decay));
-                    if (p > maxP) { maxP = p; dom = s.kingdom; }
-                    const s_val = s.type === "city" ? Math.max(0, 1.0 - (d / 30)) : Math.max(0, 0.7 - (d / 15));
-                    if (s_val > maxS) maxS = s_val;
-                });
-                newTide[y][x] = { kingdom: dom, power: maxP };
-                newSec[y][x] = maxS;
-            }
-        }
-        setTideMap(newTide); setSecMap(newSec);
-    }, [mode, biasLandmarks]);
-
-    // --- ACTIONS ---
     const generateFull = async (forceRandomSeed = false) => {
-        if (!anchorX && anchorX !== 0 || !anchorY && anchorY !== 0) {
-            alert("Spatial Anchor Required! Please set X and Y coordinates to materialize the shard.");
-            return;
-        }
         setIsGenerating(true);
         const finalWeights = { ...weights };
         if (forceRandomSeed) finalWeights.seed = Math.floor(Math.random() * 999999);
@@ -171,276 +125,299 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
             setGrid(resp.data.grid);
             setElevMap(resp.data.elev_map);
             setMoistMap(resp.data.moist_map);
-            setStatus(`MANIFESTED S:${resp.data.seed}`);
-            calculateInfluence();
-        } catch (e) { setStatus("GENERATION FAILED"); }
+            setTelemetry(`GENESIS COMPLETE: Seed ${resp.data.seed}`);
+        } catch (e) { setTelemetry("GENESIS FAILED"); }
         finally { setIsGenerating(false); }
     };
 
     const handlePaint = (gx: number, gy: number) => {
-        if (mode === 'sculpt') {
-            if ((gx < 0 || gx >= WIDTH || gy < 0 || gy >= HEIGHT)) return;
+        // Painting relative to genesis anchor
+        const localX = gx - anchorX;
+        const localY = gy - anchorY;
+        if (localX < 0 || localX >= WIDTH || localY < 0 || localY >= HEIGHT) return;
+
+        setGrid(prev => {
+            const next = [...prev];
             const R = brushRadius - 1;
-            setGrid(prev => {
-                const next = [...prev];
-                for (let dy = -R; dy <= R; dy++) {
-                    for (let dx = -R; dx <= R; dx++) {
-                        const ny = gy + dy, nx = gx + dx;
-                        if (ny >= 0 && ny < HEIGHT && nx >= 0 && nx < WIDTH && Math.sqrt(dx * dx + dy * dy) <= R) {
-                            if (activeTool === "rise") biasElev[ny][nx] = Math.min(1.0, biasElev[ny][nx] + 0.1);
-                            else if (activeTool === "sink") biasElev[ny][nx] = Math.max(0.0, biasElev[ny][nx] - 0.1);
-                            else if (activeTool === "moist") biasMoist[ny][nx] = Math.min(1.0, biasMoist[ny][nx] + 0.1);
-                            else if (activeTool === "dry") biasMoist[ny][nx] = Math.max(0.0, biasMoist[ny][nx] - 0.1);
-                            else if (activeTool === "erase") { biasBiomes[ny][nx] = null; biasLandmarks[ny][nx] = null; }
-                            else if (BIOME_CATEGORIES.Polis.includes(activeTool) || BIOME_CATEGORIES.Cultus.includes(activeTool)) {
-                                biasLandmarks[ny][nx] = activeTool;
-                            } else {
-                                biasBiomes[ny][nx] = activeTool;
-                                biasVolume[ny][nx] = Math.min(1.0, biasVolume[ny][nx] + 0.2);
-                            }
+            for (let dy = -R; dy <= R; dy++) {
+                for (let dx = -R; dx <= R; dx++) {
+                    const ny = localY + dy, nx = localX + dx;
+                    if (ny >= 0 && ny < HEIGHT && nx >= 0 && nx < WIDTH && Math.sqrt(dx * dx + dy * dy) <= R) {
+                        if (activeTool === "rise") biasElev[ny][nx] = Math.min(1.0, biasElev[ny][nx] + 0.1);
+                        else if (activeTool === "sink") biasElev[ny][nx] = Math.max(0.0, biasElev[ny][nx] - 0.1);
+                        else if (activeTool === "erase") { biasBiomes[ny][nx] = null; biasLandmarks[ny][nx] = null; }
+                        else if (BIOME_CATEGORIES.Polis.includes(activeTool) || BIOME_CATEGORIES.Cultus.includes(activeTool)) {
+                            biasLandmarks[ny][nx] = activeTool;
+                        } else {
+                            biasBiomes[ny][nx] = activeTool;
+                            biasVolume[ny][nx] = Math.min(1.0, biasVolume[ny][nx] + 0.2);
                         }
                     }
                 }
-                return next;
-            });
-        }
+            }
+            return next;
+        });
     };
 
     const handleSaveRealization = async () => {
-        if ((anchorX === "" || anchorY === "")) {
-            alert("Spatial Anchor Required for Persistance!");
-            return;
-        }
         try {
             await axios.post("/api/world/save", {
-                grid, prefix: targetPrefix,
-                config: { ...weights, anchor_x: anchorX, anchor_y: anchorY, anchor_z: anchorZ || 0 }
+                grid, prefix: activeZone || "custom",
+                config: { ...weights, anchor_x: anchorX, anchor_y: anchorY, anchor_z: currentZ }
             });
-            alert("Shard Persisted to Engine.");
-        } catch (e) { alert("Persistence Failed."); }
+            setTelemetry("SHARD PERSISTED TO ENGINE");
+        } catch (e) { setTelemetry("PERSISTENCE FAILED"); }
     };
 
     return (
-        <div className="absolute inset-0 bg-slate-950 flex text-white overflow-hidden z-[100] animate-in fade-in duration-700">
-            {/* Left Sidebar: Contextual Tools */}
-            <aside className="w-20 border-r border-white/5 bg-slate-900/40 backdrop-blur-3xl flex flex-col items-center py-8 gap-8 z-30 shadow-2xl">
-                <div className="flex flex-col items-center gap-1">
-                    <div className={clsx("h-1 w-8 rounded-full mb-1", mode === 'sculpt' ? "bg-cyan-500 shadow-[0_0_10px_#00bcd4]" : "bg-purple-500 shadow-[0_0_10px_#a855f7]")} />
+        <div className="absolute inset-0 bg-slate-[#050505] flex text-white overflow-hidden pt-10 font-sans select-none">
+            
+            {/* LEFT TOOLBAR: Global Controls */}
+            {/* LEFT TOOLBAR: Global Intelligence & Portal */}
+            <aside className="w-18 border-r border-white/5 bg-slate-950/40 backdrop-blur-3xl flex flex-col items-center py-8 gap-8 z-50 shadow-2xl">
+                <div className="flex flex-col items-center gap-1 mb-2">
+                   <div className={clsx("h-1 w-8 rounded-full mb-1 shadow-lg shadow-cyan-500/50", activeTab === 'genesis' ? "bg-cyan-500" : "bg-purple-500")} />
                 </div>
 
                 <div className="flex flex-col gap-4">
-                    <button onClick={() => setWorkspace('game')} className="p-3 bg-white/5 rounded-xl text-slate-400 hover:text-white transition-all shadow-inner" title="Quick Jump: Game Client"><Zap size={20} /></button>
+                   <button 
+                     onClick={() => setWorkspace('nexus')}
+                     className="p-3.5 bg-white/5 rounded-2xl text-slate-400 hover:text-white transition-all shadow-inner border border-white/5 group"
+                     title="Spiritual Nexus"
+                   >
+                     <Zap size={22} className="group-hover:scale-110 group-hover:text-cyan-400 transition-transform" />
+                   </button>
+                   <button 
+                     onClick={() => setCenterRequest({ x: anchorX, y: anchorY })}
+                     className="p-3.5 bg-white/5 rounded-2xl text-slate-500 hover:text-white transition-all border border-white/5 group"
+                     title="Focus Anchor"
+                   >
+                     <Compass size={22} className="group-hover:rotate-45 transition-transform" />
+                   </button>
                 </div>
 
-                <div className="h-px w-10 bg-white/5" />
+                <div className="w-8 h-px bg-white/10" />
 
-                <button
-                    onClick={() => {
-                        const nM = mode === 'sculpt' ? 'observe' : 'sculpt';
-                        setMode(nM);
-                        setWorkspace(nM === 'sculpt' ? 'editor' : 'studio');
-                    }}
-                    title="Toggle Workflow: Sculpt vs Observe"
-                    className={clsx(
-                        "p-4 rounded-2xl transition-all border group",
-                        mode === 'sculpt' ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/20" : "bg-purple-500/10 text-purple-400 border-purple-500/20"
-                    )}
+                <button 
+                  onClick={() => setShowPlayerList(!showPlayerList)}
+                  className={clsx("p-4 rounded-2xl transition-all border group shadow-lg", showPlayerList ? "bg-purple-500 border-purple-400 text-white shadow-purple-500/20" : "text-slate-500 bg-white/2 border-white/5 hover:bg-white/5")}
+                  title="Player Monitor"
                 >
-                    {mode === 'sculpt' ? <Settings size={22} className="group-hover:rotate-45 transition-transform" /> : <MapIcon size={22} />}
+                  <Users size={22} className="group-hover:scale-110 transition-transform" />
                 </button>
-
-                <button
-                    onClick={() => setShowPlayerList(!showPlayerList)}
-                    title="Player Tracker"
-                    className={clsx("p-4 rounded-2xl transition-all", showPlayerList ? "bg-purple-500 text-white shadow-lg" : "text-slate-500 hover:bg-white/5")}
-                >
-                    <Users size={22} />
-                </button>
-
-                <button
-                    onClick={() => setCenterRequest({ x: WIDTH / 2, y: HEIGHT / 2 })}
-                    title="Reset Camera Viewport"
-                    className="p-4 rounded-2xl text-slate-500 hover:text-white transition-all hover:bg-white/5"
-                >
-                    <Compass size={22} />
-                </button>
-
-                <div className="mt-auto mb-4">
-                    <span className="text-[7px] font-black uppercase tracking-[0.3em] vertical-text opacity-30 italic">{mode} MODE</span>
+                
+                <div className="mt-auto flex flex-col items-center gap-8 opacity-40 hover:opacity-100 transition-opacity">
+                   <div className="vertical-text text-[7px] font-black uppercase tracking-[0.4em] text-slate-500 italic rotate-180">Master Control</div>
+                   <button className="text-slate-600 hover:text-white transition-colors" title="Engine Settings"><Settings size={18} /></button>
                 </div>
             </aside>
 
-            {/* Main Workspace */}
-            <div className="flex-1 flex flex-col bg-[#050505]">
-                {/* Unified Header */}
-                <header className="h-16 border-b border-white/5 bg-zinc-950/80 backdrop-blur-2xl flex items-center justify-between px-8 shadow-2xl z-20">
-                    <div className="flex items-center gap-8">
+            {/* MAIN WORKSPACE: The Unified Viewport */}
+            <section className="flex-1 flex flex-col relative bg-black overflow-hidden">
+                
+                {/* Unified Sub-Header */}
+                <div className="h-14 border-b border-white/5 bg-zinc-950/80 backdrop-blur-md flex items-center justify-between px-8 z-40 shrink-0 shadow-lg">
+                    <div className="flex items-center gap-6">
                         <div className="flex items-center gap-3">
-                            <div className={clsx("h-2 w-2 rounded-full animate-pulse", mode === 'sculpt' ? "bg-cyan-500" : "bg-purple-500")} />
-                            <span className="text-white text-xl font-black italic uppercase tracking-tighter">
-                                Master<span className={mode === 'sculpt' ? "text-cyan-500" : "text-purple-500"}>Studio</span>
-                            </span>
+                           <Activity size={18} className="text-purple-500 animate-pulse" />
+                           <h1 className="text-xl font-black uppercase tracking-tighter italic whitespace-nowrap">
+                              Master<span className="text-purple-500">Studio</span>
+                              <span className="ml-3 px-2 py-0.5 bg-purple-500/10 border border-purple-500/20 rounded text-[7px] text-purple-400 align-middle not-italic tracking-[0.2em] font-black">V11.20</span>
+                           </h1>
                         </div>
-
-                        {/* View Modes */}
-                        <div className="flex items-center gap-1 bg-white/5 rounded-full p-1 border border-white/5">
-                            {[
-                                { id: "terrain", icon: <Layers size={14} />, title: "Topology" },
-                                { id: "elev", icon: <Zap size={14} />, title: "Verticality" },
-                                { id: "moist", icon: <RefreshCw size={14} />, title: "Climate" },
-                                { id: "tide", icon: <Sun size={14} />, title: "Divine Tide" },
-                                { id: "sec", icon: <Shield size={14} />, title: "Security Matrix" }
-                            ].map(v => (
+                        <div className="h-4 w-px bg-white/10" />
+                        <div className="flex items-center gap-1 bg-black/40 rounded-full p-0.5 border border-white/5">
+                            {["terrain", "elev", "moist", "tide", "sec"].map(v => (
                                 <button
-                                    key={v.id}
-                                    onClick={() => setViewMode(v.id as any)}
-                                    title={v.title}
-                                    className={clsx("p-2 rounded-full transition-all", viewMode === v.id ? "bg-white text-black shadow-lg" : "text-zinc-500 hover:text-white")}
+                                    key={v}
+                                    onClick={() => setViewMode(v as any)}
+                                    className={clsx("px-3 py-1.5 rounded-full text-[8px] font-black uppercase transition-all tracking-widest", viewMode === v ? "bg-white text-black shadow-lg" : "text-zinc-500 hover:text-white")}
                                 >
-                                    {v.icon}
+                                    {v}
                                 </button>
                             ))}
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-6">
-                        {/* Contextual Header Tools */}
-                        {mode === 'sculpt' && (
-                            <div className="flex items-center gap-3">
-                                <div className="flex items-center gap-2 bg-black/40 border border-white/10 rounded-lg px-4 py-2">
-                                    <input type="number" value={anchorX} onChange={e => setAnchorX(e.target.value === "" ? "" : parseInt(e.target.value))} placeholder="X" className="bg-transparent text-[10px] font-mono text-cyan-400 w-10 outline-none" />
-                                    <input type="number" value={anchorY} onChange={e => setAnchorY(e.target.value === "" ? "" : parseInt(e.target.value))} placeholder="Y" className="bg-transparent text-[10px] font-mono text-cyan-400 w-10 outline-none" />
-                                </div>
-                                <button onClick={() => generateFull(false)} disabled={isGenerating} className="px-6 py-2 bg-cyan-500 hover:bg-cyan-400 text-black text-[10px] font-black uppercase rounded-lg shadow-xl flex items-center gap-2">
-                                    <RefreshCw size={14} className={isGenerating ? "animate-spin" : ""} /> Realize
-                                </button>
-                                <button onClick={() => generateFull(true)} className="p-2 bg-purple-500/20 text-purple-400 border border-purple-500/20 rounded-lg hover:bg-purple-500/30 transition-all">
-                                    <Zap size={16} fill="currentColor" />
-                                </button>
-                            </div>
-                        )}
-
-                        {mode === 'observe' && (
-                            <div className="flex items-center gap-4">
-                                <button onClick={loadZoneList} className="text-zinc-500 hover:text-white"><RefreshCw size={16} /></button>
-                                <div className="px-5 py-2 bg-slate-900 border border-white/5 rounded-lg text-[10px] font-black text-slate-500 flex items-center gap-2 tracking-[0.2em] uppercase">
-                                    {activeZone ? activeZone : "LIVE ENGINE STREAM"}
-                                </div>
-                            </div>
-                        )}
-
-                        <div className="h-4 w-px bg-white/10" />
-                        <button onClick={handleSaveRealization} className="p-2.5 bg-zinc-800 text-zinc-400 hover:text-white rounded-lg border border-white/5 transition-all">
-                            <DatabaseIcon size={16} />
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 bg-black/60 border border-white/10 rounded-lg px-3 py-1.5 h-8">
+                            <span className="text-[8px] font-black text-slate-600 uppercase">Anchor</span>
+                            <input type="number" value={anchorX} onChange={e => setAnchorX(parseInt(e.target.value) || 0)} className="bg-transparent text-[10px] font-mono text-cyan-400 w-10 text-center outline-none" placeholder="X" />
+                            <input type="number" value={anchorY} onChange={e => setAnchorY(parseInt(e.target.value) || 0)} className="bg-transparent text-[10px] font-mono text-cyan-400 w-10 text-center outline-none" placeholder="Y" />
+                        </div>
+                        <button 
+                          onClick={() => generateFull(false)} 
+                          disabled={isGenerating}
+                          className="h-8 px-4 bg-purple-600 hover:bg-purple-500 text-white text-[9px] font-black uppercase rounded shadow-lg flex items-center gap-2 transition-all active:scale-95"
+                        >
+                            <RefreshCw size={12} className={isGenerating ? "animate-spin" : ""} /> Realize Shard
+                        </button>
+                        <button 
+                          onClick={handleSaveRealization}
+                          className="h-8 w-8 bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white rounded border border-white/5 flex items-center justify-center transition-all"
+                        >
+                            <DatabaseIcon size={14} />
                         </button>
                     </div>
-                </header>
+                </div>
 
-                {/* Primary Canvas Area */}
-                <main className="flex-1 relative overflow-hidden flex">
-                    <div className="flex-1 relative bg-[#0a0a0a]">
-                        <UniversalCanvas
-                            mode={mode}
-                            grid={grid}
-                            rooms={rooms.filter(r => r.z === currentZ)}
-                            elevMap={elevMap}
-                            moistMap={moistMap}
-                            tideMap={tideMap}
-                            secMap={secMap}
-                            viewMode={viewMode}
-                            brushRadius={brushRadius}
-                            zoom={zoom}
-                            onPaint={handlePaint}
-                            onPaintEnd={() => mode === 'sculpt' ? null : refreshLiveWorld()}
-                            onHover={(x, y) => {
-                                const terr = mode === 'sculpt' ? grid[y]?.[x] : rooms.find(r => r.x === x && r.y === y && r.z === currentZ)?.terrain;
-                                setTelemetry(`POS: ${x},${y},${currentZ}\nMODE: ${mode.toUpperCase()}\nBIO: ${terr || 'VOID'}`);
-                            }}
-                            onRightClick={(x, y) => setSelectedRoom({ x, y, z: currentZ })}
-                            centerPos={centerRequest}
-                        />
+                {/* THE UNIFIED CANVAS */}
+                <div className="flex-1 relative bg-slate-950">
+                    <UniversalCanvas
+                        mode={activeTab === 'genesis' ? 'sculpt' : 'observe'}
+                        grid={grid}
+                        rooms={rooms.filter(r => r.z === currentZ)}
+                        elevMap={elevMap}
+                        moistMap={moistMap}
+                        viewMode={viewMode}
+                        brushRadius={brushRadius}
+                        zoom={zoom}
+                        onPaint={handlePaint}
+                        onPaintEnd={() => refreshLiveWorld()}
+                        onHover={(x, y) => {
+                            const terr = rooms.find(r => r.x === x && r.y === y && r.z === currentZ)?.terrain || grid[y-anchorY]?.[x-anchorX] || 'VOID';
+                            setTelemetry(`COORD: ${x}, ${y}, ${currentZ} | RECOGNITION: ${terr.toUpperCase()}`);
+                        }}
+                        onRightClick={(x, y) => setCenterRequest({ x, y })}
+                        centerPos={centerRequest}
+                        anchorX={anchorX}
+                        anchorY={anchorY}
+                    />
 
-                        {/* Telemetry Floating Card */}
-                        <div className="absolute top-10 left-10 pointer-events-none p-6 bg-black/80 backdrop-blur-3xl border border-white/5 rounded-3xl shadow-2xl min-w-[200px]">
-                            <h4 className="text-cyan-500 text-[9px] font-black uppercase tracking-[0.3em] mb-3 italic flex items-center gap-2">
-                                <Info size={12} /> Master Telemetry
-                            </h4>
-                            <div className="font-mono text-[9px] text-zinc-400 space-y-1 whitespace-pre">
-                                {telemetry}
+                    {/* Vellum Telemetry Overlay: High-Fidelity Glassmorphism */}
+                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="absolute bottom-10 left-10 p-6 bg-slate-950/80 backdrop-blur-3xl border border-white/10 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] min-w-[280px] pointer-events-none group">
+                        <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/5">
+                           <div className="flex items-center gap-2 text-cyan-500">
+                             <Activity size={14} className="animate-pulse" />
+                             <span className="text-[10px] font-black uppercase tracking-[0.4em] italic leading-none">Telemetry Deck</span>
+                           </div>
+                           <div className="h-1.5 w-1.5 rounded-full bg-cyan-500 shadow-[0_0_8px_#06b6d4] animate-ping" />
+                        </div>
+                        <div className="font-mono text-[10px] text-zinc-400 leading-relaxed uppercase space-y-2">
+                            <div className="flex justify-between border-b border-white/5 pb-1"><span className="text-slate-600">Spatial Anchor</span> <span className="text-cyan-400">{anchorX}, {anchorY}</span></div>
+                            <div className="flex justify-between opacity-80"><span className="text-slate-600">Coordinate</span> <span className="text-white">{telemetry.split('|')[0].replace('COORD: ', '')}</span></div>
+                            <div className="text-[11px] font-black text-white italic mt-4 tracking-tighter border-t border-white/5 pt-2">
+                               {telemetry.split('|')[1]?.replace('RECOGNITION: ', '') || '[ LINKING ]'}
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
+                </div>
+            </section>
 
-                    {/* Right Toolbar Panel */}
-                    <AnimatePresence mode="wait">
-                        {mode === 'sculpt' && (
-                            <motion.aside key="sculpt" initial={{ x: 400 }} animate={{ x: 0 }} exit={{ x: 400 }} className="w-96 border-l border-white/5 bg-slate-950/50 backdrop-blur-3xl p-8 flex flex-col gap-8 scrollbar-hide overflow-y-auto">
-                                <header>
-                                    <h3 className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.3em] mb-2 italic">Creator Palette</h3>
-                                    <div className="text-3xl font-black italic tracking-tighter uppercase whitespace-nowrap">Universal Brush</div>
-                                </header>
+            {/* RIGHT TOOLBAR: The High-Fidelity Dual-Panel */}
+            <aside className="w-96 border-l border-white/5 bg-black/40 backdrop-blur-3xl flex flex-col shrink-0">
+                {/* Tab Switcher */}
+                <div className="flex border-b border-white/5 bg-zinc-950/40">
+                  <button 
+                    onClick={() => setActiveTab('mirror')}
+                    className={clsx("flex-1 py-5 text-[10px] font-black uppercase tracking-[0.2em] transition-all", activeTab === 'mirror' ? "text-purple-400 border-b-2 border-purple-500 bg-white/5" : "text-slate-500 hover:text-white")}
+                  >Mirror Monitor</button>
+                  <button 
+                    onClick={() => setActiveTab('genesis')}
+                    className={clsx("flex-1 py-5 text-[10px] font-black uppercase tracking-[0.2em] transition-all", activeTab === 'genesis' ? "text-cyan-400 border-b-2 border-cyan-500 bg-white/5" : "text-slate-500 hover:text-white")}
+                  >Genesis Engine</button>
+                </div>
 
-                                <div className="flex-1 px-1 custom-scrollbar">
-                                    <div className="grid grid-cols-2 gap-2 pb-8">
-                                        {Object.entries(BIOME_CATEGORIES).map(([cat, biomes]) => (
-                                            <div key={cat} className="col-span-2 mt-4 first:mt-0">
-                                                <label className="text-[8px] font-black text-zinc-600 uppercase tracking-[0.2em] mb-2 block">{cat}</label>
-                                                <div className="grid grid-cols-2 gap-2">
-                                                    {biomes.map(b => (
-                                                        <button
-                                                            key={b} onClick={() => setActiveTool(b)}
-                                                            className={clsx("px-4 py-3 rounded-xl border text-[9px] font-black uppercase transition-all truncate", activeTool === b ? "bg-cyan-500 border-cyan-400 text-black shadow-lg" : "bg-white/5 border-white/5 text-zinc-500 hover:text-white")}
-                                                        >
-                                                            {b}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        ))}
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-8">
+                   <AnimatePresence mode="wait">
+                      {activeTab === 'mirror' && (
+                        <motion.div key="mirror" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
+                           <section>
+                              <h5 className="text-[9px] font-black text-purple-500 uppercase tracking-widest mb-4 italic">Active Shards</h5>
+                              <div className="space-y-2">
+                                 {zones.map(z => (
+                                    <button 
+                                       key={z} 
+                                       onClick={() => { setActiveZone(z); refreshLiveWorld(); }}
+                                       className={clsx("w-full p-4 rounded-xl bg-white/2 border border-white/5 text-left flex items-center justify-between group hover:border-purple-500/50 transition-all", activeZone === z ? "border-purple-500/50 bg-purple-500/5" : "")}
+                                    >
+                                       <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter">{z.replace(/_/g, ' ')}</span>
+                                       <ChevronRight size={12} className="text-slate-600 group-hover:text-purple-400" />
+                                    </button>
+                                 ))}
+                              </div>
+                           </section>
+                        </motion.div>
+                      )}
+
+                      {activeTab === 'genesis' && (
+                        <motion.div key="genesis" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-10 pb-20">
+                           {/* Brush Config */}
+                           <section>
+                              <h5 className="text-[9px] font-black text-cyan-500 uppercase tracking-widest mb-4 italic">Materialization Brush</h5>
+                              <div className="space-y-6 mb-8">
+                                <div className="space-y-2">
+                                    <div className="flex justify-between text-[8px] font-black uppercase tracking-tighter">
+                                        <span className="text-zinc-500">Radius</span>
+                                        <span className="text-cyan-500">{brushRadius}px</span>
                                     </div>
+                                    <input type="range" min="1" max="10" step="1" value={brushRadius} onChange={e => setBrushRadius(parseInt(e.target.value))} className="w-full" />
                                 </div>
-                            </motion.aside>
-                        )}
+                              </div>
 
-                        {mode === 'observe' && (
-                            <motion.aside key="observe" initial={{ x: 400 }} animate={{ x: 0 }} exit={{ x: 400 }} className="w-96 border-l border-white/5 bg-slate-900/50 backdrop-blur-3xl p-8 flex flex-col gap-8">
-                                <header>
-                                    <h3 className="text-[10px] font-black text-purple-500 uppercase tracking-[0.3em] mb-2 italic">Shard Monitor</h3>
-                                    <div className="text-3xl font-black italic tracking-tighter uppercase">Active Grids</div>
-                                </header>
-                                <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-3">
-                                    {zones.map(z => (
-                                        <button key={z} onClick={() => setActiveZone(z)} className={clsx("w-full p-5 rounded-3xl bg-white/5 border border-white/5 text-left transition-all", activeZone === z ? "border-purple-500/50 bg-purple-500/5" : "hover:bg-white/10")}>
-                                            <span className="text-xs font-bold text-white uppercase italic">{z.replace(/_/g, ' ')}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </motion.aside>
-                        )}
-                    </AnimatePresence>
-                </main>
-            </div>
+                              <div className="grid grid-cols-2 gap-2">
+                                 {Object.entries(BIOME_CATEGORIES).map(([cat, biomes]) => (
+                                    <div key={cat} className="col-span-2 mt-4 first:mt-0">
+                                       <span className="text-[8px] font-black text-zinc-700 uppercase mb-2 block tracking-widest">{cat}</span>
+                                       <div className="grid grid-cols-2 gap-1.5">
+                                          {biomes.map(b => (
+                                             <button 
+                                               key={b} onClick={() => setActiveTool(b)}
+                                               className={clsx("px-3 py-2.5 rounded-lg border text-[9px] font-black uppercase transition-all truncate", activeTool === b ? "bg-cyan-600 border-cyan-400 text-white shadow-lg shadow-cyan-500/20" : "bg-white/2 border-white/5 text-slate-500 hover:text-white")}
+                                             >
+                                                {b}
+                                             </button>
+                                          ))}
+                                       </div>
+                                    </div>
+                                 ))}
+                              </div>
+                           </section>
 
-            {/* Player List Overlay */}
+                           <section className="pt-8 border-t border-white/5">
+                              <h5 className="text-[9px] font-black text-cyan-500 uppercase tracking-widest mb-6 italic">Genesis Parameters</h5>
+                              <div className="space-y-6">
+                                 {Object.entries(weights).map(([k, v]) => (
+                                    <div key={k} className="space-y-2">
+                                       <div className="flex justify-between text-[8px] font-black uppercase tracking-tighter">
+                                          <span className="text-zinc-500">{k.replace(/_/g, ' ')}</span>
+                                          <span className="text-cyan-500">{k === 'seed' ? v : v.toFixed(2)}</span>
+                                       </div>
+                                       {k === 'seed' ? (
+                                          <input type="number" value={v} onChange={e => setWeights({...weights, seed: parseInt(e.target.value) || 0})} className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-[10px] font-mono text-cyan-400 outline-none" />
+                                       ) : (
+                                          <input type="range" min="0" max="1" step="0.01" value={v} onChange={e => setWeights({...weights, [k]: parseFloat(e.target.value)})} className="w-full" />
+                                       )}
+                                    </div>
+                                 ))}
+                              </div>
+                           </section>
+                        </motion.div>
+                      )}
+                   </AnimatePresence>
+                </div>
+            </aside>
+
+            {/* Global Soul Tracker (Left Sidebar Context) */}
             <AnimatePresence>
                 {showPlayerList && (
-                    <motion.aside initial={{ x: 400 }} animate={{ x: 0 }} exit={{ x: 400 }} className="fixed right-0 top-16 bottom-0 w-80 bg-black/90 backdrop-blur-3xl border-l border-white/10 p-8 z-[200] shadow-[-50px_0_100px_rgba(0,0,0,0.8)]">
-                        <div className="mb-8 flex justify-between items-center">
-                            <div>
-                                <span className="text-purple-500 text-[10px] font-black uppercase tracking-[0.3em] italic">Soul Tracker</span>
-                                <h3 className="text-2xl font-black italic uppercase">Mortals</h3>
-                            </div>
-                            <button onClick={() => setShowPlayerList(false)} className="p-2 text-slate-500 hover:text-white"><X size={20} /></button>
+                    <motion.div initial={{ x: 400 }} animate={{ x: 0 }} exit={{ x: 400 }} className="fixed right-0 top-16 bottom-0 w-80 bg-zinc-950/95 backdrop-blur-3xl border-l border-white/10 p-8 z-[200] shadow-2xl">
+                        <div className="flex justify-between items-center mb-8">
+                           <div>
+                              <span className="text-purple-500 text-[10px] font-black uppercase tracking-[0.3em] italic">Soul Monitor</span>
+                              <h4 className="text-2xl font-black italic uppercase">Active Divine</h4>
+                           </div>
+                           <button onClick={() => setShowPlayerList(false)} className="text-slate-500 hover:text-white"><X size={20} /></button>
                         </div>
-                        <div className="flex flex-col gap-3 overflow-y-auto custom-scrollbar pr-2 h-[80vh]">
-                            {players.map(p => (
-                                <button key={p.name} onClick={() => setCenterRequest({ x: p.x, y: p.y })} className="p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-purple-500 text-left transition-all group">
-                                    <div className="text-sm font-black italic text-white group-hover:text-purple-400 capitalize">{p.name}</div>
-                                    <div className="text-[10px] font-mono text-slate-500">POS: {p.x}, {p.y}</div>
-                                </button>
-                            ))}
+                        <div className="space-y-3 h-[75vh] overflow-y-auto custom-scrollbar pr-2">
+                           {players.map(p => (
+                              <button key={p.name} onClick={() => setCenterRequest({ x: p.x, y: p.y })} className="w-full p-4 rounded-2xl bg-white/2 border border-white/5 hover:border-purple-500 text-left transition-all group">
+                                 <div className="text-sm font-black italic text-white group-hover:text-purple-400 capitalize">{p.name}</div>
+                                 <div className="text-[10px] font-mono text-zinc-600 mt-1 uppercase">Coordinate: {p.x}, {p.y}</div>
+                              </button>
+                           ))}
                         </div>
-                    </motion.aside>
+                    </motion.div>
                 )}
             </AnimatePresence>
         </div>

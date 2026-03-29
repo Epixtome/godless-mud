@@ -11,24 +11,15 @@ interface Room {
     y: number;
     z: number;
     terrain: string;
-    name?: string;
 }
 
 interface UniversalCanvasProps {
     mode: 'sculpt' | 'observe';
-    // Sculpt Data
     grid?: string[][];
+    rooms?: Room[];
     elevMap?: number[][];
     moistMap?: number[][];
-    biasLandmarks?: (string | null)[][];
-    // Observe Data
-    rooms?: Room[];
-    // Shared Layers
-    tideMap?: { kingdom: string, power: number }[][];
-    secMap?: number[][];
     viewMode: "terrain" | "elev" | "moist" | "tide" | "sec";
-
-    // Config
     tileSize?: number;
     brushRadius: number;
     zoom: number;
@@ -37,121 +28,152 @@ interface UniversalCanvasProps {
     onHover: (x: number, y: number) => void;
     onRightClick: (x: number, y: number) => void;
     centerPos?: { x: number, y: number } | null;
+    anchorX?: number;
+    anchorY?: number;
 }
 
+/**
+ * [V11.16] Godless "Infinite Radiance" Canvas
+ * High-performance offscreen buffering with anti-darkening logic and limitless zoom.
+ */
 export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
     mode,
     grid,
     rooms,
     elevMap,
     moistMap,
-    tideMap,
-    secMap,
     viewMode,
-    tileSize = 20,
+    tileSize = 8, 
     brushRadius,
     zoom,
     onPaint,
     onPaintEnd,
     onHover,
     onRightClick,
-    centerPos
+    centerPos,
+    anchorX = 0,
+    anchorY = 0
 }) => {
     const { terrainRegistry } = useStore();
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const bufferRef = useRef<HTMLCanvasElement | null>(null);
+    
     const [isPainting, setIsPainting] = useState(false);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const [viewportZoom, setViewportZoom] = useState(zoom || 25);
     const [lastMouse, setLastMouse] = useState({ x: 0, y: 0 });
     const [isPanning, setIsPanning] = useState(false);
 
+    // --- INITIALIZE BUFFER ---
     useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        if (mode === 'sculpt') {
-            const size = tileSize * (viewportZoom / 10);
-            setOffset({
-                x: (canvas.parentElement?.clientWidth || 800) / 2 - (WIDTH * size) / 2,
-                y: (canvas.parentElement?.clientHeight || 600) / 2 - (HEIGHT * size) / 2
-            });
-        } else if (centerPos && mode === 'observe') {
-            setOffset({
-                x: (canvas.parentElement?.clientWidth || 800) / 2 - centerPos.x * viewportZoom,
-                y: (canvas.parentElement?.clientHeight || 600) / 2 - centerPos.y * viewportZoom
-            });
+        if (!bufferRef.current) {
+            bufferRef.current = document.createElement("canvas");
+            bufferRef.current.width = WIDTH * tileSize;
+            bufferRef.current.height = HEIGHT * tileSize;
         }
-    }, [mode, centerPos]); // RE-CENTER ON MODE CHANGE OR PROP
+    }, [tileSize]);
 
+    // --- UPDATE BUFFER (Radiant Shaders) ---
+    // [V11.16] Eliminates gaps and applies a brilliance boost to prevent darkening on zoom-out.
+    useEffect(() => {
+        const buffer = bufferRef.current;
+        if (!buffer || !grid || !terrainRegistry) return;
+        const bCtx = buffer.getContext("2d");
+        if (!bCtx) return;
+
+        bCtx.clearRect(0, 0, buffer.width, buffer.height);
+        
+        for (let y = 0; y < grid.length; y++) {
+            for (let x = 0; x < grid[y].length; x++) {
+                let color = "#111111";
+                if (viewMode === "terrain") {
+                    // Use studio_hex first, or boost hex.
+                    const terr = terrainRegistry?.terrains[grid[y][x]];
+                    color = terr?.studio_hex || terr?.hex || "#444";
+                } else if (viewMode === "elev" && elevMap) {
+                    const e = Math.floor(elevMap[y][x] * 255);
+                    color = `rgb(${e}, ${e}, ${e})`;
+                } else if (viewMode === "moist" && moistMap) {
+                    const m = Math.floor(moistMap[y][x] * 255);
+                    color = `rgb(0, 50, ${m})`; // Bluer moisture
+                }
+                
+                bCtx.fillStyle = color;
+                // [FIX] No internal gaps in the buffer ensures solidity at distance.
+                bCtx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+            }
+        }
+    }, [grid, elevMap, moistMap, viewMode, terrainRegistry, tileSize]);
+
+    // --- MAIN RENDER ---
     const draw = useCallback(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        // Standard Resize
-        canvas.width = canvas.parentElement?.clientWidth || 800;
-        canvas.height = canvas.parentElement?.clientHeight || 600;
+        // Resize
+        if (canvas.width !== canvas.parentElement?.clientWidth || canvas.height !== canvas.parentElement?.clientHeight) {
+            canvas.width = canvas.parentElement?.clientWidth || 800;
+            canvas.height = canvas.parentElement?.clientHeight || 600;
+        }
 
-        ctx.fillStyle = "#020617";
+        // Void Background
+        ctx.fillStyle = "#05060f";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Core Drawing Logic
-        if (mode === 'sculpt' && grid) {
-            // FIXED GRID SCULPTING
-            const drawX = offset.x;
-            const drawY = offset.y;
-            const size = tileSize * (viewportZoom / 10);
-
-            for (let y = 0; y < grid.length; y++) {
-                for (let x = 0; x < grid[y].length; x++) {
-                    const px = drawX + x * size;
-                    const py = drawY + y * size;
-
-                    if (px + size < 0 || px > canvas.width || py + size < 0 || py > canvas.height) continue;
-
-                    let color = "#111111";
-                    if (viewMode === "terrain") {
-                        color = terrainRegistry?.terrains[grid[y][x]]?.hex || "#444";
-                    } else if (viewMode === "elev" && elevMap) {
-                        const e = Math.floor(elevMap[y][x] * 255);
-                        color = `rgb(${e}, ${e}, ${e})`;
-                    } else if (viewMode === "moist" && moistMap) {
-                        const m = Math.floor(moistMap[y][x] * 255);
-                        color = `rgb(0, 0, ${m})`;
-                    } else if (viewMode === "tide" && tideMap) {
-                        const t = tideMap[y][x];
-                        const alpha = Math.min(1.0, t.power / 25.0);
-                        color = t.kingdom === "light" ? `rgba(0, 188, 212, ${alpha})` : (t.kingdom === "dark" ? `rgba(156, 39, 176, ${alpha})` : "#0a0a0a");
-                    } else if (viewMode === "sec" && secMap) {
-                        const s = secMap[y][x];
-                        color = s > 0.7 ? `rgba(34, 197, 94, ${s})` : (s > 0.3 ? `rgba(234, 179, 8, ${s})` : `rgba(239, 68, 68, ${Math.max(0.1, s)})`);
-                    }
-
-                    ctx.fillStyle = color;
-                    ctx.fillRect(px, py, size - 0.5, size - 0.5);
-                }
+        // Grid Pattern (Subtle guidance)
+        if (viewportZoom > 5) {
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.03)";
+            ctx.lineWidth = 1;
+            const step = viewportZoom * 5;
+            for (let x = offset.x % step; x < canvas.width; x += step) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
             }
-        } else if (mode === 'observe' && rooms) {
-            // DYNAMIC SPARSE OBSERVATION
+            for (let y = offset.y % step; y < canvas.height; y += step) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+            }
+        }
+
+        // --- LAYER 1: MIRROR MONITOR (World Rooms) ---
+        if (rooms) {
+            const gap = viewportZoom > 4 ? 1 : 0; // [FIX] Eliminate gaps at high zoom-out
             rooms.forEach(room => {
                 const px = offset.x + room.x * viewportZoom;
                 const py = offset.y + room.y * viewportZoom;
-
                 if (px + viewportZoom < 0 || px > canvas.width || py + viewportZoom < 0 || py > canvas.height) return;
 
                 let color = terrainRegistry?.terrains[room.terrain]?.studio_hex || "#1e293b";
-
-                // Overlay ViewModes on Live Rooms
-                if (viewMode === "tide" && tideMap) {
-                    // Map room coords to tide map if possible? 
-                    // High complexity: For now, favor terrain colors for 'Observe'.
-                }
-
                 ctx.fillStyle = color;
-                ctx.fillRect(px, py, viewportZoom - 1, viewportZoom - 1);
+                ctx.fillRect(px, py, viewportZoom - gap, viewportZoom - gap);
             });
         }
-    }, [mode, grid, rooms, elevMap, moistMap, tideMap, secMap, viewMode, offset, viewportZoom, terrainRegistry]);
+
+        // --- LAYER 2: GENESIS ENGINE (The Shard) ---
+        if (bufferRef.current && grid) {
+            const sizeFactor = (viewportZoom / tileSize) * (tileSize);
+            const anchorOffsetX = (anchorX || 0) * viewportZoom;
+            const anchorOffsetY = (anchorY || 0) * viewportZoom;
+            const drawX = offset.x + anchorOffsetX;
+            const drawY = offset.y + anchorOffsetY;
+            
+            // Apply Smoothing logic
+            ctx.imageSmoothingEnabled = (viewportZoom < 2); // Only smooth when tiny
+            
+            ctx.drawImage(
+                bufferRef.current, 
+                drawX, 
+                drawY, 
+                WIDTH * (viewportZoom), 
+                HEIGHT * (viewportZoom)
+            );
+
+            // Shard Frame
+            ctx.strokeStyle = "rgba(168, 85, 247, 0.6)";
+            ctx.lineWidth = Math.max(1, viewportZoom / 10);
+            ctx.strokeRect(drawX, drawY, WIDTH * viewportZoom, HEIGHT * viewportZoom);
+        }
+    }, [rooms, grid, offset, viewportZoom, terrainRegistry, anchorX, anchorY, tileSize]);
 
     useEffect(() => {
         let frame = requestAnimationFrame(function loop() {
@@ -161,14 +183,26 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
         return () => cancelAnimationFrame(frame);
     }, [draw]);
 
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        
+        if (mode === 'sculpt' && offset.x === 0 && offset.y === 0) {
+            const size = tileSize * (viewportZoom / 10);
+            setOffset({
+                x: (canvas.parentElement?.clientWidth || 800) / 2 - (WIDTH * size) / 2,
+                y: (canvas.parentElement?.clientHeight || 600) / 2 - (HEIGHT * size) / 2
+            });
+        }
+    }, [mode, centerPos]);
+
     const handleMouseDown = (e: React.MouseEvent) => {
-        if (e.button === 1 || e.shiftKey) {
-            setIsPanning(true);
-        } else {
+        if (e.button === 1 || e.shiftKey) { setIsPanning(true); } 
+        else {
             setIsPainting(true);
             const rect = canvasRef.current!.getBoundingClientRect();
-            const gx = Math.floor((e.clientX - rect.left - offset.x) / (mode === 'sculpt' ? (tileSize * (viewportZoom / 10)) : viewportZoom));
-            const gy = Math.floor((e.clientY - rect.top - offset.y) / (mode === 'sculpt' ? (tileSize * (viewportZoom / 10)) : viewportZoom));
+            const gx = Math.floor((e.clientX - rect.left - offset.x) / viewportZoom);
+            const gy = Math.floor((e.clientY - rect.top - offset.y) / viewportZoom);
             onPaint(gx, gy);
         }
         setLastMouse({ x: e.clientX, y: e.clientY });
@@ -176,9 +210,8 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
 
     const handleMouseMove = (e: React.MouseEvent) => {
         const rect = canvasRef.current!.getBoundingClientRect();
-        const gx = Math.floor((e.clientX - rect.left - offset.x) / (mode === 'sculpt' ? (tileSize * (viewportZoom / 10)) : viewportZoom));
-        const gy = Math.floor((e.clientY - rect.top - offset.y) / (mode === 'sculpt' ? (tileSize * (viewportZoom / 10)) : viewportZoom));
-
+        const gx = Math.floor((e.clientX - rect.left - offset.x) / viewportZoom);
+        const gy = Math.floor((e.clientY - rect.top - offset.y) / viewportZoom);
         onHover(gx, gy);
 
         if (isPanning) {
@@ -190,7 +223,7 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
     };
 
     return (
-        <div className="absolute inset-0 bg-slate-950 cursor-crosshair overflow-hidden">
+        <div className="absolute inset-0 bg-[#05060f] cursor-crosshair overflow-hidden">
             <canvas
                 ref={canvasRef}
                 onMouseDown={handleMouseDown}
@@ -198,18 +231,18 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
                 onMouseUp={() => { setIsPainting(false); setIsPanning(false); onPaintEnd(); }}
                 onWheel={(e) => {
                     const delta = e.deltaY > 0 ? 0.9 : 1.1;
-                    setViewportZoom(prev => Math.max(1, Math.min(300, prev * delta)));
+                    // [V11.16] INFINITE ZOOM: Expanded range from 0.05 to 1000.
+                    setViewportZoom(prev => Math.max(0.05, Math.min(1000, prev * delta)));
                 }}
                 onContextMenu={(e) => {
                     e.preventDefault();
                     const rect = canvasRef.current!.getBoundingClientRect();
-                    const gx = Math.floor((e.clientX - rect.left - offset.x) / (mode === 'sculpt' ? (tileSize * (viewportZoom / 10)) : viewportZoom));
-                    const gy = Math.floor((e.clientY - rect.top - offset.y) / (mode === 'sculpt' ? (tileSize * (viewportZoom / 10)) : viewportZoom));
+                    const gx = Math.floor((e.clientX - rect.left - offset.x) / viewportZoom);
+                    const gy = Math.floor((e.clientY - rect.top - offset.y) / viewportZoom);
                     onRightClick(gx, gy);
                 }}
                 className="w-full h-full block"
             />
-            {/* Visual HUD Layers could go here */}
         </div>
     );
 };

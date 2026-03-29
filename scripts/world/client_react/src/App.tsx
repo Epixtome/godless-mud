@@ -24,6 +24,7 @@ import { clsx } from 'clsx';
 import LoginOverlay from './components/LoginOverlay';
 import AdminPanel from './components/AdminPanel';
 import MasterStudio from './components/studio/MasterStudio';
+import { NexusShell } from './components/NexusShell';
 
 export function App() {
   const {
@@ -103,26 +104,34 @@ export function App() {
 
   return (
     <div className="w-screen h-screen bg-slate-950 text-slate-200 selection:bg-yellow-500/30 font-display">
+      <MenuBar />
       <LoginOverlay />
       <AdminPanel />
 
-      {/* 3. Studio Workspace Layer (Integrated Monolith) */}
-      {isAdmin && (activeWorkspace === 'studio' || activeWorkspace === 'editor') && <MasterStudio initialMode={activeWorkspace as any} />}
+      {/* 4. NEXUS DASHBOARD (Primary Game UX) */}
+      {activeWorkspace === 'nexus' && <NexusShell />}
 
-      {/* 2. Unified Workspace Layer */}
+      {/* 3. Studio Workspace Layer (Integrated Monolith) */}
+      {isAdmin && (activeWorkspace === 'studio' || activeWorkspace === 'editor') && (
+        <MasterStudio 
+          key={activeWorkspace}
+          initialMode={activeWorkspace === 'studio' ? 'sculpt' : 'observe'} 
+        />
+      )}
+
+      {/* 2. Unified Workspace Layer (Legacy Floating) */}
       <div className={clsx(
         "relative flex-1 w-full h-full overflow-hidden pt-10 p-6 perspective-1000 transition-opacity duration-500",
-        (activeWorkspace === 'studio' || activeWorkspace === 'editor') ? "opacity-0 pointer-events-none" : "opacity-100"
+        (activeWorkspace === 'studio' || activeWorkspace === 'editor' || activeWorkspace === 'nexus') ? "opacity-0 pointer-events-none" : "opacity-100"
       )}>
-        <MenuBar />
 
         {/* SIDEBAR: Intelligence & Maps */}
         <Window id="tactical" title="Tactical Awareness" icon={<MapIcon size={14} />}>
-          <Viewport radius={15} context="tactical" />
+          <Viewport radius={15} context="tactical" scale={1} />
         </Window>
 
         <Window id="mini" title="Aura Scan (Mini)" icon={<MapIcon size={14} />}>
-          <Viewport radius={3} context="mini" />
+          <Viewport radius={3} context="mini" scale={1} />
         </Window>
 
         <Window id="inventory" title="Divine Vessel: Inventory" icon={<Briefcase size={14} />}>

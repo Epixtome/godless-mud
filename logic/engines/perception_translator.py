@@ -90,7 +90,8 @@ def translate_to_dict(perception_result):
                     symbol, color = "^", "#94a3b8"
                 
                 # Haze Logic
-                is_hazy = dist > getattr(perception_result, 'inner_radius', perception_result.radius)
+                inner_r = getattr(perception_result, 'inner_radius', perception_result.radius)
+                is_hazy = dist > (inner_r if inner_r is not None else perception_result.radius)
 
                 tile = {
                     "x": x, "y": y,
