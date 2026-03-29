@@ -1,109 +1,82 @@
+"""
+logic/modules/shadow_blade/actions.py
+Shadow Blade Class Skills: Born in Dark implementation.
+V7.2 Standard Refactor.
+"""
 from logic.actions.registry import register
+from logic.core import effects, resources, combat
 from utilities.colors import Colors
-from logic.core import combat, resources, perception, messaging
-import random
 
-@register("void_strike")
-def void_strike(player, target, blessing):
-    """Setup: Strike with a shadowed blade. Deals damage and applies [Marked]."""
-    power = blessing.base_power
-    damage = combat.calculate_damage(player, power, tags=["martial", "dark", "lethality"])
-    
-    target.receive_damage(player, damage, "shadowy blade")
-    target.apply_status("marked", ticks=15, applier=player)
-    
-    player.send_line(f"Your blade leaves a {Colors.MAGENTA}dark trail{Colors.RESET} across {target.name}, marking them for the void.")
-    target.room.broadcast(f"{player.name}'s blade leaves a {Colors.MAGENTA}dark trail{Colors.RESET} across {target.name}!", exclude=[player])
-    
-    # Generate Stamina
-    resources.modify_resource(player, "stamina", 10)
-    return True
+def _consume_resources(player, skill):
+    from logic.engines import magic_engine
+    magic_engine.consume_resources(player, skill)
+    magic_engine.set_cooldown(player, skill)
 
-@register("shadow_meld")
-def shadow_meld(player, target, blessing):
-    """Setup: Fade into the void. Grants [Concealed] for 200 ticks."""
-    player.apply_status("concealed", ticks=200)
-    player.send_line(f"You {Colors.DGREY}fade into the void{Colors.RESET}, vanishing from sight.")
-    player.room.broadcast(f"{player.name} {Colors.DGREY}vanishes into the shadows{Colors.RESET}!", exclude=[player])
-    return True
+@register("shadow_strike")
+def handle_shadow_strike(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
+    if not target: return None, True
+    player.send_line(f"A strike from the shadows strikes {target.name}.")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    resources.modify_resource(player, 'stamina', 15, source="Shadow Strike")
+    resources.modify_resource(player, 'umbral_pips', 1, source="Shadow Strike")
+    _consume_resources(player, skill)
+    return target, True
 
-@register("assassinate")
-def assassinate(player, target, blessing):
-    """Payoff: Deliver a lethal blow to a [Marked] target. Deals 4x damage from [Concealed]."""
-    if not player.has_status("concealed"):
-        player.send_line("You must be concealed to assassinate.")
-        return False
-        
-    power = blessing.base_power
-    multiplier = 4.0 if target.has_status("marked") else 1.5
-    
-    damage = combat.calculate_damage(player, power * multiplier, tags=["martial", "lethality"])
-    target.receive_damage(player, damage, "lethal assassination")
-    
-    player.remove_status("concealed")
-    player.send_line(f"You step from the void and {Colors.RED}strike through{Colors.RESET} {target.name}'s heart!")
-    target.room.broadcast(f"{player.name} steps from the void and {Colors.RED}plunges a blade{Colors.RESET} into {target.name}!", exclude=[player])
-    
-    return True
+@register("blindside")
+def handle_blindside(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
+    if not target: return None, True
+    player.send_line(f"You strike {target.name} from an unexpected angle.")
+    effects.apply_effect(target, "marked", 10)
+    resources.modify_resource(player, 'umbral_pips', 1, source="Blindside")
+    _consume_resources(player, skill)
+    return target, True
 
-@register("twilight_dance")
-def twilight_dance(player, target, blessing):
-    """Payoff: Whirling blades of shadow. Deals Area damage to all enemies in the room."""
-    power = blessing.base_power
-    targets = [m for m in player.room.mobs if m.is_hostile(player)]
-    
-    player.send_line(f"You perform a {Colors.MAGENTA}Twilight Dance{Colors.RESET}, your blades becoming a blur of darkness.")
-    
+@register("nightfall_execute")
+def handle_nightfall(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
+    if not target: return None, True
+    player.send_line(f"{Colors.BOLD}{Colors.MAGENTA}NIGHTFALL!{Colors.RESET} Absolute darkness for {target.name}.")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    _consume_resources(player, skill)
+    return target, True
+
+@register("shadow_cleave")
+def handle_shadow_cleave(player, skill, args, target=None):
+    player.send_line(f"{Colors.BOLD}{Colors.MAGENTA}SHADOW CLEAVE!{Colors.RESET}")
+    targets = [m for m in player.room.monsters if combat.is_target_valid(player, m)]
     for t in targets:
-        mult = 2.0 if t.has_status("marked") else 1.0
-        damage = combat.calculate_damage(player, power * mult, tags=["martial", "dark", "aoe"])
-        t.receive_damage(player, damage, "twilight blades")
-        if t.has_status("marked"):
-            t.remove_status("marked")
-            
-    return True
+        combat.handle_attack(player, t, player.room, player.game, blessing=skill)
+        effects.apply_effect(t, "blinded", 2)
+    _consume_resources(player, skill)
+    return None, True
 
-@register("void_parry")
-def void_parry(player, target, blessing):
-    """Defense: Parry the next attack, absorbing 50% damage."""
-    player.apply_status("void_parry", ticks=5)
-    player.send_line(f"You raise your blade, weaving a {Colors.CYAN}net of shadows{Colors.RESET} around you.")
-    return True
+@register("shroud_of_night")
+def handle_shroud_of_night(player, skill, args, target=None):
+    player.send_line(f"You wrap yourself in the silence of night.")
+    effects.apply_effect(player, "concealed", 8)
+    _consume_resources(player, skill)
+    return None, True
 
-@register("ghost_form")
-def ghost_form(player, target, blessing):
-    """Defense: Turn ethereal for 5s, granting 50% Evasion."""
-    player.apply_status("ghost_form", ticks=50) # 5 seconds approx
-    player.send_line(f"You become {Colors.WHITE}ethereal{Colors.RESET}, your body turning to grey mist.")
-    return True
+@register("umbral_reflexes")
+def handle_umbral_reflexes(player, skill, args, target=None):
+    player.send_line(f"Your reflexes are as fluid as a shadow.")
+    effects.apply_effect(player, "evasive", 4)
+    _consume_resources(player, skill)
+    return None, True
 
-@register("night_step")
-def night_step(player, target, blessing):
-    """Mobility: Blink to an adjacent room instantly."""
-    # Logic for room movement
-    exits = player.room.exits
-    if not exits:
-        player.send_line("There are no exits to step through.")
-        return False
-        
-    # Pick a random exit if no direction provided, or just let them pick?
-    # For now, let's assume it picks a random adjacent room.
-    target_room = random.choice(list(exits.values()))
-    player.room.broadcast(f"{player.name} {Colors.DGREY}dissolves into shadows{Colors.RESET} and is gone.", exclude=[player])
-    player.move_to(target_room)
-    player.send_line(f"You emerge from the shadows in {target_room.name}.")
-    target_room.broadcast(f"{player.name} {Colors.DGREY}emerges from the shadows{Colors.RESET}.", exclude=[player])
-    return True
+@register("shadow_step")
+def handle_shadow_step(player, skill, args, target=None):
+    player.send_line(f"{Colors.CYAN}SHADOW STEP!{Colors.RESET}")
+    _consume_resources(player, skill)
+    return None, True
 
 @register("dark_vision")
-def dark_vision(player, target, blessing):
-    """Utility: Reveal all hidden entities in the room."""
-    player.apply_status("dark_vision", ticks=200)
-    player.send_line(f"Your eyes glow with {Colors.BOLD}{Colors.MAGENTA}Abyssal Light{Colors.RESET}, revealing the unseen.")
-    
-    hidden = [m for m in player.room.mobs if m.has_status("concealed")]
-    for h in hidden:
-        h.remove_status("concealed")
-        player.send_line(f"You have revealed {h.name}!")
-        
-    return True
+def handle_dark_vision(player, skill, args, target=None):
+    player.send_line(f"The shadows no longer hinder you.")
+    _consume_resources(player, skill)
+    return None, True

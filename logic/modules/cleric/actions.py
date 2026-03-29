@@ -1,120 +1,135 @@
 """
 logic/modules/cleric/actions.py
-Cleric Skill Handlers: Healing, Cleanse, Shield of Faith, etc.
+Cleric Class Skills: Divine Guardian implementation.
+V7.2 Standard Refactor.
 """
 from logic.actions.registry import register
 from logic.core import effects, resources, combat
-from logic.engines import magic_engine, blessings_engine
 from utilities.colors import Colors
-from logic import common
 
+# Internal Helper: Consume resources and set cooldowns
 def _consume_resources(player, skill):
+    from logic.engines import magic_engine
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
-    magic_engine.consume_pacing(player, skill)
 
-@register("lay_on_hands")
-def handle_lay_on_hands(player, skill, args, target=None):
-    """High-potency heal scaling with faith/stats."""
-    target = common._get_target(player, args, player)
+@register("holy_strike")
+def handle_holy_strike(player, skill, args, target=None):
+    """Setup/Builder: Faith generator."""
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
     
-    power = blessings_engine.MathBridge.calculate_power(skill, player)
+    player.send_line(f"{Colors.YELLOW}You strike {target.name} with a weapon bathed in holy light!{Colors.RESET}")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
     
-    resources.modify_resource(target, "hp", power, source=player.name, context="Lay on Hands")
-    player.send_line(f"{Colors.GREEN}Your touch mends {target.name}'s wounds! (+{power} HP){Colors.RESET}")
-    if target != player and hasattr(target, 'send_line'):
-        target.send_line(f"{Colors.GREEN}{player.name} lays hands on you, healing your wounds!{Colors.RESET}")
+    # Generate Faith (Resource expected in URM)
+    resources.modify_resource(player, 'faith', 1, source="Holy Strike")
     
     _consume_resources(player, skill)
     return target, True
 
-@register("cleanse")
-def handle_cleanse(player, skill, args, target=None):
-    """Removes debilitating status effects."""
-    target = common._get_target(player, args, target)
+@register("divine_mark")
+def handle_divine_mark(player, skill, args, target=None):
+    """Setup: Applies Illuminated status."""
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
     
-    cleansed = []
-    # List of "cleansable" effects (toxins, plagues, etc)
-    TO_CLEANSE = ["poison", "plague", "bleed", "dazed", "curse", "blind", "silence", "slow", "weakness", "root"]
-    for effect in TO_CLEANSE:
-        if effects.has_effect(target, effect):
-            effects.remove_effect(target, effect)
-            cleansed.append(effect)
-            
-    if cleansed:
-        player.send_line(f"{Colors.CYAN}You cleanse {target.name} of: {', '.join(cleansed)}.{Colors.RESET}")
-        if target != player and hasattr(target, 'send_line'):
-            target.send_line(f"{Colors.CYAN}{player.name} has cleansed your afflictions!{Colors.RESET}")
-    else:
-        player.send_line(f"{target.name} has no afflictions to cleanse.")
+    player.send_line(f"{Colors.YELLOW}You mark {target.name} with a divine brand!{Colors.RESET}")
+    effects.apply_effect(target, "illuminated", 5)
+    
+    _consume_resources(player, skill)
+    return target, True
+
+@register("divine_wrath")
+def handle_divine_wrath(player, skill, args, target=None):
+    """Payoff/AOE: Pillar of fire."""
+    player.send_line(f"{Colors.BOLD}{Colors.YELLOW}DIVINE WRATH!{Colors.RESET} A pillar of holy fire descends!")
+    
+    targets = [m for m in player.room.monsters if combat.is_target_valid(player, m)]
+    for t in targets:
+        combat.handle_attack(player, t, player.room, player.game, blessing=skill)
+        
+    _consume_resources(player, skill)
+    return None, True
+
+@register("judgment")
+def handle_judgment(player, skill, args, target=None):
+    """Payoff: High damage vs Illuminated targets."""
+    from .utils import get_target
+    target = get_target(player, args, target)
+    if not target: return None, True
+    
+    player.send_line(f"{Colors.BOLD}{Colors.WHITE}JUDGMENT!{Colors.RESET} You call down celestial power upon the wicked!")
+    
+    # Logic-Data wall: grammar bonus handled in JSON, but we can add flavor
+    if effects.has_effect(target, "illuminated"):
+        player.send_line(f"{Colors.CYAN}The divine brand erupts in blinding light!{Colors.RESET}")
+        
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
     
     _consume_resources(player, skill)
     return target, True
 
 @register("shield_of_faith")
 def handle_shield_of_faith(player, skill, args, target=None):
-    target = common._get_target(player, args, player, "Cast Shield of Faith on whom?")
+    """Defense: Wards an ally."""
+    from .utils import get_target
+    target = get_target(player, args, player)
     if not target: return None, True
     
-    effects.apply_effect(target, "shield_of_faith", 60)
-    player.send_line(f"{Colors.YELLOW}You place a shimmering ward of faith upon {target.name}.{Colors.RESET}")
-    if target != player and hasattr(target, 'send_line'):
-        target.send_line(f"{Colors.YELLOW}{player.name} shields you with divine light!{Colors.RESET}")
-        
+    player.send_line(f"{Colors.YELLOW}You weave a protective ward around {target.name}.{Colors.RESET}")
+    effects.apply_effect(target, "shielded", 4)
+    
     _consume_resources(player, skill)
     return target, True
 
 @register("sanctify")
 def handle_sanctify(player, skill, args, target=None):
-    """Sanctifies the ground, buffing all allies in the room."""
-    player.send_line(f"{Colors.YELLOW}You sanctify the ground beneath your feet!{Colors.RESET}")
-    player.room.broadcast(f"{player.name} sanctifies the area, bathing it in holy light!", exclude_player=player)
+    """Defense/Utility: Area aura."""
+    player.send_line(f"{Colors.YELLOW}You sanctify the ground, creating a sanctuary of light.{Colors.RESET}")
     
-    # Party-wide Buff (Players + Minions)
-    allies = [p for p in player.room.players] + [m for m in player.room.monsters if getattr(m, 'leader', None) == player]
-    
-    for ally in allies:
-        effects.apply_effect(ally, "sanctified", 30)
-        if hasattr(ally, 'send_line'):
-            ally.send_line(f"{Colors.YELLOW}You feel protected by the holy ground.{Colors.RESET}")
-            
-    _consume_resources(player, skill)
-    return None, True
-
-@register("divine_wrath")
-def handle_divine_wrath(player, skill, args, target=None):
-    """AOE Holy Damage to all enemies."""
-    player.send_line(f"{Colors.YELLOW}You call down the wrath of the heavens!{Colors.RESET}")
-    player.room.broadcast(f"{Colors.YELLOW}A pillar of holy fire descends from the sky!{Colors.RESET}", exclude_player=player)
-    
-    # Hostile Targeting
-    targets = [m for m in player.room.monsters if getattr(m, 'leader', None) != player]
-    targets += [p for p in player.room.players if p != player]
-    
-    for t in targets:
-        # Use combat facade
-        combat.handle_attack(player, t, player.room, player.game, blessing=skill)
+    allies = [p for p in player.room.players]
+    for a in allies:
+        effects.apply_effect(a, "fortified", 6)
+        a.send_line(f"{Colors.GREEN}You feel safe within the sanctuary.{Colors.RESET}")
         
     _consume_resources(player, skill)
     return None, True
 
-@register("refresh")
-def handle_refresh(player, skill, args, target=None):
-    """Restore stamina to an ally (Defaults to self)."""
-    target = common._get_target(player, args, player)
+@register("angelic_stride")
+def handle_angelic_stride(player, skill, args, target=None):
+    """Mobility: Transcend physical limits."""
+    player.send_line(f"{Colors.CYAN}You glide across the battlefield, carried by unseen wings.{Colors.RESET}")
+    
+    # Remove movement blocks, apply haste
+    for s in ["prone", "stalled", "immobilized"]:
+        if effects.has_effect(player, s):
+            effects.remove_effect(player, s)
+            
+    effects.apply_effect(player, "haste", 3)
+    
+    _consume_resources(player, skill)
+    return None, True
+
+@register("lay_on_hands")
+def handle_lay_on_hands(player, skill, args, target=None):
+    """Utility/Signature: Potent heal."""
+    from .utils import get_target
+    target = get_target(player, args, player)
     if not target: return None, True
     
-    amount = 20 # Standard restoration
-    if target == player:
-        player.send_line("You cannot refresh yourself.")
-        return None, True
-        
-    resources.modify_resource(target, "stamina", amount, source=player.name, context="Refresh")
-    player.send_line(f"{Colors.CYAN}You restore {amount} Stamina to {target.name}.{Colors.RESET}")
-    if target != player and hasattr(target, 'send_line'):
-        target.send_line(f"{Colors.CYAN}{player.name} refreshes your spirit! (+{amount} Stamina){Colors.RESET}")
-        
+    player.send_line(f"{Colors.GREEN}Your touch mends {target.name}'s wounds with divine warmth.{Colors.RESET}")
+    
+    # 30% Max HP Heal
+    heal = int(target.max_hp * 0.3)
+    resources.modify_resource(target, "hp", heal, source=player.name)
+    
+    # Also cleanse common ailments
+    for e in ["poison", "bleed", "plague"]:
+        if effects.has_effect(target, e):
+            effects.remove_effect(target, e)
+            
     _consume_resources(player, skill)
     return target, True

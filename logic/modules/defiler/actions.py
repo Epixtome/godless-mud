@@ -1,93 +1,85 @@
 """
 logic/modules/defiler/actions.py
-Defiler Skill Handlers: Life Tap, Corpse Consumption, Afflictions.
+Defiler Class Skills: Rot Lord implementation.
+V7.2 Standard Refactor.
 """
 from logic.actions.registry import register
 from logic.core import effects, resources, combat
-from logic.engines import magic_engine, blessings_engine
 from utilities.colors import Colors
-from logic import common
 
 def _consume_resources(player, skill):
+    from logic.engines import magic_engine
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
-    magic_engine.consume_pacing(player, skill)
 
-@register("life_tap")
-def handle_life_tap(player, skill, args, target=None):
-    """Combat Siphon: Deals damage and heals the caster."""
-    target = common._get_target(player, args, target)
+@register("putrid_strike")
+def handle_putrid_strike(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
-    
-    # Calculate power for healing scaling
-    power = blessings_engine.MathBridge.calculate_power(skill, player, target)
-    heal = int(power * 0.5)
-    
-    # Use combat facade for damage
+    player.send_line(f"A toxic, rot-infused strike hits {target.name}.")
     combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-    resources.modify_resource(player, "hp", heal, source="Life Tap", context="Siphon")
-    
-    # Blood Well Bonus
-    def_state = player.ext_state.setdefault('defiler', {})
-    def_state['blood_well'] = min(def_state.get('blood_well', 0) + heal, 100)
-    
-    player.send_line(f"{Colors.MAGENTA}You siphon the life force from {target.name}! (+{heal} HP){Colors.RESET}")
-    
+    resources.modify_resource(player, 'concentration', 15, source="Putrid Strike")
+    resources.modify_resource(player, 'rot_pips', 1, source="Putrid Strike")
     _consume_resources(player, skill)
     return target, True
 
-@register("corpse_consumption", "consume_dead")
-def handle_corpse_consumption(player, skill, args, target=None):
-    """Consumes a corpse to restore HP and Blood Well."""
-    from models import Corpse
-    corpse = next((i for i in player.room.items if isinstance(i, Corpse)), None)
-    if not corpse:
-        player.send_line("There are no corpses here to consume.")
-        return None, True
-        
-    player.room.items.remove(corpse)
-    player.room.broadcast(f"{Colors.RED}{player.name} brutally consumes the remains of {corpse.name}!{Colors.RESET}", exclude_player=player)
-    
-    heal = 40 
-    resources.modify_resource(player, "hp", heal, source="Corpse Consumption")
-    
-    def_state = player.ext_state.setdefault('defiler', {})
-    def_state['blood_well'] = min(def_state.get('blood_well', 0) + 50, 100)
-    
-    player.send_line(f"{Colors.MAGENTA}You feast upon the dead, restoring {heal} HP and gorging your Blood Well.{Colors.RESET}")
-    
+@register("festering_wound")
+def handle_festering_wound(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
+    if not target: return None, True
+    player.send_line(f"You create a festering wound in {target.name}.")
+    effects.apply_effect(target, "bleeding", 6)
+    resources.modify_resource(player, 'rot_pips', 1, source="Festering Wound")
+    _consume_resources(player, skill)
+    return target, True
+
+@register("toxic_collapse")
+def handle_toxic_collapse(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
+    if not target: return None, True
+    player.send_line(f"{Colors.BOLD}{Colors.GREEN}TOXIC COLLAPSE!{Colors.RESET} Corruption bursts from {target.name}!")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    _consume_resources(player, skill)
+    return target, True
+
+@register("miasma_explosion")
+def handle_miasma_explosion(player, skill, args, target=None):
+    player.send_line(f"{Colors.BOLD}{Colors.GREEN}MIASMA EXPLOSION!{Colors.RESET}")
+    targets = [m for m in player.room.monsters if combat.is_target_valid(player, m)]
+    for t in targets:
+        combat.handle_attack(player, t, player.room, player.game, blessing=skill)
+        effects.apply_effect(t, "toxic", 4)
     _consume_resources(player, skill)
     return None, True
 
-@register("plague", "fear", "hex", "hunger", "malediction", "shadow_bind")
-def handle_afflictions(player, skill, args, target=None):
-    """Centralized debuff handler for Defiler entropy spells."""
-    target = common._get_target(player, args, target, f"Cast {skill.name} on whom?")
-    if not target: return None, True
+@register("carapace_of_decay")
+def handle_carapace_of_decay(player, skill, args, target=None):
+    player.send_line(f"A shell of decaying matter protects you.")
+    effects.apply_effect(player, "shielded", 6)
+    _consume_resources(player, skill)
+    return None, True
 
-    effect_map = {
-        "plague": ("plague", 20, Colors.GREEN, "sickly green vapor"),
-        "fear": ("fear", 10, Colors.DARK_GRAY, "chilling aura of dread"),
-        "hex": ("curse", 20, Colors.MAGENTA, "shimmering purple hex"),
-        "hunger": ("hunger", 10, Colors.RED, "gnawing void of hunger"),
-        "malediction": ("malediction", 20, Colors.BOLD, "crawling shadow of doom"),
-        "shadow_bind": ("root", 10, Colors.BLUE, "writhing shadow-chains")
-    }
-    
-    eff_id, duration, color, desc = effect_map.get(skill.id, (skill.id, 10, Colors.RESET, "dark energy"))
-    
-    effects.apply_effect(target, eff_id, duration)
-    player.send_line(f"You cast {color}{skill.name}{Colors.RESET} on {target.name}. A {desc} envelops them.")
-    if hasattr(target, 'send_line'):
-        target.send_line(f"{color}{player.name} has cursed you with {skill.name}!{Colors.RESET}")
-        
-    start_combat(player, target)
+@register("necrotic_stasis")
+def handle_necrotic_stasis(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
+    if not target: return None, True
+    player.send_line(f"You lock {target.name} in a state of necrotic stasis.")
+    effects.apply_effect(target, "stalled", 4)
     _consume_resources(player, skill)
     return target, True
 
-def start_combat(player, target):
-    if target.hp > 0 and not player.fighting:
-        player.fighting = target
-        player.state = "combat"
-        if player not in target.attackers:
-            target.attackers.append(player)
+@register("sludge_dash")
+def handle_sludge_dash(player, skill, args, target=None):
+    player.send_line(f"{Colors.CYAN}SLUDGE DASH!{Colors.RESET}")
+    _consume_resources(player, skill)
+    return None, True
+
+@register("plague_of_oblivion")
+def handle_plague_of_oblivion(player, skill, args, target=None):
+    player.send_line(f"{Colors.BOLD}{Colors.WHITE}PLAGUE OF OBLIVION!{Colors.RESET}")
+    _consume_resources(player, skill)
+    return None, True

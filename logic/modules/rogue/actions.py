@@ -1,132 +1,90 @@
 """
 logic/modules/rogue/actions.py
-Rogue Skill Handlers: Master of the Vision and Tempo Axes.
-V7.2 Standard Refactor (Baking Branch).
+Rogue Class Skills: Shadow Blade implementation.
+V7.2 Standard Refactor.
 """
 from logic.actions.registry import register
-from logic.core import effects, resources, combat, perception
-from logic.engines import action_manager, magic_engine
+from logic.core import effects, resources, combat
 from utilities.colors import Colors
-from logic import common
 
 def _consume_resources(player, skill):
+    from logic.engines import magic_engine
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
-    magic_engine.consume_pacing(player, skill)
-
-def _ridge_check(player, target, skill_name):
-    """[V7.2 Ridge Rule Protocol]"""
-    if not perception.can_see(player, target):
-        player.send_line(f"{Colors.YELLOW}You cannot find a path for {skill_name} through the terrain ridge!{Colors.RESET}")
-        return False
-    return True
 
 @register("rogue_quick_strike")
-def handle_quick_strike(player, skill, args, target=None):
-    """Setup/Builder: Fast, generating stamina (URM)."""
-    target = common._get_target(player, args, target, "Strike whom?")
+def handle_rogue_quick_strike(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
-    
-    player.send_line(f"{Colors.YELLOW}You strike quickly!{Colors.RESET}")
+    player.send_line(f"A quick dagger strike finds its mark on {target.name}.")
     combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-    # [V7.2] URM
-    resources.modify_resource(player, "stamina", 15, source="Quick Strike")
-    
+    effects.apply_effect(target, "bleeding", 4)
+    resources.modify_resource(player, 'stamina', 15, source="Quick Strike")
     _consume_resources(player, skill)
     return target, True
 
-@register("vanish")
-def handle_vanish(player, skill, args, target=None):
-    """Setup: Concealment."""
-    player.send_line(f"{Colors.BOLD}{Colors.BLACK}You melt into the shadows...{Colors.RESET}")
-    effects.apply_effect(player, "concealed", 6)
-    _consume_resources(player, skill)
-    return None, True
-
 @register("mark_target")
 def handle_mark_target(player, skill, args, target=None):
-    """Setup: Vision marker."""
-    target = common._get_target(player, args, target, "Mark whom?")
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
-    
-    # 1. Ridge Check (V7.2)
-    if not _ridge_check(player, target, "Mark Target"):
-        return None, True
-
-    player.send_line(f"{Colors.RED}You mark {target.name} for precision death.{Colors.RESET}")
+    player.send_line(f"You mark {target.name} for certain death.")
     effects.apply_effect(target, "marked", 10)
+    resources.modify_resource(player, 'stamina', 25, source="Mark Target")
     _consume_resources(player, skill)
     return target, True
 
 @register("backstab")
 def handle_backstab(player, skill, args, target=None):
-    """Payoff/Finisher: massive damage vs Concealed (JSON)."""
-    target = common._get_target(player, args, target, "Backstab whom?")
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
-
-    if effects.has_effect(player, "concealed"):
-        player.send_line(f"{Colors.BOLD}{Colors.RED}BACKSTAB!{Colors.RESET} You strike from the shadows with lethal precision!")
-        combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-        # [V7.2] Break concealment after payoff
-        effects.remove_effect(player, "concealed")
-    else:
-        player.send_line(f"You strike, but without the cover of shadow, your blow is less effective.")
-        combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-
+    player.send_line(f"{Colors.BOLD}{Colors.RED}BACKSTAB!{Colors.RESET} A lethal strike from the shadows!")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
     _consume_resources(player, skill)
     return target, True
 
 @register("visceral_strike")
 def handle_visceral_strike(player, skill, args, target=None):
-    """Payoff/Finisher: Critical strike vs Marked (JSON)."""
-    target = common._get_target(player, args, target, "Target which vital organ?")
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
-    
-    if effects.has_effect(target, "marked"):
-         player.send_line(f"{Colors.BOLD}{Colors.YELLOW}[CRITICAL EXPLOITURE]{Colors.RESET} You pierce {target.name}'s marked vulnerability!")
-         combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-         # [V7.2] Consume Status Protocol
-         effects.remove_effect(target, "marked")
-         effects.apply_effect(target, "exposed", 2)
-    else:
-         combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-
+    player.send_line(f"You deliver a visceral strike to {target.name}'s vitals.")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    effects.apply_effect(target, "maimed", 6)
     _consume_resources(player, skill)
     return target, True
 
+@register("vanish")
+def handle_vanish(player, skill, args, target=None):
+    player.send_line(f"{Colors.CYAN}VANISH!{Colors.RESET} You disappear into thin air.")
+    effects.apply_effect(player, "concealed", 3)
+    _consume_resources(player, skill)
+    return None, True
+
 @register("evasion")
 def handle_evasion(player, skill, args, target=None):
-    """Defense: Self-dodge."""
-    player.send_line(f"{Colors.GREEN}You roll with preternatural reflex!{Colors.RESET}")
-    effects.apply_effect(player, "evasive", 2)
+    player.send_line(f"You focus entirely on dodging incoming blows.")
+    effects.apply_effect(player, "evasive", 6)
     _consume_resources(player, skill)
     return None, True
 
 @register("shadowstep")
 def handle_shadowstep(player, skill, args, target=None):
-    """Mobility: Clear CC and Warp."""
-    player.send_line(f"You {Colors.BOLD}{Colors.PURPLE}step through the void{Colors.RESET} to safety.")
-    
-    # [V7.2] URM Break CC
-    for state in ["immobilized", "pinned", "stalled"]:
-        if effects.has_effect(player, state):
-            effects.remove_effect(player, state)
-            player.send_line(f"{Colors.GREEN}You snap free of physical restraints!{Colors.RESET}")
-            
+    player.send_line(f"{Colors.MAGENTA}SHADOWSTEP!{Colors.RESET} You reappear behind your foe.")
+    for s in ["stalled", "immobilized"]:
+        if effects.has_effect(player, s):
+            effects.remove_effect(player, s)
     _consume_resources(player, skill)
     return None, True
 
 @register("smoke_bomb")
 def handle_smoke_bomb(player, skill, args, target=None):
-    """Utility/Disruption: AoE Blind and Self Conceal."""
-    player.send_line(f"{Colors.BOLD}{Colors.WHITE}KASPLOSH!{Colors.RESET} A cloud of acrid smoke erupts!")
-    player.room.broadcast(f"{player.name} disappears into a cloud of smoke!", exclude_player=player)
-    
-    # Filter targets in room
-    targets = player.room.monsters + [p for p in player.room.players if p != player]
+    player.send_line(f"A smoke bomb shatters at your feet, blinding everyone.")
+    targets = [m for m in player.room.monsters if combat.is_target_valid(player, m)]
     for t in targets:
-         effects.apply_effect(t, "blinded", 3)
-         
-    effects.apply_effect(player, "concealed", 4)
+        effects.apply_effect(t, "blinded", 2)
+    effects.apply_effect(player, "concealed", 2)
     _consume_resources(player, skill)
     return None, True

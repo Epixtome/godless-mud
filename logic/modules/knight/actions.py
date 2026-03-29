@@ -1,117 +1,89 @@
 """
 logic/modules/knight/actions.py
-Knight Skill Handlers: The Anchor of Endurance and Position.
-V7.2 Standard Refactor (Baking Branch).
+Knight Class Skills: Stalwart Defender implementation.
+V7.2 Standard Refactor.
 """
 from logic.actions.registry import register
 from logic.core import effects, resources, combat
-from logic.engines import magic_engine
 from utilities.colors import Colors
-from logic import common
 
 def _consume_resources(player, skill):
+    from logic.engines import magic_engine
     magic_engine.consume_resources(player, skill)
     magic_engine.set_cooldown(player, skill)
-    magic_engine.consume_pacing(player, skill)
 
 @register("crippling_strike")
 def handle_crippling_strike(player, skill, args, target=None):
-    """Setup: Low-cost builder."""
-    target = common._get_target(player, args, target, "Cripple whom?")
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
-    
-    player.send_line(f"{Colors.BLUE}You strike low, hampering your target's stride!{Colors.RESET}")
+    player.send_line(f"You strike {target.name}'s legs, crippling their movement.")
     combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-    
-    # [V7.2] URM
-    resources.modify_resource(player, "stamina", 5, source="Crippling Strike")
-    
+    effects.apply_effect(target, "sluggish", 5)
+    resources.modify_resource(player, 'stamina', 15, source="Crippling Strike")
     _consume_resources(player, skill)
     return target, True
 
-@register("shield_bash")
-def handle_shield_bash(player, skill, args, target=None):
-    """Setup: [Off-Balance] applier."""
-    target = common._get_target(player, args, target, "Shield bash whom?")
+@register("intervene")
+def handle_intervene(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
-
-    player.send_line(f"{Colors.BOLD}{Colors.WHITE}You slam your shield into {target.name}!{Colors.RESET}")
-    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-    
+    player.send_line(f"You step in to protect your position relative to {target.name}.")
+    effects.apply_effect(target, "marked", 4)
+    resources.modify_resource(player, 'stamina', 10, source="Intervene")
     _consume_resources(player, skill)
     return target, True
 
 @register("execute")
 def handle_execute(player, skill, args, target=None):
-    """Payoff/Finisher: massive damage vs Prone.
-    [V7.2] Logic-Data Wall: Multiplier in JSON.
-    """
-    target = common._get_target(player, args, target, "Deliver the final blow to whom?")
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
-
-    if effects.has_effect(target, "prone"):
-        player.send_line(f"{Colors.BOLD}{Colors.RED}EXECUTE! You bring your sword down with crushing finality!{Colors.RESET}")
-    else:
-        player.send_line(f"You deliver a heavy blow, but {target.name} is still standing.")
-        
+    player.send_line(f"{Colors.BOLD}{Colors.RED}EXECUTE!{Colors.RESET} A decisive strike to end the fight!")
     combat.handle_attack(player, target, player.room, player.game, blessing=skill)
-
     _consume_resources(player, skill)
     return target, True
 
 @register("retribution")
 def handle_retribution(player, skill, args, target=None):
-    """Payoff/Counter: Multiplier if guarding or after a block.
-    [V7.2] Logic-Data Wall: Multipliers in JSON.
-    """
-    target = common._get_target(player, args, target, "Strike back at whom?")
+    from .utils import get_target
+    target = get_target(player, args, target)
     if not target: return None, True
-    
-    if effects.has_effect(player, "guarding") or effects.has_effect(player, "blocked_recently"):
-         player.send_line(f"{Colors.YELLOW}[RETRIBUTION] You exploit their over-extension!{Colors.RESET}")
-         
+    player.send_line(f"{Colors.BOLD}{Colors.YELLOW}RETRIBUTION!{Colors.RESET} You strike back with righteous fury!")
     combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    _consume_resources(player, skill)
+    return target, True
 
+@register("shield_bash")
+def handle_shield_bash(player, skill, args, target=None):
+    from .utils import get_target
+    target = get_target(player, args, target)
+    if not target: return None, True
+    player.send_line(f"You slam your shield into {target.name}!")
+    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    effects.apply_effect(target, "stun", 2)
     _consume_resources(player, skill)
     return target, True
 
 @register("brace")
 def handle_brace(player, skill, args, target=None):
-    """Defense: Stability buff."""
-    player.send_line(f"{Colors.BOLD}{Colors.CYAN}You plant your shield and brace for the storm.{Colors.RESET}")
-    effects.apply_effect(player, "braced", 4)
-    _consume_resources(player, skill)
-    return None, True
-
-@register("shield_wall")
-def handle_shield_wall(player, skill, args, target=None):
-    """Defense: Guarding buff."""
-    player.send_line(f"{Colors.BOLD}{Colors.WHITE}SHIELD WALL! You form an iron line of defense.{Colors.RESET}")
-    effects.apply_effect(player, "guarding", 6)
+    player.send_line(f"You brace behind your shield, preparing for the storm.")
+    effects.apply_effect(player, "shielded", 6)
     _consume_resources(player, skill)
     return None, True
 
 @register("charge")
 def handle_charge(player, skill, args, target=None):
-    """Mobility: Rush target."""
-    target = common._get_target(player, args, target, "Charge whom?")
-    if not target: return None, True
-    
-    player.send_line(f"{Colors.CYAN}You burst forward, initiating combat!{Colors.RESET}")
-    if effects.has_effect(player, "stalled"):
-        effects.remove_effect(player, "stalled")
-        
-    combat.handle_attack(player, target, player.room, player.game, blessing=skill)
+    player.send_line(f"{Colors.CYAN}CHARGE!{Colors.RESET} You rush your enemy!")
     _consume_resources(player, skill)
-    return target, True
+    return None, True
 
 @register("war_cry")
 def handle_war_cry(player, skill, args, target=None):
-    """Utility/Support."""
-    player.send_line(f"{Colors.BOLD}{Colors.RED}AAAARRRRGH!{Colors.RESET} Your thunderous shout echoes through the room.")
-    
-    # Restore Posture/Stamina
-    resources.modify_resource(player, "stamina", 20, source="War Cry")
-    
+    player.send_line(f"{Colors.BOLD}{Colors.YELLOW}WAR CRY!{Colors.RESET} Inspiration fills the room!")
+    allies = [p for p in player.room.players]
+    for a in allies:
+        effects.apply_effect(a, "inspired", 10)
     _consume_resources(player, skill)
     return None, True
