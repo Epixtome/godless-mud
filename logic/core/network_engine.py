@@ -90,7 +90,14 @@ class Connection:
             logger.error(f"Failed to send GES event {event_type}: {e}")
 
     async def read_line(self, timeout=None):
-        return await self.wrapper.recv(timeout=timeout)
+        raw = await self.wrapper.recv(timeout=timeout)
+        if raw and getattr(self, 'is_web', False):
+            try:
+                import json
+                return json.loads(raw)
+            except:
+                return raw
+        return raw
 
     async def run(self):
         ip = self.addr[0]
@@ -145,7 +152,10 @@ class Connection:
             if self.player:
                 # [V9.5] Signal Auth Success to Web Client
                 if self.is_web:
-                    await self.send_event("auth:success", {"name": self.name})
+                    await self.send_event("auth:success", {
+                        "name": self.name,
+                        "isAdmin": getattr(self.player, "is_admin", False)
+                    })
                 
                 self.state = "PLAYING"
                 # [V7.2] Initial UI Synchronization for WebSockets
@@ -169,7 +179,7 @@ class Connection:
                 break
             
             # Handle Pagination Interruption
-            if self.player.pagination_buffer:
+            if not isinstance(command_line, dict) and self.player.pagination_buffer:
                 if not command_line:
                     self.player.show_next_page()
                     continue
@@ -179,6 +189,18 @@ class Connection:
                     continue
                 else:
                     self.player.pagination_buffer = []
+
+            # [V9.5] GES Admin/UI Router
+            if isinstance(command_line, dict):
+                from logic.core.services import admin_service, ui_service
+                event_type = command_line.get("type", "")
+                
+                if event_type.startswith("admin:"):
+                    await admin_service.handle_admin_event(self.player, command_line)
+                elif event_type == "ui:save_layout":
+                    ui_service.save_ui_prefs(self.player, command_line.get("data", {}))
+                
+                continue
 
             # Dispatch Command
             if command_line:

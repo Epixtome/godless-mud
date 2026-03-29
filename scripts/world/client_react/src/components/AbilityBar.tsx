@@ -20,10 +20,10 @@ export function AbilityBar() {
       }
   }, [blessings]);
 
-  const handleCast = (id: string, ready: boolean) => {
-    if (!ready) return;
-    sendCommand(`cast ${id}`);
+  const handleCast = (ability: any) => {
+    import('../lib/ges').then(m => m.dispatchAbility(ability));
   };
+
 
   if (blessings.length === 0) return (
      <div className="w-full h-full flex items-center justify-center p-8 border-2 border-dashed border-slate-900/40 rounded-xl">
@@ -39,7 +39,7 @@ export function AbilityBar() {
         axis="y" 
         values={items} 
         onReorder={setItems}
-        className="w-full h-full p-2 grid grid-cols-[repeat(auto-fill,minmax(60px,1fr))] auto-rows-max gap-2 overflow-y-auto"
+        className="w-full h-full p-2 grid grid-cols-3 auto-rows-max gap-3 overflow-y-auto custom-scrollbar"
     >
       <AnimatePresence>
       {items.map((b: any) => (
@@ -48,7 +48,7 @@ export function AbilityBar() {
           key={b.id}
           className="relative"
         >
-          <AbilityButton ability={b} onCast={handleCast} />
+          <AbilityButton ability={b} onCast={handleCast} index={items.indexOf(b)} />
         </Reorder.Item>
       ))}
       </AnimatePresence>

@@ -3,46 +3,54 @@ import math
 from simple_noise import SimpleNoise
 
 def get_biome_from_matrix(elevation, moisture):
-    """[V19.0] MOUNTAIN DOMINANCE: Lowered thresholds for high-visibility ridges."""
+    """[V20.0 EXTREME VARIETY] High-Fidelity Biomatic Logic Gate."""
     # 1. WATER & COASTLINE
     if elevation < 0.12: return "ocean"
     if elevation < 0.18: return "water" 
     if elevation < 0.22: return "beach" 
     
-    # 2. LOWLANDS (Elevation 0.22 - 0.50)
-    if elevation < 0.50:
+    # 2. LOWLANDS & PLAINS (Elevation 0.22 - 0.45)
+    if elevation < 0.45:
         if moisture < 0.12: return "desert" 
         if moisture < 0.25: return "plains"    
         if moisture < 0.55: return "grass"
-        if moisture < 0.75: return "forest"
+        if moisture < 0.68: return "meadow" # V20 Bloom Zone
+        if moisture < 0.80: return "forest"
         return "swamp"
     
-    # 3. MIDLANDS (Elevation 0.50 - 0.65)
-    if elevation < 0.65:
-        if moisture < 0.20: return "wasteland"
+    # 3. FOOTHILLS & MIDLANDS (Elevation 0.45 - 0.62)
+    if elevation < 0.62:
+        if moisture < 0.18: return "wasteland"
         if moisture < 0.40: return "plains"
-        if moisture < 0.70: return "forest"
+        if moisture < 0.58: return "hills" # V20 Foothill Buffer
+        if moisture < 0.78: return "forest"
         return "dense_forest"
     
-    # 4. MOUNTAIN BELTS (Elevation 0.65 - 0.90) 
-    if elevation < 0.90:
-        if moisture < 0.60: return "mountain"
-        if moisture < 0.82: return "mountain" 
-        return "tundra"
+    # 4. PLATEAUS & MOUNTAIN BELTS (Elevation 0.62 - 0.88) 
+    if elevation < 0.88:
+        if elevation > 0.80: return "high_mountain" # V20 Cresting
+        if moisture < 0.15: return "wasteland"
+        if moisture < 0.35: return "tundra" # Dry Highlands
+        if moisture < 0.70: return "mountain" 
+        return "dense_forest" # Wet Highlands
         
-    # 5. HIGH ALPINES
-    if elevation < 0.96:
-        if moisture < 0.45: return "peak"
-        return "snow"
+    # 5. HIGH ALPINES & SUMMITS (Elevation 0.88+)
+    if elevation < 0.94:
+        if moisture < 0.35: return "peak"
+        if moisture < 0.75: return "snow"
+        return "glacier" # High-Moisture Alpine Pockets
         
-    return "peak" if moisture < 0.5 else "glacier"
+    # LETHAL SUMMIT
+    if moisture < 0.45: return "peak"
+    return "glacier"
 
 # BIOME TARGETS (Ideal E/M for each type)
 BIOME_TARGETS = {
     "ocean": (0.1, 0.5), "water": (0.3, 0.5), "desert": (0.45, 0.1), "beach": (0.38, 0.22),
-    "grass": (0.45, 0.5), "swamp": (0.4, 0.8), "wasteland": (0.6, 0.1), "plains": (0.6, 0.4),
-    "forest": (0.6, 0.6), "dense_forest": (0.65, 0.9), "tundra": (0.8, 0.2), "mountain": (0.8, 0.5),
-    "glacier": (0.8, 0.85), "peak": (0.95, 0.2), "snow": (0.95, 0.7)
+    "grass": (0.45, 0.5), "meadow": (0.42, 0.65), "swamp": (0.4, 0.8), "wasteland": (0.6, 0.1), 
+    "plains": (0.6, 0.4), "hills": (0.55, 0.5), "forest": (0.6, 0.6), "dense_forest": (0.65, 0.9), 
+    "tundra": (0.75, 0.25), "mountain": (0.8, 0.5), "high_mountain": (0.86, 0.4), 
+    "glacier": (0.92, 0.85), "peak": (0.95, 0.2), "snow": (0.95, 0.7)
 }
 
 def run_climate_pass(grid, width, height, config=None):

@@ -144,4 +144,4 @@ def run_phase_6_export(grid, width, height, offset_x, offset_y, offset_z, zone_p
         count += 1
             
     print(f"Exported {count} biological shards to {zone_dir}")
-    return True
+    return list(final_shards.keys())

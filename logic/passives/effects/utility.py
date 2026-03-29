@@ -45,13 +45,6 @@ def _trigger_trap(victim, room, trap):
     if trap in room.items:
         room.items.remove(trap)
 
-def blue_mage_learning(ctx):
-    player = ctx.get('attacker')
-    mob = ctx.get('target')
-    if getattr(player, 'active_class', None) == 'blue_mage':
-        if random.random() < 0.10 and hasattr(mob, 'tags') and mob.tags:
-            player.send_line(f"{Colors.CYAN}You have learned {random.choice(mob.tags)} from {mob.name}!{Colors.RESET}")
-
 def chronomancer_cooldown_reduction(ctx):
     player = ctx.get('player')
     if getattr(player, 'active_class', None) == 'temporalist':

@@ -26,21 +26,6 @@
             "description": "After using a Martial tagged blessing, your next Magic blessing has 0 cooldown."
         }
     },
-    "grey_mage": {
-        "id": "grey_mage",
-        "name": "Grey Mage",
-        "description": "A balancer of forces who walks the line between Light and Dark.",
-        "kingdom": "Universal",
-        "recipe": {
-            "holy": 5,
-            "dark": 5,
-            "void": 5
-        },
-        "engine_passive": {
-            "name": "Equilibrium",
-            "description": "Your Potency is calculated based on the average of your Holy and Dark resonance."
-        }
-    },
     "dragoon": {
         "id": "dragoon",
         "name": "Dragoon",
@@ -56,10 +41,10 @@
             "description": "Your first attack in a room deals 50% more damage if you just entered."
         }
     },
-    "alchemist": {
-        "id": "alchemist",
-        "name": "Alchemist",
-        "description": "A manipulator of matter and battlefield utility.",
+    "chemist": {
+        "id": "chemist",
+        "name": "Chemist",
+        "description": "A manipulator of chemical reagents and tactical utility.",
         "kingdom": "Universal",
         "recipe": {
             "utility": 6,
@@ -68,7 +53,7 @@
         },
         "engine_passive": {
             "name": "Transmutation",
-            "description": "You can convert 10 unused Essence points into a temporary shield [protection]."
+            "description": "You can convert unused stamina into alchemical pips."
         }
     },
     "temporalist": {

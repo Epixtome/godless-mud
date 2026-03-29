@@ -47,5 +47,4 @@ def register_all():
 
     # Utility
     event_engine.subscribe("on_enter_room", utility.trap_trigger)
-    event_engine.subscribe("combat_after_damage", utility.blue_mage_learning)
     event_engine.subscribe("magic_calculate_cooldown", utility.chronomancer_cooldown_reduction)

@@ -27,6 +27,9 @@ export const connectToGES = (url?: string) => {
             const { type, data } = frame;
 
             switch (type) {
+                case 'admin:catalog':
+                    store.setAdminCatalog(data);
+                    break;
                 case 'status_update':
                     store.setStatus(data);
                     break;
@@ -54,6 +57,7 @@ export const connectToGES = (url?: string) => {
                     break;
                 case 'auth:success':
                     store.setLoggedByServer(true);
+                    store.setAdminStatus(data.isAdmin);
                     if (data.name) store.saveCharacter(data.name);
                     break;
                 case 'error':
@@ -83,3 +87,27 @@ export const sendCommand = (cmd: string) => {
     // Legacy support
     import('./socket').then(m => m.sendRaw(cmd));
 };
+
+export const dispatchAbility = (ability: any) => {
+    if (!ability || !ability.ready) return;
+    
+    const store = useStore.getState();
+    const status = store.status;
+    
+    let targetStr = "";
+    if (ability.type === 'damage') {
+        // If no target, find first mob in room
+        if (!status?.target) {
+            const firstMob = status?.room?.entities?.find((e: any) => !e.is_player);
+            if (firstMob) {
+                targetStr = ` ${firstMob.name}`;
+            }
+        }
+    } else if (ability.type === 'defense') {
+        // Non-offensive defaults to self (e.g. heal, shielding)
+        targetStr = " self";
+    }
+
+    sendCommand(`cast ${ability.id}${targetStr}`);
+};
+

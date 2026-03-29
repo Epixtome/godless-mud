@@ -1,0 +1,2418 @@
+{
+    "metadata": {
+        "id": "v487_peaks_88_1",
+        "name": "Peaks Zone",
+        "security_level": "low_sec",
+        "grid_logic": true,
+        "target_cr": 50
+    },
+    "rooms": [
+        {
+            "id": "v487_peaks_88_1.9001.9088.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9088,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_woodlands_38_46.9001.9087.0",
+                "south": "v487_peaks_88_1.9001.9089.0",
+                "east": "v487_peaks_88_1.9002.9088.0",
+                "west": "v487_woodlands_38_46.9000.9088.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9088.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9002,
+            "y": 9088,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_woodlands_38_46.9002.9087.0",
+                "south": "v487_peaks_88_1.9002.9089.0",
+                "east": "v487_woodlands_38_46.9003.9088.0",
+                "west": "v487_peaks_88_1.9001.9088.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9089.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9089,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9088.0",
+                "south": "v487_peaks_88_1.9001.9090.0",
+                "east": "v487_peaks_88_1.9002.9089.0",
+                "west": "v487_woodlands_38_46.9000.9089.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9089.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9002,
+            "y": 9089,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9088.0",
+                "south": "v487_peaks_88_1.9002.9090.0",
+                "east": "v487_peaks_88_1.9003.9089.0",
+                "west": "v487_peaks_88_1.9001.9089.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9089.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9003,
+            "y": 9089,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_woodlands_38_46.9003.9088.0",
+                "south": "v487_peaks_88_1.9003.9090.0",
+                "east": "v487_woodlands_38_46.9004.9089.0",
+                "west": "v487_peaks_88_1.9002.9089.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9090.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9090,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9089.0",
+                "south": "v487_peaks_88_1.9001.9091.0",
+                "east": "v487_peaks_88_1.9002.9090.0",
+                "west": "v487_woodlands_38_46.9000.9090.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9090.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9002,
+            "y": 9090,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9089.0",
+                "south": "v487_peaks_88_1.9002.9091.0",
+                "east": "v487_peaks_88_1.9003.9090.0",
+                "west": "v487_peaks_88_1.9001.9090.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9090.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9003,
+            "y": 9090,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9089.0",
+                "south": "v487_peaks_88_1.9003.9091.0",
+                "east": "v487_woodlands_38_46.9004.9090.0",
+                "west": "v487_peaks_88_1.9002.9090.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9091.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9091,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9090.0",
+                "south": "v487_peaks_88_1.9001.9092.0",
+                "east": "v487_peaks_88_1.9002.9091.0",
+                "west": "v487_woodlands_38_46.9000.9091.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9091.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9002,
+            "y": 9091,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9090.0",
+                "south": "v487_peaks_88_1.9002.9092.0",
+                "east": "v487_peaks_88_1.9003.9091.0",
+                "west": "v487_peaks_88_1.9001.9091.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9091.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9003,
+            "y": 9091,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9090.0",
+                "south": "v487_peaks_88_1.9003.9092.0",
+                "east": "v487_woodlands_38_46.9004.9091.0",
+                "west": "v487_peaks_88_1.9002.9091.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9092.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9092,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9091.0",
+                "south": "v487_peaks_88_1.9001.9093.0",
+                "east": "v487_peaks_88_1.9002.9092.0",
+                "west": "v487_woodlands_38_46.9000.9092.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9092.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9002,
+            "y": 9092,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9091.0",
+                "south": "v487_peaks_88_1.9002.9093.0",
+                "east": "v487_peaks_88_1.9003.9092.0",
+                "west": "v487_peaks_88_1.9001.9092.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9092.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9003,
+            "y": 9092,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9091.0",
+                "south": "v487_peaks_88_1.9003.9093.0",
+                "east": "v487_peaks_88_1.9004.9092.0",
+                "west": "v487_peaks_88_1.9002.9092.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9092.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9004,
+            "y": 9092,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_woodlands_38_46.9004.9091.0",
+                "south": "v487_peaks_88_1.9004.9093.0",
+                "east": "v487_peaks_88_1.9005.9092.0",
+                "west": "v487_peaks_88_1.9003.9092.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9092.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9005,
+            "y": 9092,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_woodlands_38_46.9005.9091.0",
+                "south": "v487_peaks_88_1.9005.9093.0",
+                "east": "v487_woodlands_38_46.9006.9092.0",
+                "west": "v487_peaks_88_1.9004.9092.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9093.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9093,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9092.0",
+                "south": "v487_peaks_88_1.9001.9094.0",
+                "east": "v487_peaks_88_1.9002.9093.0",
+                "west": "v487_woodlands_38_46.9000.9093.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9093.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9002,
+            "y": 9093,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9092.0",
+                "south": "v487_peaks_88_1.9002.9094.0",
+                "east": "v487_peaks_88_1.9003.9093.0",
+                "west": "v487_peaks_88_1.9001.9093.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9093.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9003,
+            "y": 9093,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9092.0",
+                "south": "v487_peaks_88_1.9003.9094.0",
+                "east": "v487_peaks_88_1.9004.9093.0",
+                "west": "v487_peaks_88_1.9002.9093.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9093.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9004,
+            "y": 9093,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9092.0",
+                "south": "v487_peaks_88_1.9004.9094.0",
+                "east": "v487_peaks_88_1.9005.9093.0",
+                "west": "v487_peaks_88_1.9003.9093.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9093.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9005,
+            "y": 9093,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9092.0",
+                "south": "v487_peaks_88_1.9005.9094.0",
+                "east": "v487_woodlands_38_46.9006.9093.0",
+                "west": "v487_peaks_88_1.9004.9093.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9094.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9094,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9093.0",
+                "south": "v487_peaks_88_1.9001.9095.0",
+                "east": "v487_peaks_88_1.9002.9094.0",
+                "west": "v487_woodlands_38_46.9000.9094.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9094.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9002,
+            "y": 9094,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9093.0",
+                "south": "v487_peaks_88_1.9002.9095.0",
+                "east": "v487_peaks_88_1.9003.9094.0",
+                "west": "v487_peaks_88_1.9001.9094.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9094.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9003,
+            "y": 9094,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9093.0",
+                "south": "v487_peaks_88_1.9003.9095.0",
+                "east": "v487_peaks_88_1.9004.9094.0",
+                "west": "v487_peaks_88_1.9002.9094.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9094.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9004,
+            "y": 9094,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9093.0",
+                "south": "v487_peaks_88_1.9004.9095.0",
+                "east": "v487_peaks_88_1.9005.9094.0",
+                "west": "v487_peaks_88_1.9003.9094.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9094.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9005,
+            "y": 9094,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9093.0",
+                "south": "v487_peaks_88_1.9005.9095.0",
+                "east": "v487_peaks_88_1.9006.9094.0",
+                "west": "v487_peaks_88_1.9004.9094.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9006.9094.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9006,
+            "y": 9094,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_woodlands_38_46.9006.9093.0",
+                "south": "v487_peaks_88_1.9006.9095.0",
+                "east": "v487_woodlands_38_46.9007.9094.0",
+                "west": "v487_peaks_88_1.9005.9094.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9095.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9095,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9094.0",
+                "south": "v487_peaks_88_1.9001.9096.0",
+                "east": "v487_peaks_88_1.9002.9095.0",
+                "west": "v487_woodlands_38_46.9000.9095.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9095.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9002,
+            "y": 9095,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9094.0",
+                "south": "v487_peaks_88_1.9002.9096.0",
+                "east": "v487_peaks_88_1.9003.9095.0",
+                "west": "v487_peaks_88_1.9001.9095.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9095.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9003,
+            "y": 9095,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9094.0",
+                "south": "v487_peaks_88_1.9003.9096.0",
+                "east": "v487_peaks_88_1.9004.9095.0",
+                "west": "v487_peaks_88_1.9002.9095.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9095.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9004,
+            "y": 9095,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9094.0",
+                "south": "v487_peaks_88_1.9004.9096.0",
+                "east": "v487_peaks_88_1.9005.9095.0",
+                "west": "v487_peaks_88_1.9003.9095.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9095.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9005,
+            "y": 9095,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9094.0",
+                "south": "v487_peaks_88_1.9005.9096.0",
+                "east": "v487_peaks_88_1.9006.9095.0",
+                "west": "v487_peaks_88_1.9004.9095.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9006.9095.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9006,
+            "y": 9095,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9006.9094.0",
+                "south": "v487_peaks_88_1.9006.9096.0",
+                "east": "v487_woodlands_38_46.9007.9095.0",
+                "west": "v487_peaks_88_1.9005.9095.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9096.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9096,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9095.0",
+                "south": "v487_peaks_88_1.9001.9097.0",
+                "east": "v487_peaks_88_1.9002.9096.0",
+                "west": "v487_woodlands_38_46.9000.9096.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9096.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9002,
+            "y": 9096,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9095.0",
+                "south": "v487_peaks_88_1.9002.9097.0",
+                "east": "v487_peaks_88_1.9003.9096.0",
+                "west": "v487_peaks_88_1.9001.9096.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9096.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9003,
+            "y": 9096,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9095.0",
+                "south": "v487_peaks_88_1.9003.9097.0",
+                "east": "v487_peaks_88_1.9004.9096.0",
+                "west": "v487_peaks_88_1.9002.9096.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9096.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9004,
+            "y": 9096,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9095.0",
+                "south": "v487_peaks_88_1.9004.9097.0",
+                "east": "v487_peaks_88_1.9005.9096.0",
+                "west": "v487_peaks_88_1.9003.9096.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9096.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9005,
+            "y": 9096,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9095.0",
+                "south": "v487_peaks_88_1.9005.9097.0",
+                "east": "v487_peaks_88_1.9006.9096.0",
+                "west": "v487_peaks_88_1.9004.9096.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9006.9096.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9006,
+            "y": 9096,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_peaks_88_1.9006.9095.0",
+                "south": "v487_peaks_88_1.9006.9097.0",
+                "east": "v487_peaks_88_1.9007.9096.0",
+                "west": "v487_peaks_88_1.9005.9096.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9007.9096.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9007,
+            "y": 9096,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_woodlands_38_46.9007.9095.0",
+                "south": "v487_peaks_88_1.9007.9097.0",
+                "east": "v487_woodlands_38_46.9008.9096.0",
+                "west": "v487_peaks_88_1.9006.9096.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9097.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9097,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9096.0",
+                "south": "v487_peaks_88_1.9001.9098.0",
+                "east": "v487_peaks_88_1.9002.9097.0",
+                "west": "v487_woodlands_38_46.9000.9097.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9097.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9002,
+            "y": 9097,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9096.0",
+                "south": "v487_peaks_88_1.9002.9098.0",
+                "east": "v487_peaks_88_1.9003.9097.0",
+                "west": "v487_peaks_88_1.9001.9097.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9097.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9003,
+            "y": 9097,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9096.0",
+                "south": "v487_peaks_88_1.9003.9098.0",
+                "east": "v487_peaks_88_1.9004.9097.0",
+                "west": "v487_peaks_88_1.9002.9097.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9097.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9004,
+            "y": 9097,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9096.0",
+                "south": "v487_peaks_88_1.9004.9098.0",
+                "east": "v487_peaks_88_1.9005.9097.0",
+                "west": "v487_peaks_88_1.9003.9097.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9097.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9005,
+            "y": 9097,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9096.0",
+                "south": "v487_peaks_88_1.9005.9098.0",
+                "east": "v487_peaks_88_1.9006.9097.0",
+                "west": "v487_peaks_88_1.9004.9097.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9006.9097.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9006,
+            "y": 9097,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_peaks_88_1.9006.9096.0",
+                "south": "v487_peaks_88_1.9006.9098.0",
+                "east": "v487_peaks_88_1.9007.9097.0",
+                "west": "v487_peaks_88_1.9005.9097.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9007.9097.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9007,
+            "y": 9097,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_peaks_88_1.9007.9096.0",
+                "south": "v487_peaks_88_1.9007.9098.0",
+                "east": "v487_woodlands_38_46.9008.9097.0",
+                "west": "v487_peaks_88_1.9006.9097.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9098.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9098,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9097.0",
+                "south": "v487_peaks_88_1.9001.9099.0",
+                "east": "v487_peaks_88_1.9002.9098.0",
+                "west": "v487_woodlands_38_46.9000.9098.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9098.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9002,
+            "y": 9098,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9097.0",
+                "south": "v487_peaks_88_1.9002.9099.0",
+                "east": "v487_peaks_88_1.9003.9098.0",
+                "west": "v487_peaks_88_1.9001.9098.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9098.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9003,
+            "y": 9098,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9097.0",
+                "south": "v487_peaks_88_1.9003.9099.0",
+                "east": "v487_peaks_88_1.9004.9098.0",
+                "west": "v487_peaks_88_1.9002.9098.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9098.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9004,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9097.0",
+                "south": "v487_peaks_88_1.9004.9099.0",
+                "east": "v487_peaks_88_1.9005.9098.0",
+                "west": "v487_peaks_88_1.9003.9098.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9098.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9005,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9097.0",
+                "south": "v487_peaks_88_1.9005.9099.0",
+                "east": "v487_peaks_88_1.9006.9098.0",
+                "west": "v487_peaks_88_1.9004.9098.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9006.9098.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9006,
+            "y": 9098,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9006.9097.0",
+                "south": "v487_peaks_88_1.9006.9099.0",
+                "east": "v487_peaks_88_1.9007.9098.0",
+                "west": "v487_peaks_88_1.9005.9098.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9007.9098.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9007,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9007.9097.0",
+                "south": "v487_peaks_88_1.9007.9099.0",
+                "east": "v487_woodlands_38_46.9008.9098.0",
+                "west": "v487_peaks_88_1.9006.9098.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9099.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9001,
+            "y": 9099,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9098.0",
+                "south": "v487_peaks_88_1.9001.9100.0",
+                "east": "v487_peaks_88_1.9002.9099.0",
+                "west": "v487_woodlands_38_46.9000.9099.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9099.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9002,
+            "y": 9099,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9098.0",
+                "south": "v487_peaks_88_1.9002.9100.0",
+                "east": "v487_peaks_88_1.9003.9099.0",
+                "west": "v487_peaks_88_1.9001.9099.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9099.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}A{Colors.RESET}",
+            "x": 9003,
+            "y": 9099,
+            "z": 0,
+            "elevation": 15,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9098.0",
+                "south": "v487_peaks_88_1.9003.9100.0",
+                "east": "v487_peaks_88_1.9004.9099.0",
+                "west": "v487_peaks_88_1.9002.9099.0"
+            },
+            "tags": [
+                "peak",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9099.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9004,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9098.0",
+                "south": "v487_peaks_88_1.9004.9100.0",
+                "east": "v487_peaks_88_1.9005.9099.0",
+                "west": "v487_peaks_88_1.9003.9099.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9099.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9005,
+            "y": 9099,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9098.0",
+                "south": "v487_peaks_88_1.9005.9100.0",
+                "east": "v487_peaks_88_1.9006.9099.0",
+                "west": "v487_peaks_88_1.9004.9099.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9006.9099.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9006,
+            "y": 9099,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9006.9098.0",
+                "south": "v487_peaks_88_1.9006.9100.0",
+                "east": "v487_peaks_88_1.9007.9099.0",
+                "west": "v487_peaks_88_1.9005.9099.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9007.9099.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9007,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9007.9098.0",
+                "south": "v487_peaks_88_1.9007.9100.0",
+                "east": "v487_woodlands_38_46.9008.9099.0",
+                "west": "v487_peaks_88_1.9006.9099.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9100.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9001,
+            "y": 9100,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9099.0",
+                "south": "v487_peaks_88_1.9001.9101.0",
+                "east": "v487_peaks_88_1.9002.9100.0",
+                "west": "v487_woodlands_38_46.9000.9100.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9100.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9002,
+            "y": 9100,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9099.0",
+                "south": "v487_peaks_88_1.9002.9101.0",
+                "east": "v487_peaks_88_1.9003.9100.0",
+                "west": "v487_peaks_88_1.9001.9100.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9100.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9003,
+            "y": 9100,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9099.0",
+                "south": "v487_peaks_88_1.9003.9101.0",
+                "east": "v487_peaks_88_1.9004.9100.0",
+                "west": "v487_peaks_88_1.9002.9100.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9100.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9004,
+            "y": 9100,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9099.0",
+                "south": "v487_peaks_88_1.9004.9101.0",
+                "east": "v487_peaks_88_1.9005.9100.0",
+                "west": "v487_peaks_88_1.9003.9100.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9100.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9005,
+            "y": 9100,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9099.0",
+                "south": "v487_peaks_88_1.9005.9101.0",
+                "east": "v487_peaks_88_1.9006.9100.0",
+                "west": "v487_peaks_88_1.9004.9100.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9006.9100.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9006,
+            "y": 9100,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9006.9099.0",
+                "south": "v487_peaks_88_1.9006.9101.0",
+                "east": "v487_peaks_88_1.9007.9100.0",
+                "west": "v487_peaks_88_1.9005.9100.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9007.9100.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9007,
+            "y": 9100,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "v487_peaks_88_1.9007.9099.0",
+                "south": "v487_peaks_88_1.9007.9101.0",
+                "east": "v487_woodlands_38_46.9008.9100.0",
+                "west": "v487_peaks_88_1.9006.9100.0"
+            },
+            "tags": [
+                "hills",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9101.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9001,
+            "y": 9101,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9100.0",
+                "south": "v487_peaks_88_1.9001.9102.0",
+                "east": "v487_peaks_88_1.9002.9101.0",
+                "west": "v487_woodlands_38_46.9000.9101.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9101.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9002,
+            "y": 9101,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9100.0",
+                "south": "v487_peaks_88_1.9002.9102.0",
+                "east": "v487_peaks_88_1.9003.9101.0",
+                "west": "v487_peaks_88_1.9001.9101.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9101.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "High Mountain",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "high_mountain",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}^{Colors.RESET}",
+            "x": 9003,
+            "y": 9101,
+            "z": 0,
+            "elevation": 10,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9100.0",
+                "south": "v487_peaks_88_1.9003.9102.0",
+                "east": "v487_peaks_88_1.9004.9101.0",
+                "west": "v487_peaks_88_1.9002.9101.0"
+            },
+            "tags": [
+                "high_mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9101.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9004,
+            "y": 9101,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9100.0",
+                "south": "v487_peaks_88_1.9004.9102.0",
+                "east": "v487_peaks_88_1.9005.9101.0",
+                "west": "v487_peaks_88_1.9003.9101.0"
+            },
+            "tags": [
+                "tundra",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9101.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9005,
+            "y": 9101,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9100.0",
+                "south": "v487_peaks_88_1.9005.9102.0",
+                "east": "v487_peaks_88_1.9006.9101.0",
+                "west": "v487_peaks_88_1.9004.9101.0"
+            },
+            "tags": [
+                "tundra",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9006.9101.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9006,
+            "y": 9101,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_peaks_88_1.9006.9100.0",
+                "south": "v487_woodlands_38_46.9006.9102.0",
+                "east": "v487_peaks_88_1.9007.9101.0",
+                "west": "v487_peaks_88_1.9005.9101.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9007.9101.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9007,
+            "y": 9101,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "v487_peaks_88_1.9007.9100.0",
+                "south": "v487_woodlands_38_46.9007.9102.0",
+                "east": "v487_woodlands_38_46.9008.9101.0",
+                "west": "v487_peaks_88_1.9006.9101.0"
+            },
+            "tags": [
+                "hills",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9102.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9001,
+            "y": 9102,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9101.0",
+                "south": "v487_peaks_88_1.9001.9103.0",
+                "east": "v487_peaks_88_1.9002.9102.0",
+                "west": "v487_woodlands_38_46.9000.9102.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9102.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9002,
+            "y": 9102,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9101.0",
+                "south": "v487_peaks_88_1.9002.9103.0",
+                "east": "v487_peaks_88_1.9003.9102.0",
+                "west": "v487_peaks_88_1.9001.9102.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9003.9102.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9003,
+            "y": 9102,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_peaks_88_1.9003.9101.0",
+                "south": "v487_woodlands_38_46.9003.9103.0",
+                "east": "v487_peaks_88_1.9004.9102.0",
+                "west": "v487_peaks_88_1.9002.9102.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9102.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9004,
+            "y": 9102,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9101.0",
+                "south": "v487_peaks_88_1.9004.9103.0",
+                "east": "v487_peaks_88_1.9005.9102.0",
+                "west": "v487_peaks_88_1.9003.9102.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9005.9102.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9005,
+            "y": 9102,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_peaks_88_1.9005.9101.0",
+                "south": "v487_woodlands_38_46.9005.9103.0",
+                "east": "v487_woodlands_38_46.9006.9102.0",
+                "west": "v487_peaks_88_1.9004.9102.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9001.9103.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 9001,
+            "y": 9103,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v487_peaks_88_1.9001.9102.0",
+                "south": "v487_woodlands_38_46.9001.9104.0",
+                "east": "v487_peaks_88_1.9002.9103.0",
+                "west": "v487_woodlands_38_46.9000.9103.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9002.9103.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: PEAKS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9002,
+            "y": 9103,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v487_peaks_88_1.9002.9102.0",
+                "south": "v487_woodlands_38_46.9002.9104.0",
+                "east": "v487_woodlands_38_46.9003.9103.0",
+                "west": "v487_peaks_88_1.9001.9103.0"
+            },
+            "tags": [
+                "mountain",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v487_peaks_88_1.9004.9103.0",
+            "zone_id": "v487_peaks_88_1",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: PEAKS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9004,
+            "y": 9103,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "v487_peaks_88_1.9004.9102.0",
+                "south": "v487_woodlands_38_46.9004.9104.0",
+                "east": "v487_woodlands_38_46.9005.9103.0",
+                "west": "v487_woodlands_38_46.9003.9103.0"
+            },
+            "tags": [
+                "hills",
+                "v487_peaks_88_1",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        }
+    ]
+}

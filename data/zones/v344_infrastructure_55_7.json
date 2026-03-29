@@ -1,0 +1,2592 @@
+{
+    "metadata": {
+        "id": "v344_infrastructure_55_7",
+        "name": "Infrastructure Zone",
+        "security_level": "low_sec",
+        "grid_logic": true,
+        "target_cr": 50
+    },
+    "rooms": [
+        {
+            "id": "v344_infrastructure_55_7.707.755.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 707,
+            "y": 755,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.707.754.0",
+                "south": "v344_infrastructure_55_7.707.756.0",
+                "east": "v344_woodlands_0_0.708.755.0",
+                "west": "v344_woodlands_0_0.706.755.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.756.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 705,
+            "y": 756,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.705.755.0",
+                "south": "v344_infrastructure_55_7.705.757.0",
+                "east": "v344_infrastructure_55_7.706.756.0",
+                "west": "v344_woodlands_0_0.704.756.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.756.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 706,
+            "y": 756,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.706.755.0",
+                "south": "v344_infrastructure_55_7.706.757.0",
+                "east": "v344_infrastructure_55_7.707.756.0",
+                "west": "v344_infrastructure_55_7.705.756.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.756.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Cobblestone",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "cobblestone",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}",
+            "x": 707,
+            "y": 756,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.755.0",
+                "south": "v344_infrastructure_55_7.707.757.0",
+                "east": "v344_infrastructure_55_7.708.756.0",
+                "west": "v344_infrastructure_55_7.706.756.0"
+            },
+            "tags": [
+                "cobblestone",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.756.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 708,
+            "y": 756,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.708.755.0",
+                "south": "v344_infrastructure_55_7.708.757.0",
+                "east": "v344_infrastructure_55_7.709.756.0",
+                "west": "v344_infrastructure_55_7.707.756.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.756.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 709,
+            "y": 756,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.709.755.0",
+                "south": "v344_infrastructure_55_7.709.757.0",
+                "east": "v344_infrastructure_55_7.710.756.0",
+                "west": "v344_infrastructure_55_7.708.756.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.710.756.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 710,
+            "y": 756,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.710.755.0",
+                "south": "v344_infrastructure_55_7.710.757.0",
+                "east": "v344_woodlands_0_0.711.756.0",
+                "west": "v344_infrastructure_55_7.709.756.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.757.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 705,
+            "y": 757,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.756.0",
+                "south": "v344_infrastructure_55_7.705.758.0",
+                "east": "v344_infrastructure_55_7.706.757.0",
+                "west": "v344_woodlands_0_0.704.757.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.757.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Cobblestone",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "cobblestone",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}",
+            "x": 706,
+            "y": 757,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.756.0",
+                "south": "v344_infrastructure_55_7.706.758.0",
+                "east": "v344_infrastructure_55_7.707.757.0",
+                "west": "v344_infrastructure_55_7.705.757.0"
+            },
+            "tags": [
+                "cobblestone",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.757.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 707,
+            "y": 757,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.756.0",
+                "south": "v344_infrastructure_55_7.707.758.0",
+                "east": "v344_infrastructure_55_7.708.757.0",
+                "west": "v344_infrastructure_55_7.706.757.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.757.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "City",
+            "description": "Polished stone streets reflect the local architecture.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "city",
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}@{Colors.RESET}",
+            "x": 708,
+            "y": 757,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.756.0",
+                "south": "v344_infrastructure_55_7.708.758.0",
+                "east": "v344_infrastructure_55_7.709.757.0",
+                "west": "v344_infrastructure_55_7.707.757.0"
+            },
+            "tags": [
+                "city",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.757.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 709,
+            "y": 757,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.756.0",
+                "south": "v344_infrastructure_55_7.709.758.0",
+                "east": "v344_infrastructure_55_7.710.757.0",
+                "west": "v344_infrastructure_55_7.708.757.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.710.757.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 710,
+            "y": 757,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.710.756.0",
+                "south": "v344_infrastructure_55_7.710.758.0",
+                "east": "v344_infrastructure_55_7.711.757.0",
+                "west": "v344_infrastructure_55_7.709.757.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.711.757.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 711,
+            "y": 757,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.711.756.0",
+                "south": "v344_infrastructure_55_7.711.758.0",
+                "east": "v344_woodlands_0_0.712.757.0",
+                "west": "v344_infrastructure_55_7.710.757.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.758.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 704,
+            "y": 758,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.704.757.0",
+                "south": "v344_infrastructure_55_7.704.759.0",
+                "east": "v344_infrastructure_55_7.705.758.0",
+                "west": "v344_woodlands_0_0.703.758.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.758.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 705,
+            "y": 758,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.757.0",
+                "south": "v344_infrastructure_55_7.705.759.0",
+                "east": "v344_infrastructure_55_7.706.758.0",
+                "west": "v344_infrastructure_55_7.704.758.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.758.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Cobblestone",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "cobblestone",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}",
+            "x": 706,
+            "y": 758,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.757.0",
+                "south": "v344_infrastructure_55_7.706.759.0",
+                "east": "v344_infrastructure_55_7.707.758.0",
+                "west": "v344_infrastructure_55_7.705.758.0"
+            },
+            "tags": [
+                "cobblestone",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.758.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 707,
+            "y": 758,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.757.0",
+                "south": "v344_infrastructure_55_7.707.759.0",
+                "east": "v344_infrastructure_55_7.708.758.0",
+                "west": "v344_infrastructure_55_7.706.758.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.758.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "City",
+            "description": "Polished stone streets reflect the local architecture.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "city",
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}@{Colors.RESET}",
+            "x": 708,
+            "y": 758,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.757.0",
+                "south": "v344_infrastructure_55_7.708.759.0",
+                "east": "v344_infrastructure_55_7.709.758.0",
+                "west": "v344_infrastructure_55_7.707.758.0"
+            },
+            "tags": [
+                "city",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.758.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "City",
+            "description": "Polished stone streets reflect the local architecture.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "city",
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}@{Colors.RESET}",
+            "x": 709,
+            "y": 758,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.757.0",
+                "south": "v344_infrastructure_55_7.709.759.0",
+                "east": "v344_infrastructure_55_7.710.758.0",
+                "west": "v344_infrastructure_55_7.708.758.0"
+            },
+            "tags": [
+                "city",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.710.758.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "City",
+            "description": "Polished stone streets reflect the local architecture.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "city",
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}@{Colors.RESET}",
+            "x": 710,
+            "y": 758,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.710.757.0",
+                "south": "v344_infrastructure_55_7.710.759.0",
+                "east": "v344_infrastructure_55_7.711.758.0",
+                "west": "v344_infrastructure_55_7.709.758.0"
+            },
+            "tags": [
+                "city",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.711.758.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 711,
+            "y": 758,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.711.757.0",
+                "south": "v344_infrastructure_55_7.711.759.0",
+                "east": "v344_woodlands_0_0.712.758.0",
+                "west": "v344_infrastructure_55_7.710.758.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.759.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 704,
+            "y": 759,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.704.758.0",
+                "south": "v344_infrastructure_55_7.704.760.0",
+                "east": "v344_infrastructure_55_7.705.759.0",
+                "west": "v344_woodlands_0_0.703.759.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.759.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 705,
+            "y": 759,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.758.0",
+                "south": "v344_infrastructure_55_7.705.760.0",
+                "east": "v344_infrastructure_55_7.706.759.0",
+                "west": "v344_infrastructure_55_7.704.759.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.759.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Cobblestone",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "cobblestone",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}",
+            "x": 706,
+            "y": 759,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.758.0",
+                "south": "v344_infrastructure_55_7.706.760.0",
+                "east": "v344_infrastructure_55_7.707.759.0",
+                "west": "v344_infrastructure_55_7.705.759.0"
+            },
+            "tags": [
+                "cobblestone",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.759.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 707,
+            "y": 759,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.758.0",
+                "south": "v344_infrastructure_55_7.707.760.0",
+                "east": "v344_infrastructure_55_7.708.759.0",
+                "west": "v344_infrastructure_55_7.706.759.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.759.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "City",
+            "description": "Polished stone streets reflect the local architecture.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "city",
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}@{Colors.RESET}",
+            "x": 708,
+            "y": 759,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.758.0",
+                "south": "v344_infrastructure_55_7.708.760.0",
+                "east": "v344_infrastructure_55_7.709.759.0",
+                "west": "v344_infrastructure_55_7.707.759.0"
+            },
+            "tags": [
+                "city",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.759.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "City",
+            "description": "Polished stone streets reflect the local architecture.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "city",
+            "symbol": "{Colors.BOLD}{Colors.YELLOW}@{Colors.RESET}",
+            "x": 709,
+            "y": 759,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.758.0",
+                "south": "v344_infrastructure_55_7.709.760.0",
+                "east": "v344_infrastructure_55_7.710.759.0",
+                "west": "v344_infrastructure_55_7.708.759.0"
+            },
+            "tags": [
+                "city",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.710.759.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 710,
+            "y": 759,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.710.758.0",
+                "south": "v344_infrastructure_55_7.710.760.0",
+                "east": "v344_infrastructure_55_7.711.759.0",
+                "west": "v344_infrastructure_55_7.709.759.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.711.759.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 711,
+            "y": 759,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.711.758.0",
+                "south": "v344_infrastructure_55_7.711.760.0",
+                "east": "v344_woodlands_0_0.712.759.0",
+                "west": "v344_infrastructure_55_7.710.759.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.703.760.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 703,
+            "y": 760,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.703.759.0",
+                "south": "v344_infrastructure_55_7.703.761.0",
+                "east": "v344_infrastructure_55_7.704.760.0",
+                "west": "v344_woodlands_0_0.702.760.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.760.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 704,
+            "y": 760,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.704.759.0",
+                "south": "v344_infrastructure_55_7.704.761.0",
+                "east": "v344_infrastructure_55_7.705.760.0",
+                "west": "v344_infrastructure_55_7.703.760.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.760.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 705,
+            "y": 760,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.759.0",
+                "south": "v344_infrastructure_55_7.705.761.0",
+                "east": "v344_infrastructure_55_7.706.760.0",
+                "west": "v344_infrastructure_55_7.704.760.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.760.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 706,
+            "y": 760,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.759.0",
+                "south": "v344_infrastructure_55_7.706.761.0",
+                "east": "v344_infrastructure_55_7.707.760.0",
+                "west": "v344_infrastructure_55_7.705.760.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.760.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Cobblestone",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "cobblestone",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}",
+            "x": 707,
+            "y": 760,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.759.0",
+                "south": "v344_infrastructure_55_7.707.761.0",
+                "east": "v344_infrastructure_55_7.708.760.0",
+                "west": "v344_infrastructure_55_7.706.760.0"
+            },
+            "tags": [
+                "cobblestone",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.760.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 708,
+            "y": 760,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.759.0",
+                "south": "v344_infrastructure_55_7.708.761.0",
+                "east": "v344_infrastructure_55_7.709.760.0",
+                "west": "v344_infrastructure_55_7.707.760.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.760.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 709,
+            "y": 760,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.759.0",
+                "south": "v344_infrastructure_55_7.709.761.0",
+                "east": "v344_infrastructure_55_7.710.760.0",
+                "west": "v344_infrastructure_55_7.708.760.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.710.760.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Docks",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "docks",
+            "symbol": "{Colors.DGREY}D{Colors.RESET}",
+            "x": 710,
+            "y": 760,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.710.759.0",
+                "south": "v344_infrastructure_55_7.710.761.0",
+                "east": "v344_infrastructure_55_7.711.760.0",
+                "west": "v344_infrastructure_55_7.709.760.0"
+            },
+            "tags": [
+                "docks",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.711.760.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Cobblestone",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "cobblestone",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}",
+            "x": 711,
+            "y": 760,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.711.759.0",
+                "south": "v344_infrastructure_55_7.711.761.0",
+                "east": "v344_woodlands_0_0.712.760.0",
+                "west": "v344_infrastructure_55_7.710.760.0"
+            },
+            "tags": [
+                "cobblestone",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.703.761.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 703,
+            "y": 761,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.703.760.0",
+                "south": "v344_woodlands_0_0.703.762.0",
+                "east": "v344_infrastructure_55_7.704.761.0",
+                "west": "v344_woodlands_0_0.702.761.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.761.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 704,
+            "y": 761,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.704.760.0",
+                "south": "v344_infrastructure_55_7.704.762.0",
+                "east": "v344_infrastructure_55_7.705.761.0",
+                "west": "v344_infrastructure_55_7.703.761.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.761.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 705,
+            "y": 761,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.760.0",
+                "south": "v344_infrastructure_55_7.705.762.0",
+                "east": "v344_infrastructure_55_7.706.761.0",
+                "west": "v344_infrastructure_55_7.704.761.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.761.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 706,
+            "y": 761,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.760.0",
+                "south": "v344_infrastructure_55_7.706.762.0",
+                "east": "v344_infrastructure_55_7.707.761.0",
+                "west": "v344_infrastructure_55_7.705.761.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.761.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 707,
+            "y": 761,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.760.0",
+                "south": "v344_infrastructure_55_7.707.762.0",
+                "east": "v344_infrastructure_55_7.708.761.0",
+                "west": "v344_infrastructure_55_7.706.761.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.761.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Cobblestone",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "cobblestone",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}",
+            "x": 708,
+            "y": 761,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.760.0",
+                "south": "v344_infrastructure_55_7.708.762.0",
+                "east": "v344_infrastructure_55_7.709.761.0",
+                "west": "v344_infrastructure_55_7.707.761.0"
+            },
+            "tags": [
+                "cobblestone",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.761.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Cobblestone",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "cobblestone",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}",
+            "x": 709,
+            "y": 761,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.760.0",
+                "south": "v344_infrastructure_55_7.709.762.0",
+                "east": "v344_infrastructure_55_7.710.761.0",
+                "west": "v344_infrastructure_55_7.708.761.0"
+            },
+            "tags": [
+                "cobblestone",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.710.761.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Cobblestone",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "cobblestone",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}.{Colors.RESET}",
+            "x": 710,
+            "y": 761,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.710.760.0",
+                "south": "v344_woodlands_0_0.710.762.0",
+                "east": "v344_infrastructure_55_7.711.761.0",
+                "west": "v344_infrastructure_55_7.709.761.0"
+            },
+            "tags": [
+                "cobblestone",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.711.761.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 711,
+            "y": 761,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.711.760.0",
+                "south": "v344_woodlands_0_0.711.762.0",
+                "east": "v344_woodlands_0_0.712.761.0",
+                "west": "v344_infrastructure_55_7.710.761.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.762.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 704,
+            "y": 762,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.704.761.0",
+                "south": "v344_infrastructure_55_7.704.763.0",
+                "east": "v344_infrastructure_55_7.705.762.0",
+                "west": "v344_woodlands_0_0.703.762.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.762.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 705,
+            "y": 762,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.761.0",
+                "south": "v344_infrastructure_55_7.705.763.0",
+                "east": "v344_infrastructure_55_7.706.762.0",
+                "west": "v344_infrastructure_55_7.704.762.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.762.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 706,
+            "y": 762,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.761.0",
+                "south": "v344_infrastructure_55_7.706.763.0",
+                "east": "v344_infrastructure_55_7.707.762.0",
+                "west": "v344_infrastructure_55_7.705.762.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.762.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 707,
+            "y": 762,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.761.0",
+                "south": "v344_infrastructure_55_7.707.763.0",
+                "east": "v344_infrastructure_55_7.708.762.0",
+                "west": "v344_infrastructure_55_7.706.762.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.762.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 708,
+            "y": 762,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.761.0",
+                "south": "v344_infrastructure_55_7.708.763.0",
+                "east": "v344_infrastructure_55_7.709.762.0",
+                "west": "v344_infrastructure_55_7.707.762.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.762.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 709,
+            "y": 762,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.761.0",
+                "south": "v344_infrastructure_55_7.709.763.0",
+                "east": "v344_woodlands_0_0.710.762.0",
+                "west": "v344_infrastructure_55_7.708.762.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.702.763.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 702,
+            "y": 763,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.702.762.0",
+                "south": "v344_woodlands_0_0.702.764.0",
+                "east": "v344_infrastructure_55_7.703.763.0",
+                "west": "v344_woodlands_0_0.701.763.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.703.763.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 703,
+            "y": 763,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_woodlands_0_0.703.762.0",
+                "south": "v344_infrastructure_55_7.703.764.0",
+                "east": "v344_infrastructure_55_7.704.763.0",
+                "west": "v344_infrastructure_55_7.702.763.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.763.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 704,
+            "y": 763,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.704.762.0",
+                "south": "v344_infrastructure_55_7.704.764.0",
+                "east": "v344_infrastructure_55_7.705.763.0",
+                "west": "v344_infrastructure_55_7.703.763.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.763.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 705,
+            "y": 763,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.762.0",
+                "south": "v344_infrastructure_55_7.705.764.0",
+                "east": "v344_infrastructure_55_7.706.763.0",
+                "west": "v344_infrastructure_55_7.704.763.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.763.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Road",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "road",
+            "symbol": "{Colors.YELLOW}+{Colors.RESET}",
+            "x": 706,
+            "y": 763,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.762.0",
+                "south": "v344_infrastructure_55_7.706.764.0",
+                "east": "v344_infrastructure_55_7.707.763.0",
+                "west": "v344_infrastructure_55_7.705.763.0"
+            },
+            "tags": [
+                "road",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.763.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Snow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "snow",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}*{Colors.RESET}",
+            "x": 707,
+            "y": 763,
+            "z": 0,
+            "elevation": 14,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.762.0",
+                "south": "v344_infrastructure_55_7.707.764.0",
+                "east": "v344_infrastructure_55_7.708.763.0",
+                "west": "v344_infrastructure_55_7.706.763.0"
+            },
+            "tags": [
+                "snow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.763.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 708,
+            "y": 763,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.762.0",
+                "south": "v344_infrastructure_55_7.708.764.0",
+                "east": "v344_infrastructure_55_7.709.763.0",
+                "west": "v344_infrastructure_55_7.707.763.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.763.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 709,
+            "y": 763,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.762.0",
+                "south": "v344_infrastructure_55_7.709.764.0",
+                "east": "v344_woodlands_0_0.710.763.0",
+                "west": "v344_infrastructure_55_7.708.763.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.703.764.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 703,
+            "y": 764,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.703.763.0",
+                "south": "v344_infrastructure_55_7.703.765.0",
+                "east": "v344_infrastructure_55_7.704.764.0",
+                "west": "v344_woodlands_0_0.702.764.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.764.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 704,
+            "y": 764,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.704.763.0",
+                "south": "v344_infrastructure_55_7.704.765.0",
+                "east": "v344_infrastructure_55_7.705.764.0",
+                "west": "v344_infrastructure_55_7.703.764.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.764.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Snow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "snow",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}*{Colors.RESET}",
+            "x": 705,
+            "y": 764,
+            "z": 0,
+            "elevation": 14,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.763.0",
+                "south": "v344_infrastructure_55_7.705.765.0",
+                "east": "v344_infrastructure_55_7.706.764.0",
+                "west": "v344_infrastructure_55_7.704.764.0"
+            },
+            "tags": [
+                "snow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.764.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Snow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "snow",
+            "symbol": "{Colors.BOLD}{Colors.WHITE}*{Colors.RESET}",
+            "x": 706,
+            "y": 764,
+            "z": 0,
+            "elevation": 14,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.763.0",
+                "south": "v344_infrastructure_55_7.706.765.0",
+                "east": "v344_infrastructure_55_7.707.764.0",
+                "west": "v344_infrastructure_55_7.705.764.0"
+            },
+            "tags": [
+                "snow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.764.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 707,
+            "y": 764,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.763.0",
+                "south": "v344_infrastructure_55_7.707.765.0",
+                "east": "v344_infrastructure_55_7.708.764.0",
+                "west": "v344_infrastructure_55_7.706.764.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.764.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 708,
+            "y": 764,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.763.0",
+                "south": "v344_infrastructure_55_7.708.765.0",
+                "east": "v344_infrastructure_55_7.709.764.0",
+                "west": "v344_infrastructure_55_7.707.764.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.764.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 709,
+            "y": 764,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.763.0",
+                "south": "v344_infrastructure_55_7.709.765.0",
+                "east": "v344_woodlands_0_0.710.764.0",
+                "west": "v344_infrastructure_55_7.708.764.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.702.765.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 702,
+            "y": 765,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_woodlands_0_0.702.764.0",
+                "south": "v344_infrastructure_55_7.702.766.0",
+                "east": "v344_infrastructure_55_7.703.765.0",
+                "west": "v344_woodlands_0_0.701.765.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.703.765.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 703,
+            "y": 765,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.703.764.0",
+                "south": "v344_infrastructure_55_7.703.766.0",
+                "east": "v344_infrastructure_55_7.704.765.0",
+                "west": "v344_infrastructure_55_7.702.765.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.765.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 704,
+            "y": 765,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.704.764.0",
+                "south": "v344_infrastructure_55_7.704.766.0",
+                "east": "v344_infrastructure_55_7.705.765.0",
+                "west": "v344_infrastructure_55_7.703.765.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.765.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 705,
+            "y": 765,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.764.0",
+                "south": "v344_infrastructure_55_7.705.766.0",
+                "east": "v344_infrastructure_55_7.706.765.0",
+                "west": "v344_infrastructure_55_7.704.765.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.765.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 706,
+            "y": 765,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.764.0",
+                "south": "v344_infrastructure_55_7.706.766.0",
+                "east": "v344_infrastructure_55_7.707.765.0",
+                "west": "v344_infrastructure_55_7.705.765.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.765.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 707,
+            "y": 765,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.764.0",
+                "south": "v344_infrastructure_55_7.707.766.0",
+                "east": "v344_infrastructure_55_7.708.765.0",
+                "west": "v344_infrastructure_55_7.706.765.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.765.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 708,
+            "y": 765,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.764.0",
+                "south": "v344_infrastructure_55_7.708.766.0",
+                "east": "v344_infrastructure_55_7.709.765.0",
+                "west": "v344_infrastructure_55_7.707.765.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.765.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 709,
+            "y": 765,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.764.0",
+                "south": "v344_infrastructure_55_7.709.766.0",
+                "east": "v344_woodlands_0_0.710.765.0",
+                "west": "v344_infrastructure_55_7.708.765.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.702.766.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 702,
+            "y": 766,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.702.765.0",
+                "south": "v344_woodlands_0_0.702.767.0",
+                "east": "v344_infrastructure_55_7.703.766.0",
+                "west": "v344_woodlands_0_0.701.766.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.703.766.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 703,
+            "y": 766,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "v344_infrastructure_55_7.703.765.0",
+                "south": "v344_woodlands_0_0.703.767.0",
+                "east": "v344_infrastructure_55_7.704.766.0",
+                "west": "v344_infrastructure_55_7.702.766.0"
+            },
+            "tags": [
+                "mountain",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.766.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 704,
+            "y": 766,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.704.765.0",
+                "south": "v344_infrastructure_55_7.704.767.0",
+                "east": "v344_infrastructure_55_7.705.766.0",
+                "west": "v344_infrastructure_55_7.703.766.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.766.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 705,
+            "y": 766,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.765.0",
+                "south": "v344_infrastructure_55_7.705.767.0",
+                "east": "v344_infrastructure_55_7.706.766.0",
+                "west": "v344_infrastructure_55_7.704.766.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.766.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 706,
+            "y": 766,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.765.0",
+                "south": "v344_infrastructure_55_7.706.767.0",
+                "east": "v344_infrastructure_55_7.707.766.0",
+                "west": "v344_infrastructure_55_7.705.766.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.707.766.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 707,
+            "y": 766,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.707.765.0",
+                "south": "v344_woodlands_0_0.707.767.0",
+                "east": "v344_infrastructure_55_7.708.766.0",
+                "west": "v344_infrastructure_55_7.706.766.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.766.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 708,
+            "y": 766,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.765.0",
+                "south": "v344_infrastructure_55_7.708.767.0",
+                "east": "v344_infrastructure_55_7.709.766.0",
+                "west": "v344_infrastructure_55_7.707.766.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.709.766.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 709,
+            "y": 766,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.709.765.0",
+                "south": "v344_woodlands_0_0.709.767.0",
+                "east": "v344_woodlands_0_0.710.766.0",
+                "west": "v344_infrastructure_55_7.708.766.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.704.767.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 704,
+            "y": 767,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.704.766.0",
+                "south": "v344_woodlands_0_0.704.768.0",
+                "east": "v344_infrastructure_55_7.705.767.0",
+                "west": "v344_woodlands_0_0.703.767.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.705.767.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 705,
+            "y": 767,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.705.766.0",
+                "south": "v344_woodlands_0_0.705.768.0",
+                "east": "v344_infrastructure_55_7.706.767.0",
+                "west": "v344_infrastructure_55_7.704.767.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.706.767.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 706,
+            "y": 767,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.706.766.0",
+                "south": "v344_woodlands_0_0.706.768.0",
+                "east": "v344_woodlands_0_0.707.767.0",
+                "west": "v344_infrastructure_55_7.705.767.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "v344_infrastructure_55_7.708.767.0",
+            "zone_id": "v344_infrastructure_55_7",
+            "name": "Mountain Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: INFRASTRUCTURE area.",
+            "terrain": "mountain_shadow",
+            "symbol": null,
+            "x": 708,
+            "y": 767,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "v344_infrastructure_55_7.708.766.0",
+                "south": "v344_woodlands_0_0.708.768.0",
+                "east": "v344_woodlands_0_0.709.767.0",
+                "west": "v344_woodlands_0_0.707.767.0"
+            },
+            "tags": [
+                "mountain_shadow",
+                "v344_infrastructure_55_7",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        }
+    ]
+}

@@ -1,0 +1,373 @@
+{
+    "terrains": {
+        "ocean": {
+            "name": "Ocean",
+            "symbol": "~",
+            "hex": "#1e40af",
+            "studio_hex": "#030617",
+            "cost": 10,
+            "tags": [
+                "water",
+                "deep"
+            ]
+        },
+        "water": {
+            "name": "Water",
+            "symbol": "~",
+            "hex": "#3b82f6",
+            "studio_hex": "#0c1e33",
+            "cost": 5,
+            "tags": [
+                "water"
+            ]
+        },
+        "lake": {
+            "name": "Lake",
+            "symbol": "~",
+            "hex": "#0ea5e9",
+            "studio_hex": "#0a2a47",
+            "cost": 3,
+            "tags": [
+                "water",
+                "fresh"
+            ]
+        },
+        "plains": {
+            "name": "Plains",
+            "symbol": ".",
+            "hex": "#4ade80",
+            "studio_hex": "#06290d",
+            "cost": 1,
+            "tags": [
+                "land",
+                "open"
+            ]
+        },
+        "grass": {
+            "name": "Grass",
+            "symbol": "\"",
+            "hex": "#22c55e",
+            "studio_hex": "#0a3d14",
+            "cost": 1,
+            "tags": [
+                "land",
+                "low_veg"
+            ]
+        },
+        "meadow": {
+            "name": "Meadow",
+            "symbol": "\"",
+            "hex": "#84cc16",
+            "studio_hex": "#145c1f",
+            "cost": 1,
+            "tags": [
+                "land",
+                "flowers"
+            ]
+        },
+        "forest": {
+            "name": "Forest",
+            "symbol": "^",
+            "hex": "#16a34a",
+            "studio_hex": "#062410",
+            "cost": 2,
+            "tags": [
+                "land",
+                "trees"
+            ]
+        },
+        "dense_forest": {
+            "name": "Dense Forest",
+            "symbol": "^",
+            "hex": "#065f46",
+            "studio_hex": "#041409",
+            "cost": 3,
+            "tags": [
+                "land",
+                "heavy_trees"
+            ]
+        },
+        "swamp": {
+            "name": "Swamp",
+            "symbol": "%",
+            "hex": "#a855f7",
+            "studio_hex": "#111717",
+            "cost": 4,
+            "tags": [
+                "land",
+                "wet",
+                "haz"
+            ]
+        },
+        "mountain": {
+            "name": "Mountain",
+            "symbol": "^",
+            "hex": "#f8fafc",
+            "studio_hex": "#1e1e24",
+            "cost": 5,
+            "tags": [
+                "land",
+                "high"
+            ]
+        },
+        "high_mountain": {
+            "name": "High Mountain",
+            "symbol": "^",
+            "hex": "#f1f5f9",
+            "studio_hex": "#2b2b36",
+            "cost": 8,
+            "tags": [
+                "land",
+                "peaks"
+            ]
+        },
+        "peak": {
+            "name": "Summit",
+            "symbol": "A",
+            "hex": "#ffffff",
+            "studio_hex": "#f8fafc",
+            "cost": 12,
+            "tags": [
+                "land",
+                "peaks",
+                "lethal"
+            ]
+        },
+        "desert": {
+            "name": "Desert",
+            "symbol": ":",
+            "hex": "#facc15",
+            "studio_hex": "#2b2218",
+            "cost": 2,
+            "tags": [
+                "land",
+                "arid"
+            ]
+        },
+        "wasteland": {
+            "name": "Wasteland",
+            "symbol": ":",
+            "hex": "#ef4444",
+            "studio_hex": "#1a0f0a",
+            "cost": 2,
+            "tags": [
+                "land",
+                "dead"
+            ]
+        },
+        "beach": {
+            "name": "Beach",
+            "symbol": ".",
+            "hex": "#fef08a",
+            "studio_hex": "#3b3425",
+            "cost": 1,
+            "tags": [
+                "land",
+                "sand"
+            ]
+        },
+        "road": {
+            "name": "Road",
+            "symbol": "+",
+            "hex": "#eab308",
+            "studio_hex": "#0f172a",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "major"
+            ]
+        },
+        "dirt_road": {
+            "name": "Dirt Road",
+            "symbol": ".",
+            "hex": "#ca8a04",
+            "studio_hex": "#2d1b0d",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "minor"
+            ]
+        },
+        "city": {
+            "name": "City",
+            "symbol": "@",
+            "hex": "#e9d5ff",
+            "studio_hex": "#1e1b4b",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "settlement"
+            ]
+        },
+        "shrine": {
+            "name": "Shrine",
+            "symbol": "*",
+            "hex": "#fde047",
+            "studio_hex": "#4c1d95",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "holy"
+            ]
+        },
+        "ruins": {
+            "name": "Ruins",
+            "symbol": "o",
+            "hex": "#94a3b8",
+            "studio_hex": "#0f1718",
+            "cost": 2,
+            "tags": [
+                "structure",
+                "ancient"
+            ]
+        },
+        "barrows": {
+            "name": "Barrows",
+            "symbol": "n",
+            "hex": "#37474f",
+            "studio_hex": "#1a1a24",
+            "cost": 3,
+            "tags": [
+                "structure",
+                "ancient",
+                "undead"
+            ]
+        },
+        "monument": {
+            "name": "Monument",
+            "symbol": "!",
+            "hex": "#00bcd4",
+            "studio_hex": "#083344",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "ancient",
+                "heroic"
+            ]
+        },
+        "tower": {
+            "name": "Tower",
+            "symbol": "I",
+            "hex": "#d32f2f",
+            "studio_hex": "#450a0a",
+            "cost": 2,
+            "tags": [
+                "structure",
+                "defensive"
+            ]
+        },
+        "snow": {
+            "name": "Snow",
+            "symbol": ".",
+            "hex": "#f0f0f0",
+            "studio_hex": "#334155",
+            "cost": 2,
+            "tags": [
+                "land",
+                "cold"
+            ]
+        },
+        "tundra": {
+            "name": "Tundra",
+            "symbol": ",",
+            "hex": "#8d99ae",
+            "studio_hex": "#1e293b",
+            "cost": 2,
+            "tags": [
+                "land",
+                "cold",
+                "open"
+            ]
+        },
+        "glacier": {
+            "name": "Glacier",
+            "symbol": "#",
+            "hex": "#afeeee",
+            "studio_hex": "#0ea5e9",
+            "cost": 5,
+            "tags": [
+                "land",
+                "frozen"
+            ]
+        },
+        "cliffs": {
+            "name": "Cliffs",
+            "symbol": "=",
+            "hex": "#4a4a4a",
+            "studio_hex": "#0f172a",
+            "cost": 8,
+            "tags": [
+                "land",
+                "vertical"
+            ]
+        },
+        "docks": {
+            "name": "Docks",
+            "symbol": "=",
+            "hex": "#795548",
+            "studio_hex": "#2d1b0d",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "coastal"
+            ]
+        },
+        "bridge": {
+            "name": "Bridge",
+            "symbol": "=",
+            "hex": "#9e9e9e",
+            "studio_hex": "#1e293b",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "transit"
+            ]
+        },
+        "cobblestone": {
+            "name": "Cobblestone",
+            "symbol": "+",
+            "hex": "#777777",
+            "studio_hex": "#0f172a",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "road"
+            ]
+        },
+        "hills": {
+            "name": "Hills",
+            "symbol": "n",
+            "hex": "#15803d",
+            "studio_hex": "#062410",
+            "cost": 2,
+            "tags": [
+                "land",
+                "uneven"
+            ]
+        },
+        "market_ward": {
+            "name": "Market Ward",
+            "symbol": "$",
+            "hex": "#ffd700",
+            "studio_hex": "#2e2b02",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "urban",
+                "commercial"
+            ]
+        },
+        "residential_ward": {
+            "name": "Residential Ward",
+            "symbol": "h",
+            "hex": "#80deea",
+            "studio_hex": "#082f33",
+            "cost": 1,
+            "tags": [
+                "structure",
+                "urban",
+                "residential"
+            ]
+        }
+    }
+}

@@ -2,350 +2,1494 @@
     "barbarian": {
         "name": "Barbarian",
         "description": "The Juggernaut of the North. Uses Fury to fuel brutal, state-based chain reactions.",
-        "gear": ["heavy_leather_tunic", "iron_maul"],
-        "blessings": ["savage_strike", "headbutt", "lacerate", "whirlwind", "decapitate", "savage_brace", "leap", "bloodrage", "barbarian_physiology"],
-        "identity_tags": ["martial", "fury"],
-        "resources": ["stamina", "fury"],
-        "axes": ["tempo", "endurance"],
-        "version": "6.2"
+        "gear": [
+            "heavy_leather_tunic",
+            "iron_maul"
+        ],
+        "blessings": [
+            "savage_strike",
+            "headbutt",
+            "lacerate",
+            "whirlwind",
+            "decapitate",
+            "savage_brace",
+            "leap",
+            "bloodrage",
+            "barbarian_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "fury"
+        ],
+        "resources": [
+            "stamina",
+            "fury"
+        ],
+        "axes": [
+            "tempo",
+            "endurance"
+        ],
+        "version": "7.2"
     },
     "knight": {
         "name": "Knight",
         "description": "A stalwart defender and the anchor of the battlefield.",
-        "gear": ["iron_sword", "wooden_shield", "heavy_plate"],
-        "blessings": ["crippling_strike", "shield_bash", "execute", "retribution", "brace", "shield_wall", "charge", "war_cry", "knight_physiology"],
-        "identity_tags": ["martial", "endurance"],
-        "resources": ["stamina"],
-        "axes": ["endurance", "position"],
-        "version": "6.2"
+        "gear": [
+            "iron_sword",
+            "wooden_shield",
+            "heavy_plate"
+        ],
+        "blessings": [
+            "crippling_strike",
+            "intervene",
+            "execute",
+            "retribution",
+            "shield_bash",
+            "brace",
+            "charge",
+            "war_cry",
+            "knight_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "endurance"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "endurance",
+            "position"
+        ],
+        "version": "7.2"
     },
     "monk": {
         "name": "Monk",
         "description": "The master of Momentum. Controls the flow of battle through precise strikes and stances.",
-        "gear": ["silk_wraps", "monk_robes", "wooden_sandals", "spiked_knuckles"],
-        "blessings": ["monk_snap_strike", "palm_strike", "dragon_kick", "chi_burst", "meditation", "iron_fist", "flying_kick", "empty_mind", "monk_physiology"],
-        "identity_tags": ["martial", "chi"],
-        "resources": ["stamina", "chi"],
-        "axes": ["tempo", "position"],
-        "version": "6.2"
+        "gear": [
+            "silk_wraps",
+            "monk_robes",
+            "wooden_sandals",
+            "spiked_knuckles"
+        ],
+        "blessings": [
+            "monk_snap_strike",
+            "palm_strike",
+            "dragon_kick",
+            "chi_burst",
+            "meditation",
+            "iron_fist",
+            "flying_kick",
+            "empty_mind",
+            "monk_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "chi"
+        ],
+        "resources": [
+            "stamina",
+            "chi"
+        ],
+        "axes": [
+            "tempo",
+            "position"
+        ],
+        "version": "7.2"
     },
     "mage": {
         "name": "Mage",
         "description": "The Black Weaver. Exploits elemental grammar for catastrophic damage.",
-        "gear": ["wizard_robes", "willow_staff", "focus_crystal"],
-        "blessings": ["triple_bolt", "ignite", "frost_bolt", "lightning_bolt", "pyroclasm", "phase_shift", "blink", "arcane_surge", "mage_physiology"],
-        "identity_tags": ["magic", "elemental"],
-        "resources": ["concentration"],
-        "axes": ["elemental", "vision"],
+        "gear": [
+            "wizard_robes",
+            "willow_staff",
+            "focus_crystal"
+        ],
+        "blessings": [
+            "ignite",
+            "frost_bolt",
+            "lightning_bolt",
+            "pyroclasm",
+            "phase_shift",
+            "arcane_ward",
+            "blink",
+            "arcane_surge",
+            "mage_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "elemental"
+        ],
+        "resources": [
+            "concentration"
+        ],
+        "axes": [
+            "elemental",
+            "vision"
+        ],
         "version": "7.2"
     },
     "rogue": {
         "name": "Rogue",
         "description": "The Shadow Blade. A precision specialist who controls the Vision axis.",
-        "gear": ["dark_leather_mask", "shadow_cloak", "glass_dagger"],
-        "blessings": ["rogue_quick_strike", "vanish", "mark_target", "backstab", "visceral_strike", "evasion", "shadowstep", "smoke_bomb", "rogue_physiology"],
-        "identity_tags": ["martial", "vision"],
-        "resources": ["stamina"],
-        "axes": ["vision", "tempo"],
-        "version": "7.2"
-    },
-    "priest": {
-        "name": "Priest",
-        "description": "The Divine Shield. A master of Endurance and utility buffs.",
-        "gear": ["holy_mace", "reinforced_mail", "blessed_pendant"],
-        "blessings": ["holy_strike", "divine_mark", "penitence", "judgment", "purification", "aegis", "beacon_of_light", "resurrection", "priest_physiology"],
-        "identity_tags": ["divine", "endurance"],
-        "resources": ["mana"],
-        "axes": ["endurance", "utility"],
+        "gear": [
+            "dark_leather_mask",
+            "shadow_cloak",
+            "glass_dagger"
+        ],
+        "blessings": [
+            "rogue_quick_strike",
+            "mark_target",
+            "backstab",
+            "visceral_strike",
+            "vanish",
+            "evasion",
+            "shadowstep",
+            "smoke_bomb",
+            "rogue_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "vision"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "vision",
+            "tempo"
+        ],
         "version": "7.2"
     },
     "druid": {
         "name": "Druid",
         "description": "The Warden of the Wild. Controls the environmental grammar through weather and elements.",
-        "gear": ["willow_staff", "nature_cloak"],
-        "blessings": ["nature_lash", "saturate", "gale_force", "snap_freeze", "tempest_wrath", "barkskin", "nature_stride", "natural_focus"],
-        "identity_tags": ["nature", "environment"],
-        "resources": ["stamina", "concentration"],
-        "axes": ["elemental", "utility"],
-        "version": "6.2"
+        "gear": [
+            "willow_staff",
+            "nature_cloak"
+        ],
+        "blessings": [
+            "nature_lash",
+            "saturate",
+            "gale_force",
+            "tempest_wrath",
+            "barkskin",
+            "wild_growth",
+            "nature_stride",
+            "natural_focus",
+            "druid_physiology"
+        ],
+        "identity_tags": [
+            "nature",
+            "environment"
+        ],
+        "resources": [
+            "stamina",
+            "concentration"
+        ],
+        "axes": [
+            "elemental",
+            "utility"
+        ],
+        "version": "7.2"
     },
     "warlock": {
         "name": "Warlock",
         "description": "The Hexblade. A master of Entropy and recursive curses.",
-        "gear": ["bone_armor", "abyssal_blade", "acolyte_hood"],
-        "blessings": ["eldritch_blast", "curse_of_agony", "hex_of_weakness", "soul_cleave", "oblivion_strike", "void_ward", "netherstep", "pact_of_sacrifice"],
-        "identity_tags": ["occult", "chaos"],
-        "resources": ["concentration", "entropy"],
-        "axes": ["elemental", "tempo"],
-        "version": "6.2"
+        "gear": [
+            "bone_armor",
+            "abyssal_blade",
+            "acolyte_hood"
+        ],
+        "blessings": [
+            "eldritch_blast",
+            "curse_of_agony",
+            "soul_cleave",
+            "oblivion_strike",
+            "void_ward",
+            "hex_of_weakness",
+            "netherstep",
+            "pact_of_sacrifice",
+            "warlock_physiology"
+        ],
+        "identity_tags": [
+            "occult",
+            "chaos"
+        ],
+        "resources": [
+            "concentration",
+            "entropy"
+        ],
+        "axes": [
+            "elemental",
+            "tempo"
+        ],
+        "version": "7.2"
     },
     "paladin": {
         "name": "Paladin",
         "description": "The Defender of Faith. Anchors the team with divine mitigation and smite payloads.",
-        "gear": ["iron_sword", "iron_shield", "heavy_plate"],
-        "blessings": ["reckoning", "radiant_flash", "seal_of_justice", "holy_smite", "consecration", "divine_grace", "pursuit_of_justice", "lay_on_hands"],
-        "identity_tags": ["divine", "lethality"],
-        "resources": ["stamina", "concentration"],
-        "axes": ["endurance", "lethality"],
-        "version": "6.2"
+        "gear": [
+            "iron_sword",
+            "iron_shield",
+            "heavy_plate"
+        ],
+        "blessings": [
+            "reckoning",
+            "radiant_flash",
+            "holy_smite",
+            "consecration",
+            "divine_grace",
+            "seal_of_justice",
+            "pursuit_of_justice",
+            "lay_on_hands",
+            "paladin_physiology"
+        ],
+        "identity_tags": [
+            "divine",
+            "lethality"
+        ],
+        "resources": [
+            "stamina",
+            "concentration"
+        ],
+        "axes": [
+            "endurance",
+            "lethality"
+        ],
+        "version": "7.2"
     },
     "ranger": {
         "name": "Ranger",
         "description": "The Master of Distance. Uses tracking and precision to control the battlefield.",
-        "gear": ["willow_staff", "nature_cloak"],
-        "blessings": ["aim", "hunters_mark", "pinning_shot", "snipe", "piercing_arrow", "disengage", "camouflage", "recon_flare"],
-        "identity_tags": ["martial", "vision"],
-        "resources": ["stamina"],
-        "axes": ["vision", "position"],
-        "version": "6.2"
+        "gear": [
+            "willow_staff",
+            "nature_cloak"
+        ],
+        "blessings": [
+            "aim",
+            "hunters_mark",
+            "snipe",
+            "piercing_arrow",
+            "disengage",
+            "camouflage",
+            "pinning_shot",
+            "recon_flare",
+            "ranger_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "vision"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "vision",
+            "position"
+        ],
+        "version": "7.2"
     },
     "bard": {
         "name": "Bard",
         "description": "The Virtuoso. Manipulates the Tempo of battle through resonance and rhythm.",
-        "gear": ["fine_mandolin", "silk_tunic"],
-        "blessings": ["discordant_note", "fascinate", "echoing_verse", "crescendo", "soul_requiem", "serenade_of_safety", "allegro_step", "hymn_of_regeneration"],
-        "identity_tags": ["magic", "sound"],
-        "resources": ["stamina", "rhythm"],
-        "axes": ["tempo", "utility"],
-        "version": "6.2"
+        "gear": [
+            "fine_mandolin",
+            "silk_tunic"
+        ],
+        "blessings": [
+            "discordant_note",
+            "fascinate",
+            "crescendo",
+            "soul_requiem",
+            "serenade_of_safety",
+            "allegro_step",
+            "hymn_of_regeneration",
+            "echoing_verse",
+            "bard_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "sound"
+        ],
+        "resources": [
+            "stamina",
+            "rhythm"
+        ],
+        "axes": [
+            "tempo",
+            "utility"
+        ],
+        "version": "7.2"
     },
     "samurai": {
         "name": "Samurai",
         "description": "The Precise Blade. Master of one-hit lethality and counter-strikes.",
-        "gear": ["katana", "lacquered_armor"],
-        "blessings": ["iaido_draw", "meditative_stance", "sever_spirit", "dragons_breath", "tsubame_gaeshi", "hissatsu_chidori", "shadow_dash", "way_of_the_warrior"],
-        "identity_tags": ["martial", "lethality"],
-        "resources": ["stamina", "spirit"],
-        "axes": ["lethality", "tempo"],
-        "version": "6.2"
+        "gear": [
+            "katana",
+            "lacquered_armor"
+        ],
+        "blessings": [
+            "iaido_draw",
+            "meditative_stance",
+            "hissatsu_chidori",
+            "tsubame_gaeshi",
+            "sever_spirit",
+            "dragons_breath",
+            "shadow_dash",
+            "way_of_the_warrior",
+            "samurai_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "lethality"
+        ],
+        "resources": [
+            "stamina",
+            "spirit"
+        ],
+        "axes": [
+            "lethality",
+            "tempo"
+        ],
+        "version": "7.2"
     },
     "necromancer": {
         "name": "Necromancer",
         "description": "The Lord of Decay. Controls life force and commands undead servants.",
-        "gear": ["bone_staff", "skull_mask"],
-        "blessings": ["bone_spike", "soul_shackles", "rotting_touch", "deaths_embrace", "corpse_explosion", "bone_shield", "nether_grip", "raise_dead"],
-        "identity_tags": ["occult", "dark"],
-        "resources": ["concentration", "entropy"],
-        "axes": ["endurance", "utility"],
-        "version": "6.2"
+        "gear": [
+            "bone_staff",
+            "skull_mask"
+        ],
+        "blessings": [
+            "bone_spike",
+            "soul_shackles",
+            "corpse_explosion",
+            "deaths_embrace",
+            "bone_shield",
+            "rotting_touch",
+            "nether_grip",
+            "raise_dead",
+            "necromancer_physiology"
+        ],
+        "identity_tags": [
+            "occult",
+            "dark"
+        ],
+        "resources": [
+            "concentration",
+            "entropy"
+        ],
+        "axes": [
+            "endurance",
+            "utility"
+        ],
+        "version": "7.2"
     },
     "illusionist": {
         "name": "Illusionist",
         "description": "The Trickster. Warps reality to confuse foes and control vision.",
-        "gear": ["prism_shards", "refractive_cloak"],
-        "blessings": ["mirror_image", "color_spray", "hallucinate", "mind_shatter", "phantasmal_inferno", "prism_cloak", "phase_shift", "invisibility"],
-        "identity_tags": ["magic", "illusion"],
-        "resources": ["concentration"],
-        "axes": ["vision", "position"],
-        "version": "6.2"
+        "gear": [
+            "prism_shards",
+            "refractive_cloak"
+        ],
+        "blessings": [
+            "color_spray",
+            "mirror_image",
+            "phantasmal_inferno",
+            "mind_shatter",
+            "prism_cloak",
+            "hallucinate",
+            "phase_shift",
+            "invisibility",
+            "illusionist_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "illusion"
+        ],
+        "resources": [
+            "concentration"
+        ],
+        "axes": [
+            "vision",
+            "position"
+        ],
+        "version": "7.2"
     },
     "beastmaster": {
         "name": "Beastmaster",
         "description": "The Alpha. Commands powerful animal companions to intercept and destroy.",
-        "gear": ["iron_maul", "rugged_leather"],
-        "blessings": ["wild_strike", "tame_beast", "intimidating_roar", "bestial_wrath", "coordinated_kill", "pack_bond", "feral_leap", "call_companion"],
-        "identity_tags": ["martial", "beast"],
-        "resources": ["stamina", "bond"],
-        "axes": ["utility", "endurance"],
-        "version": "6.2"
-    },
-    "alchemist": {
-        "name": "Alchemist",
-        "description": "The Transmuter. Uses chemical reactions and philters for elemental control and utility.",
-        "gear": ["glass_vials", "apothecary_robes"],
-        "blessings": ["volatile_flask", "acid_mist", "catalytic_bloom", "final_flash", "transmute_flesh", "elixir_of_stone", "smokebomb_jump", "create_philter"],
-        "identity_tags": ["magic", "alchemy"],
-        "resources": ["concentration", "alchemical_pips"],
-        "axes": ["elemental", "utility"],
-        "version": "6.2"
+        "gear": [
+            "iron_maul",
+            "rugged_leather"
+        ],
+        "blessings": [
+            "wild_strike",
+            "tame_beast",
+            "bestial_wrath",
+            "coordinated_kill",
+            "pack_bond",
+            "intimidating_roar",
+            "feral_leap",
+            "call_companion",
+            "beastmaster_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "beast"
+        ],
+        "resources": [
+            "stamina",
+            "bond"
+        ],
+        "axes": [
+            "utility",
+            "endurance"
+        ],
+        "version": "7.2"
     },
     "archer": {
         "name": "Archer",
         "description": "The Deadeye. Master of reach and Fog-of-War control.",
-        "gear": ["willow_bow", "quiver_of_arrows", "scout_cloak"],
-        "blessings": ["tracker_scan", "target_lock", "heartseeker_snipe", "volley_rain", "catch_arrows", "camouflage", "archers_sprint", "pinnacle_of_arrows", "archer_physiology"],
-        "identity_tags": ["martial", "bow"],
-        "resources": ["stamina", "focus"],
-        "axes": ["vision", "position"],
+        "gear": [
+            "willow_bow",
+            "quiver_of_arrows",
+            "scout_cloak"
+        ],
+        "blessings": [
+            "tracker_scan",
+            "target_lock",
+            "heartseeker_snipe",
+            "volley_rain",
+            "catch_arrows",
+            "camouflage",
+            "archers_sprint",
+            "pinnacle_of_arrows",
+            "archer_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "bow"
+        ],
+        "resources": [
+            "stamina",
+            "focus"
+        ],
+        "axes": [
+            "vision",
+            "position"
+        ],
         "version": "7.2"
     },
     "berserker": {
         "name": "Berserker",
         "description": "The Unstoppable Force. Trades health for massive Fury and gore-splattering finishers.",
-        "gear": ["heavy_battleaxe", "spiked_leather"],
-        "blessings": ["raging_strike", "headbutt", "blood_thirst", "reckless_abandon", "gorespatter", "pain_suppressor", "brute_charge", "berserker_rage"],
-        "identity_tags": ["martial", "fury"],
-        "resources": ["stamina", "fury"],
-        "axes": ["tempo", "endurance"],
-        "version": "6.2"
+        "gear": [
+            "heavy_battleaxe",
+            "spiked_leather"
+        ],
+        "blessings": [
+            "raging_strike",
+            "blood_thirst",
+            "reckless_abandon",
+            "gorespatter",
+            "pain_suppressor",
+            "headbutt",
+            "brute_charge",
+            "berserker_rage",
+            "berserker_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "fury"
+        ],
+        "resources": [
+            "stamina",
+            "fury"
+        ],
+        "axes": [
+            "tempo",
+            "endurance"
+        ],
+        "version": "7.2"
     },
     "ninja": {
         "name": "Ninja",
         "description": "The Shinobi. A master of speed, deception, and elemental ninjutsu.",
-        "gear": ["ninjato", "throwing_kunai", "shinobi_garb"],
-        "blessings": ["kunai_throw", "smoke_screen", "throat_slit", "fire_style_fireball", "death_from_above", "kawarimi", "shadow_step", "ninjutsu_haste"],
-        "identity_tags": ["martial", "ninja"],
-        "resources": ["stamina", "mudra"],
-        "axes": ["vision", "tempo"],
-        "version": "6.2"
+        "gear": [
+            "ninjato",
+            "throwing_kunai",
+            "shinobi_garb"
+        ],
+        "blessings": [
+            "kunai_throw",
+            "mudra_weaving",
+            "fire_style_fireball",
+            "water_style_flood",
+            "kawarimi",
+            "shadow_clone",
+            "ninja_stride",
+            "ninjutsu_mastery",
+            "ninja_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "ninja"
+        ],
+        "resources": [
+            "stamina",
+            "mudra"
+        ],
+        "axes": [
+            "vision",
+            "tempo"
+        ],
+        "version": "7.2"
     },
     "thief": {
         "name": "Thief",
         "description": "The Scoundrel. Master of the quick grab, dirty tricks, and final scores.",
-        "gear": ["serrated_dagger", "black_mask"],
-        "blessings": ["mug", "sand_in_eyes", "cheap_shot", "kidney_shot", "final_heist", "nimble_reflexes", "pickpocket_dash", "stealth"],
-        "identity_tags": ["martial", "greed"],
-        "resources": ["stamina", "greed"],
-        "axes": ["vision", "tempo"],
-        "version": "6.2"
+        "gear": [
+            "serrated_dagger",
+            "black_mask"
+        ],
+        "blessings": [
+            "mug",
+            "sand_in_eyes",
+            "final_heist",
+            "cheap_shot",
+            "thief_reflexes",
+            "dirty_trick",
+            "pickpocket_dash",
+            "stealth",
+            "thief_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "greed"
+        ],
+        "resources": [
+            "stamina",
+            "greed"
+        ],
+        "axes": [
+            "vision",
+            "tempo"
+        ],
+        "version": "7.2"
     },
     "dragoon": {
         "name": "Dragoon",
         "description": "The Sky-Hunter. Master of vertical positioning and dragon-infused lethality.",
-        "gear": ["iron_polearm", "dragon_leather", "wind_cloak"],
-        "blessings": ["dragoon_thrust", "dragon_breath", "leg_sweep", "dragoon_jump", "dragon_dive", "steel_scale", "high_jump", "dragonheart"],
-        "identity_tags": ["martial", "polearm"],
-        "resources": ["stamina", "jump_pips"],
-        "axes": ["position", "lethality"],
-        "version": "6.2"
+        "gear": [
+            "iron_polearm",
+            "dragon_leather",
+            "wind_cloak"
+        ],
+        "blessings": [
+            "dragoon_thrust",
+            "dragon_breath",
+            "dragon_dive",
+            "leg_sweep",
+            "steel_scale",
+            "high_jump_defense",
+            "dragoon_jump",
+            "dragonheart",
+            "dragoon_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "polearm"
+        ],
+        "resources": [
+            "stamina",
+            "jump_pips"
+        ],
+        "axes": [
+            "position",
+            "lethality"
+        ],
+        "version": "7.2"
     },
     "elementalist": {
         "name": "Elementalist",
         "description": "The Mana-Cycler. Dynamically shifts between Fire, Ice, and Lightning to devastate the room.",
-        "gear": ["vibrant_robes", "tuning_fork", "prism_pendant"],
-        "blessings": ["elemental_strike", "flash_freeze", "cinder_shower", "elemental_cataclysm", "shock_cannon", "barrier_of_elements", "aether_dash", "attunement"],
-        "identity_tags": ["magic", "elemental"],
-        "resources": ["concentration", "attunement"],
-        "axes": ["elemental", "endurance"],
-        "version": "6.2"
+        "gear": [
+            "vibrant_robes",
+            "tuning_fork",
+            "prism_pendant"
+        ],
+        "blessings": [
+            "elemental_strike",
+            "attunement",
+            "elemental_cataclysm",
+            "shock_cannon",
+            "barrier_of_elements",
+            "flash_freeze",
+            "aether_dash",
+            "cinder_shower",
+            "elementalist_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "elemental"
+        ],
+        "resources": [
+            "concentration",
+            "attunement"
+        ],
+        "axes": [
+            "elemental",
+            "endurance"
+        ],
+        "version": "7.2"
     },
     "engineer": {
         "name": "Engineer",
         "description": "The Constructer. Deploys mechanical sentinels and hard-light barriers to control the field.",
-        "gear": ["heavy_wrench", "tool_belt", "protective_goggles"],
-        "blessings": ["wrench_strike", "shock_grenade", "targeted_pheromone", "autoturret", "overdrive", "portable_barrier", "jetpack_boost", "repair_protocol"],
-        "identity_tags": ["martial", "tech"],
-        "resources": ["stamina", "tech_scrap"],
-        "axes": ["utility", "position"],
-        "version": "6.2"
+        "gear": [
+            "heavy_wrench",
+            "tool_belt",
+            "protective_goggles"
+        ],
+        "blessings": [
+            "wrench_strike",
+            "targeted_pheromone",
+            "autoturret",
+            "shock_grenade",
+            "portable_barrier",
+            "overdrive",
+            "jetpack_boost",
+            "repair_protocol",
+            "engineer_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "tech"
+        ],
+        "resources": [
+            "stamina",
+            "tech_scrap"
+        ],
+        "axes": [
+            "utility",
+            "position"
+        ],
+        "version": "7.2"
     },
     "gambler": {
         "name": "Gambler",
         "description": "The Risk-Taker. Manipulates the fates with luck-based payoffs and probability shifting.",
-        "gear": ["weighted_dice", "card_deck", "silk_vest"],
-        "blessings": ["loaded_dice", "bad_beat", "ante_up", "jackpot", "all_in", "lucky_break", "shuffle", "high_stakes"],
-        "identity_tags": ["martial", "luck"],
-        "resources": ["stamina", "luck"],
-        "axes": ["tempo", "utility"],
-        "version": "6.2"
+        "gear": [
+            "weighted_dice",
+            "card_deck",
+            "silk_vest"
+        ],
+        "blessings": [
+            "loaded_dice",
+            "ante_up",
+            "jackpot",
+            "bad_beat",
+            "lucky_break",
+            "all_in",
+            "shuffle",
+            "high_stakes",
+            "gambler_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "luck"
+        ],
+        "resources": [
+            "stamina",
+            "luck"
+        ],
+        "axes": [
+            "tempo",
+            "utility"
+        ],
+        "version": "7.2"
     },
     "gunner": {
         "name": "Gunner",
         "description": "The Ballistic Specialist. Expert in firearm tactics and headshot payloads.",
-        "gear": ["hand_cannon", "bandolier", "eye_patch"],
-        "blessings": ["double_tap", "flashbang", "hollow_point", "gunner_headshot", "buckshot", "covering_fire", "tactical_slide", "rapid_fire"],
-        "identity_tags": ["martial", "gun"],
-        "resources": ["stamina", "bullets"],
-        "axes": ["position", "lethality"],
-        "version": "6.2"
+        "gear": [
+            "hand_cannon",
+            "bandolier",
+            "eye_patch"
+        ],
+        "blessings": [
+            "double_tap",
+            "hollow_point",
+            "gunner_headshot",
+            "buckshot",
+            "covering_fire",
+            "flashbang",
+            "tactical_slide",
+            "rapid_fire",
+            "gunner_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "gun"
+        ],
+        "resources": [
+            "stamina",
+            "bullets"
+        ],
+        "axes": [
+            "position",
+            "lethality"
+        ],
+        "version": "7.2"
     },
     "wanderer": {
         "name": "Wanderer",
-        "description": "A free spirit who moves without mental strain.",
-        "blessings": ["struggle", "strike", "kick", "untethered_step", "vagabond_resolve", "inner_compass", "free_spirit", "wanderer_init"],
-        "identity_tags": ["martial", "wanderer"],
-        "resources": ["stamina"],
-        "axes": ["tempo", "position"],
+        "description": "A free spirit who moves without mental strain. The starting point for all travelers.",
+        "blessings": [
+            "strike",
+            "kick",
+            "struggle",
+            "untethered_step",
+            "vagabond_resolve",
+            "inner_compass",
+            "free_spirit",
+            "deliberate_step",
+            "wanderer_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "wanderer"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "tempo",
+            "position"
+        ],
+        "version": "7.2"
+    },
+    "cleric": {
+        "name": "Cleric",
+        "description": "The Divine Guardian. Specialized in healing, wards, and judgment of the wicked.",
+        "gear": [
+            "holy_mace",
+            "linen_vestments",
+            "wooden_cross"
+        ],
+        "blessings": [
+            "holy_strike",
+            "divine_mark",
+            "judgment",
+            "purification",
+            "aegis",
+            "divine_grace",
+            "beacon_of_light",
+            "resurrection",
+            "cleric_physiology"
+        ],
+        "identity_tags": [
+            "divine",
+            "restoration"
+        ],
+        "resources": [
+            "stamina",
+            "faith"
+        ],
+        "axes": [
+            "restoration",
+            "judgment"
+        ],
         "version": "7.2"
     },
     "assassin": {
         "name": "Assassin",
         "description": "The lethal shadow. Specialized in precision strikes, poisons, and room control via traps.",
-        "gear": ["glass_dagger", "dark_leather_mask", "shadow_cloak"],
-        "blessings": ["hide", "backstab", "circle", "venom", "trap", "smoke_bomb", "dirt_kick", "garrote", "assassin_physiology"],
-        "identity_tags": ["martial", "vision", "lethality"],
-        "resources": ["stamina"],
-        "axes": ["vision", "lethality"],
+        "gear": [
+            "glass_dagger",
+            "dark_leather_mask",
+            "shadow_cloak"
+        ],
+        "blessings": [
+            "assassin_opening",
+            "toxic_blade",
+            "death_stroke",
+            "throat_slit",
+            "smoke_screen",
+            "evasive_maneuver",
+            "assassin_jump",
+            "killer_instinct",
+            "assassin_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "vision",
+            "lethality"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "vision",
+            "lethality"
+        ],
         "version": "7.2"
     },
     "defiler": {
         "name": "Defiler",
         "description": "A master of curses and afflictions. Fuels power through a Blood Well and withering attrition.",
-        "gear": ["bone_staff", "skull_mask", "rotting_robes"],
-        "blessings": ["life_tap", "corpse_consumption", "fear", "hex", "hunger", "malediction", "shadow_bind", "plague", "defiler_physiology"],
-        "identity_tags": ["occult", "dark", "endurance"],
-        "resources": ["stamina"],
-        "axes": ["endurance", "lethality"],
+        "gear": [
+            "bone_staff",
+            "skull_mask",
+            "rotting_robes"
+        ],
+        "blessings": [
+            "putrid_strike",
+            "festering_wound",
+            "toxic_collapse",
+            "miasma_explosion",
+            "carapace_of_decay",
+            "necrotic_stasis",
+            "sludge_dash",
+            "plague_of_oblivion",
+            "defiler_physiology"
+        ],
+        "identity_tags": [
+            "occult",
+            "dark",
+            "endurance"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "endurance",
+            "lethality"
+        ],
         "version": "7.2"
     },
     "soul_reaver": {
         "name": "Soul Reaver",
         "description": "The blood-fueled juggernaut. Sacrifices vitality for relentless aggression and heavy Dark strikes.",
-        "gear": ["blood_claymore", "jagged_plate_armour", "crimson_cloak"],
-        "blessings": ["blood_slash", "rend_soul", "reaving_strike", "crimson_nova", "blood_armor", "vampiric_pact", "blood_dash", "blood_boil", "soul_reaver_physiology"],
-        "identity_tags": ["martial", "dark", "lethality"],
-        "resources": ["stamina", "blood_well"],
-        "axes": ["endurance", "lethality"],
+        "gear": [
+            "blood_claymore",
+            "jagged_plate_armour",
+            "crimson_cloak"
+        ],
+        "blessings": [
+            "soul_rip",
+            "essence_drain",
+            "soul_reap",
+            "essence_burst",
+            "spectral_armor",
+            "ethereal_form",
+            "soul_dash",
+            "spiritual_feast",
+            "soul_reaver_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "dark",
+            "lethality"
+        ],
+        "resources": [
+            "stamina",
+            "blood_well"
+        ],
+        "axes": [
+            "endurance",
+            "lethality"
+        ],
         "version": "7.2"
     },
     "death_knight": {
         "name": "Death Knight",
         "description": "The unholy fortress. Combines Frost and Necrotic magic to anchor and dominate the field.",
-        "gear": ["doom_greataxe", "runed_plate", "frost_pendant"],
-        "blessings": ["frost_strike", "death_grip", "obliterate", "unholy_blight", "icebound_fortitude", "anti_magic_shell", "shambling_charge", "raise_ghoul", "death_knight_physiology"],
-        "identity_tags": ["martial", "necrosis", "protection"],
-        "resources": ["stamina", "runic_pips"],
-        "axes": ["endurance", "protection"],
+        "gear": [
+            "doom_greataxe",
+            "runed_plate",
+            "frost_pendant"
+        ],
+        "blessings": [
+            "death_strike",
+            "frost_fever",
+            "oblivion_strike",
+            "death_and_decay",
+            "bone_shield",
+            "unbreakable_will",
+            "death_grip",
+            "army_of_the_dead",
+            "death_knight_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "necrosis",
+            "protection"
+        ],
+        "resources": [
+            "stamina",
+            "runic_pips"
+        ],
+        "axes": [
+            "endurance",
+            "protection"
+        ],
         "version": "7.2"
     },
     "shadow_blade": {
         "name": "Shadow Blade",
         "description": "The precise void. A master of invisibility, marking targets, and lethal assassinations.",
-        "gear": ["void_dagger", "shadow_cowl", "dark_leather_mask"],
-        "blessings": ["void_strike", "shadow_meld", "assassinate", "twilight_dance", "void_parry", "ghost_form", "night_step", "dark_vision", "shadow_blade_physiology"],
-        "identity_tags": ["martial", "vision", "lethality"],
-        "resources": ["stamina"],
-        "axes": ["vision", "lethality"],
-        "version": "7.2"
-    },
-    "black_mage": {
-        "name": "Black Mage",
-        "description": "The dark weaver. Specializes in catastrophic elemental AOE and soul-igniting bursts.",
-        "gear": ["obsidian_staff", "shadow_robes", "focus_crystal"],
-        "blessings": ["hellfire_cast", "abyssal_chill", "cataclysmic_burst", "soul_ignite", "obsidian_barrier", "mana_parry", "rift_dash", "dark_ascendancy", "black_mage_physiology"],
-        "identity_tags": ["magic", "elemental", "lethality"],
-        "resources": ["concentration"],
-        "axes": ["elemental", "lethality"],
+        "gear": [
+            "void_dagger",
+            "shadow_cowl",
+            "dark_leather_mask"
+        ],
+        "blessings": [
+            "shadow_strike",
+            "blindside",
+            "nightfall_execute",
+            "shadow_cleave",
+            "shroud_of_night",
+            "umbral_reflexes",
+            "shadow_step",
+            "dark_vision",
+            "shadow_blade_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "vision",
+            "lethality"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "vision",
+            "lethality"
+        ],
         "version": "7.2"
     },
     "witch": {
         "name": "Witch",
         "description": "The fate weaver. Binds enemies with curses and hexes, winning through attrition.",
-        "gear": ["witch_hat", "curse_stick", "bone_amulet"],
-        "blessings": ["hex_flare", "curse_of_binding", "vile_curse", "soul_siphon", "fate_mirror", "mist_form", "night_shade", "dark_ritual", "witch_physiology"],
-        "identity_tags": ["occult", "disruption", "dark"],
-        "resources": ["stamina", "entropy"],
-        "axes": ["dark", "disruption"],
+        "gear": [
+            "witch_hat",
+            "curse_stick",
+            "bone_amulet"
+        ],
+        "blessings": [
+            "witchs_cackle",
+            "curse_of_misfortune",
+            "voodoo_puncture",
+            "cauldron_eruption",
+            "obsidian_ward",
+            "mist_form",
+            "broomstick_flight",
+            "grand_hex_of_ruin",
+            "witch_physiology"
+        ],
+        "identity_tags": [
+            "occult",
+            "disruption",
+            "dark"
+        ],
+        "resources": [
+            "stamina",
+            "entropy"
+        ],
+        "axes": [
+            "dark",
+            "disruption"
+        ],
         "version": "7.2"
     },
     "soul_weaver": {
         "name": "Soul Weaver",
         "description": "The life-threader. Manipulates the boundary between restoration and dark protection.",
-        "gear": ["silk_thread", "spirit_mask", "soul_crystal"],
-        "blessings": ["weave_life", "sever_thread", "soul_mending", "reaping_blast", "spiritual_barrier", "soul_bind", "spirit_walk", "thread_of_fate", "soul_weaver_physiology"],
-        "identity_tags": ["magic", "restoration", "dark"],
-        "resources": ["concentration", "spirits"],
-        "axes": ["dark", "restoration"],
+        "gear": [
+            "silk_thread",
+            "spirit_mask",
+            "soul_crystal"
+        ],
+        "blessings": [
+            "weave_strike",
+            "spirit_infusion",
+            "soul_mend",
+            "weave_explosion",
+            "spiritual_shield",
+            "thread_of_fate_blink",
+            "weaving_dash",
+            "grand_weave_revival",
+            "soul_weaver_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "restoration",
+            "dark"
+        ],
+        "resources": [
+            "concentration",
+            "spirits"
+        ],
+        "axes": [
+            "dark",
+            "restoration"
+        ],
         "version": "7.2"
     },
     "shadow_dancer": {
         "name": "Shadow Dancer",
         "description": "The lethal performer. Weaves dark magic into speed-based martial arts.",
-        "gear": ["twilight_slippers", "shadow_ribbons", "dagger_fan"],
-        "blessings": ["twilight_strike", "shadow_step", "danse_macabre", "sever_soul", "evasive_waltz", "shadow_echo", "flicker", "eclipse_curse", "shadow_dancer_physiology"],
-        "identity_tags": ["martial", "speed", "lethality"],
-        "resources": ["stamina", "rhythm"],
-        "axes": ["speed", "lethality"],
+        "gear": [
+            "twilight_slippers",
+            "shadow_ribbons",
+            "dagger_fan"
+        ],
+        "blessings": [
+            "dance_of_shadows",
+            "veiled_motion",
+            "twilight_finale",
+            "spinning_shadow",
+            "illusory_double",
+            "graceful_evasion",
+            "shadow_leap",
+            "shadow_melter",
+            "shadow_dancer_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "speed",
+            "lethality"
+        ],
+        "resources": [
+            "stamina",
+            "rhythm"
+        ],
+        "axes": [
+            "speed",
+            "lethality"
+        ],
+        "version": "7.2"
+    },
+    "warrior": {
+        "name": "Warrior",
+        "description": "The Brute Force. Specialized in heavy strikes, area denial, and unrelenting physical pressure.",
+        "gear": [
+            "iron_claymore",
+            "heavy_leather_tunic"
+        ],
+        "blessings": [
+            "warriors_strike",
+            "battle_cry",
+            "brutal_cleave",
+            "overpowering_blow",
+            "ignore_pain",
+            "berserk_leap",
+            "war_path",
+            "unbreakable_will",
+            "warrior_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "lethality"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "lethality",
+            "tempo"
+        ],
+        "version": "7.2"
+    },
+    "soldier": {
+        "name": "Soldier",
+        "description": "The Tactical Frontline. A master of shield techniques, teamwork, and localized control.",
+        "gear": [
+            "iron_sword",
+            "iron_shield",
+            "soldier_galley_half_plate"
+        ],
+        "blessings": [
+            "soldiers_strike",
+            "shield_bash",
+            "phalanx_thrust",
+            "disciplined_volley",
+            "defensive_hunker",
+            "tactical_retreat",
+            "marching_pace",
+            "rally_the_troops",
+            "soldier_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "protection"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "protection",
+            "utility"
+        ],
+        "version": "7.2"
+    },
+    "red_mage": {
+        "name": "Red Mage",
+        "description": "The Spellblade. A versatile hybrid who balances steel and sorcery through a rhythm of steel and mana.",
+        "gear": [
+            "fine_rapier",
+            "crimson_cloak",
+            "spellblade_focus"
+        ],
+        "blessings": [
+            "dual_casting",
+            "balance_point",
+            "spellsword_burst",
+            "arcane_cleave",
+            "red_barrier",
+            "displacing_strike",
+            "mystic_marching",
+            "chain_spell",
+            "red_mage_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "magic",
+            "hybrid"
+        ],
+        "resources": [
+            "stamina",
+            "balance"
+        ],
+        "axes": [
+            "hybrid",
+            "tempo"
+        ],
+        "version": "7.2"
+    },
+    "magician": {
+        "name": "Magician",
+        "description": "The Arcane Trickster. Uses illusions, sleight of hand, and unexpected spell cascades to confuse and devastate.",
+        "gear": [
+            "magicians_staff",
+            "silk_vest",
+            "hidden_pockets"
+        ],
+        "blessings": [
+            "arcane_missile",
+            "mana_infusion",
+            "arcane_barrage",
+            "mana_burst",
+            "arcane_shield",
+            "spell_lock",
+            "arcane_dash",
+            "enchant_weapon",
+            "magician_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "illusion"
+        ],
+        "resources": [
+            "stamina",
+            "concentration"
+        ],
+        "axes": [
+            "illusion",
+            "vision"
+        ],
+        "version": "7.2"
+    },
+    "sorcerer": {
+        "name": "Sorcerer",
+        "description": "The Chaotic Weaver. Manipulates unstable mana for unpredictable and devastating effects.",
+        "gear": [
+            "spellwoven_staff",
+            "shimmering_robes"
+        ],
+        "blessings": [
+            "chaos_bolt",
+            "unstable_affliction",
+            "chaos_cataclysm",
+            "mental_burn",
+            "shimmering_skin",
+            "unstable_shield",
+            "chaos_blink",
+            "wild_magic_surge",
+            "sorcerer_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "chaos"
+        ],
+        "resources": [
+            "concentration"
+        ],
+        "axes": [
+            "chaos",
+            "lethality"
+        ],
+        "version": "7.2"
+    },
+    "temporalist": {
+        "name": "Temporalist",
+        "description": "The Master of Time. Manipulates the rhythm of battle through delays, echoes, and stasis.",
+        "gear": [
+            "hourglass_focus",
+            "fading_cloak"
+        ],
+        "blessings": [
+            "time_slice",
+            "temporal_anchor",
+            "temporal_stasis",
+            "chrono_burst",
+            "rewind_death",
+            "time_dilation",
+            "chrono_blink",
+            "accelerated_destiny",
+            "temporalist_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "time"
+        ],
+        "resources": [
+            "concentration",
+            "entropy"
+        ],
+        "axes": [
+            "time",
+            "utility"
+        ],
+        "version": "7.2"
+    },
+    "guardian": {
+        "name": "Guardian",
+        "description": "The Unmovable Wall. Specialized in pure damage mitigation and protecting the weak.",
+        "gear": [
+            "tower_shield",
+            "guardian_plate",
+            "heavy_mace"
+        ],
+        "blessings": [
+            "bastion_strike",
+            "interpose",
+            "shield_slam",
+            "iron_curtain",
+            "invulnerability_stance",
+            "shield_swipe",
+            "guardian_rush",
+            "sacred_bond",
+            "guardian_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "protection"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "protection",
+            "endurance"
+        ],
+        "version": "7.2"
+    },
+    "hunter": {
+        "name": "Hunter",
+        "description": "The Master of the Hunt. Specialized in tracking, traps, and precision strikes from distance.",
+        "gear": [
+            "hunting_bow",
+            "serrated_knife",
+            "camo_cloak"
+        ],
+        "blessings": [
+            "hunters_shot",
+            "trap_setting",
+            "predator_strike",
+            "rain_of_thorns",
+            "beast_hide_cloak",
+            "wild_evasion",
+            "trek",
+            "call_of_the_wild",
+            "hunter_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "vision"
+        ],
+        "resources": [
+            "stamina"
+        ],
+        "axes": [
+            "vision",
+            "position"
+        ],
+        "version": "7.2"
+    },
+    "chemist": {
+        "name": "Chemist",
+        "description": "The Mixmaster. Uses alchemy and concoctions to buff allies or dissolve foes through chemical reactions.",
+        "gear": [
+            "alchemists_flask",
+            "heavy_apron"
+        ],
+        "blessings": [
+            "toss_philter",
+            "catalyze",
+            "acid_flask",
+            "healing_mist",
+            "smoke_bomb_defense",
+            "concoction_shield",
+            "reagent_dash",
+            "ultimate_compound",
+            "chemist_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "alchemy"
+        ],
+        "resources": [
+            "stamina",
+            "reagent_pips"
+        ],
+        "axes": [
+            "utility",
+            "elemental"
+        ],
+        "version": "7.2"
+    },
+    "dancer": {
+        "name": "Dancer",
+        "description": "The Rhythm Blade. Weaves martial strikes into intricate dances to buff allies and confuse enemies with lethal tempo.",
+        "gear": [
+            "martial_fans",
+            "dancing_garb"
+        ],
+        "blessings": [
+            "step_strike",
+            "graceful_entry",
+            "bladed_waltz",
+            "pirouette_slam",
+            "defensive_dance",
+            "enchanting_sway",
+            "flourish_dash",
+            "finale_encore",
+            "dancer_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "speed"
+        ],
+        "resources": [
+            "stamina",
+            "rhythm"
+        ],
+        "axes": [
+            "speed",
+            "utility"
+        ],
+        "version": "7.2"
+    },
+    "summoner": {
+        "name": "Summoner",
+        "description": "The Caller. Bridges the veil to summon powerful entities to fight on their behalf.",
+        "gear": [
+            "summoners_staff",
+            "ritual_robes"
+        ],
+        "blessings": [
+            "spirit_lash",
+            "veil_opening",
+            "grand_invocation",
+            "synergy_explosion",
+            "spirit_shield",
+            "banish",
+            "veil_step",
+            "call_avatar",
+            "summoner_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "summoning"
+        ],
+        "resources": [
+            "stamina",
+            "aether_pips"
+        ],
+        "axes": [
+            "utility",
+            "endurance"
+        ],
+        "version": "7.2"
+    },
+    "puppet_master": {
+        "name": "Puppet Master",
+        "description": "The Strings of Fate. Commands mechanical or magical puppets to dominate the battlefield through proxy control.",
+        "gear": [
+            "control_strings",
+            "heavy_cloak"
+        ],
+        "blessings": [
+            "puppet_strike",
+            "string_pull",
+            "overdrive",
+            "iron_fury",
+            "iron_guard",
+            "proxy_defense",
+            "thread_dash",
+            "grand_puppeteer",
+            "puppet_master_physiology"
+        ],
+        "identity_tags": [
+            "magic",
+            "tech"
+        ],
+        "resources": [
+            "stamina",
+            "control_pips"
+        ],
+        "axes": [
+            "utility",
+            "position"
+        ],
+        "version": "7.2"
+    },
+    "machinist": {
+        "name": "Machinist",
+        "description": "The Gadgeteer. Uses firearms and mechanical drones to control distance and apply constant ballistic pressure.",
+        "gear": [
+            "auto_pistol",
+            "tech_goggles",
+            "tool_belt"
+        ],
+        "blessings": [
+            "shot_burst",
+            "tech_mark",
+            "satellite_beam",
+            "ballistic_barrage",
+            "auto_barrier",
+            "recharge_protocol",
+            "rocket_jump",
+            "drone_swarm",
+            "machinist_physiology"
+        ],
+        "identity_tags": [
+            "martial",
+            "gun",
+            "tech"
+        ],
+        "resources": [
+            "stamina",
+            "ammunition"
+        ],
+        "axes": [
+            "position",
+            "lethality"
+        ],
         "version": "7.2"
     }
 }

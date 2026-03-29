@@ -16,22 +16,50 @@ def run_phase_2_logic(grid, width, height, config=None, grid_meta=None):
     
     for sx, sy in starts[:river_count]:
         cx, cy = sx, sy; visited = set()
+        
+        # [V9.2] GLACIAL HEART: Pad the river start with high-altitude snow/ice
+        for dy in range(-2, 3):
+            for dx in range(-2, 3):
+                ny, nx = sy+dy, sx+dx
+                if 0 <= nx < width and 0 <= ny < height:
+                    if grid[ny][nx] == "peak" and random.random() < 0.6:
+                        grid[ny][nx] = "glacier"
+                    elif grid[ny][nx] == "mountain" and random.random() < 0.4:
+                        grid[ny][nx] = "snow"
+
         for _ in range(700):
             visited.add((cx, cy))
             down = []
-            for dy, dx in [(-1,0),(1,0),(0,-1),(0,1),(-1,-1),(1,1)]:
+            for dy, dx in [(-1,0),(1,0),(0,-1),(0,1),(-1,-1),(1,1),(1,-1),(-1,1)]:
                  nx, ny = cx+dx, cy+dy
                  if 0 <= nx < width and 0 <= ny < height and (nx, ny) not in visited:
                      e = elev_map[ny][nx]
-                     if e < elev_map[cy][cx]: down.append((nx, ny, e))
+                     if e <= elev_map[cy][cx]: down.append((nx, ny, e))
             
-            if not down: break
+            if not down:
+                # [V9.2] NATURAL POOLING: If reached a flat spot, expand into a small lake
+                # A 5x5 to 10x10 irregular blob
+                pool_r = random.randint(3, 5)
+                for dy in range(-pool_r, pool_r + 1):
+                    for dx in range(-pool_r, pool_r + 1):
+                        px, py = cx + dx, cy + dy
+                        if 0 <= px < width and 0 <= py < height:
+                            if math.sqrt(dx*dx + dy*dy) < pool_r + (random.random() * 2):
+                                if grid[py][px] not in ["peak", "city", "shrine"]:
+                                    grid[py][px] = "water"
+                break
+            
             down.sort(key=lambda n: n[2])
-            nx, ny, _ = random.choice(down[:3]) if random.random() < 0.6 else down[0]
-            if grid[ny][nx] in ["ocean", "water"]: break
+            nx, ny, _ = random.choice(down[:3]) if random.random() < 0.4 else down[0]
+            if grid[ny][nx] in ["ocean", "water"]: 
+                # Widen the mouth slightly
+                for dy, dx in [(-1,0),(1,0),(0,-1),(0,1)]:
+                    if 0 <= nx+dx < width and 0 <= ny+dy < height:
+                        grid[ny+dy][nx+dx] = "water"
+                break
             
-            # Widening
-            r = 1 if elev_map[ny][nx] > 0.5 else 2
+            # River Widening
+            r = 1 if elev_map[ny][nx] > 0.4 else 2
             for dy in range(-r+1, r):
                 for dx in range(-r+1, r):
                     vy, vx = ny+dy, nx+dx
@@ -101,9 +129,10 @@ def run_phase_1_5_logic(grid, width, height, config):
         # Determine 1-2 massive Bay/Gulf seeds on the coast
         num_gulfs = random.randint(1, 2)
         for _ in range(num_gulfs):
-            # Pick a coastal edge point
-            edge = random.choice(["S", "E", "W"])
+            # Pick a coastal edge point (Fully Randomized)
+            edge = random.choice(["N", "S", "E", "W"])
             if edge == "S": centers.append((random.randint(30, width-30), height-1))
+            elif edge == "N": centers.append((random.randint(30, width-30), 0))
             elif edge == "E": centers.append((width-1, random.randint(30, height-30)))
             else: centers.append((0, random.randint(30, height-30)))
 
