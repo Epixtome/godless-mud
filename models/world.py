@@ -10,7 +10,9 @@ class Room:
         self.x = 0
         self.y = 0
         self.z = 0
+        self.world = None # [V7.2] Live context for perception engine
         self.zone_id = None
+
         self.shop_inventory = [] # List of item IDs sold here
         self.deity_id = None # ID of deity present here (for commune)
         self.terrain = "indoors"

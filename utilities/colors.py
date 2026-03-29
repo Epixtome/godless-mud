@@ -51,9 +51,24 @@ class Colors(metaclass=ColorMeta):
     @staticmethod
     def strip(text):
         """Removes ANSI codes from a string."""
+        if not text: return ""
         import re
         ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
         return ansi_escape.sub('', text)
+
+    @staticmethod
+    def strip_all(text):
+        """
+        Removes BOTH ANSI escape codes and {Colors.X} tokens.
+        [V7.3 Standard]
+        """
+        if not text: return ""
+        import re
+        # 1. Strip ANSI (Via internal call)
+        text = Colors.strip(text)
+        # 2. Strip {Colors.TOKEN}
+        token_escape = re.compile(r'\{Colors\.[A-Za-z_]+\}')
+        return token_escape.sub('', text)
 
     @staticmethod
     def translate(text):
