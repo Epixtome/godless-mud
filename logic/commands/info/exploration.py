@@ -297,7 +297,8 @@ def scan(player, args):
         return d.get((rx, ry), "Nearby")
 
     found_any = False
-    coords = [c for c in perception.entities.keys() if abs(c[0]) + abs(c[1]) == 1]
+    # [V7.2 BUG 6 FIX] Coordinates must include current room (0,0) and radius 1 neighbors (dist <= 1).
+    coords = [c for c in perception.entities.keys() if max(abs(c[0]), abs(c[1])) <= 1]
     coords = sorted(coords, key=lambda c: max(abs(c[0]), abs(c[1])))
     
     for (rx, ry) in coords:

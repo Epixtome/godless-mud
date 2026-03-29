@@ -65,6 +65,8 @@ def dig_room(player, direction, name="New Room", copy_from=None, terrain=None):
             new_room = Room(new_id, name, "An empty room created by magic.")
             new_room.x, new_room.y, new_room.z = x, y, z
             new_room.zone_id = player.room.zone_id
+            new_room.world = player.game.world
+
             
             if copy_from:
                 new_room.name = copy_from.name

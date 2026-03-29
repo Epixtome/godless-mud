@@ -7,11 +7,15 @@ from utilities.colors import Colors
 from logic.core import event_engine, effects, combat, resources
 from logic.engines.blessings_engine import Auditor
 from logic.core.systems.influence_service import InfluenceService
+from logic.core import perception as vision
+
+# [V9.7 ZERO-LAG TRIGGER] Ref-self for command bridge
+from logic.core.services import ui_service 
 
 logger = logging.getLogger("GodlessMUD")
 
 def send_ui_update(player, force_map=False):
-    """[V9.1 OPTIMIZED] Main UI Synchronization Pulse (Offloaded from Player Model)."""
+    """[V9.7 OPTIMIZED] Main UI Synchronization Pulse (No-Lag Mode)."""
     if not player or not player.game or not getattr(player.connection, 'is_web', False):
         return
 
@@ -25,13 +29,19 @@ def send_ui_update(player, force_map=False):
         
         # Only send map if coordinates changed OR force-requested
         if force_map or current_coords != last_coords:
-            from logic.core import perception as vision
+            # [V9.7 PARITY FIX] Dynamic Radius matching backend MAP command
+            elev = getattr(player.room, 'elevation', 0)
+            target_radius = 7 + elev
+            final_radius = max(2, min(15, target_radius))
             
-            tactical = vision.get_perception(player, radius=5, context=vision.TACTICAL)
+            tactical = vision.get_perception(player, radius=final_radius, context=vision.TACTICAL)
             if hasattr(tactical, 'to_dict'):
+                perc_dict = tactical.to_dict()
+                # [V9.7 FIX] Use the ACTUAL radius from the vision engine (respecting weather/penalties)
+                perc_dict['current_radius'] = tactical.radius 
                 player.send_json({
                     "type": "map_data",
-                    "data": { "context": "map", "perception": tactical.to_dict() }
+                    "data": { "context": "map", "perception": perc_dict }
                 })
                 # Update persistent sync state
                 player.ext_state['last_synced_coords'] = current_coords
@@ -46,26 +56,15 @@ def save_ui_prefs(player, prefs):
     logger.debug(f"UI Prefs saved for {player.name}")
 
 def send_audio_event(player, sound_id, x, y, z, intensity=1.0):
-    """[V9.3 SPATIAL] Dispatches a 3D audio pulse to the web client."""
     if not player or not getattr(player.connection, 'is_web', False):
         return
-    
-    # Calculate relative coordinates (Player is 0,0)
     rel_x = x - player.room.x if player.room else 0
     rel_y = y - player.room.y if player.room else 0
-    
-    # Pruning: Only send if within tactical audio range (Radius 7)
     if abs(rel_x) > 7 or abs(rel_y) > 7:
         return
-
     player.send_json({
         "type": "audio:event",
-        "data": {
-            "id": sound_id,
-            "rel_x": rel_x,
-            "rel_y": rel_y,
-            "intensity": intensity
-        }
+        "data": {"id": sound_id, "rel_x": rel_x, "rel_y": rel_y, "intensity": intensity}
     })
 
 def send_status_update(player):
@@ -79,31 +78,21 @@ def send_status_update(player):
         for b_id in player.equipped_blessings:
             b = player.game.world.blessings.get(b_id)
             if b:
-                # Resolve GCA Attributes (Dict/Object Support)
                 b_name = b.get('name', b_id) if isinstance(b, dict) else getattr(b, 'name', b_id)
                 b_type = b.get('logic_type', 'skill') if isinstance(b, dict) else getattr(b, 'logic_type', 'skill')
                 b_tags = b.get('identity_tags', []) if isinstance(b, dict) else getattr(b, 'identity_tags', [])
-                
-                # Cooldown Readiness
                 cooldown_ready = player.cooldowns.get(b_id, 0) <= pulse
-                
-                # Situational Requirements
                 reqs = b.get('requirements', {}) if isinstance(b, dict) else getattr(b, 'requirements', {})
                 fighting_ready = True
                 if reqs.get('fighting') is True and not player.fighting:
                     fighting_ready = False
-                
-                # Dynamic Resource Check (Auditor Logic)
                 resource_ready = True
                 costs = Auditor.calculate_costs(b, player)
                 for res_name, cost_val in costs.items():
                     if player.resources.get(res_name, 0) < cost_val:
                         resource_ready = False
                         break
-                
                 ready = cooldown_ready and resource_ready and fighting_ready
-
-                # Combo/Setup Readiness (Status Interactions)
                 setup_ready = False
                 p_rules = b.get('potency_rules', []) if isinstance(b, dict) else getattr(b, 'potency_rules', [])
                 for rule in p_rules:
@@ -114,14 +103,9 @@ def send_status_update(player):
                         if target_obj and effects.has_effect(target_obj, status_id):
                             setup_ready = True
                             break
-                
                 blessings.append({
-                    "id": b_id, 
-                    "name": b_name,
-                    "type": b_type,
-                    "tags": b_tags,
-                    "ready": ready,
-                    "setup_ready": setup_ready, # UI indicator
+                    "id": b_id, "name": b_name, "type": b_type, "tags": b_tags,
+                    "ready": ready, "setup_ready": setup_ready, 
                     "cooldown": max(0, player.cooldowns.get(b_id, 0) - pulse),
                     "cost": b.get('cost', 0) if isinstance(b, dict) else getattr(b, 'cost', 0),
                     "resource_name": b.get('resource_name', 'SP') if isinstance(b, dict) else getattr(b, 'resource_name', 'SP')
@@ -133,110 +117,32 @@ def send_status_update(player):
         elif cycle < 225: time_label, is_day = "Evening", False
         else: time_label, is_day = "Night", False
 
-        # --- CLASS RESOURCE MANAGEMENT ---
         from logic.core import resource_registry
         class_res = None
         res_defs = resource_registry.get_resources_for_kit(getattr(player, 'active_class', 'common'))
         if res_defs:
             res = res_defs[0]
             if res.id != 'balance':
-                class_res = {
-                    "name": res.display_name,
-                    "current": player.resources.get(res.id, 0),
-                    "max": player.get_max_resource(res.id),
-                    "id": res.id
-                }
+                class_res = {"name": res.display_name, "current": player.resources.get(res.id, 0), "max": player.get_max_resource(res.id), "id": res.id}
 
-        # --- ROOM CONTENTS (Entities, Objects, Shrines) ---
         entities = []
         if player.room:
-            # Players
             for p in getattr(player.room, 'players', []):
                 if p == player: continue
-                entities.append({
-                    "id": str(id(p)), "name": p.name, 
-                    "symbol": Colors.strip(getattr(p, 'symbol', '@'))[0], "is_player": True
-                })
-            
-            # Monsters
-            from logic.core import perception
+                entities.append({"id": str(id(p)), "name": p.name, "symbol": Colors.strip(getattr(p, 'symbol', '@'))[0], "is_player": True})
             for m in getattr(player.room, 'monsters', []):
-                # [V9.5 Bug 2] Intelligence-Based Awareness
-                # Mobs only show if: Fighting, Aggressive, or you can actually see them (Perception)
-                can_see = perception.can_see(player, m)
+                can_see = vision.can_see(player, m)
                 in_combat = (m.fighting is not None)
                 is_aggressive = getattr(m, 'is_aggressive', False)
-                
-                # We show unidentified but "detectable" entities as '?' or 'Something'
                 if can_see or in_combat or is_aggressive:
                     symbol = Colors.strip(getattr(m, 'symbol', 'm'))[0]
                     name = m.name if can_see else "Something"
-                    
-                    if not can_see and in_combat:
-                        symbol = "?" # Fighting but hidden (e.g. in shadows)
-                        
-                    entities.append({
-                        "id": str(id(m)), "name": name, 
-                        "symbol": symbol,
-                        "is_hostile": is_aggressive,
-                        "in_combat": in_combat
-                    })
+                    if not can_see and in_combat: symbol = "?"
+                    entities.append({"id": str(id(m)), "name": name, "symbol": symbol, "is_hostile": is_aggressive, "in_combat": in_combat})
 
-            # Interactive Items & Objects
-            for itm in getattr(player.room, 'items', []):
-                entities.append({
-                    "id": str(id(itm)),
-                    "name": itm.name,
-                    "symbol": getattr(itm, 'symbol', 'o')[0],
-                    "is_item": True,
-                    "type": itm.__class__.__name__.lower()
-                })
-
-            # Shrines (Sovereignty Interface)
-            for s_id, shrine in InfluenceService.get_instance().shrines.items():
-                if shrine.coords == [player.room.x, player.room.y, player.room.z]:
-                    entities.append({
-                        "id": s_id,
-                        "name": shrine.name,
-                        "symbol": "\u03a8", # Psi Symbol
-                        "is_shrine": True,
-                        "kingdom": shrine.captured_by
-                    })
-        
-        # --- ROOM TRAPS ---
-        traps = []
-        if player.room:
-            # Metadata-based traps
-            if hasattr(player.room, 'metadata') and 'traps' in player.room.metadata:
-                for trap in player.room.metadata['traps']:
-                    is_owner = trap.get('owner') == player.name
-                    is_assassin = getattr(player, 'active_class', 'unknown') == 'assassin'
-                    if is_owner or is_assassin:
-                        traps.append({
-                            "id": str(id(trap)),
-                            "type": trap.get('type', 'spike'),
-                            "owner": trap.get('owner', 'unknown'),
-                            "is_mine": is_owner
-                        })
-            
-            # Visible trap items
-            for itm in getattr(player.room, 'items', []):
-                if "trap" in getattr(itm, 'flags', []):
-                    traps.append({
-                        "id": str(id(itm)),
-                        "type": itm.name,
-                        "is_mechanism": True
-                    })
-
-        # --- INVENTORY & EQUIPMENT ---
         inventory = []
         for itm in player.inventory:
-            inventory.append({
-                "id": str(id(itm)),
-                "name": itm.name,
-                "type": itm.__class__.__name__.lower(),
-                "symbol": getattr(itm, 'symbol', '?')
-            })
+            inventory.append({"id": str(id(itm)), "name": itm.name, "type": itm.__class__.__name__.lower(), "symbol": getattr(itm, 'symbol', '?')})
 
         equipment = {
             "weapon": player.equipped_weapon.name if player.equipped_weapon else "Unequipped",
@@ -245,7 +151,6 @@ def send_status_update(player):
             "head": player.equipped_head.name if player.equipped_head else "Unequipped"
         }
 
-        # --- DISPATCH ---
         player.send_json({
             "type": "status_update",
             "data": {
@@ -258,21 +163,11 @@ def send_status_update(player):
                     "hp": {"current": player.fighting.hp, "max": player.fighting.max_hp},
                     "symbol": Colors.strip(getattr(player.fighting, 'symbol', 'm'))[0]
                 } if player.fighting else None,
-                "blessings": blessings,
-                "weather": weather,
-                "time": time_label,
-                "is_day": is_day,
-                "status_effects": [
-                    {"id": eid, "name": eid.replace('_', ' ').title(), "duration": max(0, ticks - pulse)}
-                    for eid, ticks in player.status_effects.items()
-                ],
+                "blessings": blessings, "weather": weather, "time": time_label, "is_day": is_day,
+                "status_effects": [{"id": eid, "name": eid.replace('_', ' ').title(), "duration": 0} for eid in player.status_effects.keys()],
                 "ui_prefs": player.ext_state.get('ui_prefs', {}),
-                "inventory": inventory,
-                "equipment": equipment,
-                "room": {
-                    "name": getattr(player.room, 'name', 'Void'),
-                    "entities": entities
-                }
+                "inventory": inventory, "equipment": equipment,
+                "room": {"name": getattr(player.room, 'name', 'Void'), "entities": entities}
             }
         })
     except Exception as e:

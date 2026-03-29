@@ -22,11 +22,12 @@ class PerceptionResult:
         self.entities = {} # (x, y) -> list of visible monsters/players
         self.pings = {} # (x, y) -> list of 'tracked' entity IDs
         self.los_mask = set() # (x, y) coordinates currently in direct Line-of-Sight
+        self.inner_radius = radius # Default to full grid, reduced by weather penalties
         
         # Persistence Context for Fog of War
         self.visited = getattr(observer, 'visited_rooms', []) if observer else []
         self.discovered = getattr(observer, 'discovered_rooms', []) if observer else []
-        self.is_admin = getattr(observer, 'is_admin', False) or getattr(observer, 'admin_vision', False)
+        self.is_admin = getattr(observer, 'admin_vision', False)
 
     def to_dict(self):
         """[V8.9] Serializes the result for JSON transit (WebSockets) via translator."""
@@ -74,13 +75,19 @@ def get_perception(observer, radius=7, context=TACTICAL_CONTEXT):
     else:
         penalty = _get_weather_radius_penalty(start_room)
         
-    final_radius = max(1, int(radius * penalty))
+    # [V6.9 REFACTOR] We keep the full radius for the grid, but mark the 'effective' vision line
+    inner_radius = max(1, int(radius * penalty))
+    final_radius = radius 
 
     from logic.engines import spatial_engine
     spatial = spatial_engine.get_instance(world)
-    if not spatial: return PerceptionResult(start_room, final_radius, observer=observer)
+    if not spatial: 
+        res = PerceptionResult(start_room, final_radius, observer=observer)
+        res.inner_radius = inner_radius
+        return res
 
     result = PerceptionResult(start_room, final_radius, observer=observer)
+    result.inner_radius = inner_radius
     radius = final_radius # Update for dependency sub-calls
     
     # 1. Gather Rooms based on Knowledge & LOS
@@ -108,11 +115,10 @@ def get_perception(observer, radius=7, context=TACTICAL_CONTEXT):
             if can_see_room:
                 visible = []
                 for m in room.monsters:
-                    # [V9.5 Bug 2] Map Intelligence Filtering
-                    # Mobs only show as icons if: Fighting or Aggressive.
-                    # We removed Admin bypass here so Admins can see the map as players do.
-                    is_active = (m.fighting is not None) or getattr(m, 'is_aggressive', False)
-                    if is_active and vision_logic.can_see(observer, m):
+                    # [V9.5 BUG 6 FIX] Removed Map Icon filter (aggressive/fighting) from core collection.
+                    # This ensures SCAN can see non-aggressive mobs.
+                    # Map-specific filtering remains in perception_translator.py for the tactical UI.
+                    if vision_logic.can_see(observer, m):
                         visible.append(m)
                 for p in room.players:
                     if vision_logic.can_see(observer, p):

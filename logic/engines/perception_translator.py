@@ -1,31 +1,38 @@
 """
 logic/engines/perception_translator.py
-[V8.9] Standardized Spatial-to-JSON Translation.
+[V9.7] Optimized Spatial-to-JSON Translation (Lag Reduction).
 """
+import json
+import os
+import logging
 from utilities.colors import Colors
+# --- Fast Imports (Optimized for 900+ Tile Processing) ---
+from logic.core.systems.influence_service import InfluenceService
+from logic.core.utils import vision_logic
 
-# Standardized Vanilla Web UI Mapping (ANSI-free HEX)
-UI_TERRAIN = {
-    "road": ("+", "#ffff55"), "dirt_road": (".", "#ffff55"),
-    "plains": (".", "#55ff55"), "grass": ("\"", "#55ff55"),
-    "hills": ("n", "#55ff55"), "forest": ("^", "#55ff55"),
-    "dense_forest": ("^", "#00aa00"), "mountain": ("^", "#ffffff"),
-    "high_mountain": ("^", "#ffffff"), "peak": ("A", "#ffffff"),
-    "swamp": ("%", "#ff55ff"), "water": ("~", "#5555ff"),
-    "shallow_water": ("~", "#55ffff"), "ocean": ("~", "#0000aa"),
-    "beach": (".", "#ffff55"), "indoors": ("#", "#55ffff"),
-    "cave": ("o", "#ffffff"), "desert": (":", "#ffff55"),
-    "wasteland": (":", "#ff5555"), "bridge": ("=", "#ffff55"),
-    "cobblestone": (".", "#ffffff"), "city": ("@", "#ffff55"),
-    "holy": ("*", "#ffff55"), "shadow": (":", "#ff55ff"),
-    "default": (".", "#bbbbbb")
-}
+UI_TERRAIN = {}
+try:
+    _reg_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "logic", "core", "data", "terrain_registry.json")
+    with open(_reg_path, "r") as _f:
+        _data = json.load(_f)
+        for _tid, _cfg in _data["terrains"].items():
+            UI_TERRAIN[_tid] = (_cfg["symbol"], _cfg["hex"])
+except Exception as _e:
+    print(f"[ERROR] Terrain Registry Load Failure: {_e}")
+    UI_TERRAIN = {"default": (".", "#64748b")}
+
+if "default" not in UI_TERRAIN:
+    UI_TERRAIN["default"] = (".", "#64748b")
 
 def translate_to_dict(perception_result):
-    """Serializes a PerceptionResult into the standard Godless Map Protocol (V8.9)."""
+    """
+    Serializes a PerceptionResult into JSON for the Godless Map Protocol (V9.7).
+    Optimized to eliminate inline imports and redundant singleton lookups.
+    """
     try:
         data = {
             "radius": perception_result.radius,
+            "inner_radius": getattr(perception_result, 'inner_radius', perception_result.radius),
             "center": { 
                 "x": perception_result.observer_room.x, 
                 "y": perception_result.observer_room.y, 
@@ -34,6 +41,15 @@ def translate_to_dict(perception_result):
             "grid": []
         }
         
+        # Pre-fetch services to avoid 900+ singleton lookups
+        inf_service = InfluenceService.get_instance()
+        los_mask = perception_result.los_mask
+        is_admin = perception_result.is_admin
+        observer = perception_result.observer
+        
+        # Terrain Registry Mapping (Fast Lookup)
+        default_terrain = UI_TERRAIN["default"]
+        
         for y in range(-perception_result.radius, perception_result.radius + 1):
             row = []
             for x in range(-perception_result.radius, perception_result.radius + 1):
@@ -41,9 +57,14 @@ def translate_to_dict(perception_result):
                 entities = perception_result.entities.get((x, y), [])
                 pings = perception_result.pings.get((x, y), [])
                 
-                # Influence Registry
-                from logic.core.systems.influence_service import InfluenceService
-                inf_service = InfluenceService.get_instance()
+                # Fog of War Logic
+                dist = max(abs(x), abs(y))
+                is_visited = room.id in perception_result.visited if room else False
+                is_discovered = is_visited or (room.id in perception_result.discovered if room else False)
+                is_knowledge = is_admin or (dist <= 3) or is_discovered
+                is_room_visible = is_knowledge and room is not None
+                is_in_los = (x, y) in los_mask
+
                 influence_data = None
                 if room:
                     dom, str_val = inf_service.get_influence(room.x, room.y, room.z)
@@ -51,62 +72,75 @@ def translate_to_dict(perception_result):
                 
                 # 1. Base Terrain
                 terrain = getattr(room, 'terrain', 'default') if room else 'default'
-                symbol, color = UI_TERRAIN.get(terrain, UI_TERRAIN["default"])
+                symbol, color = UI_TERRAIN.get(terrain, default_terrain)
                 
                 if room and hasattr(room, 'symbol') and room.symbol:
-                    sym_clean = Colors.strip(room.symbol)
+                    sym_clean = Colors.strip_all(room.symbol)
                     if sym_clean: symbol = sym_clean[0]
 
-                # 2. Fog of War Logic
-                is_in_los = (x, y) in perception_result.los_mask or perception_result.is_admin
-                is_visited = room.id in perception_result.visited if room else False
-                is_discovered = is_visited or (room.id in perception_result.discovered if room else False)
+                # [V9.7 FIX] Sync dimming for non-visited knowledge
+                if room and not is_visited and not is_admin:
+                    color = "#64748b" # Slate-500
+
+                # 3. Elevation Logic
+                elev = getattr(room, 'elevation', 0) if room else 0
+                if elev >= 10:
+                    symbol, color = "#", "#ffffff"
+                elif elev >= 5 and (terrain in ['plains', 'grass', 'road']):
+                    symbol, color = "^", "#94a3b8"
                 
-                is_room_visible = is_discovered or is_in_los or perception_result.is_admin
-                if not room: is_room_visible = False
+                # Haze Logic
+                is_hazy = dist > getattr(perception_result, 'inner_radius', perception_result.radius)
 
                 tile = {
                     "x": x, "y": y,
                     "visible": is_room_visible,
                     "visited": is_visited,
                     "in_los": is_in_los,
+                    "is_hazy": is_hazy,
                     "char": symbol,
                     "color": color,
                     "influence": influence_data,
-                    "elevation": getattr(room, 'elevation', 0) if room else 0,
+                    "elevation": elev,
                     "has_pings": len(pings) > 0
                 }
                 
-                tile["top_entities"] = []
                 if is_room_visible:
-                    # Entities are only visible if room is visible AND (in LOS or Scanned/Pinged)
-                    if entities and (perception_result.is_admin or is_in_los):
+                    tile["top_entities"] = []
+                    # Entities respect LoS (unless Admin)
+                    if entities and (is_admin or is_in_los):
                         for ent in entities[:4]:
-                            ent_color = "#5555ff" if getattr(ent, 'is_player', False) else "#ffff55"
+                            # Map Intelligence Filtering
+                            is_p = getattr(ent, 'is_player', False)
                             tags = getattr(ent, 'identity_tags', []) + getattr(ent, 'tags', [])
+                            f = getattr(ent, 'fighting', None)
+                            is_active = is_p or (f is not None) or any(t in tags for t in ["aggressive", "elite", "boss"])
+                            
+                            if not is_active and not is_admin:
+                                continue
+
+                            ent_color = "#5555ff" if is_p else "#ffff55"
                             if any(t in tags for t in ["aggressive", "elite", "boss"]): ent_color = "#ff5555"
                             
-                            from logic.core.utils import vision_logic
-                            can_see_final = vision_logic.can_see(perception_result.observer, ent)
+                            # [OPTIMIZED] can_see check
+                            can_see_final = vision_logic.can_see(observer, ent)
                             
                             ent_sym = getattr(ent, 'symbol', '@')
-                            symbol = Colors.strip(ent_sym)[0] if Colors.strip(ent_sym) else "@"
+                            ent_char = Colors.strip_all(ent_sym)[0] if Colors.strip_all(ent_sym) else "@"
                             name = getattr(ent, 'name', 'Unknown')
                             
-                            # [V9.5 BUG 2] Digital Ghosting (?) for hidden combatants
                             if not can_see_final:
-                                name = "Something"
-                                symbol = "?"
+                                name, ent_char = "Something", "?"
                                 
                             tile["top_entities"].append({
                                 "id": str(id(ent)),
                                 "name": name,
-                                "symbol": symbol,
+                                "symbol": ent_char,
                                 "color": ent_color,
-                                "is_player": getattr(ent, 'is_player', False),
-                                "is_self": ent == perception_result.observer
+                                "is_player": is_p,
+                                "is_self": ent == observer
                             })
-                    elif pings and (perception_result.is_admin or is_in_los or is_visited):
+                    elif pings and (is_admin or is_in_los or is_visited):
                         tile["top_entities"].append({
                             "name": "Vibration", "symbol": "m", "color": "#ffff55", "is_ping": True
                         })
@@ -115,6 +149,5 @@ def translate_to_dict(perception_result):
             data["grid"].append(row)
         return data
     except Exception as e:
-        import logging
         logging.getLogger("GodlessMUD").error(f"Perception Translate Error: {e}")
-        return {"type": "error", "message": "Spatial Translation Fault"}
+        return {"grid": [], "radius": 0}

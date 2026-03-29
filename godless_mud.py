@@ -158,11 +158,15 @@ class GodlessGame:
                 pass # Not valid JSON, treat as regular text
 
         # Handle Standard Commands with atomic buffering.
-        # We start buffering here, but we DO NOT stop/flush here.
-        # The 200ms Heartbeat Pulse handles the final atomic flush.
         player.start_buffering()
         try:
             result = input_handler.handle(player, command_line)
+            
+            # [V9.7 ZERO-LAG TRIGGER]
+            # Immediately trigger a UI update to flush chat and map changes.
+            # This bypasses the 200ms Heartbeat quantization for user actions.
+            if hasattr(player, 'send_ui_update'):
+                ui_service.send_ui_update(player, force_map=True)
             
             if not player.suppress_engine_prompt:
                 player.prompt_requested = True
