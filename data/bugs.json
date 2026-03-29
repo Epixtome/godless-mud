@@ -1,1 +1,65 @@
-{}
+{
+    "1": {
+        "id": 1,
+        "player": "kip",
+        "description": "add the number hotkey to the bottom of the ability button or put them into a 3 by 3 resizing grid instead of a line",
+        "context": "Cobblestone (sylvanis.57.94.0)",
+        "state": "open",
+        "created_at": "2026-03-27 18:27:37",
+        "updates": []
+    },
+    "2": {
+        "id": 2,
+        "player": "kip",
+        "description": "make the SPACEBAR do the same thing as the ` key, bringing the focus to the command bar",
+        "context": "Plains (null_void.74.108.0)",
+        "state": "open",
+        "created_at": "2026-03-27 18:28:40",
+        "updates": []
+    },
+    "3": {
+        "id": 3,
+        "player": "kip",
+        "description": "the tactical map is displaying color all the time, maybe because its using LOS instead of Fog of War and the reveal bubble. when you type MAP, the backend tactical map will only show color to rooms around the player and those that were visited and this should be the same on the UI tactical map. i also noticed that the UI tactical map will hide tiles that are out of sight and this shouldn't be happening. instead, you should be able to see the tiles but maybe dim the color a little. LOS is meant for intelligence such as the SCAN feature and mob visibility, so leave that as is but make the tiles visible assuming the fog of war is cleared.",
+        "context": "Plains (aetheria.36.53.0)",
+        "state": "open",
+        "created_at": "2026-03-29 11:10:11",
+        "updates": []
+    },
+    "4": {
+        "id": 4,
+        "player": "kip",
+        "description": "the ability deck need a facelift. i want a border color on the ability buttons based on the type of skill it is: payoff, setup, utility etc.",
+        "context": "Plains (aetheria.36.53.0)",
+        "state": "open",
+        "created_at": "2026-03-29 11:11:41",
+        "updates": []
+    },
+    "5": {
+        "id": 5,
+        "player": "kip",
+        "description": "allow the inventory menu items to be dragged, meaning you can drag the backpack content to the armaments and it'll \"equip <item>\".",
+        "context": "Plains (aetheria.36.53.0)",
+        "state": "open",
+        "created_at": "2026-03-29 11:12:39",
+        "updates": []
+    },
+    "6": {
+        "id": 6,
+        "player": "kip",
+        "description": "the SCAN command is no longer working, it says there are no signatures detected but i clearly see mobs on the tile here",
+        "context": "Plains (aetheria.38.51.0)",
+        "state": "open",
+        "created_at": "2026-03-29 11:13:47",
+        "updates": []
+    },
+    "7": {
+        "id": 7,
+        "player": "kip",
+        "description": "the spawn gear buttons in the admin panel are using @factory incorrectly. first of all, the spawning should be selecting and @spawn <item id> because the factory is a generation die, not a spawner for persistent gear.",
+        "context": "Plains (aetheria.38.51.0)",
+        "state": "open",
+        "created_at": "2026-03-29 11:15:11",
+        "updates": []
+    }
+}

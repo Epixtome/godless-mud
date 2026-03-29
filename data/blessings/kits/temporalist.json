@@ -1,0 +1,119 @@
+{
+    "blessings": {
+        "time_slice": {
+            "id": "time_slice",
+            "name": "Time Slice",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A strike that briefly pauses the foe's timeline. Generates 15 Concentration and 1 Chrono Pip.",
+            "identity_tags": [
+                "magic",
+                "time",
+                "setup",
+                "builder"
+            ],
+            "action": "time_slice"
+        },
+        "temporal_anchor": {
+            "id": "temporal_anchor",
+            "name": "Temporal Anchor",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Lock the target in their current state. Generates 1 Chrono Pip and applies [Slowed].",
+            "identity_tags": [
+                "magic",
+                "time",
+                "setup"
+            ],
+            "action": "temporal_anchor"
+        },
+        "temporal_stasis": {
+            "id": "temporal_stasis",
+            "name": "Temporal Stasis",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Completely freeze a target in time. Consumes 5 Chrono Pips to apply [Stunned] for 6 ticks.",
+            "identity_tags": [
+                "magic",
+                "time",
+                "payoff"
+            ],
+            "action": "temporal_stasis"
+        },
+        "chrono_burst": {
+            "id": "chrono_burst",
+            "name": "Chrono Burst",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff: A burst of accelerated time energy. Consumes 3 Chrono Pips to deal heavy Magic damage and grant [Haste] to self.",
+            "identity_tags": [
+                "magic",
+                "time",
+                "payoff"
+            ],
+            "action": "chrono_burst"
+        },
+        "rewind_death": {
+            "id": "rewind_death",
+            "name": "Rewind",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Rewind your own personal timeline. Removes all non-blessing debuffs on self.",
+            "identity_tags": [
+                "magic",
+                "time",
+                "defense"
+            ],
+            "action": "rewind_death"
+        },
+        "time_dilation": {
+            "id": "time_dilation",
+            "name": "Time Dilation",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Slow down incoming projectiles. Reduces missile damage by 60% for self and all allies in room.",
+            "identity_tags": [
+                "magic",
+                "time",
+                "defense"
+            ],
+            "action": "time_dilation"
+        },
+        "chrono_blink": {
+            "id": "chrono_blink",
+            "name": "Chrono Blink",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Teleport to any location you were in during the last 5 ticks.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "chrono_blink"
+        },
+        "accelerated_destiny": {
+            "id": "accelerated_destiny",
+            "name": "Accelerated Destiny",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: For 15 ticks, all cooldowns are reduced by 50% for all allies in the room.",
+            "identity_tags": [
+                "magic",
+                "utility"
+            ],
+            "action": "accelerated_destiny"
+        },
+        "temporalist_physiology": {
+            "id": "temporalist_physiology",
+            "name": "Temporalist Physiology",
+            "tier": 1,
+            "description": "Passive: Time Master. You gain 10% Haste and every Chrono Pip held increases your critical strike chance by 2%.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "temporalist",
+                "passive"
+            ]
+        }
+    }
+}

@@ -1,138 +1,120 @@
 {
     "blessings": {
+        "color_spray": {
+            "id": "color_spray",
+            "name": "Color Spray",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A dazzling flash of color that confuses the foe. Generates 15 Concentration and 1 Illusion Pip.",
+            "identity_tags": [
+                "magic",
+                "illusion",
+                "setup",
+                "builder"
+            ],
+            "action": "color_spray"
+        },
         "mirror_image": {
             "id": "mirror_image",
             "name": "Mirror Image",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: Create a flickering decoy. Grants [Mirrored] stacks (max 3). Each stack gives 15% Evasion. Generates 15 Concentration and +1 Mirage Pip. No cooldown.",
-            "identity_tags": ["magic", "illusion", "builder", "setup"],
-            "axis": "vision",
-            "action": "mirror_image",
-            "requirements": {
-                "class": "illusionist",
-                "concentration": 10
-            },
-            "base_power": 5
-        },
-        "color_spray": {
-            "id": "color_spray",
-            "name": "Color Spray",
-            "tier": 2,
-            "cost": 15,
-            "description": "Setup: A burst of dazzling light. Applies [Blinded] (4 ticks) to the target. If target is already [Marked], the duration is doubled.",
-            "identity_tags": ["magic", "illusion", "vision", "setup"],
-            "axis": "vision",
-            "action": "color_spray",
-            "requirements": {
-                "class": "illusionist",
-                "concentration": 15,
-                "cooldown": 4
-            },
-            "on_hit": {
-                "apply_status": "blinded",
-                "duration": 4
-            }
-        },
-        "hallucinate": {
-            "id": "hallucinate",
-            "name": "Hallucinate",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: Warp the target's perception. Applies [Dazed] (6 ticks) and [Off-Balance]. Dazed targets take increased psychic damage.",
-            "identity_tags": ["magic", "illusion", "mind", "setup"],
-            "axis": "tempo",
-            "action": "hallucinate",
-            "requirements": {
-                "class": "illusionist",
-                "concentration": 20,
-                "cooldown": 8
-            },
-            "on_hit": {
-                "apply_status": "dazed",
-                "duration": 6
-            }
-        },
-        "mind_shatter": {
-            "id": "mind_shatter",
-            "name": "Mind Shatter",
-            "tier": 4,
-            "cost": 35,
-            "description": "Payoff/Finisher: Shatter the illusions within the target's mind. Consumes [Blinded] or [Dazed] to deal 3x psychic damage and apply [Staggered] (2 ticks).",
-            "identity_tags": ["magic", "illusion", "lethal", "payoff", "finisher"],
-            "axis": "lethality",
-            "action": "mind_shatter",
-            "requirements": {
-                "class": "illusionist",
-                "concentration": 35,
-                "cooldown": 5
-            },
-            "base_power": 35,
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 2.5
-            }
+            "cost": 25,
+            "description": "Setup: Create duplicates of yourself. Generates 1 Illusion Pip and grants [Evasive] for 2 ticks.",
+            "identity_tags": [
+                "magic",
+                "illusion",
+                "setup"
+            ],
+            "action": "mirror_image"
         },
         "phantasmal_inferno": {
             "id": "phantasmal_inferno",
             "name": "Phantasmal Inferno",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: An illusion of absolute fire that deals mental damage. Consumes 5 Illusion Pips.",
+            "identity_tags": [
+                "magic",
+                "illusion",
+                "payoff"
+            ],
+            "action": "phantasmal_inferno"
+        },
+        "mind_shatter": {
+            "id": "mind_shatter",
+            "name": "Mind Shatter",
             "tier": 3,
-            "cost": 30,
-            "description": "Payoff/AOE: Unleash a tide of psychic fire. Deals fire/psychic damage to all in the room. Damage is increased by 20% per [Mirrored] stack active on you.",
-            "identity_tags": ["magic", "illusion", "aoe", "payoff"],
-            "axis": "endurance",
-            "action": "phantasmal_inferno",
-            "requirements": {
-                "class": "illusionist",
-                "concentration": 30,
-                "cooldown": 12
-            },
-            "base_power": 25
+            "cost": 0,
+            "description": "Payoff: Break the target's psyche. Consumes 3 Illusion Pips to deal high Magic damage and apply [Stunned] for 2 ticks.",
+            "identity_tags": [
+                "magic",
+                "illusion",
+                "payoff"
+            ],
+            "action": "mind_shatter"
         },
         "prism_cloak": {
             "id": "prism_cloak",
             "name": "Prism Cloak",
             "tier": 2,
-            "cost": 25,
-            "description": "Defense/Reaction: Shimmering refractive shield. On hit, you have a 30% chance to blink to a random position and gain [Concealed] for 3 ticks. Lasts 6 ticks.",
-            "identity_tags": ["magic", "illusion", "protection", "defense"],
-            "axis": "endurance",
-            "action": "prism_cloak",
-            "requirements": {
-                "class": "illusionist",
-                "concentration": 20,
-                "cooldown": 15
-            }
+            "cost": 75,
+            "description": "Defense: Bend light around you to become hard to see. Grants [Concealed] and 30% Evasion.",
+            "identity_tags": [
+                "magic",
+                "illusion",
+                "defense"
+            ],
+            "action": "prism_cloak"
+        },
+        "hallucinate": {
+            "id": "hallucinate",
+            "name": "Hallucinate",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Disruption: Force the target to see multiple versions of you. Reduces their hit chance by 50% for 4 ticks.",
+            "identity_tags": [
+                "magic",
+                "illusion",
+                "defense"
+            ],
+            "action": "hallucinate"
         },
         "phase_shift": {
             "id": "phase_shift",
             "name": "Phase Shift",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Teleport to a targeted spot. Leaves a decoy behind that explodes (AOE Blind) on the next tick. Clears [Slowed].",
-            "identity_tags": ["magic", "illusion", "speed", "mobility"],
-            "axis": "position",
-            "action": "phase_shift",
-            "requirements": {
-                "class": "illusionist",
-                "concentration": 25,
-                "cooldown": 10
-            }
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Teleport to a location within the same room instantly.",
+            "identity_tags": [
+                "magic",
+                "illusion",
+                "mobility"
+            ],
+            "action": "phase_shift"
         },
         "invisibility": {
             "id": "invisibility",
             "name": "Invisibility",
-            "tier": 2,
-            "cost": 0,
-            "description": "Utility: Master-level deception. Grants [Concealed] for 20 ticks to yourself and all allies in the room. This effect breaks on action.",
-            "identity_tags": ["magic", "illusion", "stealth", "utility"],
-            "axis": "vision",
-            "action": "invisibility",
-            "requirements": {
-                "class": "illusionist",
-                "concentration": 0,
-                "cooldown": 60
-            }
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Become completely invisible to all enemies for 15 ticks. Breaking invisibility with an attack deals double damage.",
+            "identity_tags": [
+                "magic",
+                "illusion",
+                "utility"
+            ],
+            "action": "invisibility"
+        },
+        "illusionist_physiology": {
+            "id": "illusionist_physiology",
+            "name": "Illusionist Physiology",
+            "tier": 1,
+            "description": "Passive: Reality Warp. You gain 10% Evasion and 15% increased duration for all Illusion manifestations.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "illusionist",
+                "passive"
+            ]
         }
     }
 }

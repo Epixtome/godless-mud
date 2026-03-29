@@ -1,142 +1,120 @@
 {
     "blessings": {
-        "hex_flare": {
-            "id": "hex_flare",
-            "name": "Hex Flare",
+        "witchs_cackle": {
+            "id": "witchs_cackle",
+            "name": "Witch's Cackle",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup: Pulse of dark energy. Applies [Hexed] (12t) to all enemies in the room. Generates 15 Entropy.",
-            "identity_tags": ["occult", "dark", "setup"],
-            "axis": "dark",
-            "action": "hex_flare",
-            "requirements": {
-                "class": "witch",
-                "stamina": 10,
-                "cooldown": 4
-            },
-            "base_power": 10
+            "cost": 0,
+            "description": "Setup/Builder: A chilling laugh that unnerves the target. Generates 15 Concentration and 1 Curse Pip.",
+            "identity_tags": [
+                "magic",
+                "occult",
+                "curse",
+                "setup",
+                "builder"
+            ],
+            "action": "witchs_cackle"
         },
-        "curse_of_binding": {
-            "id": "curse_of_binding",
-            "name": "Curse of Binding",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: Bind foe's movements. Applies [Cursed] (10t) and [Slowed] (5t). Resets if they move room.",
-            "identity_tags": ["occult", "disruption", "setup"],
-            "axis": "disruption",
-            "action": "curse_of_binding",
-            "requirements": {
-                "class": "witch",
-                "stamina": 20,
-                "cooldown": 8
-            }
-        },
-        "vile_curse": {
-            "id": "vile_curse",
-            "name": "Vile Curse",
-            "tier": 3,
-            "cost": 40,
-            "description": "Payoff: Consume all [Hexed] and [Cursed] states to deal massive Entropy damage. 3x damage per state.",
-            "identity_tags": ["occult", "lethality", "payoff"],
-            "axis": "lethality",
-            "action": "vile_curse",
-            "requirements": {
-                "class": "witch",
-                "stamina": 40,
-                "status": "hexed"
-            },
-            "base_power": 50
-        },
-        "soul_siphon": {
-            "id": "soul_siphon",
-            "name": "Soul Siphon",
-            "tier": 3,
-            "cost": 30,
-            "description": "Payoff: Drain 20% of your target's health if they are [Hexed]. Restores your own health by that amount.",
-            "identity_tags": ["occult", "lethality", "payoff"],
-            "axis": "lethality",
-            "action": "soul_siphon",
-            "requirements": {
-                "class": "witch",
-                "stamina": 30,
-                "status": "hexed",
-                "cooldown": 12
-            },
-            "base_power": 30
-        },
-        "fate_mirror": {
-            "id": "fate_mirror",
-            "name": "Fate Mirror",
-            "tier": 2,
+        "curse_of_misfortune": {
+            "id": "curse_of_misfortune",
+            "name": "Curse of Misfortune",
+            "tier": 1,
             "cost": 25,
-            "description": "Defense: Refract 50% of the next attack damage back to the attacker. Applies [Mirror Ward] for 10s.",
-            "identity_tags": ["occult", "protection", "defense"],
-            "axis": "protection",
-            "action": "fate_mirror",
-            "requirements": {
-                "class": "witch",
-                "stamina": 25,
-                "cooldown": 15
-            }
+            "description": "Setup: Hex the target with pure bad luck. Generates 1 Curse Pip and applies [Blindness].",
+            "identity_tags": [
+                "magic",
+                "occult",
+                "setup"
+            ],
+            "action": "curse_of_misfortune"
+        },
+        "voodoo_puncture": {
+            "id": "voodoo_puncture",
+            "name": "Voodoo Puncture",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Stab a spectral doll to deal massive internal damage. Consumes 5 Curse Pips.",
+            "identity_tags": [
+                "magic",
+                "occult",
+                "payoff"
+            ],
+            "action": "voodoo_puncture"
+        },
+        "cauldron_eruption": {
+            "id": "cauldron_eruption",
+            "name": "Cauldron Eruption",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: Spew toxic brew into the air. Consumes 3 Curse Pips to deal AOE magic damage and apply [Poisoned].",
+            "identity_tags": [
+                "magic",
+                "occult",
+                "area",
+                "payoff"
+            ],
+            "action": "cauldron_eruption"
+        },
+        "obsidian_ward": {
+            "id": "obsidian_ward",
+            "name": "Obsidian Ward",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Surround yourself with ancient obsidian stones. Absorbs physical damage using Concentration.",
+            "identity_tags": [
+                "magic",
+                "protection",
+                "defense"
+            ],
+            "action": "obsidian_ward"
         },
         "mist_form": {
             "id": "mist_form",
             "name": "Mist Form",
-            "tier": 4,
-            "cost": 40,
-            "description": "Defense: Turn into dark mist. You become untargetable for 4 seconds, but cannot attack.",
-            "identity_tags": ["magic", "protection", "defense"],
-            "axis": "protection",
-            "action": "mist_form",
-            "requirements": {
-                "class": "witch",
-                "stamina": 40,
-                "cooldown": 45
-            }
-        },
-        "night_shade": {
-            "id": "night_shade",
-            "name": "Night Shade",
             "tier": 1,
-            "cost": 15,
-            "description": "Mobility: Glide forward through enemies, applying [Blinded] (3t) to anyone you pass through.",
-            "identity_tags": ["occult", "vision", "mobility"],
-            "axis": "vision",
-            "action": "night_shade",
-            "requirements": {
-                "class": "witch",
-                "stamina": 15,
-                "cooldown": 6
-            }
+            "cost": 30,
+            "description": "Defense/Mobility: Briefly dissolve into a noxious mist to evade danger.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "defense"
+            ],
+            "action": "mist_form"
         },
-        "dark_ritual": {
-            "id": "dark_ritual",
-            "name": "Dark Ritual",
+        "broomstick_flight": {
+            "id": "broomstick_flight",
+            "name": "Broomstick Flight",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Fly over obstacles and move between rooms instantly.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "broomstick_flight"
+        },
+        "grand_hex_of_ruin": {
+            "id": "grand_hex_of_ruin",
+            "name": "Grand Hex",
             "tier": 5,
-            "cost": 60,
-            "description": "Utility: Ultimate: For 20s, all [Cursed] targets take 2x damage from all sources.",
-            "identity_tags": ["occult", "utility", "ultimate"],
-            "axis": "utility",
-            "action": "dark_ritual",
-            "requirements": {
-                "class": "witch",
-                "stamina": 60,
-                "cooldown": 180
-            }
+            "cost": 200,
+            "description": "Utility/Signature: For 30 ticks, all enemies in the zone deal 50% less damage and take 50% more magic damage.",
+            "identity_tags": [
+                "magic",
+                "utility"
+            ],
+            "action": "grand_hex_of_ruin"
         },
         "witch_physiology": {
             "id": "witch_physiology",
             "name": "Witch Physiology",
             "tier": 1,
-            "description": "Passive: Your [Hexed] targets deal 10% less damage to you. You gain 1 Entropy per room movement.",
+            "description": "Passive: Cauldron Master. Your potions are twice as effective and your Curse generation is increased by 10% for every debuff on the target.",
             "logic_type": "passive",
-            "identity_tags": ["dark", "passive"],
-            "potency_rules": [
-                {
-                    "type": "stat_mod",
-                    "stat": "dark_resistance",
-                    "multiplier": 1.1
-                }
+            "identity_tags": [
+                "witch",
+                "passive"
             ]
         }
     }

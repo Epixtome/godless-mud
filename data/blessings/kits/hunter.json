@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "hunters_shot": {
+            "id": "hunters_shot",
+            "name": "Hunter's Shot",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A precise arrow to track the prey. Generates 20 Stamina and 1 Mark Pip.",
+            "identity_tags": [
+                "martial",
+                "beast",
+                "setup",
+                "builder"
+            ],
+            "action": "hunters_shot"
+        },
+        "trap_setting": {
+            "id": "trap_setting",
+            "name": "Trap Setting",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Place an invisible lure. Generates 1 Mark Pip and applies [Marked] when triggered.",
+            "identity_tags": [
+                "martial",
+                "beast",
+                "setup"
+            ],
+            "action": "trap_setting"
+        },
+        "predator_strike": {
+            "id": "predator_strike",
+            "name": "Predator Strike",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: A strike that exploits every weakness. Consumes 5 Mark Pips to deal Physical damage. 100% bonus damage vs [Marked] targets.",
+            "identity_tags": [
+                "martial",
+                "beast",
+                "payoff"
+            ],
+            "action": "predator_strike"
+        },
+        "rain_of_thorns": {
+            "id": "rain_of_thorns",
+            "name": "Rain of Thorns",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: Arrows that splinter on impact. Consumes 3 Mark Pips to deal AOE damage and apply [Bleeding].",
+            "identity_tags": [
+                "martial",
+                "beast",
+                "area",
+                "payoff"
+            ],
+            "action": "rain_of_thorns"
+        },
+        "beast_hide_cloak": {
+            "id": "beast_hide_cloak",
+            "name": "Beast-Hide Cloak",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Cloak yourself and your companion in shadows. Grants [Concealed] to both for 6 ticks.",
+            "identity_tags": [
+                "martial",
+                "beast",
+                "defense"
+            ],
+            "action": "beast_hide_cloak"
+        },
+        "wild_evasion": {
+            "id": "wild_evasion",
+            "name": "Wild Evasion",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Move with animal instincts. Increases Evasion by 40% and breaks [Rooted] effects.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "defense"
+            ],
+            "action": "wild_evasion"
+        },
+        "trek": {
+            "id": "trek",
+            "name": "Trek",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Fast travel between known natural landmarks.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "trek"
+        },
+        "call_of_the_wild": {
+            "id": "call_of_the_wild",
+            "name": "Call of the Wild",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Summon a temporary pack of wolves to attack your target for 15 ticks.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "call_of_the_wild"
+        },
+        "hunter_physiology": {
+            "id": "hunter_physiology",
+            "name": "Hunter Physiology",
+            "tier": 1,
+            "description": "Passive: Master Tracker. You gain 20% bonus damage against beasts and your [Marked] effects never expire on non-player targets.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "hunter",
+                "passive"
+            ]
+        }
+    }
+}

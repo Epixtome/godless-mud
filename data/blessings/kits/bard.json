@@ -4,167 +4,119 @@
             "id": "discordant_note",
             "name": "Discordant Note",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: A jarring auditory strike. Deals minor sonic damage. Generates 15 Stamina and +5 Rhythm. No cooldown.",
-            "identity_tags": ["magic", "sound", "builder", "setup"],
-            "axis": "tempo",
-            "action": "discordant_note",
-            "requirements": {
-                "class": "bard",
-                "stamina": 10
-            },
-            "base_power": 12
+            "cost": 0,
+            "description": "Setup/Builder: A jarring sound that irritates the foe. Generates 15 Stamina and 1 Rhythm Pip.",
+            "identity_tags": [
+                "magic",
+                "sound",
+                "setup",
+                "builder"
+            ],
+            "action": "discordant_note"
         },
         "fascinate": {
             "id": "fascinate",
             "name": "Fascinate",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: Weave a captivating melody. Applies [Dazed] (4 ticks) and reduces target [Speed] by 20%.",
-            "identity_tags": ["magic", "sound", "mind", "setup"],
-            "axis": "tempo",
-            "action": "fascinate",
-            "requirements": {
-                "class": "bard",
-                "stamina": 20,
-                "cooldown": 5
-            },
-            "on_hit": {
-                "apply_status": "dazed",
-                "duration": 4
-            }
-        },
-        "echoing_verse": {
-            "id": "echoing_verse",
-            "name": "Echoing Verse",
-            "tier": 2,
-            "cost": 15,
-            "description": "Setup: Mark the target with a resonating verse. Applies [Marked] for 8 ticks. Auditory damage against this target is increased by 25%.",
-            "identity_tags": ["magic", "sound", "vision", "setup"],
-            "axis": "vision",
-            "action": "echoing_verse",
-            "requirements": {
-                "class": "bard",
-                "stamina": 15,
-                "cooldown": 8
-            },
-            "on_hit": {
-                "apply_status": "marked",
-                "duration": 8
-            }
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: A hypnotic melody. Applies [Stalled] and generates 1 Rhythm Pip.",
+            "identity_tags": [
+                "magic",
+                "sound",
+                "setup"
+            ],
+            "action": "fascinate"
         },
         "crescendo": {
             "id": "crescendo",
             "name": "Crescendo",
             "tier": 4,
-            "cost": 35,
-            "description": "Payoff/Finisher: The final, deafening peak of your performance. Consumes [Dazed] to deal 3x damage and apply [Staggered] (2 ticks).",
-            "identity_tags": ["magic", "sound", "lethal", "payoff", "finisher"],
-            "axis": "tempo",
-            "action": "crescendo",
-            "requirements": {
-                "class": "bard",
-                "rhythm": 40,
-                "cooldown": 10
-            },
-            "base_power": 60,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "dazed",
-                    "multiplier": 3.0
-                }
+            "cost": 0,
+            "description": "Payoff: A massive surge of orchestral power. Consumes 5 Rhythm Pips to deal heavy Magic damage to all enemies.",
+            "identity_tags": [
+                "magic",
+                "sound",
+                "area",
+                "payoff"
             ],
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 2.5
-            }
+            "action": "crescendo"
         },
         "soul_requiem": {
             "id": "soul_requiem",
             "name": "Soul Requiem",
             "tier": 3,
-            "cost": 30,
-            "description": "Payoff/AOE: A mournful dirge. Deals moderate sonic damage to all [Marked] enemies in the room and heals all allies for 10% health.",
-            "identity_tags": ["magic", "sound", "aoe", "payoff"],
-            "axis": "endurance",
-            "action": "soul_requiem",
-            "requirements": {
-                "class": "bard",
-                "stamina": 30,
-                "cooldown": 12
-            },
-            "base_power": 25,
-            "potency_rules": [
-                {
-                    "type": "aoe_mod",
-                    "multiplier": 1.2
-                }
-            ]
+            "cost": 0,
+            "description": "Payoff: A mournful song that drains life. Consumes 3 Rhythm Pips to deal damage and restore Mana to the caster.",
+            "identity_tags": [
+                "magic",
+                "sound",
+                "payoff"
+            ],
+            "action": "soul_requiem"
         },
         "serenade_of_safety": {
             "id": "serenade_of_safety",
             "name": "Serenade of Safety",
             "tier": 2,
-            "cost": 20,
-            "description": "Defense: A protective lullaby. Grants [Shielded] and [Braced] for 4 ticks to yourself and all allies in the room.",
-            "identity_tags": ["magic", "sound", "protection", "defense"],
-            "axis": "endurance",
-            "action": "serenade_of_safety",
-            "requirements": {
-                "class": "bard",
-                "stamina": 20,
-                "cooldown": 15
-            }
+            "cost": 75,
+            "description": "Defense: A soothing song that protects allies. Grants [Shielded] and [Reflective] for 4 ticks.",
+            "identity_tags": [
+                "magic",
+                "sound",
+                "defense"
+            ],
+            "action": "serenade_of_safety"
         },
         "allegro_step": {
             "id": "allegro_step",
             "name": "Allegro Step",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Teleport behind an enemy or ally. Grants [Haste] for 2 ticks and clears [Slowed].",
-            "identity_tags": ["magic", "speed", "mobility"],
-            "axis": "position",
-            "action": "allegro_step",
-            "requirements": {
-                "class": "bard",
-                "stamina": 25,
-                "cooldown": 8
-            }
+            "tier": 2,
+            "cost": 50,
+            "description": "Defense/Mobility: Dance out of the way of an attack. Grants [Evasive] for 2 ticks.",
+            "identity_tags": [
+                "magic",
+                "sound",
+                "defense",
+                "mobility"
+            ],
+            "action": "allegro_step"
         },
         "hymn_of_regeneration": {
             "id": "hymn_of_regeneration",
             "name": "Hymn of Regeneration",
             "tier": 2,
-            "cost": 0,
-            "description": "Utility: Committing to a low HoT aura. Heals self and allies for 2% HP per tick for 10 ticks. Consumes all your active Rhythm.",
-            "identity_tags": ["magic", "sound", "healing", "utility"],
-            "axis": "endurance",
-            "action": "hymn_of_regeneration",
-            "requirements": {
-                "class": "bard",
-                "stamina": 5,
-                "cooldown": 25
-            }
+            "cost": 100,
+            "description": "Mobility/Utility: Move through obstacles and grant allies Health Regeneration for 10 ticks.",
+            "identity_tags": [
+                "magic",
+                "sound",
+                "mobility",
+                "utility"
+            ],
+            "action": "hymn_of_regeneration"
+        },
+        "echoing_verse": {
+            "id": "echoing_verse",
+            "name": "Echoing Verse",
+            "tier": 1,
+            "cost": 30,
+            "description": "Utility: Repeat the last non-signature blessing used at 50% power.",
+            "identity_tags": [
+                "magic",
+                "sound",
+                "utility"
+            ],
+            "action": "echoing_verse"
         },
         "bard_physiology": {
             "id": "bard_physiology",
             "name": "Bard Physiology",
             "tier": 1,
-            "description": "Passive: Your soul is an instrument of cosmic vibration. All Buff effectiveness is increased by 20%, and your Rhythm generation is increased by 10%.",
+            "description": "Passive: Harmonic Flow. Your Rhythm generation is increased by 20% and you gain 5% Mana every tick.",
             "logic_type": "passive",
-            "identity_tags": ["sonic", "passive"],
-            "potency_rules": [
-                {
-                    "type": "buff_potency_mod",
-                    "multiplier": 1.2
-                },
-                {
-                    "type": "resource_gain_mod",
-                    "resource": "rhythm",
-                    "multiplier": 1.1
-                }
+            "identity_tags": [
+                "bard",
+                "passive"
             ]
         }
     }

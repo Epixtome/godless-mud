@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "soldiers_strike": {
+            "id": "soldiers_strike",
+            "name": "Soldier's Strike",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A disciplined, basic strike. Generates 20 Stamina and 1 Order Pip.",
+            "identity_tags": [
+                "martial",
+                "discipline",
+                "setup",
+                "builder"
+            ],
+            "action": "soldiers_strike"
+        },
+        "shield_bash": {
+            "id": "shield_bash",
+            "name": "Shield Bash",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Slam your shield into the foe. Generates 1 Order Pip and stuns for 1 tick.",
+            "identity_tags": [
+                "martial",
+                "discipline",
+                "setup"
+            ],
+            "action": "shield_bash"
+        },
+        "phalanx_thrust": {
+            "id": "phalanx_thrust",
+            "name": "Phalanx Thrust",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: A powerful thrust from behind a shield. Consumes 5 Order Pips to deal massive Physical damage.",
+            "identity_tags": [
+                "martial",
+                "discipline",
+                "payoff"
+            ],
+            "action": "phalanx_thrust"
+        },
+        "disciplined_volley": {
+            "id": "disciplined_volley",
+            "name": "Disciplined Volley",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: Signal a volley of support fire. Consumes 3 Order Pips to deal AOE damage in the room.",
+            "identity_tags": [
+                "martial",
+                "discipline",
+                "area",
+                "payoff"
+            ],
+            "action": "disciplined_volley"
+        },
+        "defensive_hunker": {
+            "id": "defensive_hunker",
+            "name": "Defensive Hunker",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Lower your center of gravity. Reduces incoming Physical damage by 50% but prevents movement.",
+            "identity_tags": [
+                "martial",
+                "discipline",
+                "defense"
+            ],
+            "action": "defensive_hunker"
+        },
+        "tactical_retreat": {
+            "id": "tactical_retreat",
+            "name": "Tactical Retreat",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Mobility: Back away while maintaining defense. Moves you to an adjacent room and grants [Shielded].",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "defense"
+            ],
+            "action": "tactical_retreat"
+        },
+        "marching_pace": {
+            "id": "marching_pace",
+            "name": "Marching Pace",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Increase the pace of your group. All allies in the room gain [Haste] for 4 ticks.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "marching_pace"
+        },
+        "rally_the_troops": {
+            "id": "rally_the_troops",
+            "name": "Rally the Troops",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: For 15 ticks, all allies in the room regenerate 10% HP per tick.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "rally_the_troops"
+        },
+        "soldier_physiology": {
+            "id": "soldier_physiology",
+            "name": "Soldier Physiology",
+            "tier": 1,
+            "description": "Passive: Combat Veteran. You gain 10% bonus damage and 10% damage reduction for every ally present in the same room.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "soldier",
+                "passive"
+            ]
+        }
+    }
+}

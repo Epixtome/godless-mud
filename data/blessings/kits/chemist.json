@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "toss_philter": {
+            "id": "toss_philter",
+            "name": "Toss Philter",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: Toss a basic alchemical philter. Generates 15 Stamina and 1 Reagent Pip.",
+            "identity_tags": [
+                "magic",
+                "alchemy",
+                "setup",
+                "builder"
+            ],
+            "action": "toss_philter"
+        },
+        "catalyze": {
+            "id": "catalyze",
+            "name": "Catalyze",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Accelerate the target's reactions. Generates 2 Reagent Pips and marks the target.",
+            "identity_tags": [
+                "magic",
+                "alchemy",
+                "setup"
+            ],
+            "action": "catalyze"
+        },
+        "acid_flask": {
+            "id": "acid_flask",
+            "name": "Acid Flask",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: A concentrated acid burst. Consumes 5 Reagent Pips to deal Physical damage and ignore 100% of target armor.",
+            "identity_tags": [
+                "magic",
+                "alchemy",
+                "payoff"
+            ],
+            "action": "acid_flask"
+        },
+        "healing_mist": {
+            "id": "healing_mist",
+            "name": "Healing Mist",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: A mist of restorative compounds. Consumes 3 Reagent Pips to heal all allies in the room for 5% per tick for 10 ticks.",
+            "identity_tags": [
+                "magic",
+                "alchemy",
+                "area",
+                "payoff"
+            ],
+            "action": "healing_mist"
+        },
+        "smoke_bomb_defense": {
+            "id": "smoke_bomb_defense",
+            "name": "Smoke Screen",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Break an obscure compound at your feet. Grants [Concealed] to self and [Blinded] to target.",
+            "identity_tags": [
+                "magic",
+                "alchemy",
+                "defense"
+            ],
+            "action": "smoke_bomb_defense"
+        },
+        "concoction_shield": {
+            "id": "concoction_shield",
+            "name": "Concoction Shield",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Coat yourself in a protective gel. Reduces incoming magic damage by 40% for 6 ticks.",
+            "identity_tags": [
+                "magic",
+                "protection",
+                "defense"
+            ],
+            "action": "concoction_shield"
+        },
+        "reagent_dash": {
+            "id": "reagent_dash",
+            "name": "Reagent Dash",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Consume a haste philter to move instantly between rooms.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "reagent_dash"
+        },
+        "ultimate_compound": {
+            "id": "ultimate_compound",
+            "name": "Ultimate Compound",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Your Reagent Pip costs are reduced to 0 for 15 ticks.",
+            "identity_tags": [
+                "magic",
+                "utility"
+            ],
+            "action": "ultimate_compound"
+        },
+        "chemist_physiology": {
+            "id": "chemist_physiology",
+            "name": "Chemist Physiology",
+            "tier": 1,
+            "description": "Passive: Master Alchemist. You gain 10% bonus Pacing power and every time you use a Reagent Pip, you heal for 2% of your Max HP.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "chemist",
+                "passive"
+            ]
+        }
+    }
+}

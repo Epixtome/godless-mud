@@ -1,0 +1,119 @@
+{
+    "blessings": {
+        "puppet_strike": {
+            "id": "puppet_strike",
+            "name": "Puppet Strike",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A coordinated strike between you and your puppet. Generates 15 Stamina and 1 Control Pip.",
+            "identity_tags": [
+                "magic",
+                "tech",
+                "setup",
+                "builder"
+            ],
+            "action": "puppet_strike"
+        },
+        "string_pull": {
+            "id": "string_pull",
+            "name": "String Pull",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Reposition your puppet or target. Generates 1 Control Pip and marks the target.",
+            "identity_tags": [
+                "magic",
+                "tech",
+                "setup"
+            ],
+            "action": "string_pull"
+        },
+        "overdrive": {
+            "id": "overdrive",
+            "name": "Overdrive Protocol",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Force your puppet into extreme performance. Consumes 5 Control Pips to increase puppet power by 100% for 5 ticks.",
+            "identity_tags": [
+                "magic",
+                "tech",
+                "payoff"
+            ],
+            "action": "overdrive"
+        },
+        "iron_fury": {
+            "id": "iron_fury",
+            "name": "Iron Fury",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff: A violent series of strikes from your puppet. Consumes 3 Control Pips to deal Physical damage and apply [Staggered].",
+            "identity_tags": [
+                "magic",
+                "tech",
+                "payoff"
+            ],
+            "action": "iron_fury"
+        },
+        "iron_guard": {
+            "id": "iron_guard",
+            "name": "Iron Guard",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Your puppet moves to intercept incoming damage. Reduces enemy hit chance to you by 40%.",
+            "identity_tags": [
+                "magic",
+                "protection",
+                "defense"
+            ],
+            "action": "iron_guard"
+        },
+        "proxy_defense": {
+            "id": "proxy_defense",
+            "name": "Proxy Defense",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Shift incoming damage to your puppet instead of yourself.",
+            "identity_tags": [
+                "magic",
+                "tech",
+                "defense"
+            ],
+            "action": "proxy_defense"
+        },
+        "thread_dash": {
+            "id": "thread_dash",
+            "name": "Thread Dash",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Slide across the room using your control strings as guidance.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "thread_dash"
+        },
+        "grand_puppeteer": {
+            "id": "grand_puppeteer",
+            "name": "Grand Puppeteer",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Your next 5 non-signature blessings are repeated by your puppet for 0 cost.",
+            "identity_tags": [
+                "magic",
+                "utility"
+            ],
+            "action": "grand_puppeteer"
+        },
+        "puppet_master_physiology": {
+            "id": "puppet_master_physiology",
+            "name": "Puppet Master Physiology",
+            "tier": 1,
+            "description": "Passive: Puppet Synergy. Your puppets have 10% bonus HP and your Control generation is increased by 20% when stationary.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "puppet_master",
+                "passive"
+            ]
+        }
+    }
+}

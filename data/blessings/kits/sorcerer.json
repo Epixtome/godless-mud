@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "chaos_bolt": {
+            "id": "chaos_bolt",
+            "name": "Chaos Bolt",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A bolt of unpredictable energy. Generates 15 Concentration and 1 Chaos Pip.",
+            "identity_tags": [
+                "magic",
+                "chaos",
+                "setup",
+                "builder"
+            ],
+            "action": "chaos_bolt"
+        },
+        "unstable_affliction": {
+            "id": "unstable_affliction",
+            "name": "Unstable Affliction",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Curse the target with shifting energy. Generates 1 Chaos Pip and applies [Marked].",
+            "identity_tags": [
+                "magic",
+                "chaos",
+                "setup"
+            ],
+            "action": "unstable_affliction"
+        },
+        "chaos_cataclysm": {
+            "id": "chaos_cataclysm",
+            "name": "Chaos Cataclysm",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff/AOE: A violent eruption of multiple elements. Consumes 5 Chaos Pips to deal massive AOE damage.",
+            "identity_tags": [
+                "magic",
+                "chaos",
+                "area",
+                "payoff"
+            ],
+            "action": "chaos_cataclysm"
+        },
+        "mental_burn": {
+            "id": "mental_burn",
+            "name": "Mental Burn",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff: Incinerate the target's psyche. Consumes 3 Chaos Pips to deal high Magic damage and apply [Blinded].",
+            "identity_tags": [
+                "magic",
+                "chaos",
+                "payoff"
+            ],
+            "action": "mental_burn"
+        },
+        "shimmering_skin": {
+            "id": "shimmering_skin",
+            "name": "Shimmering Skin",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Your form becomes hazy and indistinct. Increases Evasiveness by 50% for 6 ticks.",
+            "identity_tags": [
+                "magic",
+                "chaos",
+                "defense"
+            ],
+            "action": "shimmering_skin"
+        },
+        "unstable_shield": {
+            "id": "unstable_shield",
+            "name": "Unstable Shield",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: A shield that reflects 50% of incoming damage but consumes Concentration on every hit.",
+            "identity_tags": [
+                "magic",
+                "protection",
+                "defense"
+            ],
+            "action": "unstable_shield"
+        },
+        "chaos_blink": {
+            "id": "chaos_blink",
+            "name": "Chaos Blink",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Teleport to a random adjacent room. Grants [Untargetable] for 1 tick.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "chaos_blink"
+        },
+        "wild_magic_surge": {
+            "id": "wild_magic_surge",
+            "name": "Wild Magic Surge",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Your next 5 non-signature blessings are repeated once for free.",
+            "identity_tags": [
+                "magic",
+                "utility"
+            ],
+            "action": "wild_magic_surge"
+        },
+        "sorcerer_physiology": {
+            "id": "sorcerer_physiology",
+            "name": "Sorcerer Physiology",
+            "tier": 1,
+            "description": "Passive: Chaos Born. Your Magic power is increased by 15% and you have a 10% chance to generate double Pips on any setup action.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "sorcerer",
+                "passive"
+            ]
+        }
+    }
+}

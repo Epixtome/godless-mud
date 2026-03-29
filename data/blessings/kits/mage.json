@@ -1,185 +1,120 @@
 {
     "blessings": {
-        "triple_bolt": {
-            "id": "triple_bolt",
-            "name": "Triple Bolt",
-            "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: Launch three rapid bolts of raw arcane power. Generates 5 Concentration per hit.",
-            "identity_tags": ["magic", "arcane", "builder", "setup"],
-            "axis": "elemental",
-            "action": "triple_bolt",
-            "requirements": {
-                "class": "mage",
-                "concentration": 10,
-                "cooldown": 2
-            },
-            "base_power": 8,
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 0.8
-            }
-        },
         "ignite": {
             "id": "ignite",
             "name": "Ignite",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: A focused beam of heat that applies [Burning] for 6 ticks. Burning targets take steady damage and have reduced visibility.",
-            "identity_tags": ["magic", "fire", "setup"],
-            "axis": "elemental",
-            "action": "ignite",
-            "requirements": {
-                "class": "mage",
-                "concentration": 20,
-                "cooldown": 4
-            },
-            "base_power": 12,
-            "on_hit": {
-                "apply_status": "burn",
-                "duration": 6
-            }
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup: Burn the target's essence. Generates 15 Concentration and applies [Burned] for 8 ticks.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "setup",
+                "builder"
+            ],
+            "action": "ignite"
         },
         "frost_bolt": {
             "id": "frost_bolt",
             "name": "Frost Bolt",
             "tier": 2,
-            "cost": 20,
-            "description": "Setup: A freezing shard of ice that applies [Cold]. Cold targets have reduced speed. Multiple stacks or Interaction with [Wet] leads to [Frozen].",
-            "identity_tags": ["magic", "ice", "setup"],
-            "axis": "elemental",
-            "action": "frost_bolt",
-            "requirements": {
-                "class": "mage",
-                "concentration": 20,
-                "cooldown": 4
-            },
-            "base_power": 12,
-            "on_hit": {
-                "apply_status": "cold",
-                "duration": 6
-            }
+            "cost": 50,
+            "description": "Setup: A bolt of pure ice. Deals minor Magic damage and applies [Chill] (Slow) for 6 ticks.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "setup"
+            ],
+            "action": "frost_bolt"
         },
         "lightning_bolt": {
             "id": "lightning_bolt",
             "name": "Lightning Bolt",
-            "tier": 3,
-            "cost": 30,
-            "description": "Payoff: A massive bolt of lightning. Deals DOUBLE DAMAGE to [Wet] targets. If target is already [Shocked], the bolt explodes in an AoE.",
-            "identity_tags": ["magic", "lightning", "payoff"],
-            "axis": "elemental",
-            "action": "lightning_bolt",
-            "requirements": {
-                "class": "mage",
-                "concentration": 30,
-                "cooldown": 5
-            },
-            "base_power": 30,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "wet",
-                    "multiplier": 2.0
-                }
-            ]
+            "tier": 4,
+            "cost": 100,
+            "description": "Payoff: A flash of thunderous energy. Deals massive Magic damage. Deals double damage if target is [Chill].",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "payoff"
+            ],
+            "action": "lightning_bolt"
         },
         "pyroclasm": {
             "id": "pyroclasm",
             "name": "Pyroclasm",
-            "tier": 5,
-            "cost": 50,
-            "description": "Finisher: A devastating elemental eruption. Consumes the [Burning] state to deal triple damage and apply [Staggered]. THE Black Mage finisher.",
-            "identity_tags": ["magic", "fire", "payoff", "finisher"],
-            "axis": "elemental",
-            "action": "pyroclasm",
-            "requirements": {
-                "class": "mage",
-                "concentration": 50,
-                "cooldown": 15
-            },
-            "base_power": 60,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "burn",
-                    "multiplier": 3.0
-                }
-            ]
+            "tier": 3,
+            "cost": 150,
+            "description": "Payoff/AOE: An explosion of tectonic heat. Deals AOE Magic damage and applies [Burned] to all.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "area",
+                "payoff"
+            ],
+            "action": "pyroclasm"
         },
         "phase_shift": {
             "id": "phase_shift",
             "name": "Phase Shift",
             "tier": 2,
-            "cost": 20,
-            "description": "Defense: Briefly shift into the ethereal plane (2s). You are immune to physical damage but take double damage from magic.",
-            "identity_tags": ["magic", "arcane", "reaction", "defense"],
-            "axis": "endurance",
-            "action": "phase_shift",
-            "requirements": {
-                "class": "mage",
-                "concentration": 20,
-                "cooldown": 8
-            }
+            "cost": 75,
+            "description": "Defense/Reflex: Briefly phase out of reality to avoid a strike. Grants [Untargetable] for 1 tick.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "defense"
+            ],
+            "action": "phase_shift"
+        },
+        "arcane_ward": {
+            "id": "arcane_ward",
+            "name": "Arcane Ward",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Surround yourself with a shimmer of mana. Reduces the next 3 incoming magic strikes by 40%.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "defense"
+            ],
+            "action": "arcane_ward"
         },
         "blink": {
             "id": "blink",
             "name": "Blink",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Instantly teleport to a nearby location or escape an engagement. Breaks [Immobilized] and [Pinned].",
-            "identity_tags": ["magic", "arcane", "mobility"],
-            "axis": "position",
-            "action": "blink",
-            "requirements": {
-                "class": "mage",
-                "concentration": 25,
-                "cooldown": 10
-            }
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Instant teleportation to a target room or location.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "mobility"
+            ],
+            "action": "blink"
         },
         "arcane_surge": {
             "id": "arcane_surge",
             "name": "Arcane Surge",
-            "tier": 3,
-            "cost": 0,
-            "description": "Utility: Conduct raw mana into your essence, restoring 50 Concentration but causing [Stalled] for 2 ticks.",
-            "identity_tags": ["magic", "arcane", "utility"],
-            "axis": "endurance",
-            "action": "arcane_surge",
-            "requirements": {
-                "class": "mage",
-                "stamina": 15,
-                "cooldown": 20
-            }
-        },
-        "artifice_view": {
-            "id": "artifice_view",
-            "name": "Artifice View",
-            "tier": 1,
-            "cost": 5,
-            "description": "Utility: Analyze the magical and physical structural data of an object. Reveals tags, combat rating, and technical stats.",
-            "identity_tags": ["magic", "arcane", "utility", "scholar"],
-            "axis": "utility",
-            "action": "artifice_view",
-            "requirements": {
-                "concentration": 5,
-                "cooldown": 1
-            }
+            "tier": 5,
+            "cost": 250,
+            "description": "Utility/Signature: Draw raw energy from the ley-lines. Instantly restores all Concentration and boosts Magic damage by 20% for 15 ticks.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "utility"
+            ],
+            "action": "arcane_surge"
         },
         "mage_physiology": {
             "id": "mage_physiology",
             "name": "Mage Physiology",
             "tier": 1,
-            "description": "Passive: Your essence is anchored in the arcane. Magic damage is increased by 10% and Concentration regenerates faster.",
+            "description": "Passive: Elemental Resonance. Your Magic power is increased by 15% and you gain 10% resistance to elemental damage.",
             "logic_type": "passive",
-            "identity_tags": ["magic", "passive"],
-            "potency_rules": [
-                {
-                    "type": "elevation_mod",
-                    "mult_per": 0.05,
-                    "penalty_per": 0.01
-                }
+            "identity_tags": [
+                "mage",
+                "passive"
             ]
         }
     }

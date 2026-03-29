@@ -4,175 +4,117 @@
             "id": "monk_snap_strike",
             "name": "Snap Strike",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: A rapid, low-impact strike. Generates 15 Stamina and +1 Chi. Core builder for Chi payoffs.",
-            "identity_tags": ["martial", "strike", "builder", "setup"],
-            "axis": "tempo",
-            "action": "monk_snap_strike",
-            "requirements": {
-                "class": "monk",
-                "stamina": 10
-            },
-            "base_power": 12
+            "cost": 0,
+            "description": "Setup/Builder: A lightning-fast palm strike. Generates 15 Stamina and 1 Chi Pip.",
+            "identity_tags": [
+                "martial",
+                "chi",
+                "setup",
+                "builder"
+            ],
+            "action": "monk_snap_strike"
         },
         "palm_strike": {
             "id": "palm_strike",
             "name": "Palm Strike",
             "tier": 2,
-            "cost": 15,
-            "description": "Setup: A direct, internal impact. Applies [Off-Balance] for 3 ticks. Generates +2 Chi.",
-            "identity_tags": ["martial", "strike", "disruption", "setup"],
-            "axis": "tempo",
-            "action": "palm_strike",
-            "requirements": {
-                "class": "monk",
-                "stamina": 15,
-                "cooldown": 4
-            },
-            "on_hit": {
-                "apply_status": "off_balance",
-                "duration": 3
-            },
-            "base_power": 14,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 1.0
-            }
+            "cost": 25,
+            "description": "Setup: A focused strike that disrupts the target's internal flow. Generates 1 Chi Pip and applies [Off-Balance].",
+            "identity_tags": [
+                "martial",
+                "chi",
+                "setup"
+            ],
+            "action": "palm_strike"
         },
         "dragon_kick": {
             "id": "dragon_kick",
             "name": "Dragon Kick",
             "tier": 4,
             "cost": 0,
-            "description": "Payoff: Consumes all Chi for devastating force. Deals +20% bonus damage per Chi spent. If target is [Prone], the impact causes [Staggered].",
-            "identity_tags": ["martial", "strike", "lethal", "payoff"],
-            "axis": "tempo",
-            "action": "dragon_kick",
-            "requirements": {
-                "class": "monk",
-                "chi": 1,
-                "cooldown": 6
-            },
-            "base_power": 25,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 2.0
-            },
-            "potency_rules": [
-                {
-                    "type": "pip_scaling",
-                    "resource": "monk.chi",
-                    "tiers": [
-                        { "max": 999, "mult_per": 0.25, "base": 1.0 }
-                    ],
-                    "consume": true
-                }
-            ]
+            "description": "Payoff: A powerful, leaping kick infused with Chi. Consumes 5 Chi Pips to deal massive Physical damage.",
+            "identity_tags": [
+                "martial",
+                "chi",
+                "payoff"
+            ],
+            "action": "dragon_kick"
         },
         "chi_burst": {
             "id": "chi_burst",
             "name": "Chi Burst",
             "tier": 3,
             "cost": 0,
-            "description": "Payoff/AOE: Release internal energy in a shockwave. Consumes 3 Chi to deal moderate damage and apply [Staggered] to all enemies in the room.",
-            "identity_tags": ["martial", "chi", "aoe", "payoff"],
-            "axis": "position",
-            "action": "chi_burst",
-            "requirements": {
-                "class": "monk",
-                "chi": 3,
-                "cooldown": 10
-            },
-            "base_power": 20
+            "description": "Payoff: Release a shockwave of internal energy. Consumes all current Chi to deal AOE damage and push enemies back.",
+            "identity_tags": [
+                "martial",
+                "chi",
+                "area",
+                "payoff"
+            ],
+            "action": "chi_burst"
         },
         "meditation": {
             "id": "meditation",
             "name": "Meditation",
             "tier": 2,
-            "cost": 0,
-            "description": "Utility: Still your mind to recover. Restores 30% of Maximum Health and 50 Stamina. Causes [Stalled] for 2 ticks.",
-            "identity_tags": ["martial", "focus", "utility"],
-            "axis": "endurance",
-            "action": "meditation",
-            "requirements": {
-                "class": "monk",
-                "stamina": 0,
-                "cooldown": 60
-            }
+            "cost": 50,
+            "description": "Defense: Focus your breath to center your mind. Restores 30% Stamina and grants [Evasive] for 4 ticks.",
+            "identity_tags": [
+                "martial",
+                "chi",
+                "defense"
+            ],
+            "action": "meditation"
         },
         "iron_fist": {
             "id": "iron_fist",
             "name": "Iron Fist",
-            "tier": 5,
+            "tier": 1,
             "cost": 30,
-            "description": "Finisher: A single, armor-shattering blow. Deals 3x damage against [Off-Balance] or [Staggered] targets.",
-            "identity_tags": ["martial", "strike", "lethal", "finisher"],
-            "axis": "tempo",
-            "action": "iron_fist",
-            "requirements": {
-                "class": "monk",
-                "stamina": 30,
-                "cooldown": 15
-            },
-            "base_power": 50,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.0
-            }
+            "description": "Defense/Counter: Harden your defenses for the next strike. The next physical hit taken is reduced by 50% and grants 1 Chi.",
+            "identity_tags": [
+                "martial",
+                "chi",
+                "defense"
+            ],
+            "action": "iron_fist"
         },
         "flying_kick": {
             "id": "flying_kick",
             "name": "Flying Kick",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Close the distance with an aerial strike. Clears [Slowed] and grants [Haste] for 2 ticks.",
-            "identity_tags": ["martial", "speed", "mobility"],
-            "axis": "position",
-            "action": "flying_kick",
-            "requirements": {
-                "class": "monk",
-                "stamina": 25,
-                "cooldown": 8
-            }
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Leap through the air to a target position.",
+            "identity_tags": [
+                "martial",
+                "chi",
+                "mobility"
+            ],
+            "action": "flying_kick"
         },
         "empty_mind": {
             "id": "empty_mind",
             "name": "Empty Mind",
-            "tier": 2,
-            "cost": 20,
-            "description": "Defense: Enter a state of pure reaction. Grants [Evasive] for 4 ticks, giving a 60% chance to negate incoming strikes.",
-            "identity_tags": ["martial", "focus", "defense"],
-            "axis": "endurance",
-            "action": "empty_mind",
-            "requirements": {
-                "class": "monk",
-                "stamina": 20,
-                "cooldown": 12
-            }
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Enter a state of pure flow. For 10 ticks, Chi cannot be consumed (all Chi spenders are free).",
+            "identity_tags": [
+                "martial",
+                "chi",
+                "utility"
+            ],
+            "action": "empty_mind"
         },
         "monk_physiology": {
             "id": "monk_physiology",
             "name": "Monk Physiology",
             "tier": 1,
-            "description": "Passive: Your training allows you to channel kinetic energy through stances.",
+            "description": "Passive: Momentum Master. Your Evasion chance is increased by 2% for every current Chi Pip (Max 20%).",
             "logic_type": "passive",
-            "identity_tags": ["martial", "passive"],
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "status_id": "stance_iron",
-                    "multiplier": 1.15
-                },
-                {
-                     "type": "mitigation_mod",
-                     "status_id": "stance_iron",
-                     "multiplier": 0.9
-                },
-                {
-                    "type": "status_mod",
-                    "status_id": "stance_swapped",
-                    "multiplier": 1.15
-                }
+            "identity_tags": [
+                "monk",
+                "passive"
             ]
         }
     }

@@ -1,141 +1,122 @@
 {
     "blessings": {
-        "twilight_strike": {
-            "id": "twilight_strike",
-            "name": "Twilight Strike",
+        "dance_of_shadows": {
+            "id": "dance_of_shadows",
+            "name": "Dance of Shadows",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup: Strike with dark grace. Deals damage and applies [Off-Balance] (5t). Generates 15 Rhythm.",
-            "identity_tags": ["martial", "speed", "setup"],
-            "axis": "speed",
-            "action": "twilight_strike",
-            "requirements": {
-                "class": "shadow_dancer",
-                "stamina": 10,
-                "cooldown": 2
-            },
-            "base_power": 15
+            "cost": 0,
+            "description": "Setup/Builder: A series of flowing strikes in the dark. Generates 15 Stamina and 1 Flow Pip.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "speed",
+                "setup",
+                "builder"
+            ],
+            "action": "dance_of_shadows"
         },
-        "shadow_step": {
-            "id": "shadow_step",
-            "name": "Shadow Step",
+        "veiled_motion": {
+            "id": "veiled_motion",
+            "name": "Veiled Motion",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Move like a ghost. Generates 1 Flow Pip and grants [Haste].",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "setup"
+            ],
+            "action": "veiled_motion"
+        },
+        "twilight_finale": {
+            "id": "twilight_finale",
+            "name": "Twilight Finale",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: A final, overwhelming series of shadow strikes. Consumes 5 Flow Pips to deal massive damage.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "payoff"
+            ],
+            "action": "twilight_finale"
+        },
+        "spinning_shadow": {
+            "id": "spinning_shadow",
+            "name": "Spinning Shadow",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: A 360-degree strike that leaves shadow trails. Consumes 3 Flow Pips to strike all enemies in the room.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "area",
+                "payoff"
+            ],
+            "action": "spinning_shadow"
+        },
+        "illusory_double": {
+            "id": "illusory_double",
+            "name": "Illusory Double",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Create a copy of yourself made of shadow. The next incoming hit will destroy the copy instead of hurting you.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "protection",
+                "defense"
+            ],
+            "action": "illusory_double"
+        },
+        "graceful_evasion": {
+            "id": "graceful_evasion",
+            "name": "Graceful Evasion",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Effortlessly sidestep incoming attacks. Increases Evasiveness by 40% for 6 ticks.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "defense"
+            ],
+            "action": "graceful_evasion"
+        },
+        "shadow_leap": {
+            "id": "shadow_leap",
+            "name": "Shadow Leap",
             "tier": 2,
             "cost": 15,
-            "description": "Setup: Dash into the target's shadow. Gains [Concealed] and applies [Marked].",
-            "identity_tags": ["martial", "vision", "setup"],
-            "axis": "vision",
-            "action": "shadow_step",
-            "requirements": {
-                "class": "shadow_dancer",
-                "stamina": 15,
-                "cooldown": 5
-            }
+            "description": "Mobility: Leap into the shadow of another entity instantly.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "shadow_leap"
         },
-        "danse_macabre": {
-            "id": "danse_macabre",
-            "name": "Danse Macabre",
-            "tier": 3,
-            "cost": 40,
-            "description": "Payoff: Perform a lethal dance. Deals 1.2x damage per point of Speed resonance. Consumes all Rhythm.",
-            "identity_tags": ["martial", "lethality", "payoff"],
-            "axis": "lethality",
-            "action": "danse_macabre",
-            "requirements": {
-                "class": "shadow_dancer",
-                "stamina": 40,
-                "cooldown": 15
-            },
-            "base_power": 50
-        },
-        "sever_soul": {
-            "id": "sever_soul",
-            "name": "Sever Soul",
-            "tier": 3,
-            "cost": 30,
-            "description": "Payoff: A final, lethal flourish. Deals 3x damage if target is [Off-Balance]. Grants 1 Spirit on kill.",
-            "identity_tags": ["martial", "lethality", "payoff"],
-            "axis": "lethality",
-            "action": "sever_soul",
-            "requirements": {
-                "class": "shadow_dancer",
-                "stamina": 30,
-                "status": "off_balance"
-            },
-            "base_power": 40
-        },
-        "evasive_waltz": {
-            "id": "evasive_waltz",
-            "name": "Evasive Waltz",
-            "tier": 2,
-            "cost": 25,
-            "description": "Defense: Increase Evasion by 50% for 6s. Successfully dodging an attack restores 20 Stamina.",
-            "identity_tags": ["martial", "protection", "defense"],
-            "axis": "protection",
-            "action": "evasive_waltz",
-            "requirements": {
-                "class": "shadow_dancer",
-                "stamina": 25,
-                "cooldown": 20
-            }
-        },
-        "shadow_echo": {
-            "id": "shadow_echo",
-            "name": "Shadow Echo",
-            "tier": 4,
-            "cost": 35,
-            "description": "Defense: Leave behind a shadow clone for 5s. The first attack that would hit you is absorbed by the clone instead.",
-            "identity_tags": ["magic", "protection", "defense"],
-            "axis": "protection",
-            "action": "shadow_echo",
-            "requirements": {
-                "class": "shadow_dancer",
-                "stamina": 35,
-                "cooldown": 45
-            }
-        },
-        "flicker": {
-            "id": "flicker",
-            "name": "Flicker",
+        "shadow_melter": {
+            "id": "shadow_melter",
+            "name": "Shadow Melter",
             "tier": 1,
-            "cost": 10,
-            "description": "Mobility: Instantly blink to an adjacent room, applying [Slowed] (3t) to all you leave behind.",
-            "identity_tags": ["martial", "speed", "mobility"],
-            "axis": "speed",
-            "action": "flicker",
-            "requirements": {
-                "class": "shadow_dancer",
-                "stamina": 10,
-                "cooldown": 4
-            }
-        },
-        "eclipse_curse": {
-            "id": "eclipse_curse",
-            "name": "Eclipse Curse",
-            "tier": 5,
-            "cost": 60,
-            "description": "Utility: Ultimate: For 20s, all your attacks have a 50% chance to apply [Blinded] (3t).",
-            "identity_tags": ["magic", "utility", "ultimate"],
-            "axis": "utility",
-            "action": "eclipse_curse",
-            "requirements": {
-                "class": "shadow_dancer",
-                "stamina": 60,
-                "cooldown": 180
-            }
+            "cost": 50,
+            "description": "Utility: Temporarily meld your physical form into a nearby shadow to avoid detection.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "utility"
+            ],
+            "action": "shadow_melter"
         },
         "shadow_dancer_physiology": {
             "id": "shadow_dancer_physiology",
             "name": "Shadow Dancer Physiology",
             "tier": 1,
-            "description": "Passive: Your Speed resonance increases your Lethal damage multiplier. +5% Evasion base.",
+            "description": "Passive: Shadow Flow. You gain 5 Stamina every time you evade an attack while in the shadows.",
             "logic_type": "passive",
-            "identity_tags": ["speed", "passive"],
-            "potency_rules": [
-                {
-                    "type": "stat_mod",
-                    "stat": "evasion",
-                    "multiplier": 1.05
-                }
+            "identity_tags": [
+                "shadow_dancer",
+                "passive"
             ]
         }
     }

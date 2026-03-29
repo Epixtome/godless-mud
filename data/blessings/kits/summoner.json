@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "spirit_lash": {
+            "id": "spirit_lash",
+            "name": "Spirit Lash",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A lash of spectral force. Generates 15 Concentration and 1 Aether Pip.",
+            "identity_tags": [
+                "magic",
+                "summoning",
+                "setup",
+                "builder"
+            ],
+            "action": "spirit_lash"
+        },
+        "veil_opening": {
+            "id": "veil_opening",
+            "name": "Veil Opening",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Briefly open a door to the void. Generates 2 Aether Pips and applies [Marked].",
+            "identity_tags": [
+                "magic",
+                "summoning",
+                "setup"
+            ],
+            "action": "veil_opening"
+        },
+        "grand_invocation": {
+            "id": "grand_invocation",
+            "name": "Grand Invocation",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Summon a massive spectral entity for a single strike. Consumes 5 Aether Pips.",
+            "identity_tags": [
+                "magic",
+                "summoning",
+                "payoff"
+            ],
+            "action": "grand_invocation"
+        },
+        "synergy_explosion": {
+            "id": "synergy_explosion",
+            "name": "Synergy Explosion",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: Detonate your companion's stored energy. Consumes 3 Aether Pips to deal AOE damage around your companion.",
+            "identity_tags": [
+                "magic",
+                "summoning",
+                "area",
+                "payoff"
+            ],
+            "action": "synergy_explosion"
+        },
+        "spirit_shield": {
+            "id": "spirit_shield",
+            "name": "Spirit Shield",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: A shield of protective spirits. Grants 40% Magic and Physical reduction.",
+            "identity_tags": [
+                "magic",
+                "protection",
+                "defense"
+            ],
+            "action": "spirit_shield"
+        },
+        "banish": {
+            "id": "banish",
+            "name": "Banishment",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Disruption: Force an enemy into the void for 2 ticks. They cannot act and take damage.",
+            "identity_tags": [
+                "magic",
+                "summoning",
+                "defense"
+            ],
+            "action": "banish"
+        },
+        "veil_step": {
+            "id": "veil_step",
+            "name": "Veil Step",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Teleport to any location within the same room instantly.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "veil_step"
+        },
+        "call_avatar": {
+            "id": "call_avatar",
+            "name": "Call Avatar",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Summon a powerful avatar to fight for you for 60 seconds.",
+            "identity_tags": [
+                "magic",
+                "utility"
+            ],
+            "action": "call_avatar"
+        },
+        "summoner_physiology": {
+            "id": "summoner_physiology",
+            "name": "Summoner Physiology",
+            "tier": 1,
+            "description": "Passive: Veil Walker. You gain 10% Magic power for every spectral entity you have summoned and your Veil Step breaks all movement blocks.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "summoner",
+                "passive"
+            ]
+        }
+    }
+}

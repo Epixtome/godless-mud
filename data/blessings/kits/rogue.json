@@ -4,163 +4,116 @@
             "id": "rogue_quick_strike",
             "name": "Quick Strike",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: A rapid, low-impact strike. Generates 15 stamina. Increases your [Speed] by 5% for the next tick.",
-            "identity_tags": ["martial", "strike", "builder", "setup"],
-            "axis": "tempo",
-            "action": "rogue_quick_strike",
-            "requirements": {
-                "class": "rogue",
-                "stamina": 10,
-                "cooldown": 2
-            },
-            "base_power": 12
+            "cost": 0,
+            "description": "Setup/Builder: A fast, simple dagger strike. Generates 15 Stamina and sets a 4-tick bleed.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "setup",
+                "builder"
+            ],
+            "action": "rogue_quick_strike"
+        },
+        "mark_target": {
+            "id": "mark_target",
+            "name": "Mark Target",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Mark a foe's weak point. Applies [Marked] for 10 ticks.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "setup"
+            ],
+            "action": "mark_target"
+        },
+        "backstab": {
+            "id": "backstab",
+            "name": "Backstab",
+            "tier": 4,
+            "cost": 100,
+            "description": "Payoff: A lethal puncture from behind. Deals massive Physical damage. Deals x4 damage if you are [Concealed].",
+            "identity_tags": [
+                "martial",
+                "lethality",
+                "payoff"
+            ],
+            "action": "backstab"
+        },
+        "visceral_strike": {
+            "id": "visceral_strike",
+            "name": "Visceral Strike",
+            "tier": 3,
+            "cost": 75,
+            "description": "Payoff: Strike a vital organ. Dealing moderate damage and applying [Maimed] (Reduced Damage) for 6 ticks.",
+            "identity_tags": [
+                "martial",
+                "lethality",
+                "payoff"
+            ],
+            "action": "visceral_strike"
         },
         "vanish": {
             "id": "vanish",
             "name": "Vanish",
             "tier": 2,
-            "cost": 15,
-            "description": "Setup: Attempt to fade from view. Grants [Concealed] for 6 ticks. If you are already [Concealed], this refresh the duration and grants a brief [Speed] boost.",
-            "identity_tags": ["martial", "stealth", "setup"],
-            "axis": "vision",
-            "action": "vanish",
-            "requirements": {
-                "class": "rogue",
-                "stamina": 15,
-                "cooldown": 8
-            },
-            "on_hit": {
-                "apply_status": "concealed",
-                "duration": 6,
-                "target": "self"
-            }
-        },
-        "mark_target": {
-            "id": "mark_target",
-            "name": "Mark Target",
-            "tier": 2,
-            "cost": 10,
-            "description": "Setup: Focus your gaze on an enemy, applying [Marked] for 10 ticks. Marked targets are visible on the map and take +20% damage from your precision strikes.",
-            "identity_tags": ["martial", "vision", "setup"],
-            "axis": "vision",
-            "action": "mark_target",
-            "requirements": {
-                "class": "rogue",
-                "stamina": 10,
-                "cooldown": 5
-            },
-            "on_hit": {
-                "apply_status": "marked",
-                "duration": 10
-            }
-        },
-        "backstab": {
-            "id": "backstab",
-            "name": "Backstab",
-            "tier": 3,
-            "cost": 30,
-            "description": "Payoff: A lethal precision hit from hiding. Deals 3x damage to [Concealed] targets and breaks stealth. If the target is also [Marked], it is a guaranteed critical.",
-            "identity_tags": ["martial", "strike", "lethal", "payoff"],
-            "axis": "vision",
-            "action": "backstab",
-            "requirements": {
-                "class": "rogue",
-                "stamina": 30,
-                "cooldown": 4
-            },
-            "base_power": 35,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": false,
-                    "status_id": "concealed",
-                    "multiplier": 3.0
-                }
-            ]
-        },
-        "visceral_strike": {
-            "id": "visceral_strike",
-            "name": "Visceral Strike",
-            "tier": 5,
-            "cost": 40,
-            "description": "Finisher: A devastating puncture targeting vital organs. Consumes [Marked] to apply [Exposed] and deal double damage.",
-            "identity_tags": ["martial", "strike", "lethal", "payoff", "finisher"],
-            "axis": "tempo",
-            "action": "visceral_strike",
-            "requirements": {
-                "class": "rogue",
-                "stamina": 40,
-                "cooldown": 15
-            },
-            "base_power": 55,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "marked",
-                    "multiplier": 2.0
-                }
-            ]
+            "cost": 75,
+            "description": "Defense/Stealth: Instantly enter stealth. Grants [Concealed] for 3 ticks and breaks target locks.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "defense"
+            ],
+            "action": "vanish"
         },
         "evasion": {
             "id": "evasion",
             "name": "Evasion",
-            "tier": 2,
-            "cost": 20,
-            "description": "Defense: A tactical roll to avoid incoming physical harm. Grants [Evasive] for 2 ticks, giving a 50% chance to negate physical strikes.",
-            "identity_tags": ["martial", "maneuver", "defense"],
-            "axis": "tempo",
-            "action": "evasion",
-            "requirements": {
-                "class": "rogue",
-                "stamina": 20,
-                "cooldown": 12
-            }
+            "tier": 1,
+            "cost": 50,
+            "description": "Defense: Focus on dodging incoming attacks. Increases Evasion chance by 40% for 6 ticks.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "defense"
+            ],
+            "action": "evasion"
         },
         "shadowstep": {
             "id": "shadowstep",
             "name": "Shadowstep",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Instantly warp behind a target or to safety. Breaks [Immobilized] and grants [Speed] for 2 ticks.",
-            "identity_tags": ["martial", "magic", "mobility"],
-            "axis": "position",
-            "action": "shadowstep",
-            "requirements": {
-                "class": "rogue",
-                "stamina": 25,
-                "cooldown": 10
-            }
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Instantly move behind a target or into an adjacent room.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "shadowstep"
         },
         "smoke_bomb": {
             "id": "smoke_bomb",
             "name": "Smoke Bomb",
-            "tier": 3,
-            "cost": 15,
-            "description": "Utility: Throw a distracting bomb. Applies [Blinded] (3 ticks) to all enemies in the room and instantly grants you [Concealed].",
-            "identity_tags": ["martial", "utility", "disruption"],
-            "axis": "vision",
-            "action": "smoke_bomb",
-            "requirements": {
-                "class": "rogue",
-                "stamina": 15,
-                "cooldown": 20
-            }
+            "tier": 1,
+            "cost": 30,
+            "description": "Utility/Disruption: Blind all enemies in the room for 2 ticks and grants self [Concealed].",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "utility"
+            ],
+            "action": "smoke_bomb"
         },
         "rogue_physiology": {
             "id": "rogue_physiology",
             "name": "Rogue Physiology",
             "tier": 1,
-            "description": "Passive: Your body is a shadow. Movement is 20% quieter and precision damage is increased on high ground.",
+            "description": "Passive: Shadow Walker. You gain 10% movement speed and 15% increased Critical strike damage.",
             "logic_type": "passive",
-            "identity_tags": ["martial", "passive"],
-            "potency_rules": [
-                {
-                    "type": "elevation_mod",
-                    "mult_per": 0.15,
-                    "penalty_per": 0.05
-                }
+            "identity_tags": [
+                "rogue",
+                "passive"
             ]
         }
     }

@@ -1,0 +1,123 @@
+{
+    "blessings": {
+        "shot_burst": {
+            "id": "shot_burst",
+            "name": "Shot Burst",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A rapid burst from an automatic pistol. Generates 15 Stamina and 1 Ammo Pip.",
+            "identity_tags": [
+                "martial",
+                "tech",
+                "gun",
+                "setup",
+                "builder"
+            ],
+            "action": "shot_burst"
+        },
+        "tech_mark": {
+            "id": "tech_mark",
+            "name": "Tech Mark",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Paint the target with a tracking laser. Generates 1 Ammo Pip and applies [Marked].",
+            "identity_tags": [
+                "martial",
+                "tech",
+                "setup"
+            ],
+            "action": "tech_mark"
+        },
+        "satellite_beam": {
+            "id": "satellite_beam",
+            "name": "Satellite Beam",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Call down a beam from orbit. Consumes 5 Ammo Pips to deal massive Magic damage in an AOE.",
+            "identity_tags": [
+                "martial",
+                "tech",
+                "area",
+                "payoff"
+            ],
+            "action": "satellite_beam"
+        },
+        "ballistic_barrage": {
+            "id": "ballistic_barrage",
+            "name": "Ballistic Barrage",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff: A continuous stream of lead. Consumes 3 Ammo Pips to deal high Physical damage to a single target.",
+            "identity_tags": [
+                "martial",
+                "tech",
+                "payoff"
+            ],
+            "action": "ballistic_barrage"
+        },
+        "auto_barrier": {
+            "id": "auto_barrier",
+            "name": "Auto Barrier",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: An automated defensive drone generates a field around you. Reduces incoming damage by 30%.",
+            "identity_tags": [
+                "martial",
+                "tech",
+                "protection",
+                "defense"
+            ],
+            "action": "auto_barrier"
+        },
+        "recharge_protocol": {
+            "id": "recharge_protocol",
+            "name": "Recharge",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Shift systems to life support. Restores 10% HP and 50 Stamina.",
+            "identity_tags": [
+                "martial",
+                "tech",
+                "defense"
+            ],
+            "action": "recharge_protocol"
+        },
+        "rocket_jump": {
+            "id": "rocket_jump",
+            "name": "Rocket Jump",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Launch yourself to an adjacent room, knocking back all enemies at your takeoff site.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "rocket_jump"
+        },
+        "drone_swarm": {
+            "id": "drone_swarm",
+            "name": "Drone Swarm",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Dozens of small drones harass every enemy in the zone for 30 ticks, dealing constant damage and reducing Evasion.",
+            "identity_tags": [
+                "martial",
+                "tech",
+                "utility"
+            ],
+            "action": "drone_swarm"
+        },
+        "machinist_physiology": {
+            "id": "machinist_physiology",
+            "name": "Machinist Physiology",
+            "tier": 1,
+            "description": "Passive: Gadget Master. Your Ammo capacity is increased by 20% and your items have 10% reduced cooldown.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "machinist",
+                "passive"
+            ]
+        }
+    }
+}

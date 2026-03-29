@@ -1,142 +1,120 @@
 {
     "blessings": {
-        "weave_life": {
-            "id": "weave_life",
-            "name": "Weave Life",
+        "weave_strike": {
+            "id": "weave_strike",
+            "name": "Weave Strike",
             "tier": 1,
-            "cost": 15,
-            "description": "Setup: Channel life force. Restores 10 HP and applies [Regeneration] (5t). Generates 1 Spirit.",
-            "identity_tags": ["magic", "restoration", "setup"],
-            "axis": "restoration",
-            "action": "weave_life",
-            "requirements": {
-                "class": "soul_weaver",
-                "concentration": 15,
-                "cooldown": 2
-            },
-            "base_power": 10
+            "cost": 0,
+            "description": "Setup/Builder: A strike that knots the target's spirit. Generates 15 Stamina and 1 Thread Pip.",
+            "identity_tags": [
+                "magic",
+                "spirit",
+                "setup",
+                "builder"
+            ],
+            "action": "weave_strike"
         },
-        "sever_thread": {
-            "id": "sever_thread",
-            "name": "Sever Thread",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: Rip at the target's spirit. Applies [Vulnerable] (1.5x damage taken, 8t). Generates 2 Spirits.",
-            "identity_tags": ["magic", "dark", "setup"],
-            "axis": "dark",
-            "action": "sever_thread",
-            "requirements": {
-                "class": "soul_weaver",
-                "concentration": 20,
-                "cooldown": 5
-            },
-            "base_power": 20
-        },
-        "soul_mending": {
-            "id": "soul_mending",
-            "name": "Soul Mending",
-            "tier": 3,
-            "cost": 40,
-            "description": "Payoff: Consume all [Regeneration] on allies to heal all in the room for 2x power (per tag).",
-            "identity_tags": ["magic", "restoration", "payoff"],
-            "axis": "restoration",
-            "action": "soul_mending",
-            "requirements": {
-                "class": "soul_weaver",
-                "concentration": 40,
-                "cooldown": 15
-            },
-            "base_power": 45
-        },
-        "reaping_blast": {
-            "id": "reaping_blast",
-            "name": "Reaping Blast",
-            "tier": 3,
-            "cost": 35,
-            "description": "Payoff: Explode all [Vulnerable] targets for massive Necrotic damage. Deals 3x damage to Vulnerable.",
-            "identity_tags": ["magic", "lethality", "payoff"],
-            "axis": "lethality",
-            "action": "reaping_blast",
-            "requirements": {
-                "class": "soul_weaver",
-                "concentration": 35,
-                "status": "vulnerable"
-            },
-            "base_power": 55
-        },
-        "spiritual_barrier": {
-            "id": "spiritual_barrier",
-            "name": "Spiritual Barrier",
-            "tier": 2,
+        "spirit_infusion": {
+            "id": "spirit_infusion",
+            "name": "Spirit Infusion",
+            "tier": 1,
             "cost": 25,
-            "description": "Defense: Place a protective weave. Reduces damage by 30% for 12s. Applies [Spirit Braced].",
-            "identity_tags": ["magic", "protection", "defense"],
-            "axis": "protection",
-            "action": "spiritual_barrier",
-            "requirements": {
-                "class": "soul_weaver",
-                "concentration": 25,
-                "cooldown": 20
-            }
+            "description": "Setup: Infuse an ally or yourself with raw spiritual force. Generates 2 Thread Pips and grants [Focused].",
+            "identity_tags": [
+                "magic",
+                "spirit",
+                "setup"
+            ],
+            "action": "spirit_infusion"
         },
-        "soul_bind": {
-            "id": "soul_bind",
-            "name": "Soul Bind",
+        "soul_mend": {
+            "id": "soul_mend",
+            "name": "Soul Mend",
             "tier": 4,
-            "cost": 50,
-            "description": "Defense: Bind your health with the target foe. 50% of damage taken by either is shared.",
-            "identity_tags": ["magic", "utility", "defense"],
-            "axis": "utility",
-            "action": "soul_bind",
-            "requirements": {
-                "class": "soul_weaver",
-                "concentration": 50,
-                "cooldown": 60
-            }
+            "cost": 0,
+            "description": "Payoff: Knit together a shattered soul. Consumes 5 Thread Pips to restore 50% HP to a target.",
+            "identity_tags": [
+                "magic",
+                "spirit",
+                "payoff"
+            ],
+            "action": "soul_mend"
         },
-        "spirit_walk": {
-            "id": "spirit_walk",
-            "name": "Spirit Walk",
+        "weave_explosion": {
+            "id": "weave_explosion",
+            "name": "Weave Explosion",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: Detonate spiritual threads in an area. Consumes 3 Thread Pips to deal damage and apply [Blinded].",
+            "identity_tags": [
+                "magic",
+                "spirit",
+                "area",
+                "payoff"
+            ],
+            "action": "weave_explosion"
+        },
+        "spiritual_shield": {
+            "id": "spiritual_shield",
+            "name": "Spiritual Shield",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: A field of interlocking spirit threads. Reduces incoming magic damage by 50% for 6 ticks.",
+            "identity_tags": [
+                "magic",
+                "spirit",
+                "protection",
+                "defense"
+            ],
+            "action": "spiritual_shield"
+        },
+        "thread_of_fate_blink": {
+            "id": "thread_of_fate_blink",
+            "name": "Fate Blink",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Mobility: Briefly jump to the spiritual plane to avoid danger.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "defense"
+            ],
+            "action": "thread_of_fate_blink"
+        },
+        "weaving_dash": {
+            "id": "weaving_dash",
+            "name": "Weaving Dash",
             "tier": 2,
             "cost": 15,
-            "description": "Mobility: Step between realms. Grants [Concealed] for 3s and removes all movement locks.",
-            "identity_tags": ["magic", "vision", "mobility"],
-            "axis": "vision",
-            "action": "spirit_walk",
-            "requirements": {
-                "class": "soul_weaver",
-                "concentration": 15,
-                "cooldown": 10
-            }
+            "description": "Mobility: Dash forward, leaving a trail of spirit threads that slow enemies.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "weaving_dash"
         },
-        "thread_of_fate": {
-            "id": "thread_of_fate",
-            "name": "Thread of Fate",
+        "grand_weave_revival": {
+            "id": "grand_weave_revival",
+            "name": "Grand Weave",
             "tier": 5,
-            "cost": 75,
-            "description": "Utility: Ultimate: For 15s, whenever an ally takes damage, its target enemy takes 50% of it as direct damage.",
-            "identity_tags": ["magic", "utility", "ultimate"],
-            "axis": "utility",
-            "action": "thread_of_fate",
-            "requirements": {
-                "class": "soul_weaver",
-                "concentration": 75,
-                "cooldown": 240
-            }
+            "cost": 200,
+            "description": "Utility/Signature: For 30 ticks, every time an ally in the room uses an ability, they are healed for 5% of their Max HP.",
+            "identity_tags": [
+                "magic",
+                "utility"
+            ],
+            "action": "grand_weave_revival"
         },
         "soul_weaver_physiology": {
             "id": "soul_weaver_physiology",
             "name": "Soul Weaver Physiology",
             "tier": 1,
-            "description": "Passive: Your restoration tagged blessings also apply a [protection] buff equal to 20% of the amount healed.",
+            "description": "Passive: Spirit Master. You gain 10% Magic power and your healing abilities are 20% more effective.",
             "logic_type": "passive",
-            "identity_tags": ["restoration", "passive"],
-            "potency_rules": [
-                {
-                    "type": "stat_mod",
-                    "stat": "healing_received",
-                    "multiplier": 1.2
-                }
+            "identity_tags": [
+                "soul_weaver",
+                "passive"
             ]
         }
     }

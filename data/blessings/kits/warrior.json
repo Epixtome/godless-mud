@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "warriors_strike": {
+            "id": "warriors_strike",
+            "name": "Warrior's Strike",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A veteran's calculated strike. Generates 20 Stamina and 1 Combat Pip.",
+            "identity_tags": [
+                "martial",
+                "war",
+                "setup",
+                "builder"
+            ],
+            "action": "warriors_strike"
+        },
+        "battle_cry": {
+            "id": "battle_cry",
+            "name": "Battle Cry",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Intimidate the foe with a roar. Generates 1 Combat Pip and applies [Weakened].",
+            "identity_tags": [
+                "martial",
+                "war",
+                "setup"
+            ],
+            "action": "battle_cry"
+        },
+        "brutal_cleave": {
+            "id": "brutal_cleave",
+            "name": "Brutal Cleave",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff/AOE: A wide, horizontal arc. Consumes 5 Combat Pips to deal massive AOE Physical damage.",
+            "identity_tags": [
+                "martial",
+                "war",
+                "area",
+                "payoff"
+            ],
+            "action": "brutal_cleave"
+        },
+        "overpowering_blow": {
+            "id": "overpowering_blow",
+            "name": "Overpowering Blow",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff: A strike designed to shatter guards. Consumes 3 Combat Pips to deal damage and [Stagger].",
+            "identity_tags": [
+                "martial",
+                "war",
+                "payoff"
+            ],
+            "action": "overpowering_blow"
+        },
+        "ignore_pain": {
+            "id": "ignore_pain",
+            "name": "Ignore Pain",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Push through the suffering. Converts 20% of missing HP into a temporary shield.",
+            "identity_tags": [
+                "martial",
+                "war",
+                "defense"
+            ],
+            "action": "ignore_pain"
+        },
+        "berserk_leap": {
+            "id": "berserk_leap",
+            "name": "Berserk Leap",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Mobility: Leap into the fray, gaining [Unstoppable] for 2 ticks.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "defense"
+            ],
+            "action": "berserk_leap"
+        },
+        "war_path": {
+            "id": "war_path",
+            "name": "War Path",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Burst of adrenaline to move across the battlefield with ease.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "war_path"
+        },
+        "unbreakable_will": {
+            "id": "unbreakable_will",
+            "name": "Unbreakable Will",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: You cannot be reduced below 1 HP for 5 ticks.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "unbreakable_will"
+        },
+        "warrior_physiology": {
+            "id": "warrior_physiology",
+            "name": "Warrior Physiology",
+            "tier": 1,
+            "description": "Passive: Veteran's Grit. You gain 10% bonus Defense and your Combat Pip generation is doubled when below 50% HP.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "warrior",
+                "passive"
+            ]
+        }
+    }
+}

@@ -4,168 +4,117 @@
             "id": "double_tap",
             "name": "Double Tap",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: Two quick shots to the center mass. Deals physical damage and generates 15 Stamina and +1 Bullet. No cooldown.",
-            "identity_tags": ["martial", "gun", "builder", "setup"],
-            "axis": "tempo",
-            "action": "double_tap",
-            "requirements": {
-                "class": "gunner",
-                "stamina": 10
-            },
-            "base_power": 12
-        },
-        "flashbang": {
-            "id": "flashbang",
-            "name": "Flashbang",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: High-intensity magnesium flare. Applies [Blinded] group-wide (4 ticks). Deals minimal fire damage.",
-            "identity_tags": ["martial", "gun", "disruption", "setup"],
-            "axis": "vision",
-            "action": "flashbang",
-            "requirements": {
-                "class": "gunner",
-                "stamina": 20,
-                "cooldown": 6
-            },
-            "on_hit": {
-                "apply_status": "blinded",
-                "duration": 4
-            }
+            "cost": 0,
+            "description": "Setup/Builder: Two quick shots to the center mass. Generates 15 Stamina and 1 Ammo Pip.",
+            "identity_tags": [
+                "martial",
+                "gun",
+                "setup",
+                "builder"
+            ],
+            "action": "double_tap"
         },
         "hollow_point": {
             "id": "hollow_point",
             "name": "Hollow Point",
-            "tier": 2,
-            "cost": 15,
-            "description": "Setup: Specialized rounds focused on tissue damage. Applies [Bleeding] (6 ticks) and [Marked] (8 ticks).",
-            "identity_tags": ["martial", "gun", "endurance", "setup"],
-            "axis": "endurance",
-            "action": "hollow_point",
-            "requirements": {
-                "class": "gunner",
-                "stamina": 15,
-                "cooldown": 4
-            },
-            "on_hit": {
-                "apply_status": "bleeding",
-                "duration": 6
-            }
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Load specialized rounds. Generates 1 Ammo Pip and applies [Bleeding].",
+            "identity_tags": [
+                "martial",
+                "gun",
+                "setup"
+            ],
+            "action": "hollow_point"
         },
         "gunner_headshot": {
             "id": "gunner_headshot",
             "name": "Headshot",
-            "tier": 5,
-            "cost": 40,
-            "description": "Finisher: Calculated execution. Deals 4x damage if target is [Blinded], [Stunned], or [Exposed]. Consumes all Bullets for bonus accuracy.",
-            "identity_tags": ["martial", "gun", "lethal", "payoff", "finisher"],
-            "axis": "lethality",
-            "action": "gunner_headshot",
-            "requirements": {
-                "class": "gunner",
-                "bullets": 1,
-                "cooldown": 12
-            },
-            "base_power": 80,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "target_tags": ["blinded", "stunned", "exposed"],
-                    "multiplier": 4.0
-                }
-            ]
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: A perfect, lethal shot. Consumes 5 Ammo Pips to deal Physical damage with a massive critical multiplier.",
+            "identity_tags": [
+                "martial",
+                "gun",
+                "payoff"
+            ],
+            "action": "gunner_headshot"
         },
         "buckshot": {
             "id": "buckshot",
             "name": "Buckshot",
             "tier": 3,
-            "cost": 30,
-            "description": "Payoff/AOE: Spread fire. Deals damage to 3 targets in a cone. 2x damage if target is within melee range.",
-            "identity_tags": ["martial", "gun", "aoe", "payoff"],
-            "axis": "endurance",
-            "action": "buckshot",
-            "requirements": {
-                "class": "gunner",
-                "stamina": 30,
-                "cooldown": 8
-            },
-            "base_power": 30,
-            "potency_rules": [
-                {
-                    "type": "scaling_mod",
-                    "scaling_tag": "martial",
-                    "multiplier": 1.2
-                }
-            ]
+            "cost": 0,
+            "description": "Payoff/AOE: A spray of lead. Consumes 3 Ammo Pips to deal AOE Physical damage in the room.",
+            "identity_tags": [
+                "martial",
+                "gun",
+                "area",
+                "payoff"
+            ],
+            "action": "buckshot"
         },
         "covering_fire": {
             "id": "covering_fire",
             "name": "Covering Fire",
             "tier": 2,
-            "cost": 25,
-            "description": "Defense/Reaction: Suppress their movement. For the next 6 ticks, you automatically counter-attack anyone who moves or hits you with a [Staggered] shot.",
-            "identity_tags": ["martial", "gun", "protection", "defense"],
-            "axis": "position",
-            "action": "covering_fire",
-            "requirements": {
-                "class": "gunner",
-                "stamina": 25,
-                "cooldown": 20
-            }
+            "cost": 75,
+            "description": "Defense: Suppress the enemy with lead. All enemies in the room deal 30% less damage for 4 ticks.",
+            "identity_tags": [
+                "martial",
+                "gun",
+                "defense"
+            ],
+            "action": "covering_fire"
+        },
+        "flashbang": {
+            "id": "flashbang",
+            "name": "Flashbang",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Disruption: Blind and deafen. Applies [Blinded] and [Dazed] for 2 ticks.",
+            "identity_tags": [
+                "martial",
+                "gun",
+                "defense"
+            ],
+            "action": "flashbang"
         },
         "tactical_slide": {
             "id": "tactical_slide",
             "name": "Tactical Slide",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Slide beneath their reach. Move a short distance, reload +2 Bullets and clear all [Pinned] states.",
-            "identity_tags": ["martial", "speed", "mobility"],
-            "axis": "position",
-            "action": "tactical_slide",
-            "requirements": {
-                "class": "gunner",
-                "stamina": 25,
-                "cooldown": 10
-            }
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Slide into cover, breaking all movement-restricting effects.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "tactical_slide"
         },
         "rapid_fire": {
             "id": "rapid_fire",
             "name": "Rapid Fire",
-            "tier": 2,
-            "cost": 0,
-            "description": "Utility: Unleash the lead. Buff: Increases Attack Speed by 100% for 8s. Consumes 10 Stamina per second while active.",
-            "identity_tags": ["martial", "gun", "buff", "utility"],
-            "axis": "utility",
-            "action": "rapid_fire",
-            "requirements": {
-                "class": "gunner",
-                "stamina": 5,
-                "cooldown": 25
-            }
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: For 10 ticks, your attacks have 0 cooldown and double Attack Speed.",
+            "identity_tags": [
+                "martial",
+                "gun",
+                "utility"
+            ],
+            "action": "rapid_fire"
         },
         "gunner_physiology": {
             "id": "gunner_physiology",
             "name": "Gunner Physiology",
             "tier": 1,
-            "description": "Passive: Your reflexes are tuned for the draw. Your Multi-hit damage is increased by 25%, and your Range is extended by 15%. All ammunition costs are reduced by 10%.",
+            "description": "Passive: Ballistic Specialist. You gain 10% increased attack speed and your critical strikes restore 1 Ammo Pip.",
             "logic_type": "passive",
-            "identity_tags": ["ballistic", "passive"],
-            "potency_rules": [
-                {
-                    "type": "multi_hit_mod",
-                    "multiplier": 1.25
-                },
-                {
-                    "type": "range_mod",
-                    "multiplier": 1.15
-                },
-                {
-                    "type": "cost_mod",
-                    "tag": "ammo",
-                    "multiplier": 0.9
-                }
+            "identity_tags": [
+                "gunner",
+                "passive"
             ]
         }
     }

@@ -4,175 +4,117 @@
             "id": "elemental_strike",
             "name": "Elemental Strike",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: A strike infused with shifting energy. Cycles through Fire, Ice, and Lightning. Generates 15 Concentration and +1 Attunement Pip. No cooldown.",
-            "identity_tags": ["magic", "elemental", "builder", "setup"],
-            "axis": "elemental",
-            "action": "elemental_strike",
-            "requirements": {
-                "class": "elementalist",
-                "concentration": 10
-            },
-            "base_power": 12
+            "cost": 0,
+            "description": "Setup/Builder: A strike infused with shifting elements. Generates 15 Concentration and 1 Attunement Pip.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "setup",
+                "builder"
+            ],
+            "action": "elemental_strike"
         },
-        "flash_freeze": {
-            "id": "flash_freeze",
-            "name": "Flash Freeze",
-            "tier": 2,
-            "cost": 15,
-            "description": "Setup: A burst of frigid air. Applies [Frozen] (2 ticks) if the target is [Wet]. Otherwise applies [Slowed].",
-            "identity_tags": ["magic", "ice", "disruption", "setup"],
-            "axis": "elemental",
-            "action": "flash_freeze",
-            "requirements": {
-                "class": "elementalist",
-                "concentration": 15,
-                "cooldown": 4
-            },
-            "on_hit": {
-                "apply_status": "slowed",
-                "duration": 4
-            }
-        },
-        "cinder_shower": {
-            "id": "cinder_shower",
-            "name": "Cinder Shower",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: Blanket the room in burning cinders. Applies [Burning] (4 ticks) group-wide.",
-            "identity_tags": ["magic", "fire", "aoe", "setup"],
-            "axis": "elemental",
-            "action": "cinder_shower",
-            "requirements": {
-                "class": "elementalist",
-                "concentration": 20,
-                "cooldown": 6
-            },
-            "on_hit": {
-                "apply_status": "burning",
-                "duration": 4
-            },
-            "base_power": 12,
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 1.2
-            }
+        "attunement": {
+            "id": "attunement",
+            "name": "Attunement",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Shift your internal resonance. Generates 2 Attunement Pips and grants [Focused].",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "setup"
+            ],
+            "action": "attunement"
         },
         "elemental_cataclysm": {
             "id": "elemental_cataclysm",
-            "name": "Cataclysm",
+            "name": "Elemental Cataclysm",
             "tier": 4,
-            "cost": 40,
-            "description": "Payoff/Finisher: Unleash the combined power of elements. Periodic elemental bursts across the room. Elements cycle 3x per use. High-impact damage vs [Vulnerable] targets.",
-            "identity_tags": ["magic", "elemental", "aoe", "payoff", "finisher"],
-            "axis": "elemental",
-            "action": "elemental_cataclysm",
-            "requirements": {
-                "class": "elementalist",
-                "concentration": 20,
-                "cooldown": 6
-            },
-            "base_power": 30,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "wet",
-                    "multiplier": 2.0
-                }
+            "cost": 0,
+            "description": "Payoff: A violent convergence of fire, ice, and lightning. Consumes 5 Attunement Pips to deal AOE damage.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "area",
+                "payoff"
             ],
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 3.5
-            }
+            "action": "elemental_cataclysm"
         },
         "shock_cannon": {
             "id": "shock_cannon",
             "name": "Shock Cannon",
             "tier": 3,
-            "cost": 30,
-            "description": "Payoff/Burst: A focused bolt of lightning. Deals 3x damage to [Burning] targets (Electrolysis). Consumes shock stacks.",
-            "identity_tags": ["magic", "lightning", "payoff"],
-            "axis": "lethality",
-            "action": "shock_cannon",
-            "requirements": {
-                "class": "elementalist",
-                "concentration": 30,
-                "cooldown": 10
-            },
-            "base_power": 45,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "burning",
-                    "multiplier": 3.0
-                }
-            ]
+            "cost": 0,
+            "description": "Payoff: A beam of concentrated electrical force. Consumes 3 Attunement Pips to deal heavy Magic damage and [Stun] for 2 ticks.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "payoff"
+            ],
+            "action": "shock_cannon"
         },
         "barrier_of_elements": {
             "id": "barrier_of_elements",
-            "name": "Elemental Barrier",
+            "name": "Barrier of Elements",
             "tier": 2,
-            "cost": 25,
-            "description": "Defense/Reaction: Shroud yourself in shifting mana. Shield redirects 20% of elemental damage back to source and applies a status matching the element.",
-            "identity_tags": ["magic", "elemental", "protection", "defense"],
-            "axis": "endurance",
-            "action": "barrier_of_elements",
-            "requirements": {
-                "class": "elementalist",
-                "concentration": 25,
-                "cooldown": 12
-            }
+            "cost": 75,
+            "description": "Defense: A shifting shield of primal energy. Grants 50% resistance to Elemental damage for 6 ticks.",
+            "identity_tags": [
+                "magic",
+                "protection",
+                "defense"
+            ],
+            "action": "barrier_of_elements"
+        },
+        "flash_freeze": {
+            "id": "flash_freeze",
+            "name": "Flash Freeze",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Disruption: Instantly drop the temperature. Applies [Chill] and [Stalled] to all in the room for 2 ticks.",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "defense"
+            ],
+            "action": "flash_freeze"
         },
         "aether_dash": {
             "id": "aether_dash",
             "name": "Aether Dash",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Disintegrate and reform. Teleport through a line of enemies, applying the current cycle element status. Grants [Haste].",
-            "identity_tags": ["magic", "speed", "mobility"],
-            "axis": "position",
-            "action": "aether_dash",
-            "requirements": {
-                "class": "elementalist",
-                "concentration": 25,
-                "cooldown": 5
-            }
-        },
-        "attunement": {
-            "id": "attunement",
-            "name": "Attunement",
             "tier": 2,
-            "cost": 0,
-            "description": "Utility: Perfectly sync with an element. Instant cycle to targeted element and +20% damage for that element for 10 ticks.",
-            "identity_tags": ["magic", "focus", "utility"],
-            "axis": "utility",
-            "action": "attunement",
-            "requirements": {
-                "class": "elementalist",
-                "stamina": 5,
-                "cooldown": 25
-            }
+            "cost": 15,
+            "description": "Mobility: Dissolve into aether to re-materialize in an adjacent room.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "aether_dash"
+        },
+        "cinder_shower": {
+            "id": "cinder_shower",
+            "name": "Cinder Shower",
+            "tier": 1,
+            "cost": 50,
+            "description": "Utility: A gentle rain of sparks that reveals hidden objects and grants allies [Warmth].",
+            "identity_tags": [
+                "magic",
+                "elemental",
+                "utility"
+            ],
+            "action": "cinder_shower"
         },
         "elementalist_physiology": {
             "id": "elementalist_physiology",
             "name": "Elementalist Physiology",
             "tier": 1,
-            "description": "Passive: You are a conduit for the primal forces. All Elemental damage (Fire, Ice, Lightning, Water, Wind) is increased by 20%, and your Concentration costs are reduced by 10%.",
+            "description": "Passive: Mana Shifter. You gain 10% Magic power for 10 ticks every time you switch pips or attunement states.",
             "logic_type": "passive",
-            "identity_tags": ["elemental", "passive"],
-            "potency_rules": [
-                {
-                    "type": "tag_power_mod",
-                    "tags": ["fire", "ice", "lightning", "water", "wind"],
-                    "multiplier": 1.2
-                },
-                {
-                    "type": "cost_mod",
-                    "resource": "concentration",
-                    "multiplier": 0.9
-                }
+            "identity_tags": [
+                "elementalist",
+                "passive"
             ]
         }
     }

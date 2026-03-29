@@ -1,117 +1,118 @@
 {
     "blessings": {
-        "frost_strike": {
-            "id": "frost_strike",
-            "name": "Frost Strike",
+        "death_strike": {
+            "id": "death_strike",
+            "name": "Death Strike",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: A freezing strike. Deals necrotic damage and applies [Slowed] for 3 ticks. Generates +1 Runic Pip.",
-            "identity_tags": ["martial", "necrosis", "setup"],
-            "axis": "tempo",
-            "action": "frost_strike",
-            "requirements": { "class": "death_knight", "stamina": 10 },
-            "base_power": 12
+            "cost": 0,
+            "description": "Setup/Builder: A necrotic strike that drains life. Generates 15 Stamina and 1 Death Pip.",
+            "identity_tags": [
+                "martial",
+                "necrotic",
+                "setup",
+                "builder"
+            ],
+            "action": "death_strike"
+        },
+        "frost_fever": {
+            "id": "frost_fever",
+            "name": "Frost Fever",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Inflict a freezing disease. Generates 1 Death Pip and [Chills] the target.",
+            "identity_tags": [
+                "martial",
+                "necrotic",
+                "setup"
+            ],
+            "action": "frost_fever"
+        },
+        "oblivion_strike": {
+            "id": "oblivion_strike",
+            "name": "Oblivion Strike",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: A strike that channels the void. Consumes 5 Death Pips to deal massive Shadow damage.",
+            "identity_tags": [
+                "martial",
+                "necrotic",
+                "payoff"
+            ],
+            "action": "oblivion_strike"
+        },
+        "death_and_decay": {
+            "id": "death_and_decay",
+            "name": "Death and Decay",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: Corrupt the ground beneath your feet. Consumes 3 Death Pips to deal AOE Shadow damage over 10 ticks.",
+            "identity_tags": [
+                "martial",
+                "necrotic",
+                "area",
+                "payoff"
+            ],
+            "action": "death_and_decay"
+        },
+        "bone_shield": {
+            "id": "bone_shield",
+            "name": "Bone Shield",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Surround yourself with whirling bones. Reduces incoming Physical damage by 50% for 6 ticks.",
+            "identity_tags": [
+                "martial",
+                "protection",
+                "defense"
+            ],
+            "action": "bone_shield"
+        },
+        "unbreakable_will": {
+            "id": "unbreakable_will",
+            "name": "Unbreakable Will",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Break free of all control effects and gain [Unstoppable] for 2 ticks.",
+            "identity_tags": [
+                "martial",
+                "defense"
+            ],
+            "action": "unbreakable_will"
         },
         "death_grip": {
             "id": "death_grip",
             "name": "Death Grip",
             "tier": 2,
-            "cost": 25,
-            "description": "Setup/Pull: A spectral hand pulls an enemy to you or pull yourself to an ally. Applies [Pinned] for 2 ticks and [Marked] for 4 ticks.",
-            "identity_tags": ["magic", "dark", "mobility", "setup"],
-            "axis": "position",
-            "action": "death_grip",
-            "requirements": { "class": "death_knight", "stamina": 25, "cooldown": 8 }
-        },
-        "obliterate": {
-            "id": "obliterate",
-            "name": "Obliterate",
-            "tier": 4,
-            "cost": 30,
-            "description": "Payoff: A devastating heavy strike. Deals 3x damage to [Slowed] or [Pinned] targets. Consumes all Runic Pips to ignore enemy defense.",
-            "identity_tags": ["martial", "lethal", "payoff"],
-            "axis": "lethality",
-            "action": "obliterate",
-            "requirements": { "class": "death_knight", "stamina": 30, "cooldown": 5 },
-            "base_power": 45,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "target_tags": ["slowed", "pinned"],
-                    "multiplier": 3.0
-                }
-            ]
-        },
-        "unholy_blight": {
-            "id": "unholy_blight",
-            "name": "Unholy Blight",
-            "tier": 5,
-            "cost": 40,
-            "description": "Payoff/AOE: A swarm of unholy flies plague everyone in the room. Deals massive necrotic damage over 12 ticks and applies [Decrepet] group-wide.",
-            "identity_tags": ["magic", "necrosis", "aoe", "payoff"],
-            "axis": "elemental",
-            "action": "unholy_blight",
-            "requirements": { "class": "death_knight", "stamina": 40, "cooldown": 15 },
-            "base_power": 60
-        },
-        "icebound_fortitude": {
-            "id": "icebound_fortitude",
-            "name": "Icebound Fortitude",
-            "tier": 3,
-            "cost": 25,
-            "description": "Defense/Reduction: Harden your blood with icy power. Reduces all incoming physical damage by 50% for 6 ticks and breaks all [Stunned] states.",
-            "identity_tags": ["martial", "cold", "protection", "defense"],
-            "axis": "endurance",
-            "action": "icebound_fortitude",
-            "requirements": { "class": "death_knight", "stamina": 25, "cooldown": 20 }
-        },
-        "anti_magic_shell": {
-            "id": "anti_magic_shell",
-            "name": "Anti-Magic Shell",
-            "tier": 3,
-            "cost": 20,
-            "description": "Defense/Shield: Envelop yourself in a barrier that absorbs all magical damage for 4 ticks, converting it into HP.",
-            "identity_tags": ["magic", "void", "protection", "defense"],
-            "axis": "endurance",
-            "action": "anti_magic_shell",
-            "requirements": { "class": "death_knight", "stamina": 20, "cooldown": 15 }
-        },
-        "shambling_charge": {
-            "id": "shambling_charge",
-            "name": "Shambling Charge",
-            "tier": 2,
             "cost": 15,
-            "description": "Mobility: Burst move which staggers anyone in the arrival room. Grants [Haste] for 2 ticks.",
-            "identity_tags": ["martial", "speed", "mobility"],
-            "axis": "position",
-            "action": "shambling_charge",
-            "requirements": { "class": "death_knight", "stamina": 15, "cooldown": 6 }
+            "description": "Mobility/Utility: Pull the target to your location instantly.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "utility"
+            ],
+            "action": "death_grip"
         },
-        "raise_ghoul": {
-            "id": "raise_ghoul",
-            "name": "Raise Ghoul",
-            "tier": 2,
-            "cost": 0,
-            "description": "Utility: Command the dead. Consumes 5 Runic Pips to summon a [Ghoul Follower] from a corpse in the room. The ghoul leeches health for you.",
-            "identity_tags": ["occult", "dark", "summon", "utility"],
-            "axis": "utility",
-            "action": "raise_ghoul",
-            "requirements": { "class": "death_knight", "runic_pips": 5, "cooldown": 60 }
+        "army_of_the_dead": {
+            "id": "army_of_the_dead",
+            "name": "Army of the Dead",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Summon 5 temporary ghouls to overwhelm the target for 30 ticks.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "army_of_the_dead"
         },
         "death_knight_physiology": {
             "id": "death_knight_physiology",
             "name": "Death Knight Physiology",
             "tier": 1,
-            "description": "Passive: Your cold presence is overwhelming. [Slowed] applications last 50% longer and you gain 10% passive physical resistance.",
+            "description": "Passive: Lord of Woe. You gain 10% bonus damage for every Debuff on your target and your Death Pip generation increases by 20% when in magical darkness.",
             "logic_type": "passive",
-            "identity_tags": ["necrosis", "passive"],
-            "potency_rules": [
-                {
-                    "type": "stat_mod",
-                    "stat": "phys_res",
-                    "multiplier": 1.1
-                }
+            "identity_tags": [
+                "death_knight",
+                "passive"
             ]
         }
     }

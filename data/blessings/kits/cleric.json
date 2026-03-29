@@ -1,0 +1,115 @@
+{
+    "blessings": {
+        "holy_strike": {
+            "id": "holy_strike",
+            "name": "Holy Strike",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A strike infused with divine light. Generates 15 Concentration and 1 Faith Pip.",
+            "identity_tags": [
+                "divine",
+                "setup",
+                "builder"
+            ],
+            "action": "holy_strike"
+        },
+        "divine_mark": {
+            "id": "divine_mark",
+            "name": "Divine Mark",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Mark the target for divine judgment. Generates 1 Faith Pip and applies [Marked].",
+            "identity_tags": [
+                "divine",
+                "setup"
+            ],
+            "action": "divine_mark"
+        },
+        "judgment": {
+            "id": "judgment",
+            "name": "Divine Judgment",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Strike the target with absolute holy fire. Consumes 5 Faith Pips to deal massive Magic damage.",
+            "identity_tags": [
+                "divine",
+                "payoff"
+            ],
+            "action": "judgment"
+        },
+        "purification": {
+            "id": "purification",
+            "name": "Purification",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: A wave of cleansing light. Consumes 3 Faith Pips to heal all allies and damage all undead in the room.",
+            "identity_tags": [
+                "divine",
+                "area",
+                "payoff"
+            ],
+            "action": "purification"
+        },
+        "aegis": {
+            "id": "aegis",
+            "name": "Divine Aegis",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Surround yourself or an ally with a holy shield. Reduces incoming damage by 60% for 4 ticks.",
+            "identity_tags": [
+                "divine",
+                "protection",
+                "defense"
+            ],
+            "action": "aegis"
+        },
+        "divine_grace": {
+            "id": "divine_grace",
+            "name": "Divine Grace",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Grant an ally [Unstoppable] and [Haste] for 2 ticks.",
+            "identity_tags": [
+                "divine",
+                "defense"
+            ],
+            "action": "divine_grace"
+        },
+        "beacon_of_light": {
+            "id": "beacon_of_light",
+            "name": "Beacon of Light",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Project a beacon and teleport to its location. All allies nearby are healed.",
+            "identity_tags": [
+                "divine",
+                "speed",
+                "mobility"
+            ],
+            "action": "beacon_of_light"
+        },
+        "resurrection": {
+            "id": "resurrection",
+            "name": "Resurrection",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Return a fallen ally to life with 30% HP and Mana.",
+            "identity_tags": [
+                "divine",
+                "utility"
+            ],
+            "action": "resurrection"
+        },
+        "cleric_physiology": {
+            "id": "cleric_physiology",
+            "name": "Cleric Physiology",
+            "tier": 1,
+            "description": "Passive: Divine Vessel. You gain 10% bonus healing power and your Faith Pip generation is doubled when you are above 75% HP.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "cleric",
+                "passive"
+            ]
+        }
+    }
+}

@@ -4,170 +4,116 @@
             "id": "kunai_throw",
             "name": "Kunai Throw",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: A fast, ranged projectile. Generates 15 Stamina and +1 Mudra Pip. No cooldown.",
-            "identity_tags": ["martial", "throne", "builder", "setup"],
-            "axis": "tempo",
-            "action": "kunai_throw",
-            "requirements": {
-                "class": "ninja",
-                "stamina": 10
-            },
-            "base_power": 12
+            "cost": 0,
+            "description": "Setup/Builder: A quick, ranged kunai throw. Generates 15 Stamina and 1 Mudra Pip.",
+            "identity_tags": [
+                "martial",
+                "ninja",
+                "setup",
+                "builder"
+            ],
+            "action": "kunai_throw"
         },
-        "smoke_screen": {
-            "id": "smoke_screen",
-            "name": "Smoke Screen",
-            "tier": 2,
-            "cost": 15,
-            "description": "Setup: Break a smoke-vial. Applies [Blinded] (group-wide) and grants yourself [Concealed] for 3 ticks.",
-            "identity_tags": ["martial", "ninja", "vision", "setup"],
-            "axis": "vision",
-            "action": "smoke_screen",
-            "requirements": {
-                "class": "ninja",
-                "stamina": 15,
-                "cooldown": 4
-            },
-            "on_hit": {
-                "apply_status": "blinded",
-                "duration": 4
-            }
-        },
-        "throat_slit": {
-            "id": "throat_slit",
-            "name": "Throat Slit",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: Targeting a vital artery. Applies [Off-Balance] and [Silenced] for 4 ticks.",
-            "identity_tags": ["martial", "ninja", "disruption", "setup"],
-            "axis": "tempo",
-            "action": "throat_slit",
-            "requirements": {
-                "class": "ninja",
-                "stamina": 20,
-                "cooldown": 6
-            },
-            "on_hit": {
-                "apply_status": "off_balance",
-                "duration": 4
-            }
+        "mudra_weaving": {
+            "id": "mudra_weaving",
+            "name": "Mudra Weaving",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Weave your hands in spiritual patterns. Generates 2 Mudra Pips and grants [Focused].",
+            "identity_tags": [
+                "martial",
+                "ninja",
+                "setup"
+            ],
+            "action": "mudra_weaving"
         },
         "fire_style_fireball": {
             "id": "fire_style_fireball",
             "name": "Fire Style: Fireball",
             "tier": 4,
-            "cost": 35,
-            "description": "Payoff/AOE: A burst of elemental flame. Deals fire damage to all in the room. Damage increased by 20% per Mudra Pip active on you.",
-            "identity_tags": ["magic", "fire", "aoe", "payoff"],
-            "axis": "elemental",
-            "action": "fire_style_fireball",
-            "requirements": {
-                "class": "ninja",
-                "stamina": 35,
-                "cooldown": 12
-            },
-            "base_power": 25,
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 2.0
-            }
+            "cost": 0,
+            "description": "Payoff: Exhale a sphere of pure heat. Consumes 5 Mudra Pips to deal massive Fire damage in an AOE.",
+            "identity_tags": [
+                "martial",
+                "elemental",
+                "area",
+                "payoff"
+            ],
+            "action": "fire_style_fireball"
         },
-        "death_from_above": {
-            "id": "death_from_above",
-            "name": "Death from Above",
-            "tier": 5,
-            "cost": 40,
-            "description": "Finisher: The ultimate shinobi strike. Only usable while [Concealed] or [Haste]. 5x weapon damage strike to a single target. Consumes all active Mudra pips.",
-            "identity_tags": ["martial", "ninja", "lethal", "payoff", "finisher"],
-            "axis": "lethality",
-            "action": "death_from_above",
-            "requirements": {
-                "class": "ninja",
-                "stamina": 40,
-                "cooldown": 15
-            },
-            "base_power": 65,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_attacker": true,
-                    "target_tags": ["concealed", "haste"],
-                    "multiplier": 5.0
-                }
-            ]
+        "water_style_flood": {
+            "id": "water_style_flood",
+            "name": "Water Style: Flood",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff: Summon a wave of heavy water to push back enemies. Consumes 3 Mudra Pips and applies [Saturated].",
+            "identity_tags": [
+                "martial",
+                "elemental",
+                "payoff"
+            ],
+            "action": "water_style_flood"
         },
         "kawarimi": {
             "id": "kawarimi",
-            "name": "Kawarimi",
-            "tier": 3,
-            "cost": 20,
-            "description": "Defense/Reaction: The shinobi substitution. On hit, you teleport behind the target, leaving a decoy behind. Gains [Concealed] and applies [Pinned] to the target.",
-            "identity_tags": ["martial", "ninja", "speed", "defense"],
-            "axis": "vision",
-            "action": "kawarimi",
-            "requirements": {
-                "class": "ninja",
-                "stamina": 20,
-                "cooldown": 12
-            }
-        },
-        "shadow_step": {
-            "id": "shadow_step",
-            "name": "Shadow Step",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Burst move like shadow. Teleport behind a target. Grants [Haste] (2 ticks) and clears [Slowed].",
-            "identity_tags": ["martial", "speed", "mobility"],
-            "axis": "position",
-            "action": "shadow_step",
-            "requirements": {
-                "class": "ninja",
-                "stamina": 25,
-                "cooldown": 5
-            }
-        },
-        "ninjutsu_haste": {
-            "id": "ninjutsu_haste",
-            "name": "Ninjutsu: Haste",
+            "name": "Kawarimi (Substitution)",
             "tier": 2,
-            "cost": 0,
-            "description": "Utility: Master-level speed. Mastery-buff: Increases Attack Speed by 50% for 15s. Clears all [Slowed] and [Pinned] states.",
-            "identity_tags": ["martial", "focus", "speed", "utility"],
-            "axis": "vision",
-            "action": "ninjutsu_haste",
-            "requirements": {
-                "class": "ninja",
-                "stamina": 5,
-                "cooldown": 20
-            },
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_attacker": true,
-                    "target_tags": ["concealed", "haste"],
-                    "multiplier": 5.0
-                }
-            ]
+            "cost": 75,
+            "description": "Defense: Swap positions with a log. The next incoming attack deals 0 damage and grants [Concealed].",
+            "identity_tags": [
+                "martial",
+                "ninja",
+                "defense"
+            ],
+            "action": "kawarimi"
+        },
+        "shadow_clone": {
+            "id": "shadow_clone",
+            "name": "Shadow Clone",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Create a temporary clone. Increases Evasion by 30% for 4 ticks.",
+            "identity_tags": [
+                "martial",
+                "ninja",
+                "defense"
+            ],
+            "action": "shadow_clone"
+        },
+        "ninja_stride": {
+            "id": "ninja_stride",
+            "name": "Ninja Stride",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Teleport to a target or adjacent room instantly.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "ninja_stride"
+        },
+        "ninjutsu_mastery": {
+            "id": "ninjutsu_mastery",
+            "name": "Ninjutsu Mastery",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Your next 3 Mudra-based skills cost 0 Pips.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "ninjutsu_mastery"
         },
         "ninja_physiology": {
             "id": "ninja_physiology",
             "name": "Ninja Physiology",
             "tier": 1,
-            "description": "Passive: You are a ghost in the night. Your Haste durations are increased by 50% and you gain 15% increased Shadow damage.",
+            "description": "Passive: Way of the Shinobi. You gain 10% movement speed and your Shadow Step breaks all status effects.",
             "logic_type": "passive",
-            "identity_tags": ["shadow", "passive"],
-            "potency_rules": [
-                {
-                    "type": "duration_mod",
-                    "id": "haste",
-                    "multiplier": 1.5
-                },
-                {
-                    "type": "tag_power_mod",
-                    "tag": "shadow",
-                    "multiplier": 1.15
-                }
+            "identity_tags": [
+                "ninja",
+                "passive"
             ]
         }
     }

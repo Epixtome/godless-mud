@@ -2,137 +2,119 @@
     "blessings": {
         "dragoon_thrust": {
             "id": "dragoon_thrust",
-            "name": "Thrust",
+            "name": "Dragoon Thrust",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: A powerful piercing strike. Deals physical damage, generates 15 Stamina and +1 Jump Pip. No cooldown.",
-            "identity_tags": ["martial", "polearm", "builder", "setup"],
-            "axis": "tempo",
-            "action": "dragoon_thrust",
-            "requirements": {
-                "class": "dragoon",
-                "stamina": 10
-            },
-            "base_power": 12
+            "cost": 0,
+            "description": "Setup/Builder: A long-range spear thrust. Generates 15 Stamina and 1 Jump Pip.",
+            "identity_tags": [
+                "martial",
+                "polearm",
+                "setup",
+                "builder"
+            ],
+            "action": "dragoon_thrust"
         },
         "dragon_breath": {
             "id": "dragon_breath",
-            "name": "Dragon Breath",
-            "tier": 2,
-            "cost": 15,
-            "description": "Setup: Channel the spirit of the dragon. Applies [Burning] and [Off-Balance] for 4 ticks. Dealing fire damage.",
-            "identity_tags": ["magic", "fire", "disruption", "setup"],
-            "axis": "elemental",
-            "action": "dragon_breath",
-            "requirements": {
-                "class": "dragoon",
-                "stamina": 15,
-                "cooldown": 5
-            },
-            "on_hit": {
-                "apply_status": "burning",
-                "duration": 4
-            }
-        },
-        "leg_sweep": {
-            "id": "leg_sweep",
-            "name": "Leg Sweep",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: A low-sweeping kick with the polearm. Applies [Prone] and [Staggered] for 2 ticks.",
-            "identity_tags": ["martial", "polearm", "disruption", "setup"],
-            "axis": "tempo",
-            "action": "leg_sweep",
-            "requirements": {
-                "class": "dragoon",
-                "stamina": 20,
-                "cooldown": 6
-            },
-            "on_hit": {
-                "apply_status": "prone",
-                "duration": 2
-            }
-        },
-        "dragoon_jump": {
-            "id": "dragoon_jump",
-            "name": "Jump",
-            "tier": 4,
-            "cost": 35,
-            "description": "Payoff/Finisher: Leap high into the sky, becoming invincible for 2 ticks. Your descent deals 4x damage to [Prone] targets. Consumes all Jump Pips to increase descent AOE.",
-            "identity_tags": ["martial", "polearm", "lethal", "payoff", "finisher"],
-            "axis": "lethality",
-            "action": "dragoon_jump",
-            "requirements": {
-                "class": "dragoon",
-                "stamina": 35,
-                "cooldown": 8
-            },
-            "base_power": 45,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.0
-            }
+            "name": "Dragon's Breath",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Exhale a small burst of heat to tenderize the foe. Generates 1 Jump Pip and applies [Marked].",
+            "identity_tags": [
+                "martial",
+                "polearm",
+                "setup"
+            ],
+            "action": "dragon_breath"
         },
         "dragon_dive": {
             "id": "dragon_dive",
             "name": "Dragon Dive",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Strike from the heavens. Consumes 5 Jump Pips to deal massive Physical damage in a small AOE. Break [Prone] and [Staggered] targets.",
+            "identity_tags": [
+                "martial",
+                "polearm",
+                "area",
+                "payoff"
+            ],
+            "action": "dragon_dive"
+        },
+        "leg_sweep": {
+            "id": "leg_sweep",
+            "name": "Leg Sweep",
             "tier": 3,
-            "cost": 30,
-            "description": "Payoff/AOE: Plunge from the heavens in a burst of fire. Deals fire/physical damage to all in the room. Deals 2x damage if target is [Burning].",
-            "identity_tags": ["magic", "fire", "aoe", "payoff"],
-            "axis": "endurance",
-            "action": "dragon_dive",
-            "requirements": {
-                "class": "dragoon",
-                "stamina": 30,
-                "cooldown": 12
-            },
-            "base_power": 25
+            "cost": 0,
+            "description": "Payoff: Sweep the target's feet with your polearm. Consumes 3 Jump Pips to deal damage and apply [Prone].",
+            "identity_tags": [
+                "martial",
+                "polearm",
+                "payoff"
+            ],
+            "action": "leg_sweep"
         },
         "steel_scale": {
             "id": "steel_scale",
             "name": "Steel Scale",
             "tier": 2,
-            "cost": 25,
-            "description": "Defense/Reaction: Your skin takes on the hardness of dragon scales. Grants +40% Physical and Fire resistance for 8 ticks.",
-            "identity_tags": ["martial", "dragon", "protection", "defense"],
-            "axis": "endurance",
-            "action": "steel_scale",
-            "requirements": {
-                "class": "dragoon",
-                "stamina": 25,
-                "cooldown": 15
-            }
+            "cost": 75,
+            "description": "Defense: Tense your muscles like a dragon's armored hide. Grants 40% Physical reduction for 6 ticks.",
+            "identity_tags": [
+                "martial",
+                "protection",
+                "defense"
+            ],
+            "action": "steel_scale"
         },
-        "high_jump": {
-            "id": "high_jump",
+        "high_jump_defense": {
+            "id": "high_jump_defense",
             "name": "High Jump",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Leap to a targeted spot or ally. Grants [Haste] (4 ticks) and clears [Slowed] and [Pinned].",
-            "identity_tags": ["martial", "speed", "mobility"],
-            "axis": "position",
-            "action": "high_jump",
-            "requirements": {
-                "class": "dragoon",
-                "stamina": 25,
-                "cooldown": 10
-            }
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Leap high into the air to avoid a ground-based strike. Grants [Untargetable] for 1 tick.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "defense"
+            ],
+            "action": "high_jump_defense"
+        },
+        "dragoon_jump": {
+            "id": "dragoon_jump",
+            "name": "Dragoon Jump",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Leap to any room in the same zone instantly.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "dragoon_jump"
         },
         "dragonheart": {
             "id": "dragonheart",
             "name": "Dragonheart",
-            "tier": 2,
-            "cost": 0,
-            "description": "Utility: Ignite your internal flame. Increaes [Jump] damage by 50% for 2 ticks and restores 30 Stamina.",
-            "identity_tags": ["magic", "dragon", "buff", "utility"],
-            "axis": "utility",
-            "action": "dragonheart",
-            "requirements": {
-                "class": "dragoon",
-                "stamina": 0,
-                "cooldown": 60
-            }
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Your Jump Pips and Pacing costs are halved for 15 ticks.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "dragonheart"
+        },
+        "dragoon_physiology": {
+            "id": "dragoon_physiology",
+            "name": "Dragoon Physiology",
+            "tier": 1,
+            "description": "Passive: Sky Master. You deal 20% bonus damage when attacking a target from a different room or immediately after a Jump.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "dragoon",
+                "passive"
+            ]
         }
     }
 }

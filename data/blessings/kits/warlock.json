@@ -4,135 +4,116 @@
             "id": "eldritch_blast",
             "name": "Eldritch Blast",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: A crackling beam of void energy. Generates 15 Concentration and +1 Entropy. No cooldown.",
-            "identity_tags": ["dark", "magic", "builder", "setup"],
-            "axis": "tempo",
-            "action": "eldritch_blast",
-            "requirements": {
-                "class": "warlock",
-                "concentration": 10
-            },
-            "base_power": 12
+            "cost": 0,
+            "description": "Setup/Builder: A beam of crackling void energy. Generates 15 Concentration and 1 Entropy.",
+            "identity_tags": [
+                "occult",
+                "void",
+                "setup",
+                "builder"
+            ],
+            "action": "eldritch_blast"
         },
         "curse_of_agony": {
             "id": "curse_of_agony",
             "name": "Curse of Agony",
             "tier": 2,
-            "cost": 15,
-            "description": "Setup: Wrack the target's body with slow-burning agony. Applies [Burning] (Entropy Burn) for 6 ticks. Generates +2 Entropy.",
-            "identity_tags": ["dark", "chaos", "fire", "setup"],
-            "axis": "endurance",
-            "action": "curse_of_agony",
-            "requirements": {
-                "class": "warlock",
-                "concentration": 15,
-                "cooldown": 4
-            },
-            "on_hit": {
-                "apply_status": "burning",
-                "duration": 6
-            }
-        },
-        "hex_of_weakness": {
-            "id": "hex_of_weakness",
-            "name": "Hex of Weakness",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: Sap the target's strength. Applies [Shackled] and [Marked] for 8 ticks. Generates +2 Entropy.",
-            "identity_tags": ["dark", "chaos", "vision", "setup"],
-            "axis": "vision",
-            "action": "hex_of_weakness",
-            "requirements": {
-                "class": "warlock",
-                "concentration": 20,
-                "cooldown": 6
-            },
-            "on_hit": {
-                "apply_status": "shackled",
-                "duration": 8
-            }
+            "cost": 50,
+            "description": "Setup: Inflict suffering on the target. Applies [Cursed] and generates 2 Entropy.",
+            "identity_tags": [
+                "occult",
+                "disruption",
+                "setup"
+            ],
+            "action": "curse_of_agony"
         },
         "soul_cleave": {
             "id": "soul_cleave",
             "name": "Soul Cleave",
-            "tier": 3,
-            "cost": 30,
-            "description": "Payoff: A sweeping strike that harvests the soul. Consumes all [Entropy] to deal massive damage and heal for 20% of damage dealt. Bonus damage scales with Entropy level.",
-            "identity_tags": ["dark", "magic", "payoff", "finisher"],
-            "axis": "endurance",
-            "action": "soul_cleave",
-            "requirements": {
-                "class": "warlock",
-                "concentration": 30,
-                "cooldown": 10
-            },
-            "base_power": 35,
-            "scaling": {
-                "scaling_tag": "magic",
-                "multiplier": 2.0
-            }
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Tear at the target's essence. Consumes 5 Entropy to deal heavy Magic damage and heal for 20% of damage dealt.",
+            "identity_tags": [
+                "occult",
+                "void",
+                "payoff"
+            ],
+            "action": "soul_cleave"
         },
         "oblivion_strike": {
             "id": "oblivion_strike",
             "name": "Oblivion Strike",
-            "tier": 4,
-            "cost": 40,
-            "description": "Payoff: Detonate every shadow clinging to the foe. Deals +30% damage per unique status effect on the target. If target is [Marked], the detonation ignores all mitigation.",
-            "identity_tags": ["dark", "magic", "payoff"],
-            "axis": "tempo",
-            "action": "oblivion_strike",
-            "requirements": {
-                "class": "warlock",
-                "concentration": 40,
-                "cooldown": 12
-            },
-            "base_power": 45
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff: Strike from the void. Consumes all current Entropy to deal necrotic damage based on missing target health.",
+            "identity_tags": [
+                "occult",
+                "void",
+                "payoff"
+            ],
+            "action": "oblivion_strike"
         },
         "void_ward": {
             "id": "void_ward",
             "name": "Void Ward",
             "tier": 2,
-            "cost": 20,
-            "description": "Defense: Wrap yourself in an entropic field. Grants [Shielded] for 4 ticks. Each strike you absorb restores 15 Concentration and +1 Entropy.",
-            "identity_tags": ["dark", "chaos", "protection", "defense"],
-            "axis": "endurance",
-            "action": "void_ward",
-            "requirements": {
-                "class": "warlock",
-                "concentration": 20,
-                "cooldown": 15
-            }
+            "cost": 75,
+            "description": "Defense: Surround yourself with entropic shielding. The next 3 hits taken drain the attacker's stamina.",
+            "identity_tags": [
+                "occult",
+                "protection",
+                "defense"
+            ],
+            "action": "void_ward"
+        },
+        "hex_of_weakness": {
+            "id": "hex_of_weakness",
+            "name": "Hex of Weakness",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Debuff: Weaken a foe's offensive power. Reduces target's damage output by 50% for 4 ticks.",
+            "identity_tags": [
+                "occult",
+                "disruption",
+                "defense"
+            ],
+            "action": "hex_of_weakness"
         },
         "netherstep": {
             "id": "netherstep",
             "name": "Netherstep",
-            "tier": 3,
-            "cost": 25,
-            "description": "Mobility: Blink through the void. Breaks [Shackled] and [Immobilized]. Applies [Dazed] (1 tick) to all enemies in the room upon arrival.",
-            "identity_tags": ["dark", "magic", "mobility"],
-            "axis": "position",
-            "action": "netherstep",
-            "requirements": {
-                "class": "warlock",
-                "concentration": 25,
-                "cooldown": 8
-            }
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Blink through the void, leaving a trail of shadow.",
+            "identity_tags": [
+                "occult",
+                "speed",
+                "mobility"
+            ],
+            "action": "netherstep"
         },
         "pact_of_sacrifice": {
             "id": "pact_of_sacrifice",
             "name": "Pact of Sacrifice",
-            "tier": 2,
+            "tier": 5,
             "cost": 0,
-            "description": "Utility: Give life for chaos. Consume 20% of your maximum health to fully restore your [Entropy] and [Concentration].",
-            "identity_tags": ["dark", "chaos", "utility"],
-            "axis": "utility",
-            "action": "pact_of_sacrifice",
-            "requirements": {
-                "class": "warlock",
-                "hp_percent": 20,
-                "cooldown": 60
-            }
+            "description": "Utility/Signature: Trade your own life for absolute power. Consumes 25% current HP to instantly gain 10 Entropy and full Concentration.",
+            "identity_tags": [
+                "occult",
+                "utility"
+            ],
+            "action": "pact_of_sacrifice"
+        },
+        "warlock_physiology": {
+            "id": "warlock_physiology",
+            "name": "Warlock Physiology",
+            "tier": 1,
+            "description": "Passive: Echoes of the Void. You gain 10% increased Entropy generation and 15% Magic power when below 50% HP.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "warlock",
+                "passive"
+            ]
         }
     }
 }

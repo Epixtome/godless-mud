@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "step_strike": {
+            "id": "step_strike",
+            "name": "Step Strike",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A rhythmic strike between movements. Generates 15 Stamina and 1 Rhythm Pip.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "setup",
+                "builder"
+            ],
+            "action": "step_strike"
+        },
+        "graceful_entry": {
+            "id": "graceful_entry",
+            "name": "Graceful Entry",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Enter the battlefield with artistic form. Generates 2 Rhythm Pips and grants [Haste].",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "setup"
+            ],
+            "action": "graceful_entry"
+        },
+        "bladed_waltz": {
+            "id": "bladed_waltz",
+            "name": "Bladed Waltz",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff/AOE: A lethal spinning dance. Consumes 5 Rhythm Pips to strike every enemy in the room twice.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "area",
+                "payoff"
+            ],
+            "action": "bladed_waltz"
+        },
+        "pirouette_slam": {
+            "id": "pirouette_slam",
+            "name": "Pirouette Slam",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff: A spinning vertical strike. Consumes 3 Rhythm Pips to deal Physical damage and apply [Staggered].",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "payoff"
+            ],
+            "action": "pirouette_slam"
+        },
+        "defensive_dance": {
+            "id": "defensive_dance",
+            "name": "Defensive Dance",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Focus on weaving through strikes. Increases Evasion by 40% for 6 ticks.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "defense"
+            ],
+            "action": "defensive_dance"
+        },
+        "enchanting_sway": {
+            "id": "enchanting_sway",
+            "name": "Enchanting Sway",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Disruption: Entice your foe to make a mistake. Applies [Blinded] and [Dazed] for 2 ticks.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "defense"
+            ],
+            "action": "enchanting_sway"
+        },
+        "flourish_dash": {
+            "id": "flourish_dash",
+            "name": "Flourish Dash",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Move across the battlefield in a blur of artistry.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "flourish_dash"
+        },
+        "finale_encore": {
+            "id": "finale_encore",
+            "name": "Finale Encore",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Your next 5 non-signature blessings can be repeated for 0 cost and no cooldown.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "finale_encore"
+        },
+        "dancer_physiology": {
+            "id": "dancer_physiology",
+            "name": "Dancer Physiology",
+            "tier": 1,
+            "description": "Passive: Perfect Tempo. You gain 10% Critical chance and 20% bonus damage when attacking a target that was hit by an ally in the last 2 ticks.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "dancer",
+                "passive"
+            ]
+        }
+    }
+}

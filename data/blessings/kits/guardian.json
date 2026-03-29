@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "bastion_strike": {
+            "id": "bastion_strike",
+            "name": "Bastion Strike",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A protective strike that prepares your defense. Generates 20 Stamina and 1 Shield Pip.",
+            "identity_tags": [
+                "martial",
+                "protection",
+                "setup",
+                "builder"
+            ],
+            "action": "bastion_strike"
+        },
+        "interpose": {
+            "id": "interpose",
+            "name": "Interpose",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Step between a foe and an ally. Generates 1 Shield Pip and applies [Marked] to the foe.",
+            "identity_tags": [
+                "martial",
+                "protection",
+                "setup"
+            ],
+            "action": "interpose"
+        },
+        "shield_slam": {
+            "id": "shield_slam",
+            "name": "Shield Slam",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: A thunderous slam that shatters balance. Consumes 5 Shield Pips to deal Physical damage and apply [Stunned] for 3 ticks.",
+            "identity_tags": [
+                "martial",
+                "protection",
+                "payoff"
+            ],
+            "action": "shield_slam"
+        },
+        "iron_curtain": {
+            "id": "iron_curtain",
+            "name": "Iron Curtain",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff: Create a wall of force. Consumes 3 Shield Pips to reduce all incoming damage in the room by 40% for 4 ticks.",
+            "identity_tags": [
+                "martial",
+                "protection",
+                "area",
+                "payoff"
+            ],
+            "action": "iron_curtain"
+        },
+        "invulnerability_stance": {
+            "id": "invulnerability_stance",
+            "name": "Invulnerability Stance",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Become an immovable object. You take 90% reduced damage but cannot move or act.",
+            "identity_tags": [
+                "martial",
+                "protection",
+                "defense"
+            ],
+            "action": "invulnerability_stance"
+        },
+        "shield_swipe": {
+            "id": "shield_swipe",
+            "name": "Shield Swipe",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Disruption: Swipe your shield in a wide arc. Knocks back all enemies in front of you.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "defense"
+            ],
+            "action": "shield_swipe"
+        },
+        "guardian_rush": {
+            "id": "guardian_rush",
+            "name": "Guardian Rush",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Rush to the side of an ally instantly.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "guardian_rush"
+        },
+        "sacred_bond": {
+            "id": "sacred_bond",
+            "name": "Sacred Bond",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Link your health with all allies in the room. You take all damage dealt to them for 10 ticks.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "sacred_bond"
+        },
+        "guardian_physiology": {
+            "id": "guardian_physiology",
+            "name": "Guardian Physiology",
+            "tier": 1,
+            "description": "Passive: Living Wall. You gain 20% increased Health and your armor rating is doubled when stationary.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "guardian",
+                "passive"
+            ]
+        }
+    }
+}

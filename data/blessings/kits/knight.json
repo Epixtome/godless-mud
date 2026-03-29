@@ -4,174 +4,115 @@
             "id": "crippling_strike",
             "name": "Crippling Strike",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup: A low strike designed to hamper movement. Applies [Slowed] for 3 ticks. Generates small amounts of stamina.",
-            "identity_tags": ["martial", "strike", "setup"],
-            "axis": "position",
-            "action": "crippling_strike",
-            "requirements": {
-                "class": "knight",
-                "stamina": 10,
-                "cooldown": 2
-            },
-            "base_power": 12,
-            "on_hit": {
-                "apply_status": "slowed",
-                "duration": 3
-            }
+            "cost": 0,
+            "description": "Setup: A precise strike that hinders movement. Generates 15 Stamina and applies [Sluggish] for 5 ticks.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "setup",
+                "builder"
+            ],
+            "action": "crippling_strike"
+        },
+        "intervene": {
+            "id": "intervene",
+            "name": "Intervene",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Step between an ally and an enemy. Generates 10 Stamina and marks the target.",
+            "identity_tags": [
+                "martial",
+                "protection",
+                "setup"
+            ],
+            "action": "intervene"
+        },
+        "execute": {
+            "id": "execute",
+            "name": "Execute",
+            "tier": 4,
+            "cost": 100,
+            "description": "Payoff: A final, heavy strike intended to end the encounter. Deals Physical damage. Deals double total damage if target is below 25% HP.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "payoff"
+            ],
+            "action": "execute"
+        },
+        "retribution": {
+            "id": "retribution",
+            "name": "Retribution",
+            "tier": 3,
+            "cost": 75,
+            "description": "Payoff: Strike back with the force of your conviction. Deals Physical damage plus 50% of the damage you took in the last 2 ticks.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "payoff"
+            ],
+            "action": "retribution"
         },
         "shield_bash": {
             "id": "shield_bash",
             "name": "Shield Bash",
             "tier": 1,
-            "cost": 15,
-            "description": "Setup: Slam your shield into the enemy. Applies [Off-Balance]. Off-Balance targets hit by [Weight] effects (like maces or follow-up bashes) are knocked [Prone].",
-            "identity_tags": ["martial", "strike", "blunt", "setup"],
-            "axis": "tempo",
-            "action": "shield_bash",
-            "requirements": {
-                "class": "knight",
-                "stamina": 15,
-                "shield": true,
-                "cooldown": 3
-            },
-            "base_power": 8,
-            "on_hit": {
-                "apply_status": "off_balance",
-                "duration": 4
-            }
-        },
-        "execute": {
-            "id": "execute",
-            "name": "Execute",
-            "tier": 3,
             "cost": 30,
-            "description": "Payoff: A heavy overhead strike. Deals 3x damage to [Prone] targets. If the target is not prone, it deals standard damage and resets their balance.",
-            "identity_tags": ["martial", "strike", "payoff", "finisher"],
-            "axis": "endurance",
-            "action": "execute",
-            "requirements": {
-                "class": "knight",
-                "stamina": 30,
-                "cooldown": 8
-            },
-            "base_power": 40,
-            "scaling": {
-                "scaling_tag": "martial",
-                "multiplier": 3.0
-            },
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "prone",
-                    "multiplier": 3.0
-                }
-            ]
-        },
-        "retribution": {
-            "id": "retribution",
-            "name": "Retribution",
-            "tier": 4,
-            "cost": 25,
-            "description": "Payoff: A swift counter-strike. Deals double damage if used within 2 ticks of a successful block or while [Guarding].",
-            "identity_tags": ["martial", "strike", "payoff"],
-            "axis": "tempo",
-            "action": "retribution",
-            "requirements": {
-                "class": "knight",
-                "stamina": 25,
-                "cooldown": 6
-            },
-            "base_power": 25,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "status_id": "guarding",
-                    "multiplier": 2.0
-                },
-                {
-                    "type": "status_mod",
-                    "status_id": "blocked_recently",
-                    "multiplier": 2.0
-                }
-            ]
+            "description": "Defense/Disruption: Slam your shield into the target. Interrupts their current action and applies [Stunned] for 2 ticks.",
+            "identity_tags": [
+                "martial",
+                "strike",
+                "defense"
+            ],
+            "action": "shield_bash"
         },
         "brace": {
             "id": "brace",
             "name": "Brace",
             "tier": 2,
-            "cost": 15,
-            "description": "Defense: Toughen your posture. Grants [Braced] for 4 ticks, making you immune to [Prone] and [Stagger]. Increases stability by 20%.",
-            "identity_tags": ["martial", "protection", "defense"],
-            "axis": "endurance",
-            "action": "brace",
-            "requirements": {
-                "class": "knight",
-                "stamina": 15,
-                "cooldown": 10
-            }
-        },
-        "shield_wall": {
-            "id": "shield_wall",
-            "name": "Shield Wall",
-            "tier": 3,
-            "cost": 20,
-            "description": "Defense: Form a mobile defensive line. Grants [Guarding], reducing incoming physical damage by 30% and protecting allies in the room from AoE effects.",
-            "identity_tags": ["martial", "protection", "defense"],
-            "axis": "endurance",
-            "action": "shield_wall",
-            "requirements": {
-                "class": "knight",
-                "stamina": 20,
-                "shield": true,
-                "cooldown": 15
-            }
+            "cost": 50,
+            "description": "Defense: Prepare for incoming impact. Grants [Braced] and [Shielded] for 6 ticks.",
+            "identity_tags": [
+                "martial",
+                "protection",
+                "defense"
+            ],
+            "action": "brace"
         },
         "charge": {
             "id": "charge",
             "name": "Charge",
             "tier": 2,
             "cost": 25,
-            "description": "Mobility: Burst forward at the enemy. Clears [Stalled] and initiates combat with a high-impact strike.",
-            "identity_tags": ["martial", "speed", "mobility"],
-            "axis": "position",
-            "action": "charge",
-            "requirements": {
-                "class": "knight",
-                "stamina": 25,
-                "cooldown": 5
-            },
-            "base_power": 20
+            "description": "Mobility: Rush forward to a target. Applies [Staggered] on impact.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "charge"
         },
         "war_cry": {
             "id": "war_cry",
             "name": "War Cry",
-            "tier": 2,
-            "cost": 10,
-            "description": "Utility: A thunderous shout that inspires allies and unnerves foes. Restores 20 Posture and grants a minor [Stability] bonus to the room.",
-            "identity_tags": ["martial", "voice", "utility"],
-            "axis": "utility",
-            "action": "war_cry",
-            "requirements": {
-                "class": "knight",
-                "stamina": 10,
-                "cooldown": 20
-            }
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: A rallying cry that inspires allies. Increases all allies' Physical power by 20% in the room.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "war_cry"
         },
         "knight_physiology": {
             "id": "knight_physiology",
             "name": "Knight Physiology",
             "tier": 1,
-            "description": "Passive: Your training emphasizes the tactical value of the high ground.",
+            "description": "Passive: Stalwart Defender. You gain 15% increased Armor and 10% maximum Health.",
             "logic_type": "passive",
-            "identity_tags": ["martial", "passive"],
-            "potency_rules": [
-                {
-                    "type": "elevation_mod",
-                    "mult_per": 0.15,
-                    "penalty_per": 0.03
-                }
+            "identity_tags": [
+                "knight",
+                "passive"
             ]
         }
     }

@@ -4,152 +4,115 @@
             "id": "tracker_scan",
             "name": "Tracker Scan",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: Sweep the horizon for movement. Light up targets on the tactical map within Radius 5. Applies [Revealed] for 10 ticks.",
-            "identity_tags": ["martial", "vision", "builder", "setup", "scan"],
-            "axis": "vision",
-            "action": "tracker_scan",
-            "requirements": {
-                "class": "archer",
-                "stamina": 10
-            },
-            "on_hit": {
-                "apply_status": "revealed",
-                "duration": 10
-            }
+            "cost": 0,
+            "description": "Setup/Builder: Scan the area for threats. Generates 20 Stamina and 1 Focus Pip.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "setup",
+                "builder"
+            ],
+            "action": "tracker_scan"
         },
         "target_lock": {
             "id": "target_lock",
             "name": "Target Lock",
-            "tier": 2,
-            "cost": 15,
-            "description": "Setup: Focus your intent on a single foe. Applies [Marked] for 12 ticks and locks your focus, ignoring evasion from [Concealed] targets.",
-            "identity_tags": ["martial", "focus", "setup", "lock_on"],
-            "axis": "vision",
-            "action": "target_lock",
-            "requirements": {
-                "class": "archer",
-                "stamina": 15,
-                "cooldown": 4
-            },
-            "on_hit": {
-                "apply_status": "marked",
-                "duration": 12
-            }
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Lock your bow onto the target. Generates 1 Focus Pip and applies [Marked].",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "setup"
+            ],
+            "action": "target_lock"
         },
         "heartseeker_snipe": {
             "id": "heartseeker_snipe",
             "name": "Heartseeker Snipe",
-            "tier": 5,
-            "cost": 40,
-            "description": "Payoff/Finisher: A single, catastrophic bolt. Deals 4x damage against [Marked] targets. Ignores physical mitigation.",
-            "identity_tags": ["martial", "bow", "lethal", "payoff", "finisher"],
-            "axis": "lethality",
-            "action": "heartseeker_snipe",
-            "requirements": {
-                "class": "archer",
-                "stamina": 40,
-                "cooldown": 15
-            },
-            "base_power": 60,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "marked",
-                    "multiplier": 4.0
-                }
-            ]
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Aim for the heart. Consumes 5 Focus Pips to deal massive Physical damage.",
+            "identity_tags": [
+                "martial",
+                "lethality",
+                "payoff"
+            ],
+            "action": "heartseeker_snipe"
         },
         "volley_rain": {
             "id": "volley_rain",
             "name": "Volley Rain",
             "tier": 3,
-            "cost": 30,
-            "description": "Payoff/AOE: Launch a cluster of arrows high into the air. Hits a 2x2 area. [Grammar]: Arcs OVER mountains and Z-axis obstructions to hit hidden targets.",
-            "identity_tags": ["martial", "bow", "aoe", "payoff", "volley"],
-            "axis": "position",
-            "action": "volley_rain",
-            "requirements": {
-                "class": "archer",
-                "stamina": 30,
-                "cooldown": 10
-            },
-            "base_power": 25
+            "cost": 0,
+            "description": "Payoff/AOE: A rain of arrows from the sky. Consumes 3 Focus Pips to deal AOE damage.",
+            "identity_tags": [
+                "martial",
+                "area",
+                "payoff"
+            ],
+            "action": "volley_rain"
         },
         "catch_arrows": {
             "id": "catch_arrows",
             "name": "Catch Arrows",
-            "tier": 3,
-            "cost": 20,
-            "description": "Defense/Reaction: Use preternatural speed to snatch projectiles from the air. Negates the next incoming [Projection] or [Strike] damage.",
-            "identity_tags": ["martial", "speed", "defense", "reaction"],
-            "axis": "tempo",
-            "action": "catch_arrows",
-            "requirements": {
-                "class": "archer",
-                "stamina": 20,
-                "cooldown": 15
-            }
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Focus on parrying projectiles. Reduces missile damage by 80% for 6 ticks.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "defense"
+            ],
+            "action": "catch_arrows"
         },
         "camouflage": {
             "id": "camouflage",
             "name": "Camouflage",
-            "tier": 2,
-            "cost": 15,
-            "description": "Defense: Blend into the local environment. Grants [Concealed] for 8 ticks. Moving at high speed or attacking breaks the effect.",
-            "identity_tags": ["martial", "nature", "defense"],
-            "axis": "vision",
-            "action": "camouflage",
-            "requirements": {
-                "class": "archer",
-                "stamina": 15,
-                "cooldown": 20
-            }
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense: Blend into your environment. Grants [Concealed] for 3 ticks.",
+            "identity_tags": [
+                "martial",
+                "vision",
+                "defense"
+            ],
+            "action": "camouflage"
         },
         "archers_sprint": {
             "id": "archers_sprint",
             "name": "Archer's Sprint",
             "tier": 2,
-            "cost": 25,
-            "description": "Mobility: A tactical burst of speed. Clears [Slowed] and [Pinned]. Allows you to move 2 rooms in a single tick.",
-            "identity_tags": ["martial", "speed", "mobility"],
-            "axis": "position",
-            "action": "archers_sprint",
-            "requirements": {
-                "class": "archer",
-                "stamina": 25,
-                "cooldown": 8
-            }
+            "cost": 15,
+            "description": "Mobility: Burst of speed to move instantly between rooms.",
+            "identity_tags": [
+                "martial",
+                "speed",
+                "mobility"
+            ],
+            "action": "archers_sprint"
         },
         "pinnacle_of_arrows": {
             "id": "pinnacle_of_arrows",
             "name": "Pinnacle of Arrows",
             "tier": 5,
-            "cost": 0,
-            "description": "Utility/Ultimate: Enter a state of pure archery flow. Your next three [Volley] or [Snipe] actions cost 0 stamina and have 0 cooldown.",
-            "identity_tags": ["martial", "focus", "utility", "ultimate"],
-            "axis": "utility",
-            "action": "pinnacle_of_arrows",
-            "requirements": {
-                "class": "archer",
-                "stamina": 0,
-                "cooldown": 120
-            }
+            "cost": 200,
+            "description": "Utility/Signature: For 15 ticks, all arrows ignore Armor and deal double damage.",
+            "identity_tags": [
+                "martial",
+                "utility"
+            ],
+            "action": "pinnacle_of_arrows"
         },
         "archer_physiology": {
             "id": "archer_physiology",
             "name": "Archer Physiology",
             "tier": 1,
-            "description": "Passive: Your eyes are trained for distance. Ranged attacks are 20% more accurate and ignore many environmental sight blocks.",
+            "description": "Passive: Deadeye. You gain 15% increased Vision range and 10% bonus damage with bows.",
             "logic_type": "passive",
-            "identity_tags": ["martial", "passive"],
-            "potency_rules": [
-                {
-                    "type": "elevation_mod",
-                    "mult_per": 0.12,
-                    "penalty_per": 0.02
-                }
+            "identity_tags": [
+                "archer",
+                "passive"
             ]
         }
     }

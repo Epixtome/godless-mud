@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "arcane_missile": {
+            "id": "arcane_missile",
+            "name": "Arcane Missile",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A bolt of pure mana. Generates 15 Concentration and 1 Mana Pip.",
+            "identity_tags": [
+                "magic",
+                "arcane",
+                "setup",
+                "builder"
+            ],
+            "action": "arcane_missile"
+        },
+        "mana_infusion": {
+            "id": "mana_infusion",
+            "name": "Mana Infusion",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Overcharge your mana pool. Generates 2 Mana Pips and grants [Empowered].",
+            "identity_tags": [
+                "magic",
+                "arcane",
+                "setup"
+            ],
+            "action": "mana_infusion"
+        },
+        "arcane_barrage": {
+            "id": "arcane_barrage",
+            "name": "Arcane Barrage",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: A continuous stream of bolts. Consumes all Mana Pips to deal damage per pip consumed.",
+            "identity_tags": [
+                "magic",
+                "arcane",
+                "payoff"
+            ],
+            "action": "arcane_barrage"
+        },
+        "mana_burst": {
+            "id": "mana_burst",
+            "name": "Mana Burst",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: An eruption of pure arcane force. Consumes 3 Mana Pips to deal AOE damage in the room.",
+            "identity_tags": [
+                "magic",
+                "arcane",
+                "area",
+                "payoff"
+            ],
+            "action": "mana_burst"
+        },
+        "arcane_shield": {
+            "id": "arcane_shield",
+            "name": "Arcane Shield",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: Surround yourself with a field of force. Absorbs incoming damage using your Concentration pool.",
+            "identity_tags": [
+                "magic",
+                "protection",
+                "defense"
+            ],
+            "action": "arcane_shield"
+        },
+        "spell_lock": {
+            "id": "spell_lock",
+            "name": "Spell Lock",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Disruption: Disrupt an enemy's spellcasting for 4 ticks.",
+            "identity_tags": [
+                "magic",
+                "disruption",
+                "defense"
+            ],
+            "action": "spell_lock"
+        },
+        "arcane_dash": {
+            "id": "arcane_dash",
+            "name": "Arcane Dash",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Teleport to any visible location instantly.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "arcane_dash"
+        },
+        "enchant_weapon": {
+            "id": "enchant_weapon",
+            "name": "Enchant Weapon",
+            "tier": 1,
+            "cost": 50,
+            "description": "Utility: Temporarily grant an ally's weapon bonus Arcane damage for 20 ticks.",
+            "identity_tags": [
+                "magic",
+                "utility"
+            ],
+            "action": "enchant_weapon"
+        },
+        "magician_physiology": {
+            "id": "magician_physiology",
+            "name": "Magician Physiology",
+            "tier": 1,
+            "description": "Passive: Pure Arcane. Your Magic power is increased by 10% and you gain 5 Concentration every time an ally casts a spell nearby.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "magician",
+                "passive"
+            ]
+        }
+    }
+}

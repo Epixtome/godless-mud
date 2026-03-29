@@ -4,170 +4,116 @@
             "id": "nature_lash",
             "name": "Nature Lash",
             "tier": 1,
-            "cost": 10,
-            "description": "Setup/Builder: A fundamental lash that resonates with the natural world. Generates small amounts of focus.",
-            "identity_tags": ["druid", "nature", "builder"],
-            "axis": "utility",
-            "action": "nature_lash",
-            "requirements": {
-                "class": "druid",
-                "stamina": 10,
-                "cooldown": 2
-            },
-            "base_power": 10,
-            "potency_rules": [
-                {
-                    "type": "resource_gain_mod",
-                    "resource": "concentration",
-                    "base": 1.0,
-                    "scale": 0.1
-                }
-            ]
+            "cost": 0,
+            "description": "Setup/Builder: Whip the target with a vine. Generates 15 Concentration and 10 Stamina.",
+            "identity_tags": [
+                "nature",
+                "strike",
+                "setup",
+                "builder"
+            ],
+            "action": "nature_lash"
         },
         "saturate": {
             "id": "saturate",
             "name": "Saturate",
             "tier": 2,
-            "cost": 15,
-            "description": "Setup: Drench the target in pressurized water, applying [Wet] for 10s. The foundation for Elemental and Frost grammar.",
-            "identity_tags": ["druid", "water", "nature", "setup"],
-            "axis": "elemental",
-            "action": "saturate",
-            "requirements": {
-                "class": "druid",
-                "concentration": 15,
-                "cooldown": 3
-            },
-            "on_hit": {
-                "apply_status": "wet",
-                "duration": 10
-            }
+            "cost": 50,
+            "description": "Setup: Drench the target in primal water. Applies [Saturated] and generates 20 Concentration.",
+            "identity_tags": [
+                "nature",
+                "elemental",
+                "setup"
+            ],
+            "action": "saturate"
         },
         "gale_force": {
             "id": "gale_force",
             "name": "Gale Force",
-            "tier": 2,
-            "cost": 20,
-            "description": "Setup: A direct burst of wind that applies [Off-Balance]. Effectively disrupts the target's tempo.",
-            "identity_tags": ["druid", "wind", "nature", "setup"],
-            "axis": "position",
-            "action": "gale_force",
-            "requirements": {
-                "class": "druid",
-                "concentration": 20,
-                "cooldown": 4
-            },
-            "on_hit": {
-                "apply_status": "off_balance",
-                "duration": 3
-            }
-        },
-        "snap_freeze": {
-            "id": "snap_freeze",
-            "name": "Snap Freeze",
-            "tier": 3,
-            "cost": 30,
-            "description": "Payoff: Flash-freezes the target. If target is [Wet], applies [Frozen]. Deals high damage and locks movement.",
-            "identity_tags": ["druid", "ice", "nature", "payoff"],
-            "axis": "elemental",
-            "action": "snap_freeze",
-            "requirements": {
-                "class": "druid",
-                "concentration": 30,
-                "cooldown": 5
-            },
-            "base_power": 25,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "wet",
-                    "multiplier": 1.5
-                }
-            ]
+            "tier": 4,
+            "cost": 100,
+            "description": "Payoff: A violent blast of wind. Deals Magic damage. Power is doubled if target is [Saturated].",
+            "identity_tags": [
+                "nature",
+                "elemental",
+                "payoff"
+            ],
+            "action": "gale_force"
         },
         "tempest_wrath": {
             "id": "tempest_wrath",
             "name": "Tempest Wrath",
-            "tier": 5,
-            "cost": 50,
-            "description": "Finisher: Call down the wrath of the storm. Deals massive AoE damage. Damage is doubled to [Wet] targets in the room.",
-            "identity_tags": ["druid", "storm", "lightning", "nature", "payoff"],
-            "axis": "elemental",
-            "action": "tempest_wrath",
-            "requirements": {
-                "class": "druid",
-                "concentration": 50,
-                "cooldown": 12
-            },
-            "base_power": 45,
-            "potency_rules": [
-                {
-                    "type": "status_mod",
-                    "check_target": true,
-                    "status_id": "wet",
-                    "multiplier": 2.0
-                }
-            ]
+            "tier": 3,
+            "cost": 150,
+            "description": "Payoff/AOE: Lightning strikes the room. Deals AOE Magic damage and applies [Shocked] for 4 ticks.",
+            "identity_tags": [
+                "nature",
+                "elemental",
+                "area",
+                "payoff"
+            ],
+            "action": "tempest_wrath"
         },
         "barkskin": {
             "id": "barkskin",
             "name": "Barkskin",
             "tier": 2,
-            "cost": 15,
-            "description": "Defense: Toughen your skin with magical bark, gaining +20% Mitigation and resistance to [Bleeding] for 15s.",
-            "identity_tags": ["druid", "nature", "defense"],
-            "axis": "endurance",
-            "action": "barkskin",
-            "requirements": {
-                "class": "druid",
-                "concentration": 15,
-                "cooldown": 10
-            }
+            "cost": 75,
+            "description": "Defense: Harden your skin like oak. Reduces all physical damage by 50% for 6 ticks.",
+            "identity_tags": [
+                "nature",
+                "protection",
+                "defense"
+            ],
+            "action": "barkskin"
+        },
+        "wild_growth": {
+            "id": "wild_growth",
+            "name": "Wild Growth",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Root: Thorns erupt from the ground. Roots all enemies for 3 ticks.",
+            "identity_tags": [
+                "nature",
+                "disruption",
+                "defense"
+            ],
+            "action": "wild_growth"
         },
         "nature_stride": {
             "id": "nature_stride",
-            "name": "Nature's Stride",
+            "name": "Nature Stride",
             "tier": 2,
-            "cost": 10,
-            "description": "Mobility: Briefly transition into a nature-phase. Removes [Stalled] and allows for instant escape from engagement.",
-            "identity_tags": ["druid", "nature", "mobility"],
-            "axis": "position",
-            "action": "nature_stride",
-            "requirements": {
-                "class": "druid",
-                "stamina": 10,
-                "cooldown": 6
-            }
+            "cost": 15,
+            "description": "Mobility: Merge with the terrain to move instantly between natural areas.",
+            "identity_tags": [
+                "nature",
+                "speed",
+                "mobility"
+            ],
+            "action": "nature_stride"
         },
         "natural_focus": {
             "id": "natural_focus",
             "name": "Natural Focus",
-            "tier": 2,
-            "cost": 0,
-            "description": "Utility: Commune with the currents of the world, restoring 40 Concentration and 20 Stamina.",
-            "identity_tags": ["druid", "nature", "utility"],
-            "axis": "endurance",
-            "action": "natural_focus",
-            "requirements": {
-                "class": "druid",
-                "stamina": 5,
-                "cooldown": 15
-            }
+            "tier": 5,
+            "cost": 250,
+            "description": "Utility/Signature: Commune with the wilds. Restores 40% HP and Concentration.",
+            "identity_tags": [
+                "nature",
+                "utility"
+            ],
+            "action": "natural_focus"
         },
         "druid_physiology": {
             "id": "druid_physiology",
             "name": "Druid Physiology",
             "tier": 1,
-            "description": "Passive: You are one with the world. Your nature skills are enhanced by 25% during active weather, and you are immune to the negative effects of the environment.",
+            "description": "Passive: Forest Warden. You regenerate 5% Concentration every tick and are immune to [Rooted] effects.",
             "logic_type": "passive",
-            "identity_tags": ["nature", "passive"],
-            "potency_rules": [
-                {
-                    "type": "weather_mod",
-                    "active_weathers": ["rain", "storm", "thunderstorm", "blizzard", "heatwave"],
-                    "multiplier": 1.25
-                }
+            "identity_tags": [
+                "druid",
+                "passive"
             ]
         }
     }

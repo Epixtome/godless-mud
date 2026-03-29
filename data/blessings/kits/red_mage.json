@@ -1,0 +1,120 @@
+{
+    "blessings": {
+        "dual_casting": {
+            "id": "dual_casting",
+            "name": "Dual Casting",
+            "tier": 1,
+            "cost": 0,
+            "description": "Setup/Builder: A combined strike of steel and sorcery. Generates 15 Stamina and 1 Balance Pip.",
+            "identity_tags": [
+                "magic",
+                "battle",
+                "setup",
+                "builder"
+            ],
+            "action": "dual_casting"
+        },
+        "balance_point": {
+            "id": "balance_point",
+            "name": "Balance Point",
+            "tier": 1,
+            "cost": 25,
+            "description": "Setup: Align your physical and spiritual forces. Generates 2 Balance Pips and grants [Focused].",
+            "identity_tags": [
+                "magic",
+                "battle",
+                "setup"
+            ],
+            "action": "balance_point"
+        },
+        "spellsword_burst": {
+            "id": "spellsword_burst",
+            "name": "Spellsword Burst",
+            "tier": 4,
+            "cost": 0,
+            "description": "Payoff: Channel pure energy through your blade. Consumes 5 Balance Pips to deal Physical and Magic damage simultaneously.",
+            "identity_tags": [
+                "magic",
+                "battle",
+                "payoff"
+            ],
+            "action": "spellsword_burst"
+        },
+        "arcane_cleave": {
+            "id": "arcane_cleave",
+            "name": "Arcane Cleave",
+            "tier": 3,
+            "cost": 0,
+            "description": "Payoff/AOE: A wide swing infused with arcane force. Consumes 3 Balance Pips to deal AOE damage.",
+            "identity_tags": [
+                "magic",
+                "battle",
+                "area",
+                "payoff"
+            ],
+            "action": "arcane_cleave"
+        },
+        "red_barrier": {
+            "id": "red_barrier",
+            "name": "Red Barrier",
+            "tier": 2,
+            "cost": 75,
+            "description": "Defense: A field that absorbs both Physical and Magic damage using both Stamina and Concentration pools.",
+            "identity_tags": [
+                "magic",
+                "protection",
+                "defense"
+            ],
+            "action": "red_barrier"
+        },
+        "displacing_strike": {
+            "id": "displacing_strike",
+            "name": "Displacing Strike",
+            "tier": 1,
+            "cost": 30,
+            "description": "Defense/Mobility: Strike the target and briefly blink out of existence. Reduces enemy hit chance.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "defense"
+            ],
+            "action": "displacing_strike"
+        },
+        "mystic_marching": {
+            "id": "mystic_marching",
+            "name": "Mystic Marching",
+            "tier": 2,
+            "cost": 15,
+            "description": "Mobility: Teleport to any ally in the same room or adjacent room.",
+            "identity_tags": [
+                "magic",
+                "speed",
+                "mobility"
+            ],
+            "action": "mystic_marching"
+        },
+        "chain_spell": {
+            "id": "chain_spell",
+            "name": "Chain Spell",
+            "tier": 5,
+            "cost": 200,
+            "description": "Utility/Signature: Your next 5 non-signature blessings are cast twice sequentially for 0 cost.",
+            "identity_tags": [
+                "magic",
+                "utility"
+            ],
+            "action": "chain_spell"
+        },
+        "red_mage_physiology": {
+            "id": "red_mage_physiology",
+            "name": "Red Mage Physiology",
+            "tier": 1,
+            "description": "Passive: Hybrid Mastery. You gain 10% increased damage from all sources and your Balance Pip generation is doubled when your HP is above 50%.",
+            "logic_type": "passive",
+            "identity_tags": [
+                "red_mage",
+                "passive"
+            ]
+        }
+    }
+}
