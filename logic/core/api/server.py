@@ -717,9 +717,9 @@ if os.path.exists(client_path):
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.settimeout(0.05)
-                if s.connect_ex(("127.0.0.1", 3000)) == 0:
+                if s.connect_ex(("127.0.0.1", 3001)) == 0:
                     from fastapi.responses import RedirectResponse
-                    return RedirectResponse("http://localhost:3000")
+                    return RedirectResponse("http://localhost:3001")
         except: pass
 
         idx = os.path.join(client_path, "index.html")
