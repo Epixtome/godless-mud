@@ -51,6 +51,14 @@ class StencilRequest(BaseModel):
     width: int = 125
     height: int = 125
 
+class PaintRequest(BaseModel):
+    x: int
+    y: int
+    z: int = 0
+    terrain: str
+    radius: int = 1
+    zone_id: Optional[str] = "custom"
+
 # --- WebSocket Gateway ---
 
 @app.websocket("/ws")
@@ -168,6 +176,7 @@ async def get_map_data():
         rooms.append({
             "x": r.x, "y": r.y, "z": r.z,
             "terrain": getattr(r, 'terrain', 'plains'),
+            "elevation": getattr(r, 'elevation', 0),
             "name": r.name,
             "id": r.id
         })
@@ -587,6 +596,45 @@ async def import_stencil(req: StencilRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/api/world/paint")
+async def paint_world(req: PaintRequest):
+    """[V12.0] Sovereign Painter: Direct terrain modification of the live engine."""
+    if not game_instance:
+        raise HTTPException(status_code=503, detail="Game Engine not initialized")
+    
+    world = game_instance.world
+    modified_count = 0
+    
+    # Surgical Graft: The v9.9 Radial Brush Logic
+    r = req.radius - 1
+    for dy in range(-r, r + 1):
+        for dx in range(-r, r + 1):
+            if math.sqrt(dx*dx + dy*dy) > r:
+                continue
+                
+            tx, ty = req.x + dx, req.y + dy
+            
+            # 1. Coordinate Synthesis
+            from logic.core.world import get_room_id
+            rid = get_room_id(req.zone_id, tx, ty, req.z)
+            
+            # 2. Room Recovery or Creation
+            room = world.rooms.get(rid)
+            if not room:
+                from models.world import Room
+                room = Room(rid, f"Painted {req.terrain}", f"A section of {req.terrain} sculpted by divine hand.")
+                room.x, room.y, room.z = tx, ty, req.z
+                room.zone_id = req.zone_id
+                world.rooms[rid] = room
+            
+            # 3. Terrain Application
+            room.terrain = req.terrain
+            room.base_terrain = req.terrain
+            room.dirty = True
+            modified_count += 1
+
+    return {"status": "success", "modified": modified_count, "terrain": req.terrain}
+
 @app.post("/api/world/save")
 async def save_generated_world(payload: Dict[str, Any]):
     sys.path.append(os.path.abspath("scripts/world"))
@@ -727,15 +775,15 @@ if os.path.exists(client_path):
             return FileResponse(idx)
         return {"message": "Godless Online: Production Build Missing. Run 'npm run build' or start Vite dev server."}
 
-# 2. Area Editor
-editor_dist = os.path.abspath("scripts/world/area_editor/dist")
-if os.path.exists(editor_dist):
-    app.mount("/editor", StaticFiles(directory=editor_dist, html=True), name="editor")
+# 2. Area Editor (DEPRECATED - Moved to v10_5_ui_vault)
+# editor_dist = os.path.abspath("scripts/world/area_editor/dist")
+# if os.path.exists(editor_dist):
+#     app.mount("/editor", StaticFiles(directory=editor_dist, html=True), name="editor")
 
-# 3. Remote Studio
-studio_dist = os.path.abspath("scripts/world/remote_studio/web/dist")
-if os.path.exists(studio_dist):
-    app.mount("/studio", StaticFiles(directory=studio_dist, html=True), name="studio")
+# 3. Remote Studio (DEPRECATED - Moved to v10_5_ui_vault)
+# studio_dist = os.path.abspath("scripts/world/remote_studio/web/dist")
+# if os.path.exists(studio_dist):
+#     app.mount("/studio", StaticFiles(directory=studio_dist, html=True), name="studio")
 
 import uvicorn
 import sys

@@ -11,6 +11,7 @@ interface Room {
     y: number;
     z: number;
     terrain: string;
+    elevation?: number;
 }
 
 interface UniversalCanvasProps {
@@ -27,6 +28,7 @@ interface UniversalCanvasProps {
     onPaintEnd: () => void;
     onHover: (x: number, y: number) => void;
     onRightClick: (x: number, y: number) => void;
+    onCenterRequest: (x: number, y: number) => void;
     centerPos?: { x: number, y: number } | null;
     anchorX?: number;
     anchorY?: number;
@@ -50,6 +52,7 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
     onPaintEnd,
     onHover,
     onRightClick,
+    onCenterRequest,
     centerPos,
     anchorX = 0,
     anchorY = 0
@@ -87,9 +90,13 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
             for (let x = 0; x < grid[y].length; x++) {
                 let color = "#111111";
                 if (viewMode === "terrain") {
-                    // Use studio_hex first, or boost hex.
                     const terr = terrainRegistry?.terrains[grid[y][x]];
-                    color = terr?.studio_hex || terr?.hex || "#444";
+                    const baseHex = terr?.studio_hex || terr?.hex || "#444";
+                    
+                    // [V12.0] Vellum Shader: Elevation Tinting
+                    const elev = elevMap ? (elevMap[y][x] || 0) : 0.5;
+                    const brightness = 0.7 + (elev * 0.6); // 0.7 to 1.3
+                    color = applyTint(baseHex, brightness);
                 } else if (viewMode === "elev" && elevMap) {
                     const e = Math.floor(elevMap[y][x] * 255);
                     color = `rgb(${e}, ${e}, ${e})`;
@@ -99,11 +106,23 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
                 }
                 
                 bCtx.fillStyle = color;
-                // [FIX] No internal gaps in the buffer ensures solidity at distance.
                 bCtx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                
+                // [V12.0] Vellum Shader: Cell Shadowing
+                bCtx.strokeStyle = "rgba(0,0,0,0.15)";
+                bCtx.lineWidth = 1;
+                bCtx.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
             }
         }
     }, [grid, elevMap, moistMap, viewMode, terrainRegistry, tileSize]);
+
+    // Utility: Sovereign Tint Engine
+    const applyTint = (hex: string, factor: number) => {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgb(${Math.min(255, r * factor)}, ${Math.min(255, g * factor)}, ${Math.min(255, b * factor)})`;
+    };
 
     // --- MAIN RENDER ---
     const draw = useCallback(() => {
@@ -137,15 +156,27 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
 
         // --- LAYER 1: MIRROR MONITOR (World Rooms) ---
         if (rooms) {
-            const gap = viewportZoom > 4 ? 1 : 0; // [FIX] Eliminate gaps at high zoom-out
+            const gap = viewportZoom > 4 ? 1 : 0; 
             rooms.forEach(room => {
                 const px = offset.x + room.x * viewportZoom;
                 const py = offset.y + room.y * viewportZoom;
                 if (px + viewportZoom < 0 || px > canvas.width || py + viewportZoom < 0 || py > canvas.height) return;
 
-                let color = terrainRegistry?.terrains[room.terrain]?.studio_hex || "#1e293b";
+                const terr = terrainRegistry?.terrains[room.terrain];
+                const baseHex = terr?.studio_hex || terr?.hex || "#1e293b";
+                
+                // [V12.0] Vellum Shader: Elevation Tinting (Direct Room Logic)
+                const elevFactor = 0.7 + ((room.elevation || 0) + 5) / 10 * 0.6; // Scale -5/5 to 0.7/1.3
+                const color = applyTint(baseHex, elevFactor);
+
                 ctx.fillStyle = color;
                 ctx.fillRect(px, py, viewportZoom - gap, viewportZoom - gap);
+                
+                // Tactical Border for Rooms
+                if (viewportZoom > 6) {
+                    ctx.strokeStyle = "rgba(0,0,0,0.2)";
+                    ctx.strokeRect(px, py, viewportZoom - gap, viewportZoom - gap);
+                }
             });
         }
 
@@ -239,7 +270,11 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
                     const rect = canvasRef.current!.getBoundingClientRect();
                     const gx = Math.floor((e.clientX - rect.left - offset.x) / viewportZoom);
                     const gy = Math.floor((e.clientY - rect.top - offset.y) / viewportZoom);
-                    onRightClick(gx, gy);
+                    if (e.shiftKey) {
+                        onCenterRequest(gx, gy);
+                    } else {
+                        onRightClick(gx, gy);
+                    }
                 }}
                 className="w-full h-full block"
             />

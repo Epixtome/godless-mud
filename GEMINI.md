@@ -111,4 +111,15 @@ When multiple AIs work on the same class modules:
 5.  **The 300-Line Limit**: No Python file may exceed 300 lines. 
 
 ---
+
+## 8. THE SOVEREIGN TRUNK PROTOCOL (V12.0+)
+To prevent "orphaned features" and repository fragmentation, all development must follow these rules:
+
+1. **The Short-Lived Sprint**: Branches must never exist for more than 48 hours. Logic or UI changes must be merged into the 'Main' trunk immediately upon verification.
+2. **Atomic Deletion**: Once a feature is merged, the source branch MUST be deleted. No "zombie branches" are permitted to linger.
+3. **Monolithic Versioning**: Godless uses a single global version (starting at v12.0.0). Every commit to any domain (Engine, UI, or Data) increments the repository-wide version.
+4. **The UI Monolith**: `scripts/world/client_react` is the only active frontend. All other UI shards in `scripts/world/` are considered legacy and must not be modified or referenced.
+5. **Zero Placeholder Policy**: Never use `TODO` or `PLACEHOLDER`. If a feature is implemented, it must be functional or gated by an admin-only toggle.
+
+---
 **Failure to adhere to these standards will cause the Shadow Auditor to flag your code for recursive refactoring.**

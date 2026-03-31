@@ -1,0 +1,2186 @@
+{
+    "metadata": {
+        "id": "custom_wetlands_85_31",
+        "name": "Wetlands Zone",
+        "security_level": "low_sec",
+        "grid_logic": true,
+        "target_cr": 50
+    },
+    "rooms": [
+        {
+            "id": "custom_wetlands_85_31.9031.9084.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9031,
+            "y": 9084,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_infrastructure_72_39.9031.9083.0",
+                "south": "custom_wetlands_85_31.9031.9085.0",
+                "east": "custom_infrastructure_72_39.9032.9084.0",
+                "west": "custom_infrastructure_72_39.9030.9084.0"
+            },
+            "tags": [
+                "hills",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9085.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9085,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9084.0",
+                "south": "custom_wetlands_85_31.9031.9086.0",
+                "east": "custom_wetlands_85_31.9032.9085.0",
+                "west": "custom_infrastructure_72_39.9030.9085.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9085.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9085,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_infrastructure_72_39.9032.9084.0",
+                "south": "custom_wetlands_85_31.9032.9086.0",
+                "east": "custom_wetlands_85_31.9033.9085.0",
+                "west": "custom_wetlands_85_31.9031.9085.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9085.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9085,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_infrastructure_72_39.9033.9084.0",
+                "south": "custom_wetlands_85_31.9033.9086.0",
+                "east": "custom_wetlands_85_31.9034.9085.0",
+                "west": "custom_wetlands_85_31.9032.9085.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9085.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9085,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_infrastructure_72_39.9034.9084.0",
+                "south": "custom_wetlands_85_31.9034.9086.0",
+                "east": "custom_infrastructure_72_39.9035.9085.0",
+                "west": "custom_wetlands_85_31.9033.9085.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9086.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9086,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9085.0",
+                "south": "custom_wetlands_85_31.9031.9087.0",
+                "east": "custom_wetlands_85_31.9032.9086.0",
+                "west": "custom_infrastructure_72_39.9030.9086.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9086.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9086,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9085.0",
+                "south": "custom_wetlands_85_31.9032.9087.0",
+                "east": "custom_wetlands_85_31.9033.9086.0",
+                "west": "custom_wetlands_85_31.9031.9086.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9086.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9086,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9085.0",
+                "south": "custom_wetlands_85_31.9033.9087.0",
+                "east": "custom_wetlands_85_31.9034.9086.0",
+                "west": "custom_wetlands_85_31.9032.9086.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9086.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9086,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9085.0",
+                "south": "custom_wetlands_85_31.9034.9087.0",
+                "east": "custom_wetlands_85_31.9035.9086.0",
+                "west": "custom_wetlands_85_31.9033.9086.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9035.9086.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9035,
+            "y": 9086,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_infrastructure_72_39.9035.9085.0",
+                "south": "custom_wetlands_85_31.9035.9087.0",
+                "east": "custom_wetlands_76_39.9036.9086.0",
+                "west": "custom_wetlands_85_31.9034.9086.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9037.9086.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: WETLANDS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9037,
+            "y": 9086,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "custom_wetlands_76_39.9037.9085.0",
+                "south": "custom_wetlands_85_31.9037.9087.0",
+                "east": "custom_wetlands_76_39.9038.9086.0",
+                "west": "custom_wetlands_76_39.9036.9086.0"
+            },
+            "tags": [
+                "mountain",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9087.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9087,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9086.0",
+                "south": "custom_wetlands_85_31.9031.9088.0",
+                "east": "custom_wetlands_85_31.9032.9087.0",
+                "west": "custom_infrastructure_72_39.9030.9087.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9087.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9087,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9086.0",
+                "south": "custom_wetlands_85_31.9032.9088.0",
+                "east": "custom_wetlands_85_31.9033.9087.0",
+                "west": "custom_wetlands_85_31.9031.9087.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9087.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9087,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9086.0",
+                "south": "custom_wetlands_85_31.9033.9088.0",
+                "east": "custom_wetlands_85_31.9034.9087.0",
+                "west": "custom_wetlands_85_31.9032.9087.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9087.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9087,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9086.0",
+                "south": "custom_wetlands_85_31.9034.9088.0",
+                "east": "custom_wetlands_85_31.9035.9087.0",
+                "west": "custom_wetlands_85_31.9033.9087.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9035.9087.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9035,
+            "y": 9087,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9035.9086.0",
+                "south": "custom_wetlands_85_31.9035.9088.0",
+                "east": "custom_wetlands_85_31.9036.9087.0",
+                "west": "custom_wetlands_85_31.9034.9087.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9036.9087.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9036,
+            "y": 9087,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_76_39.9036.9086.0",
+                "south": "custom_wetlands_85_31.9036.9088.0",
+                "east": "custom_wetlands_85_31.9037.9087.0",
+                "west": "custom_wetlands_85_31.9035.9087.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9037.9087.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9037,
+            "y": 9087,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9037.9086.0",
+                "south": "custom_wetlands_85_31.9037.9088.0",
+                "east": "custom_peaks_66_107.9038.9087.0",
+                "west": "custom_wetlands_85_31.9036.9087.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9088.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9088,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9087.0",
+                "south": "custom_wetlands_85_31.9031.9089.0",
+                "east": "custom_wetlands_85_31.9032.9088.0",
+                "west": "custom_infrastructure_72_39.9030.9088.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9088.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9088,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9087.0",
+                "south": "custom_wetlands_85_31.9032.9089.0",
+                "east": "custom_wetlands_85_31.9033.9088.0",
+                "west": "custom_wetlands_85_31.9031.9088.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9088.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9088,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9087.0",
+                "south": "custom_wetlands_85_31.9033.9089.0",
+                "east": "custom_wetlands_85_31.9034.9088.0",
+                "west": "custom_wetlands_85_31.9032.9088.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9088.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9088,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9087.0",
+                "south": "custom_wetlands_85_31.9034.9089.0",
+                "east": "custom_wetlands_85_31.9035.9088.0",
+                "west": "custom_wetlands_85_31.9033.9088.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9035.9088.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9035,
+            "y": 9088,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9035.9087.0",
+                "south": "custom_wetlands_85_31.9035.9089.0",
+                "east": "custom_wetlands_85_31.9036.9088.0",
+                "west": "custom_wetlands_85_31.9034.9088.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9036.9088.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9036,
+            "y": 9088,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9036.9087.0",
+                "south": "custom_wetlands_85_31.9036.9089.0",
+                "east": "custom_wetlands_85_31.9037.9088.0",
+                "west": "custom_wetlands_85_31.9035.9088.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9037.9088.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9037,
+            "y": 9088,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9037.9087.0",
+                "south": "custom_wetlands_85_31.9037.9089.0",
+                "east": "custom_peaks_66_107.9038.9088.0",
+                "west": "custom_wetlands_85_31.9036.9088.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9089.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9089,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9088.0",
+                "south": "custom_wetlands_85_31.9031.9090.0",
+                "east": "custom_wetlands_85_31.9032.9089.0",
+                "west": "custom_infrastructure_72_39.9030.9089.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9089.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9089,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9088.0",
+                "south": "custom_wetlands_85_31.9032.9090.0",
+                "east": "custom_wetlands_85_31.9033.9089.0",
+                "west": "custom_wetlands_85_31.9031.9089.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9089.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9089,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9088.0",
+                "south": "custom_wetlands_85_31.9033.9090.0",
+                "east": "custom_wetlands_85_31.9034.9089.0",
+                "west": "custom_wetlands_85_31.9032.9089.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9089.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9089,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9088.0",
+                "south": "custom_wetlands_85_31.9034.9090.0",
+                "east": "custom_wetlands_85_31.9035.9089.0",
+                "west": "custom_wetlands_85_31.9033.9089.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9035.9089.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9035,
+            "y": 9089,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9035.9088.0",
+                "south": "custom_wetlands_85_31.9035.9090.0",
+                "east": "custom_wetlands_85_31.9036.9089.0",
+                "west": "custom_wetlands_85_31.9034.9089.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9036.9089.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9036,
+            "y": 9089,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9036.9088.0",
+                "south": "custom_wetlands_85_31.9036.9090.0",
+                "east": "custom_wetlands_85_31.9037.9089.0",
+                "west": "custom_wetlands_85_31.9035.9089.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9037.9089.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9037,
+            "y": 9089,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9037.9088.0",
+                "south": "custom_wetlands_85_31.9037.9090.0",
+                "east": "custom_peaks_66_107.9038.9089.0",
+                "west": "custom_wetlands_85_31.9036.9089.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9090.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9090,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9089.0",
+                "south": "custom_wetlands_85_31.9031.9091.0",
+                "east": "custom_wetlands_85_31.9032.9090.0",
+                "west": "custom_infrastructure_72_39.9030.9090.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9090.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9090,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9089.0",
+                "south": "custom_wetlands_85_31.9032.9091.0",
+                "east": "custom_wetlands_85_31.9033.9090.0",
+                "west": "custom_wetlands_85_31.9031.9090.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9090.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9090,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9089.0",
+                "south": "custom_wetlands_85_31.9033.9091.0",
+                "east": "custom_wetlands_85_31.9034.9090.0",
+                "west": "custom_wetlands_85_31.9032.9090.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9090.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9090,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9089.0",
+                "south": "custom_wetlands_85_31.9034.9091.0",
+                "east": "custom_wetlands_85_31.9035.9090.0",
+                "west": "custom_wetlands_85_31.9033.9090.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9035.9090.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9035,
+            "y": 9090,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9035.9089.0",
+                "south": "custom_wetlands_85_31.9035.9091.0",
+                "east": "custom_wetlands_85_31.9036.9090.0",
+                "west": "custom_wetlands_85_31.9034.9090.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9036.9090.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9036,
+            "y": 9090,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9036.9089.0",
+                "south": "custom_wetlands_85_31.9036.9091.0",
+                "east": "custom_wetlands_85_31.9037.9090.0",
+                "west": "custom_wetlands_85_31.9035.9090.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9037.9090.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9037,
+            "y": 9090,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9037.9089.0",
+                "south": "custom_wetlands_85_31.9037.9091.0",
+                "east": "custom_peaks_66_107.9038.9090.0",
+                "west": "custom_wetlands_85_31.9036.9090.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9091.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9091,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9090.0",
+                "south": "custom_wetlands_85_31.9031.9092.0",
+                "east": "custom_wetlands_85_31.9032.9091.0",
+                "west": "custom_infrastructure_72_39.9030.9091.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9091.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9091,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9090.0",
+                "south": "custom_wetlands_85_31.9032.9092.0",
+                "east": "custom_wetlands_85_31.9033.9091.0",
+                "west": "custom_wetlands_85_31.9031.9091.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9091.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9091,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9090.0",
+                "south": "custom_wetlands_85_31.9033.9092.0",
+                "east": "custom_wetlands_85_31.9034.9091.0",
+                "west": "custom_wetlands_85_31.9032.9091.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9091.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9091,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9090.0",
+                "south": "custom_wetlands_85_31.9034.9092.0",
+                "east": "custom_wetlands_85_31.9035.9091.0",
+                "west": "custom_wetlands_85_31.9033.9091.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9035.9091.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9035,
+            "y": 9091,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9035.9090.0",
+                "south": "custom_wetlands_85_31.9035.9092.0",
+                "east": "custom_wetlands_85_31.9036.9091.0",
+                "west": "custom_wetlands_85_31.9034.9091.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9036.9091.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9036,
+            "y": 9091,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9036.9090.0",
+                "south": "custom_wetlands_85_31.9036.9092.0",
+                "east": "custom_wetlands_85_31.9037.9091.0",
+                "west": "custom_wetlands_85_31.9035.9091.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9037.9091.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9037,
+            "y": 9091,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9037.9090.0",
+                "south": "custom_wetlands_85_31.9037.9092.0",
+                "east": "custom_peaks_66_107.9038.9091.0",
+                "west": "custom_wetlands_85_31.9036.9091.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9092.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9092,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9091.0",
+                "south": "custom_wetlands_85_31.9031.9093.0",
+                "east": "custom_wetlands_85_31.9032.9092.0",
+                "west": "custom_infrastructure_72_39.9030.9092.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9092.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9092,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9091.0",
+                "south": "custom_wetlands_85_31.9032.9093.0",
+                "east": "custom_wetlands_85_31.9033.9092.0",
+                "west": "custom_wetlands_85_31.9031.9092.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9092.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9092,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9091.0",
+                "south": "custom_wetlands_85_31.9033.9093.0",
+                "east": "custom_wetlands_85_31.9034.9092.0",
+                "west": "custom_wetlands_85_31.9032.9092.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9092.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9092,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9091.0",
+                "south": "custom_wetlands_85_31.9034.9093.0",
+                "east": "custom_wetlands_85_31.9035.9092.0",
+                "west": "custom_wetlands_85_31.9033.9092.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9035.9092.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9035,
+            "y": 9092,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9035.9091.0",
+                "south": "custom_wetlands_85_31.9035.9093.0",
+                "east": "custom_wetlands_85_31.9036.9092.0",
+                "west": "custom_wetlands_85_31.9034.9092.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9036.9092.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9036,
+            "y": 9092,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9036.9091.0",
+                "south": "custom_wetlands_85_31.9036.9093.0",
+                "east": "custom_wetlands_85_31.9037.9092.0",
+                "west": "custom_wetlands_85_31.9035.9092.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9037.9092.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9037,
+            "y": 9092,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9037.9091.0",
+                "south": "custom_peaks_66_107.9037.9093.0",
+                "east": "custom_peaks_66_107.9038.9092.0",
+                "west": "custom_wetlands_85_31.9036.9092.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9029.9093.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9029,
+            "y": 9093,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_infrastructure_72_39.9029.9092.0",
+                "south": "custom_wetlands_85_31.9029.9094.0",
+                "east": "custom_wetlands_85_31.9030.9093.0",
+                "west": "custom_infrastructure_72_39.9028.9093.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9030.9093.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9030,
+            "y": 9093,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_infrastructure_72_39.9030.9092.0",
+                "south": "custom_wetlands_85_31.9030.9094.0",
+                "east": "custom_wetlands_85_31.9031.9093.0",
+                "west": "custom_wetlands_85_31.9029.9093.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9093.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9093,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9092.0",
+                "south": "custom_wetlands_85_31.9031.9094.0",
+                "east": "custom_wetlands_85_31.9032.9093.0",
+                "west": "custom_wetlands_85_31.9030.9093.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9093.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9093,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9092.0",
+                "south": "custom_wetlands_85_31.9032.9094.0",
+                "east": "custom_wetlands_85_31.9033.9093.0",
+                "west": "custom_wetlands_85_31.9031.9093.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9093.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9093,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9092.0",
+                "south": "custom_wetlands_85_31.9033.9094.0",
+                "east": "custom_wetlands_85_31.9034.9093.0",
+                "west": "custom_wetlands_85_31.9032.9093.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9093.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9093,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9092.0",
+                "south": "custom_wetlands_85_31.9034.9094.0",
+                "east": "custom_wetlands_85_31.9035.9093.0",
+                "west": "custom_wetlands_85_31.9033.9093.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9035.9093.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9035,
+            "y": 9093,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9035.9092.0",
+                "south": "custom_wetlands_85_31.9035.9094.0",
+                "east": "custom_wetlands_85_31.9036.9093.0",
+                "west": "custom_wetlands_85_31.9034.9093.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9036.9093.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9036,
+            "y": 9093,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9036.9092.0",
+                "south": "custom_wetlands_85_31.9036.9094.0",
+                "east": "custom_peaks_66_107.9037.9093.0",
+                "west": "custom_wetlands_85_31.9035.9093.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9029.9094.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9029,
+            "y": 9094,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9029.9093.0",
+                "south": "custom_wetlands_85_31.9029.9095.0",
+                "east": "custom_wetlands_85_31.9030.9094.0",
+                "west": "custom_infrastructure_72_39.9028.9094.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9030.9094.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9030,
+            "y": 9094,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9030.9093.0",
+                "south": "custom_wetlands_85_31.9030.9095.0",
+                "east": "custom_wetlands_85_31.9031.9094.0",
+                "west": "custom_wetlands_85_31.9029.9094.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9094.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9094,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9093.0",
+                "south": "custom_wetlands_85_31.9031.9095.0",
+                "east": "custom_wetlands_85_31.9032.9094.0",
+                "west": "custom_wetlands_85_31.9030.9094.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9094.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9094,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9093.0",
+                "south": "custom_wetlands_85_31.9032.9095.0",
+                "east": "custom_wetlands_85_31.9033.9094.0",
+                "west": "custom_wetlands_85_31.9031.9094.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9094.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9094,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9093.0",
+                "south": "custom_wetlands_85_31.9033.9095.0",
+                "east": "custom_wetlands_85_31.9034.9094.0",
+                "west": "custom_wetlands_85_31.9032.9094.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9094.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9094,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9093.0",
+                "south": "custom_wetlands_85_31.9034.9095.0",
+                "east": "custom_wetlands_85_31.9035.9094.0",
+                "west": "custom_wetlands_85_31.9033.9094.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9035.9094.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9035,
+            "y": 9094,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9035.9093.0",
+                "south": "custom_peaks_66_107.9035.9095.0",
+                "east": "custom_wetlands_85_31.9036.9094.0",
+                "west": "custom_wetlands_85_31.9034.9094.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9036.9094.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9036,
+            "y": 9094,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9036.9093.0",
+                "south": "custom_peaks_66_107.9036.9095.0",
+                "east": "custom_peaks_66_107.9037.9094.0",
+                "west": "custom_wetlands_85_31.9035.9094.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9029.9095.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9029,
+            "y": 9095,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9029.9094.0",
+                "south": "custom_peaks_66_107.9029.9096.0",
+                "east": "custom_wetlands_85_31.9030.9095.0",
+                "west": "custom_infrastructure_72_39.9028.9095.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9030.9095.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9030,
+            "y": 9095,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9030.9094.0",
+                "south": "custom_peaks_66_107.9030.9096.0",
+                "east": "custom_wetlands_85_31.9031.9095.0",
+                "west": "custom_wetlands_85_31.9029.9095.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9031.9095.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9031,
+            "y": 9095,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9031.9094.0",
+                "south": "custom_peaks_66_107.9031.9096.0",
+                "east": "custom_wetlands_85_31.9032.9095.0",
+                "west": "custom_wetlands_85_31.9030.9095.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9032.9095.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9032,
+            "y": 9095,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9032.9094.0",
+                "south": "custom_peaks_66_107.9032.9096.0",
+                "east": "custom_wetlands_85_31.9033.9095.0",
+                "west": "custom_wetlands_85_31.9031.9095.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9033.9095.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9033,
+            "y": 9095,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9033.9094.0",
+                "south": "custom_peaks_66_107.9033.9096.0",
+                "east": "custom_wetlands_85_31.9034.9095.0",
+                "west": "custom_wetlands_85_31.9032.9095.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_wetlands_85_31.9034.9095.0",
+            "zone_id": "custom_wetlands_85_31",
+            "name": "Water",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: WETLANDS area.",
+            "terrain": "water",
+            "symbol": "{Colors.CYAN}~{Colors.RESET}",
+            "x": 9034,
+            "y": 9095,
+            "z": 0,
+            "elevation": -1,
+            "exits": {
+                "north": "custom_wetlands_85_31.9034.9094.0",
+                "south": "custom_peaks_66_107.9034.9096.0",
+                "east": "custom_peaks_66_107.9035.9095.0",
+                "west": "custom_wetlands_85_31.9033.9095.0"
+            },
+            "tags": [
+                "water",
+                "custom_wetlands_85_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        }
+    ]
+}

@@ -1,0 +1,2998 @@
+{
+    "metadata": {
+        "id": "custom_fields_98_99",
+        "name": "Fields Zone",
+        "security_level": "low_sec",
+        "grid_logic": true,
+        "target_cr": 50
+    },
+    "rooms": [
+        {
+            "id": "custom_fields_98_99.9099.9097.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9099,
+            "y": 9097,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_peaks_17_55.9099.9096.0",
+                "south": "custom_fields_98_99.9099.9098.0",
+                "east": "custom_fields_98_99.9100.9097.0",
+                "west": "custom_peaks_17_55.9098.9097.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9100.9097.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9100,
+            "y": 9097,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_17_55.9100.9096.0",
+                "south": "custom_fields_98_99.9100.9098.0",
+                "east": "custom_fields_98_99.9101.9097.0",
+                "west": "custom_fields_98_99.9099.9097.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9101.9097.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9101,
+            "y": 9097,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_17_55.9101.9096.0",
+                "south": "custom_fields_98_99.9101.9098.0",
+                "east": "custom_fields_98_99.9102.9097.0",
+                "west": "custom_fields_98_99.9100.9097.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9102.9097.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9102,
+            "y": 9097,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_17_55.9102.9096.0",
+                "south": "custom_fields_98_99.9102.9098.0",
+                "east": "custom_fields_98_99.9103.9097.0",
+                "west": "custom_fields_98_99.9101.9097.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9097.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9103,
+            "y": 9097,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_17_55.9103.9096.0",
+                "south": "custom_fields_98_99.9103.9098.0",
+                "east": "custom_fields_98_99.9104.9097.0",
+                "west": "custom_fields_98_99.9102.9097.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9097.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9104,
+            "y": 9097,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_17_55.9104.9096.0",
+                "south": "custom_fields_98_99.9104.9098.0",
+                "east": "custom_fields_98_99.9105.9097.0",
+                "west": "custom_fields_98_99.9103.9097.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9097.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9105,
+            "y": 9097,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_17_55.9105.9096.0",
+                "south": "custom_fields_98_99.9105.9098.0",
+                "east": "custom_peaks_17_55.9106.9097.0",
+                "west": "custom_fields_98_99.9104.9097.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9098.9098.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9098,
+            "y": 9098,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_peaks_17_55.9098.9097.0",
+                "south": "custom_fields_98_99.9098.9099.0",
+                "east": "custom_fields_98_99.9099.9098.0",
+                "west": "custom_peaks_17_55.9097.9098.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9099.9098.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9099,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9099.9097.0",
+                "south": "custom_fields_98_99.9099.9099.0",
+                "east": "custom_fields_98_99.9100.9098.0",
+                "west": "custom_fields_98_99.9098.9098.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9100.9098.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9100,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9100.9097.0",
+                "south": "custom_fields_98_99.9100.9099.0",
+                "east": "custom_fields_98_99.9101.9098.0",
+                "west": "custom_fields_98_99.9099.9098.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9101.9098.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9101,
+            "y": 9098,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_fields_98_99.9101.9097.0",
+                "south": "custom_fields_98_99.9101.9099.0",
+                "east": "custom_fields_98_99.9102.9098.0",
+                "west": "custom_fields_98_99.9100.9098.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9102.9098.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9102,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9102.9097.0",
+                "south": "custom_fields_98_99.9102.9099.0",
+                "east": "custom_fields_98_99.9103.9098.0",
+                "west": "custom_fields_98_99.9101.9098.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9098.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9103,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9097.0",
+                "south": "custom_fields_98_99.9103.9099.0",
+                "east": "custom_fields_98_99.9104.9098.0",
+                "west": "custom_fields_98_99.9102.9098.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9098.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9104,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9097.0",
+                "south": "custom_fields_98_99.9104.9099.0",
+                "east": "custom_fields_98_99.9105.9098.0",
+                "west": "custom_fields_98_99.9103.9098.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9098.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9105,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9097.0",
+                "south": "custom_fields_98_99.9105.9099.0",
+                "east": "custom_fields_98_99.9106.9098.0",
+                "west": "custom_fields_98_99.9104.9098.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9098.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9106,
+            "y": 9098,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_17_55.9106.9097.0",
+                "south": "custom_fields_98_99.9106.9099.0",
+                "east": "custom_peaks_17_55.9107.9098.0",
+                "west": "custom_fields_98_99.9105.9098.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9098.9099.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9098,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9098.9098.0",
+                "south": "custom_fields_98_99.9098.9100.0",
+                "east": "custom_fields_98_99.9099.9099.0",
+                "west": "custom_peaks_17_55.9097.9099.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9099.9099.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9099,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9099.9098.0",
+                "south": "custom_fields_98_99.9099.9100.0",
+                "east": "custom_fields_98_99.9100.9099.0",
+                "west": "custom_fields_98_99.9098.9099.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9100.9099.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9100,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9100.9098.0",
+                "south": "custom_fields_98_99.9100.9100.0",
+                "east": "custom_fields_98_99.9101.9099.0",
+                "west": "custom_fields_98_99.9099.9099.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9101.9099.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9101,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9101.9098.0",
+                "south": "custom_fields_98_99.9101.9100.0",
+                "east": "custom_fields_98_99.9102.9099.0",
+                "west": "custom_fields_98_99.9100.9099.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9102.9099.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9102,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9102.9098.0",
+                "south": "custom_fields_98_99.9102.9100.0",
+                "east": "custom_fields_98_99.9103.9099.0",
+                "west": "custom_fields_98_99.9101.9099.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9099.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9103,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9098.0",
+                "south": "custom_fields_98_99.9103.9100.0",
+                "east": "custom_fields_98_99.9104.9099.0",
+                "west": "custom_fields_98_99.9102.9099.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9099.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9104,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9098.0",
+                "south": "custom_fields_98_99.9104.9100.0",
+                "east": "custom_fields_98_99.9105.9099.0",
+                "west": "custom_fields_98_99.9103.9099.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9099.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9105,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9098.0",
+                "south": "custom_fields_98_99.9105.9100.0",
+                "east": "custom_fields_98_99.9106.9099.0",
+                "west": "custom_fields_98_99.9104.9099.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9099.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9106,
+            "y": 9099,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9098.0",
+                "south": "custom_fields_98_99.9106.9100.0",
+                "east": "custom_peaks_17_55.9107.9099.0",
+                "west": "custom_fields_98_99.9105.9099.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9098.9100.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9098,
+            "y": 9100,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9098.9099.0",
+                "south": "custom_fields_98_99.9098.9101.0",
+                "east": "custom_fields_98_99.9099.9100.0",
+                "west": "custom_peaks_17_55.9097.9100.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9099.9100.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9099,
+            "y": 9100,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9099.9099.0",
+                "south": "custom_fields_98_99.9099.9101.0",
+                "east": "custom_fields_98_99.9100.9100.0",
+                "west": "custom_fields_98_99.9098.9100.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9100.9100.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9100,
+            "y": 9100,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9100.9099.0",
+                "south": "custom_fields_98_99.9100.9101.0",
+                "east": "custom_fields_98_99.9101.9100.0",
+                "west": "custom_fields_98_99.9099.9100.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9101.9100.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9101,
+            "y": 9100,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9101.9099.0",
+                "south": "custom_fields_98_99.9101.9101.0",
+                "east": "custom_fields_98_99.9102.9100.0",
+                "west": "custom_fields_98_99.9100.9100.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9102.9100.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9102,
+            "y": 9100,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9102.9099.0",
+                "south": "custom_fields_98_99.9102.9101.0",
+                "east": "custom_fields_98_99.9103.9100.0",
+                "west": "custom_fields_98_99.9101.9100.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9100.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9103,
+            "y": 9100,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9099.0",
+                "south": "custom_fields_98_99.9103.9101.0",
+                "east": "custom_fields_98_99.9104.9100.0",
+                "west": "custom_fields_98_99.9102.9100.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9100.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9104,
+            "y": 9100,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9099.0",
+                "south": "custom_fields_98_99.9104.9101.0",
+                "east": "custom_fields_98_99.9105.9100.0",
+                "west": "custom_fields_98_99.9103.9100.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9100.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9100,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9099.0",
+                "south": "custom_fields_98_99.9105.9101.0",
+                "east": "custom_fields_98_99.9106.9100.0",
+                "west": "custom_fields_98_99.9104.9100.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9100.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9100,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9099.0",
+                "south": "custom_fields_98_99.9106.9101.0",
+                "east": "custom_peaks_17_55.9107.9100.0",
+                "west": "custom_fields_98_99.9105.9100.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9098.9101.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9098,
+            "y": 9101,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9098.9100.0",
+                "south": "custom_fields_98_99.9098.9102.0",
+                "east": "custom_fields_98_99.9099.9101.0",
+                "west": "custom_peaks_17_55.9097.9101.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9099.9101.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9099,
+            "y": 9101,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9099.9100.0",
+                "south": "custom_fields_98_99.9099.9102.0",
+                "east": "custom_fields_98_99.9100.9101.0",
+                "west": "custom_fields_98_99.9098.9101.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9100.9101.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9100,
+            "y": 9101,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9100.9100.0",
+                "south": "custom_fields_98_99.9100.9102.0",
+                "east": "custom_fields_98_99.9101.9101.0",
+                "west": "custom_fields_98_99.9099.9101.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9101.9101.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9101,
+            "y": 9101,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9101.9100.0",
+                "south": "custom_fields_98_99.9101.9102.0",
+                "east": "custom_fields_98_99.9102.9101.0",
+                "west": "custom_fields_98_99.9100.9101.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9102.9101.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9102,
+            "y": 9101,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9102.9100.0",
+                "south": "custom_fields_98_99.9102.9102.0",
+                "east": "custom_fields_98_99.9103.9101.0",
+                "west": "custom_fields_98_99.9101.9101.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9101.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9103,
+            "y": 9101,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9100.0",
+                "south": "custom_fields_98_99.9103.9102.0",
+                "east": "custom_fields_98_99.9104.9101.0",
+                "west": "custom_fields_98_99.9102.9101.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9101.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9104,
+            "y": 9101,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9100.0",
+                "south": "custom_fields_98_99.9104.9102.0",
+                "east": "custom_fields_98_99.9105.9101.0",
+                "west": "custom_fields_98_99.9103.9101.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9101.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9101,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9100.0",
+                "south": "custom_fields_98_99.9105.9102.0",
+                "east": "custom_fields_98_99.9106.9101.0",
+                "west": "custom_fields_98_99.9104.9101.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9101.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9101,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9100.0",
+                "south": "custom_fields_98_99.9106.9102.0",
+                "east": "custom_peaks_17_55.9107.9101.0",
+                "west": "custom_fields_98_99.9105.9101.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9098.9102.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9098,
+            "y": 9102,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9098.9101.0",
+                "south": "custom_fields_98_99.9098.9103.0",
+                "east": "custom_fields_98_99.9099.9102.0",
+                "west": "custom_peaks_17_55.9097.9102.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9099.9102.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9099,
+            "y": 9102,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9099.9101.0",
+                "south": "custom_fields_98_99.9099.9103.0",
+                "east": "custom_fields_98_99.9100.9102.0",
+                "west": "custom_fields_98_99.9098.9102.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9100.9102.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9100,
+            "y": 9102,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9100.9101.0",
+                "south": "custom_fields_98_99.9100.9103.0",
+                "east": "custom_fields_98_99.9101.9102.0",
+                "west": "custom_fields_98_99.9099.9102.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9101.9102.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9101,
+            "y": 9102,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9101.9101.0",
+                "south": "custom_fields_98_99.9101.9103.0",
+                "east": "custom_fields_98_99.9102.9102.0",
+                "west": "custom_fields_98_99.9100.9102.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9102.9102.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9102,
+            "y": 9102,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9102.9101.0",
+                "south": "custom_fields_98_99.9102.9103.0",
+                "east": "custom_fields_98_99.9103.9102.0",
+                "west": "custom_fields_98_99.9101.9102.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9102.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9103,
+            "y": 9102,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9101.0",
+                "south": "custom_fields_98_99.9103.9103.0",
+                "east": "custom_fields_98_99.9104.9102.0",
+                "west": "custom_fields_98_99.9102.9102.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9102.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9104,
+            "y": 9102,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9101.0",
+                "south": "custom_fields_98_99.9104.9103.0",
+                "east": "custom_fields_98_99.9105.9102.0",
+                "west": "custom_fields_98_99.9103.9102.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9102.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9102,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9101.0",
+                "south": "custom_fields_98_99.9105.9103.0",
+                "east": "custom_fields_98_99.9106.9102.0",
+                "west": "custom_fields_98_99.9104.9102.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9102.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9102,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9101.0",
+                "south": "custom_fields_98_99.9106.9103.0",
+                "east": "custom_peaks_17_55.9107.9102.0",
+                "west": "custom_fields_98_99.9105.9102.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9098.9103.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9098,
+            "y": 9103,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9098.9102.0",
+                "south": "custom_peaks_17_55.9098.9104.0",
+                "east": "custom_fields_98_99.9099.9103.0",
+                "west": "custom_peaks_17_55.9097.9103.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9099.9103.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9099,
+            "y": 9103,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9099.9102.0",
+                "south": "custom_fields_98_99.9099.9104.0",
+                "east": "custom_fields_98_99.9100.9103.0",
+                "west": "custom_fields_98_99.9098.9103.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9100.9103.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9100,
+            "y": 9103,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9100.9102.0",
+                "south": "custom_fields_98_99.9100.9104.0",
+                "east": "custom_fields_98_99.9101.9103.0",
+                "west": "custom_fields_98_99.9099.9103.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9101.9103.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9101,
+            "y": 9103,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9101.9102.0",
+                "south": "custom_fields_98_99.9101.9104.0",
+                "east": "custom_fields_98_99.9102.9103.0",
+                "west": "custom_fields_98_99.9100.9103.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9102.9103.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9102,
+            "y": 9103,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9102.9102.0",
+                "south": "custom_fields_98_99.9102.9104.0",
+                "east": "custom_fields_98_99.9103.9103.0",
+                "west": "custom_fields_98_99.9101.9103.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9103.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9103,
+            "y": 9103,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9102.0",
+                "south": "custom_fields_98_99.9103.9104.0",
+                "east": "custom_fields_98_99.9104.9103.0",
+                "west": "custom_fields_98_99.9102.9103.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9103.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9104,
+            "y": 9103,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9102.0",
+                "south": "custom_fields_98_99.9104.9104.0",
+                "east": "custom_fields_98_99.9105.9103.0",
+                "west": "custom_fields_98_99.9103.9103.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9103.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9103,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9102.0",
+                "south": "custom_fields_98_99.9105.9104.0",
+                "east": "custom_fields_98_99.9106.9103.0",
+                "west": "custom_fields_98_99.9104.9103.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9103.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9103,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9102.0",
+                "south": "custom_fields_98_99.9106.9104.0",
+                "east": "custom_peaks_17_55.9107.9103.0",
+                "west": "custom_fields_98_99.9105.9103.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9099.9104.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9099,
+            "y": 9104,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9099.9103.0",
+                "south": "custom_fields_98_99.9099.9105.0",
+                "east": "custom_fields_98_99.9100.9104.0",
+                "west": "custom_peaks_17_55.9098.9104.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9100.9104.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9100,
+            "y": 9104,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9100.9103.0",
+                "south": "custom_fields_98_99.9100.9105.0",
+                "east": "custom_fields_98_99.9101.9104.0",
+                "west": "custom_fields_98_99.9099.9104.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9101.9104.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9101,
+            "y": 9104,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9101.9103.0",
+                "south": "custom_fields_98_99.9101.9105.0",
+                "east": "custom_fields_98_99.9102.9104.0",
+                "west": "custom_fields_98_99.9100.9104.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9102.9104.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9102,
+            "y": 9104,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9102.9103.0",
+                "south": "custom_fields_98_99.9102.9105.0",
+                "east": "custom_fields_98_99.9103.9104.0",
+                "west": "custom_fields_98_99.9101.9104.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9104.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9103,
+            "y": 9104,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9103.0",
+                "south": "custom_fields_98_99.9103.9105.0",
+                "east": "custom_fields_98_99.9104.9104.0",
+                "west": "custom_fields_98_99.9102.9104.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9104.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9104,
+            "y": 9104,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9103.0",
+                "south": "custom_fields_98_99.9104.9105.0",
+                "east": "custom_fields_98_99.9105.9104.0",
+                "west": "custom_fields_98_99.9103.9104.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9104.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9104,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9103.0",
+                "south": "custom_fields_98_99.9105.9105.0",
+                "east": "custom_fields_98_99.9106.9104.0",
+                "west": "custom_fields_98_99.9104.9104.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9104.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9104,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9103.0",
+                "south": "custom_fields_98_99.9106.9105.0",
+                "east": "custom_peaks_17_55.9107.9104.0",
+                "west": "custom_fields_98_99.9105.9104.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9099.9105.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9099,
+            "y": 9105,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9099.9104.0",
+                "south": "custom_peaks_17_55.9099.9106.0",
+                "east": "custom_fields_98_99.9100.9105.0",
+                "west": "custom_peaks_17_55.9098.9105.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9100.9105.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9100,
+            "y": 9105,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9100.9104.0",
+                "south": "custom_peaks_17_55.9100.9106.0",
+                "east": "custom_fields_98_99.9101.9105.0",
+                "west": "custom_fields_98_99.9099.9105.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9101.9105.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9101,
+            "y": 9105,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9101.9104.0",
+                "south": "custom_peaks_17_55.9101.9106.0",
+                "east": "custom_fields_98_99.9102.9105.0",
+                "west": "custom_fields_98_99.9100.9105.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9102.9105.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9102,
+            "y": 9105,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9102.9104.0",
+                "south": "custom_peaks_17_55.9102.9106.0",
+                "east": "custom_fields_98_99.9103.9105.0",
+                "west": "custom_fields_98_99.9101.9105.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9105.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9103,
+            "y": 9105,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9104.0",
+                "south": "custom_fields_98_99.9103.9106.0",
+                "east": "custom_fields_98_99.9104.9105.0",
+                "west": "custom_fields_98_99.9102.9105.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9105.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9104,
+            "y": 9105,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9104.0",
+                "south": "custom_fields_98_99.9104.9106.0",
+                "east": "custom_fields_98_99.9105.9105.0",
+                "west": "custom_fields_98_99.9103.9105.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9105.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9105,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9104.0",
+                "south": "custom_fields_98_99.9105.9106.0",
+                "east": "custom_fields_98_99.9106.9105.0",
+                "west": "custom_fields_98_99.9104.9105.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9105.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9105,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9104.0",
+                "south": "custom_fields_98_99.9106.9106.0",
+                "east": "custom_peaks_17_55.9107.9105.0",
+                "west": "custom_fields_98_99.9105.9105.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9106.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9103,
+            "y": 9106,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9105.0",
+                "south": "custom_fields_98_99.9103.9107.0",
+                "east": "custom_fields_98_99.9104.9106.0",
+                "west": "custom_peaks_17_55.9102.9106.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9106.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9104,
+            "y": 9106,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9105.0",
+                "south": "custom_fields_98_99.9104.9107.0",
+                "east": "custom_fields_98_99.9105.9106.0",
+                "west": "custom_fields_98_99.9103.9106.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9106.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9106,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9105.0",
+                "south": "custom_fields_98_99.9105.9107.0",
+                "east": "custom_fields_98_99.9106.9106.0",
+                "west": "custom_fields_98_99.9104.9106.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9106.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9106,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9105.0",
+                "south": "custom_fields_98_99.9106.9107.0",
+                "east": "custom_peaks_17_55.9107.9106.0",
+                "west": "custom_fields_98_99.9105.9106.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9107.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: FIELDS area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9103,
+            "y": 9107,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9106.0",
+                "south": "custom_fields_98_99.9103.9108.0",
+                "east": "custom_fields_98_99.9104.9107.0",
+                "west": "custom_peaks_17_55.9102.9107.0"
+            },
+            "tags": [
+                "mountain",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9107.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9104,
+            "y": 9107,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9106.0",
+                "south": "custom_fields_98_99.9104.9108.0",
+                "east": "custom_fields_98_99.9105.9107.0",
+                "west": "custom_fields_98_99.9103.9107.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9107.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9107,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9106.0",
+                "south": "custom_fields_98_99.9105.9108.0",
+                "east": "custom_fields_98_99.9106.9107.0",
+                "west": "custom_fields_98_99.9104.9107.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9107.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9107,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9106.0",
+                "south": "custom_fields_98_99.9106.9108.0",
+                "east": "custom_peaks_17_55.9107.9107.0",
+                "west": "custom_fields_98_99.9105.9107.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9108.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9103,
+            "y": 9108,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9107.0",
+                "south": "custom_fields_98_99.9103.9109.0",
+                "east": "custom_fields_98_99.9104.9108.0",
+                "west": "custom_peaks_17_55.9102.9108.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9108.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9104,
+            "y": 9108,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9107.0",
+                "south": "custom_fields_98_99.9104.9109.0",
+                "east": "custom_fields_98_99.9105.9108.0",
+                "west": "custom_fields_98_99.9103.9108.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9108.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9108,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9107.0",
+                "south": "custom_fields_98_99.9105.9109.0",
+                "east": "custom_fields_98_99.9106.9108.0",
+                "west": "custom_fields_98_99.9104.9108.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9108.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9108,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9107.0",
+                "south": "custom_fields_98_99.9106.9109.0",
+                "east": "custom_peaks_17_55.9107.9108.0",
+                "west": "custom_fields_98_99.9105.9108.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9109.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9103,
+            "y": 9109,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9108.0",
+                "south": "custom_fields_98_99.9103.9110.0",
+                "east": "custom_fields_98_99.9104.9109.0",
+                "west": "custom_peaks_17_55.9102.9109.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9109.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9104,
+            "y": 9109,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9108.0",
+                "south": "custom_fields_98_99.9104.9110.0",
+                "east": "custom_fields_98_99.9105.9109.0",
+                "west": "custom_fields_98_99.9103.9109.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9109.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9109,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9108.0",
+                "south": "custom_fields_98_99.9105.9110.0",
+                "east": "custom_fields_98_99.9106.9109.0",
+                "west": "custom_fields_98_99.9104.9109.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9109.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9109,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9108.0",
+                "south": "custom_fields_98_99.9106.9110.0",
+                "east": "custom_peaks_17_55.9107.9109.0",
+                "west": "custom_fields_98_99.9105.9109.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9110.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9103,
+            "y": 9110,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9109.0",
+                "south": "custom_fields_98_99.9103.9111.0",
+                "east": "custom_fields_98_99.9104.9110.0",
+                "west": "custom_peaks_17_55.9102.9110.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9110.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9104,
+            "y": 9110,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9109.0",
+                "south": "custom_fields_98_99.9104.9111.0",
+                "east": "custom_fields_98_99.9105.9110.0",
+                "west": "custom_fields_98_99.9103.9110.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9110.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9105,
+            "y": 9110,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9109.0",
+                "south": "custom_fields_98_99.9105.9111.0",
+                "east": "custom_fields_98_99.9106.9110.0",
+                "west": "custom_fields_98_99.9104.9110.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9110.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9110,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9109.0",
+                "south": "custom_fields_98_99.9106.9111.0",
+                "east": "custom_peaks_17_55.9107.9110.0",
+                "west": "custom_fields_98_99.9105.9110.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9103.9111.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9103,
+            "y": 9111,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9103.9110.0",
+                "south": "custom_wetlands_112_100.9103.9112.0",
+                "east": "custom_fields_98_99.9104.9111.0",
+                "west": "custom_peaks_17_55.9102.9111.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9104.9111.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9104,
+            "y": 9111,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9104.9110.0",
+                "south": "custom_wetlands_112_100.9104.9112.0",
+                "east": "custom_fields_98_99.9105.9111.0",
+                "west": "custom_fields_98_99.9103.9111.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9105.9111.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9105,
+            "y": 9111,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_98_99.9105.9110.0",
+                "south": "custom_wetlands_112_100.9105.9112.0",
+                "east": "custom_fields_98_99.9106.9111.0",
+                "west": "custom_fields_98_99.9104.9111.0"
+            },
+            "tags": [
+                "plains",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9111.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9111,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9110.0",
+                "south": "custom_fields_98_99.9106.9112.0",
+                "east": "custom_peaks_17_55.9107.9111.0",
+                "west": "custom_fields_98_99.9105.9111.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9112.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9112,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9111.0",
+                "south": "custom_fields_98_99.9106.9113.0",
+                "east": "custom_peaks_17_55.9107.9112.0",
+                "west": "custom_wetlands_112_100.9105.9112.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_fields_98_99.9106.9113.0",
+            "zone_id": "custom_fields_98_99",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: FIELDS area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9106,
+            "y": 9113,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_fields_98_99.9106.9112.0",
+                "south": "custom_wetlands_112_100.9106.9114.0",
+                "east": "custom_peaks_17_55.9107.9113.0",
+                "west": "custom_wetlands_112_100.9105.9113.0"
+            },
+            "tags": [
+                "hills",
+                "custom_fields_98_99",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        }
+    ]
+}

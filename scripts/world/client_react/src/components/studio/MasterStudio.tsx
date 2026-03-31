@@ -130,7 +130,21 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
         finally { setIsGenerating(false); }
     };
 
-    const handlePaint = (gx: number, gy: number) => {
+    const handlePaint = async (gx: number, gy: number) => {
+        if (activeTab === 'mirror') {
+            // [V12.0] Sovereign Painter: Direct engine modification
+            try {
+                await axios.post("/api/world/paint", {
+                    x: gx, y: gy, z: currentZ, 
+                    terrain: activeTool, 
+                    radius: brushRadius,
+                    zone_id: activeZone || "custom"
+                });
+                // Optimistic UI could go here, but Mirror relies on the source-of-truth feed
+            } catch (e) { setTelemetry("MIRROR PAINT FAILED"); }
+            return;
+        }
+
         // Painting relative to genesis anchor
         const localX = gx - anchorX;
         const localY = gy - anchorY;
@@ -278,7 +292,14 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
                             const terr = rooms.find(r => r.x === x && r.y === y && r.z === currentZ)?.terrain || grid[y-anchorY]?.[x-anchorX] || 'VOID';
                             setTelemetry(`COORD: ${x}, ${y}, ${currentZ} | RECOGNITION: ${terr.toUpperCase()}`);
                         }}
-                        onRightClick={(x, y) => setCenterRequest({ x, y })}
+                        onRightClick={(x: number, y: number) => {
+                            const terr = rooms.find(r => r.x === x && r.y === y && r.z === currentZ)?.terrain || grid[y-anchorY]?.[x-anchorX];
+                            if (terr) {
+                                setActiveTool(terr);
+                                setTelemetry(`SAMPLED: ${terr.toUpperCase()} | TARGETING COORDINATES`);
+                            }
+                        }}
+                        onCenterRequest={(x: number, y: number) => setCenterRequest({ x, y })}
                         centerPos={centerRequest}
                         anchorX={anchorX}
                         anchorY={anchorY}
@@ -324,7 +345,7 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
                         <motion.div key="mirror" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                            <section>
                               <h5 className="text-[9px] font-black text-purple-500 uppercase tracking-widest mb-4 italic">Active Shards</h5>
-                              <div className="space-y-2">
+                              <div className="space-y-2 mb-8">
                                  {zones.map(z => (
                                     <button 
                                        key={z} 
@@ -334,6 +355,37 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
                                        <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter">{z.replace(/_/g, ' ')}</span>
                                        <ChevronRight size={12} className="text-slate-600 group-hover:text-purple-400" />
                                     </button>
+                                 ))}
+                              </div>
+                           </section>
+                           
+                           {/* [V12.0] Sovereign Painter: Heisted Brush Suite for Mirror mode */}
+                           <section className="pt-8 border-t border-white/5">
+                              <h5 className="text-[9px] font-black text-purple-500 uppercase tracking-widest mb-4 italic">Sculpting Brushes</h5>
+                              <div className="space-y-6 mb-8">
+                                 <div className="space-y-2">
+                                     <div className="flex justify-between text-[8px] font-black uppercase tracking-tighter">
+                                         <span className="text-zinc-500">Radius</span>
+                                         <span className="text-purple-500">{brushRadius}px</span>
+                                     </div>
+                                     <input type="range" min="1" max="10" step="1" value={brushRadius} onChange={e => setBrushRadius(parseInt(e.target.value))} className="w-full accent-purple-500" />
+                                 </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-2">
+                                 {Object.entries(BIOME_CATEGORIES).map(([cat, biomes]) => (
+                                    <div key={cat} className="col-span-2 mt-4 first:mt-0">
+                                       <span className="text-[8px] font-black text-zinc-700 uppercase mb-2 block tracking-widest">{cat}</span>
+                                       <div className="grid grid-cols-2 gap-1.5">
+                                          {biomes.map(b => (
+                                             <button 
+                                               key={b} onClick={() => setActiveTool(b)}
+                                               className={clsx("px-3 py-2.5 rounded-lg border text-[9px] font-black uppercase transition-all truncate", activeTool === b ? "bg-purple-600 border-purple-400 text-white shadow-lg shadow-purple-500/20" : "bg-white/2 border-white/5 text-slate-500 hover:text-white")}
+                                             >
+                                                {b}
+                                             </button>
+                                          ))}
+                                       </div>
+                                    </div>
                                  ))}
                               </div>
                            </section>
