@@ -1,6 +1,6 @@
 # GEMINI.md: AI Engineering & Development Guide for Godless
 
-> **Status:** ACTIVE PROTOCOL (V12.2 - The Sovereign Reconstitution)  
+> **Status:** ACTIVE PROTOCOL (V12.3.08 - The Sovereign Snapshot)  
 > **Reference Doc:** [SOVEREIGN_RECONSTITUTION.md](file:///c:/Users/Chris/antigravity/Godless/documentation/SOVEREIGN_RECONSTITUTION.md)
 > **Target Audience:** Gemini, GCA, Antigravity, and any Agentic AI working on this codebase.  
 > **Mandatory Rule:** All structural, logic, and data changes MUST conform to this document. "Quick fixes" or "Scripting-style" code that violates these patterns will be rejected and refactored.
@@ -123,6 +123,7 @@ To prevent "orphaned features" and repository fragmentation, all development mus
 4. **The UI Monolith**: `scripts/world/client_react` is the only active frontend. All other UI shards in `scripts/world/` are considered legacy and must not be modified or referenced.
 5. **Zero Placeholder Policy**: Never use `TODO` or `PLACEHOLDER`. If a feature is implemented, it must be functional or gated by an admin-only toggle.
 6. **The Production Bake Mandate**: The production build (`npm run build`) MUST ONLY be executed while on the Sovereign Master branch. Performing a 'Bake' from any other branch, shard, or experimental line is strictly forbidden to prevent feature-orphaning on Port 8000.
+7. **The Cold-Snapshot Mandate (v12.3.08)**: To ensure absolute disk integrity and prevent memory-overwrites during snapshots, every commit to the Sovereign Master branch MUST follow the cold-snapshot sequence: **Nuke (Kill Engine) -> Bake (Build UI) -> Commit -> Tag -> Reboot.** This prevents the running engine's "Pulse Save" from overwriting manual file changes or the 'git commit' tree.
 
 ---
 **Failure to adhere to these standards will cause the Shadow Auditor to flag your code for recursive refactoring.**
