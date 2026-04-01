@@ -6,11 +6,13 @@
 > [!IMPORTANT]
 > The "Sovereign Spine" has been reconstituted. The following tasks are complete and verified on Port 3001.
 
-## [ PROTOCOL: THE GOLDEN LOOP ]
+## [ PROTOCOL: THE SOVEREIGN SNAPSHOT (v12.3.08) ]
 1. **SCULPT:** Edit source in `scripts/world/client_react/src/`.
 2. **TEST:** Verify live on `localhost:3001`.
-3. **COMMIT:** `git add .` and `git commit -m "[STAMP] Task Name"`.
-4. **BAKE:** `npm run build` to synchronize `localhost:8000`.
+3. **NUKE:** `taskkill /F /IM python.exe` (Kill engine to prevent Pulse overwrites).
+4. **BAKE:** `npm run build` (Synchronize production on Port 8000).
+5. **SEAL:** `git add .` + `git commit` + `git tag`. (Commit while engine is OFFLINE).
+6. **IGNITION:** `python godless_mud.py` (Restart the clean monolith).
 
 ---
 
