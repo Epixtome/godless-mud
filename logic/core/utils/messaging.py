@@ -297,3 +297,26 @@ def broadcast_global(game, message):
     """Broadcasts a message to all connected players."""
     for player in game.players.values():
         send_line(player, message)
+
+def broadcast_event(game, event_type, payload):
+    """
+    [V12.3] Sovereign Event Pulse: Broadcasts structured JSON to all Web Clients.
+    Used for real-time terrain updates, world shifts, and admin pings.
+    """
+    import time
+    data = {
+        "type": event_type,
+        "data": payload,
+        "timestamp": time.time()
+    }
+    # [V12.0] Safe Access: Ensure game exists and has players
+    if not game:
+        return
+        
+    for player in game.players.values():
+        if getattr(player, 'is_web', False):
+            try:
+                # Direct JSON injection bypassing the log buffer
+                player.send_json(data)
+            except:
+                pass

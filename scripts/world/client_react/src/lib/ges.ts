@@ -57,8 +57,22 @@ export const connectToGES = (url?: string) => {
                     break;
                 case 'auth:success':
                     store.setLoggedByServer(true);
-                    store.setAdminStatus(data.isAdmin);
+                    store.setAdmin(data.isAdmin);
                     if (data.name) store.saveCharacter(data.name);
+                    break;
+                case 'world:terrain_update':
+                    // [V12.3] Divine Pulse: Update the local tactical map immediately
+                    const currentMap = store.tacticalMapData;
+                    if (currentMap) {
+                        const rx = data.x - currentMap.center.x + currentMap.radius;
+                        const ry = data.y - currentMap.center.y + currentMap.radius;
+                        if (rx >= 0 && rx < (currentMap.grid[0]?.length || 0) && ry >= 0 && ry < currentMap.grid.length) {
+                             const newGrid = [...currentMap.grid];
+                             newGrid[ry] = [...newGrid[ry]];
+                             newGrid[ry][rx] = data.terrain;
+                             store.setTacticalMapData({ ...currentMap, grid: newGrid });
+                        }
+                    }
                     break;
                 case 'error':
                     console.error("GES Error:", data.message);

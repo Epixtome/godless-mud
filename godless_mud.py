@@ -15,6 +15,10 @@ from logic.core import effects
 from logic.passives import hooks as passive_hooks
 from utilities import integrity, telemetry
 
+# [SOVEREIGN_RECONSTITUTION.md] - ACTIVE ARCHITECTURAL STANDARD
+# Version: 12.2.0-STABLE (Reconstituted: 2026-03-31)
+VERSION = "12.2.0-STABLE"
+
 # Configure logging
 log_level = os.getenv("LOG_LEVEL", "DEBUG").upper()
 logging.basicConfig(level=getattr(logging, log_level), format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

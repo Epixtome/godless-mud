@@ -206,13 +206,16 @@ export const UniversalCanvas: React.FC<UniversalCanvasProps> = ({
         }
     }, [rooms, grid, offset, viewportZoom, terrainRegistry, anchorX, anchorY, tileSize]);
 
+    // --- MAIN RENDER (Reactive) ---
+    // [V12.3] Stage 2: Thermal Stabilization. We draw only when needed.
     useEffect(() => {
-        let frame = requestAnimationFrame(function loop() {
-            draw();
-            frame = requestAnimationFrame(loop);
-        });
-        return () => cancelAnimationFrame(frame);
-    }, [draw]);
+        draw();
+    }, [draw, offset, viewportZoom, rooms, grid, viewMode, anchorX, anchorY]);
+
+    useEffect(() => {
+        // Initial draw on mount
+        draw();
+    }, []);
 
     useEffect(() => {
         const canvas = canvasRef.current;

@@ -1,6 +1,7 @@
 # GEMINI.md: AI Engineering & Development Guide for Godless
 
-> **Status:** ACTIVE PROTOCOL (V7.3 - The Web Horizon Update)  
+> **Status:** ACTIVE PROTOCOL (V12.2 - The Sovereign Reconstitution)  
+> **Reference Doc:** [SOVEREIGN_RECONSTITUTION.md](file:///c:/Users/Chris/antigravity/Godless/documentation/SOVEREIGN_RECONSTITUTION.md)
 > **Target Audience:** Gemini, GCA, Antigravity, and any Agentic AI working on this codebase.  
 > **Mandatory Rule:** All structural, logic, and data changes MUST conform to this document. "Quick fixes" or "Scripting-style" code that violates these patterns will be rejected and refactored.
 
@@ -91,6 +92,7 @@ To minimize token consumption and maximize speed, AI Agents must adhere to the f
 2.  **Artifact Memory**: Maintain a "Living Artifact" (e.g., `class_registry.md`, `ENGINE_MAP.md`) to track system hooks. Do not search the codebase for information already recorded in an artifact.
 3.  **Surgical Validation**: Use targeted scripts (like `scripts/dev/combat_sim.py`) to verify logic. Avoid full-system boots for unit-level changes.
 4.  **Spatial Shard Restraint**: Never read large world JSON shards (e.g., `data/zones/aetheria.json`) directly. Use the **Map Renderer Skill** (`scripts/dev/map_renderer.py`) or targeted coordinate scripts. If a task requires a full-shard read, you MUST confirm with the USER first.
+5.  **The Cold-Save Enforcement**: Manual attribute hardening (e.g., granting Admin status) MUST ONLY be performed while all Python processes are dead. Pulse Saves will overwrite manual JSON edits if the engine is active.
 
 ---
 
@@ -120,6 +122,7 @@ To prevent "orphaned features" and repository fragmentation, all development mus
 3. **Monolithic Versioning**: Godless uses a single global version (starting at v12.0.0). Every commit to any domain (Engine, UI, or Data) increments the repository-wide version.
 4. **The UI Monolith**: `scripts/world/client_react` is the only active frontend. All other UI shards in `scripts/world/` are considered legacy and must not be modified or referenced.
 5. **Zero Placeholder Policy**: Never use `TODO` or `PLACEHOLDER`. If a feature is implemented, it must be functional or gated by an admin-only toggle.
+6. **The Production Bake Mandate**: The production build (`npm run build`) MUST ONLY be executed while on the Sovereign Master branch. Performing a 'Bake' from any other branch, shard, or experimental line is strictly forbidden to prevent feature-orphaning on Port 8000.
 
 ---
 **Failure to adhere to these standards will cause the Shadow Auditor to flag your code for recursive refactoring.**

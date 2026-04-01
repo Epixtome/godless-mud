@@ -19,6 +19,7 @@ from PIL import Image
 from logic.core.utils.connection import WebSocketConnectionWrapper
 from logic.core.network_engine import Connection
 from logic.core import loader as world_loader
+from logic.core.utils import messaging
 
 logger = logging.getLogger("GodlessMUD")
 
@@ -614,24 +615,52 @@ async def paint_world(req: PaintRequest):
                 
             tx, ty = req.x + dx, req.y + dy
             
-            # 1. Coordinate Synthesis
-            from logic.core.world import get_room_id
-            rid = get_room_id(req.zone_id, tx, ty, req.z)
+            # 2. SOVEREIGN COORDINATE SAMPLING (v12.3)
+            # Search for ANY room at these coordinates regardless of Zone ID
+            target_room = None
+            for room_obj in world.rooms.values():
+                if room_obj.x == tx and room_obj.y == ty and room_obj.z == req.z:
+                    target_room = room_obj
+                    break
             
-            # 2. Room Recovery or Creation
-            room = world.rooms.get(rid)
-            if not room:
+            if not target_room:
+                from logic.core.world import get_room_id
+                rid = get_room_id(req.zone_id, tx, ty, req.z)
                 from models.world import Room
-                room = Room(rid, f"Painted {req.terrain}", f"A section of {req.terrain} sculpted by divine hand.")
-                room.x, room.y, room.z = tx, ty, req.z
-                room.zone_id = req.zone_id
-                world.rooms[rid] = room
+                target_room = Room(rid, f"Painted {req.terrain}", f"Materialized by divine hand.")
+                target_room.x, target_room.y, target_room.z = tx, ty, req.z
+                target_room.zone_id = req.zone_id
+                world.rooms[rid] = target_room
             
-            # 3. Terrain Application
-            room.terrain = req.terrain
-            room.base_terrain = req.terrain
-            room.dirty = True
+            # 3. Terrain Application & Pulse
+            target_room.terrain = req.terrain
+            target_room.base_terrain = req.terrain
+            target_room.dirty = True
             modified_count += 1
+            
+            # 4. DIVINE BROADCAST
+            messaging.broadcast_event(game_instance, "world:terrain_update", {
+                "x": tx, "y": ty, "z": req.z, "terrain": req.terrain
+            })
+            
+            # 5. CLEAR PERCEPTION & SYNC UI
+            for p in game_instance.players.values():
+                if p.room.x == tx and p.room.y == ty and p.room.z == req.z:
+                    # [V12.3] Instant Realization Force
+                    p.send_ui_update()
+
+    # 6. SOVEREIGN DISK COMMIT (v12.3)
+    # Ensure every divine act is immortalized on disk immediately
+    affected_zones = {r.zone_id for r in world.rooms.values() if r.dirty}
+    for zid in affected_zones:
+        try:
+            # We use world_loader facade to commit geography + state
+            world_loader.save_zone_shard(world, zid)
+            # Reset dirty flag after successful commit
+            for r in world.rooms.values():
+                if r.zone_id == zid: r.dirty = False
+        except Exception as e:
+            logger.error(f"Persistence error for {zid}: {e}")
 
     return {"status": "success", "modified": modified_count, "terrain": req.terrain}
 
@@ -699,6 +728,10 @@ async def save_generated_world(payload: Dict[str, Any]):
                             del game_instance.world.rooms[target_id]
                             
                         game_instance.world.rooms[room.id] = room
+                        # Broadcast Shard Persistence
+                        messaging.broadcast_event(game_instance, "world:shard_update", {
+                             "zone_id": zid, "coordinates": (room.x, room.y, room.z), "terrain": room.terrain
+                        })
             
             # 3. Stitch Reality
             zone_loader.apply_grid_logic(game_instance.world)

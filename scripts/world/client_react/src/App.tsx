@@ -32,7 +32,8 @@ export function App() {
     activeWorkspace,
     isAdmin,
     fetchTerrainRegistry,
-    terrainRegistry
+    terrainRegistry,
+    status
   } = useStore();
 
   useEffect(() => {
@@ -108,15 +109,21 @@ export function App() {
       <LoginOverlay />
       <AdminPanel />
 
-      {/* 4. NEXUS DASHBOARD (Primary Game UX) */}
-      {activeWorkspace === 'nexus' && <NexusShell />}
+      {/* 4. NEXUS DASHBOARD (Primary Game UX) - [V12.3] Persistent Mounting gated by Login */}
+      {isLoggedByServer && (
+        <div className={clsx("w-full h-full", activeWorkspace !== 'nexus' && "hidden")}>
+          <NexusShell />
+        </div>
+      )}
 
-      {/* 3. Studio Workspace Layer (Integrated Monolith) */}
-      {isAdmin && (activeWorkspace === 'studio' || activeWorkspace === 'editor') && (
-        <MasterStudio 
-          key={activeWorkspace}
-          initialMode={activeWorkspace === 'studio' ? 'sculpt' : 'observe'} 
-        />
+      {/* 3. Studio Workspace Layer (Integrated Monolith) - [V12.3] Persistent Mounting gated by Login */}
+      {isAdmin && isLoggedByServer && (
+        <div className={clsx("w-full h-full", (activeWorkspace !== 'studio' && activeWorkspace !== 'editor') && "hidden")}>
+          <MasterStudio 
+            key="sovereign-master-studio"
+            initialMode={activeWorkspace === 'studio' ? 'sculpt' : 'observe'} 
+          />
+        </div>
       )}
 
       {/* 2. Unified Workspace Layer (Legacy Floating) */}

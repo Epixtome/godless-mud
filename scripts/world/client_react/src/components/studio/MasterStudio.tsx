@@ -87,6 +87,8 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
     const [players, setPlayers] = useState<any[]>([]);
     const [showPlayerList, setShowPlayerList] = useState(false);
     const [centerRequest, setCenterRequest] = useState<{ x: number, y: number } | null>(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [lastActiveCoord, setLastActiveCoord] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
 
     // --- Effect: Load Initial State ---
     useEffect(() => {
@@ -194,20 +196,13 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
                 </div>
 
                 <div className="flex flex-col gap-4">
-                   <button 
-                     onClick={() => setWorkspace('nexus')}
-                     className="p-3.5 bg-white/5 rounded-2xl text-slate-400 hover:text-white transition-all shadow-inner border border-white/5 group"
-                     title="Spiritual Nexus"
-                   >
-                     <Zap size={22} className="group-hover:scale-110 group-hover:text-cyan-400 transition-transform" />
-                   </button>
-                   <button 
-                     onClick={() => setCenterRequest({ x: anchorX, y: anchorY })}
-                     className="p-3.5 bg-white/5 rounded-2xl text-slate-500 hover:text-white transition-all border border-white/5 group"
-                     title="Focus Anchor"
-                   >
-                     <Compass size={22} className="group-hover:rotate-45 transition-transform" />
-                   </button>
+                    <button 
+                      onClick={() => setCenterRequest(lastActiveCoord)}
+                      className="p-3.5 bg-white/5 rounded-2xl text-slate-500 hover:text-white transition-all border border-white/5 group"
+                      title="Focus Last Activity"
+                    >
+                      <Compass size={22} className="group-hover:rotate-45 transition-transform" />
+                    </button>
                 </div>
 
                 <div className="w-8 h-px bg-white/10" />
@@ -291,15 +286,20 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
                         onHover={(x, y) => {
                             const terr = rooms.find(r => r.x === x && r.y === y && r.z === currentZ)?.terrain || grid[y-anchorY]?.[x-anchorX] || 'VOID';
                             setTelemetry(`COORD: ${x}, ${y}, ${currentZ} | RECOGNITION: ${terr.toUpperCase()}`);
+                            setLastActiveCoord({ x, y });
                         }}
                         onRightClick={(x: number, y: number) => {
                             const terr = rooms.find(r => r.x === x && r.y === y && r.z === currentZ)?.terrain || grid[y-anchorY]?.[x-anchorX];
                             if (terr) {
                                 setActiveTool(terr);
                                 setTelemetry(`SAMPLED: ${terr.toUpperCase()} | TARGETING COORDINATES`);
+                                setLastActiveCoord({ x, y });
                             }
                         }}
-                        onCenterRequest={(x: number, y: number) => setCenterRequest({ x, y })}
+                        onCenterRequest={(x: number, y: number) => { 
+                            setCenterRequest({ x, y });
+                            setLastActiveCoord({ x, y });
+                        }}
                         centerPos={centerRequest}
                         anchorX={anchorX}
                         anchorY={anchorY}
@@ -339,28 +339,13 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
                   >Genesis Engine</button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto custom-scrollbar p-8">
+                    <div className="flex-1 overflow-y-auto custom-scrollbar p-8">
                    <AnimatePresence mode="wait">
                       {activeTab === 'mirror' && (
                         <motion.div key="mirror" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
-                           <section>
-                              <h5 className="text-[9px] font-black text-purple-500 uppercase tracking-widest mb-4 italic">Active Shards</h5>
-                              <div className="space-y-2 mb-8">
-                                 {zones.map(z => (
-                                    <button 
-                                       key={z} 
-                                       onClick={() => { setActiveZone(z); refreshLiveWorld(); }}
-                                       className={clsx("w-full p-4 rounded-xl bg-white/2 border border-white/5 text-left flex items-center justify-between group hover:border-purple-500/50 transition-all", activeZone === z ? "border-purple-500/50 bg-purple-500/5" : "")}
-                                    >
-                                       <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter">{z.replace(/_/g, ' ')}</span>
-                                       <ChevronRight size={12} className="text-slate-600 group-hover:text-purple-400" />
-                                    </button>
-                                 ))}
-                              </div>
-                           </section>
                            
-                           {/* [V12.0] Sovereign Painter: Heisted Brush Suite for Mirror mode */}
-                           <section className="pt-8 border-t border-white/5">
+                           {/* [V12.3] Task 1.3: Brush Elevation (UX Rescue) */}
+                           <section>
                               <h5 className="text-[9px] font-black text-purple-500 uppercase tracking-widest mb-4 italic">Sculpting Brushes</h5>
                               <div className="space-y-6 mb-8">
                                  <div className="space-y-2">
@@ -386,6 +371,35 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
                                           ))}
                                        </div>
                                     </div>
+                                 ))}
+                              </div>
+                           </section>
+
+                           {/* [V12.3] Task 1.1: Virtual Shard Filter */}
+                           <section className="pt-10 border-t border-white/10">
+                              <div className="flex items-center justify-between mb-4">
+                                  <h5 className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic">Active Shards</h5>
+                                  <div className="relative flex items-center bg-black/40 border border-white/5 rounded-lg px-2 py-1">
+                                      <Search size={8} className="text-slate-600 mr-2" />
+                                      <input 
+                                          type="text" 
+                                          placeholder="Filter..."
+                                          value={searchTerm}
+                                          onChange={(e) => setSearchTerm(e.target.value)}
+                                          className="bg-transparent border-none outline-none text-[8px] font-black uppercase tracking-widest text-purple-400 w-20"
+                                      />
+                                  </div>
+                              </div>
+                              <div className="space-y-2 mb-8">
+                                 {zones.filter(z => !searchTerm || z.toLowerCase().includes(searchTerm.toLowerCase())).map(z => (
+                                    <button 
+                                       key={z} 
+                                       onClick={() => { setActiveZone(z); refreshLiveWorld(); }}
+                                       className={clsx("w-full p-4 rounded-xl bg-white/2 border border-white/5 text-left flex items-center justify-between group hover:border-purple-500/50 transition-all shadow-inner", activeZone === z ? "border-purple-500/50 bg-purple-500/5" : "")}
+                                    >
+                                       <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter">{z.replace(/_/g, ' ')}</span>
+                                       <ChevronRight size={12} className="text-slate-600 group-hover:text-purple-400" />
+                                    </button>
                                  ))}
                               </div>
                            </section>
@@ -463,10 +477,29 @@ export default function MasterStudio({ initialMode = 'sculpt' }: MasterStudioPro
                         </div>
                         <div className="space-y-3 h-[75vh] overflow-y-auto custom-scrollbar pr-2">
                            {players.map(p => (
-                              <button key={p.name} onClick={() => setCenterRequest({ x: p.x, y: p.y })} className="w-full p-4 rounded-2xl bg-white/2 border border-white/5 hover:border-purple-500 text-left transition-all group">
-                                 <div className="text-sm font-black italic text-white group-hover:text-purple-400 capitalize">{p.name}</div>
-                                 <div className="text-[10px] font-mono text-zinc-600 mt-1 uppercase">Coordinate: {p.x}, {p.y}</div>
-                              </button>
+                              <div key={p.name} className="relative group">
+                                <button 
+                                  onClick={() => { setCenterRequest({ x: p.x, y: p.y }); setLastActiveCoord({ x: p.x, y: p.y }); }} 
+                                  className="w-full p-4 rounded-2xl bg-white/2 border border-white/5 hover:border-purple-500 text-left transition-all group"
+                                >
+                                   <div className="text-sm font-black italic text-white group-hover:text-purple-400 capitalize">{p.name}</div>
+                                   <div className="text-[10px] font-mono text-zinc-600 mt-1 uppercase">Coordinate: {p.x}, {p.y}</div>
+                                </button>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button 
+                                      onClick={() => axios.post('/api/admin/command', { command: `@goto ${p.name}` })}
+                                      className="p-2 bg-purple-500/20 hover:bg-purple-500 rounded-lg border border-purple-500/30 transition-colors" title="Teleport to Soul"
+                                    >
+                                        <Zap size={14} className="text-purple-400 group-hover:text-white" />
+                                    </button>
+                                    <button 
+                                      onClick={() => axios.post('/api/admin/command', { command: `@observe ${p.name}` })}
+                                      className="p-2 bg-cyan-500/20 hover:bg-cyan-500 rounded-lg border border-cyan-500/30 transition-colors" title="Spectate Soul"
+                                    >
+                                        <Shield size={14} className="text-cyan-400 group-hover:text-white" />
+                                    </button>
+                                </div>
+                              </div>
                            ))}
                         </div>
                     </motion.div>

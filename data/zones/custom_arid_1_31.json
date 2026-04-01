@@ -1,0 +1,2330 @@
+{
+    "metadata": {
+        "id": "custom_arid_1_31",
+        "name": "Arid Zone",
+        "security_level": "low_sec",
+        "grid_logic": true,
+        "target_cr": 50
+    },
+    "rooms": [
+        {
+            "id": "custom_arid_1_31.9031.9000.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9031,
+            "y": 9000,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "south": "custom_arid_1_31.9031.9001.0",
+                "east": "custom_fields_0_32.9032.9000.0",
+                "west": "custom_peaks_0_23.9030.9000.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9001.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9031,
+            "y": 9001,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9000.0",
+                "south": "custom_arid_1_31.9031.9002.0",
+                "east": "custom_arid_1_31.9032.9001.0",
+                "west": "custom_peaks_0_23.9030.9001.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9032.9001.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9032,
+            "y": 9001,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_0_32.9032.9000.0",
+                "south": "custom_arid_1_31.9032.9002.0",
+                "east": "custom_fields_0_32.9033.9001.0",
+                "west": "custom_arid_1_31.9031.9001.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9002.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9002,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_0_23.9030.9001.0",
+                "south": "custom_arid_1_31.9030.9003.0",
+                "east": "custom_arid_1_31.9031.9002.0",
+                "west": "custom_peaks_0_23.9029.9002.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9002.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9031,
+            "y": 9002,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9001.0",
+                "south": "custom_arid_1_31.9031.9003.0",
+                "east": "custom_arid_1_31.9032.9002.0",
+                "west": "custom_arid_1_31.9030.9002.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9032.9002.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9032,
+            "y": 9002,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9032.9001.0",
+                "south": "custom_arid_1_31.9032.9003.0",
+                "east": "custom_fields_0_32.9033.9002.0",
+                "west": "custom_arid_1_31.9031.9002.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9003.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9003,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_0_23.9029.9002.0",
+                "south": "custom_arid_1_31.9029.9004.0",
+                "east": "custom_arid_1_31.9030.9003.0",
+                "west": "custom_peaks_0_23.9028.9003.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9003.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9003,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9002.0",
+                "south": "custom_arid_1_31.9030.9004.0",
+                "east": "custom_arid_1_31.9031.9003.0",
+                "west": "custom_arid_1_31.9029.9003.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9003.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9031,
+            "y": 9003,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9002.0",
+                "south": "custom_arid_1_31.9031.9004.0",
+                "east": "custom_arid_1_31.9032.9003.0",
+                "west": "custom_arid_1_31.9030.9003.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9032.9003.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9032,
+            "y": 9003,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9032.9002.0",
+                "south": "custom_arid_1_31.9032.9004.0",
+                "east": "custom_arid_1_31.9033.9003.0",
+                "west": "custom_arid_1_31.9031.9003.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9033.9003.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9033,
+            "y": 9003,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_fields_0_32.9033.9002.0",
+                "south": "custom_fields_0_32.9033.9004.0",
+                "east": "custom_fields_0_32.9034.9003.0",
+                "west": "custom_arid_1_31.9032.9003.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9004.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9004,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9003.0",
+                "south": "custom_arid_1_31.9029.9005.0",
+                "east": "custom_arid_1_31.9030.9004.0",
+                "west": "custom_peaks_0_23.9028.9004.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9004.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9004,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9003.0",
+                "south": "custom_arid_1_31.9030.9005.0",
+                "east": "custom_arid_1_31.9031.9004.0",
+                "west": "custom_arid_1_31.9029.9004.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9004.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9031,
+            "y": 9004,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9003.0",
+                "south": "custom_arid_1_31.9031.9005.0",
+                "east": "custom_arid_1_31.9032.9004.0",
+                "west": "custom_arid_1_31.9030.9004.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9032.9004.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9032,
+            "y": 9004,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9032.9003.0",
+                "south": "custom_arid_1_31.9032.9005.0",
+                "east": "custom_fields_0_32.9033.9004.0",
+                "west": "custom_arid_1_31.9031.9004.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9005.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9005,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9004.0",
+                "south": "custom_arid_1_31.9029.9006.0",
+                "east": "custom_arid_1_31.9030.9005.0",
+                "west": "custom_peaks_0_23.9028.9005.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9005.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9005,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9004.0",
+                "south": "custom_arid_1_31.9030.9006.0",
+                "east": "custom_arid_1_31.9031.9005.0",
+                "west": "custom_arid_1_31.9029.9005.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9005.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9031,
+            "y": 9005,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9004.0",
+                "south": "custom_arid_1_31.9031.9006.0",
+                "east": "custom_arid_1_31.9032.9005.0",
+                "west": "custom_arid_1_31.9030.9005.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9032.9005.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9032,
+            "y": 9005,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9032.9004.0",
+                "south": "custom_fields_0_32.9032.9006.0",
+                "east": "custom_fields_0_32.9033.9005.0",
+                "west": "custom_arid_1_31.9031.9005.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9006.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9006,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9005.0",
+                "south": "custom_arid_1_31.9029.9007.0",
+                "east": "custom_arid_1_31.9030.9006.0",
+                "west": "custom_peaks_0_23.9028.9006.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9006.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9006,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9005.0",
+                "south": "custom_arid_1_31.9030.9007.0",
+                "east": "custom_arid_1_31.9031.9006.0",
+                "west": "custom_arid_1_31.9029.9006.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9006.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9031,
+            "y": 9006,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9005.0",
+                "south": "custom_arid_1_31.9031.9007.0",
+                "east": "custom_fields_0_32.9032.9006.0",
+                "west": "custom_arid_1_31.9030.9006.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9007.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9028,
+            "y": 9007,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_0_23.9028.9006.0",
+                "south": "custom_peaks_0_23.9028.9008.0",
+                "east": "custom_arid_1_31.9029.9007.0",
+                "west": "custom_peaks_0_23.9027.9007.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9007.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9007,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9006.0",
+                "south": "custom_arid_1_31.9029.9008.0",
+                "east": "custom_arid_1_31.9030.9007.0",
+                "west": "custom_arid_1_31.9028.9007.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9007.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9007,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9006.0",
+                "south": "custom_arid_1_31.9030.9008.0",
+                "east": "custom_arid_1_31.9031.9007.0",
+                "west": "custom_arid_1_31.9029.9007.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9007.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9031,
+            "y": 9007,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9006.0",
+                "south": "custom_arid_1_31.9031.9008.0",
+                "east": "custom_fields_0_32.9032.9007.0",
+                "west": "custom_arid_1_31.9030.9007.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9008.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9008,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9007.0",
+                "south": "custom_arid_1_31.9029.9009.0",
+                "east": "custom_arid_1_31.9030.9008.0",
+                "west": "custom_peaks_0_23.9028.9008.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9008.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9008,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9007.0",
+                "south": "custom_arid_1_31.9030.9009.0",
+                "east": "custom_arid_1_31.9031.9008.0",
+                "west": "custom_arid_1_31.9029.9008.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9008.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9031,
+            "y": 9008,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9007.0",
+                "south": "custom_arid_1_31.9031.9009.0",
+                "east": "custom_fields_0_32.9032.9008.0",
+                "west": "custom_arid_1_31.9030.9008.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9009.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9009,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9008.0",
+                "south": "custom_peaks_0_23.9029.9010.0",
+                "east": "custom_arid_1_31.9030.9009.0",
+                "west": "custom_peaks_0_23.9028.9009.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9009.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9009,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9008.0",
+                "south": "custom_arid_1_31.9030.9010.0",
+                "east": "custom_arid_1_31.9031.9009.0",
+                "west": "custom_arid_1_31.9029.9009.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9009.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9031,
+            "y": 9009,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9008.0",
+                "south": "custom_arid_1_31.9031.9010.0",
+                "east": "custom_fields_0_32.9032.9009.0",
+                "west": "custom_arid_1_31.9030.9009.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9010.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9010,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9009.0",
+                "south": "custom_arid_1_31.9030.9011.0",
+                "east": "custom_arid_1_31.9031.9010.0",
+                "west": "custom_peaks_0_23.9029.9010.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9010.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9031,
+            "y": 9010,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9009.0",
+                "south": "custom_arid_1_31.9031.9011.0",
+                "east": "custom_fields_0_32.9032.9010.0",
+                "west": "custom_arid_1_31.9030.9010.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9011.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Peak Shadow",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "peak_shadow",
+            "symbol": null,
+            "x": 9027,
+            "y": 9011,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_0_23.9027.9010.0",
+                "south": "custom_arid_1_31.9027.9012.0",
+                "east": "custom_peaks_0_23.9028.9011.0",
+                "west": "custom_peaks_0_23.9026.9011.0"
+            },
+            "tags": [
+                "peak_shadow",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9011.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9011,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_0_23.9029.9010.0",
+                "south": "custom_arid_1_31.9029.9012.0",
+                "east": "custom_arid_1_31.9030.9011.0",
+                "west": "custom_peaks_0_23.9028.9011.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9011.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9011,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9010.0",
+                "south": "custom_arid_1_31.9030.9012.0",
+                "east": "custom_arid_1_31.9031.9011.0",
+                "west": "custom_arid_1_31.9029.9011.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9031.9011.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9031,
+            "y": 9011,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9031.9010.0",
+                "south": "custom_fields_0_32.9031.9012.0",
+                "east": "custom_fields_0_32.9032.9011.0",
+                "west": "custom_arid_1_31.9030.9011.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9012.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9027,
+            "y": 9012,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9011.0",
+                "south": "custom_arid_1_31.9027.9013.0",
+                "east": "custom_arid_1_31.9028.9012.0",
+                "west": "custom_peaks_0_23.9026.9012.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9012.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9028,
+            "y": 9012,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_peaks_0_23.9028.9011.0",
+                "south": "custom_arid_1_31.9028.9013.0",
+                "east": "custom_arid_1_31.9029.9012.0",
+                "west": "custom_arid_1_31.9027.9012.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9012.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9012,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9011.0",
+                "south": "custom_arid_1_31.9029.9013.0",
+                "east": "custom_arid_1_31.9030.9012.0",
+                "west": "custom_arid_1_31.9028.9012.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9030.9012.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9030,
+            "y": 9012,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9030.9011.0",
+                "south": "custom_fields_0_32.9030.9013.0",
+                "east": "custom_fields_0_32.9031.9012.0",
+                "west": "custom_arid_1_31.9029.9012.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9013.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9027,
+            "y": 9013,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9012.0",
+                "south": "custom_arid_1_31.9027.9014.0",
+                "east": "custom_arid_1_31.9028.9013.0",
+                "west": "custom_peaks_0_23.9026.9013.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9013.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9028,
+            "y": 9013,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9012.0",
+                "south": "custom_arid_1_31.9028.9014.0",
+                "east": "custom_arid_1_31.9029.9013.0",
+                "west": "custom_arid_1_31.9027.9013.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9013.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Wasteland",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "wasteland",
+            "symbol": "{Colors.RED}:{Colors.RESET}",
+            "x": 9029,
+            "y": 9013,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9012.0",
+                "south": "custom_arid_1_31.9029.9014.0",
+                "east": "custom_fields_0_32.9030.9013.0",
+                "west": "custom_arid_1_31.9028.9013.0"
+            },
+            "tags": [
+                "wasteland",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9014.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Mountain",
+            "description": "The cold wind howls through the jagged stone peaks.\nAtmosphere: ARID area.",
+            "terrain": "mountain",
+            "symbol": "{Colors.WHITE}^{Colors.RESET}",
+            "x": 9027,
+            "y": 9014,
+            "z": 0,
+            "elevation": 5,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9013.0",
+                "south": "custom_arid_1_31.9027.9015.0",
+                "east": "custom_arid_1_31.9028.9014.0",
+                "west": "custom_peaks_0_23.9026.9014.0"
+            },
+            "tags": [
+                "mountain",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9014.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Plains",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "plains",
+            "symbol": "{Colors.GREEN}.{Colors.RESET}",
+            "x": 9028,
+            "y": 9014,
+            "z": 0,
+            "elevation": 0,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9013.0",
+                "south": "custom_arid_1_31.9028.9015.0",
+                "east": "custom_arid_1_31.9029.9014.0",
+                "west": "custom_arid_1_31.9027.9014.0"
+            },
+            "tags": [
+                "plains",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9014.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Tundra",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "tundra",
+            "symbol": "{Colors.DGREY},{Colors.RESET}",
+            "x": 9029,
+            "y": 9014,
+            "z": 0,
+            "elevation": 8,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9013.0",
+                "south": "custom_arid_1_31.9029.9015.0",
+                "east": "custom_fields_0_32.9030.9014.0",
+                "west": "custom_arid_1_31.9028.9014.0"
+            },
+            "tags": [
+                "tundra",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9015.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9015,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9014.0",
+                "south": "custom_arid_1_31.9027.9016.0",
+                "east": "custom_arid_1_31.9028.9015.0",
+                "west": "custom_peaks_0_23.9026.9015.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9015.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9015,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9014.0",
+                "south": "custom_arid_1_31.9028.9016.0",
+                "east": "custom_arid_1_31.9029.9015.0",
+                "west": "custom_arid_1_31.9027.9015.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9015.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9015,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9014.0",
+                "south": "custom_arid_1_31.9029.9016.0",
+                "east": "custom_fields_0_32.9030.9015.0",
+                "west": "custom_arid_1_31.9028.9015.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9016.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9016,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9015.0",
+                "south": "custom_arid_1_31.9027.9017.0",
+                "east": "custom_arid_1_31.9028.9016.0",
+                "west": "custom_peaks_0_23.9026.9016.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9016.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9016,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9015.0",
+                "south": "custom_arid_1_31.9028.9017.0",
+                "east": "custom_arid_1_31.9029.9016.0",
+                "west": "custom_arid_1_31.9027.9016.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9016.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9016,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9015.0",
+                "south": "custom_arid_1_31.9029.9017.0",
+                "east": "custom_fields_0_32.9030.9016.0",
+                "west": "custom_arid_1_31.9028.9016.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9017.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9017,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9016.0",
+                "south": "custom_arid_1_31.9027.9018.0",
+                "east": "custom_arid_1_31.9028.9017.0",
+                "west": "custom_peaks_0_23.9026.9017.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9017.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9017,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9016.0",
+                "south": "custom_arid_1_31.9028.9018.0",
+                "east": "custom_arid_1_31.9029.9017.0",
+                "west": "custom_arid_1_31.9027.9017.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9017.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9017,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9016.0",
+                "south": "custom_arid_1_31.9029.9018.0",
+                "east": "custom_fields_0_32.9030.9017.0",
+                "west": "custom_arid_1_31.9028.9017.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9018.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9018,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9017.0",
+                "south": "custom_arid_1_31.9027.9019.0",
+                "east": "custom_arid_1_31.9028.9018.0",
+                "west": "custom_peaks_0_23.9026.9018.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9018.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9018,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9017.0",
+                "south": "custom_arid_1_31.9028.9019.0",
+                "east": "custom_arid_1_31.9029.9018.0",
+                "west": "custom_arid_1_31.9027.9018.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9018.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9018,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9017.0",
+                "south": "custom_arid_1_31.9029.9019.0",
+                "east": "custom_fields_0_32.9030.9018.0",
+                "west": "custom_arid_1_31.9028.9018.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9019.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9019,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9018.0",
+                "south": "custom_arid_1_31.9027.9020.0",
+                "east": "custom_arid_1_31.9028.9019.0",
+                "west": "custom_peaks_0_23.9026.9019.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9019.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9019,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9018.0",
+                "south": "custom_arid_1_31.9028.9020.0",
+                "east": "custom_arid_1_31.9029.9019.0",
+                "west": "custom_arid_1_31.9027.9019.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9019.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9019,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9018.0",
+                "south": "custom_arid_1_31.9029.9020.0",
+                "east": "custom_fields_0_32.9030.9019.0",
+                "west": "custom_arid_1_31.9028.9019.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9020.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9020,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9019.0",
+                "south": "custom_arid_1_31.9027.9021.0",
+                "east": "custom_arid_1_31.9028.9020.0",
+                "west": "custom_peaks_0_23.9026.9020.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9020.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9020,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9019.0",
+                "south": "custom_arid_1_31.9028.9021.0",
+                "east": "custom_arid_1_31.9029.9020.0",
+                "west": "custom_arid_1_31.9027.9020.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9020.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9020,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9019.0",
+                "south": "custom_arid_1_31.9029.9021.0",
+                "east": "custom_fields_0_32.9030.9020.0",
+                "west": "custom_arid_1_31.9028.9020.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9021.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9021,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9020.0",
+                "south": "custom_arid_1_31.9027.9022.0",
+                "east": "custom_arid_1_31.9028.9021.0",
+                "west": "custom_peaks_0_23.9026.9021.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9021.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9021,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9020.0",
+                "south": "custom_arid_1_31.9028.9022.0",
+                "east": "custom_arid_1_31.9029.9021.0",
+                "west": "custom_arid_1_31.9027.9021.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9021.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9021,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9020.0",
+                "south": "custom_arid_1_31.9029.9022.0",
+                "east": "custom_fields_0_32.9030.9021.0",
+                "west": "custom_arid_1_31.9028.9021.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9022.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9022,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9021.0",
+                "south": "custom_arid_1_31.9027.9023.0",
+                "east": "custom_arid_1_31.9028.9022.0",
+                "west": "custom_peaks_0_23.9026.9022.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9022.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9022,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9021.0",
+                "south": "custom_arid_1_31.9028.9023.0",
+                "east": "custom_arid_1_31.9029.9022.0",
+                "west": "custom_arid_1_31.9027.9022.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9022.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9022,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9021.0",
+                "south": "custom_arid_1_31.9029.9023.0",
+                "east": "custom_fields_0_32.9030.9022.0",
+                "west": "custom_arid_1_31.9028.9022.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9023.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9023,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9022.0",
+                "south": "custom_arid_1_31.9027.9024.0",
+                "east": "custom_arid_1_31.9028.9023.0",
+                "west": "custom_peaks_0_23.9026.9023.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9023.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9023,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9022.0",
+                "south": "custom_arid_1_31.9028.9024.0",
+                "east": "custom_arid_1_31.9029.9023.0",
+                "west": "custom_arid_1_31.9027.9023.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9023.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9023,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9022.0",
+                "south": "custom_arid_1_31.9029.9024.0",
+                "east": "custom_fields_0_32.9030.9023.0",
+                "west": "custom_arid_1_31.9028.9023.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9027.9024.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9027,
+            "y": 9024,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9027.9023.0",
+                "south": "custom_infrastructure_26_26.9027.9025.0",
+                "east": "custom_arid_1_31.9028.9024.0",
+                "west": "custom_peaks_0_23.9026.9024.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9024.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9024,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9023.0",
+                "south": "custom_arid_1_31.9028.9025.0",
+                "east": "custom_arid_1_31.9029.9024.0",
+                "west": "custom_arid_1_31.9027.9024.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9024.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9024,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9023.0",
+                "south": "custom_arid_1_31.9029.9025.0",
+                "east": "custom_fields_0_32.9030.9024.0",
+                "west": "custom_arid_1_31.9028.9024.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9028.9025.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9028,
+            "y": 9025,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9028.9024.0",
+                "south": "custom_infrastructure_26_26.9028.9026.0",
+                "east": "custom_arid_1_31.9029.9025.0",
+                "west": "custom_infrastructure_26_26.9027.9025.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        },
+        {
+            "id": "custom_arid_1_31.9029.9025.0",
+            "zone_id": "custom_arid_1_31",
+            "name": "Hills",
+            "description": "A vast stretch of untamed wilderness.\nAtmosphere: ARID area.",
+            "terrain": "hills",
+            "symbol": "{Colors.GREEN}n{Colors.RESET}",
+            "x": 9029,
+            "y": 9025,
+            "z": 0,
+            "elevation": 3,
+            "exits": {
+                "north": "custom_arid_1_31.9029.9024.0",
+                "south": "custom_infrastructure_26_26.9029.9026.0",
+                "east": "custom_infrastructure_26_26.9030.9025.0",
+                "west": "custom_arid_1_31.9028.9025.0"
+            },
+            "tags": [
+                "hills",
+                "custom_arid_1_31",
+                "regional_v8",
+                "wilderness"
+            ],
+            "monsters": [],
+            "items": [],
+            "level": 50,
+            "spawn_rate": 0.5,
+            "sovereignty": "Wilderness"
+        }
+    ]
+}

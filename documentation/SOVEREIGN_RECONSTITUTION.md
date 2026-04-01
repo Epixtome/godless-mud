@@ -1,7 +1,7 @@
 # SOVEREIGN_RECONSTITUTION.md
 **Date:** 2026-03-31  
 **Project:** Godless V12.0  
-**Status:** STABILIZED (Monitoring)
+**Status:** STABILIZED (v12.3.07)
 
 > [!IMPORTANT]
 > The "Sovereign Spine" has been reconstituted. The following tasks are complete and verified on Port 3001.
@@ -32,28 +32,34 @@
 - [x] **Task 3.2: Domain Masking:** Pulse payloads reduced via Delta Compression.
 - [x] **Task 3.3: Emergency Auth Fix:** Hardened 'is_admin' to `kip.json`.
 
+### STAGE 4: MASTER STUDIO SOVEREIGNTY (THE SCULPTING ENGINE) - [COMPLETED]
+- [x] **Task 4.1: Shard Purge:** 487 legacy shards erased. (v12.3.01)
+- [x] **Task 4.2: Thermal Fix:** 60fps loop removed in UniversalCanvas. (v12.3.02)
+- [x] **Task 4.3: Live Sync:** Sovereign Coordinates + Divine Pulse implemented. (v12.3.05)
+- [x] **Task 4.4: Keep-Alive:** Persistent Mounting implemented in App.tsx. (v12.3.07)
+
 ---
 
 ## 2. SOVEREIGN RESILIENCE PROTOCOLS
-To prevent "Ghost Processes," "Stale Authorization," or "Pulse Overwrites" in future development.
+To prevent "Ghost Processes," "Stale Authorization," or "Pulse Overwrites."
 
 ### A. The "Cold-Save" Hardening
-- **THE CONFLICT:** Manual JSON edits (e.g., God-Status) will be **silently overwritten** by the engine's Pulse Save if the engine is running.
-- **THE LAW:** Always use `taskkill /F /IM python.exe` (Windows) BEFORE manually editing a character save. The engine must be **OFFLINE** to accept manual attribute hardening.
+- **THE CONFLICT:** Manual JSON edits will be overwritten by Pulse Save if engine is running.
+- **THE LAW:** Engine must be **OFFLINE** for manual character hardening (`taskkill /F /IM python.exe`).
 
-### B. Ghost Process Termination
-- **THE CONFLICT:** Starting a new engine instance does not kill stale background processes. These "Ghosts" will fight for port access and continue to write old data.
-- **THE LAW:** If commands feel unrecognized or logic feels stale, perform a **Nuke Reset**: `taskkill /F /IM python.exe /T` (Windows).
+### B. Persistent Mounting & The Login Gate (v12.3.07) - [NEW]
+- **THE CONFLICT:** Conditional React rendering destroys local state (map zoom, command inputs).
+- **THE LAW:** Use CSS visibility (`hidden`) for primary workspaces. Gated by `isLoggedByServer` to prevent null-data crashes. 
 
-### C. State Sharding Logic
-- **STRUCTURE:** Character discovery memory is stored in `[name].map.json`. Stats are stored in `[name].json`. The engine merges these dynamically upon login.
+### C. Sovereign Disk Commits (v12.3.07) - [NEW]
+- **THE CONFLICT:** Memory-only terrain updates don't survive reboots.
+- **THE LAW:** Every Admin "Paint" act requires an immediate `world_loader.save_zone_shard` call.
 
 ---
 
 ## 3. INTEGRITY AUDIT LOG (REVIEW ITEMS)
 - **Attribute Mismatch:** Character saves contain ~10 equipment slots not defined in `Player.__init__`. 
-    - *Resolution:* Currently handled by dynamic assignment via `getattr` in `persistence.py`.
-- **2026-03-31:** Core stabilized. Admin restored. Sharding active.
+- **2026-03-31:** Core stabilized. Admin restored. Master Studio Stabilized (v12.3.07).
 
 ---
-**[V12.2] DOCUMENTATION SEALED - MONOLITH RECONSTITUTED**
+**[V12.3.07] DOCUMENTATION SEALED - MONOLITH RECONSTITUTED**
