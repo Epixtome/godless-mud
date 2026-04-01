@@ -17,6 +17,7 @@ export interface GameStatus {
   time: string;
   is_day: boolean;
   weather: string;
+  is_admin?: boolean;
   ui_prefs?: Record<string, any>;
 }
 
@@ -159,6 +160,15 @@ export const useStore = create<AppState>()(
       },
 
       setStatus: (status) => {
+        // [V12.1] Sync Authority from server pulse
+        console.log(`[AUTH] Pulse: is_admin=${status.is_admin}, user=${status.room?.name}`);
+        if (status.is_admin !== undefined && status.is_admin !== get().isAdmin) {
+          console.group(`[AUTH] Transition: ${status.is_admin ? "ASCENSION" : "FALL"}`);
+          console.log(`Setting isAdmin to ${status.is_admin}`);
+          console.groupEnd();
+          set({ isAdmin: status.is_admin });
+        }
+        
         set({ status });
 
         // Server-Side Layout Sync: [V9.5 BRIDGING GUARD]

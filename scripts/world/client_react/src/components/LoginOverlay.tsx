@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../store/useStore';
 import { sendRaw } from '../lib/socket';
-import { Shield, User, LogIn, Trash2, Ghost, Clock } from 'lucide-react';
+import { Shield, User, ChevronRight, Zap, Settings, Info, Ghost } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
 
@@ -13,6 +13,11 @@ const LoginOverlay: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        const savedName = localStorage.getItem('godless_identity');
+        const savedPass = localStorage.getItem('godless_verify');
+        if (savedName) setName(savedName);
+        if (savedPass) setPassword(savedPass);
+
         const handleAuthStep = (e: any) => {
             if (e.detail === 'password') {
                 setStep('password');
@@ -30,18 +35,18 @@ const LoginOverlay: React.FC = () => {
         if (e) e.preventDefault();
         if (!name) return;
         
+        localStorage.setItem('godless_identity', name);
         setIsLoading(true);
         sendRaw(name);
-        // Step transition now handled by GES 'auth:require_password'
     };
 
     const handlePassword = (e: React.FormEvent) => {
         e.preventDefault();
         if (!password) return;
         
+        localStorage.setItem('godless_verify', password);
         setIsLoading(true);
         sendRaw(password);
-        // We don't clear loading here; GES will clear the overlay on success
     };
 
     const selectSaved = (charName: string) => {
@@ -85,7 +90,7 @@ const LoginOverlay: React.FC = () => {
                                 {savedCharacters.length > 0 && (
                                     <div className="space-y-3">
                                         <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold flex items-center gap-2">
-                                            <Clock size={10} /> Saved Identities
+                                            <Info size={10} /> Saved Identities
                                         </div>
                                         <div className="grid gap-2">
                                             {savedCharacters.map((char) => (
@@ -100,14 +105,14 @@ const LoginOverlay: React.FC = () => {
                                                             </div>
                                                             <span className="font-bold text-slate-300 group-hover:text-white transition-colors capitalize">{char.name}</span>
                                                         </div>
-                                                        <LogIn size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
+                                                        <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
                                                     </button>
                                                     <button 
                                                         onClick={() => removeCharacter(char.name)}
                                                         className="p-3 rounded-xl hover:bg-red-500/10 hover:text-red-400 text-slate-600 transition-colors"
                                                         title="Forget Identity"
                                                     >
-                                                        <Trash2 size={14} />
+                                                        <Zap size={14} />
                                                     </button>
                                                 </div>
                                             ))}
@@ -135,7 +140,7 @@ const LoginOverlay: React.FC = () => {
                                         disabled={!name || !isConnected}
                                         className="w-full py-4 bg-white text-black font-black rounded-xl hover:bg-cyan-400 transition-all disabled:opacity-50 disabled:grayscale uppercase tracking-widest text-xs flex items-center justify-center gap-2"
                                     >
-                                        Establish Connection <LogIn size={14} />
+                                        Establish Connection <ChevronRight size={14} />
                                     </button>
                                 </form>
                             </div>

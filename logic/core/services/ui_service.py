@@ -151,24 +151,44 @@ def send_status_update(player):
             "head": player.equipped_head.name if player.equipped_head else "Unequipped"
         }
 
+        # [V12.1] Delta Compression: Only send heavy lists if they changed
+        # We store hashes in ext_state to track changes
+        inv_fingerprint = str(hash(tuple(itm.id for itm in player.inventory)))
+        old_inv_fp = player.ext_state.get('last_inv_fp')
+        
+        bless_fingerprint = str(hash(tuple(player.equipped_blessings)))
+        old_bless_fp = player.ext_state.get('last_bless_fp')
+
+        payload = {
+            "hp": {"current": player.hp, "max": player.max_hp},
+            "stamina": {"current": player.resources.get('stamina', 0), "max": player.get_max_resource('stamina')},
+            "balance": {"current": player.resources.get('balance', 0), "max": player.get_max_resource('balance')},
+            "resource": class_res,
+            "is_admin": player.is_admin,
+            "target": {
+                "name": player.fighting.name,
+                "hp": {"current": player.fighting.hp, "max": player.fighting.max_hp},
+                "symbol": Colors.strip(getattr(player.fighting, 'symbol', 'm'))[0]
+            } if player.fighting else None,
+            "weather": weather, "time": time_label, "is_day": is_day,
+            "status_effects": [{"id": eid, "name": eid.replace('_', ' ').title(), "duration": 0} for eid in player.status_effects.keys()],
+            "ui_prefs": player.ext_state.get('ui_prefs', {}),
+            "equipment": equipment,
+            "room": {"name": getattr(player.room, 'name', 'Void'), "entities": entities}
+        }
+
+        # Only inject heavy lists if fingerprints differ
+        if inv_fingerprint != old_inv_fp:
+            payload["inventory"] = inventory
+            player.ext_state['last_inv_fp'] = inv_fingerprint
+            
+        if bless_fingerprint != old_bless_fp:
+            payload["blessings"] = blessings
+            player.ext_state['last_bless_fp'] = bless_fingerprint
+
         player.send_json({
             "type": "status_update",
-            "data": {
-                "hp": {"current": player.hp, "max": player.max_hp},
-                "stamina": {"current": player.resources.get('stamina', 0), "max": player.get_max_resource('stamina')},
-                "balance": {"current": player.resources.get('balance', 0), "max": player.get_max_resource('balance')},
-                "resource": class_res,
-                "target": {
-                    "name": player.fighting.name,
-                    "hp": {"current": player.fighting.hp, "max": player.fighting.max_hp},
-                    "symbol": Colors.strip(getattr(player.fighting, 'symbol', 'm'))[0]
-                } if player.fighting else None,
-                "blessings": blessings, "weather": weather, "time": time_label, "is_day": is_day,
-                "status_effects": [{"id": eid, "name": eid.replace('_', ' ').title(), "duration": 0} for eid in player.status_effects.keys()],
-                "ui_prefs": player.ext_state.get('ui_prefs', {}),
-                "inventory": inventory, "equipment": equipment,
-                "room": {"name": getattr(player.room, 'name', 'Void'), "entities": entities}
-            }
+            "data": payload
         })
     except Exception as e:
         logger.error(f"Status Update Error: {e}")

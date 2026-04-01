@@ -39,6 +39,14 @@ def item_from_data(item_data, game=None):
 
 def to_dict(player: 'Player') -> dict:
     """Serializes player state to a dictionary for JSON saving."""
+    
+    def serialize_item(item):
+        if not item: return None
+        # [V12.1] Item Compaction: If the item hasn't been modified from its prototype, save only the ID.
+        if hasattr(item, 'prototype_id') and item.prototype_id and not getattr(item, 'is_modified', False):
+            return item.prototype_id
+        return item.to_dict()
+
     return {
         "name": player.name,
         "room_id": player.room.id if player.room else None,
@@ -55,7 +63,7 @@ def to_dict(player: 'Player') -> dict:
         "gold": player.gold,
         "aliases": player.aliases,
         "cooldowns": player.cooldowns,
-        "inventory": [item.to_dict() for item in player.inventory],
+        "inventory": [serialize_item(item) for item in player.inventory],
         "is_resting": player.is_resting,
         "rest_until": player.rest_until,
         "active_quests": player.active_quests,
@@ -64,20 +72,20 @@ def to_dict(player: 'Player') -> dict:
         "password": player.password,
         "is_admin": player.is_admin,
         "is_building": player.is_building,
-        "equipped_armor": player.equipped_armor.to_dict() if getattr(player, 'equipped_armor', None) else None,
-        "equipped_weapon": player.equipped_weapon.to_dict() if getattr(player, 'equipped_weapon', None) else None,
-        "equipped_offhand": player.equipped_offhand.to_dict() if getattr(player, 'equipped_offhand', None) else None,
-        "equipped_head": player.equipped_head.to_dict() if getattr(player, 'equipped_head', None) else None,
-        "equipped_neck": player.equipped_neck.to_dict() if getattr(player, 'equipped_neck', None) else None,
-        "equipped_shoulders": player.equipped_shoulders.to_dict() if getattr(player, 'equipped_shoulders', None) else None,
-        "equipped_arms": player.equipped_arms.to_dict() if getattr(player, 'equipped_arms', None) else None,
-        "equipped_hands": player.equipped_hands.to_dict() if getattr(player, 'equipped_hands', None) else None,
-        "equipped_legs": player.equipped_legs.to_dict() if getattr(player, 'equipped_legs', None) else None,
-        "equipped_feet": player.equipped_feet.to_dict() if getattr(player, 'equipped_feet', None) else None,
-        "equipped_finger_l": player.equipped_finger_l.to_dict() if getattr(player, 'equipped_finger_l', None) else None,
-        "equipped_finger_r": player.equipped_finger_r.to_dict() if getattr(player, 'equipped_finger_r', None) else None,
-        "equipped_floating": player.equipped_floating.to_dict() if getattr(player, 'equipped_floating', None) else None,
-        "equipped_mount": player.equipped_mount.to_dict() if getattr(player, 'equipped_mount', None) else None,
+        "equipped_armor": serialize_item(getattr(player, 'equipped_armor', None)),
+        "equipped_weapon": serialize_item(getattr(player, 'equipped_weapon', None)),
+        "equipped_offhand": serialize_item(getattr(player, 'equipped_offhand', None)),
+        "equipped_head": serialize_item(getattr(player, 'equipped_head', None)),
+        "equipped_neck": serialize_item(getattr(player, 'equipped_neck', None)),
+        "equipped_shoulders": serialize_item(getattr(player, 'equipped_shoulders', None)),
+        "equipped_arms": serialize_item(getattr(player, 'equipped_arms', None)),
+        "equipped_hands": serialize_item(getattr(player, 'equipped_hands', None)),
+        "equipped_legs": serialize_item(getattr(player, 'equipped_legs', None)),
+        "equipped_feet": serialize_item(getattr(player, 'equipped_feet', None)),
+        "equipped_finger_l": serialize_item(getattr(player, 'equipped_finger_l', None)),
+        "equipped_finger_r": serialize_item(getattr(player, 'equipped_finger_r', None)),
+        "equipped_floating": serialize_item(getattr(player, 'equipped_floating', None)),
+        "equipped_mount": serialize_item(getattr(player, 'equipped_mount', None)),
         "friendship": player.friendship,
         "visited_rooms": list(player.visited_rooms),
         "discovered_rooms": list(player.discovered_rooms),
@@ -92,7 +100,19 @@ def to_dict(player: 'Player') -> dict:
     }
 
 def load_data(player, data):
-    """Hydrates player state from a dictionary with Migration support."""
+    """Hydrates player state from a dictionary with Migration and Sharding support."""
+    # 0. Handle Sharding: Attempt to load map data from external shard if not in main dict
+    if "discovered_rooms" not in data:
+        map_filename = os.path.join("data", "saves", f"{player.name.lower()}.map.json")
+        if os.path.exists(map_filename):
+            try:
+                with open(map_filename, 'r') as f:
+                    map_shard = json.load(f)
+                    data["visited_rooms"] = map_shard.get("visited_rooms", [])
+                    data["discovered_rooms"] = map_shard.get("discovered_rooms", [])
+            except Exception as e:
+                logger.error(f"Failed to load map shard for {player.name}: {e}")
+
     player.hp = data.get('hp', player.hp)
     player.gold = data.get('gold', 0)
     
@@ -188,13 +208,30 @@ def load_data(player, data):
     player.reset_resources()
 
 def save(player):
-    """Saves the player data to disk (Department of Archives)."""
+    """Saves the player data to disk (Department of Archives) with State Sharding."""
     try:
         os.makedirs(os.path.join("data", "saves"), exist_ok=True)
-        filename = os.path.join("data", "saves", f"{player.name.lower()}.json")
-        with open(filename, 'w') as f:
-            json.dump(to_dict(player), f, indent=4)
-        logger.info(f"Saved Archive: {player.name}")
+        
+        # 1. Generate Full Data
+        full_data = to_dict(player)
+        
+        # 2. Extract Map Shard
+        map_shard = {
+            "visited_rooms": full_data.pop("visited_rooms", []),
+            "discovered_rooms": full_data.pop("discovered_rooms", [])
+        }
+        
+        # 3. Save Core State (Lightweight)
+        core_filename = os.path.join("data", "saves", f"{player.name.lower()}.json")
+        with open(core_filename, 'w') as f:
+            json.dump(full_data, f, indent=4)
+            
+        # 4. Save Map Shard (Heavyweight)
+        map_filename = os.path.join("data", "saves", f"{player.name.lower()}.map.json")
+        with open(map_filename, 'w') as f:
+            json.dump(map_shard, f, indent=4)
+            
+        logger.info(f"Saved Sharded Archive: {player.name} + Memory Shard")
     except Exception as e:
         logger.error(f"Failed to save {player.name}: {e}")
 

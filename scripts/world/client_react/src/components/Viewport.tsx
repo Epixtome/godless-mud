@@ -138,6 +138,13 @@ export function Viewport({ radius, context, scale: propScale = 1 }: ViewportProp
   const columnCount = displayedGrid.length > 0 ? displayedGrid[0].length : 0;
   const gridPixelSize = columnCount * (tileSize + 2);
 
+  const handleWheel = (e: React.WheelEvent) => {
+    if (e.ctrlKey) return; 
+    const delta = e.deltaY;
+    // Smoother scaling with delta sensitivity
+    setUserZoom(prev => Math.min(3.0, Math.max(0.1, prev - (delta * 0.001 * prev))));
+  };
+
    if (!isConnected) {
       return (
          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900/40">
@@ -148,7 +155,10 @@ export function Viewport({ radius, context, scale: propScale = 1 }: ViewportProp
    }
 
    return (
-     <div className="w-full h-full overflow-hidden relative bg-slate-950/20 perspective-1000 flex items-center justify-center">
+     <div 
+        onWheel={handleWheel}
+        className="w-full h-full overflow-hidden relative bg-slate-950/20 perspective-1000 flex items-center justify-center"
+     >
          
          {/* DIVINE MAP PROJECTION (Restored & Locked) */}
          <div 
@@ -186,12 +196,40 @@ export function Viewport({ radius, context, scale: propScale = 1 }: ViewportProp
              </motion.div>
          </div>
 
-         {/* [V10.9 CLARITY] MAP CONTROLS */}
-         <div className="absolute bottom-2 right-2 z-[60] flex gap-2">
-            <button onClick={() => setUserZoom(prev => Math.max(0.2, prev - 0.1))} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Zoom Out"><Layers size={12} /></button>
-            <button onClick={() => setUserZoom(prev => Math.min(3, prev + 0.1))} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Zoom In"><Layers size={12} /></button>
-            <button onClick={() => { setUserZoom(1); setOffset({x:0, y:0}); }} className="p-1.5 rounded-md bg-black/60 border border-white/10 text-slate-400 hover:text-white" title="Reset"><Settings size={12} /></button>
-            <button onClick={() => setShowInfluence(!showInfluence)} className={clsx("p-1.5 rounded-md border backdrop-blur-sm transition-all", showInfluence ? "bg-cyan-500/30 border-cyan-500/50 text-cyan-400" : "bg-black/60 border-white/10 text-slate-500")} title="Influence Map"><Layers size={12} /></button>
+         {/* [V12.2] MAP CONTROLS - RELOCATED TO CENTER-BOTTOM (Occlusion Rescue) */}
+         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[20000] flex gap-3 pointer-events-none">
+            <button 
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setUserZoom(prev => Math.max(0.1, prev - 0.15)); }} 
+              className="relative p-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all z-[20000] pointer-events-auto cursor-pointer shadow-2xl flex items-center justify-center group active:scale-95" 
+              title="Zoom Out"
+            >
+              <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity" />
+              <Layers size={16} />
+            </button>
+            <button 
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setUserZoom(prev => Math.min(3.0, prev + 0.15)); }} 
+              className="relative p-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all z-[20000] pointer-events-auto cursor-pointer shadow-2xl flex items-center justify-center group active:scale-95" 
+              title="Zoom In"
+            >
+              <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity" />
+              <Layers size={16} />
+            </button>
+            <button 
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setUserZoom(1); setOffset({x:0, y:0}); }} 
+              className="relative p-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all z-[20000] pointer-events-auto cursor-pointer shadow-2xl flex items-center justify-center group active:scale-95" 
+              title="Reset View"
+            >
+              <div className="absolute inset-0 bg-yellow-500/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity" />
+              <Settings size={16} />
+            </button>
+            <button 
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowInfluence(!showInfluence); }} 
+              className={clsx("relative p-2.5 rounded-xl border backdrop-blur-md transition-all z-[20000] pointer-events-auto cursor-pointer shadow-2xl flex items-center justify-center group active:scale-95", showInfluence ? "bg-cyan-500/30 border-cyan-500/50 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.3)]" : "bg-slate-900/90 border-white/10 text-slate-500")} 
+              title="Influence Overlay"
+            >
+              <div className={clsx("absolute inset-0 rounded-xl transition-opacity", showInfluence ? "bg-cyan-500/10" : "bg-cyan-500/5 opacity-0 group-hover:opacity-100")} />
+              <Layers size={16} />
+            </button>
          </div>
     </div>
    );

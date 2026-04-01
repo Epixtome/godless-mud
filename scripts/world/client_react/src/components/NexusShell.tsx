@@ -34,13 +34,58 @@ export const NexusShell = () => {
   const { status, setWorkspace } = useStore();
   const [activeTab, setActiveTab] = useState<'inventory' | 'score' | 'attributes'>('inventory');
   const [inputCmd, setInputCmd] = useState('');
+  const [history, setHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // [V12.2] Global Tab-to-Focus (Hardened via Capture Phase)
+  React.useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        e.stopPropagation(); // Pre-empt focus traps
+        inputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown, true); // true = capture phase
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown, true);
+  }, []);
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputCmd.trim()) return;
+    
     sendCommand(inputCmd);
-    setInputCmd('');
+    
+    // Update History
+    setHistory(prev => [inputCmd, ...prev.slice(0, 19)]);
+    setHistoryIndex(-1);
+    
+    // [V12.0] Retention Protocol: Highlight rather than clear for rapid repeats
+    setTimeout(() => {
+      inputRef.current?.select();
+    }, 10);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const nextIndex = historyIndex + 1;
+      if (nextIndex < history.length) {
+        setHistoryIndex(nextIndex);
+        setInputCmd(history[nextIndex]);
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = historyIndex - 1;
+      if (nextIndex >= 0) {
+        setHistoryIndex(nextIndex);
+        setInputCmd(history[nextIndex]);
+      } else {
+        setHistoryIndex(-1);
+        setInputCmd('');
+      }
+    }
   };
 
   return (
@@ -59,9 +104,9 @@ export const NexusShell = () => {
                   <span className="text-[8px] font-black uppercase tracking-[0.2em] text-cyan-500 italic">Tactical</span>
                 </div>
                 
-                {/* Time/Weather Integrations */}
-                <div className="absolute bottom-4 right-4 z-40 flex flex-col gap-1 items-end pointer-events-none">
-                  <div className="bg-black/60 px-2 py-0.5 rounded border border-white/5 backdrop-blur-sm flex items-center gap-2">
+                {/* Time/Weather Integrations (Relocated to top-right to avoid map buttons) */}
+                <div className="absolute top-6 right-6 z-40 flex flex-col gap-1 items-end pointer-events-none">
+                  <div className="bg-black/60 px-2 py-0.5 rounded border border-white/5 backdrop-blur-sm flex items-center gap-2 shadow-2xl">
                      <Sun size={8} className="text-cyan-400" />
                      <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{status?.time || "N/A"}</span>
                   </div>
@@ -99,6 +144,7 @@ export const NexusShell = () => {
                   type="text"
                   value={inputCmd}
                   onChange={(e) => setInputCmd(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   className="flex-1 bg-transparent border-none outline-none text-base text-slate-100 placeholder:text-slate-700 placeholder:uppercase placeholder:tracking-[0.3em] font-mono"
                   placeholder="Dispatch Spiritual Command..."
                />
